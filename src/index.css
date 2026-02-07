@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root { color-scheme: dark; }
+
+::selection { background: rgba(122,160,255,.35); }
+
+.glow {
+  text-shadow: 0 0 22px rgba(122,160,255,.35), 0 0 60px rgba(58,103,214,.22);
+}

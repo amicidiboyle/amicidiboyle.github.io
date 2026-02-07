@@ -1,0 +1,121 @@
+<svg width="1920" height="1080" viewBox="0 0 1920 1080" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background gradient -->
+  <defs>
+    <linearGradient id="deepOceanGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#001220" />
+      <stop offset="40%" stop-color="#00274d" />
+      <stop offset="75%" stop-color="#003f7d" />
+      <stop offset="100%" stop-color="#0059a6" />
+    </linearGradient>
+    
+    <radialGradient id="lightBeam" cx="50%" cy="10%" r="60%" fx="50%" fy="0%">
+      <stop offset="0%" stop-color="#7cc0ff" stop-opacity="0.3" />
+      <stop offset="100%" stop-color="#7cc0ff" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+  
+  <!-- Base ocean background -->
+  <rect width="100%" height="100%" fill="url(#deepOceanGradient)" />
+  
+  <!-- Light rays from surface -->
+  <path d="M960,0 C960,0 800,200 800,500 C800,800 700,1080 700,1080 L1220,1080 C1220,1080 1120,800 1120,500 C1120,200 960,0 960,0 Z" fill="url(#lightBeam)" opacity="0.4" />
+  
+  <!-- Distant coral reef silhouettes -->
+  <g opacity="0.5">
+    <!-- Left coral group -->
+    <path d="M100,800 C150,750 170,790 200,760 C230,730 240,780 270,760 C300,740 310,790 340,780 C380,770 400,820 440,800 C480,780 500,830 520,800 C550,760 570,800 600,780" stroke="#134b6e" stroke-width="2" fill="none" />
+    
+    <!-- Right coral group -->
+    <path d="M1400,850 C1450,820 1470,860 1500,830 C1530,800 1550,840 1580,820 C1610,800 1640,850 1670,830 C1710,810 1750,860 1790,830 C1830,800 1850,840 1880,810" stroke="#134b6e" stroke-width="2" fill="none" />
+  </g>
+  
+  <!-- Ocean floor -->
+  <path d="M0,950 C80,970 150,940 250,960 C350,980 450,940 550,970 C650,1000 750,930 850,960 C950,990 1050,930 1150,950 C1250,970 1350,940 1450,960 C1550,980 1650,950 1750,970 C1850,990 1950,950 1950,950 L1950,1100 L0,1100 Z" fill="#022c50" />
+  
+  <!-- Distant fish schools -->
+  <g opacity="0.2">
+    <!-- School 1 -->
+    <g transform="translate(300, 400) scale(0.5)">
+      <circle cx="10" cy="0" r="3" fill="#88ccff" />
+      <circle cx="0" cy="5" r="3" fill="#88ccff" />
+      <circle cx="0" cy="-5" r="3" fill="#88ccff" />
+      <circle cx="-5" cy="0" r="3" fill="#88ccff" />
+      <circle cx="5" cy="5" r="3" fill="#88ccff" />
+      <circle cx="5" cy="-5" r="3" fill="#88ccff" />
+      <circle cx="15" cy="5" r="3" fill="#88ccff" />
+      <circle cx="15" cy="-5" r="3" fill="#88ccff" />
+    </g>
+    
+    <!-- School 2 -->
+    <g transform="translate(1500, 500) scale(0.5)">
+      <circle cx="10" cy="0" r="3" fill="#88ccff" />
+      <circle cx="0" cy="5" r="3" fill="#88ccff" />
+      <circle cx="0" cy="-5" r="3" fill="#88ccff" />
+      <circle cx="-5" cy="0" r="3" fill="#88ccff" />
+      <circle cx="5" cy="5" r="3" fill="#88ccff" />
+      <circle cx="5" cy="-5" r="3" fill="#88ccff" />
+      <circle cx="15" cy="5" r="3" fill="#88ccff" />
+      <circle cx="15" cy="-5" r="3" fill="#88ccff" />
+    </g>
+    
+    <!-- School 3 -->
+    <g transform="translate(800, 600) scale(0.6)">
+      <circle cx="10" cy="0" r="3" fill="#88ccff" />
+      <circle cx="0" cy="5" r="3" fill="#88ccff" />
+      <circle cx="0" cy="-5" r="3" fill="#88ccff" />
+      <circle cx="-5" cy="0" r="3" fill="#88ccff" />
+      <circle cx="5" cy="5" r="3" fill="#88ccff" />
+      <circle cx="5" cy="-5" r="3" fill="#88ccff" />
+      <circle cx="15" cy="5" r="3" fill="#88ccff" />
+      <circle cx="15" cy="-5" r="3" fill="#88ccff" />
+    </g>
+  </g>
+  
+  <!-- Distant coral structures -->
+  <g opacity="0.3">
+    <path d="M200,900 C220,880 230,890 240,870 C250,850 260,870 270,850 C280,830 290,850 300,840" stroke="#1a5f8c" stroke-width="3" fill="none" />
+    <path d="M500,920 C520,900 530,910 540,890 C550,870 560,890 570,870 C580,850 590,870 600,860" stroke="#1a5f8c" stroke-width="3" fill="none" />
+    <path d="M1300,910 C1320,890 1330,900 1340,880 C1350,860 1360,880 1370,860 C1380,840 1390,860 1400,850" stroke="#1a5f8c" stroke-width="3" fill="none" />
+    <path d="M1700,930 C1720,910 1730,920 1740,900 C1750,880 1760,900 1770,880 C1780,860 1790,880 1800,870" stroke="#1a5f8c" stroke-width="3" fill="none" />
+  </g>
+  
+  <!-- Particles (plankton) -->
+  <g opacity="0.3">
+    <circle cx="100" cy="300" r="1" fill="#ffffff" />
+    <circle cx="300" cy="200" r="1" fill="#ffffff" />
+    <circle cx="500" cy="400" r="1" fill="#ffffff" />
+    <circle cx="700" cy="300" r="1" fill="#ffffff" />
+    <circle cx="900" cy="500" r="1" fill="#ffffff" />
+    <circle cx="1100" cy="200" r="1" fill="#ffffff" />
+    <circle cx="1300" cy="400" r="1" fill="#ffffff" />
+    <circle cx="1500" cy="300" r="1" fill="#ffffff" />
+    <circle cx="1700" cy="500" r="1" fill="#ffffff" />
+    <circle cx="200" cy="400" r="1" fill="#ffffff" />
+    <circle cx="400" cy="300" r="1" fill="#ffffff" />
+    <circle cx="600" cy="500" r="1" fill="#ffffff" />
+    <circle cx="800" cy="200" r="1" fill="#ffffff" />
+    <circle cx="1000" cy="400" r="1" fill="#ffffff" />
+    <circle cx="1200" cy="300" r="1" fill="#ffffff" />
+    <circle cx="1400" cy="500" r="1" fill="#ffffff" />
+    <circle cx="1600" cy="200" r="1" fill="#ffffff" />
+    <circle cx="1800" cy="400" r="1" fill="#ffffff" />
+    <circle cx="150" cy="350" r="1" fill="#ffffff" />
+    <circle cx="350" cy="250" r="1" fill="#ffffff" />
+    <circle cx="550" cy="450" r="1" fill="#ffffff" />
+    <circle cx="750" cy="350" r="1" fill="#ffffff" />
+    <circle cx="950" cy="550" r="1" fill="#ffffff" />
+    <circle cx="1150" cy="250" r="1" fill="#ffffff" />
+    <circle cx="1350" cy="450" r="1" fill="#ffffff" />
+    <circle cx="1550" cy="350" r="1" fill="#ffffff" />
+    <circle cx="1750" cy="550" r="1" fill="#ffffff" />
+    <circle cx="250" cy="450" r="1" fill="#ffffff" />
+    <circle cx="450" cy="350" r="1" fill="#ffffff" />
+    <circle cx="650" cy="550" r="1" fill="#ffffff" />
+    <circle cx="850" cy="250" r="1" fill="#ffffff" />
+    <circle cx="1050" cy="450" r="1" fill="#ffffff" />
+    <circle cx="1250" cy="350" r="1" fill="#ffffff" />
+    <circle cx="1450" cy="550" r="1" fill="#ffffff" />
+    <circle cx="1650" cy="250" r="1" fill="#ffffff" />
+    <circle cx="1850" cy="450" r="1" fill="#ffffff" />
+  </g>
+</svg>

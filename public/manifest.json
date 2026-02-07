@@ -1,0 +1,50 @@
+{
+  "short_name": "Amici di Boyle",
+  "name": "Gli Amici di Boyle - Medicina Iperbarica e Subacquea",
+  "description": "Piattaforma leader per medicina iperbarica e subacquea in Italia. Specialisti, ricerca, formazione e centri iperbarici.",
+  "icons": [
+    {
+      "src": "/generated-icon.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/generated-icon.png", 
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "start_url": "/",
+  "display": "standalone",
+  "theme_color": "#0e2a47",
+  "background_color": "#0e2a47",
+  "scope": "/",
+  "orientation": "portrait-primary",
+  "categories": ["medical", "education", "health"],
+  "lang": "it-IT",
+  "shortcuts": [
+    {
+      "name": "Specialisti Medicina Iperbarica",
+      "short_name": "Specialisti",
+      "description": "Visualizza i nostri specialisti in medicina iperbarica",
+      "url": "/researchers",
+      "icons": [{"src": "/generated-icon.png", "sizes": "192x192"}]
+    },
+    {
+      "name": "Simulatore HBO",
+      "short_name": "Simulatore",
+      "description": "Simulatore di ossigenoterapia iperbarica",
+      "url": "/hbo-simulator",
+      "icons": [{"src": "/generated-icon.png", "sizes": "192x192"}]
+    },
+    {
+      "name": "Centri Iperbarici",
+      "short_name": "Centri",
+      "description": "Mappa dei centri iperbarici in Italia",
+      "url": "/centri-iperbarici",
+      "icons": [{"src": "/generated-icon.png", "sizes": "192x192"}]
+    }
+  ]
+}
