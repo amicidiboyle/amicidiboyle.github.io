@@ -1,0 +1,31 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://www.amicidiboyle.it/sitemap.xml
+
+# Crawl-delay for respectful crawling
+Crawl-delay: 1
+
+# Priority pages for medicina iperbarica
+Allow: /
+Allow: /researchers
+Allow: /hbo-simulator
+Allow: /global-events
+Allow: /centri-iperbarici
+Allow: /blog
+Allow: /podcast
+
+# Block admin areas
+Disallow: /area-riservata
+Disallow: /reserved-area
+Disallow: /login
+Disallow: /register
+Disallow: /profile
+
+# Block API endpoints
+Disallow: /api/
+
+# Rich snippets and structured data friendly
+Allow: /*.json$
+Allow: /*.xml$

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800" fill="none">
+  <!-- Gradiente dell'oceano con diverse sfumature di blu -->
+  <defs>
+    <linearGradient id="oceanGradient" x1="600" y1="0" x2="600" y2="800" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#00152a" />
+      <stop offset="0.3" stop-color="#00264d" />
+      <stop offset="0.6" stop-color="#004080" />
+      <stop offset="0.9" stop-color="#0073e6" />
+    </linearGradient>
+    <radialGradient id="sunRays" cx="600" cy="100" r="600" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#b3e0ff" stop-opacity="0.2" />
+      <stop offset="1" stop-color="#004080" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+  
+  <!-- Sfondo dell'oceano -->
+  <rect width="1200" height="800" fill="url(#oceanGradient)" />
+  
+  <!-- Raggi di sole che penetrano nell'acqua -->
+  <ellipse cx="600" cy="100" rx="600" ry="400" fill="url(#sunRays)" />
+  
+  <!-- Texture dell'acqua con onde -->
+  <g opacity="0.3">
+    <path d="M0,200 C100,180 200,220 300,200 C400,180 500,220 600,200 C700,180 800,220 900,200 C1000,180 1100,220 1200,200 L1200,220 C1100,240 1000,200 900,220 C800,240 700,200 600,220 C500,240 400,200 300,220 C200,240 100,200 0,220 Z" fill="#ffffff" />
+    <path d="M0,300 C100,280 200,320 300,300 C400,280 500,320 600,300 C700,280 800,320 900,300 C1000,280 1100,320 1200,300 L1200,320 C1100,340 1000,300 900,320 C800,340 700,300 600,320 C500,340 400,300 300,320 C200,340 100,300 0,320 Z" fill="#ffffff" />
+    <path d="M0,400 C100,380 200,420 300,400 C400,380 500,420 600,400 C700,380 800,420 900,400 C1000,380 1100,420 1200,400 L1200,420 C1100,440 1000,400 900,420 C800,440 700,400 600,420 C500,440 400,400 300,420 C200,440 100,400 0,420 Z" fill="#ffffff" />
+    <path d="M0,500 C100,480 200,520 300,500 C400,480 500,520 600,500 C700,480 800,520 900,500 C1000,480 1100,520 1200,500 L1200,520 C1100,540 1000,500 900,520 C800,540 700,500 600,520 C500,540 400,500 300,520 C200,540 100,500 0,520 Z" fill="#ffffff" />
+    <path d="M0,600 C100,580 200,620 300,600 C400,580 500,620 600,600 C700,580 800,620 900,600 C1000,580 1100,620 1200,600 L1200,620 C1100,640 1000,600 900,620 C800,640 700,600 600,620 C500,640 400,600 300,620 C200,640 100,600 0,620 Z" fill="#ffffff" />
+    <path d="M0,700 C100,680 200,720 300,700 C400,680 500,720 600,700 C700,680 800,720 900,700 C1000,680 1100,720 1200,700 L1200,720 C1100,740 1000,700 900,720 C800,740 700,700 600,720 C500,740 400,700 300,720 C200,740 100,700 0,720 Z" fill="#ffffff" />
+  </g>
+  
+  <!-- Particelle sospese e plancton -->
+  <g opacity="0.5">
+    <circle cx="200" cy="150" r="1" fill="white" />
+    <circle cx="350" cy="250" r="1.5" fill="white" />
+    <circle cx="500" cy="120" r="1" fill="white" />
+    <circle cx="650" cy="220" r="2" fill="white" />
+    <circle cx="800" cy="180" r="1" fill="white" />
+    <circle cx="950" cy="280" r="1.5" fill="white" />
+    <circle cx="1100" cy="150" r="1" fill="white" />
+    <circle cx="250" cy="350" r="2" fill="white" />
+    <circle cx="400" cy="420" r="1" fill="white" />
+    <circle cx="550" cy="380" r="1.5" fill="white" />
+    <circle cx="700" cy="450" r="1" fill="white" />
+    <circle cx="850" cy="380" r="2" fill="white" />
+    <circle cx="1000" cy="420" r="1.5" fill="white" />
+    <circle cx="1150" cy="350" r="1" fill="white" />
+    <circle cx="300" cy="550" r="1.5" fill="white" />
+    <circle cx="450" cy="620" r="1" fill="white" />
+    <circle cx="600" cy="580" r="2" fill="white" />
+    <circle cx="750" cy="650" r="1.5" fill="white" />
+    <circle cx="900" cy="580" r="1" fill="white" />
+    <circle cx="1050" cy="620" r="2" fill="white" />
+    <circle cx="150" cy="720" r="1" fill="white" />
+  </g>
+  
+  <!-- Pesci in silhouette in lontananza -->
+  <g opacity="0.4">
+    <path d="M200,300 C220,290 240,290 250,300 L280,300 L250,310 C240,320 220,320 200,310 Z" fill="#001a33" />
+    <path d="M400,350 C420,340 440,340 450,350 L480,350 L450,360 C440,370 420,370 400,360 Z" fill="#001a33" />
+    <path d="M700,320 C720,310 740,310 750,320 L780,320 L750,330 C740,340 720,340 700,330 Z" fill="#001a33" />
+    <path d="M900,280 C920,270 940,270 950,280 L980,280 L950,290 C940,300 920,300 900,290 Z" fill="#001a33" />
+    <path d="M300,450 C320,440 340,440 350,450 L380,450 L350,460 C340,470 320,470 300,460 Z" fill="#001a33" />
+    <path d="M500,500 C520,490 540,490 550,500 L580,500 L550,510 C540,520 520,520 500,510 Z" fill="#001a33" />
+    <path d="M800,480 C820,470 840,470 850,480 L880,480 L850,490 C840,500 820,500 800,490 Z" fill="#001a33" />
+    <path d="M950,520 C970,510 990,510 1000,520 L1030,520 L1000,530 C990,540 970,540 950,530 Z" fill="#001a33" />
+  </g>
+
+  <!-- Coralli e piante marine sul fondale -->
+  <g opacity="0.7">
+    <path d="M100,750 C110,720 120,730 130,720 C140,710 150,720 160,700 C170,680 180,700 190,680 L190,800 L100,800 Z" fill="#006080" />
+    <path d="M300,760 C310,730 320,740 330,730 C340,720 350,730 360,710 C370,690 380,710 390,690 L390,800 L300,800 Z" fill="#006080" />
+    <path d="M500,770 C510,740 520,750 530,740 C540,730 550,740 560,720 C570,700 580,720 590,700 L590,800 L500,800 Z" fill="#008055" />
+    <path d="M700,760 C710,730 720,740 730,730 C740,720 750,730 760,710 C770,690 780,710 790,690 L790,800 L700,800 Z" fill="#008055" />
+    <path d="M900,750 C910,720 920,730 930,720 C940,710 950,720 960,700 C970,680 980,700 990,680 L990,800 L900,800 Z" fill="#006080" />
+    <path d="M1100,770 C1110,740 1120,750 1130,740 C1140,730 1150,740 1160,720 C1170,700 1180,720 1190,700 L1190,800 L1100,800 Z" fill="#008055" />
+  </g>
+</svg>

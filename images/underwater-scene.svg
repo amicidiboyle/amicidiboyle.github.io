@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1920" height="1080" viewBox="0 0 1920 1080" xmlns="http://www.w3.org/2000/svg">
+  <!-- Gradiente di sfondo dell'acqua -->
+  <defs>
+    <linearGradient id="oceanGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0a3d62" stop-opacity="0.9" />
+      <stop offset="100%" stop-color="#001429" stop-opacity="1" />
+    </linearGradient>
+    
+    <!-- Filtro per raggi di luce -->
+    <filter id="lightRay" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="15" result="blur" />
+      <feComposite in="blur" operator="in" in2="SourceGraphic" result="comp" />
+    </filter>
+    
+    <!-- Pattern per bolle -->
+    <filter id="bubbleglow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="2" result="blur" />
+      <feComposite in="blur" operator="over" in2="SourceGraphic" result="comp" />
+      <feColorMatrix in="comp" type="matrix" values="1 0 0 0 0  0 1 0 0 0.2  0 0 1 0 0.6  0 0 0 0.7 0" result="color" />
+    </filter>
+  </defs>
+  
+  <!-- Sfondo acqua -->
+  <rect width="1920" height="1080" fill="url(#oceanGradient)" />
+  
+  <!-- Raggi di luce che filtrano dall'alto -->
+  <g opacity="0.2">
+    <path d="M200,0 L400,1080 L250,1080 L50,0 Z" fill="#81d4fa" filter="url(#lightRay)" />
+    <path d="M800,0 L1000,1080 L850,1080 L650,0 Z" fill="#81d4fa" filter="url(#lightRay)" />
+    <path d="M1400,0 L1600,1080 L1450,1080 L1250,0 Z" fill="#81d4fa" filter="url(#lightRay)" />
+  </g>
+  
+  <!-- Particelle sospese nell'acqua -->
+  <g opacity="0.2">
+    <circle cx="300" cy="200" r="2" fill="#ffffff" />
+    <circle cx="500" cy="400" r="1.5" fill="#ffffff" />
+    <circle cx="900" cy="300" r="2" fill="#ffffff" />
+    <circle cx="1200" cy="500" r="1" fill="#ffffff" />
+    <circle cx="1500" cy="200" r="1.5" fill="#ffffff" />
+    <circle cx="250" cy="600" r="1" fill="#ffffff" />
+    <circle cx="700" cy="700" r="2" fill="#ffffff" />
+    <circle cx="1100" cy="650" r="1.5" fill="#ffffff" />
+    <circle cx="1600" cy="800" r="1" fill="#ffffff" />
+    <circle cx="400" cy="850" r="1.5" fill="#ffffff" />
+    <circle cx="800" cy="900" r="1" fill="#ffffff" />
+    <circle cx="1300" cy="850" r="2" fill="#ffffff" />
+    <circle cx="1700" cy="750" r="1.5" fill="#ffffff" />
+  </g>
+  
+  <!-- Silhouette di coralli sullo sfondo -->
+  <g opacity="0.4" transform="translate(0, 800)">
+    <!-- Corallo 1 -->
+    <path d="M50,0 C80,-50 110,-30 120,0 C130,-70 160,-100 190,-60 C220,-120 250,-80 260,-10 C290,-60 320,-40 330,0 L50,0 Z" fill="#001429" />
+    
+    <!-- Corallo 2 -->
+    <path d="M400,0 C450,-80 470,-40 480,0 C500,-120 550,-100 570,-30 C590,-80 620,-60 640,0 L400,0 Z" fill="#001429" />
+    
+    <!-- Corallo 3 -->
+    <path d="M750,0 C800,-60 820,-30 840,0 C860,-90 900,-70 920,-20 C940,-100 970,-80 980,-30 C1000,-70 1030,-40 1050,0 L750,0 Z" fill="#001429" />
+    
+    <!-- Corallo 4 -->
+    <path d="M1200,0 C1240,-100 1280,-70 1300,-10 C1320,-80 1360,-90 1380,-20 C1400,-110 1440,-60 1460,0 L1200,0 Z" fill="#001429" />
+    
+    <!-- Corallo 5 -->
+    <path d="M1550,0 C1600,-80 1630,-30 1650,0 C1670,-70 1700,-90 1730,-20 C1760,-60 1790,-40 1810,0 L1550,0 Z" fill="#001429" />
+  </g>
+  
+  <!-- Silhouette di piante marine in primo piano -->
+  <g opacity="0.6" transform="translate(0, 900)">
+    <!-- Pianta 1 -->
+    <path d="M100,0 C120,-100 140,-80 150,-40 C160,-130 180,-140 200,-30 C220,-120 240,-90 260,0 L100,0 Z" fill="#001429" />
+    
+    <!-- Pianta 2 -->
+    <path d="M500,0 C530,-140 560,-120 580,-30 C600,-150 630,-130 650,-40 C670,-140 700,-110 720,0 L500,0 Z" fill="#001429" />
+    
+    <!-- Pianta 3 -->
+    <path d="M950,0 C980,-130 1010,-100 1030,-20 C1050,-150 1080,-120 1100,-40 C1120,-130 1150,-90 1170,0 L950,0 Z" fill="#001429" />
+    
+    <!-- Pianta 4 -->
+    <path d="M1400,0 C1430,-120 1460,-90 1480,-30 C1500,-140 1530,-110 1550,-50 C1570,-120 1600,-80 1620,0 L1400,0 Z" fill="#001429" />
+  </g>
+  
+  <!-- Bolle casuali che salgono -->
+  <g filter="url(#bubbleglow)" opacity="0.7">
+    <circle cx="300" cy="700" r="8" fill="rgba(255,255,255,0.5)" />
+    <circle cx="310" cy="650" r="5" fill="rgba(255,255,255,0.5)" />
+    <circle cx="295" cy="680" r="3" fill="rgba(255,255,255,0.5)" />
+    
+    <circle cx="800" cy="800" r="10" fill="rgba(255,255,255,0.5)" />
+    <circle cx="815" cy="770" r="6" fill="rgba(255,255,255,0.5)" />
+    <circle cx="790" cy="750" r="4" fill="rgba(255,255,255,0.5)" />
+    
+    <circle cx="1200" cy="750" r="7" fill="rgba(255,255,255,0.5)" />
+    <circle cx="1210" cy="720" r="4" fill="rgba(255,255,255,0.5)" />
+    <circle cx="1195" cy="700" r="6" fill="rgba(255,255,255,0.5)" />
+    
+    <circle cx="1600" cy="820" r="9" fill="rgba(255,255,255,0.5)" />
+    <circle cx="1610" cy="790" r="5" fill="rgba(255,255,255,0.5)" />
+    <circle cx="1590" cy="780" r="3" fill="rgba(255,255,255,0.5)" />
+  </g>
+  
+  <!-- Silhouette di un subacqueo in lontananza -->
+  <g transform="translate(1400, 300)" opacity="0.4">
+    <path d="M0,0 C10,-5 20,-5 30,0 L30,10 C25,15 15,15 10,10 L0,0 Z" fill="#001429" /> <!-- Pinne -->
+    <path d="M30,0 L50,-10 L70,0 L65,20 L35,20 L30,0 Z" fill="#001429" /> <!-- Corpo -->
+    <circle cx="60" cy="-5" r="10" fill="#001429" /> <!-- Testa -->
+    <path d="M70,-5 C90,-15 100,-5 90,10" fill="none" stroke="#001429" stroke-width="2" /> <!-- Tubo bombole -->
+    <path d="M65,15 L85,5 L65,-5" fill="none" stroke="#001429" stroke-width="2" /> <!-- Braccio -->
+  </g>
+  
+  <!-- Effetto di torbidità dell'acqua -->
+  <rect width="1920" height="1080" fill="url(#oceanGradient)" opacity="0.1" />
+</svg>

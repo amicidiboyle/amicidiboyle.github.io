@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800" fill="none">
+  <!-- Sfondo scuro dell'oceano -->
+  <rect width="1200" height="800" fill="#04142c" />
+  
+  <!-- Gradiente per la profondità -->
+  <defs>
+    <linearGradient id="oceanDepth" x1="600" y1="0" x2="600" y2="800" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#04142c" stop-opacity="0.9" />
+      <stop offset="0.4" stop-color="#0b2e52" stop-opacity="0.9" />
+      <stop offset="0.7" stop-color="#144673" stop-opacity="0.9" />
+      <stop offset="1" stop-color="#1a5c91" stop-opacity="0.85" />
+    </linearGradient>
+    <radialGradient id="lightRay" cx="600" cy="0" r="800" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#b3e0ff" stop-opacity="0.2" />
+      <stop offset="1" stop-color="#04142c" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+  
+  <!-- Raggi di luce dall'alto -->
+  <path d="M0,0 L1200,0 L1200,800 L0,800 Z" fill="url(#oceanDepth)" />
+  <path d="M400,0 L800,0 L600,800 L200,800 Z" fill="url(#lightRay)" opacity="0.3" />
+  
+  <!-- Particelle sospese -->
+  <g opacity="0.3">
+    <circle cx="200" cy="300" r="2" fill="white" />
+    <circle cx="350" cy="420" r="1.5" fill="white" />
+    <circle cx="480" cy="180" r="1" fill="white" />
+    <circle cx="600" cy="350" r="2" fill="white" />
+    <circle cx="720" cy="250" r="1.5" fill="white" />
+    <circle cx="830" cy="400" r="1" fill="white" />
+    <circle cx="950" cy="320" r="2" fill="white" />
+    <circle cx="1050" cy="450" r="1" fill="white" />
+    <circle cx="250" cy="500" r="1.5" fill="white" />
+    <circle cx="400" cy="600" r="2" fill="white" />
+    <circle cx="550" cy="520" r="1" fill="white" />
+    <circle cx="700" cy="550" r="1.5" fill="white" />
+    <circle cx="850" cy="650" r="1" fill="white" />
+    <circle cx="1000" cy="580" r="2" fill="white" />
+  </g>
+  
+  <!-- Silhouette del subacqueo -->
+  <g transform="translate(750, 300) scale(0.8)">
+    <!-- Corpo del subacqueo -->
+    <path d="M100,200 C120,180 150,190 160,210 L200,300 C210,320 220,330 240,330 L300,330 C320,330 330,350 330,370 L330,400 C330,420 320,430 300,430 L250,430 C230,430 220,420 210,400 L180,350 C170,330 150,320 130,330 L100,350 C80,370 50,360 40,340 L20,300 C10,280 20,260 40,250 L100,200 Z" fill="#222" />
+
+    <!-- Maschera e bombole -->
+    <circle cx="120" cy="230" r="30" fill="#333" />
+    <rect x="80" y="210" width="30" height="60" rx="10" fill="#444" />
+    <rect x="70" y="220" width="10" height="40" rx="5" fill="#555" />
+    <rect x="110" y="220" width="10" height="40" rx="5" fill="#555" />
+
+    <!-- Pinne -->
+    <path d="M300,400 L340,420 L350,450 L330,460 L300,430 Z" fill="#222" />
+    <path d="M250,430 L290,450 L300,480 L280,490 L250,460 Z" fill="#222" />
+
+    <!-- Braccio e mano -->
+    <path d="M160,240 C180,230 190,240 200,260 L220,300 L200,310 L180,280 C170,270 160,260 140,270 Z" fill="#222" />
+    <circle cx="220" cy="300" r="10" fill="#333" />
+
+    <!-- Bolle d'aria -->
+    <circle cx="130" cy="210" r="5" fill="white" opacity="0.7" />
+    <circle cx="140" cy="200" r="3" fill="white" opacity="0.5" />
+    <circle cx="125" cy="195" r="4" fill="white" opacity="0.6" />
+    <circle cx="135" cy="185" r="2" fill="white" opacity="0.4" />
+  </g>
+
+  <!-- Coralli sul fondale (parte inferiore) -->
+  <path d="M0,800 L0,750 C50,730 100,760 150,750 C200,740 250,710 300,720 C350,730 400,770 450,760 C500,750 550,720 600,730 C650,740 700,760 750,750 C800,740 850,720 900,730 C950,740 1000,750 1050,740 C1100,730 1150,750 1200,760 L1200,800 Z" fill="#0a4565" opacity="0.8" />
+  <path d="M0,800 L0,780 C40,770 80,790 120,785 C160,780 200,760 240,765 C280,770 320,785 360,780 C400,775 440,760 480,765 C520,770 560,785 600,780 C640,775 680,760 720,765 C760,770 800,785 840,780 C880,775 920,760 960,765 C1000,770 1040,785 1080,780 C1120,775 1160,760 1200,765 L1200,800 Z" fill="#1E5B3B" opacity="0.7" />
+</svg>
