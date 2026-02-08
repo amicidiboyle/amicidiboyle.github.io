@@ -13,26 +13,38 @@
 <body>
   <a class="skip" href="#contenuto">Vai al contenuto</a>
 
-  <header class="header" role="banner">
+  <<header class="header" role="banner">
   <div class="container header__inner">
-    <a class="brand" href="#top" aria-label="Vai alla home">
+    <a class="brand" href="#contenuto">
       <span class="brand__mark" aria-hidden="true"></span>
       <span class="brand__text">
-        <span class="brand__name">Gli Amici di Boyle</span>
-        <span class="brand__sub">Diving &amp; Hyperbaric Medicine · Ambienti estremi</span>
+        <strong>Gli Amici di Boyle</strong>
+        <span>Diving &amp; Hyperbaric Medicine · Ambienti estremi</span>
       </span>
     </a>
 
-    <nav class="nav" aria-label="Navigazione principale">
+    <!-- Desktop nav -->
+    <nav class="nav nav--desktop" aria-label="Navigazione principale">
       <a href="#vision">Vision</a>
       <a href="#chi-siamo">Chi siamo</a>
       <a href="#ricerca">Ricerca</a>
       <a href="#formazione">Formazione</a>
-      <a href="#contatti" class="btn btn--primary">Contatti</a>
+      <a class="btn btn--primary" href="#contatti">Contatti</a>
     </nav>
+
+    <!-- Mobile nav (no JS) -->
+    <details class="nav nav--mobile">
+      <summary class="btn btn--ghost" aria-label="Apri menu">Menu</summary>
+      <div class="nav__panel">
+        <a href="#vision">Vision</a>
+        <a href="#chi-siamo">Chi siamo</a>
+        <a href="#ricerca">Ricerca</a>
+        <a href="#formazione">Formazione</a>
+        <a class="btn btn--primary" href="#contatti">Contatti</a>
+      </div>
+    </details>
   </div>
 </header>
-
   <main id="contenuto">
     <!-- HERO -->
     <section class="hero" id="top">
