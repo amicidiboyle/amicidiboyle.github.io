@@ -475,3 +475,32 @@ a:hover{text-decoration:underline}
 @media (prefers-reduced-motion: reduce){
   html{scroll-behavior:auto}
        }
+/* === Mobile header alignment fix === */
+@media (max-width: 720px){
+  .header__inner{
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .nav{
+    width: 100%;
+    gap: 10px;
+    justify-content: flex-start;
+  }
+
+  .nav a{
+    padding: 10px 12px;
+    border-radius: 999px;
+    background: rgba(14,165,233,.08);
+    border: 1px solid rgba(14,165,233,.14);
+  }
+
+  .btn{
+    margin-left: 0;
+  }
+
+  .btn--primary{
+    align-self: flex-start;
+  }
+}
