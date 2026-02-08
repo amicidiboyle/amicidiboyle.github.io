@@ -3,8 +3,10 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Gli Amici di Boyle | Medicina Subacquea e Iperbarica</title>
-  <meta name="description" content="Gli Amici di Boyle: ricerca, formazione e divulgazione in medicina subacquea e iperbarica." />
+  <title>Gli Amici di Boyle | Ricerca e divulgazione in medicina subacquea e iperbarica</title>
+
+  <meta name="description" content="Gli Amici di Boyle. Ricerca e divulgazione in medicina subacquea e iperbarica. Fisiologia degli ambienti estremi, sicurezza in immersione, approccio scientifico." />
+
   <style>
     :root{
       --bg:#ffffff;
@@ -12,52 +14,90 @@
       --muted:#475569;
       --border:#e2e8f0;
       --card:#ffffff;
+
       --accent:#0ea5e9;
       --accent2:#0369a1;
+
       --shadow: 0 10px 30px rgba(2,6,23,.08);
       --radius: 16px;
       --max: 1100px;
     }
+
     *{box-sizing:border-box}
+
     body{
       margin:0;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
       background:var(--bg);
       color:var(--text);
       line-height:1.6;
     }
+
     a{color:var(--accent2); text-decoration:none}
     a:hover{text-decoration:underline}
+
+    .wrap{
+      max-width:var(--max);
+      margin:0 auto;
+      padding:0 20px;
+    }
+
     header{
-      position:sticky; top:0; z-index:10;
-      backdrop-filter:saturate(180%) blur(10px);
-      background: rgba(255,255,255,.85);
+      position:sticky;
+      top:0;
+      z-index:10;
+      background: rgba(255,255,255,.9);
+      backdrop-filter: blur(10px) saturate(180%);
       border-bottom:1px solid var(--border);
     }
-    .wrap{max-width:var(--max); margin:0 auto; padding:0 20px;}
+
     .nav{
-      display:flex; align-items:center; justify-content:space-between;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
       padding:14px 0;
       gap:16px;
+      flex-wrap:wrap;
     }
+
     .brand{
-      display:flex; align-items:center; gap:10px; font-weight:700;
+      display:flex;
+      align-items:center;
+      gap:10px;
+      font-weight:700;
       letter-spacing:.2px;
     }
+
     .dot{
-      width:12px; height:12px; border-radius:999px;
+      width:12px;
+      height:12px;
+      border-radius:999px;
       background: linear-gradient(135deg, var(--accent), var(--accent2));
       box-shadow: 0 6px 16px rgba(14,165,233,.25);
     }
-    .links{display:flex; gap:14px; flex-wrap:wrap; font-size:14px;}
-    .links a{color:var(--muted)}
-    .btn{
-      display:inline-flex; align-items:center; justify-content:center;
-      padding:10px 14px; border-radius:999px;
-      border:1px solid var(--border);
-      background:#fff; color:var(--text);
-      font-weight:600; font-size:14px;
+
+    .links{
+      display:flex;
+      gap:14px;
+      flex-wrap:wrap;
+      font-size:14px;
     }
+
+    .links a{color:var(--muted)}
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding:10px 14px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      background:#fff;
+      color:var(--text);
+      font-weight:600;
+      font-size:14px;
+    }
+
     .btn.primary{
       border-color: transparent;
       background: linear-gradient(135deg, var(--accent), var(--accent2));
@@ -66,29 +106,52 @@
     }
 
     .hero{
-      padding:56px 0 26px;
+      padding:60px 0 30px;
       background:
         radial-gradient(1200px 600px at 20% -10%, rgba(14,165,233,.14), transparent 60%),
         radial-gradient(900px 500px at 90% 10%, rgba(3,105,161,.10), transparent 55%);
     }
+
     .hero-grid{
-      display:grid; grid-template-columns: 1.2fr .8fr;
-      gap:24px; align-items:stretch;
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap:26px;
+      align-items:stretch;
     }
-    @media (max-width: 900px){ .hero-grid{grid-template-columns:1fr;} }
 
-    h1{font-size:42px; line-height:1.1; margin:0 0 12px;}
-    @media (max-width: 520px){ h1{font-size:34px;} }
+    @media (max-width: 900px){
+      .hero-grid{grid-template-columns:1fr;}
+    }
 
-    .lead{font-size:18px; color:var(--muted); margin:0 0 18px;}
+    h1{
+      font-size:42px;
+      line-height:1.1;
+      margin:0 0 12px;
+    }
+
+    @media (max-width: 520px){
+      h1{font-size:34px;}
+    }
+
+    .lead{
+      font-size:18px;
+      color:var(--muted);
+      margin:0 0 18px;
+    }
+
     .pill{
-      display:inline-flex; gap:10px; flex-wrap:wrap;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
       margin-top:14px;
     }
+
     .tag{
-      font-size:13px; color:var(--muted);
+      font-size:13px;
+      color:var(--muted);
       border:1px solid var(--border);
-      padding:6px 10px; border-radius:999px;
+      padding:6px 10px;
+      border-radius:999px;
       background:#fff;
     }
 
@@ -99,30 +162,67 @@
       padding:18px;
       box-shadow: var(--shadow);
     }
-    .card h3{margin:0 0 8px; font-size:16px;}
-    .card p{margin:0; color:var(--muted); font-size:14px;}
 
-    main{padding:26px 0 46px;}
-    .section{padding:18px 0;}
-    .section h2{font-size:22px; margin:0 0 10px;}
+    .card h3{
+      margin:0 0 8px;
+      font-size:16px;
+    }
+
+    .card p{
+      margin:0;
+      color:var(--muted);
+      font-size:14px;
+    }
+
+    main{
+      padding:30px 0 50px;
+    }
+
+    .section{
+      padding:22px 0;
+    }
+
+    .section h2{
+      font-size:22px;
+      margin:0 0 12px;
+    }
+
     .grid{
-      display:grid; grid-template-columns: repeat(3, 1fr);
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
       gap:14px;
     }
-    @media (max-width: 900px){ .grid{grid-template-columns:1fr;} }
+
+    @media (max-width: 900px){
+      .grid{grid-template-columns:1fr;}
+    }
 
     .list{
-      margin:10px 0 0; padding:0; list-style:none;
-      display:grid; gap:10px;
+      margin:10px 0 0;
+      padding:0;
+      list-style:none;
+      display:grid;
+      gap:10px;
     }
+
     .list li{
       border:1px solid var(--border);
       border-radius:14px;
       padding:12px 14px;
       background:#fff;
     }
-    .list strong{display:block; font-size:14px;}
-    .list span{display:block; color:var(--muted); font-size:13px; margin-top:2px;}
+
+    .list strong{
+      display:block;
+      font-size:14px;
+    }
+
+    .list span{
+      display:block;
+      color:var(--muted);
+      font-size:13px;
+      margin-top:2px;
+    }
 
     footer{
       border-top:1px solid var(--border);
@@ -130,158 +230,191 @@
       color:var(--muted);
       font-size:13px;
     }
+
     .foot{
-      display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap;
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      flex-wrap:wrap;
       align-items:center;
     }
   </style>
 </head>
 
 <body>
-  <header>
-    <div class="wrap">
-      <div class="nav">
-        <div class="brand">
-          <span class="dot"></span>
-          <span>Gli Amici di Boyle</span>
-        </div>
-        <nav class="links">
-          <a href="#missione">Missione</a>
-          <a href="#progetti">Progetti</a>
-          <a href="#formazione">Formazione</a>
-          <a href="#pubblicazioni">Pubblicazioni</a>
-          <a href="#contatti">Contatti</a>
-        </nav>
-        <a class="btn primary" href="#contatti">Contattaci</a>
+
+<header>
+  <div class="wrap">
+    <div class="nav">
+      <div class="brand">
+        <span class="dot"></span>
+        <span>Gli Amici di Boyle</span>
       </div>
-    </div>
-  </header>
 
-  <section class="hero">
-    <div class="wrap">
-      <div class="hero-grid">
-        <div>
-          <h1>Medicina Subacquea e Iperbarica, fatta bene.</h1>
-          <p class="lead">
-            Ricerca, formazione e divulgazione su fisiologia degli ambienti estremi, sicurezza in immersione
-            e medicina iperbarica. Chiaro, verificabile, utile.
-          </p>
-          <div style="display:flex; gap:10px; flex-wrap:wrap;">
-            <a class="btn primary" href="#progetti">Vedi i progetti</a>
-            <a class="btn" href="#formazione">Corsi e attività</a>
-          </div>
-          <div class="pill">
-            <span class="tag">Ricerca clinica</span>
-            <span class="tag">Diving & Hyperbaric Medicine</span>
-            <span class="tag">Formazione</span>
-            <span class="tag">Divulgazione</span>
-          </div>
+      <nav class="links">
+        <a href="#missione">Missione</a>
+        <a href="#progetti">Progetti</a>
+        <a href="#formazione">Formazione</a>
+        <a href="#pubblicazioni">Pubblicazioni</a>
+        <a href="#contatti">Contatti</a>
+      </nav>
+
+      <a class="btn primary" href="#contatti">Contattaci</a>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <div class="hero-grid">
+
+      <div>
+        <h1>Gli Amici di Boyle.</h1>
+
+        <p class="lead">
+          Ricerca e divulgazione in medicina subacquea ed iperbarica.
+        </p>
+
+        <p class="lead">
+          Fisiologia degli ambienti estremi, sicurezza in immersione e medicina iperbarica
+          basate su evidenze. Chiare, verificabili, utili.
+        </p>
+
+        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+          <a class="btn primary" href="#progetti">Vedi i progetti</a>
+          <a class="btn" href="#formazione">Corsi e attività</a>
         </div>
 
+        <div class="pill">
+          <span class="tag">Ricerca clinica</span>
+          <span class="tag">Diving &amp; Hyperbaric Medicine</span>
+          <span class="tag">Formazione</span>
+          <span class="tag">Divulgazione</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>In breve</h3>
+        <p>
+          Questo sito è volutamente essenziale: sfondo bianco, testi leggibili,
+          struttura chiara. Prima la sostanza, poi tutto il resto.
+        </p>
+
+        <div style="height:12px"></div>
+
+        <h3>Prossimi contenuti</h3>
+        <p>
+          Progetti, materiali didattici, case report e risorse operative
+          verranno aggiunti progressivamente.
+        </p>
+
+        <div style="height:12px"></div>
+
+        <h3>Collaborazioni</h3>
+        <p>
+          Ricerca, formazione, case report, progetti editoriali.
+          Se è utile e ben documentato, ci interessa.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<main>
+  <div class="wrap">
+
+    <section id="missione" class="section">
+      <h2>Missione</h2>
+      <div class="grid">
         <div class="card">
-          <h3>In breve</h3>
+          <h3>Ricerca</h3>
           <p>
-            Questo sito è volutamente essenziale: sfondo bianco, testi leggibili, struttura chiara.
-            Poi ci mettiamo logo, immagini e contenuti veri (non decorazioni confuse).
+            Studi, case report e protocolli pratici in medicina subacquea
+            e iperbarica, orientati all’utilità clinica.
           </p>
-          <div style="height:12px"></div>
-          <h3>Prossimi eventi</h3>
-          <p>Inserisci qui i prossimi appuntamenti (con data, luogo e link).</p>
-          <div style="height:12px"></div>
-          <h3>Vuoi collaborare?</h3>
-          <p>Scrivici: ricerca, case report, formazione, progetti editoriali.</p>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <main>
-    <div class="wrap">
-
-      <section id="missione" class="section">
-        <h2>Missione</h2>
-        <div class="grid">
-          <div class="card">
-            <h3>Ricerca</h3>
-            <p>Studi, case report e protocolli pratici per la medicina subacquea e iperbarica.</p>
-          </div>
-          <div class="card">
-            <h3>Formazione</h3>
-            <p>Lezioni, workshop e materiali didattici chiari, aggiornati, applicabili.</p>
-          </div>
-          <div class="card">
-            <h3>Divulgazione</h3>
-            <p>Spiegazioni accessibili senza banalizzare. Scienza, non folklore.</p>
-          </div>
-        </div>
-      </section>
-
-      <section id="progetti" class="section">
-        <h2>Progetti</h2>
-        <ul class="list">
-          <li>
-            <strong>Protocollo sicurezza immersioni</strong>
-            <span>Checklist, fattore umano, gestione rischio e decision making.</span>
-          </li>
-          <li>
-            <strong>Medicina degli ambienti estremi</strong>
-            <span>Pressione, ipossia, microgravità: fisiologia comparata “abisso-spazio”.</span>
-          </li>
-          <li>
-            <strong>Risorse per medici e subacquei</strong>
-            <span>Materiali scaricabili, link utili, raccomandazioni operative.</span>
-          </li>
-        </ul>
-      </section>
-
-      <section id="formazione" class="section">
-        <h2>Formazione</h2>
-        <ul class="list">
-          <li>
-            <strong>Corsi e lezioni</strong>
-            <span>Aggiungi qui calendario e descrizione breve dei moduli.</span>
-          </li>
-          <li>
-            <strong>Materiali didattici</strong>
-            <span>Slide, schede, bibliografia, risorse consigliate.</span>
-          </li>
-        </ul>
-      </section>
-
-      <section id="pubblicazioni" class="section">
-        <h2>Pubblicazioni</h2>
-        <ul class="list">
-          <li>
-            <strong>Case report / articoli</strong>
-            <span>Inserisci elenco con link DOI o PDF, se disponibili.</span>
-          </li>
-        </ul>
-      </section>
-
-      <section id="contatti" class="section">
-        <h2>Contatti</h2>
         <div class="card">
-          <p style="margin:0; color:var(--muted);">
-            Email: <a href="mailto:info@amicidiboyle.it">info@amicidiboyle.it</a><br/>
-            (oppure metti qui il contatto corretto)
+          <h3>Formazione</h3>
+          <p>
+            Lezioni, workshop e materiali didattici chiari,
+            aggiornati e applicabili nella pratica.
           </p>
         </div>
-      </section>
-
-    </div>
-  </main>
-
-  <footer>
-    <div class="wrap">
-      <div class="foot">
-        <div>© <span id="y"></span> Gli Amici di Boyle</div>
-        <div><a href="#missione">Torna su</a></div>
+        <div class="card">
+          <h3>Divulgazione</h3>
+          <p>
+            Scienza spiegata senza banalizzare.
+            Informazione corretta, niente folklore.
+          </p>
+        </div>
       </div>
-    </div>
-  </footer>
+    </section>
 
-  <script>
-    document.getElementById("y").textContent = new Date().getFullYear();
-  </script>
+    <section id="progetti" class="section">
+      <h2>Progetti</h2>
+      <ul class="list">
+        <li>
+          <strong>Protocollo di sicurezza in immersione</strong>
+          <span>Checklist, fattore umano, gestione del rischio e decision making.</span>
+        </li>
+        <li>
+          <strong>Medicina degli ambienti estremi</strong>
+          <span>Fisiologia comparata: pressione, ipossia, abisso e spazio.</span>
+        </li>
+        <li>
+          <strong>Risorse operative</strong>
+          <span>Materiali per medici e subacquei, strumenti pratici e riferimenti.</span>
+        </li>
+      </ul>
+    </section>
+
+    <section id="formazione" class="section">
+      <h2>Formazione</h2>
+      <ul class="list">
+        <li>
+          <strong>Corsi e lezioni</strong>
+          <span>Calendario e moduli formativi verranno pubblicati qui.</span>
+        </li>
+        <li>
+          <strong>Materiali didattici</strong>
+          <span>Slide, schede, bibliografia e risorse consigliate.</span>
+        </li>
+      </ul>
+    </section>
+
+    <section id="pubblicazioni" class="section">
+      <h2>Pubblicazioni</h2>
+      <ul class="list">
+        <li>
+          <strong>Articoli e case report</strong>
+          <span>Elenco con link DOI o PDF, quando disponibili.</span>
+        </li>
+      </ul>
+    </section>
+
+    <section id="contatti" class="section">
+      <h2>Contatti</h2>
+      <div class="card">
+        <p style="margin:0; color:var(--muted);">
+          Email:
+          <a href="mailto:info@amicidiboyle.it">info@amicidiboyle.it</a>
+        </p>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <div>© 2026 Gli Amici di Boyle</div>
+      <div><a href="#missione">Torna su</a></div>
+    </div>
+  </div>
+</footer>
+
 </body>
 </html>
+
