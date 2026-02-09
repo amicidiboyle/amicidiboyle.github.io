@@ -7,6 +7,9 @@
   <meta name="description" content="Gli Amici di Boyle: ricerca e divulgazione in medicina subacquea e iperbarica. Approccio multidisciplinare, evidenze, formazione e innovazione." />
   <meta name="theme-color" content="#0b4aa2" />
   <link rel="stylesheet" href="styles.css" />
+
+  <!-- (opzionale) favicon -->
+  <link rel="icon" href="assets/logo.png" type="image/png" />
 </head>
 
 <body>
@@ -14,15 +17,18 @@
 
   <header class="header" role="banner">
     <div class="container header__inner">
-      <a class="brand" href="#top" aria-label="Home">
-        <span class="brand__mark" aria-hidden="true"></span>
 
-        <!-- Payoff controllato in 3 righe -->
-        <span class="brand__sub">
-  <span class="brand__line">Diving &amp; Hyperbaric Medicine</span>
-  <span class="brand__line">Research &amp; Education</span>
-  <span class="brand__line">Human Performance &amp; Safety in Extreme Environments</span>
-</span>
+      <!-- BRAND: logo + nome + payoff -->
+      <a class="brand" href="#top" aria-label="Home">
+        <img class="brand__logo" src="assets/logo.png" alt="Gli Amici di Boyle" />
+        <span class="brand__text">
+          <span class="brand__name">Gli Amici di Boyle</span>
+          <span class="brand__sub">
+            <span class="brand__line">Diving &amp; Hyperbaric Medicine</span>
+            <span class="brand__line">Research &amp; Education</span>
+            <span class="brand__line">Human Performance &amp; Safety in Extreme Environments</span>
+          </span>
+        </span>
       </a>
 
       <!-- Desktop nav -->
@@ -49,6 +55,7 @@
           <a role="menuitem" class="btn btn--primary btn--block" href="#contatti">Contatti</a>
         </div>
       </details>
+
     </div>
   </header>
 
@@ -57,8 +64,6 @@
     <section class="hero hero--premium" id="top">
       <div class="container hero__grid hero__grid--premium">
         <div class="hero__copy">
-          <!-- (2) tolto il pulsante/pillone "RICERCA · DIVULGAZIONE · FORMAZIONE" -->
-
           <h1 class="h1 h1--premium">
             Gli Amici di Boyle
             <span class="h1__sub h1__sub--premium">
@@ -84,13 +89,13 @@
           </div>
         </div>
 
-        <!-- Colonna destra: WOW VISUAL + PANEL (3) tolto FOCUS) -->
+        <!-- Colonna destra: VISUAL + PANEL -->
         <div class="heroRight" aria-label="In evidenza e visual">
           <div class="heroVisual" aria-hidden="true">
             <div class="heroVisual__glow"></div>
             <div class="heroVisual__grid"></div>
 
-            <!-- SVG iperbarico/subacqueo: bolle + onde + gauge -->
+            <!-- SVG iperbarico/subacqueo -->
             <svg viewBox="0 0 820 260" width="100%" height="100%" preserveAspectRatio="none" style="position:absolute; inset:0; opacity:.95">
               <defs>
                 <linearGradient id="g1" x1="0" x2="1">
@@ -103,19 +108,14 @@
                 </radialGradient>
               </defs>
 
-              <!-- onde -->
-              <path d="M0,170 C140,150 220,210 360,190 C520,165 600,120 820,150 L820,260 L0,260 Z"
-                    fill="url(#g1)"/>
-              <path d="M0,190 C160,170 260,230 410,210 C560,185 650,145 820,170"
-                    fill="none" stroke="rgba(11,74,162,.22)" stroke-width="2"/>
+              <path d="M0,170 C140,150 220,210 360,190 C520,165 600,120 820,150 L820,260 L0,260 Z" fill="url(#g1)"/>
+              <path d="M0,190 C160,170 260,230 410,210 C560,185 650,145 820,170" fill="none" stroke="rgba(11,74,162,.22)" stroke-width="2"/>
 
-              <!-- gauge pressione stilizzato -->
               <circle cx="650" cy="95" r="60" fill="rgba(255,255,255,.55)" stroke="rgba(11,74,162,.18)" stroke-width="2"/>
               <path d="M610,95 A40,40 0 0 1 690,95" fill="none" stroke="rgba(11,74,162,.25)" stroke-width="8" stroke-linecap="round"/>
               <path d="M630,105 L685,80" stroke="rgba(11,74,162,.45)" stroke-width="4" stroke-linecap="round"/>
               <circle cx="650" cy="95" r="6" fill="rgba(11,74,162,.45)"/>
 
-              <!-- bolle -->
               <circle cx="120" cy="210" r="18" fill="url(#b1)"/>
               <circle cx="160" cy="165" r="10" fill="rgba(14,165,233,.18)"/>
               <circle cx="210" cy="120" r="14" fill="rgba(14,165,233,.16)"/>
@@ -127,7 +127,6 @@
           <aside class="panel panel--tight" aria-label="In evidenza">
             <div class="panel__top">
               <span class="badge">In evidenza</span>
-              <!-- (5) cambiato testo -->
               <h2 class="h2">Contenuti professionali.</h2>
               <p class="muted">
                 Strumenti operativi, progetti, materiali didattici e pubblicazioni.
@@ -141,7 +140,6 @@
                 <span>Ricerca, case report, docenza, progetti editoriali.</span>
               </div>
               <div class="panel__item" role="listitem">
-                <!-- (4) cambiato label -->
                 <strong>Lezioni e Corsi</strong>
                 <span>Università, aziende, associazioni: contenuti dove servono.</span>
               </div>
@@ -152,8 +150,9 @@
             </div>
 
             <div class="panel__cta">
-              <a class="btn btn--primary btn--block" href="#contatti">Scrivici</a>
-              <p class="fineprint">Niente “prenota ora”: prima la sostanza.</p>
+              <!-- apre MODALE contatti -->
+              <button type="button" class="btn btn--primary btn--block" data-open-dialog="contattiDialog">Scrivici</button>
+              <!-- (rimossa la frase sotto) -->
             </div>
           </aside>
         </div>
@@ -197,12 +196,14 @@
       </div>
     </section>
 
-    <!-- CHI SIAMO -->
+    <!-- CHI SIAMO (impaginazione corretta: non più “tutto a destra”) -->
     <section class="section section--soft" id="chisiamo">
       <div class="container">
-        <div class="section__head">
-          <h2 class="h2">Chi siamo</h2>
-          <p class="muted">
+
+        <!-- Head “stacked” -->
+        <div style="max-width: 80ch; margin-bottom: 16px;">
+          <h2 class="h2" style="margin:0 0 10px;">Chi siamo</h2>
+          <p class="muted" style="margin:0;">
             Gli Amici di Boyle è un gruppo di ricercatori medici specializzati nello studio della medicina iperbarica e subacquea.
             Il nome omaggia Robert Boyle e la relazione tra pressione e volume dei gas, centrale per comprendere la fisiologia in immersione.
           </p>
@@ -343,7 +344,9 @@
               della medicina iperbarica e subacquea.
             </p>
           </div>
-          <a class="btn btn--primary" href="#contatti">Proponi un incontro</a>
+
+          <!-- apre MODALE “proponi incontro” -->
+          <button type="button" class="btn btn--primary" data-open-dialog="incontroDialog">Proponi un incontro</button>
         </div>
       </div>
     </section>
@@ -383,7 +386,14 @@
             <p class="muted">
               <a href="mailto:info@amicidiboyle.it">info@amicidiboyle.it</a>
             </p>
-            <p class="fineprint">Se vuoi, aggiungiamo un form statico con servizio esterno, senza complicare il sito.</p>
+
+            <div style="margin-top:14px;">
+              <button type="button" class="btn btn--primary" data-open-dialog="contattiDialog">Apri il modulo contatti</button>
+            </div>
+
+            <p class="fineprint" style="margin-top:10px;">
+              Il modulo invia la richiesta via servizio esterno (tipo Formspree) e vi arriva via email.
+            </p>
           </article>
 
           <article class="card">
@@ -407,6 +417,138 @@
       </div>
     </div>
   </footer>
+
+  <!-- =========================
+       MODALI (Formspree)
+       1) Contatti
+       2) Proponi un incontro
+       NOTE: sostituisci YOUR_FORM_ID
+  ========================== -->
+
+  <dialog class="dialog" id="contattiDialog" aria-label="Modulo contatti">
+    <div class="dialog__inner">
+      <div class="dialog__head">
+        <h3 class="h3" style="margin:0;">Contattaci</h3>
+        <button type="button" class="btn btn--ghost" data-close-dialog>Chiudi</button>
+      </div>
+
+      <p class="muted" style="margin:10px 0 14px;">
+        Compila e invia: la richiesta arriva via email a <strong>info@amicidiboyle.it</strong>.
+      </p>
+
+      <form class="form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+        <input type="hidden" name="tipo_richiesta" value="Contatto dal sito" />
+
+        <label class="form__row">
+          <span class="form__label">Nome e cognome</span>
+          <input class="form__input" type="text" name="nome" autocomplete="name" required />
+        </label>
+
+        <label class="form__row">
+          <span class="form__label">Email</span>
+          <input class="form__input" type="email" name="email" autocomplete="email" required />
+        </label>
+
+        <label class="form__row">
+          <span class="form__label">Oggetto</span>
+          <input class="form__input" type="text" name="oggetto" required />
+        </label>
+
+        <label class="form__row">
+          <span class="form__label">Messaggio</span>
+          <textarea class="form__input" name="messaggio" rows="5" required></textarea>
+        </label>
+
+        <div class="form__actions">
+          <button class="btn btn--primary" type="submit">Invia</button>
+          <button type="button" class="btn btn--ghost" data-close-dialog>Annulla</button>
+        </div>
+
+        <p class="fineprint" style="margin-top:10px;">
+          Nessuno spam “marketing”. Solo messaggi utili.
+        </p>
+      </form>
+    </div>
+  </dialog>
+
+  <dialog class="dialog" id="incontroDialog" aria-label="Proponi un incontro">
+    <div class="dialog__inner">
+      <div class="dialog__head">
+        <h3 class="h3" style="margin:0;">Proponi un incontro</h3>
+        <button type="button" class="btn btn--ghost" data-close-dialog>Chiudi</button>
+      </div>
+
+      <p class="muted" style="margin:10px 0 14px;">
+        Raccontaci contesto, obiettivo e disponibilità: vi rispondiamo via email.
+      </p>
+
+      <form class="form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+        <input type="hidden" name="tipo_richiesta" value="Proposta incontro / docenza" />
+
+        <label class="form__row">
+          <span class="form__label">Ente / organizzazione</span>
+          <input class="form__input" type="text" name="ente" required />
+        </label>
+
+        <label class="form__row">
+          <span class="form__label">Referente</span>
+          <input class="form__input" type="text" name="referente" required />
+        </label>
+
+        <label class="form__row">
+          <span class="form__label">Email</span>
+          <input class="form__input" type="email" name="email" autocomplete="email" required />
+        </label>
+
+        <label class="form__row">
+          <span class="form__label">Tipologia (lezione / corso / collaborazione)</span>
+          <input class="form__input" type="text" name="tipologia" required />
+        </label>
+
+        <label class="form__row">
+          <span class="form__label">Dettagli e note</span>
+          <textarea class="form__input" name="dettagli" rows="6" required></textarea>
+        </label>
+
+        <div class="form__actions">
+          <button class="btn btn--primary" type="submit">Invia proposta</button>
+          <button type="button" class="btn btn--ghost" data-close-dialog>Annulla</button>
+        </div>
+      </form>
+    </div>
+  </dialog>
+
+  <!-- JS minimo: apre/chiude dialog -->
+  <script>
+    (function () {
+      const openers = document.querySelectorAll('[data-open-dialog]');
+      const closers = document.querySelectorAll('[data-close-dialog]');
+
+      openers.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const id = btn.getAttribute('data-open-dialog');
+          const dlg = document.getElementById(id);
+          if (dlg && typeof dlg.showModal === 'function') dlg.showModal();
+        });
+      });
+
+      closers.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const dlg = btn.closest('dialog');
+          if (dlg) dlg.close();
+        });
+      });
+
+      // click sullo sfondo per chiudere
+      document.querySelectorAll('dialog').forEach(dlg => {
+        dlg.addEventListener('click', (e) => {
+          const box = dlg.querySelector('.dialog__inner');
+          if (box && !box.contains(e.target)) dlg.close();
+        });
+      });
+    })();
+  </script>
 </body>
 </html>
+
 
