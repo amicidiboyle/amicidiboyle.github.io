@@ -143,9 +143,10 @@ a:hover{text-decoration:underline}
   max-width: 52vw;
 }
 
+/* 3 righe forzate (come vuoi tu) */
 .brand__line{
   display:block;
-  white-space:nowrap;
+  /* niente nowrap: su schermi piccoli deve poter respirare */
 }
 
 /* Desktop nav */
@@ -174,7 +175,7 @@ a:hover{text-decoration:underline}
 
 /* Mobile menu (details) */
 .menu{
-  display:none; /* attivo solo su mobile */
+  display:none;
   position: relative;
 }
 
@@ -260,22 +261,6 @@ a:hover{text-decoration:underline}
 }
 
 .hero__copy{min-width:0}
-
-.eyebrow{
-  display:inline-flex;
-  align-items:center;
-  gap: 10px;
-  padding: 10px 14px;
-  border: 1px solid rgba(14,165,233,.22);
-  background: rgba(14,165,233,.08);
-  color: var(--brand);
-  border-radius: 999px;
-  font-weight: 950;
-  letter-spacing: .12em;
-  text-transform: uppercase;
-  font-size: 12px;
-  margin:0 0 14px;
-}
 
 .h1{
   font-size: clamp(34px, 4.2vw, 56px);
@@ -484,14 +469,14 @@ a:hover{text-decoration:underline}
 @media (max-width: 760px){
   .header__inner{gap:12px; padding:10px 0;}
   .brand__mark{width:30px; height:30px; border-radius:10px;}
-  .brand__name{font-size:16px; max-width: 70vw;} /* più spazio al nome */
+  .brand__name{font-size:16px; max-width: 70vw;}
   .brand__sub{display:none;}
 
   .nav--desktop{display:none;}
   .menu{display:block;}
 }
 
-/* Super small screens: niente ellissi “Gli Amici di Bo…” */
+/* Super small screens */
 @media (max-width: 420px){
   .brand__name{
     max-width: 78vw;
@@ -505,16 +490,9 @@ a:hover{text-decoration:underline}
   *{transition:none !important; animation:none !important;}
 }
 
-@media (max-width: 980px){
-  .brand__sub{ max-width: 42vw; }
-}
-@media (max-width: 860px){
-  .brand__sub{ max-width: 34vw; }
-}
 /* =========================
-   POINT B: Premium hero + strip
+   POINT B: Premium hero
 ========================= */
-
 .hero--premium{
   padding: 74px 0 34px;
   background:
@@ -555,7 +533,7 @@ a:hover{text-decoration:underline}
   font-size: 14px;
 }
 
-/* Right column: visual + panel */
+/* Right column */
 .heroRight{
   display:grid;
   gap: 14px;
@@ -593,64 +571,17 @@ a:hover{text-decoration:underline}
     linear-gradient(90deg, rgba(11,74,162,.08) 1px, transparent 1px);
   background-size: 34px 34px;
   opacity: .22;
+  -webkit-mask-image: radial-gradient(circle at 50% 40%, rgba(0,0,0,1), rgba(0,0,0,.2) 60%, transparent 75%);
   mask-image: radial-gradient(circle at 50% 40%, rgba(0,0,0,1), rgba(0,0,0,.2) 60%, transparent 75%);
-}
-
-.heroVisual__label{
-  position:absolute;
-  left: 16px;
-  bottom: 14px;
-  display:flex;
-  align-items:center;
-  gap: 10px;
 }
 
 .panel--tight .panel__top{ padding-bottom: 8px; }
 .panel--tight .panel__list{ padding-bottom: 8px; }
 
-/* Strip sotto hero */
-.strip{
-  padding: 18px 0 8px;
-}
-
-.strip__grid{
-  display:grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 14px;
-}
-
-.stripCard{
-  border-radius: 22px;
-  border: 1px solid var(--border);
-  background: #fff;
-  padding: 18px;
-  box-shadow: 0 14px 36px rgba(2,6,23,.06);
-}
-
-.stripCard__kicker{
-  display:inline-flex;
-  padding: 6px 10px;x
-  border-radius: 999px;
-  border: 1px solid rgba(11,74,162,.18);
-  background: rgba(11,74,162,.06);
-  color: var(--brand);
-  font-weight: 950;
-  font-size: 12px;
-  letter-spacing: .10em;
-  text-transform: uppercase;
-}
-
-.stripCard__title{
-  margin: 12px 0 8px;
-  font-size: 18px;
-  letter-spacing: -0.01em;
-}
-
 /* Responsive: premium hero */
 @media (max-width: 980px){
   .hero--premium{ padding: 52px 0 24px; }
   .hero__grid--premium{ grid-template-columns: 1fr; }
-  .strip__grid{ grid-template-columns: 1fr; }
   .heroVisual{ min-height: 150px; }
 }
 
