@@ -113,19 +113,21 @@ a:hover{text-decoration:underline}
   padding: 12px 0;
 }
 
-/* Brand */
+/* =========================
+   BRAND
+========================= */
 .brand{
   display:flex;
-  align-items:center;
+  align-items:flex-start; /* logo allineato alle 3 righe */
   gap: 12px;
   text-decoration:none;
   min-width: 0;
 }
 
 .brand__logo{
-  width: 40px;
-  height: 40px;
-  border-radius: 12px;
+  width: 66px;
+  height: 66px;
+  border-radius: 16px;
   object-fit: cover;
   box-shadow: 0 14px 30px rgba(11,74,162,.16);
   border: 1px solid rgba(11,74,162,.12);
@@ -158,10 +160,22 @@ a:hover{text-decoration:underline}
   max-width: 52vw;
 }
 
-/* 3 righe forzate (IMPORTANTE: no word-wrap strano) */
 .brand__line{
   display:block;
-  white-space: nowrap;
+  white-space: nowrap; /* righe pulite e leggibili */
+}
+
+/* Responsive: mobile */
+@media (max-width: 760px){
+  .brand__logo{
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+  }
+
+  .brand__sub{
+    display:none; /* su mobile nascondiamo il payoff */
+  }
 }
 
 /* Desktop nav */
