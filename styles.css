@@ -139,10 +139,13 @@ a:hover{text-decoration:underline}
   font-size: 12px;
   color: var(--muted);
   margin-top: 2px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 48vw;
+  line-height: 1.35;
+  max-width: 52vw;
+}
+
+.brand__line{
+  display:block;
+  white-space:nowrap;
 }
 
 /* Desktop nav */
