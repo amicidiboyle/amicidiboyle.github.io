@@ -158,9 +158,10 @@ a:hover{text-decoration:underline}
   max-width: 52vw;
 }
 
-/* 3 righe forzate */
+/* 3 righe forzate (IMPORTANTE: no word-wrap strano) */
 .brand__line{
   display:block;
+  white-space: nowrap;
 }
 
 /* Desktop nav */
@@ -682,4 +683,3 @@ textarea.form__input{resize: vertical; min-height: 110px;}
   .heroVisual{ min-height: 150px; }
   .dialog__inner{ margin-top: 8vh; }
 }
-
