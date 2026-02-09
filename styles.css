@@ -697,3 +697,62 @@ textarea.form__input{resize: vertical; min-height: 110px;}
   .heroVisual{ min-height: 150px; }
   .dialog__inner{ margin-top: 8vh; }
 }
+/* ===== FIX LEGGIBILITÀ BRAND (incolla in fondo al file) ===== */
+
+/* Header più opaco (meno “lavato”) */
+.header{
+  background: rgba(255,255,255,.98) !important;
+  backdrop-filter: blur(10px) saturate(180%);
+}
+
+/* Brand: allinea e spazio */
+.brand{
+  align-items: flex-start !important;
+  gap: 14px;
+}
+
+/* Logo un pelo più “presente” */
+.brand__logo{
+  width: 60px !important;
+  height: 60px !important;
+  border-radius: 14px !important;
+}
+
+/* Nome più grande e scuro */
+.brand__name{
+  font-size: 20px !important;
+  font-weight: 950 !important;
+  color: #0b1220 !important;
+  line-height: 1.05 !important;
+}
+
+/* Sottotitoli: più scuri + più grossi + più “peso” */
+.brand__sub{
+  font-size: 14.5px !important;
+  font-weight: 850 !important;
+  color: #1f2937 !important;  /* molto più leggibile del muted */
+  line-height: 1.32 !important;
+  margin-top: 4px !important;
+  opacity: 1 !important;
+}
+
+/* Righe: non spezzare parole a caso */
+.brand__line{
+  display:block;
+  white-space: nowrap;
+}
+
+/* Mobile: riduci ma resta leggibile */
+@media (max-width: 760px){
+  .brand__logo{
+    width: 42px !important;
+    height: 42px !important;
+    border-radius: 12px !important;
+  }
+  .brand__name{
+    font-size: 16px !important;
+  }
+  .brand__sub{
+    display: none; /* su mobile ok nasconderlo: altrimenti schiaccia tutto */
+  }
+}
