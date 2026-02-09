@@ -502,4 +502,10 @@ a:hover{text-decoration:underline}
   *{transition:none !important; animation:none !important;}
 }
 
+}@media (max-width: 980px){
+  .brand__sub{ max-width: 42vw; }
 }
+@media (max-width: 860px){
+  .brand__sub{ max-width: 34vw; }
+}
+
