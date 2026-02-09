@@ -6,7 +6,6 @@
   <title>Gli Amici di Boyle · Ricerca e divulgazione in medicina subacquea e iperbarica</title>
   <meta name="description" content="Gli Amici di Boyle: ricerca e divulgazione in medicina subacquea e iperbarica. Approccio multidisciplinare, evidenze, formazione e innovazione." />
   <meta name="theme-color" content="#0b4aa2" />
-
   <link rel="stylesheet" href="styles.css" />
 </head>
 
@@ -52,24 +51,24 @@
 
   <main id="contenuto">
     <!-- HERO -->
-    <section class="hero" id="top">
-      <div class="container hero__grid">
+    <section class="hero hero--premium" id="top">
+      <div class="container hero__grid hero__grid--premium">
         <div class="hero__copy">
           <p class="eyebrow">RICERCA · DIVULGAZIONE · FORMAZIONE</p>
 
-          <h1 class="h1">
-            Gli Amici di Boyle.<br />
-            <span class="h1__sub">Ricerca e divulgazione in medicina subacquea ed iperbarica.</span>
+          <h1 class="h1 h1--premium">
+            Gli Amici di Boyle
+            <span class="h1__sub h1__sub--premium">Ricerca e divulgazione in medicina subacquea ed iperbarica.</span>
           </h1>
 
-          <p class="lead">
-            Un gruppo multidisciplinare che integra competenze mediche, tecnologiche e scientifiche
-            per migliorare sicurezza, conoscenza e applicazioni cliniche dell’iperbarismo.
+          <p class="lead lead--premium">
+            Un gruppo multidisciplinare che integra competenze mediche, tecnologiche e scientifiche per migliorare
+            sicurezza, conoscenza e applicazioni cliniche dell’iperbarismo.
           </p>
 
-          <div class="cta">
-            <a class="btn btn--primary" href="#ricerca">Esplora la ricerca</a>
-            <a class="btn btn--ghost" href="#chisiamo">Conosci il team</a>
+          <div class="cta cta--premium">
+            <a class="btn btn--primary btn--lg" href="#ricerca">Esplora la ricerca</a>
+            <a class="btn btn--ghost btn--lg" href="#chisiamo">Conosci il team</a>
           </div>
 
           <div class="chips" aria-label="Aree chiave">
@@ -80,36 +79,72 @@
           </div>
         </div>
 
-        <aside class="panel" aria-label="In evidenza">
-          <div class="panel__top">
-            <span class="badge">In evidenza</span>
-            <h2 class="h2">Un sito essenziale, per contenuti veri.</h2>
-            <p class="muted">
-              Qui mettiamo strumenti operativi, progetti, materiali didattici e pubblicazioni.
-              Niente decorazioni confuse, solo chiarezza.
-            </p>
-          </div>
-
-          <div class="panel__list" role="list">
-            <div class="panel__item" role="listitem">
-              <strong>Collaborazioni</strong>
-              <span>Ricerca, case report, docenza, progetti editoriali.</span>
-            </div>
-            <div class="panel__item" role="listitem">
-              <strong>Lezioni gratuite</strong>
-              <span>Università, aziende, associazioni: portiamo contenuti dove servono.</span>
-            </div>
-            <div class="panel__item" role="listitem">
-              <strong>Focus clinico</strong>
-              <span>Utilità pratica, rigore, replicabilità.</span>
+        <aside class="heroRight" aria-label="In evidenza">
+          <!-- Visual sobrio (immagine opzionale più avanti) -->
+          <div class="heroVisual" aria-hidden="true">
+            <div class="heroVisual__glow"></div>
+            <div class="heroVisual__grid"></div>
+            <div class="heroVisual__label">
+              <span class="badge">Focus</span>
+              <span class="muted">Human performance · safety · research</span>
             </div>
           </div>
 
-          <div class="panel__cta">
-            <a class="btn btn--primary btn--block" href="#contatti">Scrivici</a>
-            <p class="fineprint">Nessun “prenota ora”: prima la sostanza.</p>
+          <!-- Panel contenuti -->
+          <div class="panel panel--tight">
+            <div class="panel__top">
+              <span class="badge">In evidenza</span>
+              <h2 class="h2">Contenuti utili, non rumore.</h2>
+              <p class="muted">
+                Strumenti operativi, progetti, materiali didattici e pubblicazioni.
+                Scienza applicata, verificabile, replicabile.
+              </p>
+            </div>
+
+            <div class="panel__list" role="list">
+              <div class="panel__item" role="listitem">
+                <strong>Collaborazioni</strong>
+                <span>Ricerca, case report, docenza, progetti editoriali.</span>
+              </div>
+              <div class="panel__item" role="listitem">
+                <strong>Lezioni gratuite</strong>
+                <span>Università, aziende, associazioni: portiamo contenuti dove servono.</span>
+              </div>
+              <div class="panel__item" role="listitem">
+                <strong>Focus clinico</strong>
+                <span>Utilità pratica, rigore, decision making.</span>
+              </div>
+            </div>
+
+            <div class="panel__cta">
+              <a class="btn btn--primary btn--block" href="#contatti">Scrivici</a>
+              <p class="fineprint">Niente “prenota ora”: prima la sostanza.</p>
+            </div>
           </div>
         </aside>
+      </div>
+    </section>
+
+    <!-- STRIP: IN SINTESI -->
+    <section class="strip" aria-label="In sintesi">
+      <div class="container strip__grid">
+        <article class="stripCard">
+          <div class="stripCard__kicker">Missione</div>
+          <h3 class="stripCard__title">Sicurezza e performance</h3>
+          <p class="muted">Human factors, protocolli, decision making e prevenzione del rischio in ambienti estremi.</p>
+        </article>
+
+        <article class="stripCard">
+          <div class="stripCard__kicker">Approccio</div>
+          <h3 class="stripCard__title">Evidence-based</h3>
+          <p class="muted">Contenuti verificabili, pratici, con bibliografia e strumenti operativi.</p>
+        </article>
+
+        <article class="stripCard">
+          <div class="stripCard__kicker">Didattica</div>
+          <h3 class="stripCard__title">Ricerca &amp; Education</h3>
+          <p class="muted">Lezioni, workshop e materiali chiari per clinici, operatori e subacquei.</p>
+        </article>
       </div>
     </section>
 
@@ -368,3 +403,4 @@
   </footer>
 </body>
 </html>
+
