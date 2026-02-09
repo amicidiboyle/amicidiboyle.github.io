@@ -16,13 +16,16 @@
     <div class="container header__inner">
       <a class="brand" href="#top" aria-label="Home">
         <span class="brand__mark" aria-hidden="true"></span>
+
+        <!-- Payoff controllato in 3 righe -->
         <span class="brand__text">
           <span class="brand__name">Gli Amici di Boyle</span>
           <span class="brand__sub">
-  <span class="brand__line">Diving &amp; Hyperbaric Medicine ·</span>
-  <span class="brand__line">Human Performance &amp; Safety in Extreme Environments |</span>
-  <span class="brand__line">Research &amp; Education</span>
-</span>
+            <span class="brand__line">Diving &amp; Hyperbaric Medicine ·</span>
+            <span class="brand__line">Human Performance &amp; Safety in Extreme Environments |</span>
+            <span class="brand__line">Research &amp; Education</span>
+          </span>
+        </span>
       </a>
 
       <!-- Desktop nav -->
@@ -57,16 +60,18 @@
     <section class="hero hero--premium" id="top">
       <div class="container hero__grid hero__grid--premium">
         <div class="hero__copy">
-          <p class="eyebrow">RICERCA · DIVULGAZIONE · FORMAZIONE</p>
+          <!-- (2) tolto il pulsante/pillone "RICERCA · DIVULGAZIONE · FORMAZIONE" -->
 
           <h1 class="h1 h1--premium">
             Gli Amici di Boyle
-            <span class="h1__sub h1__sub--premium">Ricerca e divulgazione in medicina subacquea ed iperbarica.</span>
+            <span class="h1__sub h1__sub--premium">
+              Ricerca e divulgazione in medicina subacquea ed iperbarica.
+            </span>
           </h1>
 
           <p class="lead lead--premium">
-            Un gruppo multidisciplinare che integra competenze mediche, tecnologiche e scientifiche per migliorare
-            sicurezza, conoscenza e applicazioni cliniche dell’iperbarismo.
+            Un gruppo multidisciplinare che integra competenze mediche, tecnologiche e scientifiche
+            per migliorare sicurezza, conoscenza e applicazioni cliniche dell’iperbarismo.
           </p>
 
           <div class="cta cta--premium">
@@ -82,22 +87,51 @@
           </div>
         </div>
 
-        <aside class="heroRight" aria-label="In evidenza">
-          <!-- Visual sobrio (immagine opzionale più avanti) -->
+        <!-- Colonna destra: WOW VISUAL + PANEL (3) tolto FOCUS) -->
+        <div class="heroRight" aria-label="In evidenza e visual">
           <div class="heroVisual" aria-hidden="true">
             <div class="heroVisual__glow"></div>
             <div class="heroVisual__grid"></div>
-            <div class="heroVisual__label">
-              <span class="badge">Focus</span>
-              <span class="muted">Human performance · safety · research</span>
-            </div>
+
+            <!-- SVG iperbarico/subacqueo: bolle + onde + gauge -->
+            <svg viewBox="0 0 820 260" width="100%" height="100%" preserveAspectRatio="none" style="position:absolute; inset:0; opacity:.95">
+              <defs>
+                <linearGradient id="g1" x1="0" x2="1">
+                  <stop offset="0" stop-color="rgba(11,74,162,.16)"/>
+                  <stop offset="1" stop-color="rgba(14,165,233,.18)"/>
+                </linearGradient>
+                <radialGradient id="b1" cx="50%" cy="40%" r="60%">
+                  <stop offset="0" stop-color="rgba(14,165,233,.22)"/>
+                  <stop offset="1" stop-color="rgba(14,165,233,0)"/>
+                </radialGradient>
+              </defs>
+
+              <!-- onde -->
+              <path d="M0,170 C140,150 220,210 360,190 C520,165 600,120 820,150 L820,260 L0,260 Z"
+                    fill="url(#g1)"/>
+              <path d="M0,190 C160,170 260,230 410,210 C560,185 650,145 820,170"
+                    fill="none" stroke="rgba(11,74,162,.22)" stroke-width="2"/>
+
+              <!-- gauge pressione stilizzato -->
+              <circle cx="650" cy="95" r="60" fill="rgba(255,255,255,.55)" stroke="rgba(11,74,162,.18)" stroke-width="2"/>
+              <path d="M610,95 A40,40 0 0 1 690,95" fill="none" stroke="rgba(11,74,162,.25)" stroke-width="8" stroke-linecap="round"/>
+              <path d="M630,105 L685,80" stroke="rgba(11,74,162,.45)" stroke-width="4" stroke-linecap="round"/>
+              <circle cx="650" cy="95" r="6" fill="rgba(11,74,162,.45)"/>
+
+              <!-- bolle -->
+              <circle cx="120" cy="210" r="18" fill="url(#b1)"/>
+              <circle cx="160" cy="165" r="10" fill="rgba(14,165,233,.18)"/>
+              <circle cx="210" cy="120" r="14" fill="rgba(14,165,233,.16)"/>
+              <circle cx="260" cy="170" r="8" fill="rgba(14,165,233,.14)"/>
+              <circle cx="320" cy="120" r="12" fill="rgba(14,165,233,.12)"/>
+            </svg>
           </div>
 
-          <!-- Panel contenuti -->
-          <div class="panel panel--tight">
+          <aside class="panel panel--tight" aria-label="In evidenza">
             <div class="panel__top">
               <span class="badge">In evidenza</span>
-              <h2 class="h2">Contenuti utili, non rumore.</h2>
+              <!-- (5) cambiato testo -->
+              <h2 class="h2">Contenuti professionali.</h2>
               <p class="muted">
                 Strumenti operativi, progetti, materiali didattici e pubblicazioni.
                 Scienza applicata, verificabile, replicabile.
@@ -110,12 +144,13 @@
                 <span>Ricerca, case report, docenza, progetti editoriali.</span>
               </div>
               <div class="panel__item" role="listitem">
-                <strong>Lezioni gratuite</strong>
-                <span>Università, aziende, associazioni: portiamo contenuti dove servono.</span>
+                <!-- (4) cambiato label -->
+                <strong>Lezioni e Corsi</strong>
+                <span>Università, aziende, associazioni: contenuti dove servono.</span>
               </div>
               <div class="panel__item" role="listitem">
                 <strong>Focus clinico</strong>
-                <span>Utilità pratica, rigore, decision making.</span>
+                <span>Utilità pratica, rigore, replicabilità.</span>
               </div>
             </div>
 
@@ -123,31 +158,8 @@
               <a class="btn btn--primary btn--block" href="#contatti">Scrivici</a>
               <p class="fineprint">Niente “prenota ora”: prima la sostanza.</p>
             </div>
-          </div>
-        </aside>
-      </div>
-    </section>
-
-    <!-- STRIP: IN SINTESI -->
-    <section class="strip" aria-label="In sintesi">
-      <div class="container strip__grid">
-        <article class="stripCard">
-          <div class="stripCard__kicker">Missione</div>
-          <h3 class="stripCard__title">Sicurezza e performance</h3>
-          <p class="muted">Human factors, protocolli, decision making e prevenzione del rischio in ambienti estremi.</p>
-        </article>
-
-        <article class="stripCard">
-          <div class="stripCard__kicker">Approccio</div>
-          <h3 class="stripCard__title">Evidence-based</h3>
-          <p class="muted">Contenuti verificabili, pratici, con bibliografia e strumenti operativi.</p>
-        </article>
-
-        <article class="stripCard">
-          <div class="stripCard__kicker">Didattica</div>
-          <h3 class="stripCard__title">Ricerca &amp; Education</h3>
-          <p class="muted">Lezioni, workshop e materiali chiari per clinici, operatori e subacquei.</p>
-        </article>
+          </aside>
+        </div>
       </div>
     </section>
 
@@ -157,9 +169,8 @@
         <div class="section__head">
           <h2 class="h2">Vision</h2>
           <p class="muted">
-            La nostra visione è di essere un punto di riferimento internazionale per l'innovazione e la ricerca nel campo
-            della medicina iperbarica e subacquea, promuovendo un approccio multidisciplinare che integri competenze mediche,
-            tecnologiche e scientifiche.
+            La nostra visione è essere un punto di riferimento internazionale per innovazione e ricerca in medicina iperbarica e subacquea,
+            con un approccio multidisciplinare che integra competenze mediche, tecnologiche e scientifiche.
           </p>
         </div>
 
@@ -167,7 +178,7 @@
           <article class="card">
             <h3 class="h3">Rigorosa</h3>
             <p class="muted">
-              Crediamo fermamente nel potenziale terapeutico e nelle applicazioni emergenti dell’ossigenoterapia iperbarica,
+              Crediamo nel potenziale terapeutico e nelle applicazioni emergenti dell’ossigenoterapia iperbarica,
               contribuendo al progresso scientifico con ricerca verificabile.
             </p>
           </article>
@@ -175,15 +186,14 @@
           <article class="card">
             <h3 class="h3">Multidisciplinare</h3>
             <p class="muted">
-              Integriamo competenze mediche, tecnologiche e scientifiche per affrontare problemi reali e migliorare sicurezza
-              e protocolli.
+              Integriamo competenze mediche, tecnologiche e scientifiche per affrontare problemi reali e migliorare sicurezza e protocolli.
             </p>
           </article>
 
           <article class="card">
             <h3 class="h3">Continua</h3>
             <p class="muted">
-              Educazione continua, materiali didattici chiari e applicabili, divulgazione sobria: scienza, non folklore.
+              Educazione continua, materiali chiari e applicabili, divulgazione sobria: scienza, non folklore.
             </p>
           </article>
         </div>
@@ -197,8 +207,7 @@
           <h2 class="h2">Chi siamo</h2>
           <p class="muted">
             Gli Amici di Boyle è un gruppo di ricercatori medici specializzati nello studio della medicina iperbarica e subacquea.
-            Il nostro nome omaggia Robert Boyle, il fisico e chimico che formulò la legge sulla relazione tra pressione e volume dei gas,
-            fondamentale per la comprensione degli effetti fisiologici delle immersioni.
+            Il nome omaggia Robert Boyle e la relazione tra pressione e volume dei gas, centrale per comprendere la fisiologia in immersione.
           </p>
         </div>
 
@@ -209,14 +218,11 @@
           </p>
 
           <p class="muted">
-            Ci dedichiamo allo studio degli effetti della pressione sul corpo umano, sviluppando conoscenze e tecnologie che possano
-            migliorare la sicurezza delle attività subacquee e ampliare le applicazioni terapeutiche dei trattamenti iperbarici.
-            Giriamo l'Italia per fornire gratuitamente lezioni di medicina iperbarica e subacquea ad università, associazioni mediche e aziende,
-            contribuendo alla diffusione della conoscenza scientifica.
+            Studiamo gli effetti della pressione sul corpo umano, sviluppando conoscenze e strumenti che migliorino la sicurezza delle attività subacquee
+            e amplino le applicazioni terapeutiche dei trattamenti iperbarici. Portiamo lezioni e contenuti dove servono: università, associazioni e aziende.
           </p>
         </div>
 
-        <!-- TEAM (foto da aggiungere dopo) -->
         <div class="team">
           <article class="person card">
             <div class="avatar" aria-hidden="true">SZ</div>
@@ -271,8 +277,8 @@
               <li>Membri attivi UHMS (Undersea &amp; Hyperbaric Medical Society)</li>
               <li>Certificazioni SIMSI (Società Italiana Medicina Subacquea e Iperbarica)</li>
               <li>Collaborazioni con European Committee for Hyperbaric Medicine</li>
-              <li>Consulenti per protocolli di emergenza subacquea nazionali</li>
-              <li>Relatori in congressi internazionali di medicina iperbarica</li>
+              <li>Consulenze su protocolli di emergenza subacquea</li>
+              <li>Relazioni e docenze in congressi e corsi</li>
             </ul>
           </article>
 
@@ -295,8 +301,8 @@
         <div class="section__head">
           <h2 class="h2">La nostra ricerca</h2>
           <p class="muted">
-            La nostra attività di ricerca si concentra su diversi ambiti della medicina iperbarica e subacquea,
-            con progetti innovativi che mirano a espandere la conoscenza scientifica e migliorare i protocolli terapeutici.
+            Attività di ricerca su più domini della medicina iperbarica e subacquea,
+            con progetti orientati a protocolli migliori, sicurezza e applicazioni cliniche.
           </p>
         </div>
 
@@ -313,12 +319,12 @@
 
           <article class="card">
             <h3 class="h3">Telemedicina</h3>
-            <p class="muted">Telemedicina in iperbarismo e supporto remoto.</p>
+            <p class="muted">Supporto remoto e telemedicina in iperbarismo.</p>
           </article>
 
           <article class="card">
             <h3 class="h3">Dati medicali</h3>
-            <p class="muted">Sperimentazioni di trasmissione dati in ambiente iperbarico.</p>
+            <p class="muted">Trasmissione dati in ambiente iperbarico.</p>
           </article>
 
           <article class="card">
@@ -328,7 +334,7 @@
 
           <article class="card">
             <h3 class="h3">Tecnologie</h3>
-            <p class="muted">Sviluppo di tecnologie per la sicurezza subacquea.</p>
+            <p class="muted">Tecnologie per la sicurezza subacquea.</p>
           </article>
         </div>
 
@@ -336,8 +342,8 @@
           <div>
             <h3 class="h3" style="margin:0 0 6px;">Lezioni e attività</h3>
             <p class="muted" style="margin:0;">
-              Siamo disponibili a tenere lezioni presso università, aziende ed associazioni che vogliono conoscere le applicazioni
-              della medicina iperbarica e subacquea per il loro settore di appartenenza.
+              Disponibili per lezioni e corsi presso università, aziende e associazioni interessate alle applicazioni
+              della medicina iperbarica e subacquea.
             </p>
           </div>
           <a class="btn btn--primary" href="#contatti">Proponi un incontro</a>
@@ -355,7 +361,7 @@
 
         <div class="grid grid--2">
           <article class="card">
-            <h3 class="h3">Corsi e lezioni</h3>
+            <h3 class="h3">Lezioni e Corsi</h3>
             <p class="muted">Calendario, moduli e obiettivi formativi (in aggiornamento).</p>
           </article>
           <article class="card">
