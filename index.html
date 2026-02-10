@@ -7,8 +7,6 @@
   <meta name="description" content="Gli Amici di Boyle: ricerca e divulgazione in medicina subacquea e iperbarica. Approccio multidisciplinare, evidenze, formazione e innovazione." />
   <meta name="theme-color" content="#0b4aa2" />
   <link rel="stylesheet" href="styles.css" />
-
-  <!-- (opzionale) favicon -->
   <link rel="icon" href="assets/logo.png" type="image/png" />
 </head>
 
@@ -20,18 +18,17 @@
 
       <!-- BRAND: logo + nome + payoff -->
       <a class="brand" href="#top" aria-label="Home">
-  <img class="brand__logo" src="assets/logo.png" alt="Gli Amici di Boyle" />
+        <img class="brand__logo" src="assets/logo.png" alt="Gli Amici di Boyle" />
+        <span class="brand__text">
+          <span class="brand__name">Gli Amici di Boyle</span>
 
-  <span class="brand__text">
-    <span class="brand__name">Gli Amici di Boyle</span>
-
-    <span class="brand__sub">
-      <span class="brand__line">Diving &amp; Hyperbaric Medicine</span>
-      <span class="brand__line">Research &amp; Education</span>
-      <span class="brand__line">Human Performance &amp; Safety in Extreme Environments</span>
-    </span>
-  </span>
-</a>
+          <span class="brand__sub">
+            <span class="brand__line">Diving &amp; Hyperbaric Medicine</span>
+            <span class="brand__line">Research &amp; Education</span>
+            <span class="brand__line">Human Performance &amp; Safety in Extreme Environments</span>
+          </span>
+        </span>
+      </a>
 
       <!-- Desktop nav -->
       <nav class="nav nav--desktop" aria-label="Navigazione principale">
@@ -39,6 +36,7 @@
         <a href="#chisiamo">Chi siamo</a>
         <a href="#ricerca">Ricerca</a>
         <a href="#formazione">Formazione</a>
+        <a href="podcast.html">Podcast</a>
         <a class="btn btn--primary" href="#contatti">Contatti</a>
       </nav>
 
@@ -54,6 +52,7 @@
           <a role="menuitem" href="#chisiamo">Chi siamo</a>
           <a role="menuitem" href="#ricerca">Ricerca</a>
           <a role="menuitem" href="#formazione">Formazione</a>
+          <a role="menuitem" href="podcast.html">Podcast</a>
           <a role="menuitem" class="btn btn--primary btn--block" href="#contatti">Contatti</a>
         </div>
       </details>
@@ -152,9 +151,7 @@
             </div>
 
             <div class="panel__cta">
-              <!-- apre MODALE contatti -->
               <button type="button" class="btn btn--primary btn--block" data-open-dialog="contattiDialog">Scrivici</button>
-              <!-- (rimossa la frase sotto) -->
             </div>
           </aside>
         </div>
@@ -198,11 +195,9 @@
       </div>
     </section>
 
-    <!-- CHI SIAMO (impaginazione corretta: non più “tutto a destra”) -->
+    <!-- CHI SIAMO -->
     <section class="section section--soft" id="chisiamo">
       <div class="container">
-
-        <!-- Head “stacked” -->
         <div style="max-width: 80ch; margin-bottom: 16px;">
           <h2 class="h2" style="margin:0 0 10px;">Chi siamo</h2>
           <p class="muted" style="margin:0;">
@@ -225,7 +220,7 @@
 
         <div class="team">
           <article class="person card">
-            <div class="avatar" aria-hidden="true">SZ</div>
+            <img class="avatarImg" src="images/silvio.zerbi.jpg" alt="Dott. Silvio Zerbi" loading="lazy" />
             <div>
               <div class="role">Founder</div>
               <h3 class="h3">Dott. Silvio Zerbi</h3>
@@ -234,7 +229,7 @@
           </article>
 
           <article class="person card">
-            <div class="avatar" aria-hidden="true">LT</div>
+            <img class="avatarImg" src="images/luigi.tarsia.jpg" alt="Ing. Luigi Tarsia" loading="lazy" />
             <div>
               <div class="role">Engineering Director</div>
               <h3 class="h3">Ing. Luigi Tarsia</h3>
@@ -243,7 +238,7 @@
           </article>
 
           <article class="person card">
-            <div class="avatar" aria-hidden="true">DN</div>
+            <img class="avatarImg" src="images/dario.nicosia.jpg" alt="Dott. Dario Nicosia" loading="lazy" />
             <div>
               <div class="role">Diving Supervisor</div>
               <h3 class="h3">Dott. Dario Nicosia</h3>
@@ -252,7 +247,7 @@
           </article>
 
           <article class="person card">
-            <div class="avatar" aria-hidden="true">VB</div>
+            <img class="avatarImg" src="images/vincenzo.benenati.jpg" alt="Dott. Vincenzo Benenati" loading="lazy" />
             <div>
               <div class="role">Hyperbaric Supervisor</div>
               <h3 class="h3">Dott. Vincenzo Benenati</h3>
@@ -261,7 +256,7 @@
           </article>
 
           <article class="person card">
-            <div class="avatar" aria-hidden="true">MP</div>
+            <img class="avatarImg" src="images/matteo.paganini.jpg" alt="Dott. Matteo Paganini" loading="lazy" />
             <div>
               <div class="role">Head Researcher</div>
               <h3 class="h3">Dott. Matteo Paganini</h3>
@@ -347,7 +342,6 @@
             </p>
           </div>
 
-          <!-- apre MODALE “proponi incontro” -->
           <button type="button" class="btn btn--primary" data-open-dialog="incontroDialog">Proponi un incontro</button>
         </div>
       </div>
@@ -364,13 +358,60 @@
         <div class="grid grid--2">
           <article class="card">
             <h3 class="h3">Lezioni e Corsi</h3>
-            <p class="muted">Calendario, moduli e obiettivi formativi (in aggiornamento).</p>
+            <p class="muted">
+              Calendario, moduli e obiettivi formativi (in aggiornamento).
+              <br /><br />
+              <strong>Docenza universitaria:</strong> il gruppo tiene attività didattica di medicina iperbarica e subacquea
+              presso l’<strong>Università degli Studi dell’Insubria (Varese)</strong>, all’interno del Corso di Laurea in Medicina e Chirurgia.
+            </p>
           </article>
           <article class="card">
             <h3 class="h3">Materiali didattici</h3>
             <p class="muted">Slide, schede, bibliografia, risorse consigliate (in aggiornamento).</p>
           </article>
         </div>
+
+        <!-- CORSI PASSATI -->
+        <div class="section__head" style="margin-top:24px;">
+          <h3 class="h2" style="font-size:1.25rem;">Corsi passati</h3>
+          <p class="muted">
+            Selezione di eventi e corsi a cui abbiamo partecipato o contribuito.
+            Le locandine sono consultabili come anteprima e scaricabili in PDF.
+          </p>
+        </div>
+
+        <div class="posterGrid" aria-label="Corsi passati">
+          <!-- Esempi: duplica questi blocchi. -->
+          <!-- Metti la locandina in: assets/corsi/locandina-nomecorso.jpg (o .png)
+               Metti il PDF in: assets/corsi/nomecorso.pdf -->
+          <article class="posterCard card">
+            <a class="posterLink" href="assets/corsi/esempio-corso.pdf" target="_blank" rel="noopener">
+              <img class="posterImg" src="assets/corsi/esempio-corso.jpg" alt="Locandina corso (esempio)" loading="lazy" />
+            </a>
+            <div class="posterMeta">
+              <div class="posterTitle">Titolo corso (esempio)</div>
+              <div class="muted">Luogo · Data</div>
+              <a class="posterCta" href="assets/corsi/esempio-corso.pdf" target="_blank" rel="noopener">Apri PDF</a>
+            </div>
+          </article>
+
+          <article class="posterCard card">
+            <a class="posterLink" href="assets/corsi/esempio-corso-2.pdf" target="_blank" rel="noopener">
+              <img class="posterImg" src="assets/corsi/esempio-corso-2.jpg" alt="Locandina corso (esempio 2)" loading="lazy" />
+            </a>
+            <div class="posterMeta">
+              <div class="posterTitle">Titolo corso (esempio 2)</div>
+              <div class="muted">Luogo · Data</div>
+              <a class="posterCta" href="assets/corsi/esempio-corso-2.pdf" target="_blank" rel="noopener">Apri PDF</a>
+            </div>
+          </article>
+        </div>
+
+        <p class="fineprint" style="margin-top:12px;">
+          Nota: GitHub Pages mostra bene immagini (JPG/PNG/WebP). I PDF si possono linkare e aprire in nuova scheda,
+          ma per una griglia “bella” servono le anteprime in immagine.
+        </p>
+
       </div>
     </section>
 
@@ -420,13 +461,7 @@
     </div>
   </footer>
 
-  <!-- =========================
-       MODALI (Formspree)
-       1) Contatti
-       2) Proponi un incontro
-       NOTE: sostituisci YOUR_FORM_ID
-  ========================== -->
-
+  <!-- MODALI (Formspree) -->
   <dialog class="dialog" id="contattiDialog" aria-label="Modulo contatti">
     <div class="dialog__inner">
       <div class="dialog__head">
@@ -541,7 +576,6 @@
         });
       });
 
-      // click sullo sfondo per chiudere
       document.querySelectorAll('dialog').forEach(dlg => {
         dlg.addEventListener('click', (e) => {
           const box = dlg.querySelector('.dialog__inner');
@@ -552,5 +586,4 @@
   </script>
 </body>
 </html>
-
 
