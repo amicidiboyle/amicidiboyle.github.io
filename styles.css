@@ -876,3 +876,138 @@ textarea.form__input{ resize: vertical; min-height: 110px; }
   border: 1px solid var(--border) !important;
   box-shadow: none !important;
 }
+/* =========================================================
+   TEAM – FINAL OVERRIDE (avatar grandi + hover + line-clamp)
+   Incolla in fondo a styles.css
+========================================================= */
+
+/* --- Desktop/Tablet base --- */
+.team{
+  display:grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap:18px;
+  margin-top:16px;
+}
+
+.person{
+  display:flex;
+  align-items:flex-start;
+  gap:16px;
+}
+
+/* nascondi eventuale avatar con iniziali */
+.person .avatar{ display:none !important; }
+
+/* avatar desktop raddoppiato */
+.person .avatarImg{
+  width:88px !important;
+  height:88px !important;
+  max-width:88px !important;
+  max-height:88px !important;
+  flex:0 0 88px !important;
+
+  border-radius:20px !important;
+  object-fit: cover !important;
+  display:block !important;
+
+  border:1px solid var(--border) !important;
+  background: linear-gradient(135deg, rgba(11,74,162,.10), rgba(14,165,233,.12)) !important;
+  box-shadow:none !important;
+
+  transform: translateZ(0);
+  transition: transform .18s ease, filter .18s ease;
+}
+
+/* contenuto testuale: clamp delle qualifiche */
+.person p.muted{
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  -webkit-line-clamp: 2; /* DESKTOP: 2 righe */
+  line-clamp: 2;
+}
+
+/* =========================================================
+   HOVER (solo desktop: su mobile non serve e spesso fa casino)
+========================================================= */
+@media (hover:hover) and (pointer:fine){
+
+  .person.card{
+    transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+  }
+
+  .person.card:hover{
+    transform: translateY(-2px);
+    box-shadow: 0 18px 50px rgba(2,6,23,.10);
+    border-color: rgba(14,165,233,.25);
+  }
+
+  .person.card:hover .avatarImg{
+    transform: scale(1.06);
+    filter: saturate(1.03) contrast(1.02);
+  }
+}
+
+/* =========================================================
+   MOBILE (layout orizzontale + clamp più permissivo)
+========================================================= */
+@media (max-width: 760px){
+
+  /* una persona per riga */
+  .team{
+    grid-template-columns: 1fr !important;
+    gap:14px;
+  }
+
+  /* card più compatta */
+  .person.card{
+    padding:14px;
+  }
+
+  /* layout orizzontale */
+  .person{
+    flex-direction: row;
+    align-items: flex-start;
+    gap:14px;
+  }
+
+  /* avatar mobile */
+  .person .avatarImg{
+    width:64px !important;
+    height:64px !important;
+    max-width:64px !important;
+    max-height:64px !important;
+    flex:0 0 64px !important;
+    border-radius:16px !important;
+  }
+
+  /* testo sempre a sinistra */
+  .person > div{
+    text-align:left;
+    min-width:0; /* importantissimo per far funzionare ellissi/clamp */
+  }
+
+  /* clamp più lungo su mobile */
+  .person p.muted{
+    -webkit-line-clamp: 3; /* MOBILE: 3 righe */
+    line-clamp: 3;
+  }
+
+  .role{
+    font-size:11px;
+    padding:4px 8px;
+    margin-bottom:6px;
+  }
+
+  .person .h3{
+    font-size:16px;
+    margin-bottom:4px;
+  }
+
+  .person p.muted{
+    font-size:14px;
+    line-height:1.5;
+  }
+}
