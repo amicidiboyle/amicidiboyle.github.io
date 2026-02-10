@@ -966,3 +966,11 @@ textarea.form__input{ resize: vertical; min-height: 110px; }
   width:10px; height:10px;
   border-radius: 999px;
   background: linear-gradient(135deg, var(--brand),
+
+/* ===== TEAM: avatar tondi senza riquadro ===== */
+.avatarImg{
+  border-radius: 999px !important; /* cerchio perfetto */
+  background: transparent !important; /* niente piastre colorate */
+  border: 2px solid rgba(255,255,255,.9) !important; /* bordo pulito stile iOS */
+  box-shadow: 0 10px 24px rgba(2,6,23,.10) !important;
+}
