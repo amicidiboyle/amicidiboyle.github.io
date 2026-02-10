@@ -876,4 +876,37 @@ textarea.form__input{ resize: vertical; min-height: 110px; }
     text-overflow: ellipsis;
     display:block;
   }
+}/* ===== FIX HARD: payoff header SEMPRE visibile su mobile ===== */
+@media (max-width: 760px){
+
+  /* 1) forza a comparire */
+  .brand__sub{
+    display:block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+
+    font-size: 12px !important;
+    font-weight: 800 !important;
+    color: var(--muted) !important;
+    line-height: 1.25 !important;
+    margin-top: 4px !important;
+    max-width: 72vw !important;
+  }
+
+  /* 2) evita che il wrapper tagli */
+  .brand__text{
+    overflow: visible !important;
+    max-height: none !important;
+  }
+
+  /* 3) clamp per riga */
+  .brand__line{
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    display:block !important;
+  }
 }
