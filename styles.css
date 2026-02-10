@@ -909,4 +909,11 @@ textarea.form__input{ resize: vertical; min-height: 110px; }
     text-overflow: ellipsis !important;
     display:block !important;
   }
+}@media (max-width: 760px){
+  .header__inner{
+    align-items:flex-start !important;
+  }
+  .brand{
+    align-items:flex-start !important;
+  }
 }
