@@ -857,3 +857,23 @@ textarea.form__input{ resize: vertical; min-height: 110px; }
   html{scroll-behavior:auto}
   *{transition:none !important; animation:none !important;}
 }
+/* ===== Header payoff: visibile anche su mobile (compattato) ===== */
+@media (max-width: 760px){
+  .brand__sub{
+    display:block !important;
+    font-size: 12px;
+    font-weight: 800;
+    color: var(--muted);
+    line-height: 1.25;
+    margin-top: 4px;
+    max-width: 72vw;
+  }
+
+  /* invece di 3 righe lunghe, le facciamo stare bene */
+  .brand__line{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display:block;
+  }
+}
