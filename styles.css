@@ -11,6 +11,9 @@
   --max:1120px;
   --r:18px;
   --shadow: 0 18px 50px rgba(2,6,23,.10);
+
+  --shadow2: 0 12px 30px rgba(2,6,23,.08);
+  --ring: 0 0 0 4px rgba(14,165,233,.18);
 }
 
 *{box-sizing:border-box}
@@ -21,6 +24,8 @@ body{
   color:var(--ink);
   background:var(--bg);
   line-height:1.65;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
 img{max-width:100%; height:auto; display:block}
@@ -31,7 +36,7 @@ a:hover{text-decoration:underline}
 .muted{color:var(--muted)}
 .prose{max-width:80ch}
 
-/* Skip link */
+/* Accessibility */
 .skip{
   position:absolute; left:-999px; top:auto;
   width:1px; height:1px; overflow:hidden;
@@ -62,14 +67,11 @@ a:hover{text-decoration:underline}
   line-height: 1;
   cursor:pointer;
   user-select:none;
-  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+  transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
 }
 .btn:hover{ text-decoration:none; transform: translateY(-1px); }
 .btn:active{ transform: translateY(0); }
-.btn:focus-visible{
-  outline: 3px solid rgba(14,165,233,.35);
-  outline-offset: 2px;
-}
+.btn:focus-visible{ outline:none; box-shadow: var(--ring); }
 
 .btn--primary{
   border-color: transparent;
@@ -92,13 +94,14 @@ a:hover{text-decoration:underline}
   position: sticky;
   top: 0;
   z-index: 50;
-  background: rgba(255,255,255,.98);
-  backdrop-filter: blur(10px) saturate(180%);
+  background: rgba(255,255,255,.92);
+  backdrop-filter: blur(12px) saturate(160%);
   border-bottom: 1px solid var(--border);
 }
+
 .header__inner{
   display:flex;
-  align-items:center;
+  align-items:flex-start;
   justify-content:space-between;
   gap: 16px;
   padding: 12px 0;
@@ -116,13 +119,12 @@ a:hover{text-decoration:underline}
 }
 
 .brand__logo{
-  width: 64px;
-  height: 64px;
+  width: 56px;
+  height: 56px;
   border-radius: 999px;
-  object-fit: contain;
+  object-fit: cover;
   background: transparent;
-  box-shadow: none;
-  border: 1px solid rgba(11,74,162,.12);
+  border: 1px solid rgba(11,74,162,.14);
   flex: 0 0 auto;
 }
 
@@ -134,26 +136,32 @@ a:hover{text-decoration:underline}
 
 .brand__name{
   font-weight: 950;
-  letter-spacing: .2px;
+  letter-spacing: -.01em;
   line-height: 1.05;
   font-size: 20px;
   color: var(--ink);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 48vw;
-}
-
-.brand__sub{
-  font-size: 14.5px;
-  font-weight: 850;
-  color: #1f2937;
-  margin-top: 4px;
-  line-height: 1.32;
   max-width: 52vw;
 }
 
-.brand__line{ display:block; white-space: nowrap; }
+/* PAYOFF: visibile di default (desktop) */
+.brand__sub{
+  font-size: 14px;
+  font-weight: 850;
+  color: #1f2937;
+  margin-top: 4px;
+  line-height: 1.28;
+  max-width: 62vw;
+  opacity: .95;
+}
+.brand__line{
+  display:block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 
 /* =========================
    NAV
@@ -174,9 +182,8 @@ a:hover{text-decoration:underline}
   padding: 8px 10px;
   border-radius: 999px;
   white-space:nowrap;
-  transition: background .18s ease, color .18s ease;
+  transition: background .15s ease, color .15s ease;
 }
-
 .nav a:hover{
   color: var(--ink);
   background: rgba(14,165,233,.08);
@@ -186,10 +193,7 @@ a:hover{text-decoration:underline}
 /* =========================
    MOBILE MENU (details)
 ========================= */
-.menu{
-  display:none;
-  position: relative;
-}
+.menu{ display:none; position: relative; }
 
 .menu__button{
   list-style:none;
@@ -205,7 +209,6 @@ a:hover{text-decoration:underline}
   cursor:pointer;
   user-select:none;
 }
-
 .menu__button::-webkit-details-marker{display:none}
 
 .hamburger{
@@ -232,7 +235,7 @@ a:hover{text-decoration:underline}
   position: absolute;
   right: 0;
   top: calc(100% + 10px);
-  width: min(340px, 92vw);
+  width: min(320px, 90vw);
   background:#fff;
   border:1px solid var(--border);
   border-radius: 16px;
@@ -257,15 +260,8 @@ a:hover{text-decoration:underline}
 }
 
 /* =========================
-   HERO
+   HERO (premium)
 ========================= */
-.hero{
-  padding: 54px 0 28px;
-  background:
-    radial-gradient(900px 520px at 12% -10%, rgba(14,165,233,.14), transparent 62%),
-    radial-gradient(900px 520px at 90% 0%, rgba(11,74,162,.10), transparent 58%);
-}
-
 .hero--premium{
   padding: 74px 0 34px;
   background:
@@ -274,38 +270,19 @@ a:hover{text-decoration:underline}
     linear-gradient(180deg, rgba(246,251,255,1), rgba(255,255,255,1));
 }
 
-.hero__grid{
-  display:grid;
-  grid-template-columns: 1.15fr .85fr;
-  gap:24px;
-  align-items:start;
-}
-
 .hero__grid--premium{
+  display:grid;
   grid-template-columns: 1.05fr .95fr;
   gap: 26px;
-}
-
-.hero__copy{min-width:0}
-
-.h1{
-  font-size: clamp(34px, 4.2vw, 56px);
-  line-height:1.04;
-  margin:0 0 12px;
-  letter-spacing:-.02em;
-  font-weight: 950;
+  align-items:start;
 }
 
 .h1--premium{
   font-size: clamp(40px, 4.6vw, 64px);
   line-height: 1.02;
   letter-spacing: -0.03em;
-}
-
-.h1__sub{
-  display:inline-block;
-  color:var(--muted);
-  font-weight: 850;
+  margin:0 0 12px;
+  font-weight: 950;
 }
 
 .h1__sub--premium{
@@ -314,59 +291,60 @@ a:hover{text-decoration:underline}
   font-size: clamp(16px, 1.4vw, 20px);
   font-weight: 850;
   letter-spacing: -0.01em;
-}
-
-.lead{
-  font-size:18px;
-  color:var(--muted);
-  margin:0 0 16px;
-  max-width:72ch;
+  color: var(--muted);
 }
 
 .lead--premium{
   font-size: 19px;
   line-height: 1.7;
   max-width: 66ch;
+  color: var(--muted);
+  margin: 0 0 16px;
 }
 
-.cta{
+.cta--premium{
   display:flex;
   gap:10px;
   flex-wrap:wrap;
-  margin-top:10px;
+  margin-top: 12px;
 }
 
-.cta--premium{ margin-top: 12px; }
-
-/* ===== Chips: NON appiccicati, look premium ===== */
-.chips{
+/* questo sistema “spaziatore” risolve il tuo “appiccicato” sotto i pulsanti,
+   anche se hai paragrafi sciolti senza wrapper */
+.cta--premium + *{
   margin-top: 18px;
-  display: grid;
-  gap: 10px;
-  max-width: 560px;
+}
+.cta--premium + p,
+.cta--premium + div,
+.cta--premium + ul{
+  margin-top: 18px;
 }
 
-.chip{
+/* Se hai le 3 righe (Evidence-based / Docenza / Collaborazioni) come testo semplice,
+   queste regole gli danno aria e look da sito serio */
+.hero--premium strong{
+  font-weight: 950;
+}
+.hero--premium .hero__copy p{
+  margin: 0 0 12px;
+}
+.hero--premium .hero__copy p:last-child{ margin-bottom: 0; }
+
+/* chips (se le usi) */
+.chips{
   display:flex;
-  align-items:center;
-  gap:10px;
-  padding: 10px 12px;
-  border-radius: 14px;
-  border: 1px solid rgba(11,74,162,.14);
-  background: rgba(255,255,255,.92);
-  box-shadow: 0 10px 22px rgba(2,6,23,.05);
-  font-size: 14px;
-  font-weight: 850;
-  color: var(--ink);
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 14px;
 }
-
-.chip::before{
-  content:"";
-  width:10px; height:10px;
+.chip{
+  border: 1px solid var(--border);
+  background: #fff;
+  color: var(--muted);
+  padding: 8px 12px;
   border-radius: 999px;
-  background: linear-gradient(135deg, var(--brand), var(--brand2));
-  box-shadow: 0 6px 16px rgba(11,74,162,.18);
-  flex: 0 0 auto;
+  font-weight: 900;
+  font-size: 13px;
 }
 
 /* Right column */
@@ -387,9 +365,7 @@ a:hover{text-decoration:underline}
   overflow:hidden;
   min-height: 170px;
   box-shadow: 0 22px 60px rgba(2,6,23,.12);
-  transition: transform .22s ease, box-shadow .22s ease;
 }
-
 .heroVisual__glow{
   position:absolute;
   inset:-80px -60px;
@@ -399,7 +375,6 @@ a:hover{text-decoration:underline}
   filter: blur(20px);
   opacity: .75;
 }
-
 .heroVisual__grid{
   position:absolute;
   inset:0;
@@ -412,7 +387,9 @@ a:hover{text-decoration:underline}
   mask-image: radial-gradient(circle at 50% 40%, rgba(0,0,0,1), rgba(0,0,0,.2) 60%, transparent 75%);
 }
 
-/* Panel */
+/* =========================
+   PANEL / BADGE
+========================= */
 .panel{
   background:#fff;
   border:1px solid var(--border);
@@ -420,9 +397,7 @@ a:hover{text-decoration:underline}
   box-shadow: var(--shadow);
   overflow:hidden;
 }
-
 .panel__top{padding:18px 18px 10px;}
-.panel--tight .panel__top{ padding-bottom: 8px; }
 
 .badge{
   display:inline-flex;
@@ -439,8 +414,6 @@ a:hover{text-decoration:underline}
 .h3{font-size:18px; margin:0 0 8px;}
 
 .panel__list{padding:0 18px 10px; display:grid; gap:10px;}
-.panel--tight .panel__list{ padding-bottom: 8px; }
-
 .panel__item{
   border:1px solid var(--border);
   border-radius:14px;
@@ -449,12 +422,11 @@ a:hover{text-decoration:underline}
 }
 .panel__item strong{display:block}
 .panel__item span{display:block; color:var(--muted); font-size:14px; margin-top:2px;}
-
 .panel__cta{padding:12px 18px 18px;}
 .fineprint{font-size:13px; color:var(--muted); margin:10px 0 0;}
 
 /* =========================
-   SECTIONS
+   SECTIONS / GRID / CARD
 ========================= */
 .section{padding:42px 0;}
 .section--soft{
@@ -477,14 +449,12 @@ a:hover{text-decoration:underline}
 .grid--2{grid-template-columns: repeat(2, 1fr);}
 .grid--3{grid-template-columns: repeat(3, 1fr);}
 
-/* Cards */
 .card{
   background:#fff;
   border:1px solid var(--border);
   border-radius:var(--r);
   padding:18px;
-  box-shadow: 0 14px 36px rgba(2,6,23,.06);
-  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+  box-shadow: var(--shadow2);
 }
 
 .bullets{
@@ -495,7 +465,7 @@ a:hover{text-decoration:underline}
 .bullets li{margin:8px 0}
 
 /* =========================
-   TEAM
+   TEAM (wow, pulito, mobile ok)
 ========================= */
 .team{
   display:grid;
@@ -510,37 +480,49 @@ a:hover{text-decoration:underline}
   gap:16px;
 }
 
-.person > div{ min-width:0; }
+.person > div{min-width:0;}
 
-/* Se mai rimane un avatar con iniziali */
-.person .avatar{ display:none !important; }
+.person .avatar{display:none !important;}
 
-/* Avatar: SOLO cerchio, niente riquadro */
-.avatarImg{
+/* FOTO: SOLO CERCHIO, niente “quadratone” */
+.person .avatarImg{
   width:88px;
   height:88px;
   flex:0 0 88px;
-  max-width:88px;
-  max-height:88px;
-
   border-radius:999px;
-  object-fit:cover;
+  object-fit: cover;
   display:block;
 
+  border: 0;
   background: transparent;
-  border: 2px solid rgba(255,255,255,.92);
-  box-shadow: 0 14px 34px rgba(2,6,23,.12);
 
-  transition: transform .18s ease, filter .18s ease, box-shadow .18s ease;
+  /* “ring” elegante, non box quadrato */
+  box-shadow:
+    0 0 0 3px rgba(255,255,255,.95),
+    0 0 0 4px rgba(15,23,42,.10),
+    0 12px 28px rgba(2,6,23,.10);
+
+  transition: transform .18s ease, filter .18s ease;
 }
 
-/* Role badge: mai tagliato */
+/* clamp qualifiche */
+.person p.muted{
+  display:-webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp:2;
+  overflow:hidden;
+  margin: 6px 0 0;
+}
+
+/* ROLE: non tagliare su mobile */
 .role{
-  display:inline-block;
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
   padding:6px 10px;
   border-radius:999px;
-  border:1px solid var(--border);
-  background:#fff;
+  border:1px solid rgba(2,6,23,.10);
+  background: rgba(255,255,255,.85);
   font-size:12px;
   color:var(--muted);
   font-weight:950;
@@ -549,35 +531,18 @@ a:hover{text-decoration:underline}
   margin-bottom:8px;
   white-space: normal;
   max-width: 100%;
-  line-height: 1.2;
 }
 
-/* Clamp qualifiche */
-.person p.muted{
-  display:-webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp:2;
-  overflow:hidden;
-}
-
-/* Hover “wow” */
 @media (hover:hover) and (pointer:fine){
-  .card:hover{
-    transform: translateY(-3px);
-    box-shadow: 0 26px 80px rgba(2,6,23,.14);
+  .person.card{ transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease; }
+  .person.card:hover{
+    transform: translateY(-2px);
+    box-shadow: 0 18px 50px rgba(2,6,23,.12);
     border-color: rgba(14,165,233,.25);
   }
-  .card:hover .avatarImg{
+  .person.card:hover .avatarImg{
     transform: scale(1.06);
-    filter: saturate(1.03) contrast(1.02);
-    box-shadow: 0 18px 44px rgba(2,6,23,.16);
-  }
-  .heroVisual:hover{
-    transform: translateY(-3px);
-    box-shadow: 0 30px 90px rgba(2,6,23,.16);
-  }
-  .btn:hover{
-    transform: translateY(-2px);
+    filter: saturate(1.04) contrast(1.03);
   }
 }
 
@@ -598,7 +563,7 @@ a:hover{text-decoration:underline}
 }
 
 /* =========================
-   CORSI PASSATI (poster grid)
+   POSTER GRID (corsi)
 ========================= */
 .posterGrid{
   display:grid;
@@ -606,14 +571,8 @@ a:hover{text-decoration:underline}
   gap:14px;
   margin-top:14px;
 }
-
-.posterCard{
-  overflow:hidden;
-  padding:0;
-}
-
+.posterCard{ overflow:hidden; padding:0; }
 .posterLink{ display:block; text-decoration:none; }
-
 .posterImg{
   width:100%;
   height:220px;
@@ -621,97 +580,16 @@ a:hover{text-decoration:underline}
   display:block;
   background: rgba(255,255,255,.04);
 }
-
-.posterMeta{
-  padding:12px 12px 14px;
-  display:grid;
-  gap:6px;
-}
-
+.posterMeta{ padding:12px 12px 14px; display:grid; gap:6px; }
 .posterTitle{ font-weight: 800; }
-
-.posterCta{
-  display:inline-block;
-  font-weight:800;
-  text-decoration:none;
-  opacity:.9;
-}
+.posterCta{ display:inline-block; font-weight:800; text-decoration:none; opacity:.9; }
 .posterCta:hover{ opacity:1; }
 
 /* =========================
-   PODCAST PAGE
+   DIALOG / FORMS
 ========================= */
-.podcastTop{
-  display:flex;
-  gap:16px;
-  align-items:center;
-  justify-content:space-between;
-}
-.podcastLinks{
-  display:flex;
-  gap:10px;
-  flex-wrap:wrap;
-  justify-content:flex-end;
-}
-.podcastSeasons{
-  display:grid;
-  gap:14px;
-  margin-top:16px;
-}
-.season{ padding:0; overflow:hidden; }
-.season__summary{
-  list-style:none;
-  cursor:pointer;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:14px;
-  gap:12px;
-}
-.season__summary::-webkit-details-marker{ display:none; }
-.season__title{ font-size:1.05rem; font-weight:900; margin-top:6px; }
-.season__meta{ margin-top:4px; font-size:.95rem; }
-.season__chev{ font-size:1.25rem; opacity:.8; }
-.season[open] .season__chev{ transform: rotate(180deg); }
-.season__body{
-  padding:0 14px 14px;
-  display:grid;
-  gap:12px;
-}
-.episode{
-  border:1px solid rgba(255,255,255,.10);
-  background: rgba(255,255,255,.03);
-  border-radius:14px;
-  padding:12px;
-}
-.episode__meta{
-  display:flex;
-  gap:10px;
-  align-items:center;
-  justify-content:space-between;
-}
-.episode__num{ font-weight:900; letter-spacing:.02em; }
-.episode__title{ margin:8px 0 6px; font-size:1.05rem; }
-.episode__links{
-  margin-top:10px;
-  display:flex;
-  gap:10px;
-  flex-wrap:wrap;
-}
-
-/* =========================
-   DIALOG / MODAL + FORMS
-========================= */
-.dialog{
-  border: none;
-  padding: 0;
-  background: transparent;
-}
-
-.dialog::backdrop{
-  background: rgba(2,6,23,.55);
-  backdrop-filter: blur(6px);
-}
+.dialog{ border:none; padding:0; background: transparent; }
+.dialog::backdrop{ background: rgba(2,6,23,.55); backdrop-filter: blur(6px); }
 
 .dialog__inner{
   width: min(640px, calc(100vw - 28px));
@@ -722,7 +600,6 @@ a:hover{text-decoration:underline}
   box-shadow: 0 30px 90px rgba(2,6,23,.30);
   padding: 18px;
 }
-
 .dialog__head{
   display:flex;
   align-items:center;
@@ -734,11 +611,8 @@ a:hover{text-decoration:underline}
 
 .form{ display:grid; gap:12px; }
 .form__row{ display:grid; gap:6px; }
-.form__label{
-  font-weight: 900;
-  font-size: 13px;
-  color: var(--ink);
-}
+.form__label{ font-weight: 950; font-size: 13px; color: var(--ink); }
+
 .form__input{
   width:100%;
   padding: 10px 12px;
@@ -751,13 +625,12 @@ a:hover{text-decoration:underline}
   box-shadow: 0 10px 26px rgba(2,6,23,.04);
 }
 .form__input:focus{
-  outline: none;
+  outline:none;
   border-color: rgba(14,165,233,.6);
-  box-shadow:
-    0 0 0 4px rgba(14,165,233,.18),
-    0 10px 26px rgba(2,6,23,.04);
+  box-shadow: var(--ring), 0 10px 26px rgba(2,6,23,.04);
 }
 textarea.form__input{ resize: vertical; min-height: 110px; }
+
 .form__actions{
   display:flex;
   gap: 10px;
@@ -789,56 +662,46 @@ textarea.form__input{ resize: vertical; min-height: 110px; }
    RESPONSIVE
 ========================= */
 @media (max-width: 980px){
-  .hero__grid{grid-template-columns:1fr;}
-  .hero__grid--premium{ grid-template-columns:1fr; }
-  .grid--3{grid-template-columns:1fr;}
-  .grid--2{grid-template-columns:1fr;}
-  .team{grid-template-columns:1fr;}
-  .banner{flex-direction:column; align-items:flex-start;}
+  .hero__grid--premium{ grid-template-columns: 1fr; }
+  .grid--3{ grid-template-columns: 1fr; }
+  .grid--2{ grid-template-columns: 1fr; }
+  .team{ grid-template-columns: 1fr; }
+  .banner{ flex-direction:column; align-items:flex-start; }
 }
 
 @media (max-width: 920px){
   .posterGrid{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
-@media (max-width: 720px){
-  .podcastTop{ flex-direction: column; align-items: flex-start; }
-}
-
 @media (max-width: 760px){
-  .header__inner{gap:12px; padding:10px 0;}
-
-  .brand__logo{ width:42px; height:42px; border-radius:999px; }
-  .brand__name{font-size:16px; max-width: 70vw;}
-  .brand__sub{display:none;}
-
-  .nav--desktop{display:none;}
-  .menu{display:block;}
-
-  /* Hero spacing migliore in mobile */
-  .hero--premium{ padding: 52px 0 24px; }
-
-  /* Chips più ariose */
-  .chips{ max-width: 100%; }
-  .chip{ font-size: 14px; }
-
-  /* Team: avatar e testo leggibili */
-  .avatarImg{
-    width:64px;
-    height:64px;
-    flex:0 0 64px;
-    max-width:64px;
-    max-height:64px;
+  /* header compatto ma payoff VISIBILE */
+  .header__inner{ gap:12px; padding:10px 0; }
+  .brand__logo{ width:42px; height:42px; }
+  .brand__name{ font-size:16px; max-width: 62vw; }
+  .brand__sub{
+    display:block;
+    font-size:12px;
+    line-height:1.25;
+    max-width: 62vw;
   }
 
-  .person p.muted{
-    -webkit-line-clamp:3;
-  }
+  .nav--desktop{ display:none; }
+  .menu{ display:block; }
 
+  /* team mobile: non tagliare badge lunghi */
   .role{
     font-size:11px;
-    padding:6px 10px;
+    padding:5px 9px;
+    letter-spacing:.06em;
   }
+
+  /* avatar mobile */
+  .person .avatarImg{
+    width:64px; height:64px; flex:0 0 64px;
+  }
+
+  /* clamp un filo più permissivo su mobile */
+  .person p.muted{ -webkit-line-clamp:3; }
 }
 
 @media (max-width: 560px){
@@ -846,74 +709,12 @@ textarea.form__input{ resize: vertical; min-height: 110px; }
 }
 
 @media (max-width: 420px){
-  .brand__name{
-    max-width: 78vw;
-    text-overflow: clip;
-  }
+  .brand__name{ max-width: 58vw; }
+  .brand__sub{ max-width: 58vw; }
 }
 
 /* Reduced motion */
 @media (prefers-reduced-motion: reduce){
   html{scroll-behavior:auto}
   *{transition:none !important; animation:none !important;}
-}
-/* ===== Header payoff: visibile anche su mobile (compattato) ===== */
-@media (max-width: 760px){
-  .brand__sub{
-    display:block !important;
-    font-size: 12px;
-    font-weight: 800;
-    color: var(--muted);
-    line-height: 1.25;
-    margin-top: 4px;
-    max-width: 72vw;
-  }
-
-  /* invece di 3 righe lunghe, le facciamo stare bene */
-  .brand__line{
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display:block;
-  }
-}/* ===== FIX HARD: payoff header SEMPRE visibile su mobile ===== */
-@media (max-width: 760px){
-
-  /* 1) forza a comparire */
-  .brand__sub{
-    display:block !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-    height: auto !important;
-    max-height: none !important;
-    overflow: visible !important;
-
-    font-size: 12px !important;
-    font-weight: 800 !important;
-    color: var(--muted) !important;
-    line-height: 1.25 !important;
-    margin-top: 4px !important;
-    max-width: 72vw !important;
-  }
-
-  /* 2) evita che il wrapper tagli */
-  .brand__text{
-    overflow: visible !important;
-    max-height: none !important;
-  }
-
-  /* 3) clamp per riga */
-  .brand__line{
-    white-space: nowrap !important;
-    overflow: hidden !important;
-    text-overflow: ellipsis !important;
-    display:block !important;
-  }
-}@media (max-width: 760px){
-  .header__inner{
-    align-items:flex-start !important;
-  }
-  .brand{
-    align-items:flex-start !important;
-  }
 }
