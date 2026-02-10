@@ -829,3 +829,50 @@ textarea.form__input{ resize: vertical; min-height: 110px; }
   .heroVisual{ min-height: 150px; }
   .dialog__inner{ margin-top: 8vh; }
 }
+/* ===== TEAM AVATAR: micro-icone come prima ===== */
+
+/* griglia team come prima */
+.team{
+  display:grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap:14px;
+  margin-top:16px;
+}
+
+/* riga: icona a sx, testo a dx */
+.person{
+  display:flex;
+  gap:14px;
+  align-items:flex-start;
+}
+
+/* se c'è ancora l'avatar con iniziali, nascondilo */
+.person .avatar{ display:none !important; }
+
+/* BLOCCA qualunque immagine nel team a dimensione avatar */
+.team img{
+  width: 32px !important;
+  height: 32px !important;
+  max-width: 32px !important;
+  max-height: 32px !important;
+  flex: 0 0 32px !important;
+  border-radius: 12px !important;     /* look “icona” come prima */
+  object-fit: cover !important;
+  display:block !important;
+  border: 1px solid var(--border) !important;
+  box-shadow: none !important;
+}
+
+/* se usi la classe dedicata, stesso identico risultato */
+.person .avatarImg{
+  width: 32px !important;
+  height: 32px !important;
+  max-width: 32px !important;
+  max-height: 32px !important;
+  flex: 0 0 32px !important;
+  border-radius: 12px !important;
+  object-fit: cover !important;
+  display:block !important;
+  border: 1px solid var(--border) !important;
+  box-shadow: none !important;
+}
