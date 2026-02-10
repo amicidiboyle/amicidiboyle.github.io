@@ -851,4 +851,27 @@ textarea.form__input{resize: vertical; min-height: 110px;}
   .heroVisual{ min-height: 150px; }
   .dialog__inner{ margin-top: 8vh; }
 }
+/* ===== TEAM: avatar piccoli come prima (mini icona a sx, testo a dx) ===== */
+
+/* mantieni il layout "riga" */
+.person{
+  display:flex;
+  gap:14px;
+  align-items:flex-start;
+}
+
+/* foto piccole tipo vecchie iniziali */
+.avatarImg{
+  width:44px;
+  height:44px;
+  border-radius:999px;
+  object-fit: cover;
+  flex:0 0 auto;
+  border:1px solid var(--border);
+  background: linear-gradient(135deg, rgba(11,74,162,.10), rgba(14,165,233,.12));
+  box-shadow: none;
+}
+
+/* se nel markup resta ancora l'avatar con iniziali, nascondilo */
+.avatar{ display:none; }
 
