@@ -974,3 +974,11 @@ textarea.form__input{ resize: vertical; min-height: 110px; }
   border: 2px solid rgba(255,255,255,.9) !important; /* bordo pulito stile iOS */
   box-shadow: 0 10px 24px rgba(2,6,23,.10) !important;
 }
+.person{
+  position: relative;
+}
+
+.avatarImg{
+  outline: 3px solid rgba(14,165,233,.25);
+  outline-offset: 2px;
+}
