@@ -1,0 +1,985 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Podcast · Gli Amici di Boyle</title>
+  <meta name="description" content="Podcast Gli Amici di Boyle: stagioni ed episodi su medicina subacquea, iperbarica e ambienti estremi. Ascolta su Spotify." />
+  <meta name="theme-color" content="#0b4aa2" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" href="assets/logo.png" type="image/png" />
+
+  <!-- CSS SOLO PER QUESTA PAGINA (non tocca il resto del sito) -->
+  <style>
+    /* =========================
+       PODCAST PAGE – PREMIUM LAYOUT
+    ========================= */
+
+    .podcastHero{
+      padding: 44px 0 18px;
+      background:
+        radial-gradient(900px 520px at 12% -10%, rgba(14,165,233,.14), transparent 62%),
+        radial-gradient(900px 520px at 90% 0%, rgba(11,74,162,.10), transparent 58%),
+        linear-gradient(180deg, rgba(246,251,255,1), rgba(255,255,255,1));
+      border-bottom: 1px solid var(--border);
+    }
+
+    .podcastHero__grid{
+      display:grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap: 18px;
+      align-items:start;
+    }
+
+    .podcastKicker{
+      display:inline-flex;
+      gap:10px;
+      align-items:center;
+      font-weight: 950;
+      color: var(--muted);
+      font-size: 13px;
+      letter-spacing:.02em;
+      margin-bottom: 10px;
+    }
+
+    .podcastTitle{
+      margin:0 0 10px;
+      font-size: clamp(34px, 4.2vw, 52px);
+      line-height:1.04;
+      letter-spacing:-.02em;
+      font-weight: 950;
+    }
+
+    .podcastLead{
+      margin:0;
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.7;
+      max-width: 70ch;
+    }
+
+    .podcastActions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top: 14px;
+    }
+
+    .podcastPanel{
+      background: rgba(255,255,255,.92);
+      border:1px solid rgba(226,232,240,.92);
+      border-radius: 22px;
+      box-shadow: 0 22px 60px rgba(2,6,23,.12);
+      overflow:hidden;
+    }
+
+    .podcastPanel__top{
+      padding: 16px 16px 12px;
+      border-bottom: 1px solid rgba(226,232,240,.9);
+    }
+
+    .podcastPanel__title{
+      margin: 6px 0 0;
+      font-size: 16px;
+      font-weight: 950;
+    }
+
+    .podcastPanel__body{
+      padding: 14px 16px 16px;
+      display:grid;
+      gap: 10px;
+    }
+
+    .quickStat{
+      background: rgba(14,165,233,.06);
+      border: 1px solid rgba(14,165,233,.14);
+      border-radius: 16px;
+      padding: 10px 12px;
+      display:flex;
+      justify-content:space-between;
+      gap: 10px;
+      font-weight: 900;
+    }
+
+    .quickStat span{ color: var(--muted); font-weight: 850; }
+
+    /* Controls */
+    .podcastControls{
+      padding: 26px 0 10px;
+    }
+
+    .controlsGrid{
+      display:grid;
+      grid-template-columns: 1.4fr .6fr;
+      gap: 12px;
+      align-items:center;
+    }
+
+    .searchWrap{
+      position: relative;
+      width:100%;
+    }
+
+    .searchInput{
+      width:100%;
+      padding: 12px 14px 12px 42px;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      background:#fff;
+      color: var(--ink);
+      font: inherit;
+      box-shadow: 0 10px 26px rgba(2,6,23,.04);
+    }
+
+    .searchIcon{
+      position:absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      opacity: .65;
+      pointer-events:none;
+      font-weight: 900;
+    }
+
+    .seasonTabs{
+      display:flex;
+      gap:10px;
+      justify-content:flex-end;
+      flex-wrap:wrap;
+    }
+
+    .tabBtn{
+      border: 1px solid var(--border);
+      background:#fff;
+      color: var(--muted);
+      padding: 10px 12px;
+      border-radius: 999px;
+      font-weight: 900;
+      font-size: 13px;
+      cursor:pointer;
+      user-select:none;
+    }
+
+    .tabBtn[aria-pressed="true"]{
+      color: var(--ink);
+      border-color: rgba(14,165,233,.35);
+      box-shadow: 0 10px 26px rgba(2,6,23,.06);
+      background: rgba(14,165,233,.08);
+    }
+
+    /* Seasons list */
+    .seasons{
+      display:grid;
+      gap: 14px;
+      padding: 14px 0 44px;
+    }
+
+    .season{
+      border:1px solid var(--border);
+      background:#fff;
+      border-radius: 22px;
+      overflow:hidden;
+      box-shadow: 0 14px 36px rgba(2,6,23,.06);
+    }
+
+    .season__summary{
+      list-style:none;
+      cursor:pointer;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 12px;
+      padding: 14px 16px;
+      background:
+        radial-gradient(620px 240px at 10% 0%, rgba(14,165,233,.10), transparent 60%),
+        radial-gradient(520px 240px at 80% 20%, rgba(11,74,162,.08), transparent 60%);
+    }
+    .season__summary::-webkit-details-marker{ display:none; }
+
+    .season__left{
+      display:flex;
+      flex-direction:column;
+      gap: 4px;
+      min-width:0;
+    }
+
+    .season__title{
+      font-size: 18px;
+      font-weight: 950;
+      margin:0;
+      letter-spacing:-.01em;
+    }
+
+    .season__meta{
+      color: var(--muted);
+      font-weight: 850;
+      font-size: 13px;
+      display:flex;
+      gap: 10px;
+      flex-wrap:wrap;
+    }
+
+    .season__pill{
+      display:inline-flex;
+      align-items:center;
+      gap: 8px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(11,74,162,.18);
+      background: rgba(11,74,162,.06);
+      color: var(--brand);
+      font-weight: 950;
+      font-size: 12px;
+      white-space:nowrap;
+    }
+
+    .season__chev{
+      font-size: 18px;
+      opacity: .8;
+      flex: 0 0 auto;
+      transition: transform .18s ease;
+    }
+    .season[open] .season__chev{ transform: rotate(180deg); }
+
+    .season__body{
+      padding: 0 16px 16px;
+      display:grid;
+      gap: 12px;
+    }
+
+    /* Episode cards */
+    .episodes{
+      display:grid;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .episode{
+      border: 1px solid rgba(226,232,240,.95);
+      border-radius: 18px;
+      padding: 12px;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,.96), rgba(255,255,255,.88));
+      display:grid;
+      gap: 10px;
+    }
+
+    .episodeTop{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap: 12px;
+    }
+
+    .episodeNum{
+      display:inline-flex;
+      align-items:center;
+      gap: 8px;
+      font-weight: 950;
+      font-size: 12px;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      color: var(--muted);
+    }
+
+    .episodeTitle{
+      margin: 6px 0 0;
+      font-size: 16px;
+      font-weight: 950;
+      line-height:1.2;
+    }
+
+    .episodeTitle a{
+      text-decoration:none;
+    }
+    .episodeTitle a:hover{
+      text-decoration: underline;
+    }
+
+    .episodeActions{
+      display:flex;
+      gap: 10px;
+      flex-wrap:wrap;
+      align-items:center;
+      justify-content:flex-end;
+    }
+
+    .btn--spotify{
+      border-color: transparent;
+      color:#fff !important;
+      background: linear-gradient(135deg, #1DB954, #169C46);
+      box-shadow: 0 16px 40px rgba(29,185,84,.18);
+    }
+
+    .btn--tiny{
+      padding: 9px 12px;
+      font-size: 13px;
+    }
+
+    .episodeHint{
+      color: var(--muted);
+      font-size: 13.5px;
+      margin:0;
+    }
+
+    /* Hover polish */
+    @media (hover:hover) and (pointer:fine){
+      .episode{
+        transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+      }
+      .episode:hover{
+        transform: translateY(-2px);
+        box-shadow: 0 18px 50px rgba(2,6,23,.10);
+        border-color: rgba(14,165,233,.28);
+      }
+    }
+
+    /* Responsive */
+    @media (max-width: 980px){
+      .podcastHero__grid{ grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 760px){
+      .controlsGrid{ grid-template-columns: 1fr; }
+      .seasonTabs{ justify-content:flex-start; }
+      .episodeTop{ flex-direction: column; align-items:flex-start; }
+      .episodeActions{ justify-content:flex-start; }
+    }
+
+    /* Reduced motion */
+    @media (prefers-reduced-motion: reduce){
+      *{ transition:none !important; animation:none !important; }
+    }
+  </style>
+</head>
+
+<body>
+  <a class="skip" href="#contenuto">Vai al contenuto</a>
+
+  <!-- HEADER uguale al resto del sito -->
+  <header class="header" role="banner">
+    <div class="container header__inner">
+      <a class="brand" href="index.html#top" aria-label="Home">
+        <img class="brand__logo" src="assets/logo.png" alt="Gli Amici di Boyle" />
+        <span class="brand__text">
+          <span class="brand__name">Gli Amici di Boyle</span>
+          <span class="brand__sub">
+            <span class="brand__line">Diving &amp; Hyperbaric Medicine</span>
+            <span class="brand__line">Research &amp; Education</span>
+            <span class="brand__line">Human Performance &amp; Safety in Extreme Environments</span>
+          </span>
+        </span>
+      </a>
+
+      <nav class="nav nav--desktop" aria-label="Navigazione principale">
+        <a href="index.html#vision">Vision</a>
+        <a href="index.html#chisiamo">Chi siamo</a>
+        <a href="index.html#ricerca">Ricerca</a>
+        <a href="index.html#formazione">Formazione</a>
+        <a href="podcast.html" aria-current="page">Podcast</a>
+        <a class="btn btn--primary" href="index.html#contatti">Contatti</a>
+      </nav>
+
+      <details class="menu" aria-label="Menu mobile">
+        <summary class="menu__button" aria-label="Apri menu">
+          <span class="hamburger" aria-hidden="true"><span></span></span>
+          <span class="menu__label">Menu</span>
+        </summary>
+        <div class="menu__panel" role="menu">
+          <a role="menuitem" href="index.html#vision">Vision</a>
+          <a role="menuitem" href="index.html#chisiamo">Chi siamo</a>
+          <a role="menuitem" href="index.html#ricerca">Ricerca</a>
+          <a role="menuitem" href="index.html#formazione">Formazione</a>
+          <a role="menuitem" href="podcast.html">Podcast</a>
+          <a role="menuitem" class="btn btn--primary btn--block" href="index.html#contatti">Contatti</a>
+        </div>
+      </details>
+    </div>
+  </header>
+
+  <main id="contenuto">
+
+    <!-- HERO -->
+    <section class="podcastHero">
+      <div class="container podcastHero__grid">
+        <div>
+          <div class="podcastKicker">🎙️ Podcast · Medicina subacquea &amp; ambienti estremi</div>
+          <h1 class="podcastTitle">Stagioni &amp; Episodi</h1>
+          <p class="podcastLead">
+            Una serie di episodi divulgativi, ma seri, su fisiologia, sicurezza, iperbarismo e “pressione” in tutte le sue forme.
+            Link diretto agli episodi su Spotify, organizzati per stagioni.
+          </p>
+
+          <div class="podcastActions">
+            <a class="btn btn--primary btn--lg" href="#stagioni">Vai alle stagioni</a>
+            <a class="btn btn--ghost btn--lg" href="https://open.spotify.com/" target="_blank" rel="noopener">Apri Spotify</a>
+          </div>
+        </div>
+
+        <aside class="podcastPanel" aria-label="Riepilogo">
+          <div class="podcastPanel__top">
+            <span class="badge">In breve</span>
+            <div class="podcastPanel__title">Catalogo Podcast</div>
+          </div>
+          <div class="podcastPanel__body">
+            <div class="quickStat"><span>Stagioni</span> <strong id="statSeasons">3</strong></div>
+            <div class="quickStat"><span>Episodi totali</span> <strong id="statEpisodes">0</strong></div>
+            <div class="quickStat"><span>Ascolto</span> <strong>Spotify</strong></div>
+            <p class="muted" style="margin:0; font-size:13px;">
+              Suggerimento: usa la ricerca per trovare “barotrauma”, “ossigeno”, “Ustica”, ecc.
+            </p>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- CONTROLLI -->
+    <section class="podcastControls">
+      <div class="container">
+        <div class="controlsGrid">
+          <div class="searchWrap">
+            <span class="searchIcon">⌕</span>
+            <input id="search" class="searchInput" type="search" placeholder="Cerca episodio o parola chiave… (es: barotrauma, ossigeno, Ustica)" />
+          </div>
+
+          <div class="seasonTabs" aria-label="Filtri stagioni">
+            <button class="tabBtn" type="button" aria-pressed="true" data-filter="all">Tutte</button>
+            <button class="tabBtn" type="button" aria-pressed="false" data-filter="s1">Stagione 1</button>
+            <button class="tabBtn" type="button" aria-pressed="false" data-filter="s2">Stagione 2</button>
+            <button class="tabBtn" type="button" aria-pressed="false" data-filter="s3">Stagione 3</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- STAGIONI -->
+    <section class="section" id="stagioni" style="padding-top: 12px;">
+      <div class="container">
+        <div class="seasons">
+
+          <!-- STAGIONE 1 -->
+          <details class="season" data-season="s1" open>
+            <summary class="season__summary">
+              <div class="season__left">
+                <h2 class="season__title">Stagione 1</h2>
+                <div class="season__meta">
+                  <span class="season__pill">10 episodi</span>
+                  <span>Fondamenti subacquei &amp; iperbarica</span>
+                </div>
+              </div>
+              <div class="season__chev">⌄</div>
+            </summary>
+
+            <div class="season__body">
+              <div class="episodes">
+
+                <article class="episode" data-title="Le Leggi Fisiche del Mondo Sommerso" data-episode="s1e1">
+                  <div class="episodeTop">
+                    <div>
+                      <div class="episodeNum">S1 · EP 1</div>
+                      <h3 class="episodeTitle">
+                        <a href="https://open.spotify.com/episode/6MSOUbc8hpJrsYD7b4rL71?si=2f822b99f3074a0c" target="_blank" rel="noopener">
+                          Le Leggi Fisiche del Mondo Sommerso
+                        </a>
+                      </h3>
+                    </div>
+                    <div class="episodeActions">
+                      <a class="btn btn--spotify btn--tiny" href="https://open.spotify.com/episode/6MSOUbc8hpJrsYD7b4rL71?si=2f822b99f3074a0c" target="_blank" rel="noopener">Ascolta su Spotify</a>
+                      <button class="btn btn--ghost btn--tiny" type="button" data-copy="https://open.spotify.com/episode/6MSOUbc8hpJrsYD7b4rL71?si=2f822b99f3074a0c">Copia link</button>
+                    </div>
+                  </div>
+                  <p class="episodeHint">Pressione, gas e basi fisiche che comandano tutto sott’acqua.</p>
+                </article>
+
+                <article class="episode" data-title="La Subacquea Ricreativa" data-episode="s1e2">
+                  <div class="episodeTop">
+                    <div>
+                      <div class="episodeNum">S1 · EP 2</div>
+                      <h3 class="episodeTitle">
+                        <a href="https://open.spotify.com/episode/0j65FzDaiWnGOLG1RJMsdf?si=2f462544003d423e" target="_blank" rel="noopener">
+                          La Subacquea Ricreativa
+                        </a>
+                      </h3>
+                    </div>
+                    <div class="episodeActions">
+                      <a class="btn btn--spotify btn--tiny" href="https://open.spotify.com/episode/0j65FzDaiWnGOLG1RJMsdf?si=2f462544003d423e" target="_blank" rel="noopener">Ascolta su Spotify</a>
+                      <button class="btn btn--ghost btn--tiny" type="button" data-copy="https://open.spotify.com/episode/0j65FzDaiWnGOLG1RJMsdf?si=2f462544003d423e">Copia link</button>
+                    </div>
+                  </div>
+                  <p class="episodeHint">Cosa è “ricreativo” davvero, e dove iniziano gli errori classici.</p>
+                </article>
+
+                <article class="episode" data-title="La Visita di Idoneità" data-episode="s1e3">
+                  <div class="episodeTop">
+                    <div>
+                      <div class="episodeNum">S1 · EP 3</div>
+                      <h3 class="episodeTitle">
+                        <a href="https://open.spotify.com/episode/306ebmPOCAdVCPecp1iyiU?si=22d1e9fc0c884349" target="_blank" rel="noopener">
+                          La Visita di Idoneità
+                        </a>
+                      </h3>
+                    </div>
+                    <div class="episodeActions">
+                      <a class="btn btn--spotify btn--tiny" href="https://open.spotify.com/episode/306ebmPOCAdVCPecp1iyiU?si=22d1e9fc0c884349" target="_blank" rel="noopener">Ascolta su Spotify</a>
+                      <button class="btn btn--ghost btn--tiny" type="button" data-copy="https://open.spotify.com/episode/306ebmPOCAdVCPecp1iyiU?si=22d1e9fc0c884349">Copia link</button>
+                    </div>
+                  </div>
+                  <p class="episodeHint">Idoneità: cosa serve davvero, cosa si cerca, cosa si sottovaluta.</p>
+                </article>
+
+                <article class="episode" data-title="L’attrezzatura Subacquea" data-episode="s1e4">
+                  <div class="episodeTop">
+                    <div>
+                      <div class="episodeNum">S1 · EP 4</div>
+                      <h3 class="episodeTitle">
+                        <a href="https://open.spotify.com/episode/2ZtxfohbgrYYyDf7R1XaJ6?si=924c603f684f42c9" target="_blank" rel="noopener">
+                          L’attrezzatura Subacquea
+                        </a>
+                      </h3>
+                    </div>
+                    <div class="episodeActions">
+                      <a class="btn btn--spotify btn--tiny" href="https://open.spotify.com/episode/2ZtxfohbgrYYyDf7R1XaJ6?si=924c603f684f42c9" target="_blank" rel="noopener">Ascolta su Spotify</a>
+                      <button class="btn btn--ghost btn--tiny" type="button" data-copy="https://open.spotify.com/episode/2ZtxfohbgrYYyDf7R1XaJ6?si=924c603f684f42c9">Copia link</button>
+                    </div>
+                  </div>
+                  <p class="episodeHint">Attrezzatura: cosa è essenziale, cosa è optional, cosa è pericoloso se ignorato.</p>
+                </article>
+
+                <article class="episode" data-title="Il Computer Subacqueo" data-episode="s1e5">
+                  <div class="episodeTop">
+                    <div>
+                      <div class="episodeNum">S1 · EP 5</div>
+                      <h3 class="episodeTitle">
+                        <a href="https://open.spotify.com/episode/4vzJeIizgJl2rHu0lCIiL2?si=98a3c032aec3408d" target="_blank" rel="noopener">
+                          Il Computer Subacqueo
+                        </a>
+                      </h3>
+                    </div>
+                    <div class="episodeActions">
+                      <a class="btn btn--spotify btn--tiny" href="https://open.spotify.com/episode/4vzJeIizgJl2rHu0lCIiL2?si=98a3c032aec3408d" target="_blank" rel="noopener">Ascolta su Spotify</a>
+                      <button class="btn btn--ghost btn--tiny" type="button" data-copy="https://open.spotify.com/episode/4vzJeIizgJl2rHu0lCIiL2?si=98a3c032aec3408d">Copia link</button>
+                    </div>
+                  </div>
+                  <p class="episodeHint">Algoritmi, limiti, e il classico: “lo dice il computer quindi è vero”.</p>
+                </article>
+
+                <article class="episode" data-title="Il Barotrauma" data-episode="s1e6">
+                  <div class="episodeTop">
+                    <div>
+                      <div class="episodeNum">S1 · EP 6</div>
+                      <h3 class="episodeTitle">
+                        <a href="https://open.spotify.com/episode/5FYXKNcnhuHqFdRg7LWeOO?si=1702e1c8db8b4359" target="_blank" rel="noopener">
+                          Il Barotrauma
+                        </a>
+                      </h3>
+                    </div>
+                    <div class="episodeActions">
+                      <a class="btn btn--spotify btn--tiny" href="https://open.spotify.com/episode/5FYXKNcnhuHqFdRg7LWeOO?si=1702e1c8db8b4359" target="_blank" rel="noopener">Ascolta su Spotify</a>
+                      <button class="btn btn--ghost btn--tiny" type="button" data-copy="https://open.spotify.com/episode/5FYXKNcnhuHqFdRg7LWeOO?si=1702e1c8db8b4359">Copia link</button>
+                    </div>
+                  </div>
+                  <p class="episodeHint">Orecchio, seni, polmoni: l’anatomia non negocia con l’entusiasmo.</p>
+                </article>
+
+                <article class="episode" data-title="La Camera Iperbarica" data-episode="s1e7">
+                  <div class="episodeTop">
+                    <div>
+                      <div class="episodeNum">S1 · EP 7</div>
+                      <h3 class="episodeTitle">
+                        <a href="https://open.spotify.com/episode/2k96mq4lTfMF4YIs6CWRAW?si=e0f0d829290244ad" target="_blank" rel="noopener">
+                          La Camera Iperbarica
+                        </a>
+                      </h3>
+                    </div>
+                    <div class="episodeActions">
+                      <a class="btn btn--spotify btn--tiny" href="https://open.spotify.com/episode/2k96mq4lTfMF4YIs6CWRAW?si=e0f0d829290244ad" target="_blank" rel="noopener">Ascolta su Spotify</a>
+                      <button class="btn btn--ghost btn--tiny" type="button" data-copy="https://open.spotify.com/episode/2k96mq4lTfMF4YIs6CWRAW?si=e0f0d829290244ad">Copia link</button>
+                    </div>
+                  </div>
+                  <p class="episodeHint">Indicazioni, limiti, e cosa succede davvero dentro una camera.</p>
+                </article>
+
+                <article class="episode" data-title="Il Tecnico Iperbarico" data-episode="s1e8">
+                  <div class="episodeTop">
+                    <div>
+                      <div class="episodeNum">S1 · EP 8</div>
+                      <h3 class="episodeTitle">
+                        <a href="https://open.spotify.com/episode/0XtJeKMDtqAU88aC9GRP6U?si=01965d15eadc4bd5" target="_blank" rel="noopener">
+                          Il Tecnico Iperbarico
+                        </a>
+                      </h3>
+                    </div>
+                    <div class="episodeActions">
+                      <a class="btn btn--spotify btn--tiny" href="https://open.spotify.com/episode/0XtJeKMDtqAU88aC9GRP6U?si=01965d15eadc4bd5" target="_blank" rel="noopener">Ascolta su Spotify</a>
+                      <button class="btn btn--ghost btn--tiny" type="button" data-copy="https://open.spotify.com/episode/0XtJeKMDtqAU88aC9GRP6U?si=01965d15eadc4bd5">Copia link</button>
+                    </div>
+                  </div>
+                  <p class="episodeHint">Ruolo critico, spesso invisibile. Qui no.</p>
+                </article>
+
+                <article class="episode" data-title="Volare Dopo L’Immersione" data-episode="s1e9">
+                  <div class="episodeTop">
+                    <div>
+                      <div class="episodeNum">S1 · EP 9</div>
+                      <h3 class="episodeTitle">
+                        <a href="https://open.spotify.com/episode/7xGygD36INtZSoz3dhsSGI?si=9b62142220f448c0" target="_blank" rel="noopener">
+                          Volare Dopo L’Immersione
+                        </a>
+                      </h3>
+                    </div>
+                    <div class="episodeActions">
+                      <a class="btn btn--spotify btn--tiny" href="https://open.spotify.com/episode/7xGygD36INtZSoz3dhsSGI?si=9b62142220f448c0" target="_blank" rel="noopener">Ascolta su Spotify</a>
+                      <button class="btn btn--ghost btn--tiny" type="button" data-copy="https://open.spotify.com/episode/7xGygD36INtZSoz3dhsSGI?si=9b62142220f448c0">Copia link</button>
+                    </div>
+                  </div>
+                  <p class="episodeHint">Tempi, rischio, fisiologia: no, non è un “dettaglio”.</p>
+                </article>
+
+                <article class="episode" data-title="Il Trucco e La Camera Iperbarica" data-episode="s1e10">
+                  <div class="episodeTop">
+                    <div>
+                      <div class="episodeNum">S1 · EP 10</div>
+                      <h3 class="episodeTitle">
+                        <a href="https://open.spotify.com/episode/0SVzq9RvNGlNF9OvAohswg?si=2122b06ef46e472c" target="_blank" rel="noopener">
+                          Il Trucco e La Camera Iperbarica
+                        </a>
+                      </h3>
+                    </div>
+                    <div class="episodeActions">
+                      <a class="btn btn--spotify btn--tiny" href="https://open.spotify.com/episode/0SVzq9RvNGlNF9OvAohswg?si=2122b06ef46e472c" target="_blank" rel="noopener">Ascolta su Spotify</a>
+                      <button class="btn btn--ghost btn--tiny" type="button" data-copy="https://open.spotify.com/episode/0SVzq9RvNGlNF9OvAohswg?si=2122b06ef46e472c">Copia link</button>
+                    </div>
+                  </div>
+                  <p class="episodeHint">Quello che non ti aspetti di dover sapere… ma serve.</p>
+                </article>
+
+              </div>
+            </div>
+          </details>
+
+          <!-- STAGIONE 2 -->
+          <details class="season" data-season="s2">
+            <summary class="season__summary">
+              <div class="season__left">
+                <h2 class="season__title">Stagione 2</h2>
+                <div class="season__meta">
+                  <span class="season__pill">10 episodi</span>
+                  <span>Ipobarismo, cinema, storia e gas</span>
+                </div>
+              </div>
+              <div class="season__chev">⌄</div>
+            </summary>
+
+            <div class="season__body">
+              <div class="episodes">
+
+                <article class="episode" data-title="La Camera Ipobarica" data-episode="s2e1">
+                  <div class="episodeTop">
+                    <div>
+                      <div class="episodeNum">S2 · EP 1</div>
+                      <h3 class="episodeTitle"><a href="https://open.spotify.com/episode/5Hjvc1BJkLDFVAKPItRf0l?si=272c6e8d8b4242b5" target="_blank" rel="noopener">La Camera Ipobarica</a></h3>
+                    </div>
+                    <div class="episodeActions">
+                      <a class="btn btn--spotify btn--tiny" href="https://open.spotify.com/episode/5Hjvc1BJkLDFVAKPItRf0l?si=272c6e8d8b4242b5" target="_blank" rel="noopener">Ascolta su Spotify</a>
+                      <button class="btn btn--ghost btn--tiny" type="button" data-copy="https://open.spotify.com/episode/5Hjvc1BJkLDFVAKPItRf0l?si=272c6e8d8b4242b5">Copia link</button>
+                    </div>
+                  </div>
+                  <p class="episodeHint">Dall’altra parte della pressione: quando “togli aria” cambia tutto.</p>
+                </article>
+
+                <article class="episode" data-title="Vuoto vs Ipobarismo" data-episode="s2e2">
+                  <div class="episodeTop">
+                    <div>
+                      <div class="episodeNum">S2 · EP 2</div>
+                      <h3 class="episodeTitle"><a href="https://open.spotify.com/episode/3fpHrUPF4520zXVCt5zz7u?si=fdb2385ba9e64c11" target="_blank" rel="noopener">Vuoto vs Ipobarismo</a></h3>
+                    </div>
+                    <div class="episodeActions">
+                      <a class="btn btn--spotify btn--tiny" href="https://open.spotify.com/episode/3fpHrUPF4520zXVCt5zz7u?si=fdb2385ba9e64c11" target="_blank" rel="noopener">Ascolta su Spotify</a>
+                      <button class="btn btn--ghost btn--tiny" type="button" data-copy="https://open.spotify.com/episode/3fpHrUPF4520zXVCt5zz7u?si=fdb2385ba9e64c11">Copia link</button>
+                    </div>
+                  </div>
+                  <p class="episodeHint">Vuoto non è ipobarismo. Sì, c’è differenza. Grossa.</p>
+                </article>
+
+                <article class="episode" data-title="Sotto Pressione … Al Cinema!" data-episode="s2e3">
+                  <div class="episodeTop">
+                    <div>
+                      <div class="episodeNum">S2 · EP 3</div>
+                      <h3 class="episodeTitle"><a href="https://open.spotify.com/episode/6SBnlvNRFZVJu5l5kQCNxr?si=9dc84fb769394e21" target="_blank" rel="noopener">Sotto Pressione … Al Cinema!</a></h3>
+                    </div>
+                    <div class="episodeActions">
+                      <a class="btn btn--spotify btn--tiny" href="https://open.spotify.com/episode/6SBnlvNRFZVJu5l5kQCNxr?si=9dc84fb769394e21" target="_blank" rel="noopener">Ascolta su Spotify</a>
+                      <button class="btn btn--ghost btn--tiny" type="button" data-copy="https://open.spotify.com/episode/6SBnlvNRFZVJu5l5kQCNxr?si=9dc84fb769394e21">Copia link</button>
+                    </div>
+                  </div>
+                  <p class="episodeHint">Quando Hollywood incontra la fisiologia: chi vince? (spoiler: non Hollywood).</p>
+                </article>
+
+                <article class="episode" data-title="La Visione Sott’Acqua" data-episode="s2e4">
+                  <div class="episodeTop">
+                    <div>
+                      <div class="episodeNum">S2 · EP 4</div>
+                      <h3 class="episodeTitle"><a href="https://open.spotify.com/episode/3hCvyTtjgbLN5Dne5syJh5?si=6044052f0ed0446a" target="_blank" rel="noopener">La Visione Sott’Acqua</a></h3>
+                    </div>
+                    <div class="episodeActions">
+                      <a class="btn btn--spotify btn--tiny" href="https://open.spotify.com/episode/3hCvyTtjgbLN5Dne5syJh5?si=6044052f0ed0446a" target="_blank" rel="noopener">Ascolta su Spotify</a>
+                      <button class="btn btn--ghost btn--tiny" type="button" data-copy="https://open.spotify.com/episode/3hCvyTtjgbLN5Dne5syJh5?si=6044052f0ed0446a">Copia link</button>
+                    </div>
+                  </div>
+                  <p class="episodeHint">Ottica, rifrazione, e perché “vedo male” non è sempre colpa della maschera.</p>
+                </article>
+
+                <article class="episode" data-title="La Medicina Iperbarica in Svizzera" data-episode="s2e5">
+                  <div class="episodeTop">
+                    <div>
+                      <div class="episodeNum">S2 · EP 5</div>
+                      <h3 class="episodeTitle"><a href="https://open.spotify.com/episode/464BDK3uyywkXDNfN7Q79t?si=a55694953fea4042" target="_blank" rel="noopener">La Medicina Iperbarica in Svizzera</a></h3>
+                    </div>
+                    <div class="episodeActions">
+                      <a class="btn btn--spotify btn--tiny" href="https://open.spotify.com/episode/464BDK3uyywkXDNfN7Q79t?si=a55694953fea4042" target="_blank" rel="noopener">Ascolta su Spotify</a>
+                      <button class="btn btn--ghost btn--tiny" type="button" data-copy="https://open.spotify.com/episode/464BDK3uyywkXDNfN7Q79t?si=a55694953fea4042">Copia link</button>
+                    </div>
+                  </div>
+                  <p class="episodeHint">Modelli organizzativi e pratica clinica “fuori confine”.</p>
+                </article>
+
+                <article class="episode" data-title="Pinocchio" data-episode="s2e6">
+                  <div class="episodeTop">
+                    <div>
+                      <div class="episodeNum">S2 · EP 6</div>
+                      <h3 class="episodeTitle"><a href="https://open.spotify.com/episode/0XiVtXf6vzHvtfJTo3RTkV?si=f3b4afd42e294b05" target="_blank" rel="noopener">Pinocchio</a></h3>
+                    </div>
+                    <div class="episodeActions">
+                      <a class="btn btn--spotify btn--tiny" href="https://open.spotify.com/episode/0XiVtXf6vzHvtfJTo3RTkV?si=f3b4afd42e294b05" target="_blank" rel="noopener">Ascolta su Spotify</a>
+                      <button class="btn btn--ghost btn--tiny" type="button" data-copy="https://open.spotify.com/episode/0XiVtXf6vzHvtfJTo3RTkV?si=f3b4afd42e294b05">Copia link</button>
+                    </div>
+                  </div>
+                  <p class="episodeHint">Sì, Pinocchio. No, non è “fuori tema” (purtroppo per te).</p>
+                </article>
+
+                <article class="episode" data-title="Apollo 1" data-episode="s2e7">
+                  <div class="episodeTop">
+                    <div>
+                      <div class="episodeNum">S2 · EP 7</div>
+                      <h3 class="episodeTitle"><a href="https://open.spotify.com/episode/0URzOrvOKtVx2ZhPfRZAui?si=e1524c6db8994a2c" target="_blank" rel="noopener">Apollo 1</a></h3>
+                    </div>
+                    <div class="episodeActions">
+                      <a class="btn btn--spotify btn--tiny" href="https://open.spotify.com/episode/0URzOrvOKtVx2ZhPfRZAui?si=e1524c6db8994a2c" target="_blank" rel="noopener">Ascolta su Spotify</a>
+                      <button class="btn btn--ghost btn--tiny" type="button" data-copy="https://open.spotify.com/episode/0URzOrvOKtVx2ZhPfRZAui?si=e1524c6db8994a2c">Copia link</button>
+                    </div>
+                  </div>
+                  <p class="episodeHint">Spazio, pressione, ossigeno: combinazione che non perdona.</p>
+                </article>
+
+                <article class="episode" data-title="L’ossigeno" data-episode="s2e8">
+                  <div class="episodeTop">
+                    <div>
+                      <div class="episodeNum">S2 · EP 8</div>
+                      <h3 class="episodeTitle"><a href="https://open.spotify.com/episode/232sqmX64kRaZZopeSZZbm?si=67b3af603c4843d3" target="_blank" rel="noopener">L’ossigeno</a></h3>
+                    </div>
+                    <div class="episodeActions">
+                      <a class="btn btn--spotify btn--tiny" href="https://open.spotify.com/episode/232sqmX64kRaZZopeSZZbm?si=67b3af603c4843d3" target="_blank" rel="noopener">Ascolta su Spotify</a>
+                      <button class="btn btn--ghost btn--tiny" type="button" data-copy="https://open.spotify.com/episode/232sqmX64kRaZZopeSZZbm?si=67b3af603c4843d3">Copia link</button>
+                    </div>
+                  </div>
+                  <p class="episodeHint">Il gas più “banale” e più pericoloso se lo tratti con superficialità.</p>
+                </article>
+
+                <article class="episode" data-title="27 Giugno 1980 Ustica" data-episode="s2e9">
+                  <div class="episodeTop">
+                    <div>
+                      <div class="episodeNum">S2 · EP 9</div>
+                      <h3 class="episodeTitle"><a href="https://open.spotify.com/episode/2BIrJ7YHzg19kBvTFniiqU?si=662a6ec0f6c943e5" target="_blank" rel="noopener">27 Giugno 1980 Ustica</a></h3>
+                    </div>
+                    <div class="episodeActions">
+                      <a class="btn btn--spotify btn--tiny" href="https://open.spotify.com/episode/2BIrJ7YHzg19kBvTFniiqU?si=662a6ec0f6c943e5" target="_blank" rel="noopener">Ascolta su Spotify</a>
+                      <button class="btn btn--ghost btn--tiny" type="button" data-copy="https://open.spotify.com/episode/2BIrJ7YHzg19kBvTFniiqU?si=662a6ec0f6c943e5">Copia link</button>
+                    </div>
+                  </div>
+                  <p class="episodeHint">Un episodio storico pesante. Necessario.</p>
+                </article>
+
+                <article class="episode" data-title="L’azoto" data-episode="s2e10">
+                  <div class="episodeTop">
+                    <div>
+                      <div class="episodeNum">S2 · EP 10</div>
+                      <h3 class="episodeTitle"><a href="https://open.spotify.com/episode/0WMWByHyt7Teu8CrMwFzvN?si=e5eae8dc1df7425a" target="_blank" rel="noopener">L’azoto</a></h3>
+                    </div>
+                    <div class="episodeActions">
+                      <a class="btn btn--spotify btn--tiny" href="https://open.spotify.com/episode/0WMWByHyt7Teu8CrMwFzvN?si=e5eae8dc1df7425a" target="_blank" rel="noopener">Ascolta su Spotify</a>
+                      <button class="btn btn--ghost btn--tiny" type="button" data-copy="https://open.spotify.com/episode/0WMWByHyt7Teu8CrMwFzvN?si=e5eae8dc1df7425a">Copia link</button>
+                    </div>
+                  </div>
+                  <p class="episodeHint">Il grande “invisibile” che regola saturazione, narcosi e decompressione.</p>
+                </article>
+
+              </div>
+            </div>
+          </details>
+
+          <!-- STAGIONE 3 -->
+          <details class="season" data-season="s3">
+            <summary class="season__summary">
+              <div class="season__left">
+                <h2 class="season__title">Stagione 3</h2>
+                <div class="season__meta">
+                  <span class="season__pill">3 episodi</span>
+                  <span>Elio, astronauti e fisiologia “estrema”</span>
+                </div>
+              </div>
+              <div class="season__chev">⌄</div>
+            </summary>
+
+            <div class="season__body">
+              <div class="episodes">
+
+                <article class="episode" data-title="La Leggerezza dell’Elio" data-episode="s3e1">
+                  <div class="episodeTop">
+                    <div>
+                      <div class="episodeNum">S3 · EP 1</div>
+                      <h3 class="episodeTitle"><a href="https://open.spotify.com/episode/5jno2XE2ZwBgfBzHaqm5mT?si=fc7ac24c49bd4b0e" target="_blank" rel="noopener">La Leggerezza dell’Elio</a></h3>
+                    </div>
+                    <div class="episodeActions">
+                      <a class="btn btn--spotify btn--tiny" href="https://open.spotify.com/episode/5jno2XE2ZwBgfBzHaqm5mT?si=fc7ac24c49bd4b0e" target="_blank" rel="noopener">Ascolta su Spotify</a>
+                      <button class="btn btn--ghost btn--tiny" type="button" data-copy="https://open.spotify.com/episode/5jno2XE2ZwBgfBzHaqm5mT?si=fc7ac24c49bd4b0e">Copia link</button>
+                    </div>
+                  </div>
+                  <p class="episodeHint">Heliox: perché cambia lavoro respiratorio, voce e margini operativi.</p>
+                </article>
+
+                <article class="episode" data-title="L’addestramento Degli Astronauti In Immersione" data-episode="s3e2">
+                  <div class="episodeTop">
+                    <div>
+                      <div class="episodeNum">S3 · EP 2</div>
+                      <h3 class="episodeTitle"><a href="https://open.spotify.com/episode/69I9teyK9cS3C77W7KeG5e?si=77fc341ff0444324" target="_blank" rel="noopener">L’addestramento Degli Astronauti In Immersione</a></h3>
+                    </div>
+                    <div class="episodeActions">
+                      <a class="btn btn--spotify btn--tiny" href="https://open.spotify.com/episode/69I9teyK9cS3C77W7KeG5e?si=77fc341ff0444324" target="_blank" rel="noopener">Ascolta su Spotify</a>
+                      <button class="btn btn--ghost btn--tiny" type="button" data-copy="https://open.spotify.com/episode/69I9teyK9cS3C77W7KeG5e?si=77fc341ff0444324">Copia link</button>
+                    </div>
+                  </div>
+                  <p class="episodeHint">Neutrally buoyant lab: perché l’acqua è il miglior simulatore del “non peso”.</p>
+                </article>
+
+                <article class="episode" data-title="L’organo più Sensibile Alla Pressione" data-episode="s3e3">
+                  <div class="episodeTop">
+                    <div>
+                      <div class="episodeNum">S3 · EP 3</div>
+                      <h3 class="episodeTitle"><a href="https://open.spotify.com/episode/2w3drALmfECWTv3UZguRWo?si=e4ac05f3ab6d4600" target="_blank" rel="noopener">L’organo più Sensibile Alla Pressione</a></h3>
+                    </div>
+                    <div class="episodeActions">
+                      <a class="btn btn--spotify btn--tiny" href="https://open.spotify.com/episode/2w3drALmfECWTv3UZguRWo?si=e4ac05f3ab6d4600" target="_blank" rel="noopener">Ascolta su Spotify</a>
+                      <button class="btn btn--ghost btn--tiny" type="button" data-copy="https://open.spotify.com/episode/2w3drALmfECWTv3UZguRWo?si=e4ac05f3ab6d4600">Copia link</button>
+                    </div>
+                  </div>
+                  <p class="episodeHint">Un episodio “da clinici”: sensibilità, soglie e implicazioni pratiche.</p>
+                </article>
+
+              </div>
+            </div>
+          </details>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <div class="container footer__inner">
+      <div>© 2026 Gli Amici di Boyle</div>
+      <div class="footer__links">
+        <a href="index.html#top">Home</a>
+        <a href="#contenuto">Torna su</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JS minimo: ricerca + filtri + copia link + stats -->
+  <script>
+    (function(){
+      const search = document.getElementById('search');
+      const tabBtns = document.querySelectorAll('.tabBtn');
+      const seasons = document.querySelectorAll('.season');
+      const episodes = document.querySelectorAll('.episode');
+      const statEpisodes = document.getElementById('statEpisodes');
+
+      // stats episodi
+      statEpisodes.textContent = String(episodes.length);
+
+      let activeSeason = 'all';
+      let q = '';
+
+      function normalize(s){
+        return (s || '')
+          .toLowerCase()
+          .normalize('NFD')
+          .replace(/[\u0300-\u036f]/g, '');
+      }
+
+      function apply(){
+        const nq = normalize(q);
+
+        episodes.forEach(ep => {
+          const title = normalize(ep.getAttribute('data-title'));
+          const epId = ep.getAttribute('data-episode') || '';
+          const seasonId = epId.startsWith('s1') ? 's1' : epId.startsWith('s2') ? 's2' : epId.startsWith('s3') ? 's3' : 'all';
+
+          const seasonOk = (activeSeason === 'all') || (seasonId === activeSeason);
+          const queryOk = !nq || title.includes(nq);
+
+          ep.style.display = (seasonOk && queryOk) ? '' : 'none';
+        });
+
+        // nascondi stagione se nessun episodio visibile dentro
+        seasons.forEach(season => {
+          const seasonId = season.getAttribute('data-season');
+          const visibleInside = season.querySelectorAll('.episode:not([style*="display: none"])').length > 0;
+          const seasonOk = (activeSeason === 'all') || (seasonId === activeSeason);
+          season.style.display = (seasonOk && visibleInside) ? '' : 'none';
+        });
+      }
+
+      // ricerca
+      search.addEventListener('input', (e) => {
+        q = e.target.value || '';
+        apply();
+      });
+
+      // tabs stagione
+      tabBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          tabBtns.forEach(b => b.setAttribute('aria-pressed', 'false'));
+          btn.setAttribute('aria-pressed', 'true');
+          activeSeason = btn.getAttribute('data-filter') || 'all';
+
+          // apri automaticamente la stagione selezionata
+          seasons.forEach(s => {
+            if(activeSeason === 'all') return;
+            s.open = (s.getAttribute('data-season') === activeSeason);
+          });
+
+          apply();
+        });
+      });
+
+      // copia link
+      document.querySelectorAll('[data-copy]').forEach(btn => {
+        btn.addEventListener('click', async () => {
+          const url = btn.getAttribute('data-copy');
+          try{
+            await navigator.clipboard.writeText(url);
+            const old = btn.textContent;
+            btn.textContent = 'Copiato ✓';
+            setTimeout(() => btn.textContent = old, 1100);
+          }catch(e){
+            window.prompt('Copia il link:', url);
+          }
+        });
+      });
+
+      apply();
+    })();
+  </script>
+</body>
+</html>
