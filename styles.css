@@ -118,15 +118,7 @@ a:hover{text-decoration:underline}
   min-width: 0;
 }
 
-.brand__logo{
-  width: 56px;
-  height: 56px;
-  border-radius: 999px;
-  object-fit: cover;
-  background: transparent;
-  border: 1px solid rgba(11,74,162,.14);
-  flex: 0 0 auto;
-}
+.brand__logo{width:72px;height:72px;flex:0 0 72px;border-radius:999px;object-fit:cover;display:block;}
 
 .brand__text{
   display:flex;
@@ -174,7 +166,7 @@ a:hover{text-decoration:underline}
   justify-content: flex-end;
 }
 
-.nav a{
+.nav a:not(.btn){
   text-decoration:none;
   color: var(--muted);
   font-weight: 900;
@@ -580,6 +572,33 @@ a:hover{text-decoration:underline}
   display:block;
   background: rgba(255,255,255,.04);
 }
+
+
+/* ===== Poster hover: zoom + overlay "Apri PDF" ===== */
+.posterLink{ position:relative; display:block; overflow:hidden; border-radius:16px; }
+.posterLink::after{
+  content:"Apri PDF";
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:900;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  font-size:12px;
+  color:#fff;
+  background: rgba(2,6,23,.45);
+  opacity:0;
+  transition: opacity .18s ease;
+}
+.posterImg{ transition: transform .22s ease; }
+
+@media (hover:hover) and (pointer:fine){
+  .posterCard:hover .posterImg{ transform: scale(1.06); }
+  .posterCard:hover .posterLink::after{ opacity:1; }
+}
+
 .posterMeta{ padding:12px 12px 14px; display:grid; gap:6px; }
 .posterTitle{ font-weight: 800; }
 .posterCta{ display:inline-block; font-weight:800; text-decoration:none; opacity:.9; }
@@ -676,7 +695,7 @@ textarea.form__input{ resize: vertical; min-height: 110px; }
 @media (max-width: 760px){
   /* header compatto ma payoff VISIBILE */
   .header__inner{ gap:12px; padding:10px 0; }
-  .brand__logo{ width: 52px; height: 52px; }
+  .brand__logo{ width:42px; height:42px; }
   .brand__name{ font-size:16px; max-width: 62vw; }
   .brand__sub{
     display:block;
@@ -697,7 +716,7 @@ textarea.form__input{ resize: vertical; min-height: 110px; }
 
   /* avatar mobile */
   .person .avatarImg{
-    width:64px; height:64px; flex: 0 0 80px;
+    width:64px; height:64px; flex:0 0 64px;
   }
 
   /* clamp un filo più permissivo su mobile */
@@ -801,4 +820,50 @@ textarea.form__input{ resize: vertical; min-height: 110px; }
 
 }
 
-.btn--primary:hover{ color:#fff; }
+
+
+@media (max-width: 760px){
+  .brand__logo{width:60px;height:60px;flex:0 0 60px;}
+}
+
+
+
+/* ===== Partner ===== */
+.partnerCard{ position:relative; overflow:hidden; }
+.partnerCard::before{
+  content:"";
+  position:absolute; inset:-60px -80px auto auto;
+  width:220px; height:220px;
+  background: radial-gradient(circle at 30% 30%, rgba(14,165,233,.22), rgba(14,165,233,0) 65%);
+  transform: rotate(18deg);
+  pointer-events:none;
+}
+.partnerBadge{
+  display:inline-flex;
+  padding:6px 10px;
+  border-radius:999px;
+  background: rgba(11,74,162,.10);
+  border:1px solid rgba(11,74,162,.18);
+  color: var(--brand);
+  font-size:12px;
+  font-weight:900;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}
+.partnerBadge--ghost{
+  background: rgba(255,255,255,.6);
+  color: var(--muted);
+  border-color: var(--border);
+}
+.partnerCard--placeholder{ background: linear-gradient(135deg, rgba(246,248,251,.9), rgba(255,255,255,.95)); }
+
+/* ===== Subtle ambient background ===== */
+body::before{
+  content:"";
+  position:fixed; inset:0;
+  pointer-events:none;
+  background:
+    radial-gradient(900px 420px at 20% 0%, rgba(14,165,233,.10), rgba(14,165,233,0) 60%),
+    radial-gradient(900px 420px at 90% 10%, rgba(11,74,162,.10), rgba(11,74,162,0) 55%);
+  z-index:-1;
+}
