@@ -5,10 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Gli Amici di Boyle · Ricerca e divulgazione in medicina subacquea e iperbarica</title>
   <meta name="description" content="Gli Amici di Boyle: ricerca e divulgazione in medicina subacquea e iperbarica. Approccio multidisciplinare, evidenze, formazione e innovazione." />
-  <meta name="theme-color" content="#0b4aa2" />
+  <meta name="theme-color" content="#020617" />
 
-  <!-- Cache busting: cambia la versione quando aggiorni CSS -->
-  <link rel="stylesheet" href="styles.css?v=1">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Montserrat:wght@700;900&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css?v=2">
   <link rel="icon" href="assets/logo.png" type="image/png" />
 </head>
 
@@ -17,16 +20,11 @@
 
   <header class="header" role="banner">
     <div class="container header__inner">
-
       <a class="brand" href="#top" aria-label="Home">
         <img class="brand__logo" src="assets/logo.png" alt="Gli Amici di Boyle" />
         <span class="brand__text">
           <span class="brand__name">Gli Amici di Boyle</span>
-          <span class="brand__sub">
-            <span class="brand__line">Diving &amp; Hyperbaric Medicine</span>
-            <span class="brand__line">Research &amp; Education</span>
-            <span class="brand__line">Human Performance &amp; Safety in Extreme Environments</span>
-          </span>
+          <span class="brand__sub">Extreme Environments Research</span>
         </span>
       </a>
 
@@ -42,9 +40,7 @@
       <details class="menu" aria-label="Menu mobile">
         <summary class="menu__button" aria-label="Apri menu">
           <span class="hamburger" aria-hidden="true"><span></span></span>
-          <span class="menu__label">Menu</span>
         </summary>
-
         <div class="menu__panel" role="menu">
           <a role="menuitem" href="#vision">Vision</a>
           <a role="menuitem" href="#chisiamo">Chi siamo</a>
@@ -54,537 +50,269 @@
           <a role="menuitem" class="btn btn--primary btn--block" href="#contatti">Contatti</a>
         </div>
       </details>
-
     </div>
   </header>
 
   <main id="contenuto">
-
-    <!-- HERO -->
     <section class="hero hero--premium" id="top">
-      <div class="container hero__grid hero__grid--premium">
-
+      <div class="hero__glow"></div>
+      <div class="container hero__grid">
         <div class="hero__copy">
-          <p class="eyebrow">Ricerca · Formazione · Safety</p>
-
-          <h1 class="h1 h1--premium">
-            Gli Amici di Boyle
-            <span class="h1__sub h1__sub--premium">
-              Ricerca e divulgazione in medicina subacquea ed iperbarica.
-            </span>
-          </h1>
-
-          <p class="lead lead--premium">
-            Un gruppo multidisciplinare che integra competenze cliniche, tecnologiche e scientifiche
-            per migliorare sicurezza in immersione, conoscenza e applicazioni dell’ossigenoterapia iperbarica.
+          <p class="eyebrow">Evidence · Performance · Safety</p>
+          <h1 class="h1">Oltre la superficie della <span class="text-gradient">Fisiologia.</span></h1>
+          <p class="lead">
+            Integrazione di competenze cliniche e ingegneristiche avanzate per la sicurezza umana negli ambienti estremi. 
+            Dalla terapia intensiva alle profondità oceaniche.
           </p>
 
-          <div class="cta cta--premium">
+          <div class="cta">
             <a class="btn btn--primary btn--lg" href="#ricerca">Esplora la ricerca</a>
-            <a class="btn btn--ghost btn--lg" href="#chisiamo">Conosci il team</a>
+            <a class="btn btn--ghost btn--lg" href="#chisiamo">Il Team</a>
           </div>
 
-          <div class="trust" aria-label="Indicatori">
-            <div class="trust__item">
-              <strong>Evidence-based</strong>
-              <span>Approccio sobrio, replicabile, utile.</span>
-            </div>
-            <div class="trust__item">
-              <strong>Docenza</strong>
-              <span>Università, aziende, associazioni.</span>
-            </div>
-            <div class="trust__item">
-              <strong>Collaborazioni</strong>
-              <span>Progetti, case report, editoria.</span>
-            </div>
+          <div class="trust">
+            <div class="trust__item"><strong>Clinical First</strong><span>Esperienza reale in Area Critica.</span></div>
+            <div class="trust__item"><strong>Academic</strong><span>Docenza universitaria e Ricerca.</span></div>
           </div>
         </div>
 
-        <div class="heroRight" aria-label="In evidenza e visual">
-
-          <div class="heroVisual" aria-hidden="true">
-            <div class="heroVisual__glow"></div>
-            <div class="heroVisual__grid"></div>
-
-            <svg viewBox="0 0 820 260" width="100%" height="100%" preserveAspectRatio="none" style="position:absolute; inset:0; opacity:.95">
-              <defs>
-                <linearGradient id="g1" x1="0" x2="1">
-                  <stop offset="0" stop-color="rgba(11,74,162,.16)"/>
-                  <stop offset="1" stop-color="rgba(14,165,233,.18)"/>
-                </linearGradient>
-                <radialGradient id="b1" cx="50%" cy="40%" r="60%">
-                  <stop offset="0" stop-color="rgba(14,165,233,.22)"/>
-                  <stop offset="1" stop-color="rgba(14,165,233,0)"/>
-                </radialGradient>
-              </defs>
-
-              <path d="M0,170 C140,150 220,210 360,190 C520,165 600,120 820,150 L820,260 L0,260 Z" fill="url(#g1)"/>
-              <path d="M0,190 C160,170 260,230 410,210 C560,185 650,145 820,170" fill="none" stroke="rgba(11,74,162,.22)" stroke-width="2"/>
-
-              <circle cx="650" cy="95" r="60" fill="rgba(255,255,255,.55)" stroke="rgba(11,74,162,.18)" stroke-width="2"/>
-              <path d="M610,95 A40,40 0 0 1 690,95" fill="none" stroke="rgba(11,74,162,.25)" stroke-width="8" stroke-linecap="round"/>
-              <path d="M630,105 L685,80" stroke="rgba(11,74,162,.45)" stroke-width="4" stroke-linecap="round"/>
-              <circle cx="650" cy="95" r="6" fill="rgba(11,74,162,.45)"/>
-
-              <circle cx="120" cy="210" r="18" fill="url(#b1)"/>
-              <circle cx="160" cy="165" r="10" fill="rgba(14,165,233,.18)"/>
-              <circle cx="210" cy="120" r="14" fill="rgba(14,165,233,.16)"/>
-              <circle cx="260" cy="170" r="8" fill="rgba(14,165,233,.14)"/>
-              <circle cx="320" cy="120" r="12" fill="rgba(14,165,233,.12)"/>
-            </svg>
-          </div>
-
-          <aside class="panel panel--tight" aria-label="In evidenza">
+        <div class="heroRight">
+          <aside class="panel panel--premium">
             <div class="panel__top">
               <span class="badge">In evidenza</span>
-              <h2 class="h2">Contenuti professionali</h2>
-              <p class="muted">
-                Strumenti operativi, progetti, materiali didattici e pubblicazioni.
-                Scienza applicata: verificabile, replicabile.
-              </p>
+              <h2 class="h2">Asset Professionali</h2>
+              <p class="muted">Strumenti operativi e pubblicazioni basate su rigore scientifico e replicabilità clinica.</p>
             </div>
-
-            <div class="panel__list" role="list">
-              <div class="panel__item" role="listitem">
-                <strong>Collaborazioni</strong>
-                <span>Ricerca, case report, docenza, progetti editoriali.</span>
-              </div>
-              <div class="panel__item" role="listitem">
-                <strong>Lezioni e corsi</strong>
-                <span>Università, aziende, associazioni: contenuti dove servono.</span>
-              </div>
-              <div class="panel__item" role="listitem">
-                <strong>Focus clinico</strong>
-                <span>Utilità pratica, rigore, replicabilità.</span>
-              </div>
+            <div class="panel__list">
+              <div class="panel__item"><strong>Collaborazioni</strong><span>Case report e progetti editoriali.</span></div>
+              <div class="panel__item"><strong>Focus Clinico</strong><span>Utilità pratica per professionisti sanitari.</span></div>
             </div>
-
             <div class="panel__cta">
-              <button type="button" class="btn btn--primary btn--block" data-open-dialog="contattiDialog">
-                Scrivici
-              </button>
-              <p class="fineprint">Risposta via email. Zero spam. Zero rumore.</p>
+              <button type="button" class="btn btn--primary btn--block" data-open-dialog="contattiDialog">Invia Proposta</button>
             </div>
           </aside>
-
         </div>
       </div>
     </section>
 
-    <!-- VISION -->
     <section class="section" id="vision">
       <div class="container">
-        <div class="section__head">
+        <div class="section__head center">
           <h2 class="h2">Vision</h2>
-          <p class="muted">
-            Essere un riferimento internazionale per innovazione e ricerca in medicina iperbarica e subacquea,
-            con un approccio multidisciplinare che integra competenze mediche, tecnologiche e scientifiche.
-          </p>
+          <p class="muted">Riferimento per l'innovazione in medicina iperbarica attraverso la multidisciplinarietà.</p>
         </div>
-
-        <div class="grid grid--3">
-          <article class="card">
-            <h3 class="h3">Rigorosa</h3>
-            <p class="muted">
-              Ricerca verificabile, risultati e metodi chiari: scienza, non folklore.
-            </p>
+        <div class="bento-grid">
+          <article class="bento-item">
+            <h3>Rigorosa</h3>
+            <p>Scienza, non folklore. Metodi chiari e risultati verificabili.</p>
           </article>
-
-          <article class="card">
-            <h3 class="h3">Multidisciplinare</h3>
-            <p class="muted">
-              Clinica, ingegneria, fisiologia, safety: un unico linguaggio operativo.
-            </p>
+          <article class="bento-item">
+            <h3>Multidisciplinare</h3>
+            <p>Un unico linguaggio tra clinica, ingegneria e fisiologia.</p>
           </article>
-
-          <article class="card">
-            <h3 class="h3">Continua</h3>
-            <p class="muted">
-              Formazione applicabile, aggiornata, pensata per chi lavora sul campo.
-            </p>
+          <article class="bento-item">
+            <h3>Continua</h3>
+            <p>Formazione aggiornata per chi opera in contesti reali.</p>
           </article>
         </div>
       </div>
     </section>
 
-    <!-- CHI SIAMO -->
-    <section class="section section--soft" id="chisiamo">
+    <section class="section section--dark" id="chisiamo">
       <div class="container">
-
         <div class="section__head">
-          <h2 class="h2">Chi siamo</h2>
-          <p class="muted">
-            Un gruppo di ricercatori e clinici dedicati alla medicina subacquea e iperbarica.
-            Il nome omaggia Robert Boyle e la relazione tra pressione e volume dei gas, centrale per la fisiologia in immersione.
-          </p>
+          <h2 class="h2">Il Team Scientifico</h2>
+          <p class="muted">Clinici e ricercatori attivi in prima linea nella medicina d'urgenza e iperbarica.</p>
         </div>
 
-        <div class="prose">
-          <p class="muted">
-            Studiamo gli effetti della pressione sul corpo umano e sviluppiamo strumenti che migliorino la sicurezza delle attività subacquee
-            e amplino le applicazioni terapeutiche dei trattamenti iperbarici.
-          </p>
-        </div>
-
-        <div class="team" aria-label="Team">
-          <article class="person card">
-            <img class="avatarImg" src="images/silvio.zerbi.jpg" alt="Dott. Silvio Zerbi" loading="lazy" />
-            <div class="person__body">
-              <div class="role">Founder</div>
-              <h3 class="h3">Dott. Silvio Zerbi</h3>
-              <p class="muted">Anestesista Rianimatore, Intensivista, Medico Subacqueo ed Iperbarico, Medico Avionico ed Aerospaziale</p>
+        <div class="team-grid">
+          <article class="team-card">
+            <div class="team-card__img"><img src="images/silvio.zerbi.jpg" alt="Dott. Silvio Zerbi" loading="lazy"></div>
+            <div class="team-card__body">
+              <span class="role">Founder</span>
+              <h3>Dott. Silvio Zerbi</h3>
+              <p>Anestesista Rianimatore, Intensivista, Medico Subacqueo ed Iperbarico, Medico Avionico ed Aerospaziale.</p>
             </div>
           </article>
 
-          <article class="person card">
-            <img class="avatarImg" src="images/luigi.tarsia.jpg" alt="Ing. Luigi Tarsia" loading="lazy" />
-            <div class="person__body">
-              <div class="role">Engineering Director</div>
-              <h3 class="h3">Ing. Luigi Tarsia</h3>
-              <p class="muted">Ingegnere Nucleare e Biomedico, Specialista in Medicina Subacquea e Iperbarica, Avionica ed Aerospaziale</p>
+          <article class="team-card">
+            <div class="team-card__img"><img src="images/luigi.tarsia.jpg" alt="Ing. Luigi Tarsia" loading="lazy"></div>
+            <div class="team-card__body">
+              <span class="role">Engineering Director</span>
+              <h3>Ing. Luigi Tarsia</h3>
+              <p>Ingegnere Nucleare e Biomedico, Specialista in Medicina Subacquea e Iperbarica, Avionica ed Aerospaziale.</p>
             </div>
           </article>
 
-          <article class="person card">
-            <img class="avatarImg" src="images/dario.nicosia.jpg" alt="Dott. Dario Nicosia" loading="lazy" />
-            <div class="person__body">
-              <div class="role">Diving Supervisor</div>
-              <h3 class="h3">Dott. Dario Nicosia</h3>
-              <p class="muted">Anestesista Rianimatore, Intensivista, Medico Iperbarico e Subacqueo, Medico HEMS 118</p>
+          <article class="team-card">
+            <div class="team-card__img"><img src="images/dario.nicosia.jpg" alt="Dott. Dario Nicosia" loading="lazy"></div>
+            <div class="team-card__body">
+              <span class="role">Diving Supervisor</span>
+              <h3>Dott. Dario Nicosia</h3>
+              <p>Anestesista Rianimatore, Intensivista, Medico Iperbarico e Subacqueo, Medico HEMS 118.</p>
             </div>
           </article>
 
-          <article class="person card">
-            <img class="avatarImg" src="images/vincenzo.benenati.jpg" alt="Dott. Vincenzo Benenati" loading="lazy" />
-            <div class="person__body">
-              <div class="role">Hyperbaric Supervisor</div>
-              <h3 class="h3">Dott. Vincenzo Benenati</h3>
-              <p class="muted">Anestesista Rianimatore, Intensivista, Medico Iperbarico e Subacqueo</p>
+          <article class="team-card">
+            <div class="team-card__img"><img src="images/vincenzo.benenati.jpg" alt="Dott. Vincenzo Benenati" loading="lazy"></div>
+            <div class="team-card__body">
+              <span class="role">Hyperbaric Supervisor</span>
+              <h3>Dott. Vincenzo Benenati</h3>
+              <p>Anestesista Rianimatore, Intensivista, Medico Iperbarico e Subacqueo.</p>
             </div>
           </article>
 
-          <article class="person card">
-            <img class="avatarImg" src="images/matteo.paganini.jpg" alt="Dott. Matteo Paganini" loading="lazy" />
-            <div class="person__body">
-              <div class="role">Head Researcher</div>
-              <h3 class="h3">Dott. Matteo Paganini</h3>
-              <p class="muted">Ricercatore, Medico di Emergenza-Urgenza, PhD in Global Health, Humanitarian Aid and Disaster Medicine</p>
+          <article class="team-card">
+            <div class="team-card__img"><img src="images/matteo.paganini.jpg" alt="Dott. Matteo Paganini" loading="lazy"></div>
+            <div class="team-card__body">
+              <span class="role">Head Researcher</span>
+              <h3>Dott. Matteo Paganini</h3>
+              <p>Ricercatore, Medico di Emergenza-Urgenza, PhD in Global Health, Humanitarian Aid and Disaster Medicine.</p>
             </div>
           </article>
         </div>
 
-        <div class="grid grid--2 gap-lg" style="margin-top:18px;">
-          <article class="card">
-            <h3 class="h3">Certificazioni e riconoscimenti</h3>
+        <div class="info-grid">
+          <div class="info-card">
+            <h3>Certificazioni</h3>
             <ul class="bullets">
-              <li>Membri attivi UHMS (Undersea &amp; Hyperbaric Medical Society)</li>
-              <li>Certificazioni SIMSI (Società Italiana Medicina Subacquea e Iperbarica)</li>
-              <li>Collaborazioni con European Committee for Hyperbaric Medicine</li>
-              <li>Consulenze su protocolli di emergenza subacquea</li>
-              <li>Relazioni e docenze in congressi e corsi</li>
+              <li>Membri attivi UHMS</li>
+              <li>Certificazioni SIMSI</li>
+              <li>Collaborazioni ECHM</li>
+              <li>Protocolli emergenza subacquea</li>
             </ul>
-          </article>
-
-          <article class="card">
-            <h3 class="h3">Cosa facciamo (in pratica)</h3>
+          </div>
+          <div class="info-card">
+            <h3>Attività Pratica</h3>
             <ul class="bullets">
-              <li>Studio degli effetti della pressione sul corpo umano</li>
-              <li>Strumenti operativi per sicurezza subacquea</li>
-              <li>Formazione e divulgazione basate su evidenze</li>
-              <li>Progetti e collaborazioni multidisciplinari</li>
+              <li>Studio effetti pressori</li>
+              <li>Safety subacquea operativa</li>
+              <li>Divulgazione evidence-based</li>
+              <li>Progetti multidisciplinari</li>
             </ul>
-          </article>
+          </div>
         </div>
-
       </div>
     </section>
 
-    <!-- RICERCA -->
     <section class="section" id="ricerca">
       <div class="container">
         <div class="section__head">
-          <h2 class="h2">La nostra ricerca</h2>
-          <p class="muted">
-            Attività su più domini della medicina iperbarica e subacquea, orientata a protocolli migliori,
-            sicurezza e applicazioni cliniche.
-          </p>
+          <h2 class="h2">Ambiti di Ricerca</h2>
+          <p class="muted">Domini scientifici orientati al miglioramento dei protocolli clinici e della sicurezza.</p>
         </div>
-
-        <div class="grid grid--3">
-          <article class="card"><h3 class="h3">Neurologia</h3><p class="muted">Effetti neurologici dell’esposizione iperbarica.</p></article>
-          <article class="card"><h3 class="h3">Decompressione</h3><p class="muted">Prevenzione e trattamento delle patologie da decompressione.</p></article>
-          <article class="card"><h3 class="h3">Telemedicina</h3><p class="muted">Supporto remoto e telemedicina in iperbarismo.</p></article>
-          <article class="card"><h3 class="h3">Dati medicali</h3><p class="muted">Trasmissione dati in ambiente iperbarico.</p></article>
-          <article class="card"><h3 class="h3">Monitoraggio</h3><p class="muted">Monitoraggio fisiologico durante immersioni profonde.</p></article>
-          <article class="card"><h3 class="h3">Tecnologie</h3><p class="muted">Tecnologie per la sicurezza subacquea.</p></article>
+        <div class="grid-research">
+          <div class="res-item"><h4>Neurologia</h4><p>Effetti neurologici dell’esposizione iperbarica.</p></div>
+          <div class="res-item"><h4>Decompressione</h4><p>Prevenzione PDD.</p></div>
+          <div class="res-item"><h4>Telemedicina</h4><p>Supporto remoto in ambiente iperbarico.</p></div>
+          <div class="res-item"><h4>Dati medicali</h4><p>Trasmissione in iperbarismo.</p></div>
+          <div class="res-item"><h4>Monitoraggio</h4><p>Fisiologia in immersioni profonde.</p></div>
+          <div class="res-item"><h4>Tecnologie</h4><p>Sicurezza subacquea attiva.</p></div>
         </div>
-
-        <div class="banner">
-          <div>
-            <h3 class="h3">Lezioni e attività</h3>
-            <p class="muted">
-              Disponibili per lezioni e corsi presso università, aziende e associazioni interessate alle applicazioni
-              della medicina iperbarica e subacquea.
-            </p>
+        <div class="banner-proposta">
+          <div class="banner-content">
+            <h3>Docenza e Attività Didattica</h3>
+            <p>Disponibili per corsi presso università, aziende e associazioni.</p>
           </div>
-          <button type="button" class="btn btn--primary" data-open-dialog="incontroDialog">Proponi un incontro</button>
+          <button type="button" class="btn btn--primary" data-open-dialog="incontroDialog">Proponi Incontro</button>
         </div>
       </div>
     </section>
 
-    <!-- FORMAZIONE -->
     <section class="section section--soft" id="formazione">
       <div class="container">
         <div class="section__head">
           <h2 class="h2">Formazione</h2>
-          <p class="muted">Materiali chiari, aggiornati, applicabili. Per clinici, operatori e subacquei.</p>
+          <p class="muted">Risorse per clinici e operatori.</p>
+        </div>
+        <div class="grid-formazione">
+          <div class="card-form">
+            <h3>Docenza Universitaria</h3>
+            <p>Medicina iperbarica e subacquea presso <strong>Università degli Studi dell'Insubria</strong>.</p>
+          </div>
+          <div class="card-form">
+            <h3>Materiali Didattici</h3>
+            <p>Slide e bibliografia aggiornata (in aggiornamento).</p>
+          </div>
         </div>
 
-        <div class="grid grid--2">
-          <article class="card">
-            <h3 class="h3">Lezioni e corsi</h3>
-            <p class="muted">
-              Calendario, moduli e obiettivi formativi (in aggiornamento).
-            </p>
-            <div class="callout">
-              <strong>Docenza universitaria</strong>
-              <p class="muted">
-                Attività didattica di medicina iperbarica e subacquea presso l’<strong>Università degli Studi dell’Insubria (Varese)</strong>,
-                all’interno del Corso di Laurea in Medicina e Chirurgia.
-              </p>
-            </div>
-          </article>
-
-          <article class="card">
-            <h3 class="h3">Materiali didattici</h3>
-            <p class="muted">Slide, schede, bibliografia, risorse consigliate (in aggiornamento).</p>
-          </article>
+        <div class="poster-section">
+          <h3 class="h3">Corsi e Portfolio</h3>
+          <div class="poster-grid">
+            <article class="poster-card">
+              <a href="assets/corsi/hypercare.pdf" target="_blank"><img src="assets/corsi/hypercare.jpg" alt="HyperCare"></a>
+              <div class="poster-info">
+                <h4>HyperCare</h4>
+                <a href="assets/corsi/hypercare.pdf" class="btn-link">Programma PDF</a>
+              </div>
+            </article>
+            <article class="poster-card">
+              <a href="assets/corsi/simae-bologna.pdf" target="_blank"><img src="assets/corsi/simae-bologna.jpg" alt="SIMAE"></a>
+              <div class="poster-info">
+                <h4>SIMAE Bologna</h4>
+                <a href="assets/corsi/simae-bologna.pdf" class="btn-link">Programma PDF</a>
+              </div>
+            </article>
+          </div>
         </div>
-
-        <div class="section__head" style="margin-top:28px;">
-          <h2 class="h2" style="font-size:1.35rem;">Corsi passati</h2>
-          <p class="muted">Anteprima in immagine + PDF scaricabile (così la griglia resta bella).</p>
-        </div>
-
-       <!-- CORSI PASSATI -->
-<div class="section__head" style="margin-top:24px;">
-  <h3 class="h2" style="font-size:1.25rem;">Corsi</h3>
-  <p class="muted">
-    Portfolio di docenze ed eventi: anteprima della locandina + download del programma completo.
-  </p>
-</div>
-
-<div class="posterGrid" aria-label="Corsi">
-  <!-- HyperCare -->
-  <article class="posterCard card">
-    <a class="posterLink" href="assets/corsi/hypercare.pdf" target="_blank" rel="noopener" aria-label="Apri PDF HyperCare">
-      <figure class="posterFigure">
-        <img class="posterImg" src="assets/corsi/hypercare.jpg" alt="Locandina HyperCare" loading="lazy" />
-      </figure>
-    </a>
-    <div class="posterMeta">
-      <div class="posterTitle">HyperCare</div>
-      <div class="muted posterSub">Programma completo in PDF</div>
-      <div class="posterActions">
-        <a class="btn btn--ghost btn--block" href="assets/corsi/hypercare.pdf" target="_blank" rel="noopener">Download programma completo</a>
-      </div>
-    </div>
-  </article>
-
-  <!-- SIMAE Bologna -->
-  <article class="posterCard card">
-    <a class="posterLink" href="assets/corsi/simae-bologna.pdf" target="_blank" rel="noopener" aria-label="Apri PDF SIMAE Bologna">
-      <figure class="posterFigure">
-        <img class="posterImg" src="assets/corsi/simae-bologna.jpg" alt="Locandina SIMAE Bologna" loading="lazy" />
-      </figure>
-    </a>
-    <div class="posterMeta">
-      <div class="posterTitle">SIMAE Bologna</div>
-      <div class="muted posterSub">Programma completo in PDF</div>
-      <div class="posterActions">
-        <a class="btn btn--ghost btn--block" href="assets/corsi/simae-bologna.pdf" target="_blank" rel="noopener">Download programma completo</a>
-      </div>
-    </div>
-  </article>
-</div>
-
-<p class="fineprint" style="margin-top:12px;">
-</p>
-
-          </article>
-        </div>
-
-        <p class="fineprint" style="margin-top:12px;">
-        
-        </p>
       </div>
     </section>
 
-    <!-- CONTATTI -->
     <section class="section" id="contatti">
       <div class="container">
-        <div class="section__head">
-          <h2 class="h2">Contatti</h2>
-          <p class="muted">Collaborazioni, docenza, progetti, case report. Un canale unico.</p>
-        </div>
-
-        <div class="grid grid--2">
-          <article class="card">
-            <h3 class="h3">Email</h3>
-            <p class="muted">
-              <a href="mailto:info@amicidiboyle.it">info@amicidiboyle.it</a>
-            </p>
-
-            <div class="stack">
-              <button type="button" class="btn btn--primary" data-open-dialog="contattiDialog">
-                Apri il modulo contatti
-              </button>
-              <p class="fineprint">
-                Il modulo invia la richiesta via servizio esterno (tipo Formspree) e vi arriva via email.
-              </p>
-            </div>
-          </article>
-
-          <article class="card">
-            <h3 class="h3">Obiettivo</h3>
-            <p class="muted">
-              Ampliare l’accesso alle terapie iperbariche e migliorare la sicurezza delle attività subacquee,
-              costruendo ponti tra comunità scientifica, professionisti sanitari e mondo subacqueo.
-            </p>
-          </article>
+        <div class="grid-contatti">
+          <div class="contatti-copy">
+            <h2 class="h2">Contatti</h2>
+            <p>Email: <a href="mailto:info@amicidiboyle.it">info@amicidiboyle.it</a></p>
+            <button type="button" class="btn btn--primary" data-open-dialog="contattiDialog">Apri modulo contatti</button>
+          </div>
+          <div class="contatti-goal">
+            <h3>Mission</h3>
+            <p>Migliorare la sicurezza delle attività subacquee costruendo ponti tra scienza e mondo operativo.</p>
+          </div>
         </div>
       </div>
     </section>
-
   </main>
 
-  <footer class="footer" role="contentinfo">
-    <div class="container footer__inner">
-      <div>© 2026 Gli Amici di Boyle</div>
-      <div class="footer__links">
-        <a href="#top">Torna su</a>
-        <a href="#contatti">Contatti</a>
-      </div>
+  <footer class="footer">
+    <div class="container">
+      <p>© 2026 Gli Amici di Boyle · Diving & Hyperbaric Research</p>
     </div>
   </footer>
 
-  <!-- MODALI (Formspree) -->
-  <dialog class="dialog" id="contattiDialog" aria-label="Modulo contatti">
+  <dialog class="dialog" id="contattiDialog">
     <div class="dialog__inner">
-      <div class="dialog__head">
-        <h3 class="h3" style="margin:0;">Contattaci</h3>
-        <button type="button" class="btn btn--ghost" data-close-dialog>Chiudi</button>
-      </div>
-
-      <p class="muted" style="margin:10px 0 14px;">
-        Compila e invia: la richiesta arriva via email a <strong>info@amicidiboyle.it</strong>.
-      </p>
-
+      <div class="dialog__head"><h3>Contattaci</h3><button data-close-dialog>×</button></div>
       <form class="form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
-        <input type="hidden" name="tipo_richiesta" value="Contatto dal sito" />
-
-        <label class="form__row">
-          <span class="form__label">Nome e cognome</span>
-          <input class="form__input" type="text" name="nome" autocomplete="name" required />
-        </label>
-
-        <label class="form__row">
-          <span class="form__label">Email</span>
-          <input class="form__input" type="email" name="email" autocomplete="email" required />
-        </label>
-
-        <label class="form__row">
-          <span class="form__label">Oggetto</span>
-          <input class="form__input" type="text" name="oggetto" required />
-        </label>
-
-        <label class="form__row">
-          <span class="form__label">Messaggio</span>
-          <textarea class="form__input" name="messaggio" rows="5" required></textarea>
-        </label>
-
-        <div class="form__actions">
-          <button class="btn btn--primary" type="submit">Invia</button>
-          <button type="button" class="btn btn--ghost" data-close-dialog>Annulla</button>
-        </div>
-
-        <p class="fineprint" style="margin-top:10px;">Solo messaggi utili. Nessun marketing.</p>
+        <input type="text" name="nome" placeholder="Nome" required>
+        <input type="email" name="email" placeholder="Email" required>
+        <textarea name="messaggio" placeholder="Messaggio" rows="5" required></textarea>
+        <button class="btn btn--primary" type="submit">Invia</button>
       </form>
     </div>
   </dialog>
 
-  <dialog class="dialog" id="incontroDialog" aria-label="Proponi un incontro">
+  <dialog class="dialog" id="incontroDialog">
     <div class="dialog__inner">
-      <div class="dialog__head">
-        <h3 class="h3" style="margin:0;">Proponi un incontro</h3>
-        <button type="button" class="btn btn--ghost" data-close-dialog>Chiudi</button>
-      </div>
-
-      <p class="muted" style="margin:10px 0 14px;">
-        Raccontaci contesto, obiettivo e disponibilità: vi rispondiamo via email.
-      </p>
-
+      <div class="dialog__head"><h3>Proponi Incontro</h3><button data-close-dialog>×</button></div>
       <form class="form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
-        <input type="hidden" name="tipo_richiesta" value="Proposta incontro / docenza" />
-
-        <label class="form__row">
-          <span class="form__label">Ente / organizzazione</span>
-          <input class="form__input" type="text" name="ente" required />
-        </label>
-
-        <label class="form__row">
-          <span class="form__label">Referente</span>
-          <input class="form__input" type="text" name="referente" required />
-        </label>
-
-        <label class="form__row">
-          <span class="form__label">Email</span>
-          <input class="form__input" type="email" name="email" autocomplete="email" required />
-        </label>
-
-        <label class="form__row">
-          <span class="form__label">Tipologia (lezione / corso / collaborazione)</span>
-          <input class="form__input" type="text" name="tipologia" required />
-        </label>
-
-        <label class="form__row">
-          <span class="form__label">Dettagli e note</span>
-          <textarea class="form__input" name="dettagli" rows="6" required></textarea>
-        </label>
-
-        <div class="form__actions">
-          <button class="btn btn--primary" type="submit">Invia proposta</button>
-          <button type="button" class="btn btn--ghost" data-close-dialog>Annulla</button>
-        </div>
+        <input type="text" name="ente" placeholder="Organizzazione" required>
+        <input type="text" name="referente" placeholder="Referente" required>
+        <input type="email" name="email" placeholder="Email" required>
+        <textarea name="dettagli" placeholder="Dettagli proposta" rows="5" required></textarea>
+        <button class="btn btn--primary" type="submit">Invia Proposta</button>
       </form>
     </div>
   </dialog>
 
   <script>
-    (function () {
-      const openers = document.querySelectorAll('[data-open-dialog]');
-      const closers = document.querySelectorAll('[data-close-dialog]');
-
-      openers.forEach(btn => {
-        btn.addEventListener('click', () => {
-          const id = btn.getAttribute('data-open-dialog');
-          const dlg = document.getElementById(id);
-          if (dlg && typeof dlg.showModal === 'function') dlg.showModal();
-        });
+    (function() {
+      document.querySelectorAll('[data-open-dialog]').forEach(btn => {
+        btn.onclick = () => document.getElementById(btn.dataset.openDialog).showModal();
       });
-
-      closers.forEach(btn => {
-        btn.addEventListener('click', () => {
-          const dlg = btn.closest('dialog');
-          if (dlg) dlg.close();
-        });
-      });
-
-      document.querySelectorAll('dialog').forEach(dlg => {
-        dlg.addEventListener('click', (e) => {
-          const box = dlg.querySelector('.dialog__inner');
-          if (box && !box.contains(e.target)) dlg.close();
-        });
+      document.querySelectorAll('[data-close-dialog]').forEach(btn => {
+        btn.onclick = () => btn.closest('dialog').close();
       });
     })();
   </script>
