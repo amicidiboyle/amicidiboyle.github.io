@@ -62,4 +62,446 @@
 }
 
 .podKicker{
-  displ
+  display:flex;
+  align-items:center;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-bottom: 10px;
+}
+
+.podPill{
+  display:inline-flex;
+  align-items:center;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(226,232,240,.95);
+  background: rgba(255,255,255,.75);
+  font-weight: 800;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  font-size: 12px;
+}
+
+.podDot{
+  width:6px;
+  height:6px;
+  border-radius: 99px;
+  background: rgba(11,74,162,.55);
+}
+
+.podMeta{
+  color: rgba(71,85,105,.95);
+  font-weight: 650;
+  font-size: 14px;
+}
+
+.podTitle{
+  margin: 0;
+  font-size: clamp(2.0rem, 3.2vw, 3.1rem);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+}
+
+.podByline{
+  display:block;
+  margin-top: 8px;
+  font-size: 14px;
+  font-weight: 650;
+  color: rgba(71,85,105,.95);
+}
+
+.podLead{
+  margin: 14px 0 18px;
+  max-width: 72ch;
+  font-size: 1.03rem;
+  color: rgba(15,23,42,.88);
+}
+
+.podCTA{
+  display:flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.podStats{
+  display:flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.podStat{
+  background: rgba(255,255,255,.72);
+  border: 1px solid rgba(226,232,240,.95);
+  border-radius: 16px;
+  padding: 10px 12px;
+  min-width: 120px;
+  box-shadow: 0 18px 40px rgba(2,6,23,.06);
+}
+
+.podStat__n{
+  font-weight: 900;
+  font-size: 18px;
+  letter-spacing: -0.02em;
+}
+.podStat__l{
+  color: rgba(71,85,105,.95);
+  font-weight: 650;
+  font-size: 13px;
+}
+
+/* background micro animation */
+.podBG{
+  position:absolute;
+  inset:0;
+  overflow:hidden;
+  pointer-events:none;
+  z-index:1;
+}
+
+.podOrb{
+  position:absolute;
+  width: 520px;
+  height: 520px;
+  border-radius: 999px;
+  filter: blur(28px);
+  opacity: .55;
+  transform: translateZ(0);
+  animation: drift 12s ease-in-out infinite;
+}
+
+.podOrb--a{ left:-180px; top:-220px; background: radial-gradient(circle at 30% 30%, rgba(14,165,233,.36), rgba(14,165,233,0) 60%); }
+.podOrb--b{ right:-220px; top:-180px; background: radial-gradient(circle at 40% 35%, rgba(11,74,162,.34), rgba(11,74,162,0) 62%); animation-duration: 16s; }
+.podOrb--c{ left: 35%; bottom:-300px; background: radial-gradient(circle at 50% 50%, rgba(14,165,233,.22), rgba(14,165,233,0) 66%); animation-duration: 18s; }
+
+.podWave{
+  position:absolute;
+  left:-10%;
+  right:-10%;
+  bottom:-140px;
+  height: 260px;
+  background: radial-gradient(closest-side at 50% 0%, rgba(14,165,233,.20), rgba(14,165,233,0) 68%),
+              radial-gradient(closest-side at 35% 20%, rgba(11,74,162,.16), rgba(11,74,162,0) 70%);
+  filter: blur(10px);
+  opacity: .55;
+  animation: wave 10s ease-in-out infinite;
+}
+
+@keyframes drift{
+  0%{ transform: translate3d(0,0,0) scale(1); }
+  50%{ transform: translate3d(22px, -12px, 0) scale(1.03); }
+  100%{ transform: translate3d(0,0,0) scale(1); }
+}
+
+@keyframes wave{
+  0%{ transform: translate3d(0,0,0); }
+  50%{ transform: translate3d(18px, -10px, 0); }
+  100%{ transform: translate3d(0,0,0); }
+}
+
+/* Section */
+.podSection{
+  padding: 22px 0 42px;
+  position: relative;
+  z-index: 2;
+}
+
+.podSection--tight{ padding-top: 10px; }
+
+.podSection__head{
+  display:flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 16px;
+  margin-bottom: 14px;
+}
+
+/* Seasons */
+.seasons{
+  display:grid;
+  gap: 14px;
+}
+
+.season{
+  background: rgba(255,255,255,.78);
+  border: 1px solid rgba(226,232,240,.95);
+  border-radius: 20px;
+  box-shadow: 0 22px 56px rgba(2,6,23,.08);
+  overflow: clip;
+}
+
+.season__summary{
+  list-style: none;
+  cursor: pointer;
+  display:flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 18px 18px;
+}
+
+.season__summary::-webkit-details-marker{ display:none; }
+
+.season__left{
+  display:grid;
+  gap: 4px;
+  min-width:0;
+}
+
+.season__k{
+  font-weight: 900;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  font-size: 12px;
+  color: rgba(71,85,105,.95);
+}
+
+.season__t{
+  font-weight: 900;
+  font-size: 18px;
+  letter-spacing: -0.02em;
+}
+
+.season__d{
+  color: rgba(71,85,105,.95);
+  font-weight: 600;
+  max-width: 88ch;
+}
+
+.season__right{
+  display:flex;
+  align-items:center;
+  gap: 12px;
+  flex: 0 0 auto;
+}
+
+.season__count{
+  display:inline-flex;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(226,232,240,.95);
+  background: rgba(255,255,255,.85);
+  font-weight: 800;
+  color: rgba(71,85,105,.95);
+  font-size: 13px;
+}
+
+.season__chev{
+  width: 12px;
+  height: 12px;
+  border-right: 2px solid rgba(15,23,42,.55);
+  border-bottom: 2px solid rgba(15,23,42,.55);
+  transform: rotate(45deg);
+  transition: transform .22s ease;
+}
+
+.season[open] .season__chev{
+  transform: rotate(-135deg);
+}
+
+.season__body{
+  display:grid;
+  gap: 12px;
+  padding: 0 18px 18px;
+  animation: openFade .24s ease;
+}
+
+@keyframes openFade{
+  from{ opacity: 0; transform: translateY(-4px); }
+  to{ opacity: 1; transform: translateY(0); }
+}
+
+/* =========================================================
+   STAGIONI: tonalità blu progressive (wow ma professionale)
+   Richiede: <details class="season" data-season="1|2|3">
+========================================================= */
+
+/* Base: variabili di default (fallback) */
+.season{
+  --s-accent: rgba(11,74,162,.55);
+  --s-accent-soft: rgba(11,74,162,.10);
+  --s-accent-border: rgba(11,74,162,.16);
+}
+
+/* Stagione 1: blu profondo (oceano) */
+.season[data-season="1"]{
+  --s-accent: rgba(11,74,162,.72);
+  --s-accent-soft: rgba(11,74,162,.10);
+  --s-accent-border: rgba(11,74,162,.18);
+}
+
+/* Stagione 2: blu medio (electric) */
+.season[data-season="2"]{
+  --s-accent: rgba(14,165,233,.75);
+  --s-accent-soft: rgba(14,165,233,.10);
+  --s-accent-border: rgba(14,165,233,.20);
+}
+
+/* Stagione 3: blu tecnico (space, ma sobrio) */
+.season[data-season="3"]{
+  --s-accent: rgba(59,130,246,.75);
+  --s-accent-soft: rgba(59,130,246,.10);
+  --s-accent-border: rgba(59,130,246,.20);
+}
+
+/* Summary con look editoriale + barra laterale di accento */
+.season__summary{
+  background: linear-gradient(180deg, rgba(255,255,255,.85), rgba(255,255,255,.60));
+  border-bottom: 1px solid rgba(226,232,240,.85);
+  position: relative;
+}
+
+.season__summary::before{
+  content:"";
+  position:absolute;
+  left:0;
+  top:0;
+  bottom:0;
+  width:6px;
+  background: linear-gradient(180deg, var(--s-accent), rgba(255,255,255,0));
+  opacity:.9;
+}
+
+/* Badge episodio prende il colore della stagione */
+.season .epBadge{
+  background: var(--s-accent-soft);
+  border-color: var(--s-accent-border);
+  color: var(--s-accent);
+}
+
+/* Bottone episodio coerente con stagione */
+.season .epBtn{
+  border: 1px solid var(--s-accent-border);
+  background: rgba(255,255,255,.90);
+  color: rgba(15,23,42,.9);
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease, background .18s ease;
+}
+
+.season .epBtn:hover{
+  border-color: var(--s-accent);
+  background: rgba(255,255,255,.95);
+  box-shadow: 0 18px 40px rgba(2,6,23,.10);
+  transform: translateY(-1px);
+}
+
+/* Hover card episodio: accento leggero, senza “effetto gaming” */
+@media (hover:hover) and (pointer:fine){
+  .season .epCard:hover{
+    border-color: var(--s-accent-border);
+    box-shadow: 0 20px 54px rgba(2,6,23,.10);
+    transform: translateY(-2px);
+  }
+}
+
+/* Season aperta: evidenziamo il bordo in modo sobrio */
+.season[open]{
+  border-color: var(--s-accent-border);
+}
+
+/* Episode cards */
+.epCard{
+  display:flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 14px;
+  border-radius: 16px;
+  border: 1px solid rgba(226,232,240,.95);
+  background: rgba(255,255,255,.78);
+  box-shadow: 0 14px 34px rgba(2,6,23,.05);
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+}
+
+.epLeft{ min-width:0; }
+
+.epBadge{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(11,74,162,.10);
+  border: 1px solid rgba(11,74,162,.18);
+  color: rgba(11,74,162,.95);
+  font-weight: 900;
+  font-size: 12px;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.epTitle{
+  margin: 0 0 6px;
+  font-size: 16px;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+}
+
+.epDesc{
+  margin: 0;
+  color: rgba(71,85,105,.95);
+  font-weight: 600;
+  max-width: 92ch;
+}
+
+.epBtn{
+  flex: 0 0 auto;
+  text-decoration: none;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(226,232,240,.95);
+  background: rgba(255,255,255,.90);
+  font-weight: 850;
+  color: rgba(15,23,42,.9);
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+}
+
+@media (hover:hover) and (pointer:fine){
+  .epCard:hover{
+    transform: translateY(-2px);
+    box-shadow: 0 18px 46px rgba(2,6,23,.10);
+    border-color: rgba(14,165,233,.28);
+  }
+  .epCard:hover .epBtn{
+    transform: translateY(-1px);
+    border-color: rgba(14,165,233,.34);
+    box-shadow: 0 16px 40px rgba(14,165,233,.12);
+  }
+}
+
+.podFooterCTA__box{
+  border-radius: 22px;
+  border: 1px solid rgba(226,232,240,.95);
+  background: rgba(255,255,255,.78);
+  box-shadow: 0 24px 64px rgba(2,6,23,.08);
+  padding: 18px;
+}
+
+/* Mobile */
+@media (max-width: 920px){
+  .podHero__grid{ grid-template-columns: 320px 1fr; }
+}
+
+@media (max-width: 760px){
+  .podHero{ padding-top: 18px; }
+  .podHero__grid{
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .podHero__media{ max-width: 420px; margin: 0 auto; }
+  .podTitle, .podByline, .podLead{ text-align:center; }
+  .podLead{ margin-left:auto; margin-right:auto; }
+  .podCTA{ justify-content:center; }
+  .podStats{ justify-content:center; }
+  .podSection__head{ flex-direction: column; align-items: flex-start; }
+  .epCard{ flex-direction: column; align-items: flex-start; }
+  .epBtn{ width: 100%; text-align: center; }
+  .season__summary{ align-items: flex-start; }
+  .season__right{ margin-left: auto; }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce){
+  .podOrb, .podWave{ animation: none !important; }
+  .epCard, .epBtn, .season__chev{ transition: none !important; }
+}
