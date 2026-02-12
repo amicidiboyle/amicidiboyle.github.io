@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Sotto Pressione · Podcast · Gli Amici di Boyle</title>
-  <meta name="description" content="Sotto Pressione: il podcast di Gli Amici di Boyle. Medicina subacquea e iperbarica, sicurezza, fisiologia e cultura del mondo sommerso." />
+  <title>SOTTO PRESSIONE · Podcast · Gli Amici di Boyle</title>
+  <meta name="description" content="SOTTO PRESSIONE: il podcast di divulgazione su immersione, iperbarismo e ambienti estremi. Di Luigi Tarsia." />
   <meta name="theme-color" content="#0b4aa2" />
   <link rel="stylesheet" href="styles.css" />
   <link rel="icon" href="assets/logo.png" type="image/png" />
@@ -15,11 +15,12 @@
 
   <header class="header" role="banner">
     <div class="container header__inner">
+
       <a class="brand" href="index.html#top" aria-label="Home">
         <img class="brand__logo" src="assets/logo.png" alt="Gli Amici di Boyle" />
         <span class="brand__text">
           <span class="brand__name">Gli Amici di Boyle</span>
-          <span class="brand__sub" aria-label="Payoff">
+          <span class="brand__sub">
             <span class="brand__line">Diving &amp; Hyperbaric Medicine</span>
             <span class="brand__line">Research &amp; Education</span>
             <span class="brand__line">Human Performance &amp; Safety in Extreme Environments</span>
@@ -33,8 +34,7 @@
         <a href="index.html#chisiamo">Chi siamo</a>
         <a href="index.html#ricerca">Ricerca</a>
         <a href="index.html#formazione">Formazione</a>
-        <a class="is-active" href="podcast.html">Podcast</a>
-        <a href="index.html#partner">Partner</a>
+        <a class="is-active" href="podcast.html" aria-current="page">Podcast</a>
         <a class="btn btn--primary" href="index.html#contatti">Contatti</a>
       </nav>
 
@@ -51,168 +51,323 @@
           <a role="menuitem" href="index.html#ricerca">Ricerca</a>
           <a role="menuitem" href="index.html#formazione">Formazione</a>
           <a role="menuitem" href="podcast.html">Podcast</a>
-          <a role="menuitem" href="index.html#partner">Partner</a>
           <a role="menuitem" class="btn btn--primary btn--block" href="index.html#contatti">Contatti</a>
         </div>
       </details>
+
     </div>
   </header>
 
   <main id="contenuto">
-    <section class="podcastHero" aria-label="Podcast">
-      <div class="container podcastHero__grid">
-        <div class="podcastHero__copy">
-          <span class="badge">Podcast</span>
-          <h1 class="h1 podcastHero__title">Sotto Pressione</h1>
-          <p class="podcastHero__by muted">di Luigi Tarsia · Gli Amici di Boyle</p>
-          <p class="lead">
-            Storie, fisiologia, sicurezza e cultura del mondo sommerso. Un podcast per chi vuole capire davvero cosa succede quando l'ambiente cambia le regole.
+    <section class="hero hero--podcast" id="top">
+      <div class="container hero__grid hero__grid--podcast">
+
+        <div class="hero__copy">
+          <div class="kicker">Podcast</div>
+
+          <h1 class="h1 h1--podcast">
+            SOTTO PRESSIONE
+            <span class="h1__sub h1__sub--podcast">di Luigi Tarsia</span>
+          </h1>
+
+          <p class="lead lead--podcast">
+            Fisica, fisiologia e sicurezza in immersione, iperbarismo, e uno sguardo sugli ambienti estremi.
+            Divulgazione seria, tono umano, zero fuffa.
           </p>
 
-          <div class="cta">
-            <a class="btn btn--primary" href="#stagioni">Esplora le stagioni</a>
-            <a class="btn btn--ghost" href="https://open.spotify.com/show" target="_blank" rel="noopener">Apri su Spotify</a>
+          <div class="cta cta--podcast">
+            <a class="btn btn--primary btn--lg" href="#episodi">Vai agli episodi</a>
+            <a class="btn btn--ghost btn--lg" href="https://open.spotify.com" target="_blank" rel="noopener">Ascolta su Spotify</a>
           </div>
 
-          <div class="statRow" aria-label="Statistiche">
-            <div class="stat">
-              <div class="stat__k" id="episodesCount">23</div>
-              <div class="stat__l muted">Episodi</div>
-            </div>
-            <div class="stat">
-              <div class="stat__k">3</div>
-              <div class="stat__l muted">Stagioni</div>
-            </div>
-            <div class="stat">
-              <div class="stat__k">Spotify</div>
-              <div class="stat__l muted">Piattaforma</div>
-            </div>
+          <div class="chips chips--podcast" aria-label="Tag podcast">
+            <span class="chip">Immersione</span>
+            <span class="chip">Iperbarismo</span>
+            <span class="chip">Medicina</span>
+            <span class="chip">Storia &amp; cultura</span>
           </div>
         </div>
 
-        <aside class="podcastHero__card panel" aria-label="Ascolta">
-          <div class="podcastCover" aria-hidden="true">
-            <!-- Metti una cover vera in assets/podcast-cover.jpg (o .png) -->
-            <img class="podcastCover__img" src="assets/podcast-cover.jpg" alt="Cover del podcast Sotto Pressione" onerror="this.style.display='none'" />
-            <div class="podcastCover__fallback">
-              <div class="podcastCover__ring"></div>
-              <div class="podcastCover__ring ring2"></div>
-              <div class="podcastCover__ring ring3"></div>
-              <div class="podcastCover__label">Sotto Pressione</div>
+        <div class="heroRight heroRight--podcast">
+          <div class="podcastCoverCard" aria-label="Copertina podcast">
+            <div class="podcastCoverCard__bg" aria-hidden="true"></div>
+
+            <!-- Se aggiungi una cover vera, mettila qui: assets/podcast-cover.jpg -->
+            <img class="podcastCover" src="assets/podcast-cover.jpg" alt="Copertina podcast SOTTO PRESSIONE" loading="lazy"
+                 onerror="this.style.display='none'; this.parentElement.classList.add('podcastCoverCard--fallback');" />
+
+            <div class="podcastCoverMeta">
+              <div class="podcastCoverTitle">SOTTO PRESSIONE</div>
+              <div class="muted">Gli Amici di Boyle · Spotify</div>
+              <div class="podcastCoverActions">
+                <a class="btn btn--primary" href="https://open.spotify.com" target="_blank" rel="noopener">Apri su Spotify</a>
+                <a class="btn btn--ghost" href="#episodi">Episodi</a>
+              </div>
             </div>
           </div>
 
-          <div class="panel__top">
-            <h2 class="h2" style="margin:0 0 8px;">Ascolta ora</h2>
-            <p class="muted" style="margin:0;">Apri l'episodio direttamente su Spotify.</p>
-          </div>
+          <aside class="panel panel--tight" aria-label="In evidenza">
+            <div class="panel__top">
+              <span class="badge">In evidenza</span>
+              <h2 class="h2">Stagioni</h2>
+              <p class="muted">3 stagioni · 23 episodi pubblicati (aggiornamento manuale).</p>
+            </div>
 
-          <div class="panel__cta">
-            <a class="btn btn--primary btn--block" href="https://open.spotify.com/episode/6MSOUbc8hpJrsYD7b4rL71?si=2f822b99f3074a0c" target="_blank" rel="noopener">Apri Spotify</a>
-          </div>
-        </aside>
+            <div class="panel__list" role="list">
+              <div class="panel__item" role="listitem">
+                <strong>Formato</strong>
+                <span>Episodi brevi, dritti al punto, con riferimenti e contesto.</span>
+              </div>
+              <div class="panel__item" role="listitem">
+                <strong>Target</strong>
+                <span>Subacquei, sanitari, tecnici, curiosi (quelli veri).</span>
+              </div>
+            </div>
+
+            <div class="panel__cta">
+              <a class="btn btn--primary btn--block" href="#episodi">Sfoglia episodi</a>
+            </div>
+          </aside>
+        </div>
+
       </div>
     </section>
 
-    <section class="section" id="stagioni">
+    <section class="section section--soft" id="episodi">
       <div class="container">
+
         <div class="section__head">
-          <h2 class="h2">Stagioni</h2>
-          <p class="muted">Tutto in ordine, niente caos. Per quello c'è già abbastanza internet.</p>
+          <h2 class="h2">Episodi</h2>
+          <p class="muted">Stagioni in ordine. Apri e ascolta: ogni episodio rimanda a Spotify.</p>
         </div>
 
         <div class="podcastSeasons">
-          <details class="season" open>
+
+          <details class="season card" open>
             <summary class="season__summary">
               <div>
-                <div class="season__title">Stagione 1</div>
+                <div class="season__kicker">Stagione 1</div>
+                <div class="season__title">Le basi del mondo sommerso</div>
                 <div class="season__meta muted">10 episodi</div>
               </div>
-              <div class="season__chev" aria-hidden="true">⌄</div>
+              <span class="season__chev" aria-hidden="true">⌄</span>
             </summary>
+
             <div class="season__body">
               <article class="episode">
-                <div class="episode__meta"><span class="episode__num">Ep 1</span><span class="muted">Le Leggi Fisiche del Mondo Sommerso</span></div>
-                <div class="episode__links">
-                  <a class="btn btn--ghost" href="https://open.spotify.com/episode/6MSOUbc8hpJrsYD7b4rL71?si=2f822b99f3074a0c" target="_blank" rel="noopener">Apri su Spotify</a>
+                <div class="episode__meta">
+                  <div class="episode__num">Ep 1</div>
+                  <a class="episode__link" href="https://open.spotify.com/episode/6MSOUbc8hpJrsYD7b4rL71?si=2f822b99f3074a0c" target="_blank" rel="noopener">Apri su Spotify</a>
                 </div>
+                <div class="episode__title">Le Leggi Fisiche del Mondo Sommerso</div>
               </article>
+
               <article class="episode">
-                <div class="episode__meta"><span class="episode__num">Ep 2</span><span class="muted">La Subacquea Ricreativa</span></div>
-                <div class="episode__links"><a class="btn btn--ghost" href="https://open.spotify.com/episode/0j65FzDaiWnGOLG1RJMsdf?si=2f462544003d423e" target="_blank" rel="noopener">Apri su Spotify</a></div>
+                <div class="episode__meta">
+                  <div class="episode__num">Ep 2</div>
+                  <a class="episode__link" href="https://open.spotify.com/episode/0j65FzDaiWnGOLG1RJMsdf?si=2f462544003d423e" target="_blank" rel="noopener">Apri su Spotify</a>
+                </div>
+                <div class="episode__title">La Subacquea Ricreativa</div>
               </article>
+
               <article class="episode">
-                <div class="episode__meta"><span class="episode__num">Ep 3</span><span class="muted">La Visita di Idoneità</span></div>
-                <div class="episode__links"><a class="btn btn--ghost" href="https://open.spotify.com/episode/306ebmPOCAdVCPecp1iyiU?si=22d1e9fc0c884349" target="_blank" rel="noopener">Apri su Spotify</a></div>
+                <div class="episode__meta">
+                  <div class="episode__num">Ep 3</div>
+                  <a class="episode__link" href="https://open.spotify.com/episode/306ebmPOCAdVCPecp1iyiU?si=22d1e9fc0c884349" target="_blank" rel="noopener">Apri su Spotify</a>
+                </div>
+                <div class="episode__title">La Visita di Idoneità</div>
               </article>
+
               <article class="episode">
-                <div class="episode__meta"><span class="episode__num">Ep 4</span><span class="muted">L’attrezzatura Subacquea</span></div>
-                <div class="episode__links"><a class="btn btn--ghost" href="https://open.spotify.com/episode/2ZtxfohbgrYYyDf7R1XaJ6?si=924c603f684f42c9" target="_blank" rel="noopener">Apri su Spotify</a></div>
+                <div class="episode__meta">
+                  <div class="episode__num">Ep 4</div>
+                  <a class="episode__link" href="https://open.spotify.com/episode/2ZtxfohbgrYYyDf7R1XaJ6?si=924c603f684f42c9" target="_blank" rel="noopener">Apri su Spotify</a>
+                </div>
+                <div class="episode__title">L’attrezzatura Subacquea</div>
               </article>
+
               <article class="episode">
-                <div class="episode__meta"><span class="episode__num">Ep 5</span><span class="muted">Il Computer Subacqueo</span></div>
-                <div class="episode__links"><a class="btn btn--ghost" href="https://open.spotify.com/episode/4vzJeIizgJl2rHu0lCIiL2?si=98a3c032aec3408d" target="_blank" rel="noopener">Apri su Spotify</a></div>
+                <div class="episode__meta">
+                  <div class="episode__num">Ep 5</div>
+                  <a class="episode__link" href="https://open.spotify.com/episode/4vzJeIizgJl2rHu0lCIiL2?si=98a3c032aec3408d" target="_blank" rel="noopener">Apri su Spotify</a>
+                </div>
+                <div class="episode__title">Il Computer Subacqueo</div>
               </article>
+
               <article class="episode">
-                <div class="episode__meta"><span class="episode__num">Ep 6</span><span class="muted">Il Barotrauma</span></div>
-                <div class="episode__links"><a class="btn btn--ghost" href="https://open.spotify.com/episode/5FYXKNcnhuHqFdRg7LWeOO?si=1702e1c8db8b4359" target="_blank" rel="noopener">Apri su Spotify</a></div>
+                <div class="episode__meta">
+                  <div class="episode__num">Ep 6</div>
+                  <a class="episode__link" href="https://open.spotify.com/episode/5FYXKNcnhuHqFdRg7LWeOO?si=1702e1c8db8b4359" target="_blank" rel="noopener">Apri su Spotify</a>
+                </div>
+                <div class="episode__title">Il Barotrauma</div>
               </article>
+
               <article class="episode">
-                <div class="episode__meta"><span class="episode__num">Ep 7</span><span class="muted">La Camera Iperbarica</span></div>
-                <div class="episode__links"><a class="btn btn--ghost" href="https://open.spotify.com/episode/2k96mq4lTfMF4YIs6CWRAW?si=e0f0d829290244ad" target="_blank" rel="noopener">Apri su Spotify</a></div>
+                <div class="episode__meta">
+                  <div class="episode__num">Ep 7</div>
+                  <a class="episode__link" href="https://open.spotify.com/episode/2k96mq4lTfMF4YIs6CWRAW?si=e0f0d829290244ad" target="_blank" rel="noopener">Apri su Spotify</a>
+                </div>
+                <div class="episode__title">La Camera Iperbarica</div>
               </article>
+
               <article class="episode">
-                <div class="episode__meta"><span class="episode__num">Ep 8</span><span class="muted">Il Tecnico Iperbarico</span></div>
-                <div class="episode__links"><a class="btn btn--ghost" href="https://open.spotify.com/episode/0XtJeKMDtqAU88aC9GRP6U?si=01965d15eadc4bd5" target="_blank" rel="noopener">Apri su Spotify</a></div>
+                <div class="episode__meta">
+                  <div class="episode__num">Ep 8</div>
+                  <a class="episode__link" href="https://open.spotify.com/episode/0XtJeKMDtqAU88aC9GRP6U?si=01965d15eadc4bd5" target="_blank" rel="noopener">Apri su Spotify</a>
+                </div>
+                <div class="episode__title">Il Tecnico Iperbarico</div>
               </article>
+
               <article class="episode">
-                <div class="episode__meta"><span class="episode__num">Ep 9</span><span class="muted">Volare Dopo L’Immersione</span></div>
-                <div class="episode__links"><a class="btn btn--ghost" href="https://open.spotify.com/episode/7xGygD36INtZSoz3dhsSGI?si=9b62142220f448c0" target="_blank" rel="noopener">Apri su Spotify</a></div>
+                <div class="episode__meta">
+                  <div class="episode__num">Ep 9</div>
+                  <a class="episode__link" href="https://open.spotify.com/episode/7xGygD36INtZSoz3dhsSGI?si=9b62142220f448c0" target="_blank" rel="noopener">Apri su Spotify</a>
+                </div>
+                <div class="episode__title">Volare Dopo L’Immersione</div>
               </article>
+
               <article class="episode">
-                <div class="episode__meta"><span class="episode__num">Ep 10</span><span class="muted">Il Trucco e La Camera Iperbarica</span></div>
-                <div class="episode__links"><a class="btn btn--ghost" href="https://open.spotify.com/episode/0SVzq9RvNGlNF9OvAohswg?si=2122b06ef46e472c" target="_blank" rel="noopener">Apri su Spotify</a></div>
+                <div class="episode__meta">
+                  <div class="episode__num">Ep 10</div>
+                  <a class="episode__link" href="https://open.spotify.com/episode/0SVzq9RvNGlNF9OvAohswg?si=2122b06ef46e472c" target="_blank" rel="noopener">Apri su Spotify</a>
+                </div>
+                <div class="episode__title">Il Trucco e La Camera Iperbarica</div>
               </article>
             </div>
           </details>
 
-          <details class="season">
+          <details class="season card">
             <summary class="season__summary">
               <div>
-                <div class="season__title">Stagione 2</div>
+                <div class="season__kicker">Stagione 2</div>
+                <div class="season__title">Tra ipobarismo e cultura pop</div>
                 <div class="season__meta muted">10 episodi</div>
               </div>
-              <div class="season__chev" aria-hidden="true">⌄</div>
+              <span class="season__chev" aria-hidden="true">⌄</span>
             </summary>
+
             <div class="season__body">
-              <article class="episode"><div class="episode__meta"><span class="episode__num">Ep 1</span><span class="muted">La Camera Ipobarica</span></div><div class="episode__links"><a class="btn btn--ghost" href="https://open.spotify.com/episode/5Hjvc1BJkLDFVAKPItRf0l?si=272c6e8d8b4242b5" target="_blank" rel="noopener">Apri su Spotify</a></div></article>
-              <article class="episode"><div class="episode__meta"><span class="episode__num">Ep 2</span><span class="muted">Vuoto vs Ipobarismo</span></div><div class="episode__links"><a class="btn btn--ghost" href="https://open.spotify.com/episode/3fpHrUPF4520zXVCt5zz7u?si=fdb2385ba9e64c11" target="_blank" rel="noopener">Apri su Spotify</a></div></article>
-              <article class="episode"><div class="episode__meta"><span class="episode__num">Ep 3</span><span class="muted">Sotto Pressione … Al Cinema!</span></div><div class="episode__links"><a class="btn btn--ghost" href="https://open.spotify.com/episode/6SBnlvNRFZVJu5l5kQCNxr?si=9dc84fb769394e21" target="_blank" rel="noopener">Apri su Spotify</a></div></article>
-              <article class="episode"><div class="episode__meta"><span class="episode__num">Ep 4</span><span class="muted">La Visione Sott’Acqua</span></div><div class="episode__links"><a class="btn btn--ghost" href="https://open.spotify.com/episode/3hCvyTtjgbLN5Dne5syJh5?si=6044052f0ed0446a" target="_blank" rel="noopener">Apri su Spotify</a></div></article>
-              <article class="episode"><div class="episode__meta"><span class="episode__num">Ep 5</span><span class="muted">La Medicina Iperbarica in Svizzera</span></div><div class="episode__links"><a class="btn btn--ghost" href="https://open.spotify.com/episode/464BDK3uyywkXDNfN7Q79t?si=a55694953fea4042" target="_blank" rel="noopener">Apri su Spotify</a></div></article>
-              <article class="episode"><div class="episode__meta"><span class="episode__num">Ep 6</span><span class="muted">Pinocchio</span></div><div class="episode__links"><a class="btn btn--ghost" href="https://open.spotify.com/episode/0XiVtXf6vzHvtfJTo3RTkV?si=f3b4afd42e294b05" target="_blank" rel="noopener">Apri su Spotify</a></div></article>
-              <article class="episode"><div class="episode__meta"><span class="episode__num">Ep 7</span><span class="muted">Apollo 1</span></div><div class="episode__links"><a class="btn btn--ghost" href="https://open.spotify.com/episode/0URzOrvOKtVx2ZhPfRZAui?si=e1524c6db8994a2c" target="_blank" rel="noopener">Apri su Spotify</a></div></article>
-              <article class="episode"><div class="episode__meta"><span class="episode__num">Ep 8</span><span class="muted">L’ossigeno</span></div><div class="episode__links"><a class="btn btn--ghost" href="https://open.spotify.com/episode/232sqmX64kRaZZopeSZZbm?si=67b3af603c4843d3" target="_blank" rel="noopener">Apri su Spotify</a></div></article>
-              <article class="episode"><div class="episode__meta"><span class="episode__num">Ep 9</span><span class="muted">27 Giugno 1980 Ustica</span></div><div class="episode__links"><a class="btn btn--ghost" href="https://open.spotify.com/episode/2BIrJ7YHzg19kBvTFniiqU?si=662a6ec0f6c943e5" target="_blank" rel="noopener">Apri su Spotify</a></div></article>
-              <article class="episode"><div class="episode__meta"><span class="episode__num">Ep 10</span><span class="muted">L’azoto</span></div><div class="episode__links"><a class="btn btn--ghost" href="https://open.spotify.com/episode/0WMWByHyt7Teu8CrMwFzvN?si=e5eae8dc1df7425a" target="_blank" rel="noopener">Apri su Spotify</a></div></article>
+              <article class="episode">
+                <div class="episode__meta">
+                  <div class="episode__num">Ep 1</div>
+                  <a class="episode__link" href="https://open.spotify.com/episode/5Hjvc1BJkLDFVAKPItRf0l?si=272c6e8d8b4242b5" target="_blank" rel="noopener">Apri su Spotify</a>
+                </div>
+                <div class="episode__title">La Camera Ipobarica</div>
+              </article>
+
+              <article class="episode">
+                <div class="episode__meta">
+                  <div class="episode__num">Ep 2</div>
+                  <a class="episode__link" href="https://open.spotify.com/episode/3fpHrUPF4520zXVCt5zz7u?si=fdb2385ba9e64c11" target="_blank" rel="noopener">Apri su Spotify</a>
+                </div>
+                <div class="episode__title">Vuoto vs Ipobarismo</div>
+              </article>
+
+              <article class="episode">
+                <div class="episode__meta">
+                  <div class="episode__num">Ep 3</div>
+                  <a class="episode__link" href="https://open.spotify.com/episode/6SBnlvNRFZVJu5l5kQCNxr?si=9dc84fb769394e21" target="_blank" rel="noopener">Apri su Spotify</a>
+                </div>
+                <div class="episode__title">Sotto Pressione … Al Cinema!</div>
+              </article>
+
+              <article class="episode">
+                <div class="episode__meta">
+                  <div class="episode__num">Ep 4</div>
+                  <a class="episode__link" href="https://open.spotify.com/episode/3hCvyTtjgbLN5Dne5syJh5?si=6044052f0ed0446a" target="_blank" rel="noopener">Apri su Spotify</a>
+                </div>
+                <div class="episode__title">La Visione Sott’Acqua</div>
+              </article>
+
+              <article class="episode">
+                <div class="episode__meta">
+                  <div class="episode__num">Ep 5</div>
+                  <a class="episode__link" href="https://open.spotify.com/episode/464BDK3uyywkXDNfN7Q79t?si=a55694953fea4042" target="_blank" rel="noopener">Apri su Spotify</a>
+                </div>
+                <div class="episode__title">La Medicina Iperbarica in Svizzera</div>
+              </article>
+
+              <article class="episode">
+                <div class="episode__meta">
+                  <div class="episode__num">Ep 6</div>
+                  <a class="episode__link" href="https://open.spotify.com/episode/0XiVtXf6vzHvtfJTo3RTkV?si=f3b4afd42e294b05" target="_blank" rel="noopener">Apri su Spotify</a>
+                </div>
+                <div class="episode__title">Pinocchio</div>
+              </article>
+
+              <article class="episode">
+                <div class="episode__meta">
+                  <div class="episode__num">Ep 7</div>
+                  <a class="episode__link" href="https://open.spotify.com/episode/0URzOrvOKtVx2ZhPfRZAui?si=e1524c6db8994a2c" target="_blank" rel="noopener">Apri su Spotify</a>
+                </div>
+                <div class="episode__title">Apollo 1</div>
+              </article>
+
+              <article class="episode">
+                <div class="episode__meta">
+                  <div class="episode__num">Ep 8</div>
+                  <a class="episode__link" href="https://open.spotify.com/episode/232sqmX64kRaZZopeSZZbm?si=67b3af603c4843d3" target="_blank" rel="noopener">Apri su Spotify</a>
+                </div>
+                <div class="episode__title">L’ossigeno</div>
+              </article>
+
+              <article class="episode">
+                <div class="episode__meta">
+                  <div class="episode__num">Ep 9</div>
+                  <a class="episode__link" href="https://open.spotify.com/episode/2BIrJ7YHzg19kBvTFniiqU?si=662a6ec0f6c943e5" target="_blank" rel="noopener">Apri su Spotify</a>
+                </div>
+                <div class="episode__title">27 Giugno 1980 Ustica</div>
+              </article>
+
+              <article class="episode">
+                <div class="episode__meta">
+                  <div class="episode__num">Ep 10</div>
+                  <a class="episode__link" href="https://open.spotify.com/episode/0WMWByHyt7Teu8CrMwFzvN?si=e5eae8dc1df7425a" target="_blank" rel="noopener">Apri su Spotify</a>
+                </div>
+                <div class="episode__title">L’azoto</div>
+              </article>
             </div>
           </details>
 
-          <details class="season">
+          <details class="season card">
             <summary class="season__summary">
               <div>
-                <div class="season__title">Stagione 3</div>
+                <div class="season__kicker">Stagione 3</div>
+                <div class="season__title">Gas “strani” e astronauti in immersione</div>
                 <div class="season__meta muted">3 episodi</div>
               </div>
-              <div class="season__chev" aria-hidden="true">⌄</div>
+              <span class="season__chev" aria-hidden="true">⌄</span>
             </summary>
+
             <div class="season__body">
-              <article class="episode"><div class="episode__meta"><span class="episode__num">Ep 1</span><span class="muted">La Leggerezza dell’Elio</span></div><div class="episode__links"><a class="btn btn--ghost" href="https://open.spotify.com/episode/5jno2XE2ZwBgfBzHaqm5mT?si=fc7ac24c49bd4b0e" target="_blank" rel="noopener">Apri su Spotify</a></div></article>
-              <article class="episode"><div class="episode__meta"><span class="episode__num">Ep 2</span><span class="muted">L’addestramento Degli Astronauti In Immersione</span></div><div class="episode__links"><a class="btn btn--ghost" href="https://open.spotify.com/episode/69I9teyK9cS3C77W7KeG5e?si=77fc341ff0444324" target="_blank" rel="noopener">Apri su Spotify</a></div></article>
-              <article class="episode"><div class="episode__meta"><span class="episode__num">Ep 3</span><span class="muted">L’organo più Sensibile Alla Pressione</span></div><div class="episode__links"><a class="btn btn--ghost" href="https://open.spotify.com/episode/2w3drALmfECWTv3UZguRWo?si=e4ac05f3ab6d4600" target="_blank" rel="noopener">Apri su Spotify</a></div></article>
+              <article class="episode">
+                <div class="episode__meta">
+                  <div class="episode__num">Ep 1</div>
+                  <a class="episode__link" href="https://open.spotify.com/episode/5jno2XE2ZwBgfBzHaqm5mT?si=fc7ac24c49bd4b0e" target="_blank" rel="noopener">Apri su Spotify</a>
+                </div>
+                <div class="episode__title">La Leggerezza dell’Elio</div>
+              </article>
+
+              <article class="episode">
+                <div class="episode__meta">
+                  <div class="episode__num">Ep 2</div>
+                  <a class="episode__link" href="https://open.spotify.com/episode/69I9teyK9cS3C77W7KeG5e?si=77fc341ff0444324" target="_blank" rel="noopener">Apri su Spotify</a>
+                </div>
+                <div class="episode__title">L’addestramento Degli Astronauti In Immersione</div>
+              </article>
+
+              <article class="episode">
+                <div class="episode__meta">
+                  <div class="episode__num">Ep 3</div>
+                  <a class="episode__link" href="https://open.spotify.com/episode/2w3drALmfECWTv3UZguRWo?si=e4ac05f3ab6d4600" target="_blank" rel="noopener">Apri su Spotify</a>
+                </div>
+                <div class="episode__title">L’organo più Sensibile Alla Pressione</div>
+              </article>
             </div>
           </details>
+
         </div>
+
       </div>
     </section>
   </main>
@@ -222,30 +377,19 @@
       <div>© 2026 Gli Amici di Boyle</div>
       <div class="footer__links">
         <a href="index.html#top">Home</a>
+        <a href="#top">Torna su</a>
         <a href="index.html#contatti">Contatti</a>
       </div>
     </div>
   </footer>
 
   <script>
-    (function(){
-      // Chiudi il menu <details> quando selezioni una voce
-      document.querySelectorAll('.menu a').forEach(a => {
-        a.addEventListener('click', () => {
-          const d = a.closest('details');
-          if (d) d.removeAttribute('open');
-        });
-      });
-
-      // Chiudi cliccando fuori
-      document.addEventListener('click', (e) => {
-        const d = document.querySelector('details.menu[open]');
-        if (!d) return;
-        const panel = d.querySelector('.menu__panel');
-        const btn = d.querySelector('summary');
-        if (panel && !panel.contains(e.target) && btn && !btn.contains(e.target)) {
-          d.removeAttribute('open');
-        }
+    // Chiudi il menu mobile quando clicchi una voce.
+    (function () {
+      const menu = document.querySelector('details.menu');
+      if (!menu) return;
+      menu.querySelectorAll('a').forEach(a => {
+        a.addEventListener('click', () => { menu.removeAttribute('open'); });
       });
     })();
   </script>
