@@ -184,7 +184,7 @@ a:hover{text-decoration:underline}
   white-space:nowrap;
   transition: background .15s ease, color .15s ease;
 }
-.nav a:hover{
+.nav a:not(.btn):hover{
   color: var(--ink);
   background: rgba(14,165,233,.08);
   text-decoration:none;
@@ -509,7 +509,7 @@ a:hover{text-decoration:underline}
 .person p.muted{
   display:-webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp:2;
+  -webkit-line-clamp: 3;
   overflow:hidden;
   margin: 6px 0 0;
 }
@@ -676,7 +676,7 @@ textarea.form__input{ resize: vertical; min-height: 110px; }
 @media (max-width: 760px){
   /* header compatto ma payoff VISIBILE */
   .header__inner{ gap:12px; padding:10px 0; }
-  .brand__logo{ width:42px; height:42px; }
+  .brand__logo{ width: 52px; height: 52px; }
   .brand__name{ font-size:16px; max-width: 62vw; }
   .brand__sub{
     display:block;
@@ -697,11 +697,11 @@ textarea.form__input{ resize: vertical; min-height: 110px; }
 
   /* avatar mobile */
   .person .avatarImg{
-    width:64px; height:64px; flex:0 0 64px;
+    width:64px; height:64px; flex: 0 0 80px;
   }
 
   /* clamp un filo più permissivo su mobile */
-  .person p.muted{ -webkit-line-clamp:3; }
+  .person p.muted{ -webkit-line-clamp: 4; }
 }
 
 @media (max-width: 560px){
@@ -800,3 +800,5 @@ textarea.form__input{ resize: vertical; min-height: 110px; }
 }
 
 }
+
+.btn--primary:hover{ color:#fff; }
