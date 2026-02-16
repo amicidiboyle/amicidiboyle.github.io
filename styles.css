@@ -1,50 +1,61 @@
-/* Gli Amici di Boyle — Glassmorphism skin
-   Nota: Tailwind (CDN) gestisce layout e componenti.
-   Questo file contiene SOLO: background, grain, orbs, dialog backdrop. */
 
-:root { color-scheme: dark; }
+/* GLASSMORPHISM CLEAN BUILD */
+
+:root {
+  color-scheme: dark;
+}
 
 body{
+  margin:0;
+  font-family: system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
   background:
-    radial-gradient(1200px 700px at 18% 10%, rgba(0, 229, 255, .18), transparent 60%),
-    radial-gradient(1100px 650px at 85% 25%, rgba(34, 197, 94, .14), transparent 62%),
-    radial-gradient(900px 600px at 35% 90%, rgba(56, 189, 248, .12), transparent 62%),
-    linear-gradient(145deg, #020617 0%, #041b3a 30%, #063b5a 65%, #0b5f63 100%);
-  background-attachment: fixed;
+    radial-gradient(1200px 700px at 18% 10%, rgba(0,229,255,.18), transparent 60%),
+    radial-gradient(1100px 650px at 85% 25%, rgba(34,197,94,.14), transparent 62%),
+    radial-gradient(900px 600px at 35% 90%, rgba(56,189,248,.12), transparent 62%),
+    linear-gradient(145deg,#020617 0%,#041b3a 35%,#063b5a 70%,#0b5f63 100%);
+  color:white;
 }
 
-/* grain leggero per “materialità” */
-.grain::before{
-  content:"";
-  position:fixed;
-  inset:0;
-  pointer-events:none;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23n)' opacity='.12'/%3E%3C/svg%3E");
-  mix-blend-mode: soft-light;
-  opacity:.28;
+.glass{
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
+  border:1px solid rgba(255,255,255,0.18);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+  border-radius:20px;
 }
 
-/* “orbs” animati dietro al contenuto */
-.orb{
-  position:absolute;
-  inset:auto;
-  width:520px; height:520px;
-  border-radius:9999px;
-  filter: blur(40px);
-  opacity:.45;
-  transform: translate3d(0,0,0);
-  animation: drift 14s ease-in-out infinite;
-}
-.orb.b{ width:640px; height:640px; animation-duration: 18s; opacity:.35; }
-.orb.c{ width:420px; height:420px; animation-duration: 16s; opacity:.30; }
-
-@keyframes drift{
-  0%,100% { transform: translate3d(-2%, -1%, 0) scale(1.00); }
-  50%     { transform: translate3d( 2%,  1%, 0) scale(1.03); }
+.section{
+  max-width:1200px;
+  margin:auto;
+  padding:40px 20px;
 }
 
-/* Dialog backdrop */
-dialog::backdrop{
-  background: rgba(2,6,23,.65);
-  backdrop-filter: blur(8px);
+.btn-primary{
+  background: rgba(34,211,238,0.18);
+  border:1px solid rgba(34,211,238,0.4);
+  padding:12px 20px;
+  border-radius:14px;
+  font-weight:700;
+  color:white;
+  cursor:pointer;
+}
+
+.btn-primary:hover{
+  background: rgba(34,211,238,0.28);
+}
+
+.grid{
+  display:grid;
+  gap:20px;
+}
+
+.grid-3{
+  grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
+}
+
+header.glass{
+  position:sticky;
+  top:10px;
+  z-index:50;
 }
