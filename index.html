@@ -5,201 +5,268 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Gli Amici di Boyle · Ricerca e divulgazione in medicina subacquea e iperbarica</title>
   <meta name="description" content="Gli Amici di Boyle: ricerca e divulgazione in medicina subacquea e iperbarica. Approccio multidisciplinare, evidenze, formazione e innovazione." />
-  <meta name="theme-color" content="#0b4aa2" />
-
-  <!-- Cache busting: cambia la versione quando aggiorni CSS -->
-  <link rel="stylesheet" href="styles.css?v=1">
+  <meta name="theme-color" content="#05142a" />
   <link rel="icon" href="assets/logo.png" type="image/png" />
+
+  <!-- Tailwind via CDN (sì, lo so, è 2026 e stiamo ancora facendo CDN in produzione) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['ui-sans-serif','system-ui','-apple-system','Segoe UI','Roboto','Inter','Arial','Noto Sans','sans-serif']
+          },
+          boxShadow: {
+            glow: "0 0 0 1px rgba(255,255,255,.10), 0 20px 70px rgba(0,0,0,.40)",
+            glass: "0 0 0 1px rgba(255,255,255,.12), 0 16px 50px rgba(0,0,0,.35)"
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Lucide icons (web build). User asked "Lucide React"; in un file HTML puro, questo è l'equivalente sensato. -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="stylesheet" href="styles_glass.css" />
+
 </head>
 
-<body>
-  <a class="skip" href="#contenuto">Vai al contenuto</a>
+<body class="grain min-h-screen text-white/90 selection:bg-cyan-300/30 selection:text-white">
+  <a class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[60] focus:px-4 focus:py-2 focus:rounded-xl focus:bg-white/10 focus:border focus:border-white/20 focus:backdrop-blur-xl"
+     href="#contenuto">Vai al contenuto</a>
 
-  <header class="header" role="banner">
-    <div class="container header__inner">
+  <!-- Decorative orbs -->
+  <div class="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
+    <div class="orb" style="left:-160px; top:-220px; background: radial-gradient(circle at 30% 30%, rgba(0,229,255,.55), transparent 60%);"></div>
+    <div class="orb b" style="right:-260px; top:-140px; background: radial-gradient(circle at 40% 40%, rgba(56,189,248,.50), transparent 62%);"></div>
+    <div class="orb c" style="left:18%; bottom:-260px; background: radial-gradient(circle at 40% 40%, rgba(34,197,94,.40), transparent 62%);"></div>
+  </div>
 
-      <a class="brand" href="#top" aria-label="Home">
-        <img class="brand__logo" src="assets/logo.png" alt="Gli Amici di Boyle" />
-        <span class="brand__text">
-          <span class="brand__name">Gli Amici di Boyle</span>
-          <span class="brand__sub">
-            <span class="brand__line">Diving &amp; Hyperbaric Medicine</span>
-            <span class="brand__line">Research &amp; Education</span>
-            <span class="brand__line">Human Performance &amp; Safety in Extreme Environments</span>
-          </span>
-        </span>
-      </a>
+  <!-- HEADER -->
+  <header class="sticky top-0 z-50">
+    <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-3">
+      <div class="rounded-2xl border border-white/15 bg-white/8 backdrop-blur-2xl shadow-glass">
+        <div class="flex items-center justify-between gap-3 px-4 sm:px-6 py-3">
+          <a href="#top" class="group flex items-center gap-3 min-w-0">
+            <img src="assets/logo.png" alt="Gli Amici di Boyle" class="h-11 w-11 rounded-full bg-transparent" />
+            <div class="min-w-0">
+              <div class="font-extrabold tracking-tight leading-tight">
+                Gli Amici di Boyle
+              </div>
+              <div class="text-[11px] sm:text-xs text-white/70 leading-snug">
+                <span class="block">Diving &amp; Hyperbaric Medicine</span>
+                <span class="block">Research &amp; Education</span>
+                <span class="block">Human Performance &amp; Safety in Extreme Environments</span>
+              </div>
+            </div>
+          </a>
 
-      <nav class="nav nav--desktop" aria-label="Navigazione principale">
-        <a href="#vision">Vision</a>
-        <a href="#chisiamo">Chi siamo</a>
-        <a href="#ricerca">Ricerca</a>
-        <a href="#formazione">Formazione</a>
-        <a href="podcast.html">Podcast</a>
-        <a class="btn btn--primary" href="#contatti">Contatti</a>
-      </nav>
+          <!-- Desktop nav -->
+          <nav class="hidden lg:flex items-center gap-2 text-sm font-semibold">
+            <a class="px-3 py-2 rounded-xl hover:bg-white/10" href="#vision">Vision</a>
+            <a class="px-3 py-2 rounded-xl hover:bg-white/10" href="#chisiamo">Chi siamo</a>
+            <a class="px-3 py-2 rounded-xl hover:bg-white/10" href="#ricerca">Ricerca</a>
+            <a class="px-3 py-2 rounded-xl hover:bg-white/10" href="#formazione">Formazione</a>
+            <a class="px-3 py-2 rounded-xl hover:bg-white/10" href="podcast.html">Podcast</a>
+            <a class="ml-1 inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-cyan-400/20 hover:bg-cyan-400/25 border border-cyan-200/25 shadow-glow"
+               href="#contatti">
+              <i data-lucide="mail" class="h-4 w-4"></i>
+              Contatti
+            </a>
+          </nav>
 
-      <details class="menu" aria-label="Menu mobile" id="mobileMenu">
-        <summary class="menu__button" aria-label="Apri menu">
-          <span class="hamburger" aria-hidden="true"><span></span></span>
-          <span class="menu__label">Menu</span>
-        </summary>
-
-        <div class="menu__panel" role="menu">
-          <a role="menuitem" href="#vision">Vision</a>
-          <a role="menuitem" href="#chisiamo">Chi siamo</a>
-          <a role="menuitem" href="#ricerca">Ricerca</a>
-          <a role="menuitem" href="#formazione">Formazione</a>
-          <a role="menuitem" href="podcast.html">Podcast</a>
-          <a role="menuitem" class="btn btn--primary btn--block" href="#contatti">Contatti</a>
+          <!-- Mobile menu button -->
+          <button id="menuBtn" class="lg:hidden inline-flex items-center gap-2 px-3 py-2 rounded-xl border border-white/15 bg-white/10 hover:bg-white/15 backdrop-blur-xl"
+                  aria-expanded="false" aria-controls="mobileMenu" aria-label="Apri menu">
+            <i data-lucide="menu" class="h-5 w-5"></i>
+            <span class="text-sm font-bold">Menu</span>
+          </button>
         </div>
-      </details>
 
+        <!-- Mobile nav panel -->
+        <div id="mobileMenu" class="lg:hidden hidden border-t border-white/10 px-4 sm:px-6 py-3">
+          <div class="grid gap-2 text-sm font-semibold">
+            <a class="px-3 py-2 rounded-xl hover:bg-white/10" href="#vision">Vision</a>
+            <a class="px-3 py-2 rounded-xl hover:bg-white/10" href="#chisiamo">Chi siamo</a>
+            <a class="px-3 py-2 rounded-xl hover:bg-white/10" href="#ricerca">Ricerca</a>
+            <a class="px-3 py-2 rounded-xl hover:bg-white/10" href="#formazione">Formazione</a>
+            <a class="px-3 py-2 rounded-xl hover:bg-white/10" href="podcast.html">Podcast</a>
+            <a class="mt-1 inline-flex items-center justify-center gap-2 px-4 py-2 rounded-xl bg-cyan-400/20 hover:bg-cyan-400/25 border border-cyan-200/25"
+               href="#contatti">
+              <i data-lucide="mail" class="h-4 w-4"></i>
+              Contatti
+            </a>
+          </div>
+        </div>
+      </div>
     </div>
   </header>
 
   <main id="contenuto">
-
     <!-- HERO -->
-    <section class="hero hero--premium" id="top">
-      <div class="container hero__grid hero__grid--premium">
-
-        <div class="hero__copy">
-          <p class="eyebrow">Ricerca · Formazione · Safety</p>
-
-          <h1 class="h1 h1--premium">
-            Gli Amici di Boyle
-            <span class="h1__sub h1__sub--premium">
-              Ricerca e divulgazione in medicina subacquea ed iperbarica.
-            </span>
-          </h1>
-
-          <p class="lead lead--premium">
-            Un gruppo multidisciplinare che integra competenze cliniche, tecnologiche e scientifiche
-            per migliorare sicurezza in immersione, conoscenza e applicazioni dell’ossigenoterapia iperbarica.
-          </p>
-
-          <div class="cta cta--premium">
-            <a class="btn btn--primary btn--lg" href="#ricerca">Esplora la ricerca</a>
-            <a class="btn btn--ghost btn--lg" href="#chisiamo">Conosci il team</a>
-          </div>
-
-          <div class="trust" aria-label="Indicatori">
-            <div class="trust__item">
-              <strong>Evidence-based</strong>
-              <span>Approccio sobrio, replicabile, utile.</span>
-            </div>
-            <div class="trust__item">
-              <strong>Docenza</strong>
-              <span>Università, aziende, associazioni.</span>
-            </div>
-            <div class="trust__item">
-              <strong>Collaborazioni</strong>
-              <span>Progetti, case report, editoria.</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="heroRight" aria-label="In evidenza e visual">
-
-          <div class="heroVisual" aria-hidden="true">
-            <div class="heroVisual__glow"></div>
-            <div class="heroVisual__grid"></div>
-
-            <svg viewBox="0 0 820 260" width="100%" height="100%" preserveAspectRatio="none" style="position:absolute; inset:0; opacity:.95">
-              <defs>
-                <linearGradient id="g1" x1="0" x2="1">
-                  <stop offset="0" stop-color="rgba(11,74,162,.16)"/>
-                  <stop offset="1" stop-color="rgba(14,165,233,.18)"/>
-                </linearGradient>
-                <radialGradient id="b1" cx="50%" cy="40%" r="60%">
-                  <stop offset="0" stop-color="rgba(14,165,233,.22)"/>
-                  <stop offset="1" stop-color="rgba(14,165,233,0)"/>
-                </radialGradient>
-              </defs>
-
-              <path d="M0,170 C140,150 220,210 360,190 C520,165 600,120 820,150 L820,260 L0,260 Z" fill="url(#g1)"/>
-              <path d="M0,190 C160,170 260,230 410,210 C560,185 650,145 820,170" fill="none" stroke="rgba(11,74,162,.22)" stroke-width="2"/>
-
-              <circle cx="650" cy="95" r="60" fill="rgba(255,255,255,.55)" stroke="rgba(11,74,162,.18)" stroke-width="2"/>
-              <path d="M610,95 A40,40 0 0 1 690,95" fill="none" stroke="rgba(11,74,162,.25)" stroke-width="8" stroke-linecap="round"/>
-              <path d="M630,105 L685,80" stroke="rgba(11,74,162,.45)" stroke-width="4" stroke-linecap="round"/>
-              <circle cx="650" cy="95" r="6" fill="rgba(11,74,162,.45)"/>
-
-              <circle cx="120" cy="210" r="18" fill="url(#b1)"/>
-              <circle cx="160" cy="165" r="10" fill="rgba(14,165,233,.18)"/>
-              <circle cx="210" cy="120" r="14" fill="rgba(14,165,233,.16)"/>
-              <circle cx="260" cy="170" r="8" fill="rgba(14,165,233,.14)"/>
-              <circle cx="320" cy="120" r="12" fill="rgba(14,165,233,.12)"/>
-            </svg>
-          </div>
-
-          <aside class="panel panel--tight" aria-label="In evidenza">
-            <div class="panel__top">
-              <span class="badge">In evidenza</span>
-              <h2 class="h2">Contenuti professionali</h2>
-              <p class="muted">
-                Strumenti operativi, progetti, materiali didattici e pubblicazioni.
-                Scienza applicata: verificabile, replicabile.
-              </p>
+    <section id="top" class="relative">
+      <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 pt-10 sm:pt-14 pb-10">
+        <div class="grid lg:grid-cols-12 gap-6 items-start">
+          <!-- Left -->
+          <div class="lg:col-span-7">
+            <div class="inline-flex items-center gap-2 px-3 py-2 rounded-full border border-white/15 bg-white/10 backdrop-blur-xl text-xs font-extrabold tracking-wide">
+              <i data-lucide="sparkles" class="h-4 w-4 text-cyan-200"></i>
+              Ricerca · Formazione · Safety
             </div>
 
-            <div class="panel__list" role="list">
-              <div class="panel__item" role="listitem">
-                <strong>Collaborazioni</strong>
-                <span>Ricerca, case report, docenza, progetti editoriali.</span>
+            <h1 class="mt-5 text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-[1.02]">
+              Gli Amici di Boyle
+              <span class="block mt-4 text-base sm:text-lg font-extrabold text-white/80">
+                Ricerca e divulgazione in medicina subacquea ed iperbarica.
+              </span>
+            </h1>
+
+            <p class="mt-5 text-base sm:text-lg leading-relaxed text-white/75 max-w-[72ch]">
+              Un gruppo multidisciplinare che integra competenze cliniche, tecnologiche e scientifiche
+              per migliorare sicurezza in immersione, conoscenza e applicazioni dell’ossigenoterapia iperbarica.
+            </p>
+
+            <div class="mt-6 flex flex-wrap gap-3">
+              <a href="#ricerca" class="inline-flex items-center gap-2 px-5 py-3 rounded-2xl bg-cyan-400/20 hover:bg-cyan-400/25 border border-cyan-200/25 shadow-glow font-extrabold">
+                <i data-lucide="microscope" class="h-5 w-5"></i>
+                Esplora la ricerca
+              </a>
+              <a href="#chisiamo" class="inline-flex items-center gap-2 px-5 py-3 rounded-2xl bg-white/10 hover:bg-white/15 border border-white/15 backdrop-blur-xl font-extrabold">
+                <i data-lucide="users" class="h-5 w-5"></i>
+                Conosci il team
+              </a>
+            </div>
+
+            <!-- Trust bento -->
+            <div class="mt-7 grid sm:grid-cols-3 gap-3">
+              <div class="rounded-2xl border border-white/15 bg-white/10 backdrop-blur-2xl p-4 shadow-glass">
+                <div class="flex items-center gap-2 font-extrabold">
+                  <i data-lucide="badge-check" class="h-5 w-5 text-cyan-200"></i>
+                  Evidence-based
+                </div>
+                <div class="mt-2 text-sm text-white/70">Approccio sobrio, replicabile, utile.</div>
               </div>
-              <div class="panel__item" role="listitem">
-                <strong>Lezioni e corsi</strong>
-                <span>Università, aziende, associazioni: contenuti dove servono.</span>
+              <div class="rounded-2xl border border-white/15 bg-white/10 backdrop-blur-2xl p-4 shadow-glass">
+                <div class="flex items-center gap-2 font-extrabold">
+                  <i data-lucide="graduation-cap" class="h-5 w-5 text-cyan-200"></i>
+                  Docenza
+                </div>
+                <div class="mt-2 text-sm text-white/70">Università, aziende, associazioni.</div>
               </div>
-              <div class="panel__item" role="listitem">
-                <strong>Focus clinico</strong>
-                <span>Utilità pratica, rigore, replicabilità.</span>
+              <div class="rounded-2xl border border-white/15 bg-white/10 backdrop-blur-2xl p-4 shadow-glass">
+                <div class="flex items-center gap-2 font-extrabold">
+                  <i data-lucide="handshake" class="h-5 w-5 text-cyan-200"></i>
+                  Collaborazioni
+                </div>
+                <div class="mt-2 text-sm text-white/70">Progetti, case report, editoria.</div>
               </div>
             </div>
+          </div>
 
-            <div class="panel__cta">
-              <button type="button" class="btn btn--primary btn--block" data-open-dialog="contattiDialog">
-                Scrivici
-              </button>
+          <!-- Right bento -->
+          <div class="lg:col-span-5 grid gap-4">
+            <div class="relative overflow-hidden rounded-3xl border border-white/15 bg-white/10 backdrop-blur-2xl shadow-glass">
+              <div class="p-5">
+                <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-cyan-200/25 bg-cyan-400/15 text-xs font-extrabold">
+                  <i data-lucide="star" class="h-4 w-4"></i>
+                  In evidenza
+                </div>
+                <h2 class="mt-3 text-xl font-black tracking-tight">Contenuti professionali</h2>
+                <p class="mt-2 text-sm text-white/70">
+                  Strumenti operativi, progetti, materiali didattici e pubblicazioni.
+                  Scienza applicata: verificabile, replicabile.
+                </p>
+
+                <div class="mt-4 grid gap-3">
+                  <div class="rounded-2xl border border-white/10 bg-white/8 p-4">
+                    <div class="font-extrabold">Collaborazioni</div>
+                    <div class="text-sm text-white/70">Ricerca, case report, docenza, progetti editoriali.</div>
+                  </div>
+                  <div class="rounded-2xl border border-white/10 bg-white/8 p-4">
+                    <div class="font-extrabold">Lezioni e corsi</div>
+                    <div class="text-sm text-white/70">Università, aziende, associazioni: contenuti dove servono.</div>
+                  </div>
+                  <div class="rounded-2xl border border-white/10 bg-white/8 p-4">
+                    <div class="font-extrabold">Focus clinico</div>
+                    <div class="text-sm text-white/70">Utilità pratica, rigore, replicabilità.</div>
+                  </div>
+                </div>
+
+                <button type="button"
+                        class="mt-5 w-full inline-flex items-center justify-center gap-2 px-5 py-3 rounded-2xl bg-cyan-400/20 hover:bg-cyan-400/25 border border-cyan-200/25 shadow-glow font-extrabold"
+                        data-open-dialog="contattiDialog">
+                  <i data-lucide="send" class="h-5 w-5"></i>
+                  Scrivici
+                </button>
+              </div>
+
+              <!-- subtle grid -->
+              <div class="pointer-events-none absolute inset-0 opacity-30"
+                   style="background-image: linear-gradient(rgba(255,255,255,.08) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.08) 1px, transparent 1px);
+                          background-size: 40px 40px;"></div>
             </div>
-          </aside>
 
+            <div class="grid grid-cols-2 gap-4">
+              <div class="rounded-3xl border border-white/15 bg-white/10 backdrop-blur-2xl shadow-glass p-5">
+                <div class="flex items-center gap-2 text-sm font-extrabold">
+                  <i data-lucide="activity" class="h-5 w-5 text-cyan-200"></i>
+                  Metodo
+                </div>
+                <p class="mt-2 text-sm text-white/70">Risultati e metodi chiari, utili sul campo.</p>
+              </div>
+              <div class="rounded-3xl border border-white/15 bg-white/10 backdrop-blur-2xl shadow-glass p-5">
+                <div class="flex items-center gap-2 text-sm font-extrabold">
+                  <i data-lucide="shield" class="h-5 w-5 text-cyan-200"></i>
+                  Safety
+                </div>
+                <p class="mt-2 text-sm text-white/70">Decisioni migliori quando conta davvero.</p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
 
     <!-- VISION -->
-    <section class="section" id="vision">
-      <div class="container">
-        <div class="section__head">
-          <h2 class="h2">Vision</h2>
-          <p class="muted">
-            Essere un riferimento internazionale per innovazione e ricerca in medicina iperbarica e subacquea,
-            con un approccio multidisciplinare che integra competenze mediche, tecnologiche e scientifiche.
-          </p>
+    <section id="vision" class="py-10 sm:py-14">
+      <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-wrap items-end justify-between gap-4">
+          <div class="max-w-3xl">
+            <h2 class="text-2xl sm:text-3xl font-black tracking-tight">Vision</h2>
+            <p class="mt-2 text-white/75">
+              Essere un riferimento internazionale per innovazione e ricerca in medicina iperbarica e subacquea,
+              con un approccio multidisciplinare che integra competenze mediche, tecnologiche e scientifiche.
+            </p>
+          </div>
         </div>
 
-        <div class="grid grid--3">
-          <article class="card">
-            <h3 class="h3">Rigorosa</h3>
-            <p class="muted">
-              Ricana verificabile, risultati e metodi chiari. Specialisti in Anestesia e Rianimazione,
+        <div class="mt-6 grid md:grid-cols-3 gap-4">
+          <article class="rounded-3xl border border-white/15 bg-white/10 backdrop-blur-2xl shadow-glass p-6">
+            <div class="flex items-center gap-2 font-extrabold">
+              <i data-lucide="flask-conical" class="h-5 w-5 text-cyan-200"></i>
+              Rigorosa
+            </div>
+            <p class="mt-2 text-sm text-white/70">
+              Ricerca verificabile, risultati e metodi chiari. Specialisti in Anestesia e Rianimazione,
               Emergenza Urgenza, Medicina Iperbarica e Subacquea, Medicina Spaziale.
             </p>
           </article>
 
-          <article class="card">
-            <h3 class="h3">Multidisciplinare</h3>
-            <p class="muted">
-              Clinica, ingegneria, fisiologia, safety: un unico linguaggio operativo.
-            </p>
+          <article class="rounded-3xl border border-white/15 bg-white/10 backdrop-blur-2xl shadow-glass p-6">
+            <div class="flex items-center gap-2 font-extrabold">
+              <i data-lucide="layers" class="h-5 w-5 text-cyan-200"></i>
+              Multidisciplinare
+            </div>
+            <p class="mt-2 text-sm text-white/70">Clinica, ingegneria, fisiologia, safety: un unico linguaggio operativo.</p>
           </article>
 
-          <article class="card">
-            <h3 class="h3">Continua</h3>
-            <p class="muted">
+          <article class="rounded-3xl border border-white/15 bg-white/10 backdrop-blur-2xl shadow-glass p-6">
+            <div class="flex items-center gap-2 font-extrabold">
+              <i data-lucide="refresh-cw" class="h-5 w-5 text-cyan-200"></i>
+              Continua
+            </div>
+            <p class="mt-2 text-sm text-white/70">
               Formazione applicabile, aggiornata, pensata per chi lavora sul campo da chi lavora sul campo.
             </p>
           </article>
@@ -208,266 +275,338 @@
     </section>
 
     <!-- CHI SIAMO -->
-    <section class="section section--soft" id="chisiamo">
-      <div class="container">
-
-        <div class="section__head">
-          <h2 class="h2">Chi siamo</h2>
-          <p class="muted">
-            Un gruppo di ricercatori e clinici dedicati alla medicina subacquea e iperbarica.
-            Il nome omaggia Robert Boyle e la relazione tra pressione e volume dei gas, centrale per la fisiologia in immersione.
-          </p>
+    <section id="chisiamo" class="py-10 sm:py-14">
+      <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-wrap items-end justify-between gap-4">
+          <div class="max-w-3xl">
+            <h2 class="text-2xl sm:text-3xl font-black tracking-tight">Chi siamo</h2>
+            <p class="mt-2 text-white/75">
+              Un gruppo di ricercatori e clinici dedicati alla medicina subacquea e iperbarica.
+              Il nome omaggia Robert Boyle e la relazione tra pressione e volume dei gas, centrale per la fisiologia in immersione.
+            </p>
+            <p class="mt-3 text-sm text-white/70 max-w-[72ch]">
+              Studiamo gli effetti della pressione sul corpo umano e sviluppiamo strumenti che migliorino la sicurezza delle attività subacquee
+              e amplino le applicazioni terapeutiche dei trattamenti iperbarici.
+            </p>
+          </div>
         </div>
 
-        <div class="prose">
-          <p class="muted">
-            Studiamo gli effetti della pressione sul corpo umano e sviluppiamo strumenti che migliorino la sicurezza delle attività subacquee
-            e amplino le applicazioni terapeutiche dei trattamenti iperbarici.
-          </p>
+        <!-- Team bento -->
+        <div class="mt-7 grid lg:grid-cols-2 gap-4">
+          <!-- Founder -->
+          <article class="rounded-3xl border border-white/15 bg-white/10 backdrop-blur-2xl shadow-glass p-6 flex gap-4">
+            <img src="images/silvio.zerbi.jpg" alt="Dott. Silvio Zerbi" class="h-20 w-20 rounded-full object-cover ring-1 ring-white/15" loading="lazy" />
+            <div class="min-w-0">
+              <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/15 bg-white/10 text-[11px] font-extrabold tracking-wide">
+                <i data-lucide="crown" class="h-4 w-4"></i>
+                Founder
+              </div>
+              <h3 class="mt-2 text-lg font-black tracking-tight">Dott. Silvio Zerbi</h3>
+              <p class="mt-1 text-sm text-white/70">
+                Anestesista Rianimatore, Intensivista, Medico Subacqueo ed Iperbarico, Medico Aeronautico ed Aerospaziale
+              </p>
+            </div>
+          </article>
+
+          <article class="rounded-3xl border border-white/15 bg-white/10 backdrop-blur-2xl shadow-glass p-6 flex gap-4">
+            <img src="images/dario.nicosia.jpg" alt="Dott. Dario Nicosia" class="h-20 w-20 rounded-full object-cover ring-1 ring-white/15" loading="lazy" />
+            <div class="min-w-0">
+              <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/15 bg-white/10 text-[11px] font-extrabold tracking-wide">
+                <i data-lucide="anchor" class="h-4 w-4"></i>
+                Diving Supervisor
+              </div>
+              <h3 class="mt-2 text-lg font-black tracking-tight">Dott. Dario Nicosia</h3>
+              <p class="mt-1 text-sm text-white/70">Anestesista Rianimatore, Intensivista, Medico Iperbarico e Subacqueo, Medico HEMS 118</p>
+            </div>
+          </article>
+
+          <article class="rounded-3xl border border-white/15 bg-white/10 backdrop-blur-2xl shadow-glass p-6 flex gap-4">
+            <img src="images/vincenzo.benenati.jpg" alt="Dott. Vincenzo Benenati" class="h-20 w-20 rounded-full object-cover ring-1 ring-white/15" loading="lazy" />
+            <div class="min-w-0">
+              <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/15 bg-white/10 text-[11px] font-extrabold tracking-wide">
+                <i data-lucide="droplets" class="h-4 w-4"></i>
+                Hyperbaric Supervisor
+              </div>
+              <h3 class="mt-2 text-lg font-black tracking-tight">Dott. Vincenzo Benenati</h3>
+              <p class="mt-1 text-sm text-white/70">Anestesista Rianimatore, Intensivista, Medico Iperbarico e Subacqueo</p>
+            </div>
+          </article>
+
+          <article class="rounded-3xl border border-white/15 bg-white/10 backdrop-blur-2xl shadow-glass p-6 flex gap-4">
+            <img src="images/matteo.paganini.jpg" alt="Dott. Matteo Paganini" class="h-20 w-20 rounded-full object-cover ring-1 ring-white/15" loading="lazy" />
+            <div class="min-w-0">
+              <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/15 bg-white/10 text-[11px] font-extrabold tracking-wide">
+                <i data-lucide="microscope" class="h-4 w-4"></i>
+                Head Researcher
+              </div>
+              <h3 class="mt-2 text-lg font-black tracking-tight">Dott. Matteo Paganini</h3>
+              <p class="mt-1 text-sm text-white/70">Ricercatore, Medico di Emergenza-Urgenza, PhD in Global Health, Humanitarian Aid and Disaster Medicine</p>
+            </div>
+          </article>
         </div>
 
-        <div class="team" aria-label="Team">
-          <article class="person card">
-            <img class="avatarImg" src="images/silvio.zerbi.jpg" alt="Dott. Silvio Zerbi" loading="lazy" />
-            <div class="person__body">
-              <div class="role">Founder</div>
-              <h3 class="h3">Dott. Silvio Zerbi</h3>
-              <p class="muted">Anestesista Rianimatore, Intensivista, Medico Subacqueo ed Iperbarico, Medico Aeronautico ed Aerospaziale</p>
-            </div>
-          </article>
-
-          <article class="person card">
-            <img class="avatarImg" src="images/luigi.tarsia.jpg" alt="Ing. Luigi Tarsia" loading="lazy" />
-            <div class="person__body">
-              <div class="role">Engineering Director</div>
-              <h3 class="h3">Ing. Luigi Tarsia</h3>
-              <p class="muted">Ingegnere Nucleare e Biomedico, Specialista in Medicina Subacquea e Iperbarica, Aeronautica ed Aerospaziale</p>
-            </div>
-          </article>
-
-          <article class="person card">
-            <img class="avatarImg" src="images/dario.nicosia.jpg" alt="Dott. Dario Nicosia" loading="lazy" />
-            <div class="person__body">
-              <div class="role">Diving Supervisor</div>
-              <h3 class="h3">Dott. Dario Nicosia</h3>
-              <p class="muted">Anestesista Rianimatore, Intensivista, Medico Iperbarico e Subacqueo, Medico HEMS 118</p>
-            </div>
-          </article>
-
-          <article class="person card">
-            <img class="avatarImg" src="images/vincenzo.benenati.jpg" alt="Dott. Vincenzo Benenati" loading="lazy" />
-            <div class="person__body">
-              <div class="role">Hyperbaric Supervisor</div>
-              <h3 class="h3">Dott. Vincenzo Benenati</h3>
-              <p class="muted">Anestesista Rianimatore, Intensivista, Medico Iperbarico e Subacqueo</p>
-            </div>
-          </article>
-
-          <article class="person card">
-            <img class="avatarImg" src="images/matteo.paganini.jpg" alt="Dott. Matteo Paganini" loading="lazy" />
-            <div class="person__body">
-              <div class="role">Head Researcher</div>
-              <h3 class="h3">Dott. Matteo Paganini</h3>
-              <p class="muted">Ricercatore, Medico di Emergenza-Urgenza, PhD in Global Health, Humanitarian Aid and Disaster Medicine</p>
-            </div>
-          </article>
-        </div>
-
-        <div class="grid grid--2 gap-lg" style="margin-top:18px;">
-          <article class="card">
-            <h3 class="h3">Certificazioni e riconoscimenti</h3>
-            <ul class="bullets">
-              <li>Membri attivi UHMS (Undersea &amp; Hyperbaric Medical Society)</li>
-              <li>Certificazioni SIMSI (Società Italiana Medicina Subacquea e Iperbarica)</li>
-              <li>Collaborazioni con European Committee for Hyperbaric Medicine</li>
-              <li>Consulenze su protocolli di emergenza subacquea</li>
-              <li>Relazioni e docenze in congressi e corsi</li>
+        <div class="mt-6 grid md:grid-cols-2 gap-4">
+          <article class="rounded-3xl border border-white/15 bg-white/10 backdrop-blur-2xl shadow-glass p-6">
+            <h3 class="text-lg font-black tracking-tight">Certificazioni e riconoscimenti</h3>
+            <ul class="mt-3 space-y-2 text-sm text-white/75">
+              <li class="flex gap-2"><i data-lucide="check-circle-2" class="h-5 w-5 text-cyan-200 shrink-0"></i><span>Membri attivi UHMS (Undersea &amp; Hyperbaric Medical Society)</span></li>
+              <li class="flex gap-2"><i data-lucide="check-circle-2" class="h-5 w-5 text-cyan-200 shrink-0"></i><span>Certificazioni SIMSI (Società Italiana Medicina Subacquea e Iperbarica)</span></li>
+              <li class="flex gap-2"><i data-lucide="check-circle-2" class="h-5 w-5 text-cyan-200 shrink-0"></i><span>Collaborazioni con European Committee for Hyperbaric Medicine</span></li>
+              <li class="flex gap-2"><i data-lucide="check-circle-2" class="h-5 w-5 text-cyan-200 shrink-0"></i><span>Consulenze su protocolli di emergenza subacquea</span></li>
+              <li class="flex gap-2"><i data-lucide="check-circle-2" class="h-5 w-5 text-cyan-200 shrink-0"></i><span>Relazioni e docenze in congressi e corsi</span></li>
             </ul>
           </article>
 
-          <article class="card">
-            <h3 class="h3">Cosa facciamo (in pratica)</h3>
-            <ul class="bullets">
-              <li>Studio degli effetti della pressione sul corpo umano</li>
-              <li>Strumenti operativi per sicurezza subacquea</li>
-              <li>Formazione e divulgazione basate su evidenze</li>
-              <li>Progetti e collaborazioni multidisciplinari</li>
+          <article class="rounded-3xl border border-white/15 bg-white/10 backdrop-blur-2xl shadow-glass p-6">
+            <h3 class="text-lg font-black tracking-tight">Cosa facciamo (in pratica)</h3>
+            <ul class="mt-3 space-y-2 text-sm text-white/75">
+              <li class="flex gap-2"><i data-lucide="check-circle-2" class="h-5 w-5 text-cyan-200 shrink-0"></i><span>Studio degli effetti della pressione sul corpo umano</span></li>
+              <li class="flex gap-2"><i data-lucide="check-circle-2" class="h-5 w-5 text-cyan-200 shrink-0"></i><span>Strumenti operativi per sicurezza subacquea</span></li>
+              <li class="flex gap-2"><i data-lucide="check-circle-2" class="h-5 w-5 text-cyan-200 shrink-0"></i><span>Formazione e divulgazione basate su evidenze</span></li>
+              <li class="flex gap-2"><i data-lucide="check-circle-2" class="h-5 w-5 text-cyan-200 shrink-0"></i><span>Progetti e collaborazioni multidisciplinari</span></li>
             </ul>
           </article>
         </div>
-
       </div>
     </section>
 
     <!-- RICERCA -->
-    <section class="section" id="ricerca">
-      <div class="container">
-        <div class="section__head">
-          <h2 class="h2">La nostra ricerca</h2>
-          <p class="muted">
-            Attività su più domini della medicina iperbarica e subacquea, orientata a protocolli migliori,
-            sicurezza e applicazioni cliniche.
-          </p>
+    <section id="ricerca" class="py-10 sm:py-14">
+      <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-wrap items-end justify-between gap-4">
+          <div class="max-w-3xl">
+            <h2 class="text-2xl sm:text-3xl font-black tracking-tight">La nostra ricerca</h2>
+            <p class="mt-2 text-white/75">
+              Attività su più domini della medicina iperbarica e subacquea, orientata a protocolli migliori,
+              sicurezza e applicazioni cliniche.
+            </p>
+          </div>
         </div>
 
-        <div class="grid grid--3">
-          <article class="card"><h3 class="h3">Neurologia</h3><p class="muted">Effetti neurologici dell’esposizione iperbarica.</p></article>
-          <article class="card"><h3 class="h3">Decompressione</h3><p class="muted">Prevenzione e trattamento delle patologie da decompressione.</p></article>
-          <article class="card"><h3 class="h3">Telemedicina</h3><p class="muted">Supporto remoto e telemedicina in iperbarismo.</p></article>
-          <article class="card"><h3 class="h3">Dati medicali</h3><p class="muted">Trasmissione dati in ambiente iperbarico.</p></article>
-          <article class="card"><h3 class="h3">Monitoraggio</h3><p class="muted">Monitoraggio fisiologico durante immersioni profonde.</p></article>
-          <article class="card"><h3 class="h3">Tecnologie</h3><p class="muted">Tecnologie per la sicurezza subacquea.</p></article>
+        <div class="mt-6 grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <!-- Cards -->
+          <article class="rounded-3xl border border-white/15 bg-white/10 backdrop-blur-2xl shadow-glass p-6">
+            <div class="flex items-center gap-2 font-extrabold"><i data-lucide="brain" class="h-5 w-5 text-cyan-200"></i>Neurologia</div>
+            <p class="mt-2 text-sm text-white/70">Effetti neurologici dell’esposizione iperbarica.</p>
+          </article>
+          <article class="rounded-3xl border border-white/15 bg-white/10 backdrop-blur-2xl shadow-glass p-6">
+            <div class="flex items-center gap-2 font-extrabold"><i data-lucide="waves" class="h-5 w-5 text-cyan-200"></i>Decompressione</div>
+            <p class="mt-2 text-sm text-white/70">Prevenzione e trattamento delle patologie da decompressione.</p>
+          </article>
+          <article class="rounded-3xl border border-white/15 bg-white/10 backdrop-blur-2xl shadow-glass p-6">
+            <div class="flex items-center gap-2 font-extrabold"><i data-lucide="satellite" class="h-5 w-5 text-cyan-200"></i>Telemedicina</div>
+            <p class="mt-2 text-sm text-white/70">Supporto remoto e telemedicina in iperbarismo.</p>
+          </article>
+          <article class="rounded-3xl border border-white/15 bg-white/10 backdrop-blur-2xl shadow-glass p-6">
+            <div class="flex items-center gap-2 font-extrabold"><i data-lucide="database" class="h-5 w-5 text-cyan-200"></i>Dati medicali</div>
+            <p class="mt-2 text-sm text-white/70">Trasmissione dati in ambiente iperbarico.</p>
+          </article>
+          <article class="rounded-3xl border border-white/15 bg-white/10 backdrop-blur-2xl shadow-glass p-6">
+            <div class="flex items-center gap-2 font-extrabold"><i data-lucide="heart-pulse" class="h-5 w-5 text-cyan-200"></i>Monitoraggio</div>
+            <p class="mt-2 text-sm text-white/70">Monitoraggio fisiologico durante immersioni profonde.</p>
+          </article>
+          <article class="rounded-3xl border border-white/15 bg-white/10 backdrop-blur-2xl shadow-glass p-6">
+            <div class="flex items-center gap-2 font-extrabold"><i data-lucide="cpu" class="h-5 w-5 text-cyan-200"></i>Tecnologie</div>
+            <p class="mt-2 text-sm text-white/70">Tecnologie per la sicurezza subacquea.</p>
+          </article>
         </div>
 
-        <div class="banner">
+        <!-- Banner CTA -->
+        <div class="mt-6 rounded-3xl border border-white/15 bg-white/10 backdrop-blur-2xl shadow-glass p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div>
-            <h3 class="h3">Lezioni e attività</h3>
-            <p class="muted">
+            <h3 class="text-lg font-black tracking-tight">Lezioni e attività</h3>
+            <p class="mt-1 text-sm text-white/70">
               Disponibili per lezioni e corsi presso università, aziende e associazioni interessate alle applicazioni
               della medicina iperbarica e subacquea.
             </p>
           </div>
-          <button type="button" class="btn btn--primary" data-open-dialog="incontroDialog">Proponi un incontro</button>
+          <button type="button"
+                  class="inline-flex items-center gap-2 px-5 py-3 rounded-2xl bg-cyan-400/20 hover:bg-cyan-400/25 border border-cyan-200/25 shadow-glow font-extrabold"
+                  data-open-dialog="incontroDialog">
+            <i data-lucide="calendar-plus" class="h-5 w-5"></i>
+            Proponi un incontro
+          </button>
         </div>
       </div>
     </section>
 
     <!-- FORMAZIONE -->
-    <section class="section section--soft" id="formazione">
-      <div class="container">
-        <div class="section__head">
-          <h2 class="h2">Formazione</h2>
-          <p class="muted">Materiali chiari, aggiornati, applicabili. Per clinici, operatori e subacquei.</p>
+    <section id="formazione" class="py-10 sm:py-14">
+      <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-wrap items-end justify-between gap-4">
+          <div class="max-w-3xl">
+            <h2 class="text-2xl sm:text-3xl font-black tracking-tight">Formazione</h2>
+            <p class="mt-2 text-white/75">Materiali chiari, aggiornati, applicabili. Per clinici, operatori e subacquei.</p>
+          </div>
         </div>
 
-        <div class="grid grid--2">
-          <article class="card">
-            <h3 class="h3">Lezioni e corsi</h3>
-            <p class="muted">
-              Calendario, moduli e obiettivi formativi (in aggiornamento).
-            </p>
-            <div class="callout">
-              <strong>Docenza universitaria</strong>
-              <p class="muted">
+        <div class="mt-6 grid md:grid-cols-2 gap-4">
+          <article class="rounded-3xl border border-white/15 bg-white/10 backdrop-blur-2xl shadow-glass p-6">
+            <div class="flex items-center gap-2 font-extrabold">
+              <i data-lucide="graduation-cap" class="h-5 w-5 text-cyan-200"></i>
+              Lezioni e corsi
+            </div>
+            <p class="mt-2 text-sm text-white/70">Calendario, moduli e obiettivi formativi (in aggiornamento).</p>
+
+            <div class="mt-4 rounded-2xl border border-white/10 bg-white/8 p-4">
+              <div class="font-extrabold">Docenza universitaria</div>
+              <p class="mt-1 text-sm text-white/70">
                 Attività didattica di medicina iperbarica e subacquea presso l’<strong>Università degli Studi dell’Insubria (Varese)</strong>,
                 all’interno del Corso di Laurea in Medicina e Chirurgia.
               </p>
             </div>
           </article>
 
-          <article class="card">
-            <h3 class="h3">Materiali didattici</h3>
-            <p class="muted">Slide, schede, bibliografia, risorse consigliate (in aggiornamento).</p>
+          <article class="rounded-3xl border border-white/15 bg-white/10 backdrop-blur-2xl shadow-glass p-6">
+            <div class="flex items-center gap-2 font-extrabold">
+              <i data-lucide="book-open" class="h-5 w-5 text-cyan-200"></i>
+              Materiali didattici
+            </div>
+            <p class="mt-2 text-sm text-white/70">Slide, schede, bibliografia, risorse consigliate (in aggiornamento).</p>
           </article>
         </div>
 
-        <!-- CORSI PASSATI -->
-        <div class="section__head" style="margin-top:24px;">
-          <h3 class="h2" style="font-size:1.25rem;">Corsi</h3>
-          <p class="muted">Portfolio di docenze ed eventi.</p>
+        <div class="mt-8">
+          <div class="flex items-end justify-between gap-4 flex-wrap">
+            <div>
+              <h3 class="text-xl font-black tracking-tight">Corsi</h3>
+              <p class="mt-1 text-sm text-white/70">Portfolio di docenze ed eventi.</p>
+            </div>
+          </div>
+
+          <!-- Poster grid -->
+          <div class="mt-4 grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            <!-- HyperCare -->
+            <article class="overflow-hidden rounded-3xl border border-white/15 bg-white/10 backdrop-blur-2xl shadow-glass">
+              <a href="assets/corsi/hypercare.pdf" target="_blank" rel="noopener" class="group block">
+                <div class="relative">
+                  <img src="assets/corsi/hypercare.jpg" alt="Locandina HyperCare" loading="lazy"
+                       class="h-56 w-full object-cover transition-transform duration-200 group-hover:scale-[1.03]" />
+                  <div class="absolute inset-x-3 bottom-3 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <div class="rounded-full border border-white/15 bg-black/40 backdrop-blur-xl px-4 py-2 text-center text-sm font-extrabold">Apri PDF</div>
+                  </div>
+                </div>
+              </a>
+              <div class="p-5">
+                <div class="font-black">HyperCare</div>
+                <div class="mt-1 text-sm text-white/70">Programma completo in PDF</div>
+                <a href="assets/corsi/hypercare.pdf" target="_blank" rel="noopener"
+                   class="mt-4 inline-flex w-full items-center justify-center gap-2 px-4 py-2.5 rounded-2xl border border-white/15 bg-white/10 hover:bg-white/15 font-extrabold">
+                  <i data-lucide="download" class="h-4 w-4"></i>
+                  Download programma completo
+                </a>
+              </div>
+            </article>
+
+            <!-- SIMAE Bologna -->
+            <article class="overflow-hidden rounded-3xl border border-white/15 bg-white/10 backdrop-blur-2xl shadow-glass">
+              <a href="assets/corsi/simae-bologna.pdf" target="_blank" rel="noopener" class="group block">
+                <div class="relative">
+                  <img src="assets/corsi/simae-bologna.jpg" alt="Locandina SIMAE Bologna" loading="lazy"
+                       class="h-56 w-full object-cover transition-transform duration-200 group-hover:scale-[1.03]" />
+                  <div class="absolute inset-x-3 bottom-3 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <div class="rounded-full border border-white/15 bg-black/40 backdrop-blur-xl px-4 py-2 text-center text-sm font-extrabold">Apri PDF</div>
+                  </div>
+                </div>
+              </a>
+              <div class="p-5">
+                <div class="font-black">SIMAE Bologna</div>
+                <div class="mt-1 text-sm text-white/70">Programma completo in PDF</div>
+                <a href="assets/corsi/simae-bologna.pdf" target="_blank" rel="noopener"
+                   class="mt-4 inline-flex w-full items-center justify-center gap-2 px-4 py-2.5 rounded-2xl border border-white/15 bg-white/10 hover:bg-white/15 font-extrabold">
+                  <i data-lucide="download" class="h-4 w-4"></i>
+                  Download programma completo
+                </a>
+              </div>
+            </article>
+
+            <!-- RDE -->
+            <article class="overflow-hidden rounded-3xl border border-white/15 bg-white/10 backdrop-blur-2xl shadow-glass">
+              <a href="assets/corsi/RDE.pdf" target="_blank" rel="noopener" class="group block">
+                <div class="relative">
+                  <img src="assets/corsi/RDE.jpg" alt="Locandina Rescue in Difficult Environment" loading="lazy"
+                       class="h-56 w-full object-cover transition-transform duration-200 group-hover:scale-[1.03]" />
+                  <div class="absolute inset-x-3 bottom-3 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <div class="rounded-full border border-white/15 bg-black/40 backdrop-blur-xl px-4 py-2 text-center text-sm font-extrabold">Apri PDF</div>
+                  </div>
+                </div>
+              </a>
+              <div class="p-5">
+                <div class="font-black">Rescue in Difficult Environment (RDE)</div>
+                <div class="mt-1 text-sm text-white/70">Programma completo in PDF</div>
+                <a href="assets/corsi/RDE.pdf" target="_blank" rel="noopener"
+                   class="mt-4 inline-flex w-full items-center justify-center gap-2 px-4 py-2.5 rounded-2xl border border-white/15 bg-white/10 hover:bg-white/15 font-extrabold">
+                  <i data-lucide="download" class="h-4 w-4"></i>
+                  Download programma completo
+                </a>
+              </div>
+            </article>
+
+            <!-- I.E.M.I.G -->
+            <article class="overflow-hidden rounded-3xl border border-white/15 bg-white/10 backdrop-blur-2xl shadow-glass">
+              <a href="assets/corsi/I.E.M.I.G.pdf" target="_blank" rel="noopener" class="group block">
+                <div class="relative">
+                  <img src="assets/corsi/I.E.M.I.G.jpg" alt="Locandina Italian Emergency Medicine Interest Group" loading="lazy"
+                       class="h-56 w-full object-cover transition-transform duration-200 group-hover:scale-[1.03]" />
+                  <div class="absolute inset-x-3 bottom-3 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <div class="rounded-full border border-white/15 bg-black/40 backdrop-blur-xl px-4 py-2 text-center text-sm font-extrabold">Apri PDF</div>
+                  </div>
+                </div>
+              </a>
+              <div class="p-5">
+                <div class="font-black">Italian Emergency Medicine Interest Group (I.E.M.I.G)</div>
+                <div class="mt-1 text-sm text-white/70">Programma completo in PDF</div>
+                <a href="assets/corsi/I.E.M.I.G.pdf" target="_blank" rel="noopener"
+                   class="mt-4 inline-flex w-full items-center justify-center gap-2 px-4 py-2.5 rounded-2xl border border-white/15 bg-white/10 hover:bg-white/15 font-extrabold">
+                  <i data-lucide="download" class="h-4 w-4"></i>
+                  Download programma completo
+                </a>
+              </div>
+            </article>
+          </div>
         </div>
-
-        <div class="posterGrid" aria-label="Corsi">
-
-          <!-- HyperCare -->
-          <article class="posterCard card">
-            <a class="posterLink" href="assets/corsi/hypercare.pdf" target="_blank" rel="noopener">
-              <figure class="posterFigure">
-                <img class="posterImg" src="assets/corsi/hypercare.jpg" alt="Locandina HyperCare" loading="lazy" />
-              </figure>
-            </a>
-            <div class="posterMeta">
-              <div class="posterTitle">HyperCare</div>
-              <div class="muted posterSub">Programma completo in PDF</div>
-              <div class="posterActions">
-                <a class="btn btn--ghost btn--block" href="assets/corsi/hypercare.pdf" target="_blank" rel="noopener">Download programma completo</a>
-              </div>
-            </div>
-          </article>
-
-          <!-- SIMAE Bologna -->
-          <article class="posterCard card">
-            <a class="posterLink" href="assets/corsi/simae-bologna.pdf" target="_blank" rel="noopener">
-              <figure class="posterFigure">
-                <img class="posterImg" src="assets/corsi/simae-bologna.jpg" alt="Locandina SIMAE Bologna" loading="lazy" />
-              </figure>
-            </a>
-            <div class="posterMeta">
-              <div class="posterTitle">SIMAE Bologna</div>
-              <div class="muted posterSub">Programma completo in PDF</div>
-              <div class="posterActions">
-                <a class="btn btn--ghost btn--block" href="assets/corsi/simae-bologna.pdf" target="_blank" rel="noopener">Download programma completo</a>
-              </div>
-            </div>
-          </article>
-
-          <!-- RDE -->
-          <article class="posterCard card">
-            <a class="posterLink" href="assets/corsi/RDE.pdf" target="_blank" rel="noopener">
-              <figure class="posterFigure">
-                <img class="posterImg" src="assets/corsi/RDE.jpg" alt="Locandina Rescue in Difficult Environment" loading="lazy" />
-              </figure>
-            </a>
-            <div class="posterMeta">
-              <div class="posterTitle">Rescue in Difficult Environment (RDE)</div>
-              <div class="muted posterSub">Programma completo in PDF</div>
-              <div class="posterActions">
-                <a class="btn btn--ghost btn--block" href="assets/corsi/RDE.pdf" target="_blank" rel="noopener">Download programma completo</a>
-              </div>
-            </div>
-          </article>
-
-          <!-- I.E.M.I.G -->
-          <article class="posterCard card">
-            <a class="posterLink" href="assets/corsi/I.E.M.I.G.pdf" target="_blank" rel="noopener">
-              <figure class="posterFigure">
-                <img class="posterImg" src="assets/corsi/I.E.M.I.G.jpg" alt="Locandina Italian Emergency Medicine Interest Group" loading="lazy" />
-              </figure>
-            </a>
-            <div class="posterMeta">
-              <div class="posterTitle">Italian Emergency Medicine Interest Group (I.E.M.I.G)</div>
-              <div class="muted posterSub">Programma completo in PDF</div>
-              <div class="posterActions">
-                <a class="btn btn--ghost btn--block" href="assets/corsi/I.E.M.I.G.pdf" target="_blank" rel="noopener">Download programma completo</a>
-              </div>
-            </div>
-          </article>
-
-        </div>
-
-        <p class="fineprint" style="margin-top:12px;"></p>
-
       </div>
     </section>
 
     <!-- CONTATTI -->
-    <section class="section" id="contatti">
-      <div class="container">
-        <div class="section__head">
-          <h2 class="h2">Contatti</h2>
-          <p class="muted">Collaborazioni, docenza, progetti, case report. Un canale unico.</p>
+    <section id="contatti" class="py-10 sm:py-14">
+      <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-wrap items-end justify-between gap-4">
+          <div class="max-w-3xl">
+            <h2 class="text-2xl sm:text-3xl font-black tracking-tight">Contatti</h2>
+            <p class="mt-2 text-white/75">Collaborazioni, docenza, progetti, case report. Un canale unico.</p>
+          </div>
         </div>
 
-        <div class="grid grid--2">
-          <article class="card">
-            <h3 class="h3">Email</h3>
-            <p class="muted">
-              <a href="mailto:info@amicidiboyle.it">info@amicidiboyle.it</a>
+        <div class="mt-6 grid md:grid-cols-2 gap-4">
+          <article class="rounded-3xl border border-white/15 bg-white/10 backdrop-blur-2xl shadow-glass p-6">
+            <div class="flex items-center gap-2 font-extrabold">
+              <i data-lucide="mail" class="h-5 w-5 text-cyan-200"></i>
+              Email
+            </div>
+            <p class="mt-2 text-sm text-white/75">
+              <a class="underline decoration-white/25 hover:decoration-white/60" href="mailto:info@amicidiboyle.it">info@amicidiboyle.it</a>
             </p>
 
-            <div class="stack">
-              <button type="button" class="btn btn--primary" data-open-dialog="contattiDialog">
+            <div class="mt-5 grid gap-2">
+              <button type="button"
+                      class="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-2xl bg-cyan-400/20 hover:bg-cyan-400/25 border border-cyan-200/25 shadow-glow font-extrabold"
+                      data-open-dialog="contattiDialog">
+                <i data-lucide="form-input" class="h-5 w-5"></i>
                 Apri il modulo contatti
               </button>
-              <p class="fineprint">
+              <p class="text-xs text-white/60">
                 Il modulo invia la richiesta via servizio esterno (tipo Formspree) e vi arriva via email.
               </p>
             </div>
           </article>
 
-          <article class="card">
-            <h3 class="h3">Obiettivo</h3>
-            <p class="muted">
+          <article class="rounded-3xl border border-white/15 bg-white/10 backdrop-blur-2xl shadow-glass p-6">
+            <div class="flex items-center gap-2 font-extrabold">
+              <i data-lucide="target" class="h-5 w-5 text-cyan-200"></i>
+              Obiettivo
+            </div>
+            <p class="mt-2 text-sm text-white/70">
               Ampliare l’accesso alle terapie iperbariche e migliorare la sicurezza delle attività subacquee,
               costruendo ponti tra comunità scientifica, professionisti sanitari e mondo subacqueo.
             </p>
@@ -475,145 +614,197 @@
         </div>
       </div>
     </section>
-
   </main>
 
-  <footer class="footer" role="contentinfo">
-    <div class="container footer__inner">
-      <div>© 2026 Gli Amici di Boyle</div>
-      <div class="footer__links">
-        <a href="#top">Torna su</a>
-        <a href="#contatti">Contatti</a>
+  <!-- FOOTER -->
+  <footer class="py-10">
+    <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+      <div class="rounded-2xl border border-white/15 bg-white/8 backdrop-blur-2xl shadow-glass px-5 sm:px-6 py-4 flex flex-wrap items-center justify-between gap-3 text-sm text-white/70">
+        <div>© 2026 Gli Amici di Boyle</div>
+        <div class="flex gap-4 font-semibold">
+          <a class="hover:text-white" href="#top">Torna su</a>
+          <a class="hover:text-white" href="#contatti">Contatti</a>
+        </div>
       </div>
     </div>
   </footer>
 
-  <!-- MODALI (Formspree) -->
-  <dialog class="dialog" id="contattiDialog" aria-label="Modulo contatti">
-    <div class="dialog__inner">
-      <div class="dialog__head">
-        <h3 class="h3" style="margin:0;">Contattaci</h3>
-        <button type="button" class="btn btn--ghost" data-close-dialog>Chiudi</button>
+  <!-- DIALOG: CONTATTI -->
+  <dialog id="contattiDialog" aria-label="Modulo contatti" class="p-0 bg-transparent">
+    <div class="mx-auto mt-[8vh] w-[min(680px,calc(100vw-28px))] rounded-3xl border border-white/15 bg-white/10 backdrop-blur-2xl shadow-glass text-white">
+      <div class="flex items-center justify-between gap-3 px-5 py-4 border-b border-white/10">
+        <h3 class="text-lg font-black tracking-tight">Contattaci</h3>
+        <button type="button" class="inline-flex items-center gap-2 px-3 py-2 rounded-xl border border-white/15 bg-white/10 hover:bg-white/15"
+                data-close-dialog>
+          <i data-lucide="x" class="h-4 w-4"></i>
+          Chiudi
+        </button>
       </div>
 
-      <p class="muted" style="margin:10px 0 14px;">
-        Compila e invia: la richiesta arriva via email a <strong>info@amicidiboyle.it</strong>.
-      </p>
+      <div class="px-5 py-4">
+        <p class="text-sm text-white/70">
+          Compila e invia: la richiesta arriva via email a <strong class="text-white">info@amicidiboyle.it</strong>.
+        </p>
 
-      <form class="form" action="https://formspree.io/f/xzdareqw" method="POST">
-        <input type="hidden" name="tipo_richiesta" value="Contatto dal sito" />
-        <input type="hidden" name="_subject" value="Contatto dal sito – Gli Amici di Boyle" />
+        <form class="mt-4 grid gap-3" action="https://formspree.io/f/xzdareqw" method="POST">
+          <input type="hidden" name="tipo_richiesta" value="Contatto dal sito" />
+          <input type="hidden" name="_subject" value="Contatto dal sito – Gli Amici di Boyle" />
 
-        <label class="form__row">
-          <span class="form__label">Nome e cognome</span>
-          <input class="form__input" type="text" name="nome" autocomplete="name" required />
-        </label>
+          <label class="grid gap-1.5">
+            <span class="text-xs font-extrabold text-white/80">Nome e cognome</span>
+            <input class="w-full rounded-2xl border border-white/15 bg-black/20 px-4 py-3 outline-none focus:ring-4 focus:ring-cyan-300/20"
+                   type="text" name="nome" autocomplete="name" required />
+          </label>
 
-        <label class="form__row">
-          <span class="form__label">Email</span>
-          <input class="form__input" type="email" name="email" autocomplete="email" required />
-        </label>
+          <label class="grid gap-1.5">
+            <span class="text-xs font-extrabold text-white/80">Email</span>
+            <input class="w-full rounded-2xl border border-white/15 bg-black/20 px-4 py-3 outline-none focus:ring-4 focus:ring-cyan-300/20"
+                   type="email" name="email" autocomplete="email" required />
+          </label>
 
-        <label class="form__row">
-          <span class="form__label">Oggetto</span>
-          <input class="form__input" type="text" name="oggetto" required />
-        </label>
+          <label class="grid gap-1.5">
+            <span class="text-xs font-extrabold text-white/80">Oggetto</span>
+            <input class="w-full rounded-2xl border border-white/15 bg-black/20 px-4 py-3 outline-none focus:ring-4 focus:ring-cyan-300/20"
+                   type="text" name="oggetto" required />
+          </label>
 
-        <label class="form__row">
-          <span class="form__label">Messaggio</span>
-          <textarea class="form__input" name="messaggio" rows="5" required></textarea>
-        </label>
+          <label class="grid gap-1.5">
+            <span class="text-xs font-extrabold text-white/80">Messaggio</span>
+            <textarea class="w-full min-h-[120px] rounded-2xl border border-white/15 bg-black/20 px-4 py-3 outline-none focus:ring-4 focus:ring-cyan-300/20"
+                      name="messaggio" rows="5" required></textarea>
+          </label>
 
-        <div class="form__actions">
-          <button class="btn btn--primary" type="submit">Invia</button>
-          <button type="button" class="btn btn--ghost" data-close-dialog>Annulla</button>
-        </div>
+          <div class="mt-2 flex flex-wrap gap-2">
+            <button class="inline-flex items-center gap-2 px-5 py-3 rounded-2xl bg-cyan-400/20 hover:bg-cyan-400/25 border border-cyan-200/25 shadow-glow font-extrabold"
+                    type="submit">
+              <i data-lucide="send" class="h-5 w-5"></i>
+              Invia
+            </button>
+            <button type="button" class="inline-flex items-center gap-2 px-5 py-3 rounded-2xl border border-white/15 bg-white/10 hover:bg-white/15 font-extrabold"
+                    data-close-dialog>
+              <i data-lucide="ban" class="h-5 w-5"></i>
+              Annulla
+            </button>
+          </div>
 
-        <p class="fineprint" style="margin-top:10px;">Solo messaggi utili. Nessun marketing.</p>
-      </form>
+          <p class="text-xs text-white/55 mt-1">Solo messaggi utili. Nessun marketing.</p>
+        </form>
+      </div>
     </div>
   </dialog>
 
-  <dialog class="dialog" id="incontroDialog" aria-label="Proponi un incontro">
-    <div class="dialog__inner">
-      <div class="dialog__head">
-        <h3 class="h3" style="margin:0;">Proponi un incontro</h3>
-        <button type="button" class="btn btn--ghost" data-close-dialog>Chiudi</button>
+  <!-- DIALOG: INCONTRO -->
+  <dialog id="incontroDialog" aria-label="Proponi un incontro" class="p-0 bg-transparent">
+    <div class="mx-auto mt-[8vh] w-[min(680px,calc(100vw-28px))] rounded-3xl border border-white/15 bg-white/10 backdrop-blur-2xl shadow-glass text-white">
+      <div class="flex items-center justify-between gap-3 px-5 py-4 border-b border-white/10">
+        <h3 class="text-lg font-black tracking-tight">Proponi un incontro</h3>
+        <button type="button" class="inline-flex items-center gap-2 px-3 py-2 rounded-xl border border-white/15 bg-white/10 hover:bg-white/15"
+                data-close-dialog>
+          <i data-lucide="x" class="h-4 w-4"></i>
+          Chiudi
+        </button>
       </div>
 
-      <p class="muted" style="margin:10px 0 14px;">
-        Raccontaci contesto, obiettivo e disponibilità: vi rispondiamo via email.
-      </p>
+      <div class="px-5 py-4">
+        <p class="text-sm text-white/70">
+          Raccontaci contesto, obiettivo e disponibilità: vi rispondiamo via email.
+        </p>
 
-      <form class="form" action="https://formspree.io/f/xzdareqw" method="POST">
-        <input type="hidden" name="tipo_richiesta" value="Proposta incontro / docenza" />
-        <input type="hidden" name="_subject" value="Proposta incontro/docenza – Gli Amici di Boyle" />
+        <form class="mt-4 grid gap-3" action="https://formspree.io/f/xzdareqw" method="POST">
+          <input type="hidden" name="tipo_richiesta" value="Proposta incontro / docenza" />
+          <input type="hidden" name="_subject" value="Proposta incontro/docenza – Gli Amici di Boyle" />
 
-        <label class="form__row">
-          <span class="form__label">Ente / organizzazione</span>
-          <input class="form__input" type="text" name="ente" required />
-        </label>
+          <label class="grid gap-1.5">
+            <span class="text-xs font-extrabold text-white/80">Ente / organizzazione</span>
+            <input class="w-full rounded-2xl border border-white/15 bg-black/20 px-4 py-3 outline-none focus:ring-4 focus:ring-cyan-300/20"
+                   type="text" name="ente" required />
+          </label>
 
-        <label class="form__row">
-          <span class="form__label">Referente</span>
-          <input class="form__input" type="text" name="referente" required />
-        </label>
+          <label class="grid gap-1.5">
+            <span class="text-xs font-extrabold text-white/80">Referente</span>
+            <input class="w-full rounded-2xl border border-white/15 bg-black/20 px-4 py-3 outline-none focus:ring-4 focus:ring-cyan-300/20"
+                   type="text" name="referente" required />
+          </label>
 
-        <label class="form__row">
-          <span class="form__label">Email</span>
-          <input class="form__input" type="email" name="email" autocomplete="email" required />
-        </label>
+          <label class="grid gap-1.5">
+            <span class="text-xs font-extrabold text-white/80">Email</span>
+            <input class="w-full rounded-2xl border border-white/15 bg-black/20 px-4 py-3 outline-none focus:ring-4 focus:ring-cyan-300/20"
+                   type="email" name="email" autocomplete="email" required />
+          </label>
 
-        <label class="form__row">
-          <span class="form__label">Tipologia (lezione / corso / collaborazione)</span>
-          <input class="form__input" type="text" name="tipologia" required />
-        </label>
+          <label class="grid gap-1.5">
+            <span class="text-xs font-extrabold text-white/80">Tipologia (lezione / corso / collaborazione)</span>
+            <input class="w-full rounded-2xl border border-white/15 bg-black/20 px-4 py-3 outline-none focus:ring-4 focus:ring-cyan-300/20"
+                   type="text" name="tipologia" required />
+          </label>
 
-        <label class="form__row">
-          <span class="form__label">Dettagli e note</span>
-          <textarea class="form__input" name="dettagli" rows="6" required></textarea>
-        </label>
+          <label class="grid gap-1.5">
+            <span class="text-xs font-extrabold text-white/80">Dettagli e note</span>
+            <textarea class="w-full min-h-[140px] rounded-2xl border border-white/15 bg-black/20 px-4 py-3 outline-none focus:ring-4 focus:ring-cyan-300/20"
+                      name="dettagli" rows="6" required></textarea>
+          </label>
 
-        <div class="form__actions">
-          <button class="btn btn--primary" type="submit">Invia proposta</button>
-          <button type="button" class="btn btn--ghost" data-close-dialog>Annulla</button>
-        </div>
-      </form>
+          <div class="mt-2 flex flex-wrap gap-2">
+            <button class="inline-flex items-center gap-2 px-5 py-3 rounded-2xl bg-cyan-400/20 hover:bg-cyan-400/25 border border-cyan-200/25 shadow-glow font-extrabold"
+                    type="submit">
+              <i data-lucide="send" class="h-5 w-5"></i>
+              Invia proposta
+            </button>
+            <button type="button" class="inline-flex items-center gap-2 px-5 py-3 rounded-2xl border border-white/15 bg-white/10 hover:bg-white/15 font-extrabold"
+                    data-close-dialog>
+              <i data-lucide="ban" class="h-5 w-5"></i>
+              Annulla
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   </dialog>
 
   <script>
-    (function () {
-      // chiude menu mobile al click (così non resta aperto)
-      const menu = document.getElementById('mobileMenu');
-      if(menu){
-        menu.querySelectorAll('a').forEach(a=>{
-          a.addEventListener('click', ()=>{ menu.removeAttribute('open'); });
+    // Lucide init
+    lucide.createIcons();
+
+    // Mobile menu
+    (function(){
+      const btn = document.getElementById('menuBtn');
+      const panel = document.getElementById('mobileMenu');
+      if(btn && panel){
+        btn.addEventListener('click', ()=>{
+          const isOpen = !panel.classList.contains('hidden');
+          panel.classList.toggle('hidden');
+          btn.setAttribute('aria-expanded', String(!isOpen));
+        });
+        // auto-close on click
+        panel.querySelectorAll('a').forEach(a=>{
+          a.addEventListener('click', ()=>{
+            panel.classList.add('hidden');
+            btn.setAttribute('aria-expanded', 'false');
+          });
         });
       }
 
-      const openers = document.querySelectorAll('[data-open-dialog]');
-      const closers = document.querySelectorAll('[data-close-dialog]');
-
-      openers.forEach(btn => {
-        btn.addEventListener('click', () => {
-          const id = btn.getAttribute('data-open-dialog');
+      // Dialog open/close
+      document.querySelectorAll('[data-open-dialog]').forEach(opener=>{
+        opener.addEventListener('click', ()=>{
+          const id = opener.getAttribute('data-open-dialog');
           const dlg = document.getElementById(id);
-          if (dlg && typeof dlg.showModal === 'function') dlg.showModal();
+          if(dlg && typeof dlg.showModal === 'function') dlg.showModal();
         });
       });
 
-      closers.forEach(btn => {
-        btn.addEventListener('click', () => {
-          const dlg = btn.closest('dialog');
-          if (dlg) dlg.close();
+      document.querySelectorAll('[data-close-dialog]').forEach(closer=>{
+        closer.addEventListener('click', ()=>{
+          const dlg = closer.closest('dialog');
+          if(dlg) dlg.close();
         });
       });
 
-      document.querySelectorAll('dialog').forEach(dlg => {
-        dlg.addEventListener('click', (e) => {
-          const box = dlg.querySelector('.dialog__inner');
-          if (box && !box.contains(e.target)) dlg.close();
+      document.querySelectorAll('dialog').forEach(dlg=>{
+        dlg.addEventListener('click', (e)=>{
+          // close if clicked outside the inner box
+          const inner = dlg.querySelector('div[role], .mx-auto');
+          if(inner && !inner.contains(e.target)) dlg.close();
         });
       });
     })();
