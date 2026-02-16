@@ -2,78 +2,126 @@
 <!doctype html>
 <html lang="it">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Gli Amici di Boyle</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Gli Amici di Boyle</title>
 
-<script src="https://cdn.tailwindcss.com"></script>
-<link rel="stylesheet" href="styles_new.css">
+  <!-- Tailwind CDN (se carica: bonus; se non carica: il CSS sotto regge lo stesso) -->
+  <script src="https://cdn.tailwindcss.com"></script>
 
+  <!-- IMPORTANTISSIMO: questo DEVE chiamarsi styles.css -->
+  <link rel="stylesheet" href="styles.css" />
 </head>
 
 <body>
+  <header class="glass">
+    <div class="container">
+      <div class="row">
+        <div style="display:flex; align-items:center; gap:12px; min-width:260px">
+          <div class="glass" style="width:44px; height:44px; border-radius:999px; display:flex; align-items:center; justify-content:center;">
+            <span style="font-weight:900;">B</span>
+          </div>
+          <div>
+            <h1>Gli Amici di Boyle</h1>
+            <div style="font-size:12px; color: rgba(255,255,255,.70); line-height:1.35;">
+              Diving &amp; Hyperbaric Medicine · Research &amp; Education<br>
+              Human Performance &amp; Safety in Extreme Environments
+            </div>
+          </div>
+        </div>
 
-<header class="glass section">
-  <div class="flex justify-between items-center">
-    <h1 class="text-xl font-bold">Gli Amici di Boyle</h1>
-    <nav class="space-x-6 font-semibold">
-      <a href="#">Vision</a>
-      <a href="#">Chi siamo</a>
-      <a href="#">Ricerca</a>
-      <a href="#">Formazione</a>
-      <a href="#">Podcast</a>
-      <button class="btn-primary">Contatti</button>
-    </nav>
-  </div>
-</header>
-
-<main class="section">
-
-<div class="grid lg:grid-cols-2 gap-6">
-
-  <div>
-    <h2 class="text-5xl font-black">Gli Amici di Boyle</h2>
-    <p class="mt-4 text-white/70">
-      Ricerca e divulgazione in medicina subacquea ed iperbarica.
-    </p>
-
-    <div class="flex gap-4 mt-6">
-      <button class="btn-primary">Esplora la ricerca</button>
-      <button class="btn-primary">Conosci il team</button>
-    </div>
-
-    <div class="grid grid-3 mt-8">
-      <div class="glass p-5">
-        <h3 class="font-bold">Evidence-based</h3>
-        <p class="text-sm text-white/70">Approccio replicabile.</p>
-      </div>
-
-      <div class="glass p-5">
-        <h3 class="font-bold">Docenza</h3>
-        <p class="text-sm text-white/70">Università e corsi.</p>
-      </div>
-
-      <div class="glass p-5">
-        <h3 class="font-bold">Collaborazioni</h3>
-        <p class="text-sm text-white/70">Ricerca e progetti.</p>
+        <nav class="nav">
+          <a href="#vision">Vision</a>
+          <a href="#chisiamo">Chi siamo</a>
+          <a href="#ricerca">Ricerca</a>
+          <a href="#formazione">Formazione</a>
+          <a href="podcast.html">Podcast</a>
+          <a class="btn btnPrimary" href="#contatti">Contatti</a>
+        </nav>
       </div>
     </div>
-  </div>
+  </header>
 
-  <div class="glass p-6">
-    <h3 class="font-bold text-lg mb-4">Contenuti professionali</h3>
+  <main class="container">
+    <div class="grid grid2" style="align-items:start;">
+      <section>
+        <div class="pill">✦ Ricerca · Formazione · Safety</div>
+        <div class="spacer"></div>
+        <h2 class="heroTitle">Gli Amici di Boyle</h2>
+        <p class="heroSub">
+          Ricerca e divulgazione in medicina subacquea ed iperbarica.
+          Un gruppo multidisciplinare che integra competenze cliniche, tecnologiche e scientifiche per migliorare sicurezza in immersione,
+          conoscenza e applicazioni dell’ossigenoterapia iperbarica.
+        </p>
 
-    <div class="space-y-4">
-      <div class="glass p-4">Collaborazioni</div>
-      <div class="glass p-4">Lezioni e corsi</div>
-      <div class="glass p-4">Focus clinico</div>
-      <button class="btn-primary w-full mt-4">Scrivici</button>
+        <div style="display:flex; gap:12px; flex-wrap:wrap; margin-top:18px;">
+          <a class="btn btnPrimary" href="#ricerca">Esplora la ricerca</a>
+          <a class="btn" href="#chisiamo">Conosci il team</a>
+        </div>
+
+        <div class="grid grid3" style="margin-top:20px;">
+          <div class="glass card">
+            <div style="font-weight:900;">Evidence-based</div>
+            <div style="color: rgba(255,255,255,.70); font-size:14px; margin-top:6px;">Approccio sobrio, replicabile, utile.</div>
+          </div>
+          <div class="glass card">
+            <div style="font-weight:900;">Docenza</div>
+            <div style="color: rgba(255,255,255,.70); font-size:14px; margin-top:6px;">Università, aziende, associazioni.</div>
+          </div>
+          <div class="glass card">
+            <div style="font-weight:900;">Collaborazioni</div>
+            <div style="color: rgba(255,255,255,.70); font-size:14px; margin-top:6px;">Progetti, case report, editoria.</div>
+          </div>
+        </div>
+      </section>
+
+      <aside class="glass" style="padding:22px;">
+        <div class="pill">☆ In evidenza</div>
+        <h3 style="margin:14px 0 6px; font-size:22px; font-weight:950; letter-spacing:-0.02em;">Contenuti professionali</h3>
+        <div style="color: rgba(255,255,255,.72); line-height:1.55;">
+          Strumenti operativi, progetti, materiali didattici e pubblicazioni. Scienza applicata: verificabile, replicabile.
+        </div>
+
+        <div class="grid" style="margin-top:16px;">
+          <div class="glass card">
+            <div style="font-weight:900;">Collaborazioni</div>
+            <div style="color: rgba(255,255,255,.70); font-size:14px; margin-top:6px;">Ricerca, case report, docenza, progetti editoriali.</div>
+          </div>
+          <div class="glass card">
+            <div style="font-weight:900;">Lezioni e corsi</div>
+            <div style="color: rgba(255,255,255,.70); font-size:14px; margin-top:6px;">Università, aziende, associazioni: contenuti dove servono.</div>
+          </div>
+          <div class="glass card">
+            <div style="font-weight:900;">Focus clinico</div>
+            <div style="color: rgba(255,255,255,.70); font-size:14px; margin-top:6px;">Utilità pratica, rigore, replicabilità.</div>
+          </div>
+          <a class="btn btnPrimary" href="#contatti" style="text-align:center;">Scrivici</a>
+        </div>
+      </aside>
     </div>
-  </div>
 
-</div>
+    <!-- Placeholder anchors to prove nav works -->
+    <div style="height:40px"></div>
+    <section id="vision" class="glass" style="padding:22px;">
+      <h3 style="margin:0; font-size:22px; font-weight:950;">Vision</h3>
+      <p style="color: rgba(255,255,255,.72); line-height:1.6; margin-top:8px;">
+        Essere un riferimento internazionale per innovazione e ricerca in medicina iperbarica e subacquea,
+        con un approccio multidisciplinare che integra competenze mediche, tecnologiche e scientifiche.
+      </p>
+    </section>
 
-</main>
+    <div style="height:18px"></div>
+    <section id="contatti" class="glass" style="padding:22px;">
+      <h3 style="margin:0; font-size:22px; font-weight:950;">Contatti</h3>
+      <p style="color: rgba(255,255,255,.72); line-height:1.6; margin-top:8px;">
+        Email: <a href="mailto:info@amicidiboyle.it">info@amicidiboyle.it</a>
+      </p>
+    </section>
 
+    <div style="height:24px"></div>
+    <footer style="color: rgba(255,255,255,.60); font-size:13px; padding: 12px 2px;">
+      © 2026 Gli Amici di Boyle
+    </footer>
+  </main>
 </body>
 </html>
