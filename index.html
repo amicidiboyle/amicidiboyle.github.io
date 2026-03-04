@@ -3,19 +3,21 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Gli Amici di Boyle · Research & Education</title>
-  <meta name="description" content="Gli Amici di Boyle: ricerca, formazione e safety in medicina subacquea e iperbarica. Human performance & safety in extreme environments." />
-  <meta name="theme-color" content="#041b33" />
-  <link rel="stylesheet" href="styles.css?v=2" />
+  <title>Gli Amici di Boyle · Ricerca e divulgazione in medicina subacquea e iperbarica</title>
+  <meta name="description" content="Gli Amici di Boyle: ricerca e divulgazione in medicina subacquea e iperbarica. Approccio multidisciplinare, evidenze, formazione e innovazione." />
+  <meta name="theme-color" content="#0b4aa2" />
+
+  <!-- Cache busting: cambia la versione quando aggiorni CSS -->
+  <link rel="stylesheet" href="styles.css?v=1">
   <link rel="icon" href="assets/logo.png" type="image/png" />
 </head>
 
 <body>
-  <a class="skip" href="#contenuto">Salta al contenuto</a>
+  <a class="skip" href="#contenuto">Vai al contenuto</a>
 
-  <!-- Topbar -->
-  <header class="topbar" role="banner">
-    <div class="wrap topbar__inner">
+  <header class="header" role="banner">
+    <div class="container header__inner">
+
       <a class="brand" href="#top" aria-label="Home">
         <img class="brand__logo" src="assets/logo.png" alt="Gli Amici di Boyle" />
         <span class="brand__text">
@@ -33,8 +35,11 @@
         <a href="#chisiamo">Chi siamo</a>
         <a href="#ricerca">Ricerca</a>
         <a href="#formazione">Formazione</a>
+        <a href="#lezioni">Lezioni</a>
+        <a href="#pubblicazioni">Pubblicazioni</a>
+        <a href="#partner">Partner</a>
         <a href="podcast.html">Podcast</a>
-        <a class="nav__cta" href="#contatti">Contatti</a>
+        <a class="btn btn--primary" href="#contatti">Contatti</a>
       </nav>
 
       <details class="menu" aria-label="Menu mobile" id="mobileMenu">
@@ -42,57 +47,47 @@
           <span class="hamburger" aria-hidden="true"><span></span></span>
           <span class="menu__label">Menu</span>
         </summary>
+
         <div class="menu__panel" role="menu">
           <a role="menuitem" href="#vision">Vision</a>
           <a role="menuitem" href="#chisiamo">Chi siamo</a>
           <a role="menuitem" href="#ricerca">Ricerca</a>
           <a role="menuitem" href="#formazione">Formazione</a>
+          <a role="menuitem" href="#lezioni">Lezioni</a>
+          <a role="menuitem" href="#pubblicazioni">Pubblicazioni</a>
+          <a role="menuitem" href="#partner">Partner</a>
           <a role="menuitem" href="podcast.html">Podcast</a>
-          <a role="menuitem" class="nav__cta btn btn--primary btn--block" href="#contatti">Contatti</a>
+          <a role="menuitem" class="btn btn--primary btn--block" href="#contatti">Contatti</a>
         </div>
       </details>
+
     </div>
   </header>
 
   <main id="contenuto">
 
     <!-- HERO -->
-    <section class="hero depth depth--surface" id="top">
-      <div class="wrap hero__grid">
-        <div class="hero__copy">
-          <p class="kicker">Ricerca · Formazione · Safety</p>
+    <section class="hero hero--premium" id="top">
+      <div class="container hero__grid hero__grid--premium">
 
-          <h1 class="h1">
+        <div class="hero__copy">
+          <p class="eyebrow">Ricerca · Formazione · Safety</p>
+
+          <h1 class="h1 h1--premium">
             Gli Amici di Boyle
-            <span class="h1__sub">Ricerca e divulgazione in medicina subacquea ed iperbarica.</span>
+            <span class="h1__sub h1__sub--premium">
+              Ricerca e divulgazione in medicina subacquea ed iperbarica.
+            </span>
           </h1>
 
-          <p class="lead">
+          <p class="lead lead--premium">
             Un gruppo multidisciplinare che integra competenze cliniche, tecnologiche e scientifiche
             per migliorare sicurezza in immersione, conoscenza e applicazioni dell’ossigenoterapia iperbarica.
           </p>
 
-          <div class="hero__actions">
-            <a class="btn btn--primary" href="#ricerca">Esplora la ricerca</a>
-            <a class="btn btn--ghost" href="#chisiamo">Conosci il team</a>
-          </div>
-
-          <!-- Scritta che scorre (stile Collins) -->
-          <div class="marquee" aria-label="Messaggi in scorrimento">
-            <div class="marquee__track">
-              <span>Evidence-based practice</span>
-              <span>Hyperbaric &amp; Diving Medicine</span>
-              <span>Human performance</span>
-              <span>Safety in extreme environments</span>
-              <span>Ricerca applicata</span>
-              <span>Formazione operativa</span>
-              <span>Collaborazioni</span>
-              <span>Case report &amp; editoria</span>
-              <span>Evidence-based practice</span>
-              <span>Hyperbaric &amp; Diving Medicine</span>
-              <span>Human performance</span>
-              <span>Safety in extreme environments</span>
-            </div>
+          <div class="cta cta--premium">
+            <a class="btn btn--primary btn--lg" href="#ricerca">Esplora la ricerca</a>
+            <a class="btn btn--ghost btn--lg" href="#chisiamo">Conosci il team</a>
           </div>
 
           <div class="trust" aria-label="Indicatori">
@@ -111,41 +106,79 @@
           </div>
         </div>
 
-        <aside class="panel" aria-label="In evidenza">
-          <div class="panel__head">
-            <span class="badge">In evidenza</span>
-            <h2 class="h2">Contenuti professionali</h2>
-            <p class="muted">
-              Strumenti operativi, progetti, materiali didattici e pubblicazioni.
-              Scienza applicata: verificabile, replicabile.
-            </p>
+        <div class="heroRight" aria-label="In evidenza e visual">
+
+          <div class="heroVisual" aria-hidden="true">
+            <div class="heroVisual__glow"></div>
+            <div class="heroVisual__grid"></div>
+
+            <svg viewBox="0 0 820 260" width="100%" height="100%" preserveAspectRatio="none" style="position:absolute; inset:0; opacity:.95">
+              <defs>
+                <linearGradient id="g1" x1="0" x2="1">
+                  <stop offset="0" stop-color="rgba(11,74,162,.16)"/>
+                  <stop offset="1" stop-color="rgba(14,165,233,.18)"/>
+                </linearGradient>
+                <radialGradient id="b1" cx="50%" cy="40%" r="60%">
+                  <stop offset="0" stop-color="rgba(14,165,233,.22)"/>
+                  <stop offset="1" stop-color="rgba(14,165,233,0)"/>
+                </radialGradient>
+              </defs>
+
+              <path d="M0,170 C140,150 220,210 360,190 C520,165 600,120 820,150 L820,260 L0,260 Z" fill="url(#g1)"/>
+              <path d="M0,190 C160,170 260,230 410,210 C560,185 650,145 820,170" fill="none" stroke="rgba(11,74,162,.22)" stroke-width="2"/>
+
+              <circle cx="650" cy="95" r="60" fill="rgba(255,255,255,.55)" stroke="rgba(11,74,162,.18)" stroke-width="2"/>
+              <path d="M610,95 A40,40 0 0 1 690,95" fill="none" stroke="rgba(11,74,162,.25)" stroke-width="8" stroke-linecap="round"/>
+              <path d="M630,105 L685,80" stroke="rgba(11,74,162,.45)" stroke-width="4" stroke-linecap="round"/>
+              <circle cx="650" cy="95" r="6" fill="rgba(11,74,162,.45)"/>
+
+              <circle cx="120" cy="210" r="18" fill="url(#b1)"/>
+              <circle cx="160" cy="165" r="10" fill="rgba(14,165,233,.18)"/>
+              <circle cx="210" cy="120" r="14" fill="rgba(14,165,233,.16)"/>
+              <circle cx="260" cy="170" r="8" fill="rgba(14,165,233,.14)"/>
+              <circle cx="320" cy="120" r="12" fill="rgba(14,165,233,.12)"/>
+            </svg>
           </div>
-          <div class="panel__list" role="list">
-            <div class="panel__item" role="listitem">
-              <strong>Collaborazioni</strong>
-              <span>Ricerca, case report, docenza, progetti editoriali.</span>
+
+          <aside class="panel panel--tight" aria-label="In evidenza">
+            <div class="panel__top">
+              <span class="badge">In evidenza</span>
+              <h2 class="h2">Contenuti professionali</h2>
+              <p class="muted">
+                Strumenti operativi, progetti, materiali didattici e pubblicazioni.
+                Scienza applicata: verificabile, replicabile.
+              </p>
             </div>
-            <div class="panel__item" role="listitem">
-              <strong>Lezioni e corsi</strong>
-              <span>Contenuti dove servono, con linguaggio operativo.</span>
+
+            <div class="panel__list" role="list">
+              <div class="panel__item" role="listitem">
+                <strong>Collaborazioni</strong>
+                <span>Ricerca, case report, docenza, progetti editoriali.</span>
+              </div>
+              <div class="panel__item" role="listitem">
+                <strong>Lezioni e corsi</strong>
+                <span>Università, aziende, associazioni: contenuti dove servono.</span>
+              </div>
+              <div class="panel__item" role="listitem">
+                <strong>Focus clinico</strong>
+                <span>Utilità pratica, rigore, replicabilità.</span>
+              </div>
             </div>
-            <div class="panel__item" role="listitem">
-              <strong>Focus clinico</strong>
-              <span>Utilità pratica, rigore, replicabilità.</span>
+
+            <div class="panel__cta">
+              <button type="button" class="btn btn--primary btn--block" data-open-dialog="contattiDialog">
+                Scrivici
+              </button>
             </div>
-          </div>
-          <div class="panel__cta">
-            <button type="button" class="btn btn--primary btn--block" data-open-dialog="contattiDialog">
-              Scrivici
-            </button>
-          </div>
-        </aside>
+          </aside>
+
+        </div>
       </div>
     </section>
 
     <!-- VISION -->
-    <section class="section depth depth--shallow reveal" id="vision" data-reveal="left">
-      <div class="wrap">
+    <section class="section" id="vision">
+      <div class="container">
         <div class="section__head">
           <h2 class="h2">Vision</h2>
           <p class="muted">
@@ -158,7 +191,7 @@
           <article class="card">
             <h3 class="h3">Rigorosa</h3>
             <p class="muted">
-              Ricerca verificabile, risultati e metodi chiari. Specialisti in Anestesia e Rianimazione,
+              Ricana verificabile, risultati e metodi chiari. Specialisti in Anestesia e Rianimazione,
               Emergenza Urgenza, Medicina Iperbarica e Subacquea, Medicina Spaziale.
             </p>
           </article>
@@ -181,8 +214,9 @@
     </section>
 
     <!-- CHI SIAMO -->
-    <section class="section depth depth--mid reveal" id="chisiamo" data-reveal="left">
-      <div class="wrap">
+    <section class="section section--soft" id="chisiamo">
+      <div class="container">
+
         <div class="section__head">
           <h2 class="h2">Chi siamo</h2>
           <p class="muted">
@@ -205,9 +239,6 @@
               <div class="role">Founder</div>
               <h3 class="h3">Dott. Silvio Zerbi</h3>
               <p class="muted">Anestesista Rianimatore, Intensivista, Medico Subacqueo ed Iperbarico, Medico Aeronautico ed Aerospaziale</p>
-              <div class="person__actions">
-                <a class="btn btn--ghost btn--sm" href="assets/cv/silvio-zerbi.pdf" target="_blank" rel="noopener">CV (PDF)</a>
-              </div>
             </div>
           </article>
 
@@ -217,9 +248,6 @@
               <div class="role">Engineering Director</div>
               <h3 class="h3">Ing. Luigi Tarsia</h3>
               <p class="muted">Ingegnere Nucleare e Biomedico, Specialista in Medicina Subacquea e Iperbarica, Aeronautica ed Aerospaziale</p>
-              <div class="person__actions">
-                <a class="btn btn--ghost btn--sm" href="assets/cv/luigi-tarsia.pdf" target="_blank" rel="noopener">CV (PDF)</a>
-              </div>
             </div>
           </article>
 
@@ -229,9 +257,6 @@
               <div class="role">Diving Supervisor</div>
               <h3 class="h3">Dott. Dario Nicosia</h3>
               <p class="muted">Anestesista Rianimatore, Intensivista, Medico Iperbarico e Subacqueo, Medico HEMS 118</p>
-              <div class="person__actions">
-                <a class="btn btn--ghost btn--sm" href="assets/cv/dario-nicosia.pdf" target="_blank" rel="noopener">CV (PDF)</a>
-              </div>
             </div>
           </article>
 
@@ -241,9 +266,6 @@
               <div class="role">Hyperbaric Supervisor</div>
               <h3 class="h3">Dott. Vincenzo Benenati</h3>
               <p class="muted">Anestesista Rianimatore, Intensivista, Medico Iperbarico e Subacqueo</p>
-              <div class="person__actions">
-                <a class="btn btn--ghost btn--sm" href="assets/cv/vincenzo-benenati.pdf" target="_blank" rel="noopener">CV (PDF)</a>
-              </div>
             </div>
           </article>
 
@@ -253,9 +275,6 @@
               <div class="role">Head Researcher</div>
               <h3 class="h3">Dott. Matteo Paganini</h3>
               <p class="muted">Ricercatore, Medico di Emergenza-Urgenza, PhD in Global Health, Humanitarian Aid and Disaster Medicine</p>
-              <div class="person__actions">
-                <a class="btn btn--ghost btn--sm" href="assets/cv/matteo-paganini.pdf" target="_blank" rel="noopener">CV (PDF)</a>
-              </div>
             </div>
           </article>
         </div>
@@ -283,15 +302,12 @@
           </article>
         </div>
 
-        <p class="fineprint" style="margin-top:12px;">
-          Nota: i link ai CV puntano a file PDF in <code>assets/cv/</code>. Se i PDF non sono ancora nel repo, aggiungili con quei nomi (o cambia gli href).
-        </p>
       </div>
     </section>
 
     <!-- RICERCA -->
-    <section class="section depth depth--deep reveal" id="ricerca" data-reveal="left">
-      <div class="wrap">
+    <section class="section" id="ricerca">
+      <div class="container">
         <div class="section__head">
           <h2 class="h2">La nostra ricerca</h2>
           <p class="muted">
@@ -323,8 +339,8 @@
     </section>
 
     <!-- FORMAZIONE -->
-    <section class="section depth depth--abyss reveal" id="formazione" data-reveal="left">
-      <div class="wrap">
+    <section class="section section--soft" id="formazione">
+      <div class="container">
         <div class="section__head">
           <h2 class="h2">Formazione</h2>
           <p class="muted">Materiali chiari, aggiornati, applicabili. Per clinici, operatori e subacquei.</p>
@@ -333,8 +349,9 @@
         <div class="grid grid--2">
           <article class="card">
             <h3 class="h3">Lezioni e corsi</h3>
-            <p class="muted">Calendario, moduli e obiettivi formativi (in aggiornamento).</p>
-
+            <p class="muted">
+              Calendario, moduli e obiettivi formativi (in aggiornamento).
+            </p>
             <div class="callout">
               <strong>Docenza universitaria</strong>
               <p class="muted">
@@ -350,12 +367,15 @@
           </article>
         </div>
 
+        <!-- CORSI PASSATI -->
         <div class="section__head" style="margin-top:24px;">
           <h3 class="h2" style="font-size:1.25rem;">Corsi</h3>
           <p class="muted">Portfolio di docenze ed eventi.</p>
         </div>
 
         <div class="posterGrid" aria-label="Corsi">
+
+          <!-- HyperCare -->
           <article class="posterCard card">
             <a class="posterLink" href="assets/corsi/hypercare.pdf" target="_blank" rel="noopener">
               <figure class="posterFigure">
@@ -371,6 +391,7 @@
             </div>
           </article>
 
+          <!-- SIMAE Bologna -->
           <article class="posterCard card">
             <a class="posterLink" href="assets/corsi/simae-bologna.pdf" target="_blank" rel="noopener">
               <figure class="posterFigure">
@@ -386,6 +407,7 @@
             </div>
           </article>
 
+          <!-- RDE -->
           <article class="posterCard card">
             <a class="posterLink" href="assets/corsi/RDE.pdf" target="_blank" rel="noopener">
               <figure class="posterFigure">
@@ -401,6 +423,7 @@
             </div>
           </article>
 
+          <!-- I.E.M.I.G -->
           <article class="posterCard card">
             <a class="posterLink" href="assets/corsi/I.E.M.I.G.pdf" target="_blank" rel="noopener">
               <figure class="posterFigure">
@@ -415,14 +438,17 @@
               </div>
             </div>
           </article>
+
         </div>
+
+        <p class="fineprint" style="margin-top:12px;"></p>
 
       </div>
     </section>
 
     <!-- CONTATTI -->
-    <section class="section depth depth--trench reveal" id="contatti" data-reveal="left">
-      <div class="wrap">
+    <section class="section" id="contatti">
+      <div class="container">
         <div class="section__head">
           <h2 class="h2">Contatti</h2>
           <p class="muted">Collaborazioni, docenza, progetti, case report. Un canale unico.</p>
@@ -431,7 +457,9 @@
         <div class="grid grid--2">
           <article class="card">
             <h3 class="h3">Email</h3>
-            <p class="muted"><a href="mailto:info@amicidiboyle.it">info@amicidiboyle.it</a></p>
+            <p class="muted">
+              <a href="mailto:info@amicidiboyle.it">info@amicidiboyle.it</a>
+            </p>
 
             <div class="stack">
               <button type="button" class="btn btn--primary" data-open-dialog="contattiDialog">
@@ -457,11 +485,10 @@
   </main>
 
   <footer class="footer" role="contentinfo">
-    <div class="wrap footer__inner">
+    <div class="container footer__inner">
       <div>© 2026 Gli Amici di Boyle</div>
       <div class="footer__links">
         <a href="#top">Torna su</a>
-        <a href="podcast.html">Podcast</a>
         <a href="#contatti">Contatti</a>
       </div>
     </div>
@@ -571,7 +598,6 @@
         });
       }
 
-      // Dialogs
       const openers = document.querySelectorAll('[data-open-dialog]');
       const closers = document.querySelectorAll('[data-close-dialog]');
 
@@ -596,22 +622,23 @@
           if (box && !box.contains(e.target)) dlg.close();
         });
       });
-
-      // Reveal on scroll (slide-in from left)
-      const items = document.querySelectorAll('.reveal');
-      if('IntersectionObserver' in window){
-        const io = new IntersectionObserver((entries)=>{
-          entries.forEach(entry=>{
-            if(entry.isIntersecting){
-              entry.target.classList.add('is-visible');
-              io.unobserve(entry.target);
-            }
-          });
-        }, { threshold: 0.15 });
-        items.forEach(el=>io.observe(el));
-      } else {
-        items.forEach(el=>el.classList.add('is-visible'));
-      }
+    })();
+  </script>
+  <script>
+    (function(){
+      const prefersReduced = window.matchMedia </body></body> window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if(prefersReduced) return;
+      const els = document.querySelectorAll(".reveal");
+      if(!els.length) return;
+      const io = new IntersectionObserver((entries)=>{
+        for(const e of entries){
+          if(e.isIntersecting){
+            e.target.classList.add("is-visible");
+            io.unobserve(e.target);
+          }
+        }
+      }, {threshold: 0.14, rootMargin: "0px 0px -10% 0px"});
+      els.forEach(el=>io.observe(el));
     })();
   </script>
 </body>
