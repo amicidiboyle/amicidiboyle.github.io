@@ -5,22 +5,27 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Sotto Pressione · Podcast · Gli Amici di Boyle</title>
   <meta name="description" content="SOTTO PRESSIONE, il podcast di Luigi Tarsia: pressione, immersione, fisiologia estrema e spazio. Episodi divisi per stagioni con accesso rapido a Spotify." />
-  <meta name="theme-color" content="#041b33" />
-  <link rel="stylesheet" href="styles.css?v=2" />
-  <link rel="stylesheet" href="podcast.css?v=2" />
+  <meta name="theme-color" content="#0b4aa2" />
+
+  <!-- Base styles del sito -->
+  <link rel="stylesheet" href="styles.css" />
+  <!-- Styles dedicati alla pagina Podcast -->
+  <link rel="stylesheet" href="podcast.css" />
+
   <link rel="icon" href="assets/logo.png" type="image/png" />
 </head>
 
 <body>
-  <a class="skip" href="#contenuto">Salta al contenuto</a>
+  <a class="skip" href="#contenuto">Vai al contenuto</a>
 
-  <header class="topbar" role="banner">
-    <div class="wrap topbar__inner">
+  <!-- Header: stesso look della Home (mantieni classi/struttura) -->
+  <header class="header" role="banner">
+    <div class="container header__inner">
       <a class="brand" href="index.html#top" aria-label="Home">
         <img class="brand__logo" src="assets/logo.png" alt="Gli Amici di Boyle" />
         <span class="brand__text">
           <span class="brand__name">Gli Amici di Boyle</span>
-          <span class="brand__sub">
+          <span class="brand__sub" aria-label="Payoff">
             <span class="brand__line">Diving &amp; Hyperbaric Medicine</span>
             <span class="brand__line">Research &amp; Education</span>
             <span class="brand__line">Human Performance &amp; Safety in Extreme Environments</span>
@@ -34,22 +39,24 @@
         <a href="index.html#chisiamo">Chi siamo</a>
         <a href="index.html#ricerca">Ricerca</a>
         <a href="index.html#formazione">Formazione</a>
-        <a class="nav__cta" href="podcast.html" aria-current="page">Podcast</a>
-        <a class="nav__cta" href="index.html#contatti">Contatti</a>
+        <a class="is-active" href="podcast.html" aria-current="page">Podcast</a>
+        <a class="btn btn--primary" href="index.html#contatti">Contatti</a>
       </nav>
 
+      <!-- Mobile menu -->
       <details class="menu" aria-label="Menu mobile" id="mobileMenu">
         <summary class="menu__button" aria-label="Apri menu">
           <span class="hamburger" aria-hidden="true"><span></span></span>
           <span class="menu__label">Menu</span>
         </summary>
+
         <div class="menu__panel" role="menu">
           <a role="menuitem" href="index.html#top">Home</a>
           <a role="menuitem" href="index.html#vision">Vision</a>
           <a role="menuitem" href="index.html#chisiamo">Chi siamo</a>
           <a role="menuitem" href="index.html#ricerca">Ricerca</a>
           <a role="menuitem" href="index.html#formazione">Formazione</a>
-          <a role="menuitem" href="podcast.html" aria-current="page">Podcast</a>
+          <a role="menuitem" class="is-active" href="podcast.html" aria-current="page">Podcast</a>
           <a role="menuitem" class="btn btn--primary btn--block" href="index.html#contatti">Contatti</a>
         </div>
       </details>
@@ -391,24 +398,32 @@
   </main>
 
   <footer class="footer" role="contentinfo">
-    <div class="wrap footer__inner">
+    <div class="container footer__inner">
       <div>© 2026 Gli Amici di Boyle</div>
       <div class="footer__links">
         <a href="index.html#top">Home</a>
         <a href="#top">Torna su</a>
-        <a href="index.html#contatti">Contatti</a>
       </div>
     </div>
   </footer>
 
+  <!-- JS: chiude il menu mobile al click -->
   <script>
-    (function () {
+    (function(){
       const menu = document.getElementById('mobileMenu');
       if(menu){
         menu.querySelectorAll('a').forEach(a=>{
           a.addEventListener('click', ()=>{ menu.removeAttribute('open'); });
         });
       }
+      document.querySelectorAll('.season').forEach(d=>{
+        d.addEventListener('toggle', ()=>{
+          if(d.open){
+            const s = d.querySelector('summary');
+            if(s) s.scrollIntoView({block:'nearest', behavior:'smooth'});
+          }
+        });
+      });
     })();
   </script>
 </body>
