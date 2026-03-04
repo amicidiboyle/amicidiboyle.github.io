@@ -1,389 +1,369 @@
-/* Collins-inspired + "marine depths" palette + reveal from left + marquee */
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Gli Amici di Boyle · Research & Education</title>
+  <meta name="description" content="Ricerca e formazione in medicina subacquea e iperbarica, aerospaziale e performance umana in ambienti estremi." />
+  <meta name="theme-color" content="#061a2d" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
 
-:root{
-  /* Marine depths (surface -> trench) */
-  --surface-1:#0b4aa2; /* bright surface blue */
-  --surface-2:#0a73c7; /* lighter */
-  --shallow-1:#083a6b; /* shallow */
-  --mid-1:#062a4f;     /* mid */
-  --deep-1:#041b33;    /* deep */
-  --abyss-1:#031427;   /* abyss */
-  --trench-1:#020d1a;  /* trench */
+<body>
+  <a class="skip" href="#contenuto">Salta al contenuto</a>
 
-  --bg:#061223;
-  --fg:#eef6ff;
-  --muted:rgba(238,246,255,.72);
-  --line:rgba(238,246,255,.12);
+  <header class="topbar">
+    <div class="wrap topbar__inner">
+      <a class="brand" href="#">
+        <span class="brand__mark" aria-hidden="true">◎</span>
+        <span class="brand__text">Gli Amici di Boyle</span>
+      </a>
 
-  --accent:#7cf3ff;   /* bioluminescent cyan */
-  --accent2:#78ffd6;  /* teal */
-  --radius:22px;
-  --radius2:28px;
-  --shadow: 0 18px 60px rgba(0,0,0,.35);
-  --max:1160px;
+      <nav class="nav" aria-label="Navigazione principale">
+        <a href="#vision">Visione</a>
+        <a href="#ricerca">Ricerca</a>
+        <a href="#formazione">Formazione</a>
+        <a href="#podcast">Podcast</a>
+        <a href="#contatti" class="nav__cta">Contatti</a>
+      </nav>
 
-  --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
-  --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono","Courier New", monospace;
-}
+      <button class="menu" type="button" aria-label="Apri menu" aria-expanded="false">
+        <span></span><span></span>
+      </button>
+    </div>
+  </header>
 
-*{box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{
-  margin:0;
-  font-family:var(--font);
-  color:var(--fg);
-  background:
-    radial-gradient(1100px 700px at 12% -10%, rgba(124,243,255,.10), transparent 60%),
-    radial-gradient(900px 600px at 90% 0%, rgba(120,255,214,.08), transparent 60%),
-    linear-gradient(180deg, var(--mid-1), var(--trench-1) 70%);
-}
+  <main id="contenuto">
+    <!-- HERO -->
+    <section class="hero depth depth--surface">
+      <div class="wrap hero__grid">
+        <div class="hero__copy">
+          <p class="kicker">Ricerca · Formazione · Divulgazione</p>
+          <h1>Pressione, gas, performance. Dall’oceano allo spazio.</h1>
+          <p class="lead">
+            Un progetto su <strong>medicina iperbarica e subacquea</strong>, <strong>aerospazio</strong> e
+            <strong>sicurezza in ambienti estremi</strong>. Niente fumo: contenuti chiari e usabili.
+          </p>
 
-a{color:inherit; text-decoration:none}
-.wrap{max-width:var(--max); margin:0 auto; padding:0 22px}
-.skip{
-  position:absolute; left:-999px; top:auto; width:1px; height:1px; overflow:hidden;
-}
-.skip:focus{
-  left:16px; top:16px; width:auto; height:auto;
-  background:#fff; color:#000; padding:10px 12px; border-radius:10px; z-index:99;
-}
+          <div class="hero__actions">
+            <a class="btn btn--primary" href="#ricerca">Esplora i progetti</a>
+            <a class="btn btn--ghost" href="#podcast">Ascolta il podcast</a>
+          </div>
 
-/* Topbar */
-.topbar{
-  position:sticky; top:0; z-index:50;
-  backdrop-filter:saturate(150%) blur(12px);
-  background:rgba(3,10,20,.55);
-  border-bottom:1px solid var(--line);
-}
-.topbar__inner{display:flex; align-items:center; justify-content:space-between; height:68px; gap:18px}
-.brand{display:flex; align-items:center; gap:10px; font-weight:650; letter-spacing:.2px}
-.brand__mark{
-  width:28px; height:28px; border-radius:50%;
-  display:grid; place-items:center;
-  border:1px solid rgba(124,243,255,.35);
-  color:var(--accent);
-  font-size:16px;
-}
-.brand--foot .brand__mark{border-color:rgba(238,246,255,.16); color:rgba(238,246,255,.85)}
-.nav{display:flex; align-items:center; gap:18px}
-.nav a{opacity:.82; padding:10px 10px; border-radius:999px}
-.nav a:hover{opacity:1; background:rgba(238,246,255,.06)}
-.nav__cta{
-  opacity:1 !important;
-  background:rgba(124,243,255,.14);
-  border:1px solid rgba(124,243,255,.25);
-}
-.menu{
-  display:none;
-  width:44px; height:44px; border-radius:12px;
-  border:1px solid var(--line);
-  background:rgba(238,246,255,.04);
-  color:var(--fg);
-}
-.menu span{display:block; height:2px; width:18px; background:rgba(238,246,255,.9); margin:6px auto; border-radius:2px}
+          <div class="hero__meta">
+            <div class="meta">
+              <span class="meta__label">Focus</span>
+              <span class="meta__value">Hyperbaric & Aerospace Medicine</span>
+            </div>
+            <div class="meta">
+              <span class="meta__label">Approccio</span>
+              <span class="meta__value">Evidence-based, pratico</span>
+            </div>
+          </div>
+        </div>
 
-/* Depth backgrounds per section */
-.depth{position:relative}
-.depth::before{
-  content:"";
-  position:absolute; inset:0;
-  pointer-events:none;
-  opacity:.95;
-  background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,0));
-}
-.depth--surface{background: radial-gradient(900px 520px at 15% -10%, rgba(11,74,162,.55), transparent 60%),
-                         radial-gradient(900px 520px at 90% 0%, rgba(10,115,199,.35), transparent 60%),
-                         linear-gradient(180deg, var(--surface-1), var(--shallow-1) 80%);}
-.depth--shallow{background: radial-gradient(900px 520px at 20% 0%, rgba(124,243,255,.10), transparent 60%),
-                         linear-gradient(180deg, var(--shallow-1), var(--mid-1));}
-.depth--mid{background: radial-gradient(900px 520px at 85% 0%, rgba(120,255,214,.10), transparent 60%),
-                     linear-gradient(180deg, var(--mid-1), var(--deep-1));}
-.depth--deep{background: linear-gradient(180deg, var(--deep-1), var(--abyss-1));}
-.depth--abyss{background: radial-gradient(900px 520px at 10% 10%, rgba(124,243,255,.06), transparent 60%),
-                       linear-gradient(180deg, var(--abyss-1), var(--trench-1));}
-.depth--trench{background: linear-gradient(180deg, var(--trench-1), #01060f);}
+        <aside class="hero__panel" aria-label="Pannello in evidenza">
+          <div class="panel">
+            <div class="panel__head">
+              <span class="pill">In evidenza</span>
+              <span class="muted">Home</span>
+            </div>
+            <h2 class="panel__title">Sotto Pressione</h2>
+            <p class="panel__text">
+              Podcast su pressione, immersione tecnica, fisiologia estrema e spazio.
+              Episodi in stagioni, link diretto a Spotify.
+            </p>
+            <div class="panel__actions">
+              <a class="link" href="#podcast">Vai al podcast →</a>
+              <a class="link" href="#contatti">Collabora →</a>
+            </div>
+            <div class="panel__footer">
+              <div class="stat"><span class="stat__n">3</span><span class="stat__l">Stagioni</span></div>
+              <div class="stat"><span class="stat__n">∞</span><span class="stat__l">Curiosità</span></div>
+              <div class="stat"><span class="stat__n">0</span><span class="stat__l">Fuffa</span></div>
+            </div>
+          </div>
+        </aside>
+      </div>
 
-/* Hero */
-.hero{padding:64px 0 26px}
-.hero__grid{display:grid; grid-template-columns: 1.35fr .85fr; gap:28px; align-items:start; position:relative}
-.kicker{
-  font-family:var(--mono);
-  letter-spacing:.18em;
-  text-transform:uppercase;
-  font-size:12px;
-  color:rgba(238,246,255,.72);
-  margin:0 0 14px;
-}
-h1{
-  margin:0;
-  font-size: clamp(40px, 4.5vw, 64px);
-  line-height:1.02;
-  letter-spacing:-.02em;
-}
-.lead{
-  margin:16px 0 22px;
-  font-size:18px;
-  line-height:1.55;
-  color:var(--muted);
-  max-width:62ch;
-}
-.hero__actions{display:flex; gap:12px; flex-wrap:wrap}
-.btn{
-  display:inline-flex; align-items:center; justify-content:center;
-  padding:12px 16px;
-  border-radius:999px;
-  border:1px solid var(--line);
-  background:rgba(238,246,255,.04);
-  color:var(--fg);
-  font-weight:600;
-  transition: transform .18s ease, background .18s ease, border-color .18s ease;
-}
-.btn:hover{transform: translateY(-1px); background:rgba(238,246,255,.07)}
-.btn--primary{
-  background: linear-gradient(135deg, rgba(124,243,255,.18), rgba(120,255,214,.10));
-  border-color: rgba(124,243,255,.30);
-}
-.btn--ghost{background:transparent}
-.btn--small{padding:10px 14px; font-size:14px}
+      <!-- MARQUEE -->
+      <div class="wrap">
+        <div class="marquee" aria-hidden="true">
+          <div class="marquee__track">
+            <span>PRESSURE</span><span>DIVING</span><span>HYPERBARIC</span><span>HUMAN PERFORMANCE</span>
+            <span>AEROSPACE</span><span>SAFETY</span><span>PHYSIOLOGY</span><span>DECISION-MAKING</span>
+            <span>PRESSURE</span><span>DIVING</span><span>HYPERBARIC</span><span>HUMAN PERFORMANCE</span>
+            <span>AEROSPACE</span><span>SAFETY</span><span>PHYSIOLOGY</span><span>DECISION-MAKING</span>
+          </div>
+        </div>
+      </div>
+    </section>
 
-.hero__meta{display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:18px}
-.meta{
-  padding:14px 14px;
-  border-radius:16px;
-  border:1px solid var(--line);
-  background:rgba(238,246,255,.03);
-}
-.meta__label{display:block; font-family:var(--mono); font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:rgba(238,246,255,.62)}
-.meta__value{display:block; margin-top:6px; font-weight:650}
+    <!-- VISION -->
+    <section class="section depth depth--shallow" id="vision">
+      <div class="wrap">
+        <div class="section__head reveal-left">
+          <h2>Visione</h2>
+          <p>
+            Traduciamo fisiologia e tecnologia in pratica clinica, formazione e cultura della sicurezza.
+            In mare, in camera iperbarica, in terapia intensiva e nei contesti aerospaziali.
+          </p>
+        </div>
 
-.hero__panel .panel{
-  background:
-    radial-gradient(900px 400px at 10% 0%, rgba(124,243,255,.12), transparent 55%),
-    linear-gradient(180deg, rgba(238,246,255,.06), rgba(238,246,255,.02));
-  border:1px solid rgba(238,246,255,.12);
-  border-radius:var(--radius2);
-  padding:18px 18px 16px;
-  box-shadow:var(--shadow);
-}
-.panel__head{display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:10px}
-.panel__title{margin:0; font-size:24px; letter-spacing:-.01em}
-.panel__text{margin:10px 0 14px; color:var(--muted); line-height:1.5}
-.panel__actions{display:flex; gap:14px; flex-wrap:wrap; margin-bottom:14px}
-.panel__footer{display:grid; grid-template-columns:repeat(3,1fr); gap:10px; padding-top:10px; border-top:1px solid rgba(238,246,255,.10)}
-.stat{padding:10px 10px; border-radius:16px; background:rgba(2,10,18,.35); border:1px solid rgba(238,246,255,.08)}
-.stat__n{display:block; font-size:18px; font-weight:750}
-.stat__l{display:block; font-size:12px; color:rgba(238,246,255,.68)}
+        <div class="grid grid--3">
+          <article class="card reveal-left">
+            <h3>Ricerca applicata</h3>
+            <p>Domande reali, dati reali. Dal campo alla clinica, senza storytelling vuoto.</p>
+            <div class="card__tag">Clinical & Field</div>
+          </article>
 
-.pill{
-  display:inline-flex; align-items:center; gap:8px;
-  padding:6px 10px;
-  border-radius:999px;
-  border:1px solid rgba(124,243,255,.30);
-  background:rgba(124,243,255,.12);
-  color:rgba(238,246,255,.92);
-  font-size:12px;
-  font-family:var(--mono);
-  letter-spacing:.08em;
-  text-transform:uppercase;
-}
-.pill--dark{
-  border-color:rgba(238,246,255,.14);
-  background:rgba(238,246,255,.05);
-}
-.muted{color:rgba(238,246,255,.62); font-size:13px}
-.link{font-weight:650; opacity:.9}
-.link:hover{opacity:1; text-decoration:underline}
-.link--inv{color:rgba(238,246,255,.92)}
+          <article class="card reveal-left">
+            <h3>Formazione</h3>
+            <p>Lezioni, workshop e moduli: materiale pulito, aggiornato, con focus operativo.</p>
+            <div class="card__tag">Teaching</div>
+          </article>
 
-/* Marquee (scrolling text) */
-.marquee{
-  margin-top:22px;
-  border-top:1px solid rgba(238,246,255,.14);
-  border-bottom:1px solid rgba(238,246,255,.14);
-  padding:14px 0;
-  overflow:hidden;
-  mask-image: linear-gradient(90deg, transparent, black 12%, black 88%, transparent);
-}
-.marquee__track{
-  display:flex;
-  gap:28px;
-  width:max-content;
-  will-change: transform;
-  animation: marquee 18s linear infinite;
-}
-.marquee span{
-  white-space:nowrap;
-  font-family:var(--mono);
-  font-size:12px;
-  letter-spacing:.22em;
-  opacity:.70;
-  text-transform:uppercase;
-}
-@keyframes marquee{
-  from{transform:translateX(0)}
-  to{transform:translateX(-50%)}
-}
+          <article class="card reveal-left">
+            <h3>Outreach</h3>
+            <p>Podcast, articoli e visual per rendere la scienza leggibile e utile.</p>
+            <div class="card__tag">Communication</div>
+          </article>
+        </div>
+      </div>
+    </section>
 
-/* Sections */
-.section{padding:64px 0; position:relative}
-.section__head{
-  display:grid;
-  grid-template-columns: 1fr 1.2fr;
-  gap:20px;
-  align-items:end;
-  margin-bottom:22px;
-}
-.section__head h2{
-  margin:0;
-  font-size: clamp(28px, 3vw, 40px);
-  letter-spacing:-.02em;
-}
-.section__head p{
-  margin:0;
-  color:var(--muted);
-  line-height:1.6;
-}
+    <!-- RICERCA -->
+    <section class="section depth depth--mid" id="ricerca">
+      <div class="wrap">
+        <div class="section__head reveal-left">
+          <h2>Ricerca</h2>
+          <p>
+            Sezioni “a blocchi” che compaiono scorrendo. Sostituisci i placeholder con i tuoi progetti reali.
+          </p>
+        </div>
 
-.grid{display:grid; gap:16px}
-.grid--3{grid-template-columns:repeat(3,1fr)}
-.grid--2{grid-template-columns:repeat(2,1fr)}
+        <div class="cases">
+          <article class="case reveal-left">
+            <div class="case__meta">
+              <span class="pill pill--dark">Hyperbaric</span>
+              <span class="muted">Case report · fisiologia</span>
+            </div>
+            <h3 class="case__title">Back to Pressure After PVI</h3>
+            <p class="case__desc">
+              Scenario clinico raro e gestione del rischio in ritorno all’esposizione iperbarica.
+            </p>
+            <div class="case__links">
+              <a class="link link--inv" href="#">Leggi →</a>
+              <a class="link link--inv" href="#">PDF →</a>
+            </div>
+          </article>
 
-.card, .listcard, .episode{
-  border:1px solid rgba(238,246,255,.12);
-  background:rgba(238,246,255,.03);
-  border-radius:var(--radius);
-  padding:18px;
-}
-.card h3, .listcard h3, .episode h3{margin:0 0 10px; letter-spacing:-.01em}
-.card p, .listcard p, .episode p{margin:0 0 12px; color:var(--muted); line-height:1.55}
-.card__tag{
-  display:inline-block;
-  font-family:var(--mono);
-  font-size:11px;
-  letter-spacing:.16em;
-  text-transform:uppercase;
-  padding-top:6px;
-  opacity:.7;
-  border-top:1px solid rgba(238,246,255,.10);
-  width:100%;
-}
+          <article class="case reveal-left">
+            <div class="case__meta">
+              <span class="pill pill--dark">Aerospace</span>
+              <span class="muted">Review · ambienti estremi</span>
+            </div>
+            <h3 class="case__title">Dall’abisso allo spazio</h3>
+            <p class="case__desc">
+              Gas, pressione, performance: parallelismi utili tra iperbarismo e contesti aerospaziali.
+            </p>
+            <div class="case__links">
+              <a class="link link--inv" href="#">Leggi →</a>
+              <a class="link link--inv" href="#">Bibliografia →</a>
+            </div>
+          </article>
 
-.cases{display:grid; gap:16px}
-.case{
-  border:1px solid rgba(238,246,255,.12);
-  border-radius:var(--radius2);
-  padding:20px;
-  background: rgba(2,10,18,.28);
-}
-.case__meta{display:flex; gap:10px; align-items:center; justify-content:space-between; flex-wrap:wrap}
-.case__title{margin:10px 0 8px; font-size:26px; letter-spacing:-.02em}
-.case__desc{margin:0 0 12px; color:rgba(238,246,255,.70); line-height:1.6; max-width:90ch}
-.case__links{display:flex; gap:16px; flex-wrap:wrap}
+          <article class="case reveal-left">
+            <div class="case__meta">
+              <span class="pill pill--dark">Human factors</span>
+              <span class="muted">Safety · sistemi complessi</span>
+            </div>
+            <h3 class="case__title">Checklist & decision-making</h3>
+            <p class="case__desc">
+              Tool rapidi per team: comunicazione, procedure, error management in ambienti ad alta complessità.
+            </p>
+            <div class="case__links">
+              <a class="link link--inv" href="#">Toolkit →</a>
+              <a class="link link--inv" href="#">Formazione →</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
 
-.list{margin:0 0 14px; padding-left:18px; color:rgba(238,246,255,.72); line-height:1.6}
-.episode__top{display:flex; justify-content:space-between; align-items:center; gap:10px; margin-bottom:10px}
-.center{display:flex; justify-content:center; margin-top:18px}
+    <!-- FORMAZIONE -->
+    <section class="section depth depth--deep" id="formazione">
+      <div class="wrap">
+        <div class="section__head reveal-left">
+          <h2>Formazione</h2>
+          <p>Modello essenziale: pochi blocchi, chiari. Il “wow” qui è la leggibilità.</p>
+        </div>
 
-.contact{
-  display:grid;
-  grid-template-columns: 1fr 1.1fr;
-  gap:18px;
-  align-items:start;
-  border:1px solid rgba(238,246,255,.12);
-  background:rgba(238,246,255,.03);
-  border-radius:var(--radius2);
-  padding:22px;
-}
-.contact h2{margin:0 0 10px; font-size:34px; letter-spacing:-.02em}
-.contact p{margin:0 0 14px; color:var(--muted); line-height:1.6}
-.contact__chips{display:flex; flex-wrap:wrap; gap:10px}
-.chip{
-  padding:8px 12px;
-  border-radius:999px;
-  border:1px solid rgba(238,246,255,.12);
-  background:rgba(2,10,18,.28);
-  font-size:13px;
-  color:rgba(238,246,255,.8);
-}
+        <div class="grid grid--2">
+          <article class="listcard reveal-left">
+            <h3>Corsi e docenze</h3>
+            <ul class="list">
+              <li><strong>Università / ospedale</strong> · moduli e seminari (placeholder)</li>
+              <li>Workshop pratici · procedure, trauma, ecografia (placeholder)</li>
+              <li>Formazione su gas e sicurezza operativa (placeholder)</li>
+            </ul>
+            <a class="link" href="#contatti">Richiedi programma →</a>
+          </article>
 
-.form{display:grid; grid-template-columns:1fr 1fr; gap:12px}
-.form label{display:grid; gap:6px; font-size:13px; color:rgba(238,246,255,.78)}
-.form input, .form textarea{
-  width:100%;
-  padding:12px 12px;
-  border-radius:14px;
-  border:1px solid rgba(238,246,255,.12);
-  background:rgba(2,10,18,.28);
-  color:var(--fg);
-  outline:none;
-}
-.form input:focus, .form textarea:focus{border-color:rgba(124,243,255,.35)}
-.form .full{grid-column:1/-1}
-.fineprint{
-  grid-column:1/-1;
-  margin:0;
-  font-size:12px;
-  color:rgba(238,246,255,.60);
-}
+          <article class="listcard reveal-left">
+            <h3>Materiale</h3>
+            <ul class="list">
+              <li>Slide e infografiche (PDF)</li>
+              <li>Checklist (one-page)</li>
+              <li>Raccolta bibliografica</li>
+            </ul>
+            <a class="link" href="#">Scarica un esempio →</a>
+          </article>
+        </div>
+      </div>
+    </section>
 
-.footer{
-  padding:34px 0 22px;
-  border-top:1px solid rgba(238,246,255,.10);
-  background:rgba(1,6,12,.75);
-}
-.footer__grid{display:grid; grid-template-columns:1.2fr .8fr; gap:18px; align-items:start}
-.footer__cols{display:grid; grid-template-columns:repeat(2,1fr); gap:14px}
-.footer h4{
-  margin:0 0 10px;
-  font-size:13px;
-  letter-spacing:.14em;
-  text-transform:uppercase;
-  color:rgba(238,246,255,.72);
-  font-family:var(--mono);
-}
-.footer a{display:block; padding:6px 0; opacity:.8}
-.footer a:hover{opacity:1; text-decoration:underline}
-.footer__bottom{padding-top:16px}
+    <!-- PODCAST -->
+    <section class="section depth depth--abyss" id="podcast">
+      <div class="wrap">
+        <div class="section__head reveal-left">
+          <h2>Podcast</h2>
+          <p>Anteprima in home: 3 episodi, poi rimandi alla pagina completa.</p>
+        </div>
 
-/* Reveal from left (blocks appear while scrolling) */
-.reveal-left{
-  opacity:0;
-  transform: translateX(-28px);
-  transition: opacity .7s ease, transform .7s ease;
-  will-change: opacity, transform;
-}
-.reveal-left.is-in{
-  opacity:1;
-  transform: translateX(0);
-}
+        <div class="grid grid--3">
+          <article class="episode reveal-left">
+            <div class="episode__top">
+              <span class="pill">Stagione 1</span><span class="muted">Episodio 01</span>
+            </div>
+            <h3>Pressione: concetti base</h3>
+            <p>Dal mare allo spazio: cosa cambia quando cambia l’ambiente.</p>
+            <a class="btn btn--small btn--primary" href="#">Apri su Spotify</a>
+          </article>
 
-/* Reduced motion */
-@media (prefers-reduced-motion: reduce){
-  .marquee__track{animation:none}
-  .reveal-left{opacity:1; transform:none; transition:none}
-  .btn{transition:none}
-}
+          <article class="episode reveal-left">
+            <div class="episode__top">
+              <span class="pill">Stagione 2</span><span class="muted">Episodio 05</span>
+            </div>
+            <h3>Narcosi e performance</h3>
+            <p>Riconoscere il problema prima che diventi decisione sbagliata.</p>
+            <a class="btn btn--small btn--primary" href="#">Apri su Spotify</a>
+          </article>
 
-/* Responsive */
-@media (max-width: 920px){
-  .hero__grid{grid-template-columns:1fr}
-  .section__head{grid-template-columns:1fr}
-  .contact{grid-template-columns:1fr}
-  .grid--3{grid-template-columns:1fr}
-  .grid--2{grid-template-columns:1fr}
+          <article class="episode reveal-left">
+            <div class="episode__top">
+              <span class="pill">Stagione 3</span><span class="muted">Episodio 02</span>
+            </div>
+            <h3>EVA / IVA</h3>
+            <p>Pressioni, gas e limiti operativi. Niente fantascienza: pratica.</p>
+            <a class="btn btn--small btn--primary" href="#">Apri su Spotify</a>
+          </article>
+        </div>
 
-  .nav{
-    position:fixed; inset:68px 16px auto 16px;
-    padding:14px;
-    border-radius:18px;
-    border:1px solid rgba(238,246,255,.12);
-    background:rgba(2,10,18,.92);
-    box-shadow:var(--shadow);
-    display:none;
-    flex-direction:column;
-    align-items:stretch;
-  }
-  .nav a{padding:12px 14px}
-  .nav.nav--open{display:flex}
-  .menu{display:inline-block}
-}
+        <div class="center reveal-left">
+          <a class="btn btn--ghost" href="#">Vai alla pagina Podcast completa →</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTATTI -->
+    <section class="section depth depth--trench" id="contatti">
+      <div class="wrap">
+        <div class="contact reveal-left">
+          <div>
+            <h2>Contatti</h2>
+            <p>Collaborazioni, docenze, progetti, eventi. Se è serio e utile, ci interessa.</p>
+            <div class="contact__chips">
+              <span class="chip">Ricerca</span>
+              <span class="chip">Formazione</span>
+              <span class="chip">Consulenza</span>
+              <span class="chip">Media</span>
+            </div>
+          </div>
+
+          <form class="form" action="#" method="post" onsubmit="return false">
+            <label>
+              <span>Nome</span>
+              <input type="text" placeholder="Nome e Cognome" />
+            </label>
+            <label>
+              <span>Email</span>
+              <input type="email" placeholder="nome@dominio.it" />
+            </label>
+            <label class="full">
+              <span>Messaggio</span>
+              <textarea rows="4" placeholder="Due righe, chiare."></textarea>
+            </label>
+            <button class="btn btn--primary" type="submit">Invia (placeholder)</button>
+            <p class="fineprint">
+              Form statico: per invio reale collega a Formspree/Netlify/Vercel quando vuoi.
+            </p>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap footer__grid">
+      <div>
+        <div class="brand brand--foot">
+          <span class="brand__mark" aria-hidden="true">◎</span>
+          <span class="brand__text">Gli Amici di Boyle</span>
+        </div>
+        <p class="muted">
+          Research & Education in medicina subacquea e iperbarica, aerospazio e ambienti estremi.
+        </p>
+      </div>
+
+      <div class="footer__cols">
+        <div>
+          <h4>Sezioni</h4>
+          <a href="#vision">Visione</a>
+          <a href="#ricerca">Ricerca</a>
+          <a href="#formazione">Formazione</a>
+          <a href="#podcast">Podcast</a>
+        </div>
+        <div>
+          <h4>Altro</h4>
+          <a href="#">Pubblicazioni</a>
+          <a href="#">Media kit</a>
+          <a href="#">Privacy</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="wrap footer__bottom">
+      <span class="muted">© <span id="y"></span> Gli Amici di Boyle</span>
+    </div>
+  </footer>
+
+  <script>
+    // menu mobile
+    const btn = document.querySelector('.menu');
+    const nav = document.querySelector('.nav');
+    btn?.addEventListener('click', () => {
+      const open = nav.classList.toggle('nav--open');
+      btn.setAttribute('aria-expanded', String(open));
+    });
+
+    // reveal from left (InsideTrauma-like blocks appearing)
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const targets = document.querySelectorAll('.reveal-left');
+
+    if (!reduceMotion && 'IntersectionObserver' in window) {
+      const io = new IntersectionObserver((entries) => {
+        for (const e of entries) {
+          if (e.isIntersecting) e.target.classList.add('is-in');
+        }
+      }, { threshold: 0.12, rootMargin: '0px 0px -5% 0px' });
+
+      targets.forEach(el => io.observe(el));
+    } else {
+      targets.forEach(el => el.classList.add('is-in'));
+    }
+
+    document.getElementById('y').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
