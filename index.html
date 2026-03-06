@@ -33,9 +33,6 @@
         <a href="#chisiamo">Chi siamo</a>
         <a href="#ricerca">Ricerca</a>
         <a href="#formazione">Formazione</a>
-        <a href="#lezioni">Lezioni</a>
-        <a href="#articoli">Articoli</a>
-        <a href="#partner">Partner</a>
         <a href="podcast.html">Podcast</a>
         <a class="btn btn--primary" href="#contatti">Contatti</a>
       </nav>
@@ -47,8 +44,7 @@
           <span class="menu__label">Menu</span>
         </summary>
         <div class="menu__panel" role="menu">
-          <a role="menuitem" href="#vision">Vision</a>
-          <a role="menuitem" href="#chisiamo">Chi siamo</a>
+          <a role="menuitem" href="#vision">Visione</a>
           <a role="menuitem" href="#ricerca">Ricerca</a>
           <a role="menuitem" href="#formazione">Formazione</a>
           <a role="menuitem" href="#lezioni">Lezioni</a>
@@ -363,7 +359,7 @@
               della medicina iperbarica e subacquea.
             </p>
           </div>
-          <a class="btn btn--primary" href="#contatti">Proponi un incontro</a>
+          <button type="button" class="btn btn--primary" data-open-dialog="contattiDialog">Proponi un incontro</button>
         </div>
       </div>
     </section>
@@ -553,7 +549,7 @@
           </article>
 
           <article class="posterCard card reveal" data-delay="120">
-            <a class="posterLink" href="assets/pubblicazioni/Paganini_2025%20UHMJ_Technical%20Suitability%20of%20Implantable%20Cardiac%20Devices%20for%20Recreational%20Diving.pdf" target="_blank" rel="noopener">
+            <a class="posterLink" href="assets/pubblicazioni/technical_suitability_cardiac_devices_diving.pdf" target="_blank" rel="noopener">
               <figure class="posterFigure posterFigure--logo">
                 <img class="posterImg posterImg--contain" src="assets/pubblicazioni/UHM_logo.png" alt="Undersea and Hyperbaric Medicine Journal" loading="lazy" />
               </figure>
@@ -565,7 +561,7 @@
                 Articolo tecnico sulla compatibilità dei dispositivi cardiaci impiantabili con l’attività subacquea ricreativa.
               </p>
               <div class="posterActions">
-                <a class="btn btn--ghost btn--block" href="assets/pubblicazioni/Paganini_2025%20UHMJ_Technical%20Suitability%20of%20Implantable%20Cardiac%20Devices%20for%20Recreational%20Diving.pdf" target="_blank" rel="noopener">Apri PDF</a>
+                <a class="btn btn--ghost btn--block" href="assets/pubblicazioni/technical_suitability_cardiac_devices_diving.pdf" target="_blank" rel="noopener">Apri PDF</a>
               </div>
             </div>
           </article>
@@ -582,7 +578,10 @@
         </div>
 
         <div class="grid grid--2 gap-lg">
-          <article class="card reveal">
+          <article class="card reveal partnerCard">
+            <div class="partnerLogoWrap">
+              <img class="partnerLogo" src="assets/itecc_logo.png" alt="Logo Inside Trauma" loading="lazy" />
+            </div>
             <h3 class="h3">Inside Trauma</h3>
             <p class="muted">
               Progetto dedicato al trauma care, con approccio pratico, formazione e contenuti di qualità.
@@ -595,7 +594,7 @@
           <article class="card reveal" data-delay="80">
             <h3 class="h3">Perché qui</h3>
             <p class="muted">
-              Perché la pagina iniziale deve mostrare il vostro ecosistema, non solo l’elenco delle cose che fate.
+              Perché la homepage deve mostrare il vostro ecosistema, non solo l’elenco delle cose che fate.
             </p>
             <div class="posterActions">
               <a class="btn btn--ghost" href="#contatti">Proponi una collaborazione</a>
@@ -607,70 +606,57 @@
 
 
     
-        <!-- CONTATTI -->
+    <!-- CONTATTI -->
     <section class="section section--soft" id="contatti">
       <div class="container">
         <div class="section__head reveal">
           <h2 class="h2">Contatti</h2>
-          <p class="muted">
-            Collaborazioni, docenze, corsi, case report, proposte editoriali. Scrivici in modo chiaro e ti rispondiamo.
-          </p>
+          <p class="muted">Collaborazioni, docenze, corsi, case report, proposte editoriali. Un ingresso unico, ma fatto bene.</p>
         </div>
 
-        <div class="contactPanel reveal">
-          <div class="contactPanel__intro">
-            <span class="pill">Contatto diretto</span>
-            <h3 class="h3">Parliamone bene, non a caso</h3>
+        <div class="contactCards">
+          <article class="contactCard card reveal">
+            <div class="contactCard__icon">✉</div>
+            <h3 class="h3">Contatto generale</h3>
             <p class="muted">
-              Usa il modulo per richieste su ricerca, teaching, publications, media o partnership.
-              In alternativa puoi scrivere a <a href="mailto:info@amicidiboyle.it">info@amicidiboyle.it</a>.
+              Per domande, progetti, richieste editoriali o informazioni generali.
             </p>
+            <ul class="contactList">
+              <li>Email diretta: <a href="mailto:info@amicidiboyle.it">info@amicidiboyle.it</a></li>
+              <li>Risposta tramite Formspree</li>
+              <li>Messaggi filtrati e ordinati</li>
+            </ul>
+            <button type="button" class="btn btn--primary" data-open-dialog="contattiDialog">Apri modulo contatti</button>
+          </article>
 
-            <div class="contactMini">
-              <div class="contactMini__item">
-                <span class="contactMini__k">Email</span>
-                <span class="contactMini__v"><a href="mailto:info@amicidiboyle.it">info@amicidiboyle.it</a></span>
-              </div>
-             
+          <article class="contactCard card reveal" data-delay="80">
+            <div class="contactCard__icon">◎</div>
+            <h3 class="h3">Proponi incontro o docenza</h3>
+            <p class="muted">
+              Per università, corsi, congressi, attività didattiche e collaborazioni strutturate.
+            </p>
+            <ul class="contactList">
+              <li>Lezioni e corsi specialistici</li>
+              <li>Collaborazioni scientifiche</li>
+              <li>Eventi e docenze</li>
+            </ul>
+            <button type="button" class="btn btn--ghost" data-open-dialog="incontroDialog">Apri modulo docenza</button>
+          </article>
+        </div>
+
+        <div class="contactStrip reveal" data-delay="120">
+          <div class="contactStrip__item">
+            <span class="contactStrip__k">Email</span>
+            <span class="contactStrip__v"><a href="mailto:info@amicidiboyle.it">info@amicidiboyle.it</a></span>
           </div>
-
-          <form id="contactForm" class="contactForm" action="https://formspree.io/f/xzdareqw" method="POST" accept-charset="UTF-8">
-            <input type="text" name="_gotcha" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
-            <input type="hidden" name="_subject" value="Nuovo contatto dal sito Amici di Boyle" />
-
-            <div class="formRow">
-              <label class="formField">
-                <span class="formLabel">Nome</span>
-                <input class="formInput" type="text" name="name" placeholder="Nome e Cognome" autocomplete="name" required />
-              </label>
-
-              <label class="formField">
-                <span class="formLabel">Email</span>
-                <input class="formInput" type="email" name="email" placeholder="nome@dominio.it" autocomplete="email" required />
-              </label>
-            </div>
-
-            <label class="formField">
-              <span class="formLabel">Oggetto</span>
-              <input class="formInput" type="text" name="subject" placeholder="Es. proposta docenza, collaborazione, richiesta informazioni" required />
-            </label>
-
-            <label class="formField">
-              <span class="formLabel">Messaggio</span>
-              <textarea class="formInput formTextarea" name="message" rows="6" placeholder="Entra in contatto con noi!." required></textarea>
-            </label>
-
-            <div class="formActions">
-              <button id="contactSubmit" class="btn btn--primary btn--lg" type="submit">Invia messaggio</button>
-              <a class="btn btn--ghost" href="mailto:info@amicidiboyle.it">Scrivi via email</a>
-            </div>
-
-            <p id="contactStatus" class="formStatus" aria-live="polite"></p>
-
-            <p class="fineprint">
-      
-            </p>
-          </form>
+          <div class="contactStrip__item">
+            <span class="contactStrip__k">Canale</span>
+            <span class="contactStrip__v">Modulo + email</span>
+          </div>
+          <div class="contactStrip__item">
+            <span class="contactStrip__k">Ambiti</span>
+            <span class="contactStrip__v">Ricerca · Teaching · Media</span>
+          </div>
         </div>
       </div>
     </section>
@@ -687,6 +673,45 @@
       </div>
     </div>
   </footer>
+
+  <!-- MODALE CONTATTI -->
+  <dialog class="dialog" id="contattiDialog" aria-label="Modulo contatti">
+    <div class="dialog__inner">
+      <div class="dialog__head">
+        <h3 class="h3" style="margin:0;">Contattaci</h3>
+        <button type="button" class="btn btn--ghost" data-close-dialog>Chiudi</button>
+      </div>
+
+      <form class="form" action="#" method="post" onsubmit="return false">
+        <div class="grid grid--2">
+          <label class="field">
+            <span>Nome</span>
+            <input name="name" type="text" autocomplete="name" placeholder="Nome e Cognome" required />
+          </label>
+
+          <label class="field">
+            <span>Email</span>
+            <input name="email" type="email" autocomplete="email" placeholder="nome@dominio.it" required />
+          </label>
+        </div>
+
+        <label class="field">
+          <span>Messaggio</span>
+          <textarea name="message" rows="5" placeholder="Due righe, chiare. Contesto e richiesta." required></textarea>
+        </label>
+
+        <div class="dialog__actions">
+          <button type="submit" class="btn btn--primary">Invia (da configurare)</button>
+          <button type="button" class="btn btn--ghost" data-close-dialog>Annulla</button>
+        </div>
+
+        <p class="fineprint">
+          Nota: per far inviare davvero l’email, imposta l’attributo <code>action</code> del form con il tuo endpoint (Formspree / Getform / Netlify Forms).
+        </p>
+      </form>
+    </div>
+  </dialog>
+
   <script>
     (function(){
       const els = Array.from(document.querySelectorAll('.reveal'));
@@ -708,7 +733,6 @@
             }
           }
         }, { threshold: 0.12, rootMargin: '0px 0px -10% 0px' });
-
         els.forEach(el => io.observe(el));
       }
 
@@ -716,7 +740,7 @@
       if(menu){
         menu.querySelectorAll('a').forEach(a => {
           a.addEventListener('click', () => {
-            setTimeout(() => { menu.open = false; }, 0);
+            menu.open = false;
           });
         });
         window.addEventListener('hashchange', () => { menu.open = false; });
