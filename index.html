@@ -606,15 +606,17 @@
 
 
     
-    <!-- CONTATTI -->
+        <!-- CONTATTI -->
     <section class="section section--soft" id="contatti">
       <div class="container">
         <div class="section__head reveal">
           <h2 class="h2">Contatti</h2>
-          <p class="muted">Collaborazioni, docenze, corsi, case report, proposte editoriali. Un ingresso unico, ma fatto bene.</p>
+          <p class="muted">
+            Collaborazioni, docenze, corsi, case report, proposte editoriali. Un ingresso chiaro e ordinato, senza inutili complicazioni.
+          </p>
         </div>
 
-        <div class="contactCards">
+        <div class="contactCards contactCards--3">
           <article class="contactCard card reveal">
             <div class="contactCard__icon">✉</div>
             <h3 class="h3">Contatto generale</h3>
@@ -623,8 +625,6 @@
             </p>
             <ul class="contactList">
               <li>Email diretta: <a href="mailto:info@amicidiboyle.it">info@amicidiboyle.it</a></li>
-              <li>Risposta tramite Formspree</li>
-              <li>Messaggi filtrati e ordinati</li>
             </ul>
             <button type="button" class="btn btn--primary" data-open-dialog="contattiDialog">Apri modulo contatti</button>
           </article>
@@ -642,21 +642,15 @@
             </ul>
             <button type="button" class="btn btn--ghost" data-open-dialog="incontroDialog">Apri modulo docenza</button>
           </article>
-        </div>
 
-        <div class="contactStrip reveal" data-delay="120">
-          <div class="contactStrip__item">
-            <span class="contactStrip__k">Email</span>
-            <span class="contactStrip__v"><a href="mailto:info@amicidiboyle.it">info@amicidiboyle.it</a></span>
-          </div>
-          <div class="contactStrip__item">
-            <span class="contactStrip__k">Canale</span>
-            <span class="contactStrip__v">Modulo + email</span>
-          </div>
-          <div class="contactStrip__item">
-            <span class="contactStrip__k">Ambiti</span>
-            <span class="contactStrip__v">Ricerca · Teaching · Media</span>
-          </div>
+          <article class="contactCard card reveal" data-delay="160">
+            <div class="contactCard__icon">★</div>
+            <h3 class="h3">Diventa un Amico di Boyle</h3>
+            <p class="muted">
+              Candidati per entrare nella rete. Puoi allegare una foto profilo e il tuo curriculum. Dopo valutazione potrai essere inserito nella futura <strong>Rete di Boyle</strong>, dove verranno valorizzate le iniziative create in ambito iperbarico e subacqueo.
+            </p>
+            <button type="button" class="btn btn--ghost" data-open-dialog="boyleDialog">Candidati ora</button>
+          </article>
         </div>
       </div>
     </section>
@@ -674,15 +668,18 @@
     </div>
   </footer>
 
-  <!-- MODALE CONTATTI -->
+  <!-- MODALI CONTATTI -->
   <dialog class="dialog" id="contattiDialog" aria-label="Modulo contatti">
     <div class="dialog__inner">
       <div class="dialog__head">
-        <h3 class="h3" style="margin:0;">Contattaci</h3>
+        <h3 class="h3" style="margin:0;">Modulo contatti</h3>
         <button type="button" class="btn btn--ghost" data-close-dialog>Chiudi</button>
       </div>
 
-      <form class="form" action="#" method="post" onsubmit="return false">
+      <form id="contactFormGeneral" class="form modalForm" action="https://formspree.io/f/xzdareqw" method="POST" accept-charset="UTF-8">
+        <input type="text" name="_gotcha" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
+        <input type="hidden" name="_subject" value="Nuovo contatto generale dal sito Amici di Boyle" />
+
         <div class="grid grid--2">
           <label class="field">
             <span>Nome</span>
@@ -696,21 +693,131 @@
         </div>
 
         <label class="field">
+          <span>Oggetto</span>
+          <input name="subject" type="text" placeholder="Es. collaborazione, richiesta informazioni" required />
+        </label>
+
+        <label class="field">
           <span>Messaggio</span>
           <textarea name="message" rows="5" placeholder="Due righe, chiare. Contesto e richiesta." required></textarea>
         </label>
 
         <div class="dialog__actions">
-          <button type="submit" class="btn btn--primary">Invia (da configurare)</button>
+          <button id="submitGeneral" type="submit" class="btn btn--primary">Invia messaggio</button>
           <button type="button" class="btn btn--ghost" data-close-dialog>Annulla</button>
         </div>
 
-        <p class="fineprint">
-          Nota: per far inviare davvero l’email, imposta l’attributo <code>action</code> del form con il tuo endpoint (Formspree / Getform / Netlify Forms).
-        </p>
+        <p class="form__status" id="statusGeneral" aria-live="polite"></p>
+        <p class="fineprint">Invio tramite Formspree. In alternativa: <a href="mailto:info@amicidiboyle.it">info@amicidiboyle.it</a></p>
       </form>
     </div>
   </dialog>
+
+  <dialog class="dialog" id="incontroDialog" aria-label="Modulo incontro o docenza">
+    <div class="dialog__inner">
+      <div class="dialog__head">
+        <h3 class="h3" style="margin:0;">Modulo incontro / docenza</h3>
+        <button type="button" class="btn btn--ghost" data-close-dialog>Chiudi</button>
+      </div>
+
+      <form id="contactFormTeaching" class="form modalForm" action="https://formspree.io/f/xzdareqw" method="POST" accept-charset="UTF-8">
+        <input type="text" name="_gotcha" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
+        <input type="hidden" name="_subject" value="Richiesta incontro o docenza dal sito Amici di Boyle" />
+
+        <label class="field">
+          <span>Nome / Ente</span>
+          <input name="name" type="text" placeholder="Nome, ente o struttura" required />
+        </label>
+
+        <div class="grid grid--2">
+          <label class="field">
+            <span>Email</span>
+            <input name="email" type="email" autocomplete="email" placeholder="nome@dominio.it" required />
+          </label>
+
+          <label class="field">
+            <span>Tipo di richiesta</span>
+            <input name="subject" type="text" placeholder="Es. docenza universitaria, congresso, incontro" required />
+          </label>
+        </div>
+
+        <label class="field">
+          <span>Dettagli</span>
+          <textarea name="message" rows="5" placeholder="Data, contesto, obiettivo, eventuale scadenza." required></textarea>
+        </label>
+
+        <div class="dialog__actions">
+          <button id="submitTeaching" type="submit" class="btn btn--primary">Invia richiesta</button>
+          <button type="button" class="btn btn--ghost" data-close-dialog>Annulla</button>
+        </div>
+
+        <p class="form__status" id="statusTeaching" aria-live="polite"></p>
+        <p class="fineprint">Invio tramite Formspree. In alternativa: <a href="mailto:info@amicidiboyle.it">info@amicidiboyle.it</a></p>
+      </form>
+    </div>
+  </dialog>
+
+  <dialog class="dialog" id="boyleDialog" aria-label="Candidatura Amico di Boyle">
+    <div class="dialog__inner">
+      <div class="dialog__head">
+        <h3 class="h3" style="margin:0;">Diventa un Amico di Boyle</h3>
+        <button type="button" class="btn btn--ghost" data-close-dialog>Chiudi</button>
+      </div>
+
+      <form id="contactFormBoyle" class="form modalForm" action="https://formspree.io/f/xzdareqw" method="POST" enctype="multipart/form-data" accept-charset="UTF-8">
+        <input type="text" name="_gotcha" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
+        <input type="hidden" name="_subject" value="Candidatura Diventa un Amico di Boyle" />
+
+        <div class="grid grid--2">
+          <label class="field">
+            <span>Nome e Cognome</span>
+            <input name="name" type="text" placeholder="Nome e Cognome" required />
+          </label>
+
+          <label class="field">
+            <span>Email</span>
+            <input name="email" type="email" autocomplete="email" placeholder="nome@dominio.it" required />
+          </label>
+        </div>
+
+        <label class="field">
+          <span>Profilo professionale</span>
+          <input name="subject" type="text" placeholder="Es. anestesista, tecnico iperbarico, ricercatore, subacqueo professionale" required />
+        </label>
+
+        <label class="field">
+          <span>Presentazione</span>
+          <textarea name="message" rows="5" placeholder="Presentati brevemente e descrivi il tuo interesse per la rete di Boyle." required></textarea>
+        </label>
+
+        <div class="grid grid--2">
+          <label class="field">
+            <span>Foto profilo</span>
+            <input name="profile_photo" type="file" accept=".jpg,.jpeg,.png,.webp,image/*" />
+          </label>
+
+          <label class="field">
+            <span>Curriculum</span>
+            <input name="cv_file" type="file" accept=".pdf,.doc,.docx" />
+          </label>
+        </div>
+
+        <div class="callout">
+          <strong>Nota</strong>
+          <p class="muted">Se l’allegato non dovesse passare tramite il modulo, invia foto e CV direttamente a <a href="mailto:info@amicidiboyle.it">info@amicidiboyle.it</a> indicando lo stesso oggetto.</p>
+        </div>
+
+        <div class="dialog__actions">
+          <button id="submitBoyle" type="submit" class="btn btn--primary">Invia candidatura</button>
+          <button type="button" class="btn btn--ghost" data-close-dialog>Annulla</button>
+        </div>
+
+        <p class="form__status" id="statusBoyle" aria-live="polite"></p>
+        <p class="fineprint">Candidatura soggetta a valutazione. La sezione “Rete di Boyle” potrà valorizzare i nuovi ingressi e le iniziative sviluppate.</p>
+      </form>
+    </div>
+  </dialog>
+
 
   <script>
     (function(){
@@ -739,25 +846,46 @@
       const menu = document.getElementById('mobileMenu');
       if(menu){
         menu.querySelectorAll('a').forEach(a => {
-          a.addEventListener('click', () => {
-            menu.open = false;
-          });
+          a.addEventListener('click', () => { menu.open = false; });
         });
         window.addEventListener('hashchange', () => { menu.open = false; });
       }
 
-      const form = document.getElementById('contactForm');
-      const status = document.getElementById('contactStatus');
-      const submit = document.getElementById('contactSubmit');
+      document.querySelectorAll('[data-open-dialog]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const id = btn.getAttribute('data-open-dialog');
+          const dlg = document.getElementById(id);
+          if(dlg && typeof dlg.showModal === 'function') dlg.showModal();
+        });
+      });
 
-      if(form && status && submit){
+      document.querySelectorAll('[data-close-dialog]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const dlg = btn.closest('dialog');
+          if(dlg) dlg.close();
+        });
+      });
+
+      document.querySelectorAll('dialog').forEach(dlg => {
+        dlg.addEventListener('click', (e) => {
+          const box = dlg.querySelector('.dialog__inner');
+          if(box && !box.contains(e.target)) dlg.close();
+        });
+      });
+
+      async function wireForm(formId, statusId, submitId, successText){
+        const form = document.getElementById(formId);
+        const status = document.getElementById(statusId);
+        const submit = document.getElementById(submitId);
+        if(!form || !status || !submit) return;
+
         form.addEventListener('submit', async function(e){
           e.preventDefault();
           const originalText = submit.textContent;
           submit.disabled = true;
           submit.textContent = 'Invio in corso...';
           status.textContent = '';
-          status.className = 'formStatus';
+          status.className = 'form__status';
 
           try{
             const response = await fetch(form.action, {
@@ -768,21 +896,25 @@
 
             if(response.ok){
               form.reset();
-              status.textContent = 'Messaggio inviato correttamente.';
-              status.className = 'formStatus is-success';
+              status.textContent = successText;
+              status.classList.add('is-success');
             } else {
               status.textContent = 'Invio non riuscito. Controlla i campi oppure usa l’email diretta.';
-              status.className = 'formStatus is-error';
+              status.classList.add('is-error');
             }
           } catch(err){
             status.textContent = 'Errore di rete. Riprova tra poco oppure scrivi a info@amicidiboyle.it.';
-            status.className = 'formStatus is-error';
+            status.classList.add('is-error');
           } finally {
             submit.disabled = false;
             submit.textContent = originalText;
           }
         });
       }
+
+      wireForm('contactFormGeneral', 'statusGeneral', 'submitGeneral', 'Messaggio inviato correttamente.');
+      wireForm('contactFormTeaching', 'statusTeaching', 'submitTeaching', 'Richiesta inviata correttamente.');
+      wireForm('contactFormBoyle', 'statusBoyle', 'submitBoyle', 'Candidatura inviata correttamente.');
     })();
   </script>
 </body>
