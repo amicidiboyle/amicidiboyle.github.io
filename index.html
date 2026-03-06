@@ -47,13 +47,14 @@
           <span class="menu__label">Menu</span>
         </summary>
         <div class="menu__panel" role="menu">
-          <a role="menuitem" href="#vision">Visione</a>
+          <a role="menuitem" href="#vision">Vision</a>
+          <a role="menuitem" href="#chisiamo">Chi siamo</a>
           <a role="menuitem" href="#ricerca">Ricerca</a>
           <a role="menuitem" href="#formazione">Formazione</a>
           <a role="menuitem" href="#lezioni">Lezioni</a>
           <a role="menuitem" href="#articoli">Articoli</a>
           <a role="menuitem" href="#partner">Partner</a>
-          <a role="menuitem" href="#podcast">Podcast</a>
+          <a role="menuitem" href="podcast.html">Podcast</a>
           <a role="menuitem" class="btn btn--primary btn--block" href="#contatti">Contatti</a>
         </div>
       </details>
@@ -616,7 +617,7 @@
           </p>
         </div>
 
-        <div class="contactPanel card reveal">
+        <div class="contactPanel reveal">
           <div class="contactPanel__intro">
             <span class="pill">Contatto diretto</span>
             <h3 class="h3">Parliamone bene, non a caso</h3>
@@ -641,13 +642,7 @@
             </div>
           </div>
 
-          <form
-            id="contactForm"
-            class="contactForm"
-            action="https://formspree.io/f/xzdareqw"
-            method="POST"
-            accept-charset="UTF-8"
-          >
+          <form id="contactForm" class="contactForm" action="https://formspree.io/f/xzdareqw" method="POST" accept-charset="UTF-8">
             <input type="text" name="_gotcha" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
             <input type="hidden" name="_subject" value="Nuovo contatto dal sito Amici di Boyle" />
 
@@ -701,7 +696,6 @@
     </div>
   </footer>
   <script>
-    // Scroll reveal
     (function(){
       const els = Array.from(document.querySelectorAll('.reveal'));
       const prefersReduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -713,76 +707,66 @@
 
       if(prefersReduce){
         els.forEach(el => el.classList.add('is-visible'));
-        return;
+      } else {
+        const io = new IntersectionObserver((entries) => {
+          for (const e of entries){
+            if(e.isIntersecting){
+              e.target.classList.add('is-visible');
+              io.unobserve(e.target);
+            }
+          }
+        }, { threshold: 0.12, rootMargin: '0px 0px -10% 0px' });
+
+        els.forEach(el => io.observe(el));
       }
 
-      const io = new IntersectionObserver((entries) => {
-        for (const e of entries){
-          if(e.isIntersecting){
-            e.target.classList.add('is-visible');
-            io.unobserve(e.target);
-          }
-        }
-      }, { threshold: 0.12, rootMargin: '0px 0px -10% 0px' });
-
-      els.forEach(el => io.observe(el));
-    })();
-
-    // Mobile menu closes after clicking a section
-    (function(){
       const menu = document.getElementById('mobileMenu');
-      if(!menu) return;
-
-      menu.querySelectorAll('a').forEach(a => {
-        a.addEventListener('click', () => {
-          requestAnimationFrame(() => { menu.open = false; });
+      if(menu){
+        menu.querySelectorAll('a').forEach(a => {
+          a.addEventListener('click', () => {
+            setTimeout(() => { menu.open = false; }, 0);
+          });
         });
-      });
+        window.addEventListener('hashchange', () => { menu.open = false; });
+      }
 
-      window.addEventListener('hashchange', () => {
-        menu.open = false;
-      });
-    })();
-
-    // Contact form via AJAX + Formspree
-    (function(){
       const form = document.getElementById('contactForm');
       const status = document.getElementById('contactStatus');
       const submit = document.getElementById('contactSubmit');
-      if(!form || !status || !submit) return;
 
-      form.addEventListener('submit', async function(e){
-        e.preventDefault();
+      if(form && status && submit){
+        form.addEventListener('submit', async function(e){
+          e.preventDefault();
+          const originalText = submit.textContent;
+          submit.disabled = true;
+          submit.textContent = 'Invio in corso...';
+          status.textContent = '';
+          status.className = 'formStatus';
 
-        const originalText = submit.textContent;
-        submit.disabled = true;
-        submit.textContent = 'Invio in corso...';
-        status.textContent = '';
-        status.className = 'formStatus';
+          try{
+            const response = await fetch(form.action, {
+              method: 'POST',
+              body: new FormData(form),
+              headers: { 'Accept': 'application/json' }
+            });
 
-        try{
-          const response = await fetch(form.action, {
-            method: 'POST',
-            body: new FormData(form),
-            headers: { 'Accept': 'application/json' }
-          });
-
-          if(response.ok){
-            form.reset();
-            status.textContent = 'Messaggio inviato correttamente.';
-            status.className = 'formStatus is-success';
-          } else {
-            status.textContent = 'Invio non riuscito. Controlla i campi oppure usa l’email diretta.';
+            if(response.ok){
+              form.reset();
+              status.textContent = 'Messaggio inviato correttamente.';
+              status.className = 'formStatus is-success';
+            } else {
+              status.textContent = 'Invio non riuscito. Controlla i campi oppure usa l’email diretta.';
+              status.className = 'formStatus is-error';
+            }
+          } catch(err){
+            status.textContent = 'Errore di rete. Riprova tra poco oppure scrivi a info@amicidiboyle.it.';
             status.className = 'formStatus is-error';
+          } finally {
+            submit.disabled = false;
+            submit.textContent = originalText;
           }
-        } catch(err){
-          status.textContent = 'Errore di rete. Riprova tra poco oppure scrivi a info@amicidiboyle.it.';
-          status.className = 'formStatus is-error';
-        } finally {
-          submit.disabled = false;
-          submit.textContent = originalText;
-        }
-      });
+        });
+      }
     })();
   </script>
 </body>
