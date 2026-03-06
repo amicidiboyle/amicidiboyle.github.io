@@ -29,11 +29,13 @@
       </a>
 
       <nav class="nav nav--desktop" aria-label="Navigazione principale">
+        <a href="#top">Home</a>
         <a href="#vision">Visione</a>
         <a href="#chisiamo">Fondatori</a>
         <a href="#ricerca">Ricerca</a>
         <a href="#formazione">Formazione</a>
         <a href="podcast.html">Podcast</a>
+        <a href="#partner">Partner</a>
         <a class="btn btn--primary" href="#contatti">Contatti</a>
       </nav>
 
@@ -44,6 +46,7 @@
           <span class="menu__label">Menu</span>
         </summary>
         <div class="menu__panel" role="menu">
+          <a role="menuitem" href="#top">Home</a>
           <a role="menuitem" href="#vision">Visione</a>
           <a role="menuitem" href="#ricerca">Ricerca</a>
           <a role="menuitem" href="#formazione">Formazione</a>
@@ -52,6 +55,7 @@
           <a role="menuitem" href="#rete-boyle">Rete di Boyle</a>
           <a role="menuitem" href="#prossimo-evento">Prossimo evento</a>
           <a role="menuitem" href="podcast.html">Podcast</a>
+          <a role="menuitem" href="#partner">Partner</a>
           <a role="menuitem" class="btn btn--primary btn--block" href="#contatti">Contatti</a>
         </div>
       </details>
@@ -93,9 +97,8 @@
           </h1>
 
           <p class="lead">
-            Un gruppo di professionisti di prima linea che integra competenze cliniche, tecnologiche e scientifiche
-            per migliorare la sicurezza in immersione, la conoscenza fisiologica e le applicazioni della medicina iperbarica
-            negli ambienti estremi reali, non solo sulla carta.
+            Un gruppo multidisciplinare che integra competenze cliniche, tecnologiche e scientifiche per migliorare
+            la sicurezza in immersione, la conoscenza fisiologica e le applicazioni della medicina iperbarica.
           </p>
 
           <div class="cta">
@@ -119,35 +122,40 @@
           </div>
         </div>
 
-        <aside class="hero__panel reveal hero__panel--visual" aria-label="Podcast">
-          <div class="panel surfacePanel podcastHeroPanel">
+        <aside class="hero__panel reveal hero__panel--visual" aria-label="Superficie">
+          <div class="panel surfacePanel">
             <div class="panel__head">
               <span class="pill">Podcast</span>
-              <span class="muted">Divulgazione da prima linea</span>
+              <span class="muted">Sotto Pressione</span>
             </div>
-            <h2 class="panel__title">Sotto Pressione</h2>
+            <h2 class="panel__title">Pressione, immersione, fisiologia estrema e spazio</h2>
             <p class="panel__text">
-              Il podcast di Luigi Tarsia è uno dei pezzi forti del progetto: medicina subacquea, iperbarica,
-              ambienti estremi, pressione, fisiologia e sicurezza raccontati con linguaggio chiaro ma rigoroso.
+              Il podcast di Luigi Tarsia racconta medicina subacquea e iperbarica, safety, spazio e fisiologia estrema con un linguaggio chiaro ma rigoroso.
             </p>
             <div class="surfacePanel__stats">
               <div class="mini">
                 <span class="mini__k">Formato</span>
-                <span class="mini__v">Episodi per stagioni</span>
+                <span class="mini__v">Episodi e stagioni</span>
               </div>
               <div class="mini">
-                <span class="mini__k">Accesso</span>
+                <span class="mini__k">Ascolto</span>
                 <span class="mini__v">Pagina dedicata + Spotify</span>
               </div>
             </div>
-            <div class="panel__cta">
-              <a class="btn btn--primary btn--block" href="podcast.html">Apri il podcast</a>
-              <a class="btn btn--ghost btn--block" href="#formazione">Vedi anche la formazione</a>
-            </div>
-            <div class="heroVisual podcastHeroVisual" aria-hidden="true">
+            <div class="heroVisual" aria-hidden="true">
               <div class="heroVisual__glow"></div>
               <div class="heroVisual__grid"></div>
-              <div class="podcastHeroVisual__badge">SOTTO<br>PRESSIONE</div>
+              <svg viewBox="0 0 820 260" width="100%" height="100%" preserveAspectRatio="none">
+                <defs>
+                  <linearGradient id="g1" x1="0" x2="1">
+                    <stop offset="0" stop-color="rgba(8,58,107,.22)"/>
+                    <stop offset="1" stop-color="rgba(2,6,23,.06)"/>
+                  </linearGradient>
+                </defs>
+                <path d="M0,170 C140,150 220,210 360,190 C520,165 600,120 820,150 L820,260 L0,260 Z" fill="url(#g1)"/>
+                <path d="M0,190 C160,170 260,230 410,210 C560,185 650,145 820,170" fill="none" stroke="rgba(14,165,233,.30)" stroke-width="2"/>
+                <path d="M0,120 C150,90 260,160 420,135 C560,112 680,60 820,95" fill="none" stroke="rgba(124,243,255,.20)" stroke-width="2"/>
+              </svg>
             </div>
           </div>
         </aside>
@@ -181,31 +189,27 @@
             </div>
           </article>
 
-          <article class="featurePodcast featureVision card reveal" data-delay="80">
+          <article class="featurePodcast card reveal" data-delay="80">
             <div class="featurePodcast__head">
               <span class="pill">Visione</span>
-              <span class="muted">Persone che hanno voglia di fare</span>
+              <span class="muted">Rete, campo, iniziativa</span>
             </div>
             <h3 class="featurePodcast__title">Una rete operativa, non solo teorica</h3>
             <p class="muted">
-              Vogliamo mettere in rete professionisti che nei campi della medicina degli ambienti estremi
-              hanno voglia di proporre, costruire, collaborare e far crescere progetti utili.
+              Vogliamo collegare professionisti che negli ambienti estremi hanno voglia di proporre,
+              costruire, collaborare e far crescere progetti utili.
             </p>
             <ul class="bullets bullets--tight">
               <li>Professionisti di prima linea, non solo da laboratorio</li>
-              <li>Competenze che nascono dal lavoro sul campo</li>
+              <li>Competenze nate dal lavoro sul campo</li>
               <li>Spazio aperto a iniziativa, proposte e rete vera</li>
             </ul>
-            <p class="muted featureVision__closing">
-              L'obiettivo non è collezionare nomi, ma collegare persone serie che condividono esperienza,
-              responsabilità e voglia di muovere qualcosa negli ambienti estremi.
-            </p>
           </article>
         </div>
       </div>
     </section>
 
-<section class="section depth depth--shallow" id="vision">
+<section class="section depth depth--shallow visionSection" id="vision">
       <div class="container">
         <div class="section__head reveal">
           <h2 class="h2">Visione</h2>
@@ -228,15 +232,15 @@
             <h3 class="h3">Multidisciplinare</h3>
             <p class="muted">
               Clinica, ingegneria, fisiologia, tecnologia, formazione e safety parlano lo stesso linguaggio:
-              quello dell'applicazione concreta negli ambienti estremi.
+              quello dell'applicazione concreta negli ambienti complessi.
             </p>
           </article>
 
           <article class="card reveal" data-delay="160">
-            <h3 class="h3">In rete</h3>
+            <h3 class="h3">Aperta a chi fa</h3>
             <p class="muted">
-              Vogliamo mettere in connessione persone che hanno voglia di fare, proporre, collaborare e costruire
-              progetti seri nella medicina iperbarica, subacquea, di montagna, spaziale e in altri contesti complessi.
+              Non vogliamo collezionare nomi ma connettere persone serie, competenti e propositive,
+              capaci di portare idee, progetti e collaborazioni utili.
             </p>
           </article>
         </div>
@@ -253,44 +257,44 @@
         </div>
 
         <div class="activityGrid">
-          <article class="activityCard card reveal">
+          <article class="activityCard activityCard--research card reveal">
             <div class="activityCard__icon">◉</div>
             <div class="activityCard__eyebrow">Ricerca</div>
             <h3 class="h3">Research</h3>
             <p class="muted">
               Studi clinici, collaborazioni scientifiche, progetti di ricerca e protocolli applicati alla medicina iperbarica e subacquea.
             </p>
-            <a class="btn btn--ghost" href="#ricerca">Esplora la ricerca</a>
+            <a class="btn btn--activity" href="#ricerca">Esplora la ricerca</a>
           </article>
 
-          <article class="activityCard card reveal" data-delay="80">
+          <article class="activityCard activityCard--teaching card reveal" data-delay="80">
             <div class="activityCard__icon">◎</div>
             <div class="activityCard__eyebrow">Formazione</div>
             <h3 class="h3">Teaching</h3>
             <p class="muted">
               Docenze universitarie, corsi, congressi, materiali didattici e attività costruite per chi lavora sul campo.
             </p>
-            <a class="btn btn--ghost" href="#formazione">Vai alla formazione</a>
+            <a class="btn btn--activity" href="#formazione">Vai alla formazione</a>
           </article>
 
-          <article class="activityCard card reveal" data-delay="160">
+          <article class="activityCard activityCard--publications card reveal" data-delay="160">
             <div class="activityCard__icon">◌</div>
             <div class="activityCard__eyebrow">Editoriale</div>
             <h3 class="h3">Publications</h3>
             <p class="muted">
               Articoli, case report, contributi editoriali e materiali scientifici utili a clinici, operatori e ricercatori.
             </p>
-            <a class="btn btn--ghost" href="#articoli">Leggi le pubblicazioni</a>
+            <a class="btn btn--activity" href="#articoli">Leggi le pubblicazioni</a>
           </article>
 
-          <article class="activityCard card reveal" data-delay="240">
+          <article class="activityCard activityCard--media card reveal" data-delay="240">
             <div class="activityCard__icon">◍</div>
             <div class="activityCard__eyebrow">Divulgazione</div>
             <h3 class="h3">Media</h3>
             <p class="muted">
               Podcast, interviste e contenuti divulgativi che raccontano la medicina degli ambienti estremi in modo accessibile.
             </p>
-            <a class="btn btn--ghost" href="podcast.html">Apri area media</a>
+            <a class="btn btn--activity" href="podcast.html">Apri area media</a>
           </article>
         </div>
       </div>
@@ -301,15 +305,13 @@
         <div class="section__head reveal">
           <h2 class="h2">I Fondatori</h2>
           <p class="muted">
-            Il nucleo originario degli Amici di Boyle. Qui restano i profili sintetici con foto e breve curriculum,
-            perché sono già una delle parti più riconoscibili del sito e meritano di restare in primo piano.
+            Il nucleo originario degli Amici di Boyle: professionisti con esperienza clinica, operativa e formativa negli ambienti estremi.
           </p>
         </div>
 
         <div class="prose reveal" data-delay="80">
           <p class="muted">
-            Studiamo gli effetti della pressione sul corpo umano e sviluppiamo strumenti che migliorino la sicurezza delle attività subacquee,
-            la qualità della formazione e la diffusione di una cultura rigorosa della medicina in ambienti estremi.
+            Lavoriamo tra terapia intensiva, emergenza, immersione, formazione e ricerca applicata, con l’obiettivo di rendere più sicure e più solide le pratiche negli ambienti estremi.
           </p>
         </div>
 
@@ -390,24 +392,22 @@
         <div class="section__head reveal">
           <h2 class="h2">La Rete di Boyle</h2>
           <p class="muted">
-            Uno spazio aperto a chi ha passione, iniziativa e contenuti seri da portare nel mondo degli ambienti estremi.
-            Non solo medicina iperbarica e subacquea, ma anche montagna, spazio, ingegneria e altri contesti ad alta complessità.
+            Una rete aperta a professionisti che negli ambienti estremi portano competenze reali, iniziativa e voglia di costruire progetti utili.
           </p>
         </div>
 
         <div class="networkIntro card reveal">
           <div class="networkIntro__icon">◎</div>
-          <h3 class="h3">Una rete in costruzione, con identità chiara</h3>
+          <h3 class="h3">Una rete selettiva, aperta a chi fa</h3>
           <p class="muted">
-            Al momento la rete è in fase di costruzione. Le candidature sono aperte tramite il modulo
-            <strong>“Diventa un Amico di Boyle”</strong>, che ora include anche un menu per indicare la principale area di interesse.
+            Le candidature sono aperte tramite il modulo <strong>“Diventa un Amico di Boyle”</strong>, con indicazione dell’area principale di interesse e valutazione editoriale dei profili.
           </p>
 
           <div class="networkIntro__grid">
             <div class="networkIntro__item">
               <span class="networkIntro__k">Chi può candidarsi</span>
               <span class="networkIntro__v">
-                Medici, tecnici, ricercatori, ingegneri, formatori e professionisti con reale interesse per gli ambienti estremi.
+                Medici, tecnici, ricercatori, ingegneri, formatori e professionisti che lavorano o progettano nei contesti estremi.
               </span>
             </div>
 
@@ -422,7 +422,7 @@
             <div class="networkIntro__item">
               <span class="networkIntro__k">Cosa potrà fare</span>
               <span class="networkIntro__v">
-                Entrare nella rete, proporre attività, essere coinvolto in progetti e valorizzare iniziative pertinenti sul sito.
+                Entrare nella rete, proporre attività, sviluppare collaborazioni e dare visibilità a iniziative coerenti con la missione.
               </span>
             </div>
           </div>
@@ -436,7 +436,7 @@
         <div class="networkPlaceholder reveal" data-delay="100">
           <div class="networkPlaceholder__line"></div>
           <p class="muted">
-            I primi profili della rete compariranno qui dopo valutazione editoriale, mantenendo coerenza, tono professionale e utilità reale.
+            I profili della rete saranno pubblicati dopo valutazione, mantenendo coerenza scientifica, chiarezza editoriale e utilità concreta.
           </p>
         </div>
       </div>
@@ -448,7 +448,7 @@
         <div class="section__head reveal">
           <h2 class="h2">Prossimo evento</h2>
           <p class="muted">
-            Uno spazio pensato per dare visibilità, uno alla volta, alle attività in evidenza. Quando l’evento sarà concluso, potrà passare nel portfolio.
+            Un solo evento alla volta, messo in evidenza con chiarezza. Dopo l’attività, i materiali potranno confluire nel portfolio.
           </p>
         </div>
 
@@ -783,7 +783,6 @@
           <h2 class="h2">Contatti</h2>
           <p class="muted">
             Collaborazioni, docenze, corsi, case report, proposte editoriali e candidature per la Rete di Boyle.
-            Gli ingressi restano distinti, ordinati e già funzionanti con Formspree.
           </p>
         </div>
 
@@ -818,7 +817,7 @@
             <div class="contactCard__icon">★</div>
             <h3 class="h3">Diventa un Amico di Boyle</h3>
             <p class="muted">
-              Candidati per entrare nella rete. Puoi allegare una foto profilo, il tuo curriculum e indicare la principale area di interesse negli ambienti estremi. Dopo valutazione potrai essere inserito nella futura <strong>Rete di Boyle</strong>.
+              Candidati per entrare nella rete. Puoi allegare foto profilo, curriculum e indicare la tua area principale di interesse negli ambienti estremi.
             </p>
             <button type="button" class="btn btn--ghost" data-open-dialog="boyleDialog">Candidati ora</button>
           </article>
@@ -999,7 +998,7 @@
         </div>
 
         <p class="form__status" id="statusBoyle" aria-live="polite"></p>
-        <p class="fineprint">Candidatura soggetta a valutazione. La sezione “Rete di Boyle” potrà valorizzare i nuovi ingressi e le iniziative sviluppate.</p>
+        <p class="fineprint">Candidatura soggetta a valutazione editoriale.</p>
       </form>
     </div>
   </dialog>
