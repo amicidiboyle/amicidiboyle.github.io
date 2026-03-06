@@ -764,3 +764,25 @@ hr{
   background: linear-gradient(90deg, transparent, rgba(238,246,255,.12), transparent);
   margin: 16px 0;
 }
+
+
+/* ===== Articoli additions (logo papers) ===== */
+.posterFigure--logo{
+  background: linear-gradient(180deg, rgba(255,255,255,.92), rgba(245,248,252,.98));
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  min-height:320px;
+}
+
+.posterImg--contain{
+  object-fit:contain;
+  padding:24px;
+  background:transparent;
+}
+
+.articleText{
+  margin:10px 0 0;
+  line-height:1.55;
+  color:rgba(238,246,255,.78);
+}
