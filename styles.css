@@ -766,23 +766,139 @@ hr{
 }
 
 
-/* ===== Articoli additions (logo papers) ===== */
+/* ===== Practical updates: Lezioni / Articoli / Partner / Contatti ===== */
+.section--soft{
+  border-top: 1px solid rgba(238,246,255,.08);
+  border-bottom: 1px solid rgba(238,246,255,.08);
+}
+
 .posterFigure--logo{
-  background: linear-gradient(180deg, rgba(255,255,255,.92), rgba(245,248,252,.98));
   display:flex;
   align-items:center;
   justify-content:center;
   min-height:320px;
+  background:
+    radial-gradient(800px 240px at 50% 18%, rgba(124,243,255,.10), transparent 56%),
+    linear-gradient(180deg, rgba(8,58,107,.92), rgba(2,13,26,.96));
 }
 
 .posterImg--contain{
   object-fit:contain;
-  padding:24px;
+  width:min(88%, 420px);
+  max-height:280px;
+  aspect-ratio:auto;
+  padding:0;
   background:transparent;
+  filter: drop-shadow(0 18px 42px rgba(0,0,0,.24));
 }
 
 .articleText{
   margin:10px 0 0;
-  line-height:1.55;
+  line-height:1.58;
   color:rgba(238,246,255,.78);
+}
+
+.contactCards{
+  display:grid;
+  grid-template-columns:repeat(2, minmax(0,1fr));
+  gap:18px;
+}
+@media (max-width: 900px){
+  .contactCards{ grid-template-columns:1fr; }
+}
+
+.contactCard{
+  position:relative;
+  overflow:hidden;
+}
+.contactCard__icon{
+  width:44px;
+  height:44px;
+  display:grid;
+  place-items:center;
+  border-radius:14px;
+  border:1px solid rgba(124,243,255,.18);
+  background:rgba(124,243,255,.08);
+  font-weight:900;
+  font-size:20px;
+  margin-bottom:10px;
+}
+
+.contactList{
+  margin:12px 0 16px;
+  padding-left:18px;
+  color:rgba(238,246,255,.78);
+  line-height:1.6;
+}
+.contactList li{ margin:6px 0; }
+
+.contactStrip{
+  margin-top:18px;
+  display:grid;
+  grid-template-columns:repeat(3, minmax(0,1fr));
+  gap:12px;
+}
+@media (max-width: 900px){
+  .contactStrip{ grid-template-columns:1fr; }
+}
+.contactStrip__item{
+  border-radius:18px;
+  border:1px solid rgba(238,246,255,.12);
+  background:rgba(238,246,255,.03);
+  padding:12px;
+}
+.contactStrip__k{
+  display:block;
+  font-family:var(--mono);
+  letter-spacing:.10em;
+  text-transform:uppercase;
+  font-size:11px;
+  color:rgba(238,246,255,.66);
+}
+.contactStrip__v{
+  display:block;
+  margin-top:6px;
+  font-weight:900;
+}
+
+/* More professional forms */
+.dialog__inner{
+  background:
+    radial-gradient(700px 240px at 12% 0%, rgba(124,243,255,.08), transparent 55%),
+    linear-gradient(180deg, rgba(255,255,255,.98), rgba(248,250,252,.98));
+}
+.form--pro{
+  margin-top:12px;
+}
+.form__row{
+  display:grid;
+  gap:6px;
+}
+.form__label{
+  font-weight:900;
+  font-size:13px;
+  color:var(--ink);
+}
+.form__input{
+  border-radius:16px;
+  padding:12px 14px;
+}
+.form__actions{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-top:6px;
+}
+.form__status{
+  margin:8px 0 0;
+  font-size:13px;
+  font-weight:800;
+}
+.form__status.is-success{ color:#0f766e; }
+.form__status.is-error{ color:#b91c1c; }
+.hp{
+  position:absolute !important;
+  left:-9999px !important;
+  opacity:0 !important;
+  pointer-events:none !important;
 }
