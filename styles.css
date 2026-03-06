@@ -902,3 +902,148 @@ hr{
   opacity:0 !important;
   pointer-events:none !important;
 }
+
+
+/* ===== Contact form redesign (inline, functional, mobile-friendly) ===== */
+.contactPanel{
+  display:grid;
+  grid-template-columns: 0.92fr 1.08fr;
+  gap: 22px;
+  padding: 20px;
+  border-radius: 28px;
+  border: 1px solid rgba(238,246,255,.12);
+  background:
+    radial-gradient(900px 320px at 12% 0%, rgba(124,243,255,.10), transparent 55%),
+    linear-gradient(180deg, rgba(8,58,107,.82), rgba(2,13,26,.94));
+  box-shadow: 0 28px 80px rgba(0,0,0,.28);
+}
+@media (max-width: 900px){
+  .contactPanel{ grid-template-columns: 1fr; }
+}
+
+.contactPanel__intro{
+  display:grid;
+  align-content:start;
+  gap: 12px;
+}
+
+.contactMini{
+  display:grid;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+.contactMini__item{
+  border-radius: 18px;
+  border: 1px solid rgba(238,246,255,.10);
+  background: rgba(238,246,255,.04);
+  padding: 12px;
+}
+
+.contactMini__k{
+  display:block;
+  font-family: var(--mono);
+  letter-spacing: .10em;
+  text-transform: uppercase;
+  font-size: 11px;
+  color: rgba(238,246,255,.66);
+}
+
+.contactMini__v{
+  display:block;
+  margin-top: 6px;
+  font-weight: 850;
+  color: rgba(238,246,255,.94);
+}
+
+.contactForm{
+  display:grid;
+  gap: 14px;
+}
+
+.formRow{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+@media (max-width: 700px){
+  .formRow{ grid-template-columns: 1fr; }
+}
+
+.formField{
+  display:grid;
+  gap: 8px;
+}
+
+.formLabel{
+  font-weight: 900;
+  font-size: 13px;
+  color: rgba(238,246,255,.94);
+  letter-spacing: -.01em;
+}
+
+.formInput{
+  width: 100%;
+  border-radius: 18px;
+  border: 1px solid rgba(238,246,255,.14);
+  background: rgba(3,10,22,.58);
+  color: rgba(238,246,255,.96);
+  padding: 14px 16px;
+  outline: none;
+  transition: border-color .18s ease, box-shadow .18s ease, background .18s ease;
+}
+.formInput::placeholder{
+  color: rgba(238,246,255,.46);
+}
+.formInput:focus{
+  border-color: rgba(124,243,255,.30);
+  box-shadow: 0 0 0 6px rgba(124,243,255,.10);
+  background: rgba(3,10,22,.72);
+}
+.formTextarea{
+  resize: vertical;
+  min-height: 150px;
+}
+
+.formActions{
+  display:flex;
+  align-items:center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.formStatus{
+  font-size: 14px;
+  font-weight: 800;
+  color: rgba(238,246,255,.76);
+  min-height: 20px;
+}
+.formStatus.is-success{ color: #7cf3ff; }
+.formStatus.is-error{ color: #ffb4b4; }
+
+/* UHM logo card: cleaner, fills box without ugly white surround */
+.posterFigure--logo{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  min-height:320px;
+  background:
+    radial-gradient(800px 240px at 50% 18%, rgba(124,243,255,.10), transparent 56%),
+    linear-gradient(180deg, rgba(8,58,107,.92), rgba(2,13,26,.96));
+}
+.posterImg--contain{
+  object-fit:contain;
+  width:min(92%, 460px);
+  max-height:300px;
+  aspect-ratio:auto;
+  padding:0;
+  background:transparent;
+  filter: drop-shadow(0 18px 42px rgba(0,0,0,.24));
+}
+
+.hp{
+  position:absolute !important;
+  left:-9999px !important;
+  opacity:0 !important;
+  pointer-events:none !important;
+}
