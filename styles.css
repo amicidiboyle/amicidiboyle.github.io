@@ -861,49 +861,6 @@ hr{
   font-weight:900;
 }
 
-/* More professional forms */
-.dialog__inner{
-  background:
-    radial-gradient(700px 240px at 12% 0%, rgba(124,243,255,.08), transparent 55%),
-    linear-gradient(180deg, rgba(255,255,255,.98), rgba(248,250,252,.98));
-}
-.form--pro{
-  margin-top:12px;
-}
-.form__row{
-  display:grid;
-  gap:6px;
-}
-.form__label{
-  font-weight:900;
-  font-size:13px;
-  color:var(--ink);
-}
-.form__input{
-  border-radius:16px;
-  padding:12px 14px;
-}
-.form__actions{
-  display:flex;
-  gap:10px;
-  flex-wrap:wrap;
-  margin-top:6px;
-}
-.form__status{
-  margin:8px 0 0;
-  font-size:13px;
-  font-weight:800;
-}
-.form__status.is-success{ color:#0f766e; }
-.form__status.is-error{ color:#b91c1c; }
-.hp{
-  position:absolute !important;
-  left:-9999px !important;
-  opacity:0 !important;
-  pointer-events:none !important;
-}
-
-
 /* ===== Practical fixes round 3 ===== */
 #contatti,
 #partner,
@@ -938,3 +895,58 @@ hr{
   object-fit:contain;
   filter: drop-shadow(0 10px 22px rgba(0,0,0,.22));
 }
+
+
+/* ===== Contatti update: 3 ingressi + modali funzionanti ===== */
+.contactCards--3{
+  grid-template-columns: repeat(3, minmax(0,1fr));
+}
+@media (max-width: 1100px){
+  .contactCards--3{ grid-template-columns: 1fr; }
+}
+
+.dialog{
+  border: 1px solid rgba(238,246,255,.14);
+  border-radius: 22px;
+  padding: 0;
+  background: rgba(3,10,22,.92);
+  color: rgba(238,246,255,.96);
+  max-width: min(860px, 92vw);
+}
+.dialog::backdrop{
+  background: rgba(0,0,0,.55);
+  backdrop-filter: blur(2px);
+}
+.dialog__inner{
+  padding: 16px;
+  background:
+    radial-gradient(700px 240px at 12% 0%, rgba(124,243,255,.08), transparent 55%),
+    linear-gradient(180deg, rgba(8,58,107,.92), rgba(2,13,26,.96));
+}
+.dialog__head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(238,246,255,.10);
+}
+.dialog__actions{
+  display:flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+.modalForm{
+  margin-top:12px;
+}
+.form__status{
+  margin:8px 0 0;
+  font-size:13px;
+  font-weight:800;
+  min-height:20px;
+}
+.form__status.is-success{ color:#7cf3ff; }
+.form__status.is-error{ color:#ffb4b4; }
+
+.contactStrip{ display:none; }
