@@ -1630,3 +1630,50 @@ main::before{ content:none !important; }
   object-fit:contain;
   filter:drop-shadow(0 10px 22px rgba(0,0,0,.22));
 }
+/* HERO spacing fix */
+
+.hero {
+  min-height: 90vh;
+  padding-top: 140px;
+  padding-bottom: 120px;
+  display: flex;
+  align-items: center;
+}
+
+/* spazio sotto header */
+
+header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+/* evita che hero finisca sotto l'header */
+
+main {
+  margin-top: 110px;
+}
+
+/* ticker separato */
+
+.heroTicker {
+  margin-top: 40px;
+  opacity: 0.9;
+}
+
+/* mobile */
+
+@media (max-width: 768px) {
+
+  .hero {
+    min-height: 80vh;
+    padding-top: 120px;
+    padding-bottom: 80px;
+  }
+
+  main {
+    margin-top: 90px;
+  }
+
+}
