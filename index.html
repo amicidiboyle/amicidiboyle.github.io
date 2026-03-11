@@ -23,7 +23,8 @@
           <span class="brand__sub" aria-label="Payoff">
             <span class="brand__line">Diving &amp; Hyperbaric Medicine</span>
             <span class="brand__line">Research &amp; Education</span>
-            <span class="brand__line">Human Performance &amp; Safety in Extreme Environments</span>
+            <span class="brand__line">Human Performance &amp;</span>
+            <span class="brand__line">Safety in Extreme Environments</span>
           </span>
         </span>
       </a>
@@ -419,7 +420,7 @@
 
         <div class="networkIntro__actions">
           <button type="button" class="btn btn--primary" data-open-dialog="boyleDialog">Diventa un Amico di Boyle</button>
-          <a class="btn btn--ghost" href="#contatti">Contatti</a>
+          <a class="btn btn--electric" href="rete.html">Entra nella rete</a>
         </div>
       </div>
     </div>
@@ -1088,18 +1089,5 @@
       wireForm('contactFormBoyle', 'statusBoyle', 'submitBoyle', 'Candidatura inviata correttamente.');
     })();
   </script>
-
-<script>
-const observer=new IntersectionObserver((entries)=>{
-entries.forEach(e=>{
-if(e.isIntersecting){e.target.classList.add('visible');}
-});
-},{threshold:0.2});
-
-document.querySelectorAll('section').forEach(el=>{
-el.classList.add('reveal-left');
-observer.observe(el);
-});
-</script>
 </body>
 </html>
