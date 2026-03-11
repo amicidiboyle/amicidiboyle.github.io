@@ -23,8 +23,7 @@
           <span class="brand__sub" aria-label="Payoff">
             <span class="brand__line">Diving &amp; Hyperbaric Medicine</span>
             <span class="brand__line">Research &amp; Education</span>
-            <span class="brand__line">Human Performance &amp;</span>
-            <span class="brand__line">Safety in Extreme Environments</span>
+            <span class="brand__line">Human Performance &amp; Safety in Extreme Environments</span>
           </span>
         </span>
       </a>
@@ -32,18 +31,12 @@
       <nav class="nav nav--desktop" aria-label="Navigazione principale">
   <a href="#top">Home</a>
   <a href="#vision">Visione</a>
-  <div class="navDropdown">
-    <a href="#attivita" class="navDropdown__trigger">Attività <span aria-hidden="true">▾</span></a>
-    <div class="navDropdown__menu" role="menu" aria-label="Sottosezioni attività">
-      <a role="menuitem" href="#ricerca">Ricerca</a>
-      <a role="menuitem" href="#formazione">Formazione</a>
-      <a role="menuitem" href="#articoli">Pubblicazioni</a>
-      <a role="menuitem" href="podcast.html">Media</a>
-    </div>
-  </div>
+  <a href="#attivita">Attività</a>
   <a href="#chisiamo">Fondatori</a>
   <a href="#rete-boyle">Rete</a>
   <a href="#prossimo-evento">Evento</a>
+  <a href="#ricerca">Ricerca</a>
+  <a href="#formazione">Formazione</a>
   <a href="podcast.html">Podcast</a>
   <a href="#partner">Partner</a>
   <a class="btn btn--primary" href="#contatti">Contatti</a>
@@ -66,8 +59,6 @@
   <a role="menuitem" href="#chisiamo">Fondatori</a>
   <a role="menuitem" href="#rete-boyle">Rete di Boyle</a>
   <a role="menuitem" href="#prossimo-evento">Evento</a>
-  <a role="menuitem" href="#ricerca">Ricerca</a>
-  <a role="menuitem" href="#formazione">Formazione</a>
   <a role="menuitem" href="podcast.html">Podcast</a>
   <a role="menuitem" href="#partner">Partner</a>
   <a role="menuitem" class="btn btn--primary btn--block" href="#contatti">Contatti</a>
@@ -104,7 +95,8 @@
     <section class="hero hero--surface" id="top">
   <div class="container hero__grid hero__grid--balanced">
     <div class="hero__copy reveal">
-<h1 class="h1">
+      <p class="eyebrow">Ricerca · Formazione · Safety</p>
+      <h1 class="h1">
         Medicina degli ambienti estremi
         <span class="h1__sub">Ricerca e divulgazione in medicina subacquea, iperbarica e nei contesti ad alta complessità.</span>
       </h1>
@@ -170,7 +162,6 @@
     <div class="featureSplit">
       <article class="featureImpact card reveal">
         <div class="featureImpact__media" aria-hidden="true">
-          <img class="featureImpact__bg" src="assets/back_rete.png" alt="" loading="lazy" />
           <div class="featureImpact__shine"></div>
           <div class="featureImpact__depth"></div>
         </div>
@@ -394,14 +385,14 @@
 
     <div class="networkHero card reveal" data-delay="60">
       <div class="networkHero__media" aria-hidden="true">
-        <img src="assets/back_rete.png" alt="" loading="lazy" />
+        <img src="assets/network-map.webp" alt="" loading="lazy" />
       </div>
 
       <div class="networkHero__footer">
         <article class="networkHero__statement reveal" data-delay="100">
           <h3 class="h3">Una rete selettiva, aperta a chi fa</h3>
           <p class="muted">
-            Accedi alla pagina dedicata alla Rete Boyle, indica l’area principale di interesse e proponi idee, collaborazioni e iniziative coerenti con il progetto.
+            Entra nella Rete Boyle, indica l’area principale di interesse e aiutaci a costruire progetti utili e collaborazioni reali.
           </p>
         </article>
 
@@ -429,7 +420,7 @@
         </div>
 
         <div class="networkIntro__actions">
-          <a class="btn btn--electric" href="rete.html">Entra nella rete</a>
+          <a class="btn btn--primary btn--electric" href="rete.html">Entra nella rete</a>
         </div>
       </div>
     </div>
@@ -1098,18 +1089,5 @@
       wireForm('contactFormBoyle', 'statusBoyle', 'submitBoyle', 'Candidatura inviata correttamente.');
     })();
   </script>
-
-<script>
-const observer=new IntersectionObserver((entries)=>{
-entries.forEach(e=>{
-if(e.isIntersecting){e.target.classList.add('visible');}
-});
-},{threshold:0.2});
-
-document.querySelectorAll('section').forEach(el=>{
-el.classList.add('reveal-left');
-observer.observe(el);
-});
-</script>
 </body>
 </html>
