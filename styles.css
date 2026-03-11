@@ -1878,3 +1878,22 @@ body::before{
     background-position:center top;
   }
 }
+
+/* podcast cover full */
+.podcast-card img{
+width:100%;
+height:auto;
+object-fit:contain;
+}
+
+/* scroll reveal */
+.reveal-left{
+opacity:0;
+transform:translateX(-60px);
+transition:all .7s ease;
+}
+
+.reveal-left.visible{
+opacity:1;
+transform:translateX(0);
+}
