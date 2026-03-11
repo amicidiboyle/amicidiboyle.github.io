@@ -6,8 +6,30 @@
   <title>Gli Amici di Boyle · Research & Education</title>
   <meta name="description" content="Gli Amici di Boyle: ricerca e formazione in medicina subacquea e iperbarica, medicina aerospaziale e performance umana in ambienti estremi." />
   <meta name="theme-color" content="#041b33" />
+  <link rel="canonical" href="https://www.amicidiboyle.it/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="it_IT" />
+  <meta property="og:site_name" content="Gli Amici di Boyle" />
+  <meta property="og:title" content="Gli Amici di Boyle · Ricerca e formazione negli ambienti estremi" />
+  <meta property="og:description" content="Ricerca e formazione in medicina subacquea e iperbarica, medicina aerospaziale e ambienti estremi." />
+  <meta property="og:url" content="https://www.amicidiboyle.it/" />
+  <meta property="og:image" content="https://www.amicidiboyle.it/assets/ocean-desktop.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Gli Amici di Boyle" />
+  <meta name="twitter:description" content="Ricerca e formazione in medicina subacquea e iperbarica, medicina aerospaziale e ambienti estremi." />
+  <meta name="twitter:image" content="https://www.amicidiboyle.it/assets/ocean-desktop.jpg" />
   <link rel="stylesheet" href="styles.css" />
   <link rel="icon" href="assets/logo.png" type="image/png" />
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"Organization",
+    "name":"Gli Amici di Boyle",
+    "url":"https://www.amicidiboyle.it/",
+    "logo":"https://www.amicidiboyle.it/assets/logo.png",
+    "description":"Progetto dedicato a ricerca e formazione in medicina subacquea e iperbarica, medicina aerospaziale e ambienti estremi."
+  }
+  </script>
 </head>
 
 <body>
@@ -17,7 +39,7 @@
   <header class="header" role="banner">
     <div class="container header__inner">
       <a class="brand" href="#top" aria-label="Home">
-        <img class="brand__logo" src="assets/logo.png" alt="Gli Amici di Boyle" />
+        <img class="brand__logo" src="assets/logo.png" alt="Gli Amici di Boyle" width="86" height="86" decoding="async" fetchpriority="high" />
         <span class="brand__text">
           <span class="brand__name">Gli Amici di Boyle</span>
           <span class="brand__sub" aria-label="Payoff">
@@ -31,13 +53,23 @@
       <nav class="nav nav--desktop" aria-label="Navigazione principale">
   <a href="#top">Home</a>
   <a href="#vision">Visione</a>
-  <a href="#attivita">Attività</a>
+
+  <div class="navDropdown">
+    <a class="navDropdown__trigger" href="#attivita" aria-haspopup="true">
+      <span>Attività</span>
+      <span class="navDropdown__chevron" aria-hidden="true">▾</span>
+    </a>
+    <div class="navDropdown__menu" role="menu" aria-label="Sottomenu Attività">
+      <a role="menuitem" href="#ricerca">Ricerca</a>
+      <a role="menuitem" href="#formazione">Formazione</a>
+      <a role="menuitem" href="#articoli">Pubblicazioni</a>
+      <a role="menuitem" href="podcast.html">Media</a>
+    </div>
+  </div>
+
   <a href="#chisiamo">Fondatori</a>
   <a href="#rete-boyle">Rete</a>
   <a href="#prossimo-evento">Evento</a>
-  <a href="#ricerca">Ricerca</a>
-  <a href="#formazione">Formazione</a>
-  <a href="podcast.html">Podcast</a>
   <a href="#partner">Partner</a>
   <a class="btn btn--primary" href="#contatti">Contatti</a>
 </nav>
@@ -55,11 +87,10 @@
   <a role="menuitem" href="#ricerca">Ricerca</a>
   <a role="menuitem" href="#formazione">Formazione</a>
   <a role="menuitem" href="#articoli">Pubblicazioni</a>
-  <a role="menuitem" href="podcast.html">Media</a>
+  <a role="menuitem" href="podcast.html">Media / Podcast</a>
   <a role="menuitem" href="#chisiamo">Fondatori</a>
   <a role="menuitem" href="#rete-boyle">Rete di Boyle</a>
-  <a role="menuitem" href="#prossimo-evento">Eventi</a>
-  <a role="menuitem" href="podcast.html">Podcast</a>
+  <a role="menuitem" href="#prossimo-evento">Evento</a>
   <a role="menuitem" href="#partner">Partner</a>
   <a role="menuitem" class="btn btn--primary btn--block" href="#contatti">Contatti</a>
 </div>
@@ -133,7 +164,7 @@
       </div>
 
       <div class="heroPodcast">
-        <img class="heroPodcast__cover" src="assets/sotto-pressione-cover.jpg" alt="Copertina podcast Sotto Pressione" loading="lazy" />
+        <img class="heroPodcast__cover" src="assets/sotto-pressione-cover.jpg" alt="Copertina podcast Sotto Pressione" loading="eager" decoding="async" fetchpriority="high" />
         <div class="heroPodcast__copy">
           <h2 class="panel__title">Sotto Pressione</h2>
           <p class="panel__text">
@@ -200,7 +231,7 @@
 <section class="section depth depth--shallow" id="vision">
       <div class="container">
         <div class="section__head reveal">
-          <h2 class="h2">Vision</h2>
+          <h2 class="h2">Visione</h2>
           <p class="muted">
             Essere un riferimento internazionale per innovazione e ricerca in medicina iperbarica e subacquea,
             con un approccio multidisciplinare che integra competenze mediche, tecnologiche e scientifiche di alto livello. Amici di Boyle vuol dire ambienti estremi e gestione dell'emergenza negli scenari più complessi.
@@ -244,7 +275,7 @@
 
     <div class="activityGrid">
       <article class="activityCard card reveal">
-        <img class="activityCard__iconImg" src="assets/ricerca.png" alt="Icona Ricerca" loading="lazy" />
+        <img class="activityCard__iconImg" src="assets/ricerca.png" alt="Icona Ricerca" loading="lazy" decoding="async" />
         <div class="activityCard__eyebrow">Macroarea 01</div>
         <h3 class="h3">Ricerca</h3>
         <p class="muted">
@@ -254,7 +285,7 @@
       </article>
 
       <article class="activityCard card reveal" data-delay="80">
-        <img class="activityCard__iconImg" src="assets/formazione.png" alt="Icona Formazione" loading="lazy" />
+        <img class="activityCard__iconImg" src="assets/formazione.png" alt="Icona Formazione" loading="lazy" decoding="async" />
         <div class="activityCard__eyebrow">Macroarea 02</div>
         <h3 class="h3">Formazione</h3>
         <p class="muted">
@@ -264,7 +295,7 @@
       </article>
 
       <article class="activityCard card reveal" data-delay="160">
-        <img class="activityCard__iconImg" src="assets/pubblicazioni.png" alt="Icona Pubblicazioni" loading="lazy" />
+        <img class="activityCard__iconImg" src="assets/pubblicazioni.png" alt="Icona Pubblicazioni" loading="lazy" decoding="async" />
         <div class="activityCard__eyebrow">Macroarea 03</div>
         <h3 class="h3">Pubblicazioni</h3>
         <p class="muted">
@@ -274,7 +305,7 @@
       </article>
 
       <article class="activityCard card reveal" data-delay="240">
-        <img class="activityCard__iconImg" src="assets/media.png" alt="Icona Media" loading="lazy" />
+        <img class="activityCard__iconImg" src="assets/media.png" alt="Icona Media" loading="lazy" decoding="async" />
         <div class="activityCard__eyebrow">Macroarea 04</div>
         <h3 class="h3">Media</h3>
         <p class="muted">
@@ -304,45 +335,45 @@
 
         <div class="team" aria-label="Team">
           <article class="person card reveal" data-delay="0">
-            <img class="avatarImg" src="images/silvio.zerbi.jpg" alt="Dott. Silvio Zerbi" loading="lazy" />
+            <img class="avatarImg" src="images/silvio.zerbi.jpg" alt="Dott. Silvio Zerbi" loading="lazy" decoding="async" />
             <div class="person__body">
-              <div class="role">Founder</div>
+              <div class="role">Fondatore</div>
               <h3 class="h3">Dott. Silvio Zerbi</h3>
               <p class="muted">Anestesista Rianimatore, Intensivista, Medico Subacqueo ed Iperbarico, Medico Aeronautico ed Aerospaziale</p>
             </div>
           </article>
 
           <article class="person card reveal" data-delay="80">
-            <img class="avatarImg" src="images/luigi.tarsia.jpg" alt="Ing. Luigi Tarsia" loading="lazy" />
+            <img class="avatarImg" src="images/luigi.tarsia.jpg" alt="Ing. Luigi Tarsia" loading="lazy" decoding="async" />
             <div class="person__body">
-              <div class="role">Engineering Director</div>
+              <div class="role">Direzione ingegneria</div>
               <h3 class="h3">Ing. Luigi Tarsia</h3>
               <p class="muted">Ingegnere Nucleare e Biomedico, Specialista in Medicina Subacquea e Iperbarica, Aeronautica ed Aerospaziale</p>
             </div>
           </article>
 
           <article class="person card reveal" data-delay="160">
-            <img class="avatarImg" src="images/dario.nicosia.jpg" alt="Dott. Dario Nicosia" loading="lazy" />
+            <img class="avatarImg" src="images/dario.nicosia.jpg" alt="Dott. Dario Nicosia" loading="lazy" decoding="async" />
             <div class="person__body">
-              <div class="role">Diving Supervisor</div>
+              <div class="role">Responsabile area diving</div>
               <h3 class="h3">Dott. Dario Nicosia</h3>
               <p class="muted">Anestesista Rianimatore, Intensivista, Medico Iperbarico e Subacqueo, Medico HEMS 118</p>
             </div>
           </article>
 
           <article class="person card reveal" data-delay="240">
-            <img class="avatarImg" src="images/vincenzo.benenati.jpg" alt="Dott. Vincenzo Benenati" loading="lazy" />
+            <img class="avatarImg" src="images/vincenzo.benenati.jpg" alt="Dott. Vincenzo Benenati" loading="lazy" decoding="async" />
             <div class="person__body">
-              <div class="role">Hyperbaric Supervisor</div>
+              <div class="role">Responsabile area iperbarica</div>
               <h3 class="h3">Dott. Vincenzo Benenati</h3>
               <p class="muted">Anestesista Rianimatore, Intensivista, Medico Iperbarico e Subacqueo</p>
             </div>
           </article>
 
           <article class="person card reveal" data-delay="320">
-            <img class="avatarImg" src="images/matteo.paganini.jpg" alt="Dott. Matteo Paganini" loading="lazy" />
+            <img class="avatarImg" src="images/matteo.paganini.jpg" alt="Dott. Matteo Paganini" loading="lazy" decoding="async" />
             <div class="person__body">
-              <div class="role">Head Researcher</div>
+              <div class="role">Responsabile ricerca</div>
               <h3 class="h3">Dott. Matteo Paganini</h3>
               <p class="muted">Ricercatore, Medico di Emergenza-Urgenza, PhD in Global Health, Humanitarian Aid and Disaster Medicine</p>
             </div>
@@ -385,7 +416,7 @@
 
     <div class="networkHero card reveal" data-delay="60">
       <div class="networkHero__media" aria-hidden="true">
-        <img src="assets/network-map.webp" alt="" loading="lazy" />
+        <img src="assets/network-map.webp" alt="" loading="lazy" decoding="async" />
       </div>
 
       <div class="networkHero__footer">
@@ -438,7 +469,7 @@
 
     <article class="eventShowcase card reveal">
       <div class="eventShowcase__copy">
-        <span class="pill pill--next">Next Event</span>
+        <span class="pill pill--next">Prossimo evento</span>
         <h3 class="eventShowcase__title">The Day After</h3>
         <p class="muted">
           Un corso del partner ITCC dedicato alla gestione del trauma maggiore oltre la fase acuta, in piena coerenza con una visione moderna della medicina degli ambienti estremi.
@@ -463,7 +494,7 @@
       </div>
 
       <div class="eventShowcase__media">
-        <img class="eventShowcase__poster" src="assets/corsi/thedayafter.png" alt="Locandina The Day After" loading="lazy" />
+        <img class="eventShowcase__poster" src="assets/corsi/thedayafter.png" alt="Locandina The Day After" loading="lazy" decoding="async" />
       </div>
     </article>
   </div>
@@ -572,7 +603,7 @@
           <article class="posterCard card reveal" data-delay="0">
             <a class="posterLink" href="assets/corsi/hypercare.pdf" target="_blank" rel="noopener">
               <figure class="posterFigure">
-                <img class="posterImg" src="assets/corsi/hypercare.jpg" alt="Locandina HyperCare" loading="lazy" />
+                <img class="posterImg" src="assets/corsi/hypercare.jpg" alt="Locandina HyperCare" loading="lazy" decoding="async" />
               </figure>
             </a>
             <div class="posterMeta">
@@ -587,7 +618,7 @@
           <article class="posterCard card reveal" data-delay="80">
             <a class="posterLink" href="assets/corsi/simae-bologna.pdf" target="_blank" rel="noopener">
               <figure class="posterFigure">
-                <img class="posterImg" src="assets/corsi/simae-bologna.jpg" alt="Locandina SIMAE Bologna" loading="lazy" />
+                <img class="posterImg" src="assets/corsi/simae-bologna.jpg" alt="Locandina SIMAE Bologna" loading="lazy" decoding="async" />
               </figure>
             </a>
             <div class="posterMeta">
@@ -602,7 +633,7 @@
           <article class="posterCard card reveal" data-delay="160">
             <a class="posterLink" href="assets/corsi/RDE.pdf" target="_blank" rel="noopener">
               <figure class="posterFigure">
-                <img class="posterImg" src="assets/corsi/RDE.jpg" alt="Locandina Rescue in Difficult Environment" loading="lazy" />
+                <img class="posterImg" src="assets/corsi/RDE.jpg" alt="Locandina Rescue in Difficult Environment" loading="lazy" decoding="async" />
               </figure>
             </a>
             <div class="posterMeta">
@@ -617,7 +648,7 @@
           <article class="posterCard card reveal" data-delay="240">
             <a class="posterLink" href="assets/corsi/I.E.M.I.G.pdf" target="_blank" rel="noopener">
               <figure class="posterFigure">
-                <img class="posterImg" src="assets/corsi/I.E.M.I.G.jpg" alt="Locandina Italian Emergency Medicine Interest Group" loading="lazy" />
+                <img class="posterImg" src="assets/corsi/I.E.M.I.G.jpg" alt="Locandina Italian Emergency Medicine Interest Group" loading="lazy" decoding="async" />
               </figure>
             </a>
             <div class="posterMeta">
@@ -658,7 +689,7 @@
           <article class="posterCard card reveal">
             <a class="posterLink" href="assets/lezioni/ADE_Medicina%20Subacquea.webp" target="_blank" rel="noopener">
               <figure class="posterFigure">
-                <img class="posterImg" src="assets/lezioni/ADE_Medicina%20Subacquea.webp" alt="ADE Medicina Subacquea e Iperbarica" loading="lazy" />
+                <img class="posterImg" src="assets/lezioni/ADE_Medicina%20Subacquea.webp" alt="ADE Medicina Subacquea e Iperbarica" loading="lazy" decoding="async" />
               </figure>
             </a>
             <div class="posterMeta">
@@ -673,7 +704,7 @@
           <article class="posterCard card reveal" data-delay="80">
             <a class="posterLink" href="assets/lezioni/ADE_Medicina%20Spaziale.webp" target="_blank" rel="noopener">
               <figure class="posterFigure">
-                <img class="posterImg" src="assets/lezioni/ADE_Medicina%20Spaziale.webp" alt="ADE Medicina Spaziale" loading="lazy" />
+                <img class="posterImg" src="assets/lezioni/ADE_Medicina%20Spaziale.webp" alt="ADE Medicina Spaziale" loading="lazy" decoding="async" />
               </figure>
             </a>
             <div class="posterMeta">
@@ -700,7 +731,7 @@
           <article class="posterCard card reveal" data-delay="0">
             <a class="posterLink" href="https://www.economiadellospazio.it/autore/dott-silvio-zerbi/" target="_blank" rel="noopener">
               <figure class="posterFigure">
-                <img class="posterImg" src="assets/pubblicazioni/Locandina_Space%26Blue.webp" alt="Copertina Space &amp; Blue" loading="lazy" />
+                <img class="posterImg" src="assets/pubblicazioni/Locandina_Space%26Blue.webp" alt="Copertina Space &amp; Blue" loading="lazy" decoding="async" />
               </figure>
             </a>
             <div class="posterMeta">
@@ -718,7 +749,7 @@
           <article class="posterCard card reveal" data-delay="120">
             <a class="posterLink" href="assets/pubblicazioni/technical_suitability_cardiac_devices_diving.pdf" target="_blank" rel="noopener">
               <figure class="posterFigure posterFigure--logo">
-                <img class="posterImg posterImg--contain" src="assets/pubblicazioni/UHM_logo.png" alt="Undersea and Hyperbaric Medicine Journal" loading="lazy" />
+                <img class="posterImg posterImg--contain" src="assets/pubblicazioni/UHM_logo.png" alt="Undersea and Hyperbaric Medicine Journal" loading="lazy" decoding="async" />
               </figure>
             </a>
             <div class="posterMeta">
@@ -745,7 +776,7 @@
         <div class="grid grid--2 gap-lg">
           <article class="card reveal partnerCard">
             <div class="partnerLogoWrap">
-              <img class="partnerLogo" src="assets/itecc_logo.png" alt="Logo Inside Trauma" loading="lazy" />
+              <img class="partnerLogo" src="assets/itecc_logo.png" alt="Logo Inside Trauma" loading="lazy" decoding="async" />
             </div>
             <h3 class="h3">Inside Trauma</h3>
             <p class="muted">
