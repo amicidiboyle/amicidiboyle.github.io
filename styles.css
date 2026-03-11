@@ -1755,7 +1755,9 @@ main{
   .header__inner{ grid-template-columns:minmax(260px, 330px) 1fr auto; }
 }
 @media (max-width: 1240px){
-  .navDropdown{ display:none; }
+  .navDropdown{ display:flex; }
+  .navDropdown__trigger{ padding:9px 8px; }
+  .navDropdown__menu{ min-width:200px; }
 }
 
 /* Hero podcast cover: show entire cover */
@@ -1849,3 +1851,134 @@ main{
 
 /* Mobile menu panel above content */
 .menu__panel{ z-index:140; }
+
+
+/* =========================================================
+   March 11 stability pass — responsive background, nav, coherence
+========================================================= */
+
+/* Use portrait background on mobile/tablet and cinematic background on desktop */
+body::before{
+  background-image:url("assets/ocean-background.png");
+  background-repeat:no-repeat;
+  background-position:center top;
+  background-size:cover;
+}
+
+@media (min-width: 1024px){
+  body::before{
+    background-image:url("assets/ocean-desktop.jpg");
+    background-position:center center;
+    background-size:cover;
+  }
+}
+
+@supports (-webkit-touch-callout: none){
+  body::before{
+    background-size:cover;
+    background-position:center top;
+  }
+  @media (min-width: 1024px){
+    body::before{
+      background-image:url("assets/ocean-desktop.jpg");
+      background-position:center center;
+      background-size:cover;
+    }
+  }
+}
+
+/* Cleaner header behaviour */
+.header__inner{
+  min-height:88px;
+}
+
+@media (max-width: 1500px){
+  .brand__sub{ display:none; }
+  .header__inner{ grid-template-columns:minmax(250px, 320px) 1fr auto; }
+}
+
+@media (max-width: 1240px){
+  .header__inner{
+    grid-template-columns:minmax(220px, 280px) 1fr auto;
+    gap:14px;
+  }
+  .nav--desktop{ gap:10px; }
+  .nav--desktop a:not(.btn){ font-size:.9rem; padding:9px 8px; }
+  .navDropdown{ display:flex; }
+  .navDropdown__trigger{ padding:9px 8px; }
+  .navDropdown__menu{ min-width:200px; }
+}
+
+@media (max-width: 1080px){
+  .brand__sub{ display:grid; }
+}
+
+/* Stable desktop dropdown */
+.navDropdown{
+  position:relative;
+  display:flex;
+  align-items:center;
+  margin:0;
+  padding:0 0 16px;
+}
+.navDropdown::after{
+  content:"";
+  position:absolute;
+  left:0;
+  right:0;
+  top:100%;
+  height:18px;
+}
+.navDropdown__trigger{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  opacity:.88;
+  padding:10px 10px;
+  border-radius:999px;
+  font-weight:750;
+  text-decoration:none;
+}
+.navDropdown__trigger:hover,
+.navDropdown__trigger:focus-visible{
+  opacity:1;
+  text-decoration:none;
+  background:rgba(238,246,255,.06);
+  outline:none;
+}
+.navDropdown__chevron{
+  font-size:.8rem;
+  line-height:1;
+  opacity:.85;
+  transform:translateY(1px);
+}
+.navDropdown__menu{
+  top:calc(100% + 8px);
+  left:0;
+}
+.navDropdown:hover .navDropdown__chevron,
+.navDropdown:focus-within .navDropdown__chevron{
+  transform:translateY(1px) rotate(180deg);
+}
+@media (max-width: 1080px){
+  .navDropdown{ display:none; }
+}
+
+/* Keep section title language coherent */
+.role{
+  letter-spacing:.08em;
+}
+
+/* Slightly calmer mobile overlay */
+@media (max-width: 767px){
+  body::after{ opacity:.22; }
+}
+
+/* Better image stability */
+.brand__logo,
+.heroPodcast__cover,
+.avatarImg,
+.activityCard__iconImg,
+.networkHero__media img{
+  height:auto;
+}
