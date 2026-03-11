@@ -32,12 +32,18 @@
       <nav class="nav nav--desktop" aria-label="Navigazione principale">
   <a href="#top">Home</a>
   <a href="#vision">Visione</a>
-  <a href="#attivita">Attività</a>
+  <div class="navDropdown">
+    <a href="#attivita" class="navDropdown__trigger">Attività <span aria-hidden="true">▾</span></a>
+    <div class="navDropdown__menu" role="menu" aria-label="Sottosezioni attività">
+      <a role="menuitem" href="#ricerca">Ricerca</a>
+      <a role="menuitem" href="#formazione">Formazione</a>
+      <a role="menuitem" href="#articoli">Pubblicazioni</a>
+      <a role="menuitem" href="podcast.html">Media</a>
+    </div>
+  </div>
   <a href="#chisiamo">Fondatori</a>
   <a href="#rete-boyle">Rete</a>
   <a href="#prossimo-evento">Evento</a>
-  <a href="#ricerca">Ricerca</a>
-  <a href="#formazione">Formazione</a>
   <a href="podcast.html">Podcast</a>
   <a href="#partner">Partner</a>
   <a class="btn btn--primary" href="#contatti">Contatti</a>
@@ -53,6 +59,10 @@
   <a role="menuitem" href="#top">Home</a>
   <a role="menuitem" href="#vision">Visione</a>
   <a role="menuitem" href="#attivita">Attività</a>
+  <a role="menuitem" href="#ricerca">Ricerca</a>
+  <a role="menuitem" href="#formazione">Formazione</a>
+  <a role="menuitem" href="#articoli">Pubblicazioni</a>
+  <a role="menuitem" href="podcast.html">Media</a>
   <a role="menuitem" href="#chisiamo">Fondatori</a>
   <a role="menuitem" href="#rete-boyle">Rete di Boyle</a>
   <a role="menuitem" href="#prossimo-evento">Evento</a>
@@ -94,8 +104,7 @@
     <section class="hero hero--surface" id="top">
   <div class="container hero__grid hero__grid--balanced">
     <div class="hero__copy reveal">
-      <p class="eyebrow">Ricerca · Formazione · Safety</p>
-      <h1 class="h1">
+<h1 class="h1">
         Medicina degli ambienti estremi
         <span class="h1__sub">Ricerca e divulgazione in medicina subacquea, iperbarica e nei contesti ad alta complessità.</span>
       </h1>
@@ -161,6 +170,7 @@
     <div class="featureSplit">
       <article class="featureImpact card reveal">
         <div class="featureImpact__media" aria-hidden="true">
+          <img class="featureImpact__bg" src="assets/back_rete.png" alt="" loading="lazy" />
           <div class="featureImpact__shine"></div>
           <div class="featureImpact__depth"></div>
         </div>
@@ -384,14 +394,14 @@
 
     <div class="networkHero card reveal" data-delay="60">
       <div class="networkHero__media" aria-hidden="true">
-        <img src="assets/network-map.webp" alt="" loading="lazy" />
+        <img src="assets/back_rete.png" alt="" loading="lazy" />
       </div>
 
       <div class="networkHero__footer">
         <article class="networkHero__statement reveal" data-delay="100">
           <h3 class="h3">Una rete selettiva, aperta a chi fa</h3>
           <p class="muted">
-            Entra nella Rete <strong>“Diventa un Amico di Boyle”</strong>, indica l’area principale di interesse e scrivici le tue idee.
+            Accedi alla pagina dedicata alla Rete Boyle, indica l’area principale di interesse e proponi idee, collaborazioni e iniziative coerenti con il progetto.
           </p>
         </article>
 
@@ -419,7 +429,6 @@
         </div>
 
         <div class="networkIntro__actions">
-          <button type="button" class="btn btn--primary" data-open-dialog="boyleDialog">Diventa un Amico di Boyle</button>
           <a class="btn btn--electric" href="rete.html">Entra nella rete</a>
         </div>
       </div>
@@ -1089,5 +1098,18 @@
       wireForm('contactFormBoyle', 'statusBoyle', 'submitBoyle', 'Candidatura inviata correttamente.');
     })();
   </script>
+
+<script>
+const observer=new IntersectionObserver((entries)=>{
+entries.forEach(e=>{
+if(e.isIntersecting){e.target.classList.add('visible');}
+});
+},{threshold:0.2});
+
+document.querySelectorAll('section').forEach(el=>{
+el.classList.add('reveal-left');
+observer.observe(el);
+});
+</script>
 </body>
 </html>
