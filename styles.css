@@ -1690,3 +1690,191 @@ main{
 .contactCard__icon--network{
   background:linear-gradient(180deg, rgba(120,255,214,.18), rgba(120,255,214,.06));
 }
+
+/* =========================================================
+   V2 fixes - desktop background, header/hero balance, rete background
+========================================================= */
+
+/* Desktop background uses the new wide image. Mobile keeps the original image that already works well. */
+body::before{
+  background:url("assets/ocean-desktop.jpg") center top / cover no-repeat;
+}
+
+@media (max-width: 767px){
+  body::before{
+    background:url("assets/ocean-background.png") center top / auto 100% no-repeat;
+  }
+}
+
+@supports (-webkit-touch-callout: none){
+  body::before{
+    background:url("assets/ocean-background.png") center top / auto 100% no-repeat;
+  }
+}
+
+/* Header: avoid overlap on intermediate desktop widths */
+.header__inner{
+  grid-template-columns:minmax(320px, 430px) 1fr auto;
+  gap:18px;
+}
+
+.brand{
+  grid-template-columns:74px 1fr;
+  gap:14px;
+}
+
+.brand__logo{
+  width:74px;
+  height:74px;
+}
+
+.brand__name{
+  font-size:17px;
+}
+
+.brand__sub{
+  gap:1px;
+}
+
+.brand__line{
+  font-size:11px;
+  line-height:1.08;
+}
+
+.nav--desktop{
+  gap:8px;
+}
+
+.nav--desktop a:not(.btn){
+  font-size:.88rem;
+  padding:10px 8px;
+}
+
+@media (max-width: 1380px){
+  .header__inner{
+    grid-template-columns:minmax(280px, 360px) 1fr auto;
+    gap:14px;
+  }
+
+  .brand{
+    grid-template-columns:64px 1fr;
+    gap:12px;
+  }
+
+  .brand__logo{
+    width:64px;
+    height:64px;
+  }
+
+  .brand__sub{
+    display:none;
+  }
+
+  .nav--desktop a:not(.btn){
+    font-size:.84rem;
+    padding:10px 7px;
+  }
+}
+
+@media (max-width: 1240px){
+  .header__inner{
+    grid-template-columns:1fr auto;
+  }
+
+  .nav--desktop{ display:none; }
+  .menu{ display:block; position:relative; }
+}
+
+/* Hero: cleaner desktop proportions and less collision with the header */
+.hero{
+  min-height:auto;
+  padding-top:42px;
+  padding-bottom:82px;
+  display:block;
+}
+
+.hero__grid--balanced{
+  grid-template-columns:minmax(0, 1.08fr) minmax(360px, 430px);
+  align-items:start;
+  gap:26px;
+}
+
+.hero__copy{
+  max-width:700px;
+}
+
+.hero__copy .h1{
+  max-width:13ch;
+}
+
+.hero__copy .lead{
+  max-width:62ch;
+}
+
+.hero__panel{
+  margin-top:6px;
+}
+
+.heroPodcast__cover{
+  width:100%;
+  aspect-ratio:16/9;
+  object-fit:cover;
+  border-radius:18px;
+}
+
+@media (max-width: 980px){
+  .hero{
+    padding-top:22px;
+    padding-bottom:62px;
+  }
+
+  .hero__grid--balanced{
+    grid-template-columns:1fr;
+    gap:18px;
+  }
+
+  .hero__copy,
+  .hero__copy .h1,
+  .hero__copy .lead{
+    max-width:none;
+  }
+}
+
+/* In evidenza: use the uploaded back_rete image instead of the empty blue placeholder */
+.featureImpact{
+  grid-template-rows:290px auto;
+}
+
+.featureImpact__media{
+  background:
+    linear-gradient(180deg, rgba(5,16,35,.08), rgba(2,10,22,.28)),
+    url("assets/back_rete.png") center center / cover no-repeat;
+}
+
+.featureImpact__media::before{
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.10), transparent 20%, rgba(2,13,26,.20) 100%),
+    radial-gradient(540px 180px at 50% 4%, rgba(255,255,255,.12), transparent 58%);
+  mix-blend-mode:screen;
+}
+
+.featureImpact__shine{
+  opacity:.28;
+}
+
+.featureImpact__depth{
+  height:42%;
+  background:
+    linear-gradient(180deg, transparent, rgba(2,13,26,.34)),
+    radial-gradient(540px 180px at 50% 100%, rgba(124,243,255,.10), transparent 58%);
+}
+
+@media (max-width: 760px){
+  .featureImpact{
+    grid-template-rows:230px auto;
+  }
+
+  .featureImpact__media{
+    background-position:center top;
+  }
+}
