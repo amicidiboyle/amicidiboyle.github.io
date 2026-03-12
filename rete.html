@@ -9,27 +9,30 @@
     :root{
       --bg:#031427;
       --bg2:#041b33;
-      --panel:rgba(5, 18, 38, 0.52);
-      --panel-border:rgba(150, 228, 255, 0.26);
+      --panel:rgba(5, 18, 38, 0.56);
+      --panel-border:rgba(150, 228, 255, 0.24);
       --text:#eef6ff;
       --muted:rgba(238,246,255,.82);
       --soft:rgba(238,246,255,.64);
       --glow:#79e9ff;
       --glow-2:#7cf3ff;
+      --accent:#8ce6ff;
+      --accent-2:#3db9ff;
       --shadow:0 20px 50px rgba(0,0,0,.35);
+      --shadow-strong:0 26px 70px rgba(0,0,0,.46);
       --radius:28px;
-      --radius-sm:22px;
       --max:1400px;
     }
 
     *{ box-sizing:border-box; }
     html{ scroll-behavior:smooth; }
+
     body{
       margin:0;
       font-family:system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
       color:var(--text);
       background:
-        linear-gradient(rgba(2,12,26,.52), rgba(2,12,26,.70)),
+        linear-gradient(rgba(2,12,26,.50), rgba(2,12,26,.72)),
         url("assets/rete-background.jpg") center center / cover no-repeat fixed,
         radial-gradient(circle at top, #0b3b70 0%, #031427 70%);
       min-height:100vh;
@@ -45,7 +48,17 @@
         radial-gradient(circle at 80% 20%, rgba(124,243,255,.08), transparent 20%),
         radial-gradient(circle at 70% 75%, rgba(124,243,255,.06), transparent 18%);
       mix-blend-mode:screen;
-      opacity:.8;
+      opacity:.85;
+    }
+
+    body::after{
+      content:"";
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      background:
+        linear-gradient(180deg, rgba(125,233,255,.04), transparent 18%, transparent 82%, rgba(125,233,255,.04));
+      opacity:.9;
     }
 
     a{
@@ -80,19 +93,62 @@
       border:1px solid rgba(255,255,255,.12);
       font-weight:700;
       backdrop-filter:blur(10px);
-      transition:transform .18s ease, background .18s ease;
+      box-shadow:0 10px 24px rgba(0,0,0,.18);
+      transition:transform .18s ease, background .18s ease, border-color .18s ease;
     }
 
     .back-link:hover{
       background:rgba(255,255,255,.10);
+      border-color:rgba(124,243,255,.26);
       transform:translateY(-1px);
     }
 
     .hero{
       margin-bottom:34px;
+      padding:28px 28px 24px;
+      border-radius:var(--radius);
+      background:
+        linear-gradient(135deg, rgba(9,36,74,.34), rgba(4,15,31,.42)),
+        rgba(4,15,31,.20);
+      border:1px solid rgba(124,243,255,.14);
+      backdrop-filter:blur(10px);
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      position:relative;
+    }
+
+    .hero::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+      background:
+        radial-gradient(circle at 15% 18%, rgba(124,243,255,.16), transparent 22%),
+        linear-gradient(90deg, transparent, rgba(124,243,255,.05), transparent);
+      opacity:.95;
+    }
+
+    .hero__eyebrow{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      margin-bottom:14px;
+      padding:8px 14px;
+      border-radius:999px;
+      border:1px solid rgba(124,243,255,.18);
+      background:rgba(255,255,255,.05);
+      color:#bfefff;
+      font-size:.88rem;
+      font-weight:800;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      position:relative;
+      z-index:1;
     }
 
     .hero__title{
+      position:relative;
+      z-index:1;
       margin:0;
       font-size:clamp(2.6rem, 5vw, 4.3rem);
       line-height:1;
@@ -103,9 +159,11 @@
     }
 
     .hero__subtitle{
+      position:relative;
+      z-index:1;
       margin:18px 0 0;
       font-size:clamp(1.05rem, 1.7vw, 1.45rem);
-      line-height:1.45;
+      line-height:1.55;
       color:var(--muted);
       max-width:900px;
     }
@@ -119,41 +177,62 @@
     .member-card{
       position:relative;
       overflow:hidden;
-      min-height:380px;
+      min-height:400px;
       border-radius:var(--radius);
       border:1px solid var(--panel-border);
       background:
-        linear-gradient(180deg, rgba(16,70,122,.16), rgba(4,18,37,.38)),
+        linear-gradient(180deg, rgba(16,70,122,.16), rgba(4,18,37,.44)),
         rgba(4,15,31,.34);
       box-shadow:
         0 0 0 1px rgba(124,243,255,.05) inset,
         0 0 28px rgba(124,243,255,.08),
         var(--shadow);
-      backdrop-filter:blur(8px);
+      backdrop-filter:blur(10px);
       padding:20px 18px 18px;
       display:flex;
       flex-direction:column;
       align-items:center;
       text-align:center;
-      transition:transform .22s ease, box-shadow .22s ease, border-color .22s ease;
-    }
-
-    .member-card:hover{
-      transform:translateY(-4px);
-      border-color:rgba(124,243,255,.42);
-      box-shadow:
-        0 0 0 1px rgba(124,243,255,.09) inset,
-        0 0 32px rgba(124,243,255,.16),
-        0 26px 60px rgba(0,0,0,.42);
+      transition:transform .24s ease, box-shadow .24s ease, border-color .24s ease;
+      isolation:isolate;
     }
 
     .member-card::before{
       content:"";
       position:absolute;
-      inset:auto 12% 10px 12%;
+      inset:0;
+      background:
+        radial-gradient(circle at top, rgba(124,243,255,.13), transparent 34%),
+        linear-gradient(180deg, rgba(255,255,255,.05), transparent 32%);
+      opacity:.9;
+      pointer-events:none;
+      z-index:0;
+    }
+
+    .member-card::after{
+      content:"";
+      position:absolute;
+      inset:auto 12% 12px 12%;
       height:2px;
-      background:linear-gradient(90deg, transparent, rgba(124,243,255,.9), transparent);
+      background:linear-gradient(90deg, transparent, rgba(124,243,255,.95), transparent);
       opacity:.95;
+      box-shadow:0 0 16px rgba(124,243,255,.45);
+      pointer-events:none;
+      z-index:0;
+    }
+
+    .member-card:hover{
+      transform:translateY(-5px);
+      border-color:rgba(124,243,255,.42);
+      box-shadow:
+        0 0 0 1px rgba(124,243,255,.10) inset,
+        0 0 36px rgba(124,243,255,.14),
+        var(--shadow-strong);
+    }
+
+    .member-card > *{
+      position:relative;
+      z-index:1;
     }
 
     .member-photo-wrap{
@@ -168,8 +247,18 @@
       box-shadow:
         0 0 0 2px rgba(124,243,255,.26),
         0 0 24px rgba(124,243,255,.35),
-        0 0 70px rgba(124,243,255,.10);
+        0 0 70px rgba(124,243,255,.12);
       flex:0 0 auto;
+    }
+
+    .member-photo-wrap::after{
+      content:"";
+      position:absolute;
+      inset:-8px;
+      border-radius:999px;
+      border:1px solid rgba(124,243,255,.10);
+      box-shadow:0 0 18px rgba(124,243,255,.18);
+      pointer-events:none;
     }
 
     .member-photo{
@@ -185,24 +274,26 @@
     .member-name{
       margin:0;
       font-size:clamp(1.25rem, 1.2vw, 1.7rem);
-      line-height:1.12;
+      line-height:1.1;
       letter-spacing:-.03em;
-      font-weight:800;
-      color:#f4fbff;
+      font-weight:900;
       text-wrap:balance;
+      color:#ffffff;
+      text-shadow:0 0 14px rgba(124,243,255,.12);
     }
 
     .member-role{
-      margin:10px 0 0;
+      margin:12px 0 0;
       color:var(--muted);
-      font-size:1.02rem;
-      line-height:1.4;
+      font-size:1rem;
+      line-height:1.48;
       text-wrap:balance;
+      max-width:30ch;
     }
 
     .member-links{
       margin-top:auto;
-      padding-top:16px;
+      padding-top:18px;
       display:flex;
       gap:12px;
       align-items:center;
@@ -211,22 +302,33 @@
     }
 
     .icon-btn{
-      width:42px;
-      height:42px;
+      width:44px;
+      height:44px;
       border-radius:999px;
       display:inline-flex;
       align-items:center;
       justify-content:center;
       border:1px solid rgba(124,243,255,.24);
-      background:rgba(255,255,255,.05);
-      box-shadow:0 0 12px rgba(124,243,255,.08);
-      transition:transform .18s ease, background .18s ease, border-color .18s ease;
+      background:rgba(255,255,255,.06);
+      box-shadow:
+        0 0 12px rgba(124,243,255,.08),
+        inset 0 0 0 1px rgba(255,255,255,.03);
+      transition:transform .18s ease, background .18s ease, border-color .18s ease, box-shadow .18s ease;
+      cursor:pointer;
     }
 
     .icon-btn:hover{
-      transform:translateY(-1px);
-      background:rgba(124,243,255,.12);
+      transform:translateY(-2px) scale(1.04);
+      background:rgba(124,243,255,.14);
       border-color:rgba(124,243,255,.46);
+      box-shadow:
+        0 0 20px rgba(124,243,255,.18),
+        0 10px 24px rgba(0,0,0,.18);
+    }
+
+    .icon-btn:focus-visible{
+      outline:2px solid rgba(124,243,255,.85);
+      outline-offset:3px;
     }
 
     .icon{
@@ -238,28 +340,51 @@
 
     .cta-box{
       margin-top:34px;
-      padding:24px;
+      padding:28px 24px;
       border-radius:var(--radius);
       border:1px solid rgba(124,243,255,.18);
-      background:rgba(4,15,31,.36);
-      backdrop-filter:blur(8px);
+      background:
+        linear-gradient(135deg, rgba(9,36,74,.30), rgba(4,15,31,.42)),
+        rgba(4,15,31,.36);
+      backdrop-filter:blur(10px);
       box-shadow:var(--shadow);
       text-align:center;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .cta-box::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+      background:
+        radial-gradient(circle at top, rgba(124,243,255,.12), transparent 30%);
+      opacity:.85;
     }
 
     .cta-box h2{
+      position:relative;
+      z-index:1;
       margin:0 0 10px;
-      font-size:1.7rem;
+      font-size:1.8rem;
       letter-spacing:-.03em;
+      text-shadow:0 0 14px rgba(124,243,255,.10);
     }
 
     .cta-box p{
+      position:relative;
+      z-index:1;
       margin:0;
       color:var(--muted);
-      line-height:1.6;
+      line-height:1.7;
+      max-width:900px;
+      margin-inline:auto;
     }
 
     .cta-box .btn{
+      position:relative;
+      z-index:1;
       margin-top:18px;
       display:inline-flex;
       align-items:center;
@@ -272,12 +397,13 @@
       color:white;
       font-weight:800;
       box-shadow:0 16px 34px rgba(0,96,196,.24);
-      transition:transform .18s ease, filter .18s ease;
+      transition:transform .18s ease, filter .18s ease, box-shadow .18s ease;
     }
 
     .cta-box .btn:hover{
       transform:translateY(-2px);
       filter:brightness(1.05);
+      box-shadow:0 18px 38px rgba(0,96,196,.30);
     }
 
     @media (max-width: 1280px){
@@ -297,13 +423,17 @@
         padding:28px 16px 44px;
       }
 
+      .hero{
+        padding:22px 18px 20px;
+      }
+
       .members-grid{
         grid-template-columns:repeat(2, minmax(0, 1fr));
         gap:16px;
       }
 
       .member-card{
-        min-height:340px;
+        min-height:350px;
         padding:16px 14px;
       }
 
@@ -340,9 +470,11 @@
     </div>
 
     <section class="hero">
+      <div class="hero__eyebrow">Network scientifico</div>
       <h1 class="hero__title">Rete di Boyle</h1>
       <p class="hero__subtitle">
-        La rete di professionisti e ricercatori degli “Amici di Boyle”.
+        La rete di professionisti e ricercatori degli “Amici di Boyle”, un ecosistema multidisciplinare dedicato
+        alla medicina subacquea e iperbarica, agli ambienti estremi, alla fisiologia umana e alla sicurezza.
       </p>
     </section>
 
@@ -353,9 +485,9 @@
           <img class="member-photo" src="assets/rete/simona-damiano.jpg" alt="Simona Damiano" />
         </div>
         <h2 class="member-name">Simona Damiano</h2>
-        <p class="member-role">Cardiologa Pediatra, Ospedale del Ponte, Varese. Subacquea Esperta, Scuba Schools International. Focus: Ecocardiografia</p>
+        <p class="member-role">Cardiologa pediatra, Ospedale del Ponte, Varese. Subacquea esperta, Scuba Schools International. Focus: ecocardiografia.</p>
         <div class="member-links">
-          <a class="icon-btn" href="#" aria-label="LinkedIn di Simona Damiano" target="_blank" rel="noopener">
+          <a class="icon-btn" href="https://www.linkedin.com/" aria-label="LinkedIn di Simona Damiano" target="_blank" rel="noopener noreferrer">
             <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
               <path d="M6.94 8.5H3.56V20h3.38V8.5ZM5.25 3A2.03 2.03 0 1 0 5.3 7.06 2.03 2.03 0 0 0 5.25 3Zm4.23 5.5V20h3.38v-5.7c0-1.5.28-2.95 2.14-2.95 1.83 0 1.86 1.71 1.86 3.05V20h3.39v-6.29c0-3.09-.67-5.46-4.28-5.46-1.73 0-2.88.95-3.35 1.85h-.05V8.5H9.48Z"/>
             </svg>
@@ -372,10 +504,10 @@
         <div class="member-photo-wrap">
           <img class="member-photo" src="assets/rete/andrea-alpini.jpg" alt="Andrea Murdoch Alpini" />
         </div>
-        <h2 class="member-name">Andrea Murdoch Alpini </h2>
-        <p class="member-role">Esploratore Subacqueo, Divulgatore, PSAI Diving Instructor, CEO PHY Diving. Focus: Esplorazione di Relitti e Cave Sommerse</p>
+        <h2 class="member-name">Andrea Murdoch Alpini</h2>
+        <p class="member-role">Esploratore subacqueo, divulgatore, PSAI Diving Instructor, CEO PHY Diving. Focus: esplorazione di relitti e cave sommerse.</p>
         <div class="member-links">
-          <a class="icon-btn" href="#" aria-label="LinkedIn di Andrea Murdoch Alpini" target="_blank" rel="noopener">
+          <a class="icon-btn" href="https://www.linkedin.com/" aria-label="LinkedIn di Andrea Murdoch Alpini" target="_blank" rel="noopener noreferrer">
             <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
               <path d="M6.94 8.5H3.56V20h3.38V8.5ZM5.25 3A2.03 2.03 0 1 0 5.3 7.06 2.03 2.03 0 0 0 5.25 3Zm4.23 5.5V20h3.38v-5.7c0-1.5.28-2.95 2.14-2.95 1.83 0 1.86 1.71 1.86 3.05V20h3.39v-6.29c0-3.09-.67-5.46-4.28-5.46-1.73 0-2.88.95-3.35 1.85h-.05V8.5H9.48Z"/>
             </svg>
@@ -393,9 +525,9 @@
           <img class="member-photo" src="assets/rete/valerio-zerbi.jpg" alt="Valerio Zerbi" />
         </div>
         <h2 class="member-name">Valerio Zerbi</h2>
-        <p class="member-role">Ingegnere Biomedico, Professore Associato Neuroscienze Università di Ginevra, Svizzera. Focus: Ricerca in Translational Neuroscience</p>
+        <p class="member-role">Ingegnere biomedico, professore associato di neuroscienze, Università di Ginevra, Svizzera. Focus: translational neuroscience.</p>
         <div class="member-links">
-          <a class="icon-btn" href="#" aria-label="https://www.linkedin.com/in/valerio-zerbi-a95b7725/" target="_blank" rel="noopener">
+          <a class="icon-btn" href="https://www.linkedin.com/in/valerio-zerbi-a95b7725/" aria-label="LinkedIn di Valerio Zerbi" target="_blank" rel="noopener noreferrer">
             <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
               <path d="M6.94 8.5H3.56V20h3.38V8.5ZM5.25 3A2.03 2.03 0 1 0 5.3 7.06 2.03 2.03 0 0 0 5.25 3Zm4.23 5.5V20h3.38v-5.7c0-1.5.28-2.95 2.14-2.95 1.83 0 1.86 1.71 1.86 3.05V20h3.39v-6.29c0-3.09-.67-5.46-4.28-5.46-1.73 0-2.88.95-3.35 1.85h-.05V8.5H9.48Z"/>
             </svg>
@@ -413,9 +545,9 @@
           <img class="member-photo" src="assets/rete/erika-borotto.jpg" alt="Erika Borotto" />
         </div>
         <h2 class="member-name">Erika Borotto</h2>
-        <p class="member-role">Specialista in Anestesia e Rianimazione. Presidente Inside Trauma Emergency and Critical Care. Italia</p>
+        <p class="member-role">Specialista in anestesia e rianimazione. Presidente Inside Trauma Emergency and Critical Care. Italia.</p>
         <div class="member-links">
-          <a class="icon-btn" href="#" aria-label="https://www.linkedin.com/in/erika-borotto-79a4a796/" target="_blank" rel="noopener">
+          <a class="icon-btn" href="https://www.linkedin.com/in/erika-borotto-79a4a796/" aria-label="LinkedIn di Erika Borotto" target="_blank" rel="noopener noreferrer">
             <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
               <path d="M6.94 8.5H3.56V20h3.38V8.5ZM5.25 3A2.03 2.03 0 1 0 5.3 7.06 2.03 2.03 0 0 0 5.25 3Zm4.23 5.5V20h3.38v-5.7c0-1.5.28-2.95 2.14-2.95 1.83 0 1.86 1.71 1.86 3.05V20h3.39v-6.29c0-3.09-.67-5.46-4.28-5.46-1.73 0-2.88.95-3.35 1.85h-.05V8.5H9.48Z"/>
             </svg>
@@ -433,9 +565,9 @@
           <img class="member-photo" src="assets/rete/andrea-galvani.jpg" alt="Andrea Galvani" />
         </div>
         <h2 class="member-name">Andrea Galvani</h2>
-        <p class="member-role">Medico Iperbarico e Subacqueo. Consigliere Nazionale Società Italiana Medicina Subacquea Iperbarica. Responsabile Scientifico Centro Iperbarico Rebubblica San Marino</p>
+        <p class="member-role">Medico iperbarico e subacqueo. Consigliere nazionale della Società Italiana di Medicina Subacquea e Iperbarica. Responsabile scientifico del Centro Iperbarico Repubblica di San Marino.</p>
         <div class="member-links">
-          <a class="icon-btn" href="#" aria-label="https://www.linkedin.com/in/agalv86/" target="_blank" rel="noopener">
+          <a class="icon-btn" href="https://www.linkedin.com/in/agalv86/" aria-label="LinkedIn di Andrea Galvani" target="_blank" rel="noopener noreferrer">
             <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
               <path d="M6.94 8.5H3.56V20h3.38V8.5ZM5.25 3A2.03 2.03 0 1 0 5.3 7.06 2.03 2.03 0 0 0 5.25 3Zm4.23 5.5V20h3.38v-5.7c0-1.5.28-2.95 2.14-2.95 1.83 0 1.86 1.71 1.86 3.05V20h3.39v-6.29c0-3.09-.67-5.46-4.28-5.46-1.73 0-2.88.95-3.35 1.85h-.05V8.5H9.48Z"/>
             </svg>
@@ -454,9 +586,9 @@
       <h2>Vuoi entrare nella Rete di Boyle?</h2>
       <p>
         La rete è aperta a professionisti, ricercatori e collaboratori interessati alla medicina subacquea,
-        iperbarica, alla gestione golobale del paziente critico in ambienti estremi. 
-        Gli Amici di Boyle sono appassionati di fisiologia umana, di neuroscienze, di medicina spaziale, Gli amici di Boyle sono una rete di professionisti connessi dalla voglia di sapere.
-        
+        iperbarica, alla gestione globale del paziente critico e agli ambienti estremi.
+        Gli Amici di Boyle sono una rete di professionisti curiosi, competenti e appassionati di fisiologia umana,
+        neuroscienze, medicina spaziale, sicurezza e innovazione.
       </p>
       <a class="btn" href="index.html#contatti">Candidati alla rete</a>
     </section>
