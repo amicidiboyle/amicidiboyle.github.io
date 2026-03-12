@@ -21,6 +21,7 @@
       --shadow:0 20px 50px rgba(0,0,0,.35);
       --shadow-strong:0 26px 70px rgba(0,0,0,.46);
       --radius:28px;
+      --radius-sm:22px;
       --max:1400px;
     }
 
@@ -66,6 +67,10 @@
       text-decoration:none;
     }
 
+    button, input, textarea{
+      font:inherit;
+    }
+
     .page{
       position:relative;
       z-index:1;
@@ -105,7 +110,7 @@
 
     .hero{
       margin-bottom:34px;
-      padding:28px 28px 24px;
+      padding:30px 28px 26px;
       border-radius:var(--radius);
       background:
         linear-gradient(135deg, rgba(9,36,74,.34), rgba(4,15,31,.42)),
@@ -124,6 +129,7 @@
       pointer-events:none;
       background:
         radial-gradient(circle at 15% 18%, rgba(124,243,255,.16), transparent 22%),
+        radial-gradient(circle at 80% 16%, rgba(124,243,255,.10), transparent 18%),
         linear-gradient(90deg, transparent, rgba(124,243,255,.05), transparent);
       opacity:.95;
     }
@@ -150,12 +156,23 @@
       position:relative;
       z-index:1;
       margin:0;
-      font-size:clamp(2.6rem, 5vw, 4.3rem);
-      line-height:1;
-      letter-spacing:-.05em;
+      font-size:clamp(2.8rem, 5.6vw, 5rem);
+      line-height:.95;
+      letter-spacing:-.06em;
       text-transform:uppercase;
-      color:#90deff;
-      text-shadow:0 0 18px rgba(124,243,255,.18);
+      color:#b4ecff;
+      text-shadow:
+        0 0 10px rgba(124,243,255,.22),
+        0 0 24px rgba(124,243,255,.18),
+        0 0 60px rgba(124,243,255,.08);
+    }
+
+    .hero__title .glow{
+      display:block;
+      color:#ffffff;
+      text-shadow:
+        0 0 12px rgba(255,255,255,.24),
+        0 0 28px rgba(124,243,255,.24);
     }
 
     .hero__subtitle{
@@ -375,35 +392,262 @@
     .cta-box p{
       position:relative;
       z-index:1;
-      margin:0;
+      margin:0 auto;
       color:var(--muted);
       line-height:1.7;
       max-width:900px;
-      margin-inline:auto;
     }
 
-    .cta-box .btn{
+    .btn-electric{
       position:relative;
       z-index:1;
-      margin-top:18px;
+      overflow:hidden;
       display:inline-flex;
       align-items:center;
       justify-content:center;
       gap:10px;
-      padding:14px 18px;
+      margin-top:20px;
+      padding:14px 20px;
       border-radius:999px;
-      border:1px solid rgba(124,243,255,.26);
-      background:linear-gradient(135deg, rgba(9,96,196,.92), rgba(27,181,245,.88));
-      color:white;
-      font-weight:800;
-      box-shadow:0 16px 34px rgba(0,96,196,.24);
+      border:1px solid rgba(124,243,255,.34);
+      background:
+        linear-gradient(135deg, rgba(8,78,176,.96), rgba(10,142,231,.92));
+      color:#fff;
+      font-weight:850;
+      letter-spacing:.01em;
+      cursor:pointer;
+      box-shadow:
+        0 16px 36px rgba(0,75,170,.28),
+        inset 0 1px 0 rgba(255,255,255,.14);
       transition:transform .18s ease, filter .18s ease, box-shadow .18s ease;
     }
 
-    .cta-box .btn:hover{
+    .btn-electric:hover{
       transform:translateY(-2px);
       filter:brightness(1.05);
-      box-shadow:0 18px 38px rgba(0,96,196,.30);
+      box-shadow:
+        0 18px 38px rgba(0,75,170,.34),
+        inset 0 1px 0 rgba(255,255,255,.18);
+    }
+
+    .btn-electric::before{
+      content:"";
+      position:absolute;
+      inset:-30% auto -30% -18%;
+      width:28%;
+      background:linear-gradient(90deg, transparent, rgba(255,255,255,.88), transparent);
+      transform:skewX(-22deg);
+      filter:blur(4px);
+      opacity:.95;
+      animation:electricSweep 2.6s linear infinite;
+    }
+
+    .btn-electric::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        radial-gradient(circle at 18% 50%, rgba(124,243,255,.34), transparent 20%),
+        radial-gradient(circle at 56% 48%, rgba(255,255,255,.18), transparent 12%),
+        radial-gradient(circle at 78% 54%, rgba(124,243,255,.28), transparent 18%);
+      mix-blend-mode:screen;
+      opacity:.55;
+      pointer-events:none;
+    }
+
+    .btn-electric span{
+      position:relative;
+      z-index:1;
+    }
+
+    @keyframes electricSweep{
+      0%{ left:-24%; }
+      100%{ left:118%; }
+    }
+
+    /* MODAL */
+    .modal{
+      position:fixed;
+      inset:0;
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding:24px;
+      background:rgba(2,8,18,.62);
+      backdrop-filter:blur(8px);
+      z-index:9999;
+    }
+
+    .modal.is-open{
+      display:flex;
+    }
+
+    .modal__dialog{
+      width:min(860px, 100%);
+      max-height:90vh;
+      overflow:auto;
+      border-radius:28px;
+      border:1px solid rgba(124,243,255,.18);
+      background:
+        linear-gradient(135deg, rgba(10,34,68,.84), rgba(4,15,31,.92)),
+        rgba(4,15,31,.92);
+      box-shadow:0 34px 90px rgba(0,0,0,.52);
+      position:relative;
+      padding:26px;
+    }
+
+    .modal__close{
+      position:absolute;
+      top:14px;
+      right:14px;
+      width:42px;
+      height:42px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.06);
+      color:#fff;
+      cursor:pointer;
+      font-size:1.1rem;
+      transition:transform .18s ease, background .18s ease;
+    }
+
+    .modal__close:hover{
+      transform:scale(1.05);
+      background:rgba(255,255,255,.10);
+    }
+
+    .modal__title{
+      margin:0;
+      font-size:clamp(1.7rem, 2.6vw, 2.3rem);
+      letter-spacing:-.04em;
+    }
+
+    .modal__text{
+      margin:10px 0 0;
+      color:var(--muted);
+      line-height:1.65;
+      max-width:70ch;
+    }
+
+    .network-form{
+      margin-top:20px;
+      display:grid;
+      gap:14px;
+    }
+
+    .form-grid{
+      display:grid;
+      grid-template-columns:repeat(2, minmax(0, 1fr));
+      gap:14px;
+    }
+
+    .field{
+      display:grid;
+      gap:7px;
+    }
+
+    .field--full{
+      grid-column:1 / -1;
+    }
+
+    .field label{
+      font-weight:800;
+      color:#dff8ff;
+      font-size:.96rem;
+    }
+
+    .field input,
+    .field textarea{
+      width:100%;
+      padding:13px 14px;
+      border-radius:16px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(3,10,22,.42);
+      color:#fff;
+      outline:none;
+      transition:border-color .18s ease, box-shadow .18s ease, background .18s ease;
+    }
+
+    .field input::placeholder,
+    .field textarea::placeholder{
+      color:rgba(238,246,255,.42);
+    }
+
+    .field input:focus,
+    .field textarea:focus{
+      border-color:rgba(124,243,255,.34);
+      box-shadow:0 0 0 6px rgba(124,243,255,.10);
+      background:rgba(3,10,22,.52);
+    }
+
+    .field textarea{
+      min-height:120px;
+      resize:vertical;
+    }
+
+    .code-preview{
+      width:100%;
+      min-height:180px;
+      padding:14px;
+      border-radius:18px;
+      border:1px solid rgba(124,243,255,.14);
+      background:rgba(2,10,20,.58);
+      color:#dff6ff;
+      font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size:.86rem;
+      line-height:1.45;
+      resize:vertical;
+    }
+
+    .modal__actions{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      align-items:center;
+      margin-top:8px;
+    }
+
+    .btn-secondary{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      padding:13px 16px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.06);
+      color:#fff;
+      font-weight:800;
+      cursor:pointer;
+      transition:transform .18s ease, background .18s ease;
+    }
+
+    .btn-secondary:hover{
+      transform:translateY(-1px);
+      background:rgba(255,255,255,.10);
+    }
+
+    .form-status{
+      margin-top:4px;
+      min-height:22px;
+      font-weight:700;
+      color:#bfefff;
+    }
+
+    .form-status.error{
+      color:#ffc5c5;
+    }
+
+    .visually-hidden{
+      position:absolute !important;
+      width:1px;
+      height:1px;
+      padding:0;
+      margin:-1px;
+      overflow:hidden;
+      clip:rect(0,0,0,0);
+      white-space:nowrap;
+      border:0;
     }
 
     @media (max-width: 1280px){
@@ -415,6 +659,12 @@
     @media (max-width: 1024px){
       .members-grid{
         grid-template-columns:repeat(3, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 860px){
+      .form-grid{
+        grid-template-columns:1fr;
       }
     }
 
@@ -446,6 +696,14 @@
       .member-role{
         font-size:.95rem;
       }
+
+      .modal{
+        padding:14px;
+      }
+
+      .modal__dialog{
+        padding:20px 16px;
+      }
     }
 
     @media (max-width: 520px){
@@ -454,7 +712,7 @@
       }
 
       .hero__title{
-        font-size:2.4rem;
+        font-size:2.5rem;
       }
 
       .member-card{
@@ -471,7 +729,10 @@
 
     <section class="hero">
       <div class="hero__eyebrow">Network scientifico</div>
-      <h1 class="hero__title">Rete di Boyle</h1>
+      <h1 class="hero__title">
+        <span class="glow">Rete</span>
+        di Boyle
+      </h1>
       <p class="hero__subtitle">
         La rete di professionisti e ricercatori degli “Amici di Boyle”, un ecosistema multidisciplinare dedicato
         alla medicina subacquea e iperbarica, agli ambienti estremi, alla fisiologia umana e alla sicurezza.
@@ -488,14 +749,10 @@
         <p class="member-role">Cardiologa pediatra, Ospedale del Ponte, Varese. Subacquea esperta, Scuba Schools International. Focus: ecocardiografia.</p>
         <div class="member-links">
           <a class="icon-btn" href="https://www.linkedin.com/" aria-label="LinkedIn di Simona Damiano" target="_blank" rel="noopener noreferrer">
-            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M6.94 8.5H3.56V20h3.38V8.5ZM5.25 3A2.03 2.03 0 1 0 5.3 7.06 2.03 2.03 0 0 0 5.25 3Zm4.23 5.5V20h3.38v-5.7c0-1.5.28-2.95 2.14-2.95 1.83 0 1.86 1.71 1.86 3.05V20h3.39v-6.29c0-3.09-.67-5.46-4.28-5.46-1.73 0-2.88.95-3.35 1.85h-.05V8.5H9.48Z"/>
-            </svg>
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.94 8.5H3.56V20h3.38V8.5ZM5.25 3A2.03 2.03 0 1 0 5.3 7.06 2.03 2.03 0 0 0 5.25 3Zm4.23 5.5V20h3.38v-5.7c0-1.5.28-2.95 2.14-2.95 1.83 0 1.86 1.71 1.86 3.05V20h3.39v-6.29c0-3.09-.67-5.46-4.28-5.46-1.73 0-2.88.95-3.35 1.85h-.05V8.5H9.48Z"/></svg>
           </a>
           <a class="icon-btn" href="mailto:simona.damiano@asst-settelaghi.it" aria-label="Email di Simona Damiano">
-            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M3 6.75A2.75 2.75 0 0 1 5.75 4h12.5A2.75 2.75 0 0 1 21 6.75v10.5A2.75 2.75 0 0 1 18.25 20H5.75A2.75 2.75 0 0 1 3 17.25V6.75Zm2.2-.25 6.27 5.05a.83.83 0 0 0 1.06 0L18.8 6.5H5.2Zm13.8 1.46-5.42 4.36a2.33 2.33 0 0 1-2.96 0L5.2 7.96v9.29c0 .3.25.55.55.55h12.5c.3 0 .55-.25.55-.55V7.96Z"/>
-            </svg>
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6.75A2.75 2.75 0 0 1 5.75 4h12.5A2.75 2.75 0 0 1 21 6.75v10.5A2.75 2.75 0 0 1 18.25 20H5.75A2.75 2.75 0 0 1 3 17.25V6.75Zm2.2-.25 6.27 5.05a.83.83 0 0 0 1.06 0L18.8 6.5H5.2Zm13.8 1.46-5.42 4.36a2.33 2.33 0 0 1-2.96 0L5.2 7.96v9.29c0 .3.25.55.55.55h12.5c.3 0 .55-.25.55-.55V7.96Z"/></svg>
           </a>
         </div>
       </article>
@@ -508,14 +765,10 @@
         <p class="member-role">Esploratore subacqueo, divulgatore, PSAI Diving Instructor, CEO PHY Diving. Focus: esplorazione di relitti e cave sommerse.</p>
         <div class="member-links">
           <a class="icon-btn" href="https://www.linkedin.com/" aria-label="LinkedIn di Andrea Murdoch Alpini" target="_blank" rel="noopener noreferrer">
-            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M6.94 8.5H3.56V20h3.38V8.5ZM5.25 3A2.03 2.03 0 1 0 5.3 7.06 2.03 2.03 0 0 0 5.25 3Zm4.23 5.5V20h3.38v-5.7c0-1.5.28-2.95 2.14-2.95 1.83 0 1.86 1.71 1.86 3.05V20h3.39v-6.29c0-3.09-.67-5.46-4.28-5.46-1.73 0-2.88.95-3.35 1.85h-.05V8.5H9.48Z"/>
-            </svg>
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.94 8.5H3.56V20h3.38V8.5ZM5.25 3A2.03 2.03 0 1 0 5.3 7.06 2.03 2.03 0 0 0 5.25 3Zm4.23 5.5V20h3.38v-5.7c0-1.5.28-2.95 2.14-2.95 1.83 0 1.86 1.71 1.86 3.05V20h3.39v-6.29c0-3.09-.67-5.46-4.28-5.46-1.73 0-2.88.95-3.35 1.85h-.05V8.5H9.48Z"/></svg>
           </a>
           <a class="icon-btn" href="mailto:exploration@wreckdiving.com" aria-label="Email di Andrea Murdoch Alpini">
-            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M3 6.75A2.75 2.75 0 0 1 5.75 4h12.5A2.75 2.75 0 0 1 21 6.75v10.5A2.75 2.75 0 0 1 18.25 20H5.75A2.75 2.75 0 0 1 3 17.25V6.75Zm2.2-.25 6.27 5.05a.83.83 0 0 0 1.06 0L18.8 6.5H5.2Zm13.8 1.46-5.42 4.36a2.33 2.33 0 0 1-2.96 0L5.2 7.96v9.29c0 .3.25.55.55.55h12.5c.3 0 .55-.25.55-.55V7.96Z"/>
-            </svg>
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6.75A2.75 2.75 0 0 1 5.75 4h12.5A2.75 2.75 0 0 1 21 6.75v10.5A2.75 2.75 0 0 1 18.25 20H5.75A2.75 2.75 0 0 1 3 17.25V6.75Zm2.2-.25 6.27 5.05a.83.83 0 0 0 1.06 0L18.8 6.5H5.2Zm13.8 1.46-5.42 4.36a2.33 2.33 0 0 1-2.96 0L5.2 7.96v9.29c0 .3.25.55.55.55h12.5c.3 0 .55-.25.55-.55V7.96Z"/></svg>
           </a>
         </div>
       </article>
@@ -528,14 +781,10 @@
         <p class="member-role">Ingegnere Biomedico, Professore Associato di Neuroscienze, Università di Ginevra, Svizzera. Focus: translational neuroscience.</p>
         <div class="member-links">
           <a class="icon-btn" href="https://www.linkedin.com/in/valerio-zerbi-a95b7725/" aria-label="LinkedIn di Valerio Zerbi" target="_blank" rel="noopener noreferrer">
-            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M6.94 8.5H3.56V20h3.38V8.5ZM5.25 3A2.03 2.03 0 1 0 5.3 7.06 2.03 2.03 0 0 0 5.25 3Zm4.23 5.5V20h3.38v-5.7c0-1.5.28-2.95 2.14-2.95 1.83 0 1.86 1.71 1.86 3.05V20h3.39v-6.29c0-3.09-.67-5.46-4.28-5.46-1.73 0-2.88.95-3.35 1.85h-.05V8.5H9.48Z"/>
-            </svg>
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.94 8.5H3.56V20h3.38V8.5ZM5.25 3A2.03 2.03 0 1 0 5.3 7.06 2.03 2.03 0 0 0 5.25 3Zm4.23 5.5V20h3.38v-5.7c0-1.5.28-2.95 2.14-2.95 1.83 0 1.86 1.71 1.86 3.05V20h3.39v-6.29c0-3.09-.67-5.46-4.28-5.46-1.73 0-2.88.95-3.35 1.85h-.05V8.5H9.48Z"/></svg>
           </a>
           <a class="icon-btn" href="mailto:zerbiv@hotmail.com" aria-label="Email di Valerio Zerbi">
-            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M3 6.75A2.75 2.75 0 0 1 5.75 4h12.5A2.75 2.75 0 0 1 21 6.75v10.5A2.75 2.75 0 0 1 18.25 20H5.75A2.75 2.75 0 0 1 3 17.25V6.75Zm2.2-.25 6.27 5.05a.83.83 0 0 0 1.06 0L18.8 6.5H5.2Zm13.8 1.46-5.42 4.36a2.33 2.33 0 0 1-2.96 0L5.2 7.96v9.29c0 .3.25.55.55.55h12.5c.3 0 .55-.25.55-.55V7.96Z"/>
-            </svg>
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6.75A2.75 2.75 0 0 1 5.75 4h12.5A2.75 2.75 0 0 1 21 6.75v10.5A2.75 2.75 0 0 1 18.25 20H5.75A2.75 2.75 0 0 1 3 17.25V6.75Zm2.2-.25 6.27 5.05a.83.83 0 0 0 1.06 0L18.8 6.5H5.2Zm13.8 1.46-5.42 4.36a2.33 2.33 0 0 1-2.96 0L5.2 7.96v9.29c0 .3.25.55.55.55h12.5c.3 0 .55-.25.55-.55V7.96Z"/></svg>
           </a>
         </div>
       </article>
@@ -545,17 +794,13 @@
           <img class="member-photo" src="assets/rete/erika-borotto.jpg" alt="Erika Borotto" />
         </div>
         <h2 class="member-name">Erika Borotto</h2>
-        <p class="member-role">Specialista in Anestesia e Rianimazione. Presidente Inside Trauma Emergency and Critical Care. Italia. Focus: Critical Care</p>
+        <p class="member-role">Specialista in Anestesia e Rianimazione. Presidente Inside Trauma Emergency and Critical Care. Italia. Focus: Critical Care.</p>
         <div class="member-links">
           <a class="icon-btn" href="https://www.linkedin.com/in/erika-borotto-79a4a796/" aria-label="LinkedIn di Erika Borotto" target="_blank" rel="noopener noreferrer">
-            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M6.94 8.5H3.56V20h3.38V8.5ZM5.25 3A2.03 2.03 0 1 0 5.3 7.06 2.03 2.03 0 0 0 5.25 3Zm4.23 5.5V20h3.38v-5.7c0-1.5.28-2.95 2.14-2.95 1.83 0 1.86 1.71 1.86 3.05V20h3.39v-6.29c0-3.09-.67-5.46-4.28-5.46-1.73 0-2.88.95-3.35 1.85h-.05V8.5H9.48Z"/>
-            </svg>
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.94 8.5H3.56V20h3.38V8.5ZM5.25 3A2.03 2.03 0 1 0 5.3 7.06 2.03 2.03 0 0 0 5.25 3Zm4.23 5.5V20h3.38v-5.7c0-1.5.28-2.95 2.14-2.95 1.83 0 1.86 1.71 1.86 3.05V20h3.39v-6.29c0-3.09-.67-5.46-4.28-5.46-1.73 0-2.88.95-3.35 1.85h-.05V8.5H9.48Z"/></svg>
           </a>
           <a class="icon-btn" href="mailto:erika.borotto@asst-settelaghi.it" aria-label="Email di Erika Borotto">
-            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M3 6.75A2.75 2.75 0 0 1 5.75 4h12.5A2.75 2.75 0 0 1 21 6.75v10.5A2.75 2.75 0 0 1 18.25 20H5.75A2.75 2.75 0 0 1 3 17.25V6.75Zm2.2-.25 6.27 5.05a.83.83 0 0 0 1.06 0L18.8 6.5H5.2Zm13.8 1.46-5.42 4.36a2.33 2.33 0 0 1-2.96 0L5.2 7.96v9.29c0 .3.25.55.55.55h12.5c.3 0 .55-.25.55-.55V7.96Z"/>
-            </svg>
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6.75A2.75 2.75 0 0 1 5.75 4h12.5A2.75 2.75 0 0 1 21 6.75v10.5A2.75 2.75 0 0 1 18.25 20H5.75A2.75 2.75 0 0 1 3 17.25V6.75Zm2.2-.25 6.27 5.05a.83.83 0 0 0 1.06 0L18.8 6.5H5.2Zm13.8 1.46-5.42 4.36a2.33 2.33 0 0 1-2.96 0L5.2 7.96v9.29c0 .3.25.55.55.55h12.5c.3 0 .55-.25.55-.55V7.96Z"/></svg>
           </a>
         </div>
       </article>
@@ -565,40 +810,33 @@
           <img class="member-photo" src="assets/rete/andrea-galvani.jpg" alt="Andrea Galvani" />
         </div>
         <h2 class="member-name">Andrea Galvani</h2>
-        <p class="member-role">Medico Iperbarico e Subacqueo. Consigliere Nazionale SIMSI. Responsabile Scientifico del Centro Iperbarico Repubblica di San Marino. Focus: OFFSHORE e Dive Medicine</p>
+        <p class="member-role">Medico Iperbarico e Subacqueo. Consigliere Nazionale SIMSI. Responsabile Scientifico del Centro Iperbarico Repubblica di San Marino. Focus: offshore e dive medicine.</p>
         <div class="member-links">
           <a class="icon-btn" href="https://www.linkedin.com/in/agalv86/" aria-label="LinkedIn di Andrea Galvani" target="_blank" rel="noopener noreferrer">
-            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M6.94 8.5H3.56V20h3.38V8.5ZM5.25 3A2.03 2.03 0 1 0 5.3 7.06 2.03 2.03 0 0 0 5.25 3Zm4.23 5.5V20h3.38v-5.7c0-1.5.28-2.95 2.14-2.95 1.83 0 1.86 1.71 1.86 3.05V20h3.39v-6.29c0-3.09-.67-5.46-4.28-5.46-1.73 0-2.88.95-3.35 1.85h-.05V8.5H9.48Z"/>
-            </svg>
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.94 8.5H3.56V20h3.38V8.5ZM5.25 3A2.03 2.03 0 1 0 5.3 7.06 2.03 2.03 0 0 0 5.25 3Zm4.23 5.5V20h3.38v-5.7c0-1.5.28-2.95 2.14-2.95 1.83 0 1.86 1.71 1.86 3.05V20h3.39v-6.29c0-3.09-.67-5.46-4.28-5.46-1.73 0-2.88.95-3.35 1.85h-.05V8.5H9.48Z"/></svg>
           </a>
           <a class="icon-btn" href="mailto:andrea.galvani@example.com" aria-label="Email di Andrea Galvani">
-            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M3 6.75A2.75 2.75 0 0 1 5.75 4h12.5A2.75 2.75 0 0 1 21 6.75v10.5A2.75 2.75 0 0 1 18.25 20H5.75A2.75 2.75 0 0 1 3 17.25V6.75Zm2.2-.25 6.27 5.05a.83.83 0 0 0 1.06 0L18.8 6.5H5.2Zm13.8 1.46-5.42 4.36a2.33 2.33 0 0 1-2.96 0L5.2 7.96v9.29c0 .3.25.55.55.55h12.5c.3 0 .55-.25.55-.55V7.96Z"/>
-            </svg>
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6.75A2.75 2.75 0 0 1 5.75 4h12.5A2.75 2.75 0 0 1 21 6.75v10.5A2.75 2.75 0 0 1 18.25 20H5.75A2.75 2.75 0 0 1 3 17.25V6.75Zm2.2-.25 6.27 5.05a.83.83 0 0 0 1.06 0L18.8 6.5H5.2Zm13.8 1.46-5.42 4.36a2.33 2.33 0 0 1-2.96 0L5.2 7.96v9.29c0 .3.25.55.55.55h12.5c.3 0 .55-.25.55-.55V7.96Z"/></svg>
           </a>
         </div>
       </article>
 
-    <article class="member-card">
+      <article class="member-card">
         <div class="member-photo-wrap">
-          <img class="member-photo" src="assets/rete/federica-giuffrida.jpg" alt="Federia Giuffrida" />
+          <img class="member-photo" src="assets/rete/federica-giuffrida.jpg" alt="Federica Giuffrida" />
         </div>
         <h2 class="member-name">Federica Giuffrida</h2>
-        <p class="member-role">Specialista in Anestesia e Rianimazione. Critical Care Medicine. Soccorso Alpino. Focus: Medicina di Montagna e Soccorso in Ambienti Impervi</p>
+        <p class="member-role">Specialista in Anestesia e Rianimazione. Critical Care Medicine. Soccorso Alpino. Focus: medicina di montagna e soccorso in ambienti impervi.</p>
         <div class="member-links">
           <a class="icon-btn" href="https://www.linkedin.com/in/federica-giuffrida-76609a9a/" aria-label="LinkedIn di Federica Giuffrida" target="_blank" rel="noopener noreferrer">
-            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M6.94 8.5H3.56V20h3.38V8.5ZM5.25 3A2.03 2.03 0 1 0 5.3 7.06 2.03 2.03 0 0 0 5.25 3Zm4.23 5.5V20h3.38v-5.7c0-1.5.28-2.95 2.14-2.95 1.83 0 1.86 1.71 1.86 3.05V20h3.39v-6.29c0-3.09-.67-5.46-4.28-5.46-1.73 0-2.88.95-3.35 1.85h-.05V8.5H9.48Z"/>
-            </svg>
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.94 8.5H3.56V20h3.38V8.5ZM5.25 3A2.03 2.03 0 1 0 5.3 7.06 2.03 2.03 0 0 0 5.25 3Zm4.23 5.5V20h3.38v-5.7c0-1.5.28-2.95 2.14-2.95 1.83 0 1.86 1.71 1.86 3.05V20h3.39v-6.29c0-3.09-.67-5.46-4.28-5.46-1.73 0-2.88.95-3.35 1.85h-.05V8.5H9.48Z"/></svg>
           </a>
           <a class="icon-btn" href="mailto:federica.giuffrida@asst-settelaghi.it" aria-label="Email di Federica Giuffrida">
-            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M3 6.75A2.75 2.75 0 0 1 5.75 4h12.5A2.75 2.75 0 0 1 21 6.75v10.5A2.75 2.75 0 0 1 18.25 20H5.75A2.75 2.75 0 0 1 3 17.25V6.75Zm2.2-.25 6.27 5.05a.83.83 0 0 0 1.06 0L18.8 6.5H5.2Zm13.8 1.46-5.42 4.36a2.33 2.33 0 0 1-2.96 0L5.2 7.96v9.29c0 .3.25.55.55.55h12.5c.3 0 .55-.25.55-.55V7.96Z"/>
-            </svg>
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6.75A2.75 2.75 0 0 1 5.75 4h12.5A2.75 2.75 0 0 1 21 6.75v10.5A2.75 2.75 0 0 1 18.25 20H5.75A2.75 2.75 0 0 1 3 17.25V6.75Zm2.2-.25 6.27 5.05a.83.83 0 0 0 1.06 0L18.8 6.5H5.2Zm13.8 1.46-5.42 4.36a2.33 2.33 0 0 1-2.96 0L5.2 7.96v9.29c0 .3.25.55.55.55h12.5c.3 0 .55-.25.55-.55V7.96Z"/></svg>
           </a>
         </div>
       </article>
+
     </section>
 
     <section class="cta-box">
@@ -609,8 +847,237 @@
         Gli Amici di Boyle sono una rete di professionisti curiosi, competenti e appassionati di fisiologia umana,
         neuroscienze, medicina spaziale, sicurezza e innovazione.
       </p>
-      <a class="btn" href="index.html#contatti">Candidati alla rete</a>
+      <button class="btn-electric" id="open-network-modal" type="button">
+        <span>Candidati alla rete</span>
+      </button>
     </section>
   </main>
+
+  <!-- MODALE CANDIDATURA -->
+  <div class="modal" id="network-modal" aria-hidden="true">
+    <div class="modal__dialog" role="dialog" aria-modal="true" aria-labelledby="network-modal-title">
+      <button class="modal__close" id="close-network-modal" type="button" aria-label="Chiudi finestra">✕</button>
+
+      <h2 class="modal__title" id="network-modal-title">Candidatura alla Rete di Boyle</h2>
+      <p class="modal__text">
+        Compila il modulo. La candidatura verrà inviata a <strong>info@amicidiboyle.it</strong> tramite Formspree.
+        In fondo troverai anche il <strong>codice HTML della card</strong> generato automaticamente, così nella mail ti arriva già una base pronta per essere incollata in <code>rete.html</code>.
+      </p>
+
+      <form class="network-form" id="network-form" action="https://formspree.io/f/xzdareqw" method="POST">
+        <input type="hidden" name="_subject" value="Nuova candidatura alla Rete di Boyle">
+        <input type="hidden" name="_language" value="it">
+        <input type="text" name="_gotcha" class="visually-hidden" tabindex="-1" autocomplete="off">
+
+        <div class="form-grid">
+          <div class="field">
+            <label for="cand-name">Nome e Cognome</label>
+            <input id="cand-name" name="nome" type="text" required placeholder="Es. Maria Rossi">
+          </div>
+
+          <div class="field">
+            <label for="cand-email">Email</label>
+            <input id="cand-email" name="email" type="email" required placeholder="nome@email.it">
+          </div>
+
+          <div class="field">
+            <label for="cand-affiliation">Affiliazione</label>
+            <input id="cand-affiliation" name="affiliazione" type="text" placeholder="Ospedale, Università, Centro, Azienda">
+          </div>
+
+          <div class="field">
+            <label for="cand-role">Ruolo / Professione</label>
+            <input id="cand-role" name="ruolo" type="text" placeholder="Es. Medico iperbarico, ricercatore, ingegnere biomedico">
+          </div>
+
+          <div class="field field--full">
+            <label for="cand-interest">Area di interesse / Focus</label>
+            <input id="cand-interest" name="focus" type="text" placeholder="Es. Medicina iperbarica, neuroscienze, fisiologia, soccorso in ambienti estremi">
+          </div>
+
+          <div class="field field--full">
+            <label for="cand-linkedin">Profilo LinkedIn</label>
+            <input id="cand-linkedin" name="linkedin" type="url" placeholder="https://www.linkedin.com/in/...">
+          </div>
+
+          <div class="field field--full">
+            <label for="cand-bio">Breve presentazione</label>
+            <textarea id="cand-bio" name="presentazione" placeholder="Racconta in poche righe chi sei, cosa fai e perché vorresti entrare nella Rete di Boyle."></textarea>
+          </div>
+
+          <div class="field field--full">
+            <label for="cand-snippet">Anteprima codice card da incollare in rete.html</label>
+            <textarea id="cand-snippet" name="codice_card_html" class="code-preview" readonly></textarea>
+          </div>
+        </div>
+
+        <div class="modal__actions">
+          <button class="btn-electric" type="submit">
+            <span>Invia candidatura</span>
+          </button>
+          <button class="btn-secondary" type="button" id="copy-snippet">
+            Copia codice card
+          </button>
+        </div>
+
+        <div class="form-status" id="form-status"></div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const modal = document.getElementById('network-modal');
+    const openBtn = document.getElementById('open-network-modal');
+    const closeBtn = document.getElementById('close-network-modal');
+    const form = document.getElementById('network-form');
+    const statusBox = document.getElementById('form-status');
+    const copyBtn = document.getElementById('copy-snippet');
+
+    const nameInput = document.getElementById('cand-name');
+    const emailInput = document.getElementById('cand-email');
+    const affiliationInput = document.getElementById('cand-affiliation');
+    const roleInput = document.getElementById('cand-role');
+    const interestInput = document.getElementById('cand-interest');
+    const linkedinInput = document.getElementById('cand-linkedin');
+    const bioInput = document.getElementById('cand-bio');
+    const snippetField = document.getElementById('cand-snippet');
+
+    function openModal(){
+      modal.classList.add('is-open');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+      setTimeout(() => nameInput.focus(), 50);
+      updateSnippet();
+    }
+
+    function closeModal(){
+      modal.classList.remove('is-open');
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+
+    function escapeHtml(str){
+      return (str || '')
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#39;');
+    }
+
+    function slugify(str){
+      return (str || '')
+        .toLowerCase()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-+|-+$/g, '')
+        .replace(/-{2,}/g, '-');
+    }
+
+    function buildRoleLine(){
+      const parts = [];
+      if(roleInput.value.trim()) parts.push(roleInput.value.trim());
+      if(affiliationInput.value.trim()) parts.push(affiliationInput.value.trim());
+      if(interestInput.value.trim()) parts.push('Focus: ' + interestInput.value.trim());
+      if(bioInput.value.trim()) parts.push(bioInput.value.trim());
+      return parts.join('. ');
+    }
+
+    function buildCardSnippet(){
+      const fullName = nameInput.value.trim() || 'Nome Cognome';
+      const safeName = escapeHtml(fullName);
+      const email = emailInput.value.trim() || 'email@example.com';
+      const linkedin = linkedinInput.value.trim() || 'https://www.linkedin.com/';
+      const slug = slugify(fullName || 'nome-cognome') || 'nome-cognome';
+      const roleLine = escapeHtml(buildRoleLine() || 'Ruolo / breve descrizione.');
+
+      return `<article class="member-card">
+  <div class="member-photo-wrap">
+    <img class="member-photo" src="assets/rete/${slug}.jpg" alt="${safeName}" />
+  </div>
+  <h2 class="member-name">${safeName}</h2>
+  <p class="member-role">${roleLine}</p>
+  <div class="member-links">
+    <a class="icon-btn" href="${escapeHtml(linkedin)}" aria-label="LinkedIn di ${safeName}" target="_blank" rel="noopener noreferrer">
+      <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.94 8.5H3.56V20h3.38V8.5ZM5.25 3A2.03 2.03 0 1 0 5.3 7.06 2.03 2.03 0 0 0 5.25 3Zm4.23 5.5V20h3.38v-5.7c0-1.5.28-2.95 2.14-2.95 1.83 0 1.86 1.71 1.86 3.05V20h3.39v-6.29c0-3.09-.67-5.46-4.28-5.46-1.73 0-2.88.95-3.35 1.85h-.05V8.5H9.48Z"/></svg>
+    </a>
+    <a class="icon-btn" href="mailto:${escapeHtml(email)}" aria-label="Email di ${safeName}">
+      <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6.75A2.75 2.75 0 0 1 5.75 4h12.5A2.75 2.75 0 0 1 21 6.75v10.5A2.75 2.75 0 0 1 18.25 20H5.75A2.75 2.75 0 0 1 3 17.25V6.75Zm2.2-.25 6.27 5.05a.83.83 0 0 0 1.06 0L18.8 6.5H5.2Zm13.8 1.46-5.42 4.36a2.33 2.33 0 0 1-2.96 0L5.2 7.96v9.29c0 .3.25.55.55.55h12.5c.3 0 .55-.25.55-.55V7.96Z"/></svg>
+    </a>
+  </div>
+</article>`;
+    }
+
+    function updateSnippet(){
+      snippetField.value = buildCardSnippet();
+    }
+
+    [nameInput, emailInput, affiliationInput, roleInput, interestInput, linkedinInput, bioInput]
+      .forEach(el => el.addEventListener('input', updateSnippet));
+
+    openBtn.addEventListener('click', openModal);
+    closeBtn.addEventListener('click', closeModal);
+
+    modal.addEventListener('click', (e) => {
+      if(e.target === modal) closeModal();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if(e.key === 'Escape' && modal.classList.contains('is-open')){
+        closeModal();
+      }
+    });
+
+    copyBtn.addEventListener('click', async () => {
+      updateSnippet();
+      try{
+        await navigator.clipboard.writeText(snippetField.value);
+        statusBox.textContent = 'Codice card copiato negli appunti.';
+        statusBox.classList.remove('error');
+      }catch{
+        snippetField.select();
+        document.execCommand('copy');
+        statusBox.textContent = 'Codice card copiato negli appunti.';
+        statusBox.classList.remove('error');
+      }
+    });
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      updateSnippet();
+      statusBox.textContent = 'Invio in corso...';
+      statusBox.classList.remove('error');
+
+      try{
+        const response = await fetch(form.action, {
+          method: 'POST',
+          body: new FormData(form),
+          headers: {
+            'Accept': 'application/json'
+          }
+        });
+
+        if(response.ok){
+          statusBox.textContent = 'Candidatura inviata correttamente. Ti consiglio di conservare anche il codice della card.';
+          statusBox.classList.remove('error');
+          form.reset();
+          updateSnippet();
+          setTimeout(() => {
+            closeModal();
+            statusBox.textContent = '';
+          }, 1800);
+        }else{
+          statusBox.textContent = 'Invio non riuscito. Riprova tra poco.';
+          statusBox.classList.add('error');
+        }
+      }catch(err){
+        statusBox.textContent = 'Errore di rete. Controlla la connessione e riprova.';
+        statusBox.classList.add('error');
+      }
+    });
+
+    updateSnippet();
+  </script>
 </body>
 </html>
