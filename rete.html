@@ -465,7 +465,6 @@
       100%{ left:118%; }
     }
 
-    /* MODAL */
     .modal{
       position:fixed;
       inset:0;
@@ -585,46 +584,12 @@
       resize:vertical;
     }
 
-    .code-preview{
-      width:100%;
-      min-height:180px;
-      padding:14px;
-      border-radius:18px;
-      border:1px solid rgba(124,243,255,.14);
-      background:rgba(2,10,20,.58);
-      color:#dff6ff;
-      font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-      font-size:.86rem;
-      line-height:1.45;
-      resize:vertical;
-    }
-
     .modal__actions{
       display:flex;
       gap:12px;
       flex-wrap:wrap;
       align-items:center;
       margin-top:8px;
-    }
-
-    .btn-secondary{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      gap:10px;
-      padding:13px 16px;
-      border-radius:999px;
-      border:1px solid rgba(255,255,255,.12);
-      background:rgba(255,255,255,.06);
-      color:#fff;
-      font-weight:800;
-      cursor:pointer;
-      transition:transform .18s ease, background .18s ease;
-    }
-
-    .btn-secondary:hover{
-      transform:translateY(-1px);
-      background:rgba(255,255,255,.10);
     }
 
     .form-status{
@@ -837,12 +802,12 @@
         </div>
       </article>
       
-<article class="member-card">
+      <article class="member-card">
         <div class="member-photo-wrap">
           <img class="member-photo" src="assets/rete/paolo-calzavacca.jpg" alt="Paolo Calzavacca" />
         </div>
         <h2 class="member-name">Paolo Calzavacca</h2>
-        <p class="member-role">Specialista in Anestesia e Rianimazione, ICU IRCCS San Gerardo del Tintori- Monza. Subacqueo Esperto. Focus: ExtraCorporeal Membrane Oxygenation</p>
+        <p class="member-role">Specialista in Anestesia e Rianimazione, ICU IRCCS San Gerardo del Tintori - Monza. Subacqueo esperto. Focus: ExtraCorporeal Membrane Oxygenation.</p>
         <div class="member-links">
           <a class="icon-btn" href="https://www.linkedin.com/in/paolo-calzavacca-6549623a/" aria-label="LinkedIn di Paolo Calzavacca" target="_blank" rel="noopener noreferrer">
             <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.94 8.5H3.56V20h3.38V8.5ZM5.25 3A2.03 2.03 0 1 0 5.3 7.06 2.03 2.03 0 0 0 5.25 3Zm4.23 5.5V20h3.38v-5.7c0-1.5.28-2.95 2.14-2.95 1.83 0 1.86 1.71 1.86 3.05V20h3.39v-6.29c0-3.09-.67-5.46-4.28-5.46-1.73 0-2.88.95-3.35 1.85h-.05V8.5H9.48Z"/></svg>
@@ -869,21 +834,20 @@
     </section>
   </main>
 
-  <!-- MODALE CANDIDATURA -->
   <div class="modal" id="network-modal" aria-hidden="true">
     <div class="modal__dialog" role="dialog" aria-modal="true" aria-labelledby="network-modal-title">
       <button class="modal__close" id="close-network-modal" type="button" aria-label="Chiudi finestra">✕</button>
 
-      <h2 class="modal__title" id="network-modal-title">Candidatura alla Rete di Boyle</h2>
+      <h2 class="modal__title" id="network-modal-title">Entra nella Rete Smart degli Amici di Boyle!</h2>
       <p class="modal__text">
-        Compila il modulo. La candidatura verrà inviata a <strong>info@amicidiboyle.it</strong> tramite Formspree.
-        In fondo troverai anche il <strong>codice HTML della card</strong> generato automaticamente, così nella mail ti arriva già una base pronta per essere incollata in <code>rete.html</code>.
+        Compila il modulo per candidarti alla rete. La richiesta verrà inviata al team degli Amici di Boyle per la valutazione.
       </p>
 
       <form class="network-form" id="network-form" action="https://formspree.io/f/xzdareqw" method="POST">
         <input type="hidden" name="_subject" value="Nuova candidatura alla Rete di Boyle">
         <input type="hidden" name="_language" value="it">
         <input type="text" name="_gotcha" class="visually-hidden" tabindex="-1" autocomplete="off">
+        <input type="hidden" id="cand-snippet" name="codice_card_html">
 
         <div class="form-grid">
           <div class="field">
@@ -920,19 +884,11 @@
             <label for="cand-bio">Breve presentazione</label>
             <textarea id="cand-bio" name="presentazione" placeholder="Racconta in poche righe chi sei, cosa fai e perché vorresti entrare nella Rete di Boyle."></textarea>
           </div>
-
-          <div class="field field--full">
-            <label for="cand-snippet">Anteprima codice card da incollare in rete.html</label>
-            <textarea id="cand-snippet" name="codice_card_html" class="code-preview" readonly></textarea>
-          </div>
         </div>
 
         <div class="modal__actions">
           <button class="btn-electric" type="submit">
             <span>Invia candidatura</span>
-          </button>
-          <button class="btn-secondary" type="button" id="copy-snippet">
-            Copia codice card
           </button>
         </div>
 
@@ -947,7 +903,6 @@
     const closeBtn = document.getElementById('close-network-modal');
     const form = document.getElementById('network-form');
     const statusBox = document.getElementById('form-status');
-    const copyBtn = document.getElementById('copy-snippet');
 
     const nameInput = document.getElementById('cand-name');
     const emailInput = document.getElementById('cand-email');
@@ -1045,20 +1000,6 @@
       }
     });
 
-    copyBtn.addEventListener('click', async () => {
-      updateSnippet();
-      try{
-        await navigator.clipboard.writeText(snippetField.value);
-        statusBox.textContent = 'Codice card copiato negli appunti.';
-        statusBox.classList.remove('error');
-      }catch{
-        snippetField.select();
-        document.execCommand('copy');
-        statusBox.textContent = 'Codice card copiato negli appunti.';
-        statusBox.classList.remove('error');
-      }
-    });
-
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       updateSnippet();
@@ -1075,7 +1016,7 @@
         });
 
         if(response.ok){
-          statusBox.textContent = 'Candidatura inviata correttamente. Ti consiglio di conservare anche il codice della card.';
+          statusBox.textContent = 'Candidatura inviata correttamente.';
           statusBox.classList.remove('error');
           form.reset();
           updateSnippet();
