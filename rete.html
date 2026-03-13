@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Rete di Boyle | Gli Amici di Boyle</title>
   <meta name="description" content="La rete di professionisti e ricercatori degli Amici di Boyle." />
-    <link rel="stylesheet" href="rete.css" />
+  <link rel="stylesheet" href="rete.css" />
 </head>
 <body>
   <main class="page">
@@ -13,119 +13,29 @@
       <a class="back-link" href="index.html">← Torna alla home</a>
     </div>
 
-    
     <section class="hero">
-      <div class="hero__connectome" aria-hidden="true">
-        <svg class="connectome-svg" viewBox="0 0 1400 520" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <filter id="glow-line" x="-20%" y="-20%" width="140%" height="140%">
-              <feGaussianBlur stdDeviation="1.8" result="blur"/>
-              <feMerge>
-                <feMergeNode in="blur"/>
-                <feMergeNode in="SourceGraphic"/>
-              </feMerge>
-            </feMerge>
-            </filter>
-            <filter id="glow-node" x="-80%" y="-80%" width="260%" height="260%">
-              <feGaussianBlur stdDeviation="3.5" result="blur"/>
-              <feMerge>
-                <feMergeNode in="blur"/>
-                <feMergeNode in="SourceGraphic"/>
-              </feMerge>
-            </feMerge>
-            </filter>
-            <linearGradient id="lineGradA" x1="0" y1="0" x2="1" y2="0">
-              <stop offset="0%" stop-color="#d9fbff" stop-opacity="0.05"/>
-              <stop offset="50%" stop-color="#9aefff" stop-opacity="0.22"/>
-              <stop offset="100%" stop-color="#d9fbff" stop-opacity="0.05"/>
-            </linearGradient>
-            <linearGradient id="lineGradB" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0%" stop-color="#d9fbff" stop-opacity="0.04"/>
-              <stop offset="50%" stop-color="#7cf3ff" stop-opacity="0.18"/>
-              <stop offset="100%" stop-color="#d9fbff" stop-opacity="0.04"/>
-            </linearGradient>
-            <radialGradient id="nodeGrad" cx="50%" cy="50%" r="50%">
-              <stop offset="0%" stop-color="#ffffff" stop-opacity="0.98"/>
-              <stop offset="45%" stop-color="#bff8ff" stop-opacity="0.88"/>
-              <stop offset="100%" stop-color="#7cf3ff" stop-opacity="0.2"/>
-            </radialGradient>
-            <mask id="connectomeFade">
-              <rect width="1400" height="520" fill="white"/>
-              <rect x="0" y="0" width="520" height="520" fill="url(#leftFade)"/>
-            </mask>
-            <linearGradient id="leftFade" x1="0" y1="0" x2="1" y2="0">
-              <stop offset="0%" stop-color="black"/>
-              <stop offset="45%" stop-color="black"/>
-              <stop offset="80%" stop-color="white"/>
-              <stop offset="100%" stop-color="white"/>
-            </linearGradient>
-          </defs>
-
-          <g class="connectome-base" mask="url(#connectomeFade)">
-            <g class="connectome-links" filter="url(#glow-line)">
-              <path id="path-a" d="M 420 145 C 560 70, 770 90, 930 160 S 1160 240, 1310 150" />
-              <path id="path-b" d="M 455 220 C 620 130, 790 160, 940 235 S 1160 330, 1325 245" />
-              <path id="path-c" d="M 390 305 C 560 225, 720 250, 865 320 S 1080 410, 1280 330" />
-              <path id="path-d" d="M 520 120 C 610 220, 730 300, 885 280 S 1110 185, 1275 215" />
-              <path id="path-e" d="M 600 95 C 700 180, 810 210, 930 185 S 1150 115, 1295 175" />
-              <path id="path-f" d="M 650 355 C 760 250, 905 240, 1045 285 S 1200 355, 1330 315" />
-              <path id="path-g" d="M 745 85 C 780 180, 780 280, 745 405" class="link-faint" />
-              <path id="path-h" d="M 560 118 C 635 210, 665 305, 640 420" class="link-soft" />
-              <path id="path-i" d="M 905 118 C 850 200, 820 288, 835 392" class="link-soft" />
-              <path id="path-j" d="M 470 180 C 650 205, 820 185, 1005 150 S 1200 120, 1300 140" class="link-faint" />
-              <path id="path-k" d="M 440 268 C 595 255, 760 305, 915 285 S 1140 220, 1305 250" class="link-soft" />
-              <path id="path-l" d="M 500 360 C 635 300, 780 330, 930 360 S 1145 400, 1315 375" class="link-faint" />
-            </g>
-
-            <g class="connectome-nodes" filter="url(#glow-node)">
-              <circle cx="455" cy="128" r="5.4" class="node node-1"/>
-              <circle cx="598" cy="98" r="4.6" class="node node-2"/>
-              <circle cx="734" cy="114" r="6.2" class="node node-3"/>
-              <circle cx="880" cy="144" r="5.2" class="node node-4"/>
-              <circle cx="1045" cy="175" r="4.6" class="node node-5"/>
-              <circle cx="1214" cy="165" r="6.4" class="node node-6"/>
-              <circle cx="520" cy="220" r="4.2" class="node node-7"/>
-              <circle cx="690" cy="196" r="5.8" class="node node-8"/>
-              <circle cx="846" cy="224" r="4.8" class="node node-9"/>
-              <circle cx="1012" cy="260" r="6.6" class="node node-10"/>
-              <circle cx="1156" cy="286" r="4.9" class="node node-11"/>
-              <circle cx="595" cy="300" r="4.8" class="node node-12"/>
-              <circle cx="742" cy="334" r="5.9" class="node node-13"/>
-              <circle cx="896" cy="318" r="4.1" class="node node-14"/>
-              <circle cx="1088" cy="348" r="5.7" class="node node-15"/>
-              <circle cx="1260" cy="332" r="4.7" class="node node-16"/>
-              <circle cx="655" cy="410" r="3.9" class="node node-17"/>
-              <circle cx="830" cy="392" r="4.5" class="node node-18"/>
-              <circle cx="953" cy="380" r="3.9" class="node node-19"/>
-              <circle cx="1188" cy="395" r="4.5" class="node node-20"/>
-            </g>
-
-            <g class="travelers">
-              <circle r="3.8" class="traveler traveler-a"><animateMotion dur="7.2s" repeatCount="indefinite" rotate="auto"><mpath href="#path-a"/></animateMotion></circle>
-              <circle r="3.1" class="traveler traveler-b"><animateMotion dur="8.9s" begin="-2.1s" repeatCount="indefinite" rotate="auto"><mpath href="#path-b"/></animateMotion></circle>
-              <circle r="3.5" class="traveler traveler-c"><animateMotion dur="10.4s" begin="-5.4s" repeatCount="indefinite" rotate="auto"><mpath href="#path-c"/></animateMotion></circle>
-              <circle r="2.9" class="traveler traveler-d"><animateMotion dur="6.6s" begin="-1.8s" repeatCount="indefinite" rotate="auto"><mpath href="#path-d"/></animateMotion></circle>
-              <circle r="3.2" class="traveler traveler-e"><animateMotion dur="9.6s" begin="-3.8s" repeatCount="indefinite" rotate="auto"><mpath href="#path-e"/></animateMotion></circle>
-              <circle r="3.4" class="traveler traveler-f"><animateMotion dur="8.2s" begin="-4.6s" repeatCount="indefinite" rotate="auto"><mpath href="#path-f"/></animateMotion></circle>
-              <circle r="2.6" class="traveler traveler-g"><animateMotion dur="7.8s" begin="-2.8s" repeatCount="indefinite" rotate="auto"><mpath href="#path-k"/></animateMotion></circle>
-            </g>
-          </g>
-        </svg>
+      <div class="hero__neural" aria-hidden="true">
+        <span class="pulse pulse--1"></span>
+        <span class="pulse pulse--2"></span>
+        <span class="pulse pulse--3"></span>
+        <span class="pulse pulse--4"></span>
+        <span class="pulse pulse--5"></span>
+        <span class="pulse pulse--6"></span>
+        <span class="pulse pulse--7"></span>
+        <span class="pulse pulse--8"></span>
+        <span class="pulse pulse--9"></span>
       </div>
 
-      <div class="hero__content">
-        <div class="hero__eyebrow">Network scientifico</div>
-        <h1 class="hero__title">
-          <span class="glow">Rete</span>
-          di Boyle
-        </h1>
-        <p class="hero__subtitle">
-          La rete di professionisti e ricercatori degli “Amici di Boyle”, un ecosistema multidisciplinare dedicato
-          alla medicina subacquea e iperbarica, agli ambienti estremi, alla fisiologia umana e alla sicurezza.
-        </p>
-      </div>
+      <div class="hero__eyebrow">Network scientifico</div>
+      <h1 class="hero__title">
+        <span class="glow">Rete</span>
+        di Boyle
+      </h1>
+      <p class="hero__subtitle">
+        La rete di professionisti e ricercatori degli “Amici di Boyle”, un ecosistema multidisciplinare dedicato
+        alla medicina subacquea e iperbarica, agli ambienti estremi, alla fisiologia umana e alla sicurezza.
+      </p>
     </section>
-
 
     <section class="members-grid">
 
@@ -240,12 +150,13 @@
           </a>
         </div>
       </article>
-<article class="member-card">
+
+      <article class="member-card">
         <div class="member-photo-wrap">
           <img class="member-photo" src="assets/rete/erion-xhepa.jpg" alt="Erion Xhepa" />
         </div>
         <h2 class="member-name">Erion Xhepa</h2>
-        <p class="member-role">Dive Master|Senior Interventional Cardiologist, Cardiac Catheter Laboratory,TUM University Hospital German Heart Center. Munich.</p>
+        <p class="member-role">Dive Master | Senior Interventional Cardiologist, Cardiac Catheter Laboratory, TUM University Hospital German Heart Center. Munich.</p>
         <div class="member-links">
           <a class="icon-btn" href="https://www.linkedin.com/in/erion-xhepa-a21bb86a/" aria-label="LinkedIn di Erion Xhepa" target="_blank" rel="noopener noreferrer">
             <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.94 8.5H3.56V20h3.38V8.5ZM5.25 3A2.03 2.03 0 1 0 5.3 7.06 2.03 2.03 0 0 0 5.25 3Zm4.23 5.5V20h3.38v-5.7c0-1.5.28-2.95 2.14-2.95 1.83 0 1.86 1.71 1.86 3.05V20h3.39v-6.29c0-3.09-.67-5.46-4.28-5.46-1.73 0-2.88.95-3.35 1.85h-.05V8.5H9.48Z"/></svg>
@@ -280,10 +191,9 @@
         Compila il modulo per candidarti alla rete. La richiesta verrà inviata al team degli Amici di Boyle per la valutazione.
       </p>
 
-      <form class="network-form" id="network-form" action="https://formspree.io/f/xzdareqw" method="POST">
+      <form class="network-form" id="network-form" action="https://formspree.io/f/xzdareqw" method="POST" enctype="multipart/form-data">
         <input type="hidden" name="_subject" value="Nuova candidatura alla Rete di Boyle">
         <input type="hidden" name="_language" value="it">
-       
         <input type="hidden" id="cand-snippet" name="codice_card_html">
 
         <div class="form-grid">
@@ -315,6 +225,12 @@
           <div class="field field--full">
             <label for="cand-linkedin">Profilo LinkedIn</label>
             <input id="cand-linkedin" name="linkedin" type="url" placeholder="https://www.linkedin.com/in/...">
+          </div>
+
+          <div class="field field--full">
+            <label for="cand-photo">Allega foto profilo</label>
+            <input id="cand-photo" name="profile_photo" type="file" accept=".jpg,.jpeg,.png,.webp,image/*">
+            <small class="field__hint">Formato consigliato: JPG o PNG, immagine frontale ben leggibile.</small>
           </div>
 
           <div class="field field--full">
@@ -400,21 +316,7 @@
       const slug = slugify(fullName || 'nome-cognome') || 'nome-cognome';
       const roleLine = escapeHtml(buildRoleLine() || 'Ruolo / breve descrizione.');
 
-      return `<article class="member-card">
-  <div class="member-photo-wrap">
-    <img class="member-photo" src="assets/rete/${slug}.jpg" alt="${safeName}" />
-  </div>
-  <h2 class="member-name">${safeName}</h2>
-  <p class="member-role">${roleLine}</p>
-  <div class="member-links">
-    <a class="icon-btn" href="${escapeHtml(linkedin)}" aria-label="LinkedIn di ${safeName}" target="_blank" rel="noopener noreferrer">
-      <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.94 8.5H3.56V20h3.38V8.5ZM5.25 3A2.03 2.03 0 1 0 5.3 7.06 2.03 2.03 0 0 0 5.25 3Zm4.23 5.5V20h3.38v-5.7c0-1.5.28-2.95 2.14-2.95 1.83 0 1.86 1.71 1.86 3.05V20h3.39v-6.29c0-3.09-.67-5.46-4.28-5.46-1.73 0-2.88.95-3.35 1.85h-.05V8.5H9.48Z"/></svg>
-    </a>
-    <a class="icon-btn" href="mailto:${escapeHtml(email)}" aria-label="Email di ${safeName}">
-      <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6.75A2.75 2.75 0 0 1 5.75 4h12.5A2.75 2.75 0 0 1 21 6.75v10.5A2.75 2.75 0 0 1 18.25 20H5.75A2.75 2.75 0 0 1 3 17.25V6.75Zm2.2-.25 6.27 5.05a.83.83 0 0 0 1.06 0L18.8 6.5H5.2Zm13.8 1.46-5.42 4.36a2.33 2.33 0 0 1-2.96 0L5.2 7.96v9.29c0 .3.25.55.55.55h12.5c.3 0 .55-.25.55-.55V7.96Z"/></svg>
-    </a>
-  </div>
-</article>`;
+      return `<article class="member-card">\n  <div class="member-photo-wrap">\n    <img class="member-photo" src="assets/rete/${slug}.jpg" alt="${safeName}" />\n  </div>\n  <h2 class="member-name">${safeName}</h2>\n  <p class="member-role">${roleLine}</p>\n  <div class="member-links">\n    <a class="icon-btn" href="${escapeHtml(linkedin)}" aria-label="LinkedIn di ${safeName}" target="_blank" rel="noopener noreferrer">\n      <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.94 8.5H3.56V20h3.38V8.5ZM5.25 3A2.03 2.03 0 1 0 5.3 7.06 2.03 2.03 0 0 0 5.25 3Zm4.23 5.5V20h3.38v-5.7c0-1.5.28-2.95 2.14-2.95 1.83 0 1.86 1.71 1.86 3.05V20h3.39v-6.29c0-3.09-.67-5.46-4.28-5.46-1.73 0-2.88.95-3.35 1.85h-.05V8.5H9.48Z"/></svg>\n    </a>\n    <a class="icon-btn" href="mailto:${escapeHtml(email)}" aria-label="Email di ${safeName}">\n      <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6.75A2.75 2.75 0 0 1 5.75 4h12.5A2.75 2.75 0 0 1 21 6.75v10.5A2.75 2.75 0 0 1 18.25 20H5.75A2.75 2.75 0 0 1 3 17.25V6.75Zm2.2-.25 6.27 5.05a.83.83 0 0 0 1.06 0L18.8 6.5H5.2Zm13.8 1.46-5.42 4.36a2.33 2.33 0 0 1-2.96 0L5.2 7.96v9.29c0 .3.25.55.55.55h12.5c.3 0 .55-.25.55-.55V7.96Z"/></svg>\n    </a>\n  </div>\n</article>`;
     }
 
     function updateSnippet(){
