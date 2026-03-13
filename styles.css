@@ -1160,39 +1160,17 @@ main{
   overflow:hidden;
   padding:0;
   min-height:540px;
-  background:
-    radial-gradient(1100px 420px at 50% 0%, rgba(124,243,255,.10), transparent 58%),
-    linear-gradient(180deg, rgba(6,24,45,.12), rgba(2,11,24,.18));
-}
-.networkHero::before{
-  content:"";
-  position:absolute;
-  inset:0;
-  pointer-events:none;
-  background:
-    radial-gradient(520px 180px at 50% 5%, rgba(255,255,255,.12), transparent 58%),
-    radial-gradient(760px 260px at 50% 100%, rgba(124,243,255,.10), transparent 62%),
-    linear-gradient(180deg, rgba(2,10,22,.12), rgba(2,10,22,.20));
-  z-index:0;
+  background:linear-gradient(180deg, rgba(6,24,45,.16), rgba(2,11,24,.22));
 }
 .networkHero__media{
   position:absolute;
   inset:0;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:
-    radial-gradient(900px 280px at 50% 16%, rgba(124,243,255,.10), transparent 58%),
-    linear-gradient(180deg, rgba(2,10,22,.10), rgba(2,10,22,.18));
 }
 .networkHero__media img{
   width:100%;
   height:100%;
-  object-fit:contain;
-  object-position:center center;
-  padding:clamp(10px, 2.4vw, 30px);
-  opacity:.76;
-  filter:drop-shadow(0 0 26px rgba(124,243,255,.16));
+  object-fit:cover;
+  opacity:.96;
   mix-blend-mode:screen;
 }
 .networkHero__footer{
@@ -1204,11 +1182,10 @@ main{
 }
 .networkHero__statement{
   border-radius:22px;
-  border:1px solid rgba(238,246,255,.11);
-  background:rgba(6,14,26,.05);
-  backdrop-filter: blur(4px);
+  border:1px solid rgba(238,246,255,.10);
+  background:rgba(6,14,26,.10);
+  backdrop-filter: blur(6px);
   padding:18px;
-  box-shadow:0 10px 28px rgba(0,0,0,.08);
 }
 .networkHero__overlay{
   display:grid;
@@ -1218,10 +1195,10 @@ main{
 .networkHero__item{
   border-radius:20px;
   border:1px solid rgba(238,246,255,.10);
-  background:rgba(6,14,26,.035);
-  backdrop-filter: blur(3px);
+  background:rgba(6,14,26,.08);
+  backdrop-filter: blur(6px);
   padding:16px;
-  box-shadow:0 12px 28px rgba(0,0,0,.07);
+  box-shadow:0 14px 32px rgba(0,0,0,.08);
 }
 .networkIntro__k{
   display:block;
@@ -1564,4 +1541,130 @@ body::after{
 .activityCard__iconImg,
 .networkHero__media img{
   height:auto;
+}
+
+
+/* =========================================================
+   Final refinements: mobile network section + contact icons/buttons
+========================================================= */
+.contactCard{
+  background:
+    radial-gradient(700px 220px at 50% 0%, rgba(124,243,255,.08), transparent 60%),
+    linear-gradient(180deg, rgba(6,24,45,.42), rgba(2,11,24,.50));
+}
+.contactCard .btn{
+  margin-top:auto;
+}
+.contactCard__icon{
+  width:68px;
+  height:68px;
+  border-radius:22px;
+  background:linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.04));
+  box-shadow:0 16px 34px rgba(0,0,0,.22), inset 0 1px 0 rgba(255,255,255,.08), 0 0 26px rgba(124,243,255,.14);
+  isolation:isolate;
+  overflow:hidden;
+}
+.contactCard__icon::before{
+  content:"";
+  position:absolute;
+  inset:-35% auto -35% -18%;
+  width:34%;
+  background:linear-gradient(90deg, transparent, rgba(255,255,255,.92), transparent);
+  transform:skewX(-22deg);
+  filter:blur(5px);
+  opacity:.95;
+  animation:electricSweep 2.8s linear infinite;
+}
+.contactCard__icon::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(circle at 22% 28%, rgba(124,243,255,.34), transparent 20%),
+    radial-gradient(circle at 76% 70%, rgba(255,255,255,.14), transparent 15%),
+    radial-gradient(circle at 50% 50%, rgba(124,243,255,.10), transparent 42%);
+  mix-blend-mode:screen;
+  pointer-events:none;
+}
+.contactCard__iconSvg{
+  position:relative;
+  z-index:1;
+  width:34px;
+  height:34px;
+  display:block;
+}
+.contactCard__iconSvg *{
+  fill:none;
+  stroke:rgba(238,246,255,.94);
+  stroke-width:2.35;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  vector-effect:non-scaling-stroke;
+}
+.contactCard__iconSvg .contactCard__bolt{
+  stroke:rgba(124,243,255,.98);
+  filter:drop-shadow(0 0 8px rgba(124,243,255,.62));
+}
+.contactCard__icon--mail{
+  background:linear-gradient(180deg, rgba(124,243,255,.20), rgba(124,243,255,.07));
+}
+.contactCard__icon--teach{
+  background:linear-gradient(180deg, rgba(70,170,255,.24), rgba(70,170,255,.07));
+}
+.contactCard__icon--network{
+  background:linear-gradient(180deg, rgba(120,255,214,.20), rgba(120,255,214,.07));
+}
+
+.networkHero__statement,
+.networkHero__item{
+  background:linear-gradient(180deg, rgba(4,17,34,.22), rgba(4,17,34,.10));
+}
+
+@media (max-width: 760px){
+  .contactCard__icon{
+    width:62px;
+    height:62px;
+  }
+  .contactCard__iconSvg{
+    width:30px;
+    height:30px;
+  }
+}
+
+@media (max-width: 640px){
+  .networkHero{
+    min-height:auto;
+    display:grid;
+    grid-template-rows:auto 1fr;
+    background:linear-gradient(180deg, rgba(6,24,45,.10), rgba(2,11,24,.20));
+  }
+  .networkHero__media{
+    position:relative;
+    inset:auto;
+    min-height:280px;
+    display:flex;
+    align-items:flex-end;
+    justify-content:center;
+    background:
+      radial-gradient(400px 190px at 50% 0%, rgba(170,230,255,.12), transparent 58%),
+      linear-gradient(180deg, rgba(255,255,255,.05), transparent 36%);
+  }
+  .networkHero__media img{
+    width:100%;
+    height:100%;
+    object-fit:contain;
+    object-position:center top;
+    padding:12px 10px 0;
+    opacity:.92;
+    mix-blend-mode:screen;
+  }
+  .networkHero__footer{
+    padding:14px 14px 18px;
+    margin-top:-10px;
+  }
+  .networkHero__statement,
+  .networkHero__item{
+    background:linear-gradient(180deg, rgba(4,17,34,.16), rgba(4,17,34,.08));
+    backdrop-filter:blur(6px);
+  }
 }
