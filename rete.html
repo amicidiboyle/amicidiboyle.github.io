@@ -37,6 +37,21 @@
         url("assets/rete-background.jpg") center center / cover no-repeat fixed,
         radial-gradient(circle at top, #0b3b70 0%, #031427 70%);
       min-height:100vh;
+      position:relative;
+      overflow-x:hidden;
+    }
+
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      background:
+        radial-gradient(circle at 18% 12%, rgba(124,243,255,.12), transparent 22%),
+        radial-gradient(circle at 82% 10%, rgba(124,243,255,.08), transparent 18%),
+        linear-gradient(180deg, rgba(255,255,255,.02), transparent 25%);
+      mix-blend-mode:screen;
+      z-index:0;
     }
 
     body::before{
@@ -120,6 +135,7 @@
       box-shadow:var(--shadow);
       overflow:hidden;
       position:relative;
+      isolation:isolate;
     }
 
     .hero::before{
@@ -132,6 +148,21 @@
         radial-gradient(circle at 80% 16%, rgba(124,243,255,.10), transparent 18%),
         linear-gradient(90deg, transparent, rgba(124,243,255,.05), transparent);
       opacity:.95;
+    }
+
+    .hero::after{
+      content:"";
+      position:absolute;
+      inset:-22% -8% auto;
+      height:86%;
+      pointer-events:none;
+      background:
+        radial-gradient(circle at 50% 0%, rgba(255,255,255,.16), transparent 26%),
+        repeating-linear-gradient(115deg, rgba(124,243,255,.11) 0 2px, transparent 2px 28px);
+      opacity:.32;
+      transform:translateY(-6%);
+      mix-blend-mode:screen;
+      z-index:0;
     }
 
     .hero__eyebrow{
@@ -239,12 +270,19 @@
     }
 
     .member-card:hover{
-      transform:translateY(-5px);
+      transform:translateY(-6px) scale(1.01);
       border-color:rgba(124,243,255,.42);
       box-shadow:
         0 0 0 1px rgba(124,243,255,.10) inset,
         0 0 36px rgba(124,243,255,.14),
         var(--shadow-strong);
+    }
+
+    .member-card:hover .member-photo-wrap{
+      box-shadow:
+        0 0 0 2px rgba(124,243,255,.32),
+        0 0 30px rgba(124,243,255,.42),
+        0 0 90px rgba(124,243,255,.18);
     }
 
     .member-card > *{
@@ -677,7 +715,14 @@
       }
 
       .hero__title{
-        font-size:2.5rem;
+        font-size:2.25rem;
+        line-height:1;
+        letter-spacing:-.05em;
+      }
+
+      .hero__subtitle{
+        font-size:1rem;
+        line-height:1.6;
       }
 
       .member-card{
