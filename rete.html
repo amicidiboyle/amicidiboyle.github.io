@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Rete di Boyle | Gli Amici di Boyle</title>
   <meta name="description" content="La rete di professionisti e ricercatori degli Amici di Boyle." />
-  <link rel="stylesheet" href="rete.css" />
+    <link rel="stylesheet" href="rete.css" />
 </head>
 <body>
   <main class="page">
@@ -16,80 +16,116 @@
     
     <section class="hero">
       <div class="hero__connectome" aria-hidden="true">
-        <svg class="connectome-svg" viewBox="0 0 1200 360" preserveAspectRatio="none">
-          <g class="connectome-links">
-            <path id="path-a" d="M72 62 C 180 112, 210 148, 322 128 S 504 66, 602 108 S 780 212, 926 164 S 1088 76, 1162 106" />
-            <path id="path-b" d="M94 258 C 180 208, 296 182, 392 216 S 560 300, 650 250 S 820 134, 966 208 S 1082 304, 1164 286" />
-            <path id="path-c" d="M164 320 C 238 254, 332 180, 446 160 S 640 146, 742 92 S 916 28, 1086 56" />
-            <path id="path-d" d="M152 44 C 254 64, 322 86, 428 126 S 624 242, 778 234 S 1032 138, 1162 182" class="link-soft" />
-            <path id="path-e" d="M44 176 C 140 146, 258 106, 350 126 S 518 250, 658 228 S 894 118, 1128 146" class="link-soft" />
-            <path id="path-f" d="M256 344 C 342 286, 430 246, 544 258 S 744 322, 868 286 S 1028 214, 1140 228" class="link-faint" />
-            <path id="path-g" d="M448 26 C 494 92, 520 146, 534 212 S 550 294, 562 344" class="link-faint" />
-            <path id="path-h" d="M784 14 C 760 82, 734 134, 692 188 S 604 278, 526 334" class="link-faint" />
-          </g>
+        <svg class="connectome-svg" viewBox="0 0 1400 520" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <filter id="glow-line" x="-20%" y="-20%" width="140%" height="140%">
+              <feGaussianBlur stdDeviation="1.8" result="blur"/>
+              <feMerge>
+                <feMergeNode in="blur"/>
+                <feMergeNode in="SourceGraphic"/>
+              </feMerge>
+            </feMerge>
+            </filter>
+            <filter id="glow-node" x="-80%" y="-80%" width="260%" height="260%">
+              <feGaussianBlur stdDeviation="3.5" result="blur"/>
+              <feMerge>
+                <feMergeNode in="blur"/>
+                <feMergeNode in="SourceGraphic"/>
+              </feMerge>
+            </feMerge>
+            </filter>
+            <linearGradient id="lineGradA" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="#d9fbff" stop-opacity="0.05"/>
+              <stop offset="50%" stop-color="#9aefff" stop-opacity="0.22"/>
+              <stop offset="100%" stop-color="#d9fbff" stop-opacity="0.05"/>
+            </linearGradient>
+            <linearGradient id="lineGradB" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#d9fbff" stop-opacity="0.04"/>
+              <stop offset="50%" stop-color="#7cf3ff" stop-opacity="0.18"/>
+              <stop offset="100%" stop-color="#d9fbff" stop-opacity="0.04"/>
+            </linearGradient>
+            <radialGradient id="nodeGrad" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#ffffff" stop-opacity="0.98"/>
+              <stop offset="45%" stop-color="#bff8ff" stop-opacity="0.88"/>
+              <stop offset="100%" stop-color="#7cf3ff" stop-opacity="0.2"/>
+            </radialGradient>
+            <mask id="connectomeFade">
+              <rect width="1400" height="520" fill="white"/>
+              <rect x="0" y="0" width="520" height="520" fill="url(#leftFade)"/>
+            </mask>
+            <linearGradient id="leftFade" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="black"/>
+              <stop offset="45%" stop-color="black"/>
+              <stop offset="80%" stop-color="white"/>
+              <stop offset="100%" stop-color="white"/>
+            </linearGradient>
+          </defs>
 
-          <g class="connectome-nodes">
-            <circle cx="72" cy="62" r="4.3"/>
-            <circle cx="322" cy="128" r="5.2"/>
-            <circle cx="602" cy="108" r="4.8"/>
-            <circle cx="926" cy="164" r="4.4"/>
-            <circle cx="1162" cy="106" r="5.4"/>
-            <circle cx="94" cy="258" r="3.8"/>
-            <circle cx="392" cy="216" r="4.2"/>
-            <circle cx="650" cy="250" r="5.6"/>
-            <circle cx="966" cy="208" r="4.4"/>
-            <circle cx="1164" cy="286" r="3.6"/>
-            <circle cx="164" cy="320" r="4.6"/>
-            <circle cx="446" cy="160" r="4.2"/>
-            <circle cx="742" cy="92" r="5"/>
-            <circle cx="1086" cy="56" r="4.6"/>
-            <circle cx="152" cy="44" r="3.2"/>
-            <circle cx="428" cy="126" r="4"/>
-            <circle cx="778" cy="234" r="4.8"/>
-            <circle cx="1162" cy="182" r="4"/>
-            <circle cx="44" cy="176" r="3"/>
-            <circle cx="350" cy="126" r="4.6"/>
-            <circle cx="658" cy="228" r="4.1"/>
-            <circle cx="1128" cy="146" r="3.6"/>
-            <circle cx="544" cy="258" r="6"/>
-            <circle cx="868" cy="286" r="4.2"/>
-            <circle cx="534" cy="212" r="4.4"/>
-            <circle cx="692" cy="188" r="4.8"/>
-          </g>
+          <g class="connectome-base" mask="url(#connectomeFade)">
+            <g class="connectome-links" filter="url(#glow-line)">
+              <path id="path-a" d="M 420 145 C 560 70, 770 90, 930 160 S 1160 240, 1310 150" />
+              <path id="path-b" d="M 455 220 C 620 130, 790 160, 940 235 S 1160 330, 1325 245" />
+              <path id="path-c" d="M 390 305 C 560 225, 720 250, 865 320 S 1080 410, 1280 330" />
+              <path id="path-d" d="M 520 120 C 610 220, 730 300, 885 280 S 1110 185, 1275 215" />
+              <path id="path-e" d="M 600 95 C 700 180, 810 210, 930 185 S 1150 115, 1295 175" />
+              <path id="path-f" d="M 650 355 C 760 250, 905 240, 1045 285 S 1200 355, 1330 315" />
+              <path id="path-g" d="M 745 85 C 780 180, 780 280, 745 405" class="link-faint" />
+              <path id="path-h" d="M 560 118 C 635 210, 665 305, 640 420" class="link-soft" />
+              <path id="path-i" d="M 905 118 C 850 200, 820 288, 835 392" class="link-soft" />
+              <path id="path-j" d="M 470 180 C 650 205, 820 185, 1005 150 S 1200 120, 1300 140" class="link-faint" />
+              <path id="path-k" d="M 440 268 C 595 255, 760 305, 915 285 S 1140 220, 1305 250" class="link-soft" />
+              <path id="path-l" d="M 500 360 C 635 300, 780 330, 930 360 S 1145 400, 1315 375" class="link-faint" />
+            </g>
 
-          <g class="connectome-travelers">
-            <circle class="traveler traveler--a" r="2.7">
-              <animateMotion dur="7.5s" repeatCount="indefinite" rotate="auto"><mpath href="#path-a"/></animateMotion>
-            </circle>
-            <circle class="traveler traveler--b" r="2.5">
-              <animateMotion dur="10.5s" repeatCount="indefinite" rotate="auto"><mpath href="#path-b"/></animateMotion>
-            </circle>
-            <circle class="traveler traveler--c" r="2.3">
-              <animateMotion dur="8.8s" repeatCount="indefinite" rotate="auto"><mpath href="#path-c"/></animateMotion>
-            </circle>
-            <circle class="traveler traveler--d" r="2.2">
-              <animateMotion dur="11.3s" repeatCount="indefinite" rotate="auto"><mpath href="#path-d"/></animateMotion>
-            </circle>
-            <circle class="traveler traveler--e" r="2.4">
-              <animateMotion dur="9.6s" repeatCount="indefinite" rotate="auto"><mpath href="#path-e"/></animateMotion>
-            </circle>
-            <circle class="traveler traveler--f" r="2.1">
-              <animateMotion dur="12.8s" repeatCount="indefinite" rotate="auto"><mpath href="#path-h"/></animateMotion>
-            </circle>
+            <g class="connectome-nodes" filter="url(#glow-node)">
+              <circle cx="455" cy="128" r="5.4" class="node node-1"/>
+              <circle cx="598" cy="98" r="4.6" class="node node-2"/>
+              <circle cx="734" cy="114" r="6.2" class="node node-3"/>
+              <circle cx="880" cy="144" r="5.2" class="node node-4"/>
+              <circle cx="1045" cy="175" r="4.6" class="node node-5"/>
+              <circle cx="1214" cy="165" r="6.4" class="node node-6"/>
+              <circle cx="520" cy="220" r="4.2" class="node node-7"/>
+              <circle cx="690" cy="196" r="5.8" class="node node-8"/>
+              <circle cx="846" cy="224" r="4.8" class="node node-9"/>
+              <circle cx="1012" cy="260" r="6.6" class="node node-10"/>
+              <circle cx="1156" cy="286" r="4.9" class="node node-11"/>
+              <circle cx="595" cy="300" r="4.8" class="node node-12"/>
+              <circle cx="742" cy="334" r="5.9" class="node node-13"/>
+              <circle cx="896" cy="318" r="4.1" class="node node-14"/>
+              <circle cx="1088" cy="348" r="5.7" class="node node-15"/>
+              <circle cx="1260" cy="332" r="4.7" class="node node-16"/>
+              <circle cx="655" cy="410" r="3.9" class="node node-17"/>
+              <circle cx="830" cy="392" r="4.5" class="node node-18"/>
+              <circle cx="953" cy="380" r="3.9" class="node node-19"/>
+              <circle cx="1188" cy="395" r="4.5" class="node node-20"/>
+            </g>
+
+            <g class="travelers">
+              <circle r="3.8" class="traveler traveler-a"><animateMotion dur="7.2s" repeatCount="indefinite" rotate="auto"><mpath href="#path-a"/></animateMotion></circle>
+              <circle r="3.1" class="traveler traveler-b"><animateMotion dur="8.9s" begin="-2.1s" repeatCount="indefinite" rotate="auto"><mpath href="#path-b"/></animateMotion></circle>
+              <circle r="3.5" class="traveler traveler-c"><animateMotion dur="10.4s" begin="-5.4s" repeatCount="indefinite" rotate="auto"><mpath href="#path-c"/></animateMotion></circle>
+              <circle r="2.9" class="traveler traveler-d"><animateMotion dur="6.6s" begin="-1.8s" repeatCount="indefinite" rotate="auto"><mpath href="#path-d"/></animateMotion></circle>
+              <circle r="3.2" class="traveler traveler-e"><animateMotion dur="9.6s" begin="-3.8s" repeatCount="indefinite" rotate="auto"><mpath href="#path-e"/></animateMotion></circle>
+              <circle r="3.4" class="traveler traveler-f"><animateMotion dur="8.2s" begin="-4.6s" repeatCount="indefinite" rotate="auto"><mpath href="#path-f"/></animateMotion></circle>
+              <circle r="2.6" class="traveler traveler-g"><animateMotion dur="7.8s" begin="-2.8s" repeatCount="indefinite" rotate="auto"><mpath href="#path-k"/></animateMotion></circle>
+            </g>
           </g>
         </svg>
       </div>
 
-      <div class="hero__eyebrow">Network scientifico</div>
-      <h1 class="hero__title">
-        <span class="glow">Rete</span>
-        di Boyle
-      </h1>
-      <p class="hero__subtitle">
-        La rete di professionisti e ricercatori degli “Amici di Boyle”, un ecosistema multidisciplinare dedicato
-        alla medicina subacquea e iperbarica, agli ambienti estremi, alla fisiologia umana e alla sicurezza.
-      </p>
+      <div class="hero__content">
+        <div class="hero__eyebrow">Network scientifico</div>
+        <h1 class="hero__title">
+          <span class="glow">Rete</span>
+          di Boyle
+        </h1>
+        <p class="hero__subtitle">
+          La rete di professionisti e ricercatori degli “Amici di Boyle”, un ecosistema multidisciplinare dedicato
+          alla medicina subacquea e iperbarica, agli ambienti estremi, alla fisiologia umana e alla sicurezza.
+        </p>
+      </div>
     </section>
+
 
     <section class="members-grid">
 
@@ -244,7 +280,7 @@
         Compila il modulo per candidarti alla rete. La richiesta verrà inviata al team degli Amici di Boyle per la valutazione.
       </p>
 
-      <form class="network-form" id="network-form" action="https://formspree.io/f/xzdareqw" method="POST" enctype="multipart/form-data">
+      <form class="network-form" id="network-form" action="https://formspree.io/f/xzdareqw" method="POST">
         <input type="hidden" name="_subject" value="Nuova candidatura alla Rete di Boyle">
         <input type="hidden" name="_language" value="it">
        
@@ -279,12 +315,6 @@
           <div class="field field--full">
             <label for="cand-linkedin">Profilo LinkedIn</label>
             <input id="cand-linkedin" name="linkedin" type="url" placeholder="https://www.linkedin.com/in/...">
-          </div>
-
-          <div class="field field--full">
-            <label for="cand-photo">Allega foto profilo</label>
-            <input id="cand-photo" name="profile_photo" type="file" accept=".jpg,.jpeg,.png,.webp,image/*">
-            <small class="field__hint">Formato consigliato: JPG o PNG, immagine frontale ben leggibile.</small>
           </div>
 
           <div class="field field--full">
