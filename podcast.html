@@ -29,11 +29,26 @@
       </a>
 
       <nav class="nav nav--desktop" aria-label="Navigazione principale">
-        <a href="index.html#vision">Vision</a>
-        <a href="index.html#chisiamo">Chi siamo</a>
-        <a href="index.html#ricerca">Ricerca</a>
-        <a href="index.html#formazione">Formazione</a>
-        <a class="is-active" href="podcast.html" aria-current="page">Podcast</a>
+        <a href="index.html#top">Home</a>
+        <a href="index.html#vision">Visione</a>
+
+        <div class="navDropdown navDropdown--podcast">
+          <a class="navDropdown__trigger" href="index.html#attivita" aria-haspopup="true">
+            <span>Attività</span>
+            <span class="navDropdown__chevron" aria-hidden="true">▾</span>
+          </a>
+          <div class="navDropdown__menu" role="menu" aria-label="Sottomenu Attività">
+            <a role="menuitem" href="index.html#ricerca">Ricerca</a>
+            <a role="menuitem" href="index.html#formazione">Formazione</a>
+            <a role="menuitem" href="index.html#articoli">Pubblicazioni</a>
+            <a role="menuitem" class="is-active" href="podcast.html" aria-current="page">Media</a>
+          </div>
+        </div>
+
+        <a href="index.html#chisiamo">Fondatori</a>
+        <a href="index.html#rete-boyle">Rete</a>
+        <a href="index.html#prossimo-evento">Evento</a>
+        <a href="index.html#partner">Partner</a>
         <a class="btn btn--primary" href="index.html#contatti">Contatti</a>
       </nav>
 
@@ -43,11 +58,17 @@
           <span class="menu__label">Menu</span>
         </summary>
         <div class="menu__panel" role="menu">
-          <a role="menuitem" href="index.html#vision">Vision</a>
-          <a role="menuitem" href="index.html#chisiamo">Chi siamo</a>
+          <a role="menuitem" href="index.html#top">Home</a>
+          <a role="menuitem" href="index.html#vision">Visione</a>
+          <a role="menuitem" href="index.html#attivita">Attività</a>
           <a role="menuitem" href="index.html#ricerca">Ricerca</a>
           <a role="menuitem" href="index.html#formazione">Formazione</a>
-          <a role="menuitem" class="is-active" href="podcast.html" aria-current="page">Podcast</a>
+          <a role="menuitem" href="index.html#articoli">Pubblicazioni</a>
+          <a role="menuitem" class="is-active" href="podcast.html" aria-current="page">Media / Podcast</a>
+          <a role="menuitem" href="index.html#chisiamo">Fondatori</a>
+          <a role="menuitem" href="index.html#rete-boyle">Rete di Boyle</a>
+          <a role="menuitem" href="index.html#prossimo-evento">Evento</a>
+          <a role="menuitem" href="index.html#partner">Partner</a>
           <a role="menuitem" class="btn btn--primary btn--block" href="index.html#contatti">Contatti</a>
         </div>
       </details>
@@ -377,6 +398,24 @@
         </div>
       </details>
     
+        </div>
+
+        <div class="podQr reveal" data-delay="90">
+          <div class="podQr__copy">
+            <span class="podPill">YouTube</span>
+            <h3 class="h3">Inquadra e vai al podcast</h3>
+            <p class="muted">
+              Scansiona il QR code per aprire <strong>Sotto Pressione</strong> su YouTube dal telefono, senza inseguire link come in una caccia al tesoro mal progettata.
+            </p>
+            <div class="podQr__tips">
+              <span>Apri direttamente il podcast dal mobile</span>
+              <span>Condividilo con studenti, colleghi e curiosi</span>
+            </div>
+          </div>
+          <a class="podQr__card" href="https://www.youtube.com/results?search_query=Sotto+Pressione+Luigi+Tarsia" target="_blank" rel="noopener" aria-label="Apri il podcast su YouTube">
+            <img class="podQr__image" src="assets/podcast-qrcode.jpg" alt="QR code per aprire il podcast Sotto Pressione su YouTube" loading="lazy" />
+            <span class="podQr__label">Scansiona per YouTube</span>
+          </a>
         </div>
 
         <div class="podFooterCTA reveal" data-delay="100">
