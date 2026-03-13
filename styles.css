@@ -244,6 +244,42 @@ a:hover{ text-decoration:underline; }
   .brand__sub{ display:none; }
 }
 
+@media (max-width: 640px){
+  .header__inner{
+    grid-template-columns:minmax(0,1fr) auto;
+    gap:10px;
+  }
+  .brand{
+    grid-template-columns:64px 1fr;
+    gap:12px;
+  }
+  .brand__logo{
+    width:64px;
+    height:64px;
+  }
+  .brand__name{
+    font-size:16px;
+    white-space:normal;
+    overflow:visible;
+    text-overflow:clip;
+    line-height:1.02;
+  }
+}
+
+@media (max-width: 420px){
+  .brand{
+    grid-template-columns:56px 1fr;
+    gap:10px;
+  }
+  .brand__logo{
+    width:56px;
+    height:56px;
+  }
+  .brand__name{
+    font-size:15px;
+  }
+}
+
 /* =========================
    Marquee
 ========================= */
@@ -526,7 +562,7 @@ code{
 }
 .panel__title{ margin: 0; font-size: 1.35rem; letter-spacing:-.02em; }
 .panel__text{ margin: 10px 0 0; color: rgba(238,246,255,.76); line-height: 1.55; }
-.panel__cta{ margin-top: 14px; display:grid; gap: 10px; }
+.panel__cta{ margin-top: 14px; display:grid; gap: 10px; align-items:start; }
 .panel__mini{
   margin-top: 14px;
   display:grid;
@@ -897,26 +933,69 @@ hr{
   overflow:hidden;
 }
 .contactCard__icon{
-  width:58px;
-  height:58px;
+  position:relative;
+  width:64px;
+  height:64px;
   display:grid;
   place-items:center;
-  border-radius:20px;
-  border:1px solid rgba(124,243,255,.24);
-  background:rgba(124,243,255,.08);
-  box-shadow:0 14px 34px rgba(0,0,0,.16), inset 0 1px 0 rgba(255,255,255,.06);
-  font-weight:900;
-  font-size:26px;
-  margin-bottom:10px;
+  border-radius:22px;
+  border:1px solid rgba(124,243,255,.28);
+  background:linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.03));
+  box-shadow:0 16px 34px rgba(0,0,0,.20), inset 0 1px 0 rgba(255,255,255,.08), 0 0 24px rgba(124,243,255,.12);
+  margin-bottom:12px;
+  overflow:hidden;
+  isolation:isolate;
+}
+.contactCard__icon::before{
+  content:"";
+  position:absolute;
+  inset:-35% auto -35% -18%;
+  width:34%;
+  background:linear-gradient(90deg, transparent, rgba(255,255,255,.92), transparent);
+  transform:skewX(-22deg);
+  filter:blur(5px);
+  opacity:.95;
+  animation:electricSweep 2.8s linear infinite;
+}
+.contactCard__icon::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(circle at 18% 50%, rgba(124,243,255,.36), transparent 18%),
+    radial-gradient(circle at 55% 46%, rgba(255,255,255,.18), transparent 12%),
+    radial-gradient(circle at 82% 54%, rgba(124,243,255,.30), transparent 20%);
+  mix-blend-mode:screen;
+  opacity:.72;
+  pointer-events:none;
+}
+.contactCard__iconSvg{
+  position:relative;
+  z-index:1;
+  width:30px;
+  height:30px;
+  stroke:currentColor;
+  stroke-width:2.4;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  color:#eefcff;
+  fill:none;
+  filter:drop-shadow(0 0 12px currentColor);
+}
+.contactCard__bolt{
+  stroke:#ffffff;
 }
 .contactCard__icon--mail{
-  background:linear-gradient(180deg, rgba(124,243,255,.18), rgba(124,243,255,.06));
+  color:#bff6ff;
+  background:linear-gradient(180deg, rgba(124,243,255,.22), rgba(124,243,255,.06));
 }
 .contactCard__icon--teach{
-  background:linear-gradient(180deg, rgba(70,170,255,.20), rgba(70,170,255,.06));
+  color:#bcd8ff;
+  background:linear-gradient(180deg, rgba(70,170,255,.24), rgba(70,170,255,.07));
 }
 .contactCard__icon--network{
-  background:linear-gradient(180deg, rgba(120,255,214,.18), rgba(120,255,214,.06));
+  color:#cbffe9;
+  background:linear-gradient(180deg, rgba(120,255,214,.22), rgba(120,255,214,.07));
 }
 
 .contactList{
@@ -1169,7 +1248,9 @@ main{
 .networkHero__media img{
   width:100%;
   height:100%;
-  object-fit:cover;
+  object-fit:contain;
+  object-position:center center;
+  padding:clamp(18px, 2.8vw, 34px);
   opacity:.96;
   mix-blend-mode:screen;
 }
@@ -1538,7 +1619,6 @@ body::after{
 .brand__logo,
 .heroPodcast__cover,
 .avatarImg,
-.activityCard__iconImg,
-.networkHero__media img{
+.activityCard__iconImg{
   height:auto;
 }
