@@ -16,76 +16,66 @@
     
     <section class="hero">
       <div class="hero__connectome" aria-hidden="true">
-        <svg class="connectome-svg" viewBox="0 0 1200 420" preserveAspectRatio="none">
-          <defs>
-            <linearGradient id="signalGrad" x1="0" y1="0" x2="1" y2="0">
-              <stop offset="0%" stop-color="rgba(255,255,255,0)" />
-              <stop offset="45%" stop-color="#dff9ff" />
-              <stop offset="100%" stop-color="rgba(255,255,255,0)" />
-            </linearGradient>
-          </defs>
-
-          <g class="connectome-base">
-            <path id="path-a" d="M54 128 C 138 82, 228 78, 314 128 S 504 212, 640 188 S 842 74, 1142 114" class="major" />
-            <path id="path-b" d="M88 242 C 202 188, 298 148, 408 180 S 612 282, 756 248 S 936 154, 1140 196" class="major" />
-            <path id="path-c" d="M178 332 C 272 246, 358 188, 470 194 S 642 302, 760 316 S 1008 272, 1124 226" class="soft" />
-            <path id="path-d" d="M218 82 C 334 102, 432 144, 538 212 S 756 342, 1008 348" class="soft" />
-            <path id="path-e" d="M402 34 C 438 98, 458 146, 496 208 S 590 314, 700 376" class="branch" />
-            <path id="path-f" d="M760 32 C 722 108, 676 150, 624 206 S 508 314, 394 370" class="branch" />
-            <path id="path-g" d="M114 166 C 230 154, 332 114, 472 118 S 730 196, 922 178 S 1062 148, 1144 172" class="soft" />
-            <path id="path-h" d="M128 292 C 242 246, 340 224, 428 246 S 604 330, 768 302 S 1010 206, 1138 242" class="soft" />
-            <path id="path-i" d="M560 58 C 620 106, 666 126, 736 122 S 920 82, 1080 90" class="branch faint" />
-            <path id="path-j" d="M542 236 C 620 206, 684 198, 766 224 S 944 304, 1118 316" class="branch faint" />
-          </g>
-
-          <g class="connectome-signal">
-            <path d="M54 128 C 138 82, 228 78, 314 128 S 504 212, 640 188 S 842 74, 1142 114" class="signal signal-a" />
-            <path d="M88 242 C 202 188, 298 148, 408 180 S 612 282, 756 248 S 936 154, 1140 196" class="signal signal-b" />
-            <path d="M178 332 C 272 246, 358 188, 470 194 S 642 302, 760 316 S 1008 272, 1124 226" class="signal signal-c" />
-            <path d="M218 82 C 334 102, 432 144, 538 212 S 756 342, 1008 348" class="signal signal-d" />
-            <path d="M402 34 C 438 98, 458 146, 496 208 S 590 314, 700 376" class="signal signal-e" />
-            <path d="M760 32 C 722 108, 676 150, 624 206 S 508 314, 394 370" class="signal signal-f" />
+        <svg class="connectome-svg" viewBox="0 0 1200 360" preserveAspectRatio="none">
+          <g class="connectome-links">
+            <path id="path-a" d="M72 62 C 180 112, 210 148, 322 128 S 504 66, 602 108 S 780 212, 926 164 S 1088 76, 1162 106" />
+            <path id="path-b" d="M94 258 C 180 208, 296 182, 392 216 S 560 300, 650 250 S 820 134, 966 208 S 1082 304, 1164 286" />
+            <path id="path-c" d="M164 320 C 238 254, 332 180, 446 160 S 640 146, 742 92 S 916 28, 1086 56" />
+            <path id="path-d" d="M152 44 C 254 64, 322 86, 428 126 S 624 242, 778 234 S 1032 138, 1162 182" class="link-soft" />
+            <path id="path-e" d="M44 176 C 140 146, 258 106, 350 126 S 518 250, 658 228 S 894 118, 1128 146" class="link-soft" />
+            <path id="path-f" d="M256 344 C 342 286, 430 246, 544 258 S 744 322, 868 286 S 1028 214, 1140 228" class="link-faint" />
+            <path id="path-g" d="M448 26 C 494 92, 520 146, 534 212 S 550 294, 562 344" class="link-faint" />
+            <path id="path-h" d="M784 14 C 760 82, 734 134, 692 188 S 604 278, 526 334" class="link-faint" />
           </g>
 
           <g class="connectome-nodes">
-            <circle cx="54" cy="128" r="3.4"/>
-            <circle cx="152" cy="98" r="2.8"/>
-            <circle cx="314" cy="128" r="5.8"/>
-            <circle cx="472" cy="118" r="4.1"/>
-            <circle cx="640" cy="188" r="6.3"/>
-            <circle cx="818" cy="124" r="4.8"/>
-            <circle cx="956" cy="106" r="3.7"/>
-            <circle cx="1142" cy="114" r="5.6"/>
-            <circle cx="88" cy="242" r="2.9"/>
-            <circle cx="232" cy="182" r="3.1"/>
-            <circle cx="408" cy="180" r="4.7"/>
-            <circle cx="548" cy="238" r="3.8"/>
-            <circle cx="756" cy="248" r="5.4"/>
-            <circle cx="944" cy="172" r="4.5"/>
-            <circle cx="1140" cy="196" r="5.1"/>
-            <circle cx="178" cy="332" r="3.9"/>
-            <circle cx="470" cy="194" r="4.3"/>
-            <circle cx="700" cy="376" r="4.9"/>
-            <circle cx="922" cy="178" r="4.2"/>
-            <circle cx="1008" cy="348" r="3.6"/>
-            <circle cx="402" cy="34" r="2.7"/>
-            <circle cx="496" cy="208" r="4.6"/>
-            <circle cx="760" cy="32" r="3.4"/>
-            <circle cx="624" cy="206" r="5.1"/>
-            <circle cx="560" cy="58" r="2.9"/>
-            <circle cx="766" cy="224" r="4.1"/>
-            <circle cx="1118" cy="316" r="3.2"/>
+            <circle cx="72" cy="62" r="4.3"/>
+            <circle cx="322" cy="128" r="5.2"/>
+            <circle cx="602" cy="108" r="4.8"/>
+            <circle cx="926" cy="164" r="4.4"/>
+            <circle cx="1162" cy="106" r="5.4"/>
+            <circle cx="94" cy="258" r="3.8"/>
+            <circle cx="392" cy="216" r="4.2"/>
+            <circle cx="650" cy="250" r="5.6"/>
+            <circle cx="966" cy="208" r="4.4"/>
+            <circle cx="1164" cy="286" r="3.6"/>
+            <circle cx="164" cy="320" r="4.6"/>
+            <circle cx="446" cy="160" r="4.2"/>
+            <circle cx="742" cy="92" r="5"/>
+            <circle cx="1086" cy="56" r="4.6"/>
+            <circle cx="152" cy="44" r="3.2"/>
+            <circle cx="428" cy="126" r="4"/>
+            <circle cx="778" cy="234" r="4.8"/>
+            <circle cx="1162" cy="182" r="4"/>
+            <circle cx="44" cy="176" r="3"/>
+            <circle cx="350" cy="126" r="4.6"/>
+            <circle cx="658" cy="228" r="4.1"/>
+            <circle cx="1128" cy="146" r="3.6"/>
+            <circle cx="544" cy="258" r="6"/>
+            <circle cx="868" cy="286" r="4.2"/>
+            <circle cx="534" cy="212" r="4.4"/>
+            <circle cx="692" cy="188" r="4.8"/>
           </g>
 
           <g class="connectome-travelers">
-            <circle class="traveler traveler--a" r="2.2"><animateMotion dur="6.4s" repeatCount="indefinite" rotate="auto"><mpath href="#path-a"/></animateMotion></circle>
-            <circle class="traveler traveler--b" r="1.8"><animateMotion dur="8.9s" begin="-2.2s" repeatCount="indefinite" rotate="auto"><mpath href="#path-b"/></animateMotion></circle>
-            <circle class="traveler traveler--c" r="2.0"><animateMotion dur="7.8s" begin="-4.1s" repeatCount="indefinite" rotate="auto"><mpath href="#path-c"/></animateMotion></circle>
-            <circle class="traveler traveler--d" r="1.7"><animateMotion dur="9.8s" begin="-1.1s" repeatCount="indefinite" rotate="auto"><mpath href="#path-d"/></animateMotion></circle>
-            <circle class="traveler traveler--e" r="1.9"><animateMotion dur="5.6s" begin="-3.3s" repeatCount="indefinite" rotate="auto"><mpath href="#path-e"/></animateMotion></circle>
-            <circle class="traveler traveler--f" r="1.8"><animateMotion dur="7.1s" begin="-5.7s" repeatCount="indefinite" rotate="auto"><mpath href="#path-f"/></animateMotion></circle>
-            <circle class="traveler traveler--g" r="1.5"><animateMotion dur="11.2s" begin="-2.8s" repeatCount="indefinite" rotate="auto"><mpath href="#path-g"/></animateMotion></circle>
-            <circle class="traveler traveler--h" r="1.6"><animateMotion dur="10.4s" begin="-6.4s" repeatCount="indefinite" rotate="auto"><mpath href="#path-h"/></animateMotion></circle>
+            <circle class="traveler traveler--a" r="2.7">
+              <animateMotion dur="7.5s" repeatCount="indefinite" rotate="auto"><mpath href="#path-a"/></animateMotion>
+            </circle>
+            <circle class="traveler traveler--b" r="2.5">
+              <animateMotion dur="10.5s" repeatCount="indefinite" rotate="auto"><mpath href="#path-b"/></animateMotion>
+            </circle>
+            <circle class="traveler traveler--c" r="2.3">
+              <animateMotion dur="8.8s" repeatCount="indefinite" rotate="auto"><mpath href="#path-c"/></animateMotion>
+            </circle>
+            <circle class="traveler traveler--d" r="2.2">
+              <animateMotion dur="11.3s" repeatCount="indefinite" rotate="auto"><mpath href="#path-d"/></animateMotion>
+            </circle>
+            <circle class="traveler traveler--e" r="2.4">
+              <animateMotion dur="9.6s" repeatCount="indefinite" rotate="auto"><mpath href="#path-e"/></animateMotion>
+            </circle>
+            <circle class="traveler traveler--f" r="2.1">
+              <animateMotion dur="12.8s" repeatCount="indefinite" rotate="auto"><mpath href="#path-h"/></animateMotion>
+            </circle>
           </g>
         </svg>
       </div>
