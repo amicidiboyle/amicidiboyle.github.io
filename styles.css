@@ -1300,7 +1300,7 @@ body::before{
   inset:0;
   pointer-events:none;
   z-index:-2;
-  background-image:url("assets/ocean-background.png");
+  background-image:url("assets/ocean-mobile.jpg");
   background-repeat:no-repeat;
   background-position:center top;
   background-size:cover;
@@ -1892,3 +1892,230 @@ main,
     animation:none !important;
   }
 }
+
+
+/* ===== March 14 final polish: mobile background, founder links, network card ===== */
+
+/* restore correct new ocean background on all devices */
+body{
+  background:#031427;
+}
+body::before{
+  background-image:url("assets/ocean-mobile.jpg") !important;
+  background-position:center top !important;
+  background-size:cover !important;
+}
+@media (min-width:1024px){
+  body::before{
+    background-image:url("assets/ocean-desktop.jpg") !important;
+    background-position:center 10% !important;
+    background-size:cover !important;
+  }
+}
+@media (max-width:767px){
+  body::before{
+    background-image:url("assets/ocean-mobile.jpg") !important;
+    background-position:center top !important;
+    background-size:cover !important;
+  }
+  body::after{ opacity:.12 !important; }
+}
+
+/* keep founder linkedin buttons small and aligned */
+.person__titleRow{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  flex-wrap:wrap;
+}
+.founder-link{
+  width:34px !important;
+  height:34px !important;
+  min-width:34px;
+  min-height:34px;
+  flex:0 0 34px;
+  border-radius:999px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  border:1px solid rgba(124,243,255,.24);
+  background:rgba(255,255,255,.05);
+  box-shadow:0 0 14px rgba(124,243,255,.10), inset 0 0 0 1px rgba(255,255,255,.03);
+  text-decoration:none !important;
+  padding:0 !important;
+  line-height:1 !important;
+  font-size:0 !important;
+}
+.founder-link:hover{
+  transform:translateY(-1px) scale(1.04);
+  background:rgba(124,243,255,.12);
+  border-color:rgba(124,243,255,.42);
+  box-shadow:0 0 18px rgba(124,243,255,.20), 0 10px 20px rgba(0,0,0,.18);
+}
+.founder-link__icon{
+  width:18px !important;
+  height:18px !important;
+  display:block;
+  fill:currentColor;
+  color:#eefcff;
+  filter:drop-shadow(0 0 8px rgba(124,243,255,.28));
+}
+@media (max-width:640px){
+  .founder-link{
+    width:32px !important;
+    height:32px !important;
+    min-width:32px;
+    min-height:32px;
+    flex-basis:32px;
+  }
+  .founder-link__icon{
+    width:17px !important;
+    height:17px !important;
+  }
+}
+
+/* better network section desktop: map as subtle atmospheric background */
+.networkHero{
+  min-height:600px;
+  background:
+    linear-gradient(180deg, rgba(6,24,45,.10), rgba(2,11,24,.16));
+}
+.networkHero__media,
+.networkHero__media picture{
+  position:absolute;
+  inset:0;
+}
+.networkHero__media img{
+  width:100%;
+  height:100%;
+  max-width:none;
+  object-fit:contain;
+  object-position:center 28%;
+  padding:18px 18px 8px;
+  opacity:.18;
+  mix-blend-mode:screen;
+  filter:drop-shadow(0 0 14px rgba(124,243,255,.10)) saturate(1.03) contrast(1.01);
+}
+.networkHero__footer{
+  position:relative;
+  z-index:1;
+  display:grid;
+  gap:16px;
+  padding:26px 24px 22px;
+}
+.networkHero__statement{
+  max-width:860px;
+  border-radius:22px;
+  border:1px solid rgba(238,246,255,.10);
+  background:linear-gradient(180deg, rgba(4,17,34,.34), rgba(4,17,34,.20));
+  backdrop-filter:blur(7px);
+  padding:20px 20px 18px;
+}
+.networkHero__overlay{
+  display:grid;
+  grid-template-columns:repeat(3, minmax(0,1fr));
+  gap:16px;
+}
+.networkHero__item{
+  min-height:100%;
+  border-radius:20px;
+  border:1px solid rgba(238,246,255,.10);
+  background:linear-gradient(180deg, rgba(4,17,34,.28), rgba(4,17,34,.18));
+  backdrop-filter:blur(7px);
+  padding:16px;
+  box-shadow:0 14px 32px rgba(0,0,0,.08);
+}
+
+/* mobile: Italy becomes soft background inside the section, not a big foreground sticker */
+@media (max-width:980px){
+  .networkHero{
+    min-height:auto;
+    padding:0;
+    background:linear-gradient(180deg, rgba(6,24,45,.14), rgba(2,11,24,.18));
+  }
+  .networkHero__media{
+    position:absolute;
+    inset:0;
+    min-height:unset;
+    background:none;
+  }
+  .networkHero__media img{
+    width:100%;
+    height:100%;
+    object-fit:contain;
+    object-position:center 32%;
+    padding:18px 8px 14px;
+    opacity:.15;
+    mix-blend-mode:screen;
+    filter:drop-shadow(0 0 10px rgba(124,243,255,.08)) saturate(1.02) contrast(1.01);
+  }
+  .networkHero__footer{
+    padding:20px 14px 18px;
+    gap:14px;
+  }
+  .networkHero__statement{
+    max-width:none;
+    padding:18px 16px 16px;
+    background:linear-gradient(180deg, rgba(4,17,34,.44), rgba(4,17,34,.24));
+  }
+  .networkHero__overlay{
+    grid-template-columns:1fr;
+    gap:14px;
+  }
+  .networkHero__item{
+    background:linear-gradient(180deg, rgba(4,17,34,.40), rgba(4,17,34,.22));
+  }
+}
+@media (max-width:640px){
+  .networkHero{
+    min-height:760px;
+  }
+  .networkHero__media img{
+    object-position:center 28%;
+    padding:24px 6px 12px;
+    opacity:.14;
+  }
+}
+
+/* keep brand tidy on mobile */
+@media (max-width:980px){
+  .brand__sub{
+    display:grid !important;
+    gap:2px;
+    opacity:.95;
+  }
+  .brand__line{
+    font-size:10px;
+    line-height:1.04;
+    color:rgba(238,246,255,.92);
+  }
+}
+@media (max-width:640px){
+  .brand{
+    grid-template-columns:60px 1fr;
+    gap:10px;
+    align-items:start;
+  }
+  .brand__logo{
+    width:60px;
+    height:60px;
+  }
+  .brand__name{
+    font-size:14px;
+    white-space:normal;
+    overflow:visible;
+    text-overflow:clip;
+    line-height:1.02;
+    max-width:none;
+  }
+  .brand__line{
+    font-size:9px;
+  }
+}
+
+/* a bit more visible underwater dust without overdoing it */
+.waterDust{
+  opacity:.42 !important;
+}
+.waterDust::before{ animation-duration:32s !important; }
+.waterDust::after{ animation-duration:44s !important; }
