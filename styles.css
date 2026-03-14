@@ -1544,346 +1544,351 @@ body::after{
 }
 
 
-/* ===== March 14 refinement: founders + background + no-upload forms ===== */
-.person__titleRow{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  flex-wrap:wrap;
+/* =========================================================
+   Final refinements: mobile network section + contact icons/buttons
+========================================================= */
+.contactCard{
+  background:
+    radial-gradient(700px 220px at 50% 0%, rgba(124,243,255,.08), transparent 60%),
+    linear-gradient(180deg, rgba(6,24,45,.42), rgba(2,11,24,.50));
 }
-.founder-link{
+.contactCard .btn{
+  margin-top:auto;
+}
+.contactCard__icon{
+  width:68px;
+  height:68px;
+  border-radius:22px;
+  background:linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.04));
+  box-shadow:0 16px 34px rgba(0,0,0,.22), inset 0 1px 0 rgba(255,255,255,.08), 0 0 26px rgba(124,243,255,.14);
+  isolation:isolate;
+  overflow:hidden;
+}
+.contactCard__icon::before{
+  content:"";
+  position:absolute;
+  inset:-35% auto -35% -18%;
+  width:34%;
+  background:linear-gradient(90deg, transparent, rgba(255,255,255,.92), transparent);
+  transform:skewX(-22deg);
+  filter:blur(5px);
+  opacity:.95;
+  animation:electricSweep 2.8s linear infinite;
+}
+.contactCard__icon::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(circle at 22% 28%, rgba(124,243,255,.34), transparent 20%),
+    radial-gradient(circle at 76% 70%, rgba(255,255,255,.14), transparent 15%),
+    radial-gradient(circle at 50% 50%, rgba(124,243,255,.10), transparent 42%);
+  mix-blend-mode:screen;
+  pointer-events:none;
+}
+.contactCard__iconSvg{
+  position:relative;
+  z-index:1;
   width:34px;
   height:34px;
-  border-radius:999px;
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  border:1px solid rgba(124,243,255,.24);
-  background:rgba(255,255,255,.05);
-  box-shadow:0 0 14px rgba(124,243,255,.10), inset 0 0 0 1px rgba(255,255,255,.03);
-  transition:transform .18s ease, background .18s ease, border-color .18s ease, box-shadow .18s ease;
-  text-decoration:none;
+  display:block;
 }
-.founder-link:hover{
-  transform:translateY(-1px) scale(1.04);
-  background:rgba(124,243,255,.12);
-  border-color:rgba(124,243,255,.42);
-  box-shadow:0 0 18px rgba(124,243,255,.20), 0 10px 20px rgba(0,0,0,.18);
+.contactCard__iconSvg *{
+  fill:none;
+  stroke:rgba(238,246,255,.94);
+  stroke-width:2.35;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  vector-effect:non-scaling-stroke;
 }
-.founder-link__icon{
-  width:18px;
-  height:18px;
-  fill:currentColor;
-  color:#eefcff;
-  filter:drop-shadow(0 0 8px rgba(124,243,255,.28));
+.contactCard__iconSvg .contactCard__bolt{
+  stroke:rgba(124,243,255,.98);
+  filter:drop-shadow(0 0 8px rgba(124,243,255,.62));
 }
-
-#contactFormBoyle .callout,
-#contactFormBoyle input[type="file"]{
-  display:none !important;
+.contactCard__icon--mail{
+  background:linear-gradient(180deg, rgba(124,243,255,.20), rgba(124,243,255,.07));
+}
+.contactCard__icon--teach{
+  background:linear-gradient(180deg, rgba(70,170,255,.24), rgba(70,170,255,.07));
+}
+.contactCard__icon--network{
+  background:linear-gradient(180deg, rgba(120,255,214,.20), rgba(120,255,214,.07));
 }
 
-/* use new mobile background instead of the old one */
-body::before{
-  background-image:url("assets/ocean-mobile.jpg");
-  background-repeat:no-repeat;
-  background-position:center top;
-  background-size:cover;
-  opacity:1;
-}
-body::after{
-  opacity:.30;
-}
-
-@media (min-width: 1024px){
-  body::before{
-    background-image:url("assets/ocean-desktop.jpg");
-    background-position:center 8%;
-    background-size:cover;
-  }
-  body::after{ opacity:.24; }
-}
-
-@media (max-width: 767px){
-  body::before{
-    background-image:url("assets/ocean-mobile.jpg");
-    background-position:center top;
-    background-size:cover;
-  }
-  body::after{ opacity:.16; }
-}
-
-/* make the network block in home feel lighter and let the map breathe */
-.networkHero{
-  min-height:620px;
-  background:linear-gradient(180deg, rgba(6,24,45,.06), rgba(2,11,24,.14));
-}
-.networkHero__media img{
-  width:100%;
-  height:100% !important;
-  max-width:none;
-  object-fit:contain;
-  object-position:center 28%;
-  padding:20px 18px 0;
-  opacity:.94;
-  filter:drop-shadow(0 0 24px rgba(124,243,255,.12)) saturate(1.04) contrast(1.02);
-  mix-blend-mode:screen;
-}
 .networkHero__statement,
 .networkHero__item{
-  background:linear-gradient(180deg, rgba(4,17,34,.16), rgba(4,17,34,.05));
-  backdrop-filter:blur(5px);
+  background:linear-gradient(180deg, rgba(4,17,34,.22), rgba(4,17,34,.10));
 }
-.networkHero__footer{
-  padding:24px;
+
+@media (max-width: 760px){
+  .contactCard__icon{
+    width:62px;
+    height:62px;
+  }
+  .contactCard__iconSvg{
+    width:30px;
+    height:30px;
+  }
 }
-@media (max-width:980px){
+
+@media (max-width: 640px){
   .networkHero{
     min-height:auto;
     display:grid;
-    grid-template-rows:minmax(230px, 42vw) auto;
+    grid-template-rows:auto 1fr;
+    background:linear-gradient(180deg, rgba(6,24,45,.10), rgba(2,11,24,.20));
+  }
+  .networkHero__media{
+    position:relative;
+    inset:auto;
+    min-height:280px;
+    display:flex;
+    align-items:flex-end;
+    justify-content:center;
+    background:
+      radial-gradient(400px 190px at 50% 0%, rgba(170,230,255,.12), transparent 58%),
+      linear-gradient(180deg, rgba(255,255,255,.05), transparent 36%);
   }
   .networkHero__media img{
     width:100%;
-    height:100% !important;
-    object-fit:cover;
-    object-position:center 34%;
-    padding:0;
-    opacity:.90;
+    height:100%;
+    object-fit:contain;
+    object-position:center top;
+    padding:12px 10px 0;
+    opacity:.92;
+    mix-blend-mode:screen;
+  }
+  .networkHero__footer{
+    padding:14px 14px 18px;
+    margin-top:-10px;
+  }
+  .networkHero__statement,
+  .networkHero__item{
+    background:linear-gradient(180deg, rgba(4,17,34,.16), rgba(4,17,34,.08));
+    backdrop-filter:blur(6px);
   }
 }
 
-/* a touch more contrast for hero copy over the new background */
-.hero__copy{
+
+/* ===== March 14 refinement v2: mobile network, dust, brand, smoothness ===== */
+body{
+  position:relative;
+}
+
+/* make sure content stays above atmospheric layers */
+.header,
+.marquee,
+main,
+.footer{
   position:relative;
   z-index:1;
 }
-.hero__copy::before{
-  content:"";
-  position:absolute;
-  inset:-28px -28px -28px -18px;
-  background:radial-gradient(circle at 24% 30%, rgba(3,20,39,.24), rgba(3,20,39,.10) 48%, rgba(3,20,39,0) 78%);
-  filter:blur(10px);
-  z-index:-1;
-  pointer-events:none;
-}
 
-
-/* ===== March 14 mobile/network refinements ===== */
-
-/* keep mobile scrolling calmer */
-@media (max-width: 980px){
-  html{ scroll-behavior:auto; }
-  body{
-    background-attachment: scroll !important;
-    -webkit-overflow-scrolling: touch;
-    overscroll-behavior-y: contain;
-  }
-  .header{
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-  }
-}
-
-/* fixed ocean layer without old grey jump */
-body{
-  background: #031427;
-}
-body::before{
-  content:"";
-  position:fixed;
-  inset:0;
-  pointer-events:none;
-  z-index:-3;
-  background-image:url("assets/ocean-mobile.jpg");
-  background-repeat:no-repeat;
-  background-position:center top;
-  background-size:cover;
-  opacity:1;
-  transform:translateZ(0);
-}
-body::after{
-  content:"";
-  position:fixed;
-  inset:0;
-  pointer-events:none;
-  z-index:-2;
-  background:
-    linear-gradient(180deg,
-      rgba(4,23,43,.02) 0%,
-      rgba(4,23,43,.04) 22%,
-      rgba(3,20,39,.05) 46%,
-      rgba(2,14,28,.08) 70%,
-      rgba(0,4,10,.14) 100%
-    ),
-    url("assets/light-rays-overlay.png") center top / cover no-repeat;
-  opacity:.20;
-}
-
-@media (min-width: 1024px){
-  body::before{
-    background-image:url("assets/ocean-desktop.jpg");
-    background-position:center 10%;
-    background-size:cover;
-  }
-  body::after{ opacity:.18; }
-}
-@media (max-width: 767px){
-  body::before{
-    background-image:url("assets/ocean-mobile.jpg");
-    background-position:center top;
-    background-size:cover;
-  }
-  body::after{ opacity:.12; }
-}
-
-/* subtle underwater dust */
+/* visible underwater dust */
 .waterDust{
   position:fixed;
   inset:0;
   pointer-events:none;
-  z-index:-1;
-  opacity:.32;
+  z-index:0;
+  opacity:.52;
+  mix-blend-mode:screen;
   overflow:hidden;
 }
 .waterDust::before,
 .waterDust::after{
   content:"";
   position:absolute;
-  inset:-20% 0;
+  inset:-15% 0;
   background-repeat:repeat;
-  animation: dustRise 34s linear infinite;
-  will-change: transform, opacity;
+  will-change:transform, opacity;
 }
 .waterDust::before{
   background-image:
-    radial-gradient(circle, rgba(255,255,255,.36) 0 1px, transparent 1.8px),
-    radial-gradient(circle, rgba(124,243,255,.28) 0 1.4px, transparent 2px),
-    radial-gradient(circle, rgba(255,255,255,.18) 0 0.8px, transparent 1.6px);
-  background-size: 220px 220px, 300px 300px, 160px 160px;
-  background-position: 20px 40px, 120px 180px, 60px 100px;
-  filter: blur(.2px);
+    radial-gradient(circle, rgba(255,255,255,.55) 0 1px, transparent 1.9px),
+    radial-gradient(circle, rgba(124,243,255,.34) 0 1.4px, transparent 2.3px),
+    radial-gradient(circle, rgba(255,255,255,.22) 0 .8px, transparent 1.6px);
+  background-size: 180px 180px, 260px 260px, 120px 120px;
+  background-position: 18px 26px, 120px 110px, 60px 80px;
+  animation: dustRiseA 30s linear infinite;
 }
 .waterDust::after{
   background-image:
-    radial-gradient(circle, rgba(255,255,255,.20) 0 1px, transparent 1.8px),
-    radial-gradient(circle, rgba(124,243,255,.20) 0 1.2px, transparent 2px);
-  background-size: 260px 260px, 340px 340px;
-  background-position: 100px 140px, 10px 220px;
-  opacity:.7;
-  animation-duration: 46s;
+    radial-gradient(circle, rgba(255,255,255,.22) 0 1px, transparent 1.8px),
+    radial-gradient(circle, rgba(124,243,255,.20) 0 1.1px, transparent 2px);
+  background-size: 240px 240px, 320px 320px;
+  background-position: 80px 140px, 20px 220px;
+  opacity:.78;
+  animation: dustRiseB 42s linear infinite;
 }
-@keyframes dustRise{
-  0%{ transform:translateY(0); opacity:.18; }
-  50%{ opacity:.34; }
-  100%{ transform:translateY(-140px); opacity:.12; }
+@keyframes dustRiseA{
+  0%{ transform:translate3d(0,0,0); opacity:.20; }
+  50%{ opacity:.48; }
+  100%{ transform:translate3d(0,-150px,0); opacity:.14; }
 }
-@media (prefers-reduced-motion: reduce){
-  .waterDust::before,
-  .waterDust::after{ animation:none; }
+@keyframes dustRiseB{
+  0%{ transform:translate3d(0,0,0); opacity:.16; }
+  55%{ opacity:.34; }
+  100%{ transform:translate3d(0,-110px,0); opacity:.10; }
 }
 
-/* network block: desktop keeps world, mobile uses Italy and reads better */
+/* network block: keep imagery as background, not foreground */
 .networkHero{
-  min-height:640px;
-  background:
-    linear-gradient(180deg, rgba(6,24,45,.04), rgba(2,11,24,.12));
+  min-height:620px;
+  background:linear-gradient(180deg, rgba(6,24,45,.10), rgba(2,11,24,.18));
 }
-.networkHero__media{
+.networkHero__media,
+.networkHero__media picture{
   position:absolute;
   inset:0;
 }
-.networkHero__media picture,
 .networkHero__media img{
-  display:block;
   width:100%;
   height:100%;
-}
-.networkHero__media img{
   max-width:none;
   object-fit:contain;
-  object-position:center 30%;
-  padding:18px 18px 0;
-  opacity:.96;
-  filter:drop-shadow(0 0 24px rgba(124,243,255,.14)) saturate(1.06) contrast(1.03);
+  object-position:center center;
+  padding:18px 18px 10px;
+  opacity:.26;
   mix-blend-mode:screen;
+  filter:drop-shadow(0 0 18px rgba(124,243,255,.10)) saturate(1.04) contrast(1.02);
 }
 .networkHero__statement,
 .networkHero__item{
-  background:linear-gradient(180deg, rgba(4,17,34,.14), rgba(4,17,34,.04));
-  backdrop-filter:blur(5px);
+  background:linear-gradient(180deg, rgba(4,17,34,.30), rgba(4,17,34,.14));
+  backdrop-filter:blur(8px);
+}
+.networkHero__statement .muted,
+.networkHero__item .networkIntro__v{
+  color:rgba(238,246,255,.92);
 }
 .networkHero__footer{
   position:relative;
   z-index:1;
-  display:grid;
-  gap:16px;
-  padding:22px;
-}
-.networkIntro__actions{
-  margin-top:4px;
+  padding:24px;
 }
 
 @media (max-width:980px){
-  .networkHero{
-    min-height:auto;
-    display:grid;
-    grid-template-rows:minmax(300px, 62vw) auto;
-    background:linear-gradient(180deg, rgba(6,24,45,.08), rgba(2,11,24,.16));
+  html{ scroll-behavior:auto; }
+  .header{
+    backdrop-filter:none;
+    -webkit-backdrop-filter:none;
+    background:linear-gradient(90deg, rgba(3,16,34,.96), rgba(8,42,76,.88), rgba(3,16,34,.96));
   }
-  .networkHero__media{
-    position:relative;
-    inset:auto;
-    min-height:300px;
-    display:flex;
-    align-items:flex-end;
-    justify-content:center;
-    background:
-      radial-gradient(420px 210px at 50% 0%, rgba(170,230,255,.12), transparent 58%),
-      linear-gradient(180deg, rgba(255,255,255,.04), transparent 34%);
+  body{
+    background-attachment:scroll !important;
+    -webkit-overflow-scrolling:touch;
+    overscroll-behavior-y:contain;
   }
-  .networkHero__media img{
-    width:100%;
-    height:100% !important;
-    object-fit:contain;
-    object-position:center 20%;
-    padding:16px 12px 0;
-    opacity:.96;
-    mix-blend-mode:screen;
-    filter:drop-shadow(0 0 20px rgba(124,243,255,.18)) saturate(1.08) contrast(1.04);
+  body::before,
+  body::after{
+    background-attachment:scroll !important;
   }
-  .networkHero__footer{
-    min-height:auto;
-    margin-top:-8px;
-    padding:0 14px 18px;
-  }
-  .networkHero__overlay{ grid-template-columns:1fr; }
-  .networkHero__statement,
-  .networkHero__item{
-    background:linear-gradient(180deg, rgba(4,17,34,.16), rgba(4,17,34,.06));
-    backdrop-filter:blur(6px);
-  }
-}
-@media (max-width:640px){
-  .networkHero{
-    grid-template-rows:320px auto;
-  }
-  .networkHero__media{
-    min-height:320px;
-  }
-  .networkHero__media img{
-    object-position:center 16%;
-    padding:18px 8px 0;
-  }
-}
 
-/* keep brand readable on narrow mobile */
-@media (max-width: 640px){
+  /* mobile reveal smoother and more consistent */
+  .reveal{
+    transform:translate3d(-22px, 6px, 0);
+    filter:blur(4px);
+    transition:
+      opacity .82s cubic-bezier(.22,.82,.2,1),
+      transform .82s cubic-bezier(.22,.82,.2,1),
+      filter .82s ease;
+  }
+  .reveal.is-visible{
+    transform:translate3d(0,0,0);
+    filter:blur(0);
+  }
+
+  /* show the white descriptor lines elegantly in mobile brand */
+  .brand{
+    grid-template-columns:60px 1fr;
+    gap:10px;
+    align-items:start;
+  }
+  .brand__logo{
+    width:60px;
+    height:60px;
+  }
+  .brand__text{
+    gap:4px;
+  }
   .brand__name{
-    font-size:15px;
+    font-size:14px;
     white-space:normal;
     overflow:visible;
     text-overflow:clip;
-    max-width:11ch;
+    line-height:1.02;
+    max-width:none;
+  }
+  .brand__sub{
+    display:grid;
+    gap:2px;
+    opacity:.95;
+  }
+  .brand__line{
+    font-size:10px;
+    line-height:1.04;
+    color:rgba(238,246,255,.92);
+  }
+  .menu__button{
+    padding:10px 12px;
+  }
+
+  /* keep Italy entirely inside the network card as a background */
+  .networkHero{
+    min-height:unset;
+    background:linear-gradient(180deg, rgba(6,24,45,.12), rgba(2,11,24,.18));
+  }
+  .networkHero__media{
+    position:absolute;
+    inset:0;
+    background:none;
+  }
+  .networkHero__media img{
+    width:100%;
+    height:100%;
+    object-fit:contain;
+    object-position:center 44%;
+    padding:26px 10px 22px;
+    opacity:.22;
+    mix-blend-mode:screen;
+    filter:drop-shadow(0 0 16px rgba(124,243,255,.12)) saturate(1.03) contrast(1.01);
+  }
+  .networkHero__footer{
+    padding:22px 14px 18px;
+  }
+  .networkHero__overlay{
+    grid-template-columns:1fr;
+  }
+  .networkHero__statement,
+  .networkHero__item{
+    background:linear-gradient(180deg, rgba(4,17,34,.34), rgba(4,17,34,.18));
+    backdrop-filter:blur(6px);
+  }
+}
+
+@media (max-width:640px){
+  .networkHero{
+    min-height:760px;
+  }
+  .networkHero__media img{
+    object-position:center 38%;
+    padding:22px 6px 18px;
+    opacity:.24;
+  }
+  .brand__name{
+    font-size:13px;
+  }
+  .brand__line{
+    font-size:9px;
+  }
+  .menu__label{
+    font-size:15px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce){
+  .waterDust::before,
+  .waterDust::after{
+    animation:none !important;
   }
 }
