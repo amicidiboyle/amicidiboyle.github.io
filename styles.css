@@ -134,7 +134,7 @@ a { color: inherit; text-decoration: none; }
 .hero-bg {
   background:
     linear-gradient(180deg, rgba(1,8,15,0) 0%, rgba(1,10,18,.16) 40%, rgba(1,8,15,.46) 100%),
-    url("assets/ocean-desktop.jpg") center top / cover no-repeat;
+    url("assets/ocean-desktop.svg") center top / cover no-repeat;
   opacity: .96;
 }
 .light-scattering {
@@ -657,7 +657,7 @@ a { color: inherit; text-decoration: none; }
     visibility: visible;
     transform: translateY(0);
   }
-  .hero-bg { background-image: linear-gradient(180deg, rgba(1,8,15,0) 0%, rgba(1,10,18,.16) 40%, rgba(1,8,15,.46) 100%), url("assets/ocean-mobile.jpg"); }
+  .hero-bg { background-image: linear-gradient(180deg, rgba(1,8,15,0) 0%, rgba(1,10,18,.16) 40%, rgba(1,8,15,.46) 100%), url("assets/ocean-mobile.svg"); }
   .light-scattering { animation: none; opacity: .75; }
   .particles { opacity: .14; animation: none; }
   .glass-card { padding: 22px; }
@@ -676,70 +676,4 @@ a { color: inherit; text-decoration: none; }
   .event-meta span,
   .bullet-cloud span,
   .glass-chip { width: 100%; border-radius: 18px; }
-}
-
-
-/* =========================
-   Merge helpers for index2 content inside index1 layout
-========================= */
-.hero-grid--content{ align-items:center; }
-.hero-podcast-panel .hero-panel-inner{ padding:18px; }
-.hero-podcast-grid{ display:grid; grid-template-columns: 170px 1fr; gap:18px; align-items:start; }
-.hero-cover{ width:100%; aspect-ratio:1/1; object-fit:cover; border-radius:20px; border:1px solid rgba(123,228,255,.18); box-shadow:0 14px 34px rgba(0,0,0,.26); }
-.metric-list{ display:grid; gap:12px; margin-top:14px; }
-.cta-row--tight{ margin-top:16px; }
-.activity-asset{ width:56px; height:56px; object-fit:contain; margin-bottom:18px; }
-.content-grid .content-card img{ width:100%; aspect-ratio: 4 / 3; object-fit:cover; border-radius:18px; margin-bottom:16px; }
-.banner-card{ margin-top:22px; display:flex; justify-content:space-between; align-items:center; gap:18px; }
-.btn-block{ width:100%; margin-top:14px; }
-.contact-grid-3{ grid-template-columns: repeat(3, minmax(0, 1fr)); }
-.contact-card--rich{ display:flex; flex-direction:column; gap:12px; }
-.compact-list{ margin-top:0; }
-.compact-list li{ padding:12px 14px; border-radius:14px; border:1px solid rgba(123,228,255,.14); background:rgba(123,228,255,.04); color:var(--text); }
-.partner-feature{ display:flex; flex-direction:column; align-items:flex-start; gap:12px; }
-.partner-logo{ width:180px; max-width:100%; object-fit:contain; margin-bottom:6px; }
-
-.dialog{ border:0; padding:0; max-width:min(760px, calc(100% - 24px)); width:100%; background:transparent; }
-.dialog::backdrop{ background:rgba(2,8,16,.72); backdrop-filter:blur(4px); }
-.dialog__inner{ border-radius:26px; border:1px solid rgba(123,228,255,.16); background:linear-gradient(180deg, rgba(8,28,54,.92), rgba(7,21,44,.96)); box-shadow: var(--shadow), inset 0 1px 0 rgba(255,255,255,.04); padding:22px; }
-.dialog__head{ display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:14px; }
-.dialog__actions{ display:flex; flex-wrap:wrap; gap:12px; margin-top:18px; }
-.form{ display:grid; gap:14px; }
-.field{ display:grid; gap:8px; }
-.field span{ font-weight:700; color:var(--text); }
-.field input,
-.field textarea,
-.field select{
-  width:100%;
-  border-radius:16px;
-  border:1px solid rgba(123,228,255,.18);
-  background:rgba(4,15,31,.64);
-  color:var(--text);
-  padding:14px 16px;
-  outline:none;
-}
-.field input::placeholder,
-.field textarea::placeholder{ color:rgba(237,247,255,.46); }
-.field input:focus,
-.field textarea:focus,
-.field select:focus{ border-color:rgba(123,228,255,.34); box-shadow:0 0 0 3px rgba(123,228,255,.10); }
-.form__status{ min-height:1.4em; margin:0; color:var(--soft); }
-.form__status.is-success{ color:#8ff5ba; }
-.form__status.is-error{ color:#ffb7b7; }
-
-@media (max-width: 1180px){
-  .contact-grid-3{ grid-template-columns:1fr 1fr; }
-}
-@media (max-width: 920px){
-  .hero-podcast-grid,
-  .contact-grid-3,
-  .banner-card{ grid-template-columns:1fr; }
-  .banner-card{ display:grid; }
-}
-@media (max-width: 768px){
-  .hero-bg { background-image: linear-gradient(180deg, rgba(1,8,15,0) 0%, rgba(1,10,18,.16) 40%, rgba(1,8,15,.46) 100%), url("assets/ocean-mobile.jpg"); }
-  .hero-podcast-grid{ grid-template-columns:1fr; }
-  .hero-cover{ max-width:260px; }
-  .contact-grid-3{ grid-template-columns:1fr; }
-  .dialog__head{ align-items:flex-start; flex-direction:column; }
 }
