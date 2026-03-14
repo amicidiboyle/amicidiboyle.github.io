@@ -33,6 +33,7 @@
 </head>
 
 <body>
+  <div class="waterDust" aria-hidden="true"></div>
   <a class="skip" href="#contenuto">Vai al contenuto</a>
 
   <!-- Sticky header -->
@@ -441,7 +442,10 @@
 
     <div class="networkHero card reveal" data-delay="60">
       <div class="networkHero__media" aria-hidden="true">
-        <img src="assets/network-map.webp" alt="" loading="lazy" decoding="async" />
+        <picture>
+          <source media="(max-width: 980px)" srcset="assets/network-italy-mobile.jpg" />
+          <img src="assets/network-map.webp" alt="" loading="lazy" decoding="async" />
+        </picture>
       </div>
 
       <div class="networkHero__footer">
