@@ -5,7 +5,731 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Rete di Boyle | Gli Amici di Boyle</title>
   <meta name="description" content="La rete di professionisti e ricercatori degli Amici di Boyle." />
-    <link rel="stylesheet" href="rete.css" />
+  <style>
+    :root{
+      --bg:#031427;
+      --bg2:#041b33;
+      --panel:rgba(5, 18, 38, 0.56);
+      --panel-border:rgba(150, 228, 255, 0.24);
+      --text:#eef6ff;
+      --muted:rgba(238,246,255,.82);
+      --soft:rgba(238,246,255,.64);
+      --glow:#79e9ff;
+      --glow-2:#7cf3ff;
+      --accent:#8ce6ff;
+      --accent-2:#3db9ff;
+      --shadow:0 20px 50px rgba(0,0,0,.35);
+      --shadow-strong:0 26px 70px rgba(0,0,0,.46);
+      --radius:28px;
+      --radius-sm:22px;
+      --max:1400px;
+    }
+
+    *{ box-sizing:border-box; }
+    html{ scroll-behavior:smooth; }
+
+    body{
+      margin:0;
+      font-family:system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      color:var(--text);
+      background:
+        linear-gradient(rgba(2,12,26,.30), rgba(2,12,26,.54)),
+        url("assets/rete-background.jpg") center center / cover no-repeat fixed,
+        radial-gradient(circle at top, #0b3b70 0%, #031427 70%);
+      min-height:100vh;
+      position:relative;
+      overflow-x:hidden;
+    }
+
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      background:
+        radial-gradient(circle at 18% 12%, rgba(124,243,255,.12), transparent 22%),
+        radial-gradient(circle at 82% 10%, rgba(124,243,255,.08), transparent 18%),
+        linear-gradient(180deg, rgba(255,255,255,.02), transparent 25%);
+      mix-blend-mode:screen;
+      z-index:0;
+    }
+
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      background:
+        radial-gradient(circle at 15% 30%, rgba(124,243,255,.10), transparent 18%),
+        radial-gradient(circle at 80% 20%, rgba(124,243,255,.08), transparent 20%),
+        radial-gradient(circle at 70% 75%, rgba(124,243,255,.06), transparent 18%);
+      mix-blend-mode:screen;
+      opacity:.85;
+    }
+
+    body::after{
+      content:"";
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      background:
+        linear-gradient(180deg, rgba(125,233,255,.04), transparent 18%, transparent 82%, rgba(125,233,255,.04));
+      opacity:.9;
+    }
+
+    a{
+      color:inherit;
+      text-decoration:none;
+    }
+
+    button, input, textarea{
+      font:inherit;
+    }
+
+    .page{
+      position:relative;
+      z-index:1;
+      max-width:var(--max);
+      margin:0 auto;
+      padding:40px 24px 60px;
+    }
+
+    .topbar{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:16px;
+      margin-bottom:30px;
+      flex-wrap:wrap;
+    }
+
+    .back-link{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding:12px 16px;
+      border-radius:999px;
+      background:rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.12);
+      font-weight:700;
+      backdrop-filter:blur(10px);
+      box-shadow:0 10px 24px rgba(0,0,0,.18);
+      transition:transform .18s ease, background .18s ease, border-color .18s ease;
+    }
+
+    .back-link:hover{
+      background:rgba(255,255,255,.10);
+      border-color:rgba(124,243,255,.26);
+      transform:translateY(-1px);
+    }
+
+    .hero{
+      margin-bottom:34px;
+      padding:30px 28px 26px;
+      border-radius:var(--radius);
+      background:
+        linear-gradient(135deg, rgba(9,36,74,.34), rgba(4,15,31,.42)),
+        rgba(4,15,31,.20);
+      border:1px solid rgba(124,243,255,.14);
+      backdrop-filter:blur(10px);
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      position:relative;
+      isolation:isolate;
+    }
+
+    .hero::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+      background:
+        radial-gradient(circle at 15% 18%, rgba(124,243,255,.16), transparent 22%),
+        radial-gradient(circle at 80% 16%, rgba(124,243,255,.10), transparent 18%),
+        linear-gradient(90deg, transparent, rgba(124,243,255,.05), transparent);
+      opacity:.95;
+    }
+
+    .hero::after{
+      content:"";
+      position:absolute;
+      inset:-22% -8% auto;
+      height:86%;
+      pointer-events:none;
+      background:
+        radial-gradient(circle at 50% 0%, rgba(255,255,255,.16), transparent 26%),
+        repeating-linear-gradient(115deg, rgba(124,243,255,.11) 0 2px, transparent 2px 28px);
+      opacity:.32;
+      transform:translateY(-6%);
+      mix-blend-mode:screen;
+      z-index:0;
+    }
+
+    .hero__eyebrow{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      margin-bottom:14px;
+      padding:8px 14px;
+      border-radius:999px;
+      border:1px solid rgba(124,243,255,.18);
+      background:rgba(255,255,255,.05);
+      color:#bfefff;
+      font-size:.88rem;
+      font-weight:800;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      position:relative;
+      z-index:1;
+    }
+
+    .hero__title{
+      position:relative;
+      z-index:1;
+      margin:0;
+      font-size:clamp(2.8rem, 5.6vw, 5rem);
+      line-height:.95;
+      letter-spacing:-.06em;
+      text-transform:uppercase;
+      color:#b4ecff;
+      text-shadow:
+        0 0 10px rgba(124,243,255,.22),
+        0 0 24px rgba(124,243,255,.18),
+        0 0 60px rgba(124,243,255,.08);
+    }
+
+    .hero__title .glow{
+      display:block;
+      color:#ffffff;
+      text-shadow:
+        0 0 12px rgba(255,255,255,.24),
+        0 0 28px rgba(124,243,255,.24);
+    }
+
+    .hero__subtitle{
+      position:relative;
+      z-index:1;
+      margin:18px 0 0;
+      font-size:clamp(1.05rem, 1.7vw, 1.45rem);
+      line-height:1.55;
+      color:var(--muted);
+      max-width:900px;
+    }
+
+    .members-grid{
+      display:grid;
+      grid-template-columns:repeat(5, minmax(0, 1fr));
+      gap:22px;
+    }
+
+    .member-card{
+      position:relative;
+      overflow:hidden;
+      min-height:400px;
+      border-radius:var(--radius);
+      border:1px solid var(--panel-border);
+      background:
+        linear-gradient(180deg, rgba(16,70,122,.16), rgba(4,18,37,.44)),
+        rgba(4,15,31,.34);
+      box-shadow:
+        0 0 0 1px rgba(124,243,255,.05) inset,
+        0 0 28px rgba(124,243,255,.08),
+        var(--shadow);
+      backdrop-filter:blur(10px);
+      padding:20px 18px 18px;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      text-align:center;
+      transition:transform .24s ease, box-shadow .24s ease, border-color .24s ease;
+      isolation:isolate;
+    }
+
+    .member-card::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        radial-gradient(circle at top, rgba(124,243,255,.13), transparent 34%),
+        linear-gradient(180deg, rgba(255,255,255,.05), transparent 32%);
+      opacity:.9;
+      pointer-events:none;
+      z-index:0;
+    }
+
+    .member-card::after{
+      content:"";
+      position:absolute;
+      inset:auto 12% 12px 12%;
+      height:2px;
+      background:linear-gradient(90deg, transparent, rgba(124,243,255,.95), transparent);
+      opacity:.95;
+      box-shadow:0 0 16px rgba(124,243,255,.45);
+      pointer-events:none;
+      z-index:0;
+    }
+
+    .member-card:hover{
+      transform:translateY(-6px) scale(1.01);
+      border-color:rgba(124,243,255,.42);
+      box-shadow:
+        0 0 0 1px rgba(124,243,255,.10) inset,
+        0 0 36px rgba(124,243,255,.14),
+        var(--shadow-strong);
+    }
+
+    .member-card:hover .member-photo-wrap{
+      box-shadow:
+        0 0 0 2px rgba(124,243,255,.32),
+        0 0 30px rgba(124,243,255,.42),
+        0 0 90px rgba(124,243,255,.18);
+    }
+
+    .member-card > *{
+      position:relative;
+      z-index:1;
+    }
+
+    .member-photo-wrap{
+      position:relative;
+      width:170px;
+      height:170px;
+      margin:0 auto 18px;
+      border-radius:999px;
+      padding:6px;
+      background:
+        radial-gradient(circle at 50% 50%, rgba(124,243,255,.18), rgba(124,243,255,.02) 62%, transparent 72%);
+      box-shadow:
+        0 0 0 2px rgba(124,243,255,.26),
+        0 0 24px rgba(124,243,255,.35),
+        0 0 70px rgba(124,243,255,.12);
+      flex:0 0 auto;
+    }
+
+    .member-photo-wrap::after{
+      content:"";
+      position:absolute;
+      inset:-8px;
+      border-radius:999px;
+      border:1px solid rgba(124,243,255,.10);
+      box-shadow:0 0 18px rgba(124,243,255,.18);
+      pointer-events:none;
+    }
+
+    .member-photo{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      border-radius:999px;
+      display:block;
+      border:2px solid rgba(255,255,255,.32);
+      background:#0a2039;
+    }
+
+    .member-name{
+      margin:0;
+      font-size:clamp(1.25rem, 1.2vw, 1.7rem);
+      line-height:1.1;
+      letter-spacing:-.03em;
+      font-weight:900;
+      text-wrap:balance;
+      color:#ffffff;
+      text-shadow:0 0 14px rgba(124,243,255,.12);
+    }
+
+    .member-role{
+      margin:12px 0 0;
+      color:var(--muted);
+      font-size:1rem;
+      line-height:1.48;
+      text-wrap:balance;
+      max-width:30ch;
+    }
+
+    .member-links{
+      margin-top:auto;
+      padding-top:18px;
+      display:flex;
+      gap:12px;
+      align-items:center;
+      justify-content:center;
+      flex-wrap:wrap;
+    }
+
+    .icon-btn{
+      width:44px;
+      height:44px;
+      border-radius:999px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      border:1px solid rgba(124,243,255,.24);
+      background:rgba(255,255,255,.06);
+      box-shadow:
+        0 0 12px rgba(124,243,255,.08),
+        inset 0 0 0 1px rgba(255,255,255,.03);
+      transition:transform .18s ease, background .18s ease, border-color .18s ease, box-shadow .18s ease;
+      cursor:pointer;
+    }
+
+    .icon-btn:hover{
+      transform:translateY(-2px) scale(1.04);
+      background:rgba(124,243,255,.14);
+      border-color:rgba(124,243,255,.46);
+      box-shadow:
+        0 0 20px rgba(124,243,255,.18),
+        0 10px 24px rgba(0,0,0,.18);
+    }
+
+    .icon-btn:focus-visible{
+      outline:2px solid rgba(124,243,255,.85);
+      outline-offset:3px;
+    }
+
+    .icon{
+      width:20px;
+      height:20px;
+      fill:currentColor;
+      display:block;
+    }
+
+    .cta-box{
+      margin-top:34px;
+      padding:28px 24px;
+      border-radius:var(--radius);
+      border:1px solid rgba(124,243,255,.18);
+      background:
+        linear-gradient(135deg, rgba(9,36,74,.30), rgba(4,15,31,.42)),
+        rgba(4,15,31,.36);
+      backdrop-filter:blur(10px);
+      box-shadow:var(--shadow);
+      text-align:center;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .cta-box::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+      background:
+        radial-gradient(circle at top, rgba(124,243,255,.12), transparent 30%);
+      opacity:.85;
+    }
+
+    .cta-box h2{
+      position:relative;
+      z-index:1;
+      margin:0 0 10px;
+      font-size:1.8rem;
+      letter-spacing:-.03em;
+      text-shadow:0 0 14px rgba(124,243,255,.10);
+    }
+
+    .cta-box p{
+      position:relative;
+      z-index:1;
+      margin:0 auto;
+      color:var(--muted);
+      line-height:1.7;
+      max-width:900px;
+    }
+
+    .btn-electric{
+      position:relative;
+      z-index:1;
+      overflow:hidden;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      margin-top:20px;
+      padding:14px 20px;
+      border-radius:999px;
+      border:1px solid rgba(124,243,255,.34);
+      background:
+        linear-gradient(135deg, rgba(8,78,176,.96), rgba(10,142,231,.92));
+      color:#fff;
+      font-weight:850;
+      letter-spacing:.01em;
+      cursor:pointer;
+      box-shadow:
+        0 16px 36px rgba(0,75,170,.28),
+        inset 0 1px 0 rgba(255,255,255,.14);
+      transition:transform .18s ease, filter .18s ease, box-shadow .18s ease;
+    }
+
+    .btn-electric:hover{
+      transform:translateY(-2px);
+      filter:brightness(1.05);
+      box-shadow:
+        0 18px 38px rgba(0,75,170,.34),
+        inset 0 1px 0 rgba(255,255,255,.18);
+    }
+
+    .btn-electric::before{
+      content:"";
+      position:absolute;
+      inset:-30% auto -30% -18%;
+      width:28%;
+      background:linear-gradient(90deg, transparent, rgba(255,255,255,.88), transparent);
+      transform:skewX(-22deg);
+      filter:blur(4px);
+      opacity:.95;
+      animation:electricSweep 2.6s linear infinite;
+    }
+
+    .btn-electric::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        radial-gradient(circle at 18% 50%, rgba(124,243,255,.34), transparent 20%),
+        radial-gradient(circle at 56% 48%, rgba(255,255,255,.18), transparent 12%),
+        radial-gradient(circle at 78% 54%, rgba(124,243,255,.28), transparent 18%);
+      mix-blend-mode:screen;
+      opacity:.55;
+      pointer-events:none;
+    }
+
+    .btn-electric span{
+      position:relative;
+      z-index:1;
+    }
+
+    @keyframes electricSweep{
+      0%{ left:-24%; }
+      100%{ left:118%; }
+    }
+
+    .modal{
+      position:fixed;
+      inset:0;
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding:24px;
+      background:rgba(2,8,18,.62);
+      backdrop-filter:blur(8px);
+      z-index:9999;
+    }
+
+    .modal.is-open{
+      display:flex;
+    }
+
+    .modal__dialog{
+      width:min(860px, 100%);
+      max-height:90vh;
+      overflow:auto;
+      border-radius:28px;
+      border:1px solid rgba(124,243,255,.18);
+      background:
+        linear-gradient(135deg, rgba(10,34,68,.84), rgba(4,15,31,.92)),
+        rgba(4,15,31,.92);
+      box-shadow:0 34px 90px rgba(0,0,0,.52);
+      position:relative;
+      padding:26px;
+    }
+
+    .modal__close{
+      position:absolute;
+      top:14px;
+      right:14px;
+      width:42px;
+      height:42px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.06);
+      color:#fff;
+      cursor:pointer;
+      font-size:1.1rem;
+      transition:transform .18s ease, background .18s ease;
+    }
+
+    .modal__close:hover{
+      transform:scale(1.05);
+      background:rgba(255,255,255,.10);
+    }
+
+    .modal__title{
+      margin:0;
+      font-size:clamp(1.7rem, 2.6vw, 2.3rem);
+      letter-spacing:-.04em;
+    }
+
+    .modal__text{
+      margin:10px 0 0;
+      color:var(--muted);
+      line-height:1.65;
+      max-width:70ch;
+    }
+
+    .network-form{
+      margin-top:20px;
+      display:grid;
+      gap:14px;
+    }
+
+    .form-grid{
+      display:grid;
+      grid-template-columns:repeat(2, minmax(0, 1fr));
+      gap:14px;
+    }
+
+    .field{
+      display:grid;
+      gap:7px;
+    }
+
+    .field--full{
+      grid-column:1 / -1;
+    }
+
+    .field label{
+      font-weight:800;
+      color:#dff8ff;
+      font-size:.96rem;
+    }
+
+    .field input,
+    .field textarea{
+      width:100%;
+      padding:13px 14px;
+      border-radius:16px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(3,10,22,.42);
+      color:#fff;
+      outline:none;
+      transition:border-color .18s ease, box-shadow .18s ease, background .18s ease;
+    }
+
+    .field input::placeholder,
+    .field textarea::placeholder{
+      color:rgba(238,246,255,.42);
+    }
+
+    .field input:focus,
+    .field textarea:focus{
+      border-color:rgba(124,243,255,.34);
+      box-shadow:0 0 0 6px rgba(124,243,255,.10);
+      background:rgba(3,10,22,.52);
+    }
+
+    .field textarea{
+      min-height:120px;
+      resize:vertical;
+    }
+
+    .modal__actions{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      align-items:center;
+      margin-top:8px;
+    }
+
+    .form-status{
+      margin-top:4px;
+      min-height:22px;
+      font-weight:700;
+      color:#bfefff;
+    }
+
+    .form-status.error{
+      color:#ffc5c5;
+    }
+
+    .visually-hidden{
+      position:absolute !important;
+      width:1px;
+      height:1px;
+      padding:0;
+      margin:-1px;
+      overflow:hidden;
+      clip:rect(0,0,0,0);
+      white-space:nowrap;
+      border:0;
+    }
+
+    @media (max-width: 1280px){
+      .members-grid{
+        grid-template-columns:repeat(4, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 1024px){
+      .members-grid{
+        grid-template-columns:repeat(3, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 860px){
+      .form-grid{
+        grid-template-columns:1fr;
+      }
+    }
+
+    @media (max-width: 760px){
+      .page{
+        padding:28px 16px 44px;
+      }
+
+      .hero{
+        padding:22px 18px 20px;
+      }
+
+      .members-grid{
+        grid-template-columns:repeat(2, minmax(0, 1fr));
+        gap:16px;
+      }
+
+      .member-card{
+        min-height:350px;
+        padding:16px 14px;
+      }
+
+      .member-photo-wrap{
+        width:136px;
+        height:136px;
+        margin-bottom:14px;
+      }
+
+      .member-role{
+        font-size:.95rem;
+      }
+
+      .modal{
+        padding:14px;
+      }
+
+      .modal__dialog{
+        padding:20px 16px;
+      }
+    }
+
+    @media (max-width: 520px){
+      .members-grid{
+        grid-template-columns:1fr;
+      }
+
+      .hero__title{
+        font-size:2.25rem;
+        line-height:1;
+        letter-spacing:-.05em;
+      }
+
+      .hero__subtitle{
+        font-size:1rem;
+        line-height:1.6;
+      }
+
+      .member-card{
+        min-height:auto;
+      }
+    }
+  </style>
 </head>
 <body>
   <main class="page">
@@ -13,119 +737,17 @@
       <a class="back-link" href="index.html">← Torna alla home</a>
     </div>
 
-    
     <section class="hero">
-      <div class="hero__connectome" aria-hidden="true">
-        <svg class="connectome-svg" viewBox="0 0 1400 520" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <filter id="glow-line" x="-20%" y="-20%" width="140%" height="140%">
-              <feGaussianBlur stdDeviation="1.8" result="blur"/>
-              <feMerge>
-                <feMergeNode in="blur"/>
-                <feMergeNode in="SourceGraphic"/>
-              </feMerge>
-            </feMerge>
-            </filter>
-            <filter id="glow-node" x="-80%" y="-80%" width="260%" height="260%">
-              <feGaussianBlur stdDeviation="3.5" result="blur"/>
-              <feMerge>
-                <feMergeNode in="blur"/>
-                <feMergeNode in="SourceGraphic"/>
-              </feMerge>
-            </feMerge>
-            </filter>
-            <linearGradient id="lineGradA" x1="0" y1="0" x2="1" y2="0">
-              <stop offset="0%" stop-color="#d9fbff" stop-opacity="0.05"/>
-              <stop offset="50%" stop-color="#9aefff" stop-opacity="0.22"/>
-              <stop offset="100%" stop-color="#d9fbff" stop-opacity="0.05"/>
-            </linearGradient>
-            <linearGradient id="lineGradB" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0%" stop-color="#d9fbff" stop-opacity="0.04"/>
-              <stop offset="50%" stop-color="#7cf3ff" stop-opacity="0.18"/>
-              <stop offset="100%" stop-color="#d9fbff" stop-opacity="0.04"/>
-            </linearGradient>
-            <radialGradient id="nodeGrad" cx="50%" cy="50%" r="50%">
-              <stop offset="0%" stop-color="#ffffff" stop-opacity="0.98"/>
-              <stop offset="45%" stop-color="#bff8ff" stop-opacity="0.88"/>
-              <stop offset="100%" stop-color="#7cf3ff" stop-opacity="0.2"/>
-            </radialGradient>
-            <mask id="connectomeFade">
-              <rect width="1400" height="520" fill="white"/>
-              <rect x="0" y="0" width="520" height="520" fill="url(#leftFade)"/>
-            </mask>
-            <linearGradient id="leftFade" x1="0" y1="0" x2="1" y2="0">
-              <stop offset="0%" stop-color="black"/>
-              <stop offset="45%" stop-color="black"/>
-              <stop offset="80%" stop-color="white"/>
-              <stop offset="100%" stop-color="white"/>
-            </linearGradient>
-          </defs>
-
-          <g class="connectome-base" mask="url(#connectomeFade)">
-            <g class="connectome-links" filter="url(#glow-line)">
-              <path id="path-a" d="M 420 145 C 560 70, 770 90, 930 160 S 1160 240, 1310 150" />
-              <path id="path-b" d="M 455 220 C 620 130, 790 160, 940 235 S 1160 330, 1325 245" />
-              <path id="path-c" d="M 390 305 C 560 225, 720 250, 865 320 S 1080 410, 1280 330" />
-              <path id="path-d" d="M 520 120 C 610 220, 730 300, 885 280 S 1110 185, 1275 215" />
-              <path id="path-e" d="M 600 95 C 700 180, 810 210, 930 185 S 1150 115, 1295 175" />
-              <path id="path-f" d="M 650 355 C 760 250, 905 240, 1045 285 S 1200 355, 1330 315" />
-              <path id="path-g" d="M 745 85 C 780 180, 780 280, 745 405" class="link-faint" />
-              <path id="path-h" d="M 560 118 C 635 210, 665 305, 640 420" class="link-soft" />
-              <path id="path-i" d="M 905 118 C 850 200, 820 288, 835 392" class="link-soft" />
-              <path id="path-j" d="M 470 180 C 650 205, 820 185, 1005 150 S 1200 120, 1300 140" class="link-faint" />
-              <path id="path-k" d="M 440 268 C 595 255, 760 305, 915 285 S 1140 220, 1305 250" class="link-soft" />
-              <path id="path-l" d="M 500 360 C 635 300, 780 330, 930 360 S 1145 400, 1315 375" class="link-faint" />
-            </g>
-
-            <g class="connectome-nodes" filter="url(#glow-node)">
-              <circle cx="455" cy="128" r="5.4" class="node node-1"/>
-              <circle cx="598" cy="98" r="4.6" class="node node-2"/>
-              <circle cx="734" cy="114" r="6.2" class="node node-3"/>
-              <circle cx="880" cy="144" r="5.2" class="node node-4"/>
-              <circle cx="1045" cy="175" r="4.6" class="node node-5"/>
-              <circle cx="1214" cy="165" r="6.4" class="node node-6"/>
-              <circle cx="520" cy="220" r="4.2" class="node node-7"/>
-              <circle cx="690" cy="196" r="5.8" class="node node-8"/>
-              <circle cx="846" cy="224" r="4.8" class="node node-9"/>
-              <circle cx="1012" cy="260" r="6.6" class="node node-10"/>
-              <circle cx="1156" cy="286" r="4.9" class="node node-11"/>
-              <circle cx="595" cy="300" r="4.8" class="node node-12"/>
-              <circle cx="742" cy="334" r="5.9" class="node node-13"/>
-              <circle cx="896" cy="318" r="4.1" class="node node-14"/>
-              <circle cx="1088" cy="348" r="5.7" class="node node-15"/>
-              <circle cx="1260" cy="332" r="4.7" class="node node-16"/>
-              <circle cx="655" cy="410" r="3.9" class="node node-17"/>
-              <circle cx="830" cy="392" r="4.5" class="node node-18"/>
-              <circle cx="953" cy="380" r="3.9" class="node node-19"/>
-              <circle cx="1188" cy="395" r="4.5" class="node node-20"/>
-            </g>
-
-            <g class="travelers">
-              <circle r="3.8" class="traveler traveler-a"><animateMotion dur="7.2s" repeatCount="indefinite" rotate="auto"><mpath href="#path-a"/></animateMotion></circle>
-              <circle r="3.1" class="traveler traveler-b"><animateMotion dur="8.9s" begin="-2.1s" repeatCount="indefinite" rotate="auto"><mpath href="#path-b"/></animateMotion></circle>
-              <circle r="3.5" class="traveler traveler-c"><animateMotion dur="10.4s" begin="-5.4s" repeatCount="indefinite" rotate="auto"><mpath href="#path-c"/></animateMotion></circle>
-              <circle r="2.9" class="traveler traveler-d"><animateMotion dur="6.6s" begin="-1.8s" repeatCount="indefinite" rotate="auto"><mpath href="#path-d"/></animateMotion></circle>
-              <circle r="3.2" class="traveler traveler-e"><animateMotion dur="9.6s" begin="-3.8s" repeatCount="indefinite" rotate="auto"><mpath href="#path-e"/></animateMotion></circle>
-              <circle r="3.4" class="traveler traveler-f"><animateMotion dur="8.2s" begin="-4.6s" repeatCount="indefinite" rotate="auto"><mpath href="#path-f"/></animateMotion></circle>
-              <circle r="2.6" class="traveler traveler-g"><animateMotion dur="7.8s" begin="-2.8s" repeatCount="indefinite" rotate="auto"><mpath href="#path-k"/></animateMotion></circle>
-            </g>
-          </g>
-        </svg>
-      </div>
-
-      <div class="hero__content">
-        <div class="hero__eyebrow">Network scientifico</div>
-        <h1 class="hero__title">
-          <span class="glow">Rete</span>
-          di Boyle
-        </h1>
-        <p class="hero__subtitle">
-          La rete di professionisti e ricercatori degli “Amici di Boyle”, un ecosistema multidisciplinare dedicato
-          alla medicina subacquea e iperbarica, agli ambienti estremi, alla fisiologia umana e alla sicurezza.
-        </p>
-      </div>
+      <div class="hero__eyebrow">Network scientifico</div>
+      <h1 class="hero__title">
+        <span class="glow">Rete</span>
+        di Boyle
+      </h1>
+      <p class="hero__subtitle">
+        La rete di professionisti e ricercatori degli “Amici di Boyle”, un ecosistema multidisciplinare dedicato
+        alla medicina subacquea e iperbarica, agli ambienti estremi, alla fisiologia umana e alla sicurezza.
+      </p>
     </section>
-
 
     <section class="members-grid">
 
@@ -135,6 +757,7 @@
         </div>
         <h2 class="member-name">Simona Damiano</h2>
         <p class="member-role">Cardiologa pediatra, Ospedale del Ponte, Varese. Expert Diver, Scuba Schools International. Focus: ecocardiografia.</p>
+        <p class="member-location"><span class="member-location__k">Città / sede</span><span class="member-location__v">Varese</span></p>
         <div class="member-links">
           <a class="icon-btn" href="https://www.linkedin.com/" aria-label="LinkedIn di Simona Damiano" target="_blank" rel="noopener noreferrer">
             <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.94 8.5H3.56V20h3.38V8.5ZM5.25 3A2.03 2.03 0 1 0 5.3 7.06 2.03 2.03 0 0 0 5.25 3Zm4.23 5.5V20h3.38v-5.7c0-1.5.28-2.95 2.14-2.95 1.83 0 1.86 1.71 1.86 3.05V20h3.39v-6.29c0-3.09-.67-5.46-4.28-5.46-1.73 0-2.88.95-3.35 1.85h-.05V8.5H9.48Z"/></svg>
@@ -151,6 +774,7 @@
         </div>
         <h2 class="member-name">Andrea Murdock Alpini</h2>
         <p class="member-role">Esploratore subacqueo, divulgatore, PSAI Diving Instructor, CEO PHY Diving. Focus: esplorazione di relitti e cave sommerse.</p>
+        <p class="member-location"><span class="member-location__k">Città / sede</span><span class="member-location__v">Italia</span></p>
         <div class="member-links">
           <a class="icon-btn" href="https://www.linkedin.com/in/andrea-murdock-alpini-050505228/" aria-label="LinkedIn di Andrea Murdock Alpini" target="_blank" rel="noopener noreferrer">
             <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.94 8.5H3.56V20h3.38V8.5ZM5.25 3A2.03 2.03 0 1 0 5.3 7.06 2.03 2.03 0 0 0 5.25 3Zm4.23 5.5V20h3.38v-5.7c0-1.5.28-2.95 2.14-2.95 1.83 0 1.86 1.71 1.86 3.05V20h3.39v-6.29c0-3.09-.67-5.46-4.28-5.46-1.73 0-2.88.95-3.35 1.85h-.05V8.5H9.48Z"/></svg>
@@ -167,6 +791,7 @@
         </div>
         <h2 class="member-name">Valerio Zerbi</h2>
         <p class="member-role">Ingegnere Biomedico, Professore Associato di Neuroscienze, Università di Ginevra, Svizzera. Focus: translational neuroscience.</p>
+        <p class="member-location"><span class="member-location__k">Città / sede</span><span class="member-location__v">Ginevra</span></p>
         <div class="member-links">
           <a class="icon-btn" href="https://www.linkedin.com/in/valerio-zerbi-a95b7725/" aria-label="LinkedIn di Valerio Zerbi" target="_blank" rel="noopener noreferrer">
             <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.94 8.5H3.56V20h3.38V8.5ZM5.25 3A2.03 2.03 0 1 0 5.3 7.06 2.03 2.03 0 0 0 5.25 3Zm4.23 5.5V20h3.38v-5.7c0-1.5.28-2.95 2.14-2.95 1.83 0 1.86 1.71 1.86 3.05V20h3.39v-6.29c0-3.09-.67-5.46-4.28-5.46-1.73 0-2.88.95-3.35 1.85h-.05V8.5H9.48Z"/></svg>
@@ -183,6 +808,7 @@
         </div>
         <h2 class="member-name">Erika Borotto</h2>
         <p class="member-role">Specialista in Anestesia e Rianimazione. Presidente Inside Trauma Emergency and Critical Care. Italia. Focus: Critical Care.</p>
+        <p class="member-location"><span class="member-location__k">Città / sede</span><span class="member-location__v">Italia</span></p>
         <div class="member-links">
           <a class="icon-btn" href="https://www.linkedin.com/in/erika-borotto-79a4a796/" aria-label="LinkedIn di Erika Borotto" target="_blank" rel="noopener noreferrer">
             <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.94 8.5H3.56V20h3.38V8.5ZM5.25 3A2.03 2.03 0 1 0 5.3 7.06 2.03 2.03 0 0 0 5.25 3Zm4.23 5.5V20h3.38v-5.7c0-1.5.28-2.95 2.14-2.95 1.83 0 1.86 1.71 1.86 3.05V20h3.39v-6.29c0-3.09-.67-5.46-4.28-5.46-1.73 0-2.88.95-3.35 1.85h-.05V8.5H9.48Z"/></svg>
@@ -199,6 +825,7 @@
         </div>
         <h2 class="member-name">Andrea Galvani</h2>
         <p class="member-role">Medico Iperbarico e Subacqueo. Consigliere Nazionale SIMSI. Responsabile Scientifico del Centro Iperbarico Repubblica di San Marino. Focus: offshore e dive medicine.</p>
+        <p class="member-location"><span class="member-location__k">Città / sede</span><span class="member-location__v">San Marino</span></p>
         <div class="member-links">
           <a class="icon-btn" href="https://www.linkedin.com/in/agalv86/" aria-label="LinkedIn di Andrea Galvani" target="_blank" rel="noopener noreferrer">
             <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.94 8.5H3.56V20h3.38V8.5ZM5.25 3A2.03 2.03 0 1 0 5.3 7.06 2.03 2.03 0 0 0 5.25 3Zm4.23 5.5V20h3.38v-5.7c0-1.5.28-2.95 2.14-2.95 1.83 0 1.86 1.71 1.86 3.05V20h3.39v-6.29c0-3.09-.67-5.46-4.28-5.46-1.73 0-2.88.95-3.35 1.85h-.05V8.5H9.48Z"/></svg>
@@ -215,6 +842,7 @@
         </div>
         <h2 class="member-name">Federica Giuffrida</h2>
         <p class="member-role">Specialista in Anestesia e Rianimazione. Critical Care Medicine. Soccorso Alpino. Focus: Medicina di Montagna e Soccorso in Ambienti Impervi.</p>
+        <p class="member-location"><span class="member-location__k">Città / sede</span><span class="member-location__v">Varese</span></p>
         <div class="member-links">
           <a class="icon-btn" href="https://www.linkedin.com/in/federica-giuffrida-76609a9a/" aria-label="LinkedIn di Federica Giuffrida" target="_blank" rel="noopener noreferrer">
             <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.94 8.5H3.56V20h3.38V8.5ZM5.25 3A2.03 2.03 0 1 0 5.3 7.06 2.03 2.03 0 0 0 5.25 3Zm4.23 5.5V20h3.38v-5.7c0-1.5.28-2.95 2.14-2.95 1.83 0 1.86 1.71 1.86 3.05V20h3.39v-6.29c0-3.09-.67-5.46-4.28-5.46-1.73 0-2.88.95-3.35 1.85h-.05V8.5H9.48Z"/></svg>
@@ -231,6 +859,7 @@
         </div>
         <h2 class="member-name">Paolo Calzavacca</h2>
         <p class="member-role">Specialista in Anestesia e Rianimazione, ICU IRCCS San Gerardo del Tintori - Monza. Expert Diver. Focus: ExtraCorporeal Membrane Oxygenation.</p>
+        <p class="member-location"><span class="member-location__k">Città / sede</span><span class="member-location__v">Monza</span></p>
         <div class="member-links">
           <a class="icon-btn" href="https://www.linkedin.com/in/paolo-calzavacca-6549623a/" aria-label="LinkedIn di Paolo Calzavacca" target="_blank" rel="noopener noreferrer">
             <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.94 8.5H3.56V20h3.38V8.5ZM5.25 3A2.03 2.03 0 1 0 5.3 7.06 2.03 2.03 0 0 0 5.25 3Zm4.23 5.5V20h3.38v-5.7c0-1.5.28-2.95 2.14-2.95 1.83 0 1.86 1.71 1.86 3.05V20h3.39v-6.29c0-3.09-.67-5.46-4.28-5.46-1.73 0-2.88.95-3.35 1.85h-.05V8.5H9.48Z"/></svg>
@@ -246,6 +875,7 @@
         </div>
         <h2 class="member-name">Erion Xhepa</h2>
         <p class="member-role">Dive Master|Senior Interventional Cardiologist, Cardiac Catheter Laboratory,TUM University Hospital German Heart Center. Munich.</p>
+        <p class="member-location"><span class="member-location__k">Città / sede</span><span class="member-location__v">Monaco di Baviera</span></p>
         <div class="member-links">
           <a class="icon-btn" href="https://www.linkedin.com/in/erion-xhepa-a21bb86a/" aria-label="LinkedIn di Erion Xhepa" target="_blank" rel="noopener noreferrer">
             <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.94 8.5H3.56V20h3.38V8.5ZM5.25 3A2.03 2.03 0 1 0 5.3 7.06 2.03 2.03 0 0 0 5.25 3Zm4.23 5.5V20h3.38v-5.7c0-1.5.28-2.95 2.14-2.95 1.83 0 1.86 1.71 1.86 3.05V20h3.39v-6.29c0-3.09-.67-5.46-4.28-5.46-1.73 0-2.88.95-3.35 1.85h-.05V8.5H9.48Z"/></svg>
@@ -280,7 +910,7 @@
         Compila il modulo per candidarti alla rete. La richiesta verrà inviata al team degli Amici di Boyle per la valutazione.
       </p>
 
-      <form class="network-form" id="network-form" action="https://formspree.io/f/xzdareqw" method="POST" enctype="multipart/form-data">
+      <form class="network-form" id="network-form" action="https://formspree.io/f/xzdareqw" method="POST">
         <input type="hidden" name="_subject" value="Nuova candidatura alla Rete di Boyle">
         <input type="hidden" name="_language" value="it">
        
@@ -312,17 +942,16 @@
             <input id="cand-interest" name="focus" type="text" placeholder="Es. Medicina iperbarica, neuroscienze, fisiologia, soccorso in ambienti estremi">
           </div>
 
-          <div class="field field--full">
+          <div class="field">
+            <label for="cand-city">Città / Sede</label>
+            <input id="cand-city" name="citta" type="text" placeholder="Es. Varese, Ginevra, San Marino">
+          </div>
+
+          <div class="field">
             <label for="cand-linkedin">Profilo LinkedIn</label>
             <input id="cand-linkedin" name="linkedin" type="url" placeholder="https://www.linkedin.com/in/...">
           </div>
-          <div class="field field--full">
-            <label for="cand-photo">Allega foto profilo</label>
-            <input id="cand-photo" name="profile_photo" type="file" accept=".jpg,.jpeg,.png,.webp,image/*">
-            <small class="field__hint">Formato consigliato: JPG o PNG, immagine frontale ben leggibile.</small>
-          </div>
-
-          <div class="field field--full">
+<div class="field field--full">
             <label for="cand-bio">Breve presentazione</label>
             <textarea id="cand-bio" name="presentazione" placeholder="Racconta in poche righe chi sei, cosa fai e perché vorresti entrare nella Rete di Boyle."></textarea>
           </div>
@@ -351,6 +980,7 @@
     const affiliationInput = document.getElementById('cand-affiliation');
     const roleInput = document.getElementById('cand-role');
     const interestInput = document.getElementById('cand-interest');
+    const cityInput = document.getElementById('cand-city');
     const linkedinInput = document.getElementById('cand-linkedin');
     const bioInput = document.getElementById('cand-bio');
     const snippetField = document.getElementById('cand-snippet');
@@ -404,13 +1034,14 @@
       const linkedin = linkedinInput.value.trim() || 'https://www.linkedin.com/';
       const slug = slugify(fullName || 'nome-cognome') || 'nome-cognome';
       const roleLine = escapeHtml(buildRoleLine() || 'Ruolo / breve descrizione.');
+      const cityLine = escapeHtml(cityInput.value.trim() || 'Da definire');
 
       return `<article class="member-card">
   <div class="member-photo-wrap">
     <img class="member-photo" src="assets/rete/${slug}.jpg" alt="${safeName}" />
   </div>
   <h2 class="member-name">${safeName}</h2>
-  <p class="member-role">${roleLine}</p>
+  <p class="member-role">${roleLine}</p>\n  <p class="member-location"><span class="member-location__k">Città / sede</span><span class="member-location__v">${cityLine}</span></p>
   <div class="member-links">
     <a class="icon-btn" href="${escapeHtml(linkedin)}" aria-label="LinkedIn di ${safeName}" target="_blank" rel="noopener noreferrer">
       <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.94 8.5H3.56V20h3.38V8.5ZM5.25 3A2.03 2.03 0 1 0 5.3 7.06 2.03 2.03 0 0 0 5.25 3Zm4.23 5.5V20h3.38v-5.7c0-1.5.28-2.95 2.14-2.95 1.83 0 1.86 1.71 1.86 3.05V20h3.39v-6.29c0-3.09-.67-5.46-4.28-5.46-1.73 0-2.88.95-3.35 1.85h-.05V8.5H9.48Z"/></svg>
@@ -426,7 +1057,7 @@
       snippetField.value = buildCardSnippet();
     }
 
-    [nameInput, emailInput, affiliationInput, roleInput, interestInput, linkedinInput, bioInput]
+    [nameInput, emailInput, affiliationInput, roleInput, interestInput, cityInput, linkedinInput, bioInput]
       .forEach(el => el.addEventListener('input', updateSnippet));
 
     openBtn.addEventListener('click', openModal);
