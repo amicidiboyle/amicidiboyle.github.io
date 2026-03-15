@@ -38,10 +38,44 @@ body{
   margin:0;
   font-family:var(--font);
   color: var(--fg);
-  background:#031427;
-  background-attachment: fixed;
+  background:
+    linear-gradient(180deg, rgba(0,0,0,.08), rgba(0,0,0,.24)),
+    url("assets/ocean-desktop.jpg") center top / cover no-repeat fixed,
+    linear-gradient(180deg, #02111f, #031427 32%, #041b33 100%);
   min-height:100%;
+  position:relative;
+  overflow-x:hidden;
 }
+
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  background:
+    linear-gradient(180deg, rgba(1,8,15,0) 0%, rgba(1,10,18,.16) 40%, rgba(1,8,15,.34) 100%),
+    url("assets/light-rays-overlay.png") center top / cover no-repeat;
+  opacity:.34;
+  mix-blend-mode:screen;
+  z-index:0;
+}
+
+body::after{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  background-image:
+    radial-gradient(circle, rgba(214,245,255,.18) 0 1px, transparent 1.7px),
+    radial-gradient(circle, rgba(171,228,255,.14) 0 1.1px, transparent 1.8px),
+    radial-gradient(circle, rgba(214,245,255,.10) 0 1px, transparent 1.7px);
+  background-size: 220px 220px, 320px 320px, 420px 420px;
+  background-position: 12% 10%, 72% 20%, 50% 60%;
+  opacity:.22;
+  animation: particlesRise 28s linear infinite alternate;
+  z-index:0;
+}
+
 
 img{ max-width:100%; display:block; }
 a{ color:inherit; text-decoration:none; }
@@ -397,11 +431,11 @@ code{
   opacity: .95;
   background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,0));
 }
-.depth--shallow{ background: linear-gradient(180deg, rgba(8,58,107,.60), rgba(6,42,79,.55)); }
-.depth--mid{ background: linear-gradient(180deg, rgba(6,42,79,.62), rgba(4,27,51,.58)); }
-.depth--deep{ background: linear-gradient(180deg, rgba(4,27,51,.62), rgba(3,20,39,.62)); }
-.depth--abyss{ background: linear-gradient(180deg, rgba(3,20,39,.70), rgba(2,13,26,.70)); }
-.depth--trench{ background: linear-gradient(180deg, rgba(2,13,26,.78), rgba(1,7,14,.85)); }
+.depth--shallow{ background: linear-gradient(180deg, rgba(8,58,107,.24), rgba(6,42,79,.20)); }
+.depth--mid{ background: linear-gradient(180deg, rgba(6,42,79,.22), rgba(4,27,51,.18)); }
+.depth--deep{ background: linear-gradient(180deg, rgba(4,27,51,.24), rgba(3,20,39,.20)); }
+.depth--abyss{ background: linear-gradient(180deg, rgba(3,20,39,.26), rgba(2,13,26,.22)); }
+.depth--trench{ background: linear-gradient(180deg, rgba(2,13,26,.30), rgba(1,7,14,.28)); }
 
 .section{
   padding: 92px 0;
@@ -2133,4 +2167,100 @@ body::after,
   .waterDust{
     opacity:.40 !important;
   }
+}
+
+
+/* ===== Visionario merge additions ===== */
+main{ position:relative; z-index:1; }
+.header, .marquee{ position:relative; z-index:2; }
+.hero{ isolation:isolate; }
+.hero-bg,
+.light-scattering,
+.particles{
+  position:absolute; inset:0; pointer-events:none;
+}
+.hero-bg{
+  background:
+    linear-gradient(180deg, rgba(1,8,15,0) 0%, rgba(1,10,18,.12) 38%, rgba(1,8,15,.34) 100%),
+    url("assets/ocean-desktop.jpg") center top / cover no-repeat;
+  opacity:.95;
+  z-index:0;
+}
+.light-scattering{
+  background:
+    radial-gradient(ellipse at 50% -10%, rgba(180,240,255,.18) 0%, rgba(140,220,255,.14) 14%, rgba(44,122,186,.08) 32%, rgba(0,0,0,0) 68%),
+    radial-gradient(circle at 18% 8%, rgba(180,240,255,.09), transparent 28%),
+    radial-gradient(circle at 82% 2%, rgba(120,210,255,.08), transparent 24%),
+    linear-gradient(180deg, rgba(165,228,255,.08) 0%, rgba(71,137,186,.04) 32%, rgba(6,22,42,0) 72%);
+  animation: driftLight 18s ease-in-out infinite alternate;
+  opacity:.92;
+  z-index:0;
+}
+.particles{
+  background-image:
+    radial-gradient(circle, rgba(214,245,255,.34) 0 1px, transparent 1.6px),
+    radial-gradient(circle, rgba(171,228,255,.22) 0 1.2px, transparent 1.9px),
+    radial-gradient(circle, rgba(214,245,255,.16) 0 1px, transparent 1.8px);
+  background-size: 220px 220px, 320px 320px, 420px 420px;
+  background-position: 12% 10%, 72% 20%, 50% 60%;
+  opacity:.16;
+  animation: particlesRise 30s linear infinite;
+  z-index:0;
+}
+.hero > .container{ position:relative; z-index:1; }
+.hero--surface{ background: transparent; }
+.scopeLine{ margin-top:18px; display:flex; flex-wrap:wrap; gap:10px; }
+.scopeLine__item{
+  padding:10px 14px; border-radius:999px; border:1px solid rgba(123,228,255,.18);
+  background:rgba(7,23,44,.28); backdrop-filter: blur(8px); color:var(--fg); font-weight:700;
+}
+.visionSection{
+  background: linear-gradient(180deg, rgba(4,16,31,.12), rgba(4,16,31,.06));
+}
+.section-kicker{
+  margin:0 0 12px; text-transform:uppercase; letter-spacing:.18em; font-size:.74rem; color:var(--accent);
+  font-family:var(--mono);
+}
+.section-grid{ display:grid; gap:24px; }
+.vision-layout{ grid-template-columns:minmax(0,1.18fr) minmax(300px,.82fr); align-items:start; }
+.bullet-cloud{ display:flex; flex-wrap:wrap; gap:10px; margin-top:18px; }
+.bullet-cloud span{
+  padding:10px 14px; border-radius:999px; border:1px solid rgba(123,228,255,.18);
+  background:rgba(7,23,44,.30); backdrop-filter: blur(8px);
+}
+.timeline-card{ padding:28px; }
+.timeline{ list-style:none; margin:0; padding:6px 0 0 0; display:grid; gap:18px; }
+.timeline li{ display:grid; grid-template-columns:84px 1fr; gap:14px; align-items:start; position:relative; }
+.timeline li::before{ content:""; position:absolute; left:40px; top:28px; width:1px; height:calc(100% + 8px); background: linear-gradient(180deg, rgba(123,228,255,.4), transparent); }
+.timeline li:last-child::before{ display:none; }
+.timeline strong{ display:inline-flex; width:82px; height:32px; align-items:center; justify-content:center; border-radius:999px; background:rgba(123,228,255,.08); color:var(--accent); font-size:.84rem; }
+.networkHero,
+.eventShowcase,
+.person.card,
+.posterCard,
+.contactCard,
+.partnerCard,
+.case.card{
+  backdrop-filter: blur(14px);
+}
+.networkHero{ background: linear-gradient(180deg, rgba(8,28,54,.50), rgba(7,21,44,.36)); }
+.networkHero__statement,
+.networkHero__item{ background: rgba(6,24,45,.22) !important; border-color: rgba(124,243,255,.18) !important; }
+.eventShowcase{ background: linear-gradient(180deg, rgba(8,28,54,.44), rgba(7,21,44,.30)); }
+.eventShowcase__poster,
+.eventShowcase__image{ width:100%; height:auto; object-fit:cover; display:block; }
+.person.card{ background: linear-gradient(180deg, rgba(8,28,54,.40), rgba(7,21,44,.28)); }
+.posterCard{ background: linear-gradient(180deg, rgba(8,28,54,.42), rgba(7,21,44,.30)); }
+.contactCard{ background: linear-gradient(180deg, rgba(8,28,54,.42), rgba(7,21,44,.30)); }
+.featureImpact__media{ min-height:300px; }
+.partnerCard{ background: linear-gradient(180deg, rgba(8,28,54,.42), rgba(7,21,44,.30)); }
+.contactCard__icon{ box-shadow:0 0 22px rgba(123,228,255,.16), inset 0 0 12px rgba(255,255,255,.04); }
+@keyframes driftLight{ from{ transform:translate3d(0,0,0) scale(1);} to{ transform:translate3d(0,10px,0) scale(1.03);} }
+@keyframes particlesRise{ from { transform: translateY(0);} to { transform: translateY(-24px);} }
+@media (max-width:980px){
+  body{ background-image: linear-gradient(180deg, rgba(0,0,0,.12), rgba(0,0,0,.26)), url("assets/ocean-mobile.jpg"), linear-gradient(180deg, #02111f, #031427 32%, #041b33 100%); background-position:center top; }
+  .hero-bg{ background-image: linear-gradient(180deg, rgba(1,8,15,0) 0%, rgba(1,10,18,.12) 38%, rgba(1,8,15,.34) 100%), url("assets/ocean-mobile.jpg"); }
+  .vision-layout{ grid-template-columns:1fr; }
+  body::before{ opacity:.26; }
+  body::after, .particles{ opacity:.12; animation:none; }
 }
