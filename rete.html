@@ -5,7 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Rete di Boyle | Gli Amici di Boyle</title>
   <meta name="description" content="La rete di professionisti e ricercatori degli Amici di Boyle." />
-    <link rel="stylesheet" href="rete.css" />
+  <link rel="preload" as="image" href="assets/rete-background.jpg" fetchpriority="high">
+  <link rel="stylesheet" href="rete.css" />
 </head>
 <body>
   <main class="page">
@@ -327,7 +328,7 @@
         Compila il modulo per candidarti alla rete. La richiesta verrà inviata al team degli Amici di Boyle per la valutazione.
       </p>
 
-      <form class="network-form" id="network-form" action="https://formspree.io/f/xzdareqw" method="POST" enctype="multipart/form-data">
+      <form class="network-form" id="network-form" action="https://formspree.io/f/xzdareqw" method="POST">
         <input type="hidden" name="_subject" value="Nuova candidatura alla Rete di Boyle">
         <input type="hidden" name="_language" value="it">
        
@@ -362,11 +363,6 @@
           <div class="field field--full">
             <label for="cand-linkedin">Profilo LinkedIn</label>
             <input id="cand-linkedin" name="linkedin" type="url" placeholder="https://www.linkedin.com/in/...">
-          </div>
-          <div class="field field--full">
-            <label for="cand-photo">Allega foto profilo</label>
-            <input id="cand-photo" name="profile_photo" type="file" accept=".jpg,.jpeg,.png,.webp,image/*">
-            <small class="field__hint">Formato consigliato: JPG o PNG, immagine frontale ben leggibile.</small>
           </div>
 
           <div class="field field--full">
