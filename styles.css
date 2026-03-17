@@ -1049,3 +1049,186 @@ body::before{
   .linkedin-link{ align-self:flex-start; }
   .lesson-poster-grid{ grid-template-columns:1fr; gap:16px; }
 }
+
+
+/* === v3 refinements: lezioni, articoli, linkedin, evento, rete, reveal === */
+.linkedin-link{
+  width:42px;
+  min-width:42px;
+  height:42px;
+  padding:0;
+  justify-content:center;
+  gap:0;
+  border-radius:12px;
+  font-size:1rem;
+  text-transform:lowercase;
+}
+.linkedin-link svg{ display:none; }
+.linkedin-link span{
+  display:block;
+  color:#7be4ff;
+  font-weight:800;
+  line-height:1;
+  letter-spacing:-0.03em;
+  transform:translateY(-1px);
+}
+
+.course-poster-grid{
+  align-items:start;
+}
+.course-poster-card{
+  padding:16px 16px 14px;
+  min-height:unset;
+}
+.course-poster-card img{
+  aspect-ratio: 4 / 5.15;
+  max-height: 330px;
+  object-fit:contain;
+  margin-bottom:14px;
+}
+.course-poster-card h3{
+  min-height:2.4em;
+  font-size:1rem;
+}
+.course-poster-card p.section-kicker,
+.lesson-poster-card p.section-kicker,
+.article-poster-card p.section-kicker{
+  margin-bottom:6px;
+}
+.lesson-poster-grid,
+.article-poster-grid{
+  display:grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap:20px;
+  align-items:start;
+}
+.lesson-poster-card,
+.article-poster-card{
+  padding:16px 16px 14px;
+  height:100%;
+}
+.lesson-poster-card img,
+.article-poster-card img{
+  width:100%;
+  aspect-ratio:4 / 5.15;
+  object-fit:contain;
+  object-position:center top;
+  margin-bottom:14px;
+  border-radius:18px;
+  background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.01));
+  border:1px solid rgba(123,228,255,.12);
+}
+.lesson-poster-card h3,
+.article-poster-card h3{
+  min-height:2.8em;
+  font-size:1rem;
+}
+.lesson-poster-card .text-link,
+.article-poster-card .text-link{
+  margin-top:auto;
+}
+
+#contenuti-articoli{
+  border-top:1px solid rgba(123,228,255,.10);
+}
+.articoli-block{
+  gap:20px;
+}
+.formazione-block + .formazione-block{
+  padding-top:4px;
+}
+.formazione-subhead{
+  position:relative;
+}
+.formazione-subhead::after{
+  content:"";
+  display:block;
+  width:92px;
+  height:1px;
+  margin-top:14px;
+  background:linear-gradient(90deg, rgba(123,228,255,.55), transparent);
+}
+
+.event-poster,
+.event-poster img{
+  display:block;
+}
+.event-poster img{
+  width:100%;
+  max-width:420px;
+  margin-inline:auto;
+  aspect-ratio: 4 / 5.55;
+  object-fit:contain;
+  object-position:center top;
+  border-radius:22px;
+  background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.01));
+  border:1px solid rgba(123,228,255,.12);
+  box-shadow:0 18px 42px rgba(0,0,0,.24);
+}
+
+.reveal{
+  transition:
+    opacity .95s ease,
+    transform 1.05s cubic-bezier(.19,1,.22,1),
+    filter .95s ease;
+}
+.reveal-soft{ transition-duration: 1.15s, 1.2s, 1.05s; }
+.reveal-slow{ transition-duration: 1.3s, 1.35s, 1.15s; }
+.reveal-strong{ transition-duration: .95s, 1.05s, .9s; }
+.reveal-left{ transform: translate3d(-58px, 0, 0) scale(.985); }
+.reveal-right{ transform: translate3d(58px, 0, 0) scale(.985); }
+.reveal-up{ transform: translate3d(0, 54px, 0) scale(.99); }
+
+.network-grid{
+  background:
+    radial-gradient(circle at 14% 22%, rgba(150,230,255,.08), transparent 17%),
+    radial-gradient(circle at 74% 18%, rgba(120,205,255,.08), transparent 16%),
+    radial-gradient(circle at 61% 73%, rgba(100,180,255,.07), transparent 19%),
+    radial-gradient(circle at 82% 58%, rgba(130,220,255,.05), transparent 15%);
+}
+.network-grid::before{
+  background-image:
+    linear-gradient(18deg, transparent 0 15.8%, rgba(136,226,255,.18) 16.05% 16.35%, transparent 16.7% 100%),
+    linear-gradient(34deg, transparent 0 23.2%, rgba(136,226,255,.14) 23.45% 23.7%, transparent 24.05% 100%),
+    linear-gradient(58deg, transparent 0 28.5%, rgba(136,226,255,.17) 28.8% 29.05%, transparent 29.35% 100%),
+    linear-gradient(83deg, transparent 0 37.4%, rgba(136,226,255,.12) 37.6% 37.84%, transparent 38.15% 100%),
+    linear-gradient(112deg, transparent 0 33.4%, rgba(136,226,255,.15) 33.65% 33.94%, transparent 34.2% 100%),
+    linear-gradient(126deg, transparent 0 44.4%, rgba(136,226,255,.13) 44.65% 44.92%, transparent 45.2% 100%),
+    linear-gradient(144deg, transparent 0 53.2%, rgba(136,226,255,.15) 53.45% 53.74%, transparent 54.05% 100%),
+    linear-gradient(164deg, transparent 0 66.1%, rgba(136,226,255,.14) 66.35% 66.58%, transparent 66.85% 100%),
+    linear-gradient(92deg, transparent 0 73.4%, rgba(136,226,255,.12) 73.6% 73.84%, transparent 74.1% 100%);
+  opacity:1;
+  filter: drop-shadow(0 0 5px rgba(123,228,255,.16));
+}
+.network-grid::after{
+  background-position:
+    10% 24%, 23% 14%, 38% 27%, 56% 17%, 78% 22%,
+    86% 37%, 19% 54%, 42% 49%, 64% 58%;
+}
+.pulse{
+  height:4px;
+  background: linear-gradient(90deg, transparent 0%, rgba(210,248,255,.08) 8%, rgba(241,252,255,1) 46%, rgba(168,240,255,.16) 88%, transparent 100%);
+  filter: blur(.12px) drop-shadow(0 0 12px rgba(198,245,255,.95));
+}
+.p1{ left: 6%; top: 25%; width: 210px; transform: rotate(17deg); animation: neuralPulseA 4.4s linear infinite; }
+.p2{ left: 28%; top: 17%; width: 220px; transform: rotate(39deg); animation: neuralPulseB 5s linear infinite -1.4s; }
+.p3{ left: 16%; top: 59%; width: 244px; transform: rotate(-11deg); animation: neuralPulseC 4.8s linear infinite -2.7s; }
+.p4{ left: 48%; top: 40%; width: 184px; transform: rotate(18deg); animation: neuralPulseA 4.9s linear infinite -.6s; }
+.p5{ left: 52%; top: 63%; width: 172px; transform: rotate(-22deg); animation: neuralPulseB 5.3s linear infinite -2.1s; }
+
+@media (max-width: 920px){
+  .lesson-poster-grid,
+  .article-poster-grid{ grid-template-columns:1fr 1fr; }
+}
+@media (max-width: 768px){
+  .lesson-poster-grid,
+  .article-poster-grid{ grid-template-columns:1fr; }
+  .course-poster-card img,
+  .lesson-poster-card img,
+  .article-poster-card img{
+    max-height:420px;
+  }
+  .linkedin-link{
+    width:38px; min-width:38px; height:38px;
+  }
+}
