@@ -1000,3 +1000,52 @@ body::before{
   .course-poster-card img,
   .lesson-poster-card img{ aspect-ratio:auto; max-height: 520px; }
 }
+
+
+/* === fine tuning header / founders / formazione / contatti === */
+.brand{ flex:1 1 420px; }
+.brand-text{ display:grid; gap:2px; min-width:0; }
+.brand strong{ font-size: clamp(1.15rem, 1.8vw, 1.55rem); line-height:1.02; }
+.brand em{ font-size: clamp(.9rem, 1.15vw, 1.05rem); color: var(--text); opacity:.92; }
+.brand-text small{ font-size: clamp(.72rem, .95vw, .9rem); color: var(--soft); line-height:1.2; }
+.site-nav{ flex:0 0 auto; }
+
+.founder-card{ display:flex; flex-direction:column; }
+.founder-head{ display:flex; align-items:center; justify-content:space-between; gap:12px; margin:16px 0 10px; }
+.founder-head h3{ margin:0; }
+.linkedin-link{
+  display:inline-flex; align-items:center; gap:8px; padding:8px 12px; border-radius:999px;
+  border:1px solid rgba(123,228,255,.18); background:rgba(123,228,255,.07); color:var(--text);
+  font-size:.84rem; font-weight:700; white-space:nowrap; transition:transform .2s ease, border-color .2s ease, box-shadow .2s ease;
+}
+.linkedin-link:hover{ transform:translateY(-1px); border-color:rgba(123,228,255,.34); box-shadow:0 10px 24px rgba(0,0,0,.18); }
+.linkedin-link svg{ width:16px; height:16px; fill:#7be4ff; flex:0 0 16px; }
+
+.formazione-block{ display:grid; gap:18px; }
+.formazione-subhead{ max-width:900px; margin-bottom:0; }
+.lesson-poster-grid{ display:grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap:20px; }
+.course-poster-card, .lesson-poster-card{ height:100%; }
+.course-poster-card h3, .lesson-poster-card h3{ min-height:3.1em; }
+.course-poster-card .text-link, .lesson-poster-card .text-link{ margin-top:auto; }
+.lesson-poster-card img{ aspect-ratio: 4 / 5.45; object-fit:contain; object-position:center top; }
+
+.contact-card--rich{ min-height:100%; padding:26px; }
+.contact-card--rich .section-kicker{ margin-bottom:6px; }
+.compact-list--contact{ display:grid; gap:10px; margin:6px 0 0; }
+.compact-list--contact li{ min-height:50px; display:flex; align-items:center; }
+.contact-card--rich .btn{ margin-top:auto; width:100%; }
+
+@media (max-width: 1180px){
+  .brand{ flex-basis:360px; }
+}
+@media (max-width: 920px){
+  .lesson-poster-grid{ grid-template-columns:1fr 1fr; }
+}
+@media (max-width: 768px){
+  .brand strong{ font-size:1.08rem; }
+  .brand em{ display:block; font-size:.83rem; }
+  .brand-text small{ display:block; font-size:.72rem; }
+  .founder-head{ align-items:flex-start; flex-direction:column; }
+  .linkedin-link{ align-self:flex-start; }
+  .lesson-poster-grid{ grid-template-columns:1fr; gap:16px; }
+}
