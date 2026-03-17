@@ -830,3 +830,173 @@ body::before{
   width:220px !important;
   height:220px !important;
 }
+
+
+/* =========================
+   Requested refinements
+========================= */
+.reveal{
+  opacity:0;
+  filter: blur(10px);
+  transition: opacity .9s ease, transform .9s cubic-bezier(.22,1,.36,1), filter .9s ease;
+  will-change: transform, opacity;
+}
+.reveal.is-visible{ opacity:1; transform:none; filter:blur(0); }
+.reveal-left{ transform: translate3d(-48px, 0, 0); }
+.reveal-right{ transform: translate3d(48px, 0, 0); }
+.reveal-up{ transform: translate3d(0, 42px, 0); }
+
+.network-box{
+  position:relative;
+  isolation:isolate;
+}
+.network-bg,
+.network-grid,
+.network-copy{ position:absolute; inset:0; }
+.network-grid{
+  overflow:hidden;
+  background:
+    radial-gradient(circle at 18% 22%, rgba(150,230,255,.06), transparent 18%),
+    radial-gradient(circle at 78% 26%, rgba(120,205,255,.06), transparent 18%),
+    radial-gradient(circle at 62% 72%, rgba(100,180,255,.05), transparent 20%);
+  opacity:.98;
+}
+.network-grid::before,
+.network-grid::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+}
+.network-grid::before{
+  background-image:
+    linear-gradient(18deg, transparent 0 17%, rgba(136,226,255,.16) 17.2% 17.65%, transparent 17.95% 100%),
+    linear-gradient(58deg, transparent 0 26%, rgba(136,226,255,.15) 26.15% 26.55%, transparent 26.85% 100%),
+    linear-gradient(112deg, transparent 0 30%, rgba(136,226,255,.14) 30.15% 30.55%, transparent 30.85% 100%),
+    linear-gradient(144deg, transparent 0 40%, rgba(136,226,255,.13) 40.1% 40.55%, transparent 40.85% 100%),
+    linear-gradient(92deg, transparent 0 49%, rgba(136,226,255,.12) 49.15% 49.5%, transparent 49.8% 100%),
+    linear-gradient(12deg, transparent 0 61%, rgba(136,226,255,.14) 61.15% 61.55%, transparent 61.85% 100%),
+    linear-gradient(130deg, transparent 0 73%, rgba(136,226,255,.13) 73.1% 73.5%, transparent 73.8% 100%);
+  opacity:.9;
+}
+.network-grid::after{
+  background-image:
+    radial-gradient(circle, rgba(223,248,255,.98) 0 1.5px, rgba(123,228,255,.9) 1.8px, transparent 4px),
+    radial-gradient(circle, rgba(223,248,255,.95) 0 1.4px, rgba(123,228,255,.72) 1.7px, transparent 3.8px),
+    radial-gradient(circle, rgba(223,248,255,.85) 0 1.3px, rgba(123,228,255,.65) 1.5px, transparent 3.6px),
+    radial-gradient(circle, rgba(223,248,255,.85) 0 1.2px, rgba(123,228,255,.55) 1.5px, transparent 3.4px),
+    radial-gradient(circle, rgba(223,248,255,.85) 0 1.2px, rgba(123,228,255,.55) 1.5px, transparent 3.4px),
+    radial-gradient(circle, rgba(223,248,255,.85) 0 1.2px, rgba(123,228,255,.55) 1.5px, transparent 3.4px),
+    radial-gradient(circle, rgba(223,248,255,.85) 0 1.2px, rgba(123,228,255,.55) 1.5px, transparent 3.4px),
+    radial-gradient(circle, rgba(223,248,255,.85) 0 1.2px, rgba(123,228,255,.55) 1.5px, transparent 3.4px),
+    radial-gradient(circle, rgba(223,248,255,.85) 0 1.2px, rgba(123,228,255,.55) 1.5px, transparent 3.4px);
+  background-size:auto;
+  background-repeat:no-repeat;
+  background-position:
+    12% 24%, 30% 17%, 48% 31%, 68% 19%, 84% 29%,
+    23% 56%, 49% 51%, 73% 61%, 38% 78%;
+  filter: drop-shadow(0 0 10px rgba(123,228,255,.45));
+}
+.node{
+  width:10px;
+  height:10px;
+  box-shadow: 0 0 0 3px rgba(123,228,255,.1), 0 0 22px rgba(123,228,255,.55);
+}
+.pulse{
+  height:3px;
+  border-radius:999px;
+  background: linear-gradient(90deg, transparent 0%, rgba(210,248,255,.12) 10%, rgba(210,248,255,.98) 50%, rgba(150,235,255,.15) 90%, transparent 100%);
+  filter: blur(.15px) drop-shadow(0 0 10px rgba(164,238,255,.85));
+  transform-origin:left center;
+}
+.p1{ left: 8%; top: 26%; width: 180px; transform: rotate(14deg); animation: neuralPulseA 4.8s linear infinite; }
+.p2{ left: 29%; top: 20%; width: 194px; transform: rotate(38deg); animation: neuralPulseB 5.6s linear infinite -1.8s; }
+.p3{ left: 18%; top: 57%; width: 210px; transform: rotate(-12deg); animation: neuralPulseC 5.1s linear infinite -3.1s; }
+.network-copy{
+  z-index:2;
+  align-content:end;
+  padding:24px;
+}
+
+.poster-card{
+  padding:18px;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+}
+.poster-card img{
+  width:100%;
+  aspect-ratio: 4 / 5.45;
+  object-fit:contain;
+  object-position:center;
+  background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.01));
+  border:1px solid rgba(123,228,255,.12);
+}
+
+.section-heading--tight{ margin-bottom:18px; }
+.course-poster-grid{
+  display:grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap:20px;
+}
+.course-poster-card,
+.lesson-poster-card{
+  display:flex;
+  flex-direction:column;
+}
+.course-poster-card img,
+.lesson-poster-card img{
+  width:100%;
+  aspect-ratio: 4 / 5.5;
+  object-fit:contain;
+  object-position:center top;
+  margin-bottom:16px;
+  border-radius:18px;
+  background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.01));
+  border:1px solid rgba(123,228,255,.12);
+}
+.formazione-lesson-grid .lesson-poster-card img{
+  aspect-ratio: 16 / 10.6;
+}
+
+@keyframes neuralPulseA{
+  0%{ opacity:0; transform:translateX(-28px) scaleX(.68) rotate(14deg); }
+  14%{ opacity:1; }
+  100%{ opacity:0; transform:translateX(108px) scaleX(1.08) rotate(14deg); }
+}
+@keyframes neuralPulseB{
+  0%{ opacity:0; transform:translateX(-32px) scaleX(.65) rotate(38deg); }
+  18%{ opacity:1; }
+  100%{ opacity:0; transform:translateX(126px) scaleX(1.12) rotate(38deg); }
+}
+@keyframes neuralPulseC{
+  0%{ opacity:0; transform:translateX(-24px) scaleX(.72) rotate(-12deg); }
+  18%{ opacity:1; }
+  100%{ opacity:0; transform:translateX(140px) scaleX(1.15) rotate(-12deg); }
+}
+
+@media (max-width: 1180px){
+  .course-poster-grid{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 920px){
+  .course-poster-grid{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .poster-card img{ max-width: 420px; margin-inline:auto; }
+}
+
+@media (max-width: 768px){
+  .reveal,
+  .reveal-left,
+  .reveal-right,
+  .reveal-up{ opacity:1; filter:none; transform:none; }
+  .course-poster-grid{ grid-template-columns: 1fr 1fr; gap:16px; }
+  .course-poster-card{ padding:18px; }
+  .network-copy{ padding:18px; }
+}
+
+@media (max-width: 560px){
+  .course-poster-grid{ grid-template-columns: 1fr; }
+  .poster-card img,
+  .course-poster-card img,
+  .lesson-poster-card img{ aspect-ratio:auto; max-height: 520px; }
+}
