@@ -1057,3 +1057,298 @@ body::before{
   .research-card,
   .formation-card{ min-height: initial; }
 }
+
+
+/* ==== v5 focused refinements ==== */
+.info-card h2{
+  overflow-wrap:anywhere;
+  hyphens:auto;
+}
+
+.reveal{
+  transition: opacity .78s ease, transform .9s cubic-bezier(.22,.61,.36,1), filter .78s ease;
+}
+.section .cards-grid > *:nth-child(2){ transition-delay: .06s; }
+.section .cards-grid > *:nth-child(3){ transition-delay: .12s; }
+.section .cards-grid > *:nth-child(4){ transition-delay: .18s; }
+.section .cards-grid > *:nth-child(5){ transition-delay: .24s; }
+
+/* network box rebuilt */
+.network-box{
+  min-height: 520px;
+  display:grid;
+  grid-template-rows: minmax(0,1fr) auto;
+  gap: 18px;
+  padding: 20px;
+  background:
+    linear-gradient(180deg, rgba(8,28,54,.72), rgba(6,20,38,.9));
+}
+.network-visual{
+  position: relative;
+  min-height: 320px;
+  border-radius: 22px;
+  overflow: hidden;
+  border: 1px solid rgba(123,228,255,.14);
+  background:
+    radial-gradient(circle at 50% 0%, rgba(180,238,255,.12), transparent 48%),
+    linear-gradient(180deg, rgba(6,20,38,.32), rgba(6,20,38,.08));
+}
+.network-figure{
+  position:absolute;
+  inset: 0;
+  width:100%;
+  height:100%;
+  object-fit: cover;
+  object-position: center;
+  opacity: .92;
+  filter: saturate(1.02) contrast(1.02);
+}
+.light-ray,
+.light-pulse{
+  position:absolute;
+  display:block;
+  pointer-events:none;
+}
+.light-ray{
+  height: 2px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(255,255,255,0), rgba(218,248,255,.95) 36%, rgba(148,226,255,.6) 50%, rgba(255,255,255,0));
+  box-shadow: 0 0 16px rgba(167,234,255,.2);
+  opacity: 0;
+}
+.ray-1{ left: 8%; top: 26%; width: 40%; transform: rotate(8deg); animation: rayTravelA 8s linear infinite; }
+.ray-2{ left: 34%; top: 32%; width: 28%; transform: rotate(-14deg); animation: rayTravelB 7.2s linear infinite 1s; }
+.ray-3{ left: 18%; top: 58%; width: 38%; transform: rotate(-5deg); animation: rayTravelC 8.6s linear infinite 2.2s; }
+.ray-4{ left: 50%; top: 54%; width: 30%; transform: rotate(14deg); animation: rayTravelD 7.8s linear infinite .6s; }
+.light-pulse{
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(243,252,255,.98) 0, rgba(170,233,255,.82) 44%, rgba(170,233,255,0) 72%);
+  box-shadow: 0 0 18px rgba(160,230,255,.24);
+  opacity: .35;
+  animation: pulseBeat 5.5s ease-in-out infinite;
+}
+.pulse-1{ left: 18%; top: 24%; animation-delay: -.2s; }
+.pulse-2{ left: 56%; top: 40%; animation-delay: -1.9s; }
+.pulse-3{ left: 66%; top: 61%; animation-delay: -3.1s; }
+
+.network-actions{
+  position: relative;
+  z-index: 2;
+  display:grid;
+  grid-template-columns: repeat(3, minmax(0,1fr));
+  gap: 12px;
+}
+.network-chip{
+  display:block;
+  min-height: 100%;
+  padding: 16px 16px 14px;
+  border-radius: 18px;
+  background: rgba(7, 21, 40, .56);
+  border: 1px solid rgba(123,228,255,.14);
+}
+.network-chip strong{
+  display:block;
+  margin-bottom: 4px;
+}
+.network-chip p{
+  margin: 0;
+  color: rgba(237,247,255,.72);
+  font-size: .94rem;
+}
+.network-chip:hover{
+  border-color: rgba(123,228,255,.26);
+  box-shadow: 0 10px 24px rgba(0,0,0,.18);
+}
+
+/* remove old neural disco remnants */
+.network-bg,
+.network-map,
+.network-copy{
+  display:none !important;
+}
+
+@keyframes rayTravelA{
+  0%{ opacity:0; transform: translateX(-18px) scaleX(.55) rotate(8deg); }
+  14%{ opacity:.9; }
+  55%{ opacity:.76; }
+  100%{ opacity:0; transform: translateX(160px) scaleX(1.1) rotate(8deg); }
+}
+@keyframes rayTravelB{
+  0%{ opacity:0; transform: translateX(-10px) scaleX(.5) rotate(-14deg); }
+  18%{ opacity:.96; }
+  60%{ opacity:.7; }
+  100%{ opacity:0; transform: translateX(110px) scaleX(1.05) rotate(-14deg); }
+}
+@keyframes rayTravelC{
+  0%{ opacity:0; transform: translateX(-14px) scaleX(.5) rotate(-5deg); }
+  16%{ opacity:.95; }
+  58%{ opacity:.72; }
+  100%{ opacity:0; transform: translateX(150px) scaleX(1.08) rotate(-5deg); }
+}
+@keyframes rayTravelD{
+  0%{ opacity:0; transform: translateX(-10px) scaleX(.55) rotate(14deg); }
+  18%{ opacity:.92; }
+  56%{ opacity:.7; }
+  100%{ opacity:0; transform: translateX(120px) scaleX(1.02) rotate(14deg); }
+}
+@keyframes pulseBeat{
+  0%, 100%{ transform: scale(1); opacity:.36; }
+  50%{ transform: scale(1.18); opacity:.96; }
+}
+
+/* founder section upgraded */
+.founders-grid{
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  overflow: visible;
+}
+.founder-card{
+  min-width: 0;
+  text-align:left;
+  padding: 24px;
+  background:
+    linear-gradient(180deg, rgba(9,29,54,.8), rgba(6,21,39,.92)),
+    radial-gradient(circle at 90% 10%, rgba(126,215,255,.12), transparent 24%);
+}
+.founder-top{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+.founder-card > img,
+.founder-top > img{
+  width: 92px;
+  height: 92px;
+  margin: 0;
+  flex: 0 0 auto;
+  border-radius: 22px;
+  object-fit: cover;
+  border: 1px solid rgba(123,228,255,.2);
+}
+.founder-role{
+  margin: 0 0 8px;
+  font-size: .76rem;
+  text-transform: uppercase;
+  letter-spacing: .16em;
+  color: var(--cyan-2);
+}
+.founder-card h3{
+  margin-bottom: 10px;
+}
+.linkedin-link{
+  width: 36px;
+  height: 36px;
+  margin: 0;
+  flex: 0 0 auto;
+  border-radius: 12px;
+}
+
+/* contact cards */
+.contact-grid-3{
+  align-items: stretch;
+}
+.contact-card--rich{
+  gap: 14px;
+  padding: 24px;
+  min-height: 100%;
+}
+.contact-card--rich .energy-icon{
+  margin-bottom: 6px;
+}
+.contact-card--rich .btn-uniform{
+  width: 100%;
+  margin-top: auto;
+}
+.contact-card--rich .compact-list{
+  display:grid;
+  gap: 10px;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+/* lessons and articles sizing */
+.content-subheading{
+  max-width: 760px;
+  margin-bottom: 18px;
+}
+.content-subheading h3{
+  margin: 0 0 10px;
+  font-size: clamp(1.5rem, 2vw, 2rem);
+}
+.lessons-block{
+  margin-top: 30px;
+}
+.lesson-grid,
+.article-grid{
+  align-items: stretch;
+}
+.poster-tile{
+  display:flex;
+  flex-direction:column;
+  gap: 4px;
+}
+.poster-tile img{
+  width: 100%;
+  max-width: 320px;
+  margin: 0 auto 12px;
+  aspect-ratio: .78 / 1;
+  object-fit: cover;
+  object-position: top center;
+  background: rgba(3,11,20,.28);
+  border-radius: 18px;
+  box-shadow: 0 12px 30px rgba(0,0,0,.22);
+}
+.article-tile img{
+  max-width: 300px;
+  aspect-ratio: .82 / 1;
+  object-fit: contain;
+  padding: 8px;
+}
+.article-grid{
+  margin-top: 12px;
+}
+
+/* research and training cards without back_rete as background */
+.research-card--feature{
+  background:
+    linear-gradient(180deg, rgba(9,29,54,.84), rgba(5,18,34,.92)),
+    radial-gradient(circle at 88% 16%, rgba(126,215,255,.12), transparent 24%);
+}
+.formation-downloads{
+  background:
+    linear-gradient(180deg, rgba(8,28,54,.84), rgba(6,21,40,.94)),
+    radial-gradient(circle at 84% 14%, rgba(124,214,255,.12), transparent 26%);
+}
+
+/* tidy some text blocks */
+.research-card p,
+.formation-card p,
+.feature-card p,
+.contact-card p{
+  text-wrap: pretty;
+}
+
+@media (max-width: 920px){
+  .network-actions{
+    grid-template-columns: 1fr;
+  }
+  .poster-tile img{
+    max-width: 280px;
+  }
+}
+@media (max-width: 768px){
+  .network-box{
+    min-height: auto;
+  }
+  .network-visual{
+    min-height: 260px;
+  }
+  .founders-grid{
+    grid-template-columns: 1fr;
+  }
+}
