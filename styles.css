@@ -796,3 +796,37 @@ a { color: inherit; text-decoration: none; }
   from{ transform:translateX(0);}
   to{ transform:translateX(-50%);}
 }
+
+/* FIX 1: global fixed ocean background */
+body{
+  background: none !important;
+}
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:-5;
+  background:url("assets/ocean-desktop.jpg") center/cover no-repeat;
+}
+@media (max-width:768px){
+  body::before{
+    background:url("assets/ocean-mobile.jpg") center/cover no-repeat;
+  }
+}
+
+/* remove section solid backgrounds */
+.section, .alt-section{
+  background: transparent !important;
+}
+
+/* FIX 2: ticker transparent */
+.ticker{
+  background: transparent !important;
+  border:none !important;
+}
+
+/* FIX 3: big activity icons */
+.activity-asset{
+  width:220px !important;
+  height:220px !important;
+}
