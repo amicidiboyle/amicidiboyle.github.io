@@ -1352,3 +1352,86 @@ body::before{
     grid-template-columns: 1fr;
   }
 }
+
+
+/* v6 course posters */
+.course-poster-grid{
+  display:grid;
+  grid-template-columns: repeat(2, minmax(0,1fr));
+  gap: 14px;
+  margin-top: 10px;
+}
+.course-poster-card{
+  display:flex;
+  flex-direction:column;
+  gap: 10px;
+  padding: 12px;
+  border-radius: 18px;
+  background: rgba(4,18,34,.42);
+  border: 1px solid rgba(123,228,255,.12);
+}
+.course-poster-card img{
+  width:100%;
+  aspect-ratio: .78 / 1;
+  object-fit: cover;
+  object-position: top center;
+  border-radius: 14px;
+  background: rgba(3,11,20,.28);
+  box-shadow: 0 10px 24px rgba(0,0,0,.20);
+}
+.course-poster-card .text-link{
+  font-size: .93rem;
+  line-height: 1.4;
+}
+
+/* v6 electric contact buttons */
+.btn-electric{
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, rgba(14,44,82,.96), rgba(10,31,58,.94));
+  border-color: rgba(123,228,255,.24);
+  color: var(--text);
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.02), 0 14px 28px rgba(0,0,0,.18);
+}
+.btn-electric::before,
+.btn-electric::after{
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.btn-electric::before{
+  background:
+    linear-gradient(102deg, transparent 0%, transparent 30%, rgba(176,239,255,.05) 36%, rgba(176,239,255,.9) 44%, rgba(176,239,255,.06) 52%, transparent 58%, transparent 100%);
+  transform: translateX(-120%);
+  animation: electricSweep 4.6s linear infinite;
+}
+.btn-electric::after{
+  background-image:
+    linear-gradient(90deg, transparent 0 8%, rgba(166,235,255,.0) 8% 12%, rgba(166,235,255,.85) 12% 14%, rgba(166,235,255,0) 14% 18%, transparent 18% 100%);
+  mix-blend-mode: screen;
+  opacity: .45;
+  animation: electricFlicker 2.8s steps(6,end) infinite;
+}
+.btn-electric:hover{
+  border-color: rgba(152,236,255,.4);
+  box-shadow: 0 0 0 1px rgba(152,236,255,.06), 0 16px 34px rgba(42,112,168,.22);
+}
+@keyframes electricSweep{
+  0%{ transform: translateX(-130%); opacity:.2; }
+  12%{ opacity:.9; }
+  100%{ transform: translateX(130%); opacity:.28; }
+}
+@keyframes electricFlicker{
+  0%,100%{ opacity:.16; }
+  30%{ opacity:.42; }
+  52%{ opacity:.2; }
+  68%{ opacity:.5; }
+}
+
+@media (max-width: 900px){
+  .course-poster-grid{ grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 640px){
+  .course-poster-grid{ grid-template-columns: 1fr; }
+}
