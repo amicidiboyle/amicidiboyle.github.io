@@ -962,3 +962,164 @@ a { color: inherit; text-decoration: none; }
     letter-spacing: .13em;
   }
 }
+
+
+/* ===== 2026-03-17 refinement pass 2 ===== */
+.site-header{
+  background: linear-gradient(90deg, rgba(2,15,31,.88), rgba(7,49,86,.78), rgba(2,15,31,.88));
+}
+.nav-wrap{
+  min-height: 88px;
+}
+.brand{
+  gap: 14px;
+}
+.brand img{
+  width: 92px;
+  height: 92px;
+  object-fit: contain;
+}
+.brand strong{
+  font-size: 1.05rem;
+  line-height: 1.02;
+}
+.brand em{
+  display:block !important;
+  font-size: .52rem;
+  line-height: 1.22;
+  max-width: 350px;
+  color: rgba(237,247,255,.90);
+}
+
+/* 2) Founders cards horizontal with visible linkedin icon beside names */
+.founders-grid{
+  display:grid;
+  grid-template-columns: 1fr !important;
+  gap:16px;
+}
+.founder-card{
+  display:grid;
+  grid-template-columns: 96px 1fr;
+  align-items:center;
+  gap:18px;
+  text-align:left;
+  padding:20px;
+}
+.founder-card > img{
+  grid-row: 1 / span 3;
+  margin:0;
+}
+.founder-card h3{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin:0 0 6px;
+}
+.founder-card .linkedin-link{
+  display:inline-flex !important;
+  width:34px;
+  height:34px;
+  margin:0;
+  flex: 0 0 34px;
+}
+.founder-card .linkedin-link img{
+  width:16px;
+  height:16px;
+}
+.founder-card p{
+  margin:0;
+}
+.founder-card > .linkedin-link{
+  grid-column:2;
+  grid-row:1;
+  justify-self:start;
+  align-self:start;
+  margin-left: 190px; /* overridden by markup fix below if present */
+}
+.founder-card.founder-card--inline > .linkedin-link{
+  display:none !important;
+}
+
+/* 3) Hero podcast cover vertical and more prominent */
+.hero-podcast-grid{
+  grid-template-columns: 210px 1fr;
+  gap:22px;
+  align-items:start;
+}
+.hero-cover{
+  width:100%;
+  aspect-ratio: 3 / 4;
+  object-fit: contain;
+  background: rgba(4,15,31,.28);
+  padding: 8px;
+  align-self:stretch;
+  justify-self:center;
+  max-width:none;
+}
+
+/* 4) Activity icons bigger and centered */
+.activity-card{
+  text-align:center;
+}
+.activity-asset{
+  width:128px !important;
+  height:128px !important;
+  object-fit:contain;
+  margin:0 auto 18px !important;
+  display:block;
+}
+
+/* 5) Event poster show PNG */
+.poster-card img{
+  width:100%;
+  display:block !important;
+  aspect-ratio: 4 / 5;
+  object-fit: contain;
+  background: rgba(4,15,31,.22);
+  padding: 6px;
+}
+
+@media (max-width: 920px){
+  .founder-card{
+    grid-template-columns: 82px 1fr;
+    gap:14px;
+  }
+  .founder-card > img{
+    width:82px;
+    height:82px;
+  }
+  .hero-podcast-grid{
+    grid-template-columns: 180px 1fr;
+  }
+  .activity-asset{
+    width:112px !important;
+    height:112px !important;
+  }
+}
+@media (max-width: 768px){
+  .nav-wrap{
+    min-height: 78px;
+  }
+  .brand img{
+    width:64px;
+    height:64px;
+  }
+  .brand strong{
+    font-size: .96rem;
+  }
+  .brand em{
+    font-size:.48rem;
+    max-width: 210px;
+  }
+  .hero-podcast-grid{
+    grid-template-columns: 1fr;
+  }
+  .hero-cover{
+    max-width: 220px;
+    margin: 0 auto;
+  }
+  .activity-asset{
+    width:104px !important;
+    height:104px !important;
+  }
+}
