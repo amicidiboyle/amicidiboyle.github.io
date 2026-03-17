@@ -1011,3 +1011,298 @@ body::before{
   .network-visual-stage{min-height:260px;}
   .founders-grid{grid-template-columns:1fr;}
 }
+
+
+/* ===== v8 structure + mobile cleanup ===== */
+.activity-asset{
+  width:110px !important;
+  height:110px !important;
+}
+
+.research-showcase-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:18px;
+  margin-top:24px;
+}
+.research-card{
+  min-height:0;
+  padding:24px;
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  border-radius:24px;
+  overflow:hidden;
+}
+.research-card::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:
+    radial-gradient(circle at top right, rgba(190,242,255,.12), transparent 34%),
+    linear-gradient(180deg, rgba(255,255,255,.04), transparent 48%);
+}
+.research-card h3{margin:0 0 2px;}
+.research-card p{margin:0;color:rgba(237,247,255,.84);}
+.research-tags{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-top:auto;
+  padding-top:4px;
+}
+.research-tags span{
+  display:inline-flex;
+  align-items:center;
+  padding:8px 12px;
+  border-radius:999px;
+  font-size:.76rem;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:rgba(229,248,255,.92);
+  background:rgba(123,228,255,.08);
+  border:1px solid rgba(123,228,255,.16);
+}
+.research-card .btn{margin-top:4px; align-self:flex-start;}
+.research-card--hyperbaric{
+  background:linear-gradient(180deg, rgba(11,35,66,.92), rgba(6,19,38,.96));
+}
+.research-card--aerospace{
+  background:linear-gradient(180deg, rgba(10,31,64,.92), rgba(6,18,37,.96));
+}
+.research-card--human{
+  background:linear-gradient(180deg, rgba(8,28,58,.92), rgba(5,17,34,.96));
+}
+.research-card--didattica{
+  background:linear-gradient(180deg, rgba(12,37,70,.92), rgba(7,21,41,.96));
+}
+
+.courses-showcase{
+  padding:24px;
+}
+.courses-intro{
+  align-items:flex-start;
+  margin-bottom:20px;
+}
+.course-poster-grid{
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:20px;
+}
+.course-poster-card{
+  display:grid;
+  grid-template-columns:minmax(145px, 180px) 1fr;
+  gap:18px;
+  align-items:center;
+  padding:16px;
+}
+.course-poster-card img{
+  margin:0;
+  aspect-ratio:0.72;
+  min-height:220px;
+}
+.course-poster-card h4{
+  font-size:1.08rem;
+  margin:0 0 12px;
+}
+.course-poster-card .btn{
+  width:100%;
+  margin-top:0;
+}
+
+.teaching-poster-grid{
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:16px;
+}
+.teaching-card{
+  padding:14px;
+}
+.teaching-card img{
+  aspect-ratio:0.82;
+  max-height:280px;
+  object-fit:cover;
+}
+#contenuti-articoli .feature-card img{
+  aspect-ratio:1.08;
+  max-height:260px;
+  object-fit:cover;
+}
+
+.founders-grid{
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:18px;
+}
+.founder-card{
+  min-height:100%;
+  background:
+    radial-gradient(circle at 12% 10%, rgba(176,238,255,.18), transparent 26%),
+    linear-gradient(180deg, rgba(12,34,66,.94), rgba(6,18,38,.97));
+  box-shadow:0 18px 42px rgba(0,0,0,.22), inset 0 1px 0 rgba(255,255,255,.04);
+}
+.founder-card::before{
+  background:
+    linear-gradient(135deg, rgba(255,255,255,.09), transparent 22%, transparent 78%, rgba(123,228,255,.07)),
+    radial-gradient(circle at 88% 12%, rgba(123,228,255,.12), transparent 20%);
+}
+.founder-topline{
+  margin-bottom:16px;
+}
+.founder-card>img{
+  width:96px;
+  height:96px;
+}
+
+@media (max-width: 1080px){
+  .founders-grid{grid-template-columns:repeat(2,minmax(0,1fr));}
+}
+@media (max-width: 920px){
+  .research-showcase-grid{grid-template-columns:1fr;}
+  .course-poster-grid{grid-template-columns:1fr;}
+  .course-poster-card{grid-template-columns:140px 1fr;}
+}
+@media (max-width: 768px){
+  .site-header{
+    position:sticky;
+    top:0;
+    backdrop-filter:blur(14px);
+    background:rgba(4,17,33,.78);
+  }
+  .nav-wrap{
+    min-height:72px;
+    gap:10px;
+  }
+  .brand{
+    gap:10px;
+    align-items:center;
+    max-width:calc(100% - 58px);
+  }
+  .brand img{
+    width:44px;
+    height:44px;
+  }
+  .brand strong{
+    font-size:.98rem;
+    line-height:1.1;
+  }
+  .brand em{
+    display:block;
+    font-size:.63rem;
+    line-height:1.2;
+    letter-spacing:.03em;
+  }
+  .brand-sub{
+    display:block;
+    font-size:.58rem;
+    line-height:1.2;
+  }
+  .nav-burger{
+    width:44px;
+    height:44px;
+    border-radius:14px;
+    margin-left:auto;
+  }
+  .site-nav{
+    top:calc(100% + 8px);
+    left:10px;
+    right:10px;
+    max-height:calc(100vh - 92px);
+    overflow:auto;
+    padding:10px;
+    border-radius:20px;
+  }
+  .site-nav a,
+  .nav-dropdown > span{
+    font-size:1rem;
+    padding:13px 14px;
+  }
+  .hero{
+    min-height:auto;
+    padding-top:20px;
+  }
+  .hero-grid{
+    gap:18px;
+  }
+  .hero h1{
+    font-size:clamp(2rem, 10vw, 3rem);
+    max-width:11ch;
+  }
+  .hero-copy .cta-row,
+  .hero-panel-inner .cta-row{
+    flex-direction:column;
+  }
+  .ticker-track{
+    font-size:.72rem;
+    letter-spacing:.14em;
+    padding:8px 0;
+  }
+  .section{
+    padding:54px 0;
+  }
+  .section-heading{
+    margin-bottom:20px;
+  }
+  .glass-card{
+    padding:18px;
+    border-radius:22px;
+  }
+  .cards-grid{
+    gap:14px;
+  }
+  .activity-asset{
+    width:74px !important;
+    height:74px !important;
+  }
+  .content-grid .content-card img{
+    aspect-ratio:16/10;
+  }
+  .event-grid,
+  .rete-home-grid,
+  .section-grid.split-2{
+    grid-template-columns:1fr;
+  }
+  .event-grid .poster-card img{
+    max-height:420px;
+    object-fit:cover;
+  }
+  .network-box--image{
+    padding:14px;
+  }
+  .network-visual-stage{
+    min-height:220px;
+  }
+  .network-copy--cards{
+    grid-template-columns:1fr;
+    gap:10px;
+  }
+  .courses-showcase{
+    padding:18px;
+  }
+  .course-poster-card{
+    grid-template-columns:1fr;
+    gap:14px;
+  }
+  .course-poster-card img{
+    width:100%;
+    max-width:240px;
+    min-height:0;
+    margin:0 auto;
+  }
+  .teaching-poster-grid,
+  .founders-grid{
+    grid-template-columns:1fr;
+  }
+  .teaching-card img,
+  #contenuti-articoli .feature-card img{
+    max-height:220px;
+  }
+  .research-tags{
+    gap:8px;
+  }
+  .research-tags span{
+    font-size:.7rem;
+    padding:7px 10px;
+  }
+  .contact-card--rich .btn{
+    min-height:46px;
+  }
+}
