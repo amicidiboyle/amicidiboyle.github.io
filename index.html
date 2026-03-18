@@ -871,15 +871,9 @@
         btn.addEventListener('click', () => {
           const dlg = document.getElementById(btn.getAttribute('data-open-dialog'));
           if (!dlg || typeof dlg.showModal !== 'function') return;
+          /* Reset stile prima di aprire */
+          dlg.style.cssText = '';
           dlg.showModal();
-          /* Centra il dialog nella viewport su tutti i browser */
-          dlg.style.margin = 'auto';
-          dlg.style.position = 'fixed';
-          dlg.style.inset = '0';
-          dlg.style.width = 'min(780px, calc(100% - 32px))';
-          dlg.style.maxHeight = '90vh';
-          dlg.style.overflowY = 'auto';
-          dlg.style.transform = 'none';
         });
       });
       document.querySelectorAll('[data-close-dialog]').forEach(btn => {
