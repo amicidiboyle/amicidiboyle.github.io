@@ -2592,3 +2592,342 @@ dialog.dialog {
   .founder-card, .founder-card:hover { transform: none !important; transition: box-shadow .3s !important; }
   .founder-card > img, .founder-card:hover > img { transform: none !important; }
 }
+
+
+/* ==========================================================
+   FINAL13 — 6 fix definitivi (sovrascrivono tutto sopra)
+   ========================================================== */
+
+/* ── 1. DIALOG: centrato in modo definitivo ──────────────────
+   Il problema: `left: 50%; transform: translate(-50%,-50%)`
+   spostava il dialog fuori schermo perché <dialog> nativo
+   usa già un suo posizionamento. Soluzione pulita: solo
+   margin:auto + inset:0 su position:fixed. Zero transform.
+   --------------------------------------------------------- */
+.dialog {
+  position: fixed !important;
+  inset: 0 !important;
+  margin: auto !important;
+  top: 0 !important; left: 0 !important;
+  right: 0 !important; bottom: 0 !important;
+  transform: none !important;
+  width: min(780px, calc(100% - 32px)) !important;
+  max-height: 90vh !important;
+  overflow-y: auto !important;
+  background: transparent !important;
+  border: 0 !important;
+  padding: 0 !important;
+}
+/* Assicura che ::backdrop copra tutto */
+.dialog::backdrop {
+  background: rgba(1,5,13,.78) !important;
+  backdrop-filter: blur(6px) !important;
+}
+
+/* ── 2. TIMELINE DESKTOP: solo raggio di luce, zero puntini ──
+   Rimuove tutti i puntini (::after) sul desktop.
+   Linea verticale come raggio luminoso continuo.
+   Il badge anno rimane pulito senza nulla sopra.
+   --------------------------------------------------------- */
+
+/* Annulla TUTTI i puntini precedenti sul desktop */
+.timeline li::after {
+  display: none !important;
+  content: none !important;
+}
+.timeline li:last-child::after {
+  display: none !important;
+  content: none !important;
+  animation: none !important;
+}
+
+/* Raggio di luce che unisce tutte le date */
+.timeline {
+  position: relative !important;
+  padding-left: 0 !important;
+}
+.timeline::before {
+  content: "" !important;
+  position: absolute !important;
+  left: 39px !important;
+  top: 8px !important;
+  bottom: 8px !important;
+  width: 2px !important;
+  background: linear-gradient(180deg,
+    transparent 0%,
+    rgba(123,228,255,.6) 8%,
+    var(--cyan-2) 30%,
+    rgba(123,228,255,.8) 55%,
+    rgba(123,228,255,.4) 80%,
+    transparent 100%) !important;
+  box-shadow:
+    0 0 6px rgba(123,228,255,.5),
+    0 0 18px rgba(123,228,255,.2) !important;
+  border-radius: 2px !important;
+  animation: timelineGlow 3s ease-in-out infinite alternate !important;
+}
+@keyframes timelineGlow {
+  from { opacity: .7; filter: blur(0px); }
+  to   { opacity: 1;  filter: blur(.4px); box-shadow: 0 0 10px rgba(123,228,255,.7), 0 0 28px rgba(123,228,255,.3); }
+}
+
+/* Badge anno: pulito, nessun overlap */
+.timeline li {
+  display: grid !important;
+  grid-template-columns: 80px 1fr !important;
+  gap: 14px !important;
+  align-items: start !important;
+  position: relative !important;
+  padding-left: 0 !important;
+}
+.timeline li::before { display: none !important; }
+.timeline strong {
+  display: inline-flex !important;
+  width: 78px !important; height: 32px !important;
+  align-items: center !important; justify-content: center !important;
+  border-radius: 999px !important;
+  background: rgba(123,228,255,.1) !important;
+  border: 1px solid rgba(123,228,255,.24) !important;
+  color: var(--cyan-2) !important;
+  font-size: .84rem !important; font-weight: 700 !important;
+  letter-spacing: .02em !important;
+  box-shadow: 0 0 10px rgba(123,228,255,.15) !important;
+  position: relative !important; z-index: 1 !important;
+}
+.timeline li:hover strong {
+  background: rgba(123,228,255,.18) !important;
+  box-shadow: 0 0 20px rgba(123,228,255,.3) !important;
+}
+.timeline span {
+  color: var(--muted) !important;
+  font-size: .92rem !important;
+  line-height: 1.55 !important;
+  padding-top: 6px !important;
+}
+.timeline li:last-child span { color: var(--text) !important; }
+
+/* Su mobile: puntini (già definiti sopra nei blocchi mobile) */
+@media (max-width: 768px) {
+  .timeline li::after {
+    display: block !important;
+    content: "" !important;
+    animation: dotPulse 2s ease-in-out infinite !important;
+  }
+  .timeline li:last-child::after {
+    display: block !important;
+    animation: dotPulse 2s ease-in-out infinite !important;
+  }
+  .timeline li {
+    grid-template-columns: 1fr !important;
+    padding-left: 0 !important;
+  }
+  .timeline strong {
+    width: auto !important; height: auto !important;
+    display: inline !important;
+    background: none !important; border: none !important;
+    box-shadow: none !important;
+    color: var(--cyan-2) !important;
+    font-size: .9rem !important;
+    padding: 0 !important;
+  }
+}
+
+/* ── 3. FOUNDER CARD: nuova animazione hover — spotlight ─────
+   Invece del 3D rotateX (che causava glitch), usiamo:
+   - sollevamento pulito translateY
+   - spotlight radiale che si accende sotto il cursore
+   - foto con leggero zoom + alone luminoso
+   - bordo che si illumina
+   --------------------------------------------------------- */
+.founder-card {
+  transition:
+    transform .35s cubic-bezier(.22,.68,0,1.3),
+    box-shadow .35s ease,
+    border-color .28s ease !important;
+  transform-style: flat !important; /* disabilita 3D */
+}
+.founder-card::before {
+  content: "" !important;
+  position: absolute !important; inset: 0 !important;
+  border-radius: inherit !important; pointer-events: none !important;
+  z-index: 1 !important;
+  background: radial-gradient(circle at 50% -10%,
+    rgba(180,240,255,.13) 0%,
+    rgba(120,200,255,.06) 30%,
+    transparent 65%) !important;
+  transition: opacity .35s !important;
+  opacity: 0 !important;
+}
+.founder-card:hover::before { opacity: 1 !important; }
+
+.founder-card:hover {
+  transform: translateY(-7px) !important;
+  border-color: rgba(160,240,255,.38) !important;
+  box-shadow:
+    0 24px 60px rgba(0,0,0,.5),
+    0 0 40px rgba(80,200,255,.1),
+    inset 0 1px 0 rgba(255,255,255,.16) !important;
+}
+.founder-card > img {
+  transition: transform .35s cubic-bezier(.22,.68,0,1.3),
+              box-shadow .35s, filter .3s !important;
+}
+.founder-card:hover > img {
+  transform: scale(1.07) !important;
+  box-shadow: 0 6px 22px rgba(0,0,0,.4), 0 0 22px rgba(123,228,255,.35) !important;
+  filter: brightness(1.06) saturate(1.1) !important;
+}
+/* Disabilita il 3D su tutti i breakpoint */
+@media (max-width: 768px) {
+  .founder-card:hover { transform: translateY(-3px) !important; }
+  .founder-card:hover > img { transform: scale(1.04) !important; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .founder-card:hover { transform: none !important; }
+  .founder-card:hover > img { transform: none !important; }
+}
+
+/* ── 4. BTN SCOPRI LA RETE: elettricità potenziata ───────────
+   Raggio luminoso che attraversa il bottone + bordo pulsante.
+   --------------------------------------------------------- */
+.btn-rete-cta {
+  position: relative !important;
+  overflow: hidden !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 9px !important;
+  min-height: 52px !important;
+  padding: 0 28px !important;
+  font-size: .97rem !important;
+  font-weight: 700 !important;
+  border-radius: 14px !important;
+  background: linear-gradient(135deg,
+    rgba(16,130,255,.97),
+    rgba(0,195,255,.92)) !important;
+  border: 1px solid rgba(100,220,255,.5) !important;
+  color: rgba(2,12,28,.96) !important;
+  box-shadow:
+    0 10px 32px rgba(0,120,255,.3),
+    inset 0 1px 0 rgba(255,255,255,.3) !important;
+  cursor: pointer !important;
+  transition: transform .22s cubic-bezier(.22,.68,0,1.4),
+              box-shadow .22s !important;
+}
+/* Raggio 1: scan veloce */
+.btn-rete-cta::before {
+  content: "" !important;
+  position: absolute !important;
+  top: -10% !important; width: 55px !important; height: 120% !important;
+  background: linear-gradient(105deg,
+    transparent 0%,
+    rgba(255,255,255,.08) 30%,
+    rgba(255,255,255,.62) 50%,
+    rgba(255,255,255,.08) 70%,
+    transparent 100%) !important;
+  transform: skewX(-16deg) translateX(-120px) !important;
+  animation: reteLightning 2.2s ease-in-out infinite !important;
+}
+@keyframes reteLightning {
+  0%   { transform: skewX(-16deg) translateX(-120px); opacity: 0; }
+  8%   { opacity: 1; }
+  55%  { transform: skewX(-16deg) translateX(320px); opacity: 0; }
+  100% { transform: skewX(-16deg) translateX(320px); opacity: 0; }
+}
+/* Raggio 2: flash secondario sfasato */
+.btn-rete-cta::after {
+  content: "" !important;
+  position: absolute !important;
+  inset: 0 !important; border-radius: inherit !important;
+  border: 1.5px solid rgba(160,230,255,.55) !important;
+  animation: reteGlow 2.2s ease-in-out infinite !important;
+  pointer-events: none !important;
+}
+@keyframes reteGlow {
+  0%,100% { box-shadow: 0 0 0 0 rgba(0,200,255,0); opacity: .6; }
+  30%     { box-shadow: 0 0 22px 4px rgba(0,200,255,.25); opacity: 1; }
+  55%     { box-shadow: 0 0 0 0 rgba(0,200,255,0); opacity: .6; }
+}
+.btn-rete-cta:hover {
+  transform: translateY(-2px) scale(1.02) !important;
+  box-shadow:
+    0 16px 44px rgba(0,140,255,.42),
+    0 0 60px rgba(0,200,255,.22),
+    inset 0 1px 0 rgba(255,255,255,.35) !important;
+}
+
+/* ── 5. TEACHING CARD DESKTOP: locandine 2x più grandi ───────
+   max-height portata a 420px — le locandine verticali
+   si vedono nella loro interezza come veri poster.
+   --------------------------------------------------------- */
+.teaching-card-img-wrap {
+  max-height: 420px !important;
+  overflow: hidden !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: rgba(4,14,32,.5) !important;
+  border-radius: 14px !important;
+  margin-bottom: 16px !important;
+}
+.teaching-card-img-wrap img {
+  width: auto !important;
+  max-width: 100% !important;
+  height: auto !important;
+  max-height: 400px !important;
+  object-fit: contain !important;
+  border-radius: 12px !important;
+  padding: 0 !important;
+}
+/* Mobile: dimensioni ridotte (già gestite sopra ma ri-affermiamo) */
+@media (max-width: 768px) {
+  .teaching-card-img-wrap {
+    max-height: none !important;
+    height: auto !important;
+    width: 88px !important;
+    flex-shrink: 0 !important;
+    align-self: flex-start !important;
+  }
+  .teaching-card-img-wrap img {
+    width: 88px !important;
+    height: 116px !important;
+    max-height: 116px !important;
+    object-fit: cover !important;
+  }
+}
+
+/* ── 6. FEATURE CARD IMMAGINI: stessa altezza uniforme ───────
+   Entrambe le immagini nelle pubblicazioni hanno la stessa
+   altezza fissa con object-fit: cover centrato.
+   --------------------------------------------------------- */
+#contenuti-articoli .feature-card > img,
+.articoli-grid .feature-card > img {
+  width: 100% !important;
+  height: 240px !important;
+  max-height: 240px !important;
+  min-height: 240px !important;
+  object-fit: cover !important;
+  object-position: center top !important;
+  border-radius: 14px !important;
+  margin-bottom: 16px !important;
+  background: rgba(4,14,32,.5) !important;
+  padding: 0 !important;
+  display: block !important;
+}
+/* UHM logo: stesso box ma con contain + padding per non tagliarlo */
+#contenuti-articoli .feature-card > img[src*="UHM"],
+#contenuti-articoli .feature-card > img[src*="logo"],
+.articoli-grid .feature-card > img[src*="UHM"],
+.articoli-grid .feature-card > img[src*="logo"] {
+  object-fit: contain !important;
+  object-position: center !important;
+  padding: 24px !important;
+  background: rgba(5,18,42,.7) !important;
+}
+/* Mobile: altezza proporzionata */
+@media (max-width: 768px) {
+  #contenuti-articoli .feature-card > img,
+  .articoli-grid .feature-card > img {
+    height: 170px !important;
+    min-height: 170px !important;
+  }
+}
