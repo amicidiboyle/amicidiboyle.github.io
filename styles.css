@@ -1036,2157 +1036,604 @@ body::after {
   .activity-grid-row { grid-template-columns: 1fr; }
 }
 
-
 /* ==========================================================
-   MIGLIORIE GRAFICHE — desktop + mobile
+   OVERRIDES — stato finale di tutte le modifiche
+   Un solo blocco pulito, nessun duplicato.
    ========================================================== */
 
-/* ── DESKTOP: locandine teaching e pubblicazioni — layout verticale ─────
-   Carte più alte, locandina visibile per intero proporzionata.
-   -------------------------------------------------------------------- */
-.teaching-card {
-  display: flex; flex-direction: column;
-}
-.teaching-card > img {
-  width: 100%;
-  height: auto;
-  max-height: 320px;
-  object-fit: contain;
-  object-position: center top;
-  border-radius: 12px;
-  margin-bottom: 14px;
-  background: rgba(4,14,32,.55);
-  padding: 10px;
-}
-.teaching-poster-grid {
-  grid-template-columns: repeat(2,minmax(0,1fr));
-  gap: 22px;
-  align-items: start;
-}
-
-/* Feature-card articoli: layout verticale con immagine proporzionata */
-.feature-card {
-  display: flex; flex-direction: column;
-}
-.feature-card > img {
-  width: 100%;
-  height: auto;
-  max-height: 280px;
-  object-fit: contain;
-  object-position: center;
-  border-radius: 12px;
-  margin-bottom: 16px;
-  background: rgba(4,14,32,.55);
-  padding: 14px;
-}
-.feature-card > img[src*="UHM"],
-.feature-card > img[src*="logo"] {
-  max-height: 160px;
-  padding: 22px;
-}
-
-/* ── DESKTOP WOW: sezioni con bordo luminoso top ─────────────
-   Una sottile linea cyan che marca visivamente ogni sezione.
-   --------------------------------------------------------- */
-.section-heading::before {
-  content: "";
-  display: block;
-  width: 44px; height: 3px;
-  border-radius: 999px;
-  background: linear-gradient(90deg, var(--cyan), var(--blue));
-  margin-bottom: 16px;
-  box-shadow: 0 0 12px rgba(123,228,255,.4);
-}
-
-/* ── DESKTOP WOW: hero stats counter glow al hover ───────────
-   Ogni stat brillа di cyan quando si hover.
-   --------------------------------------------------------- */
-.hero-stat:hover strong {
-  text-shadow: 0 0 18px rgba(123,228,255,.6);
-  transition: text-shadow .3s;
-}
-
-/* ── DESKTOP WOW: card con bordo superiore colorato ──────────
-   Ogni research-card ha una striscia colorata in cima.
-   --------------------------------------------------------- */
-.research-card--hyperbaric { border-top: 2px solid rgba(80,160,255,.5); }
-.research-card--aerospace  { border-top: 2px solid rgba(60,200,255,.5); }
-.research-card--human      { border-top: 2px solid rgba(100,230,200,.45); }
-.research-card--didattica  { border-top: 2px solid rgba(160,220,255,.45); }
-
-/* ── DESKTOP WOW: network chips con shimmer ──────────────────
-   Bordo animato sulle chip della sezione Rete.
-   (già presente ma rafforziamo)
-   --------------------------------------------------------- */
-.network-chip { transition: border-color .25s, transform .25s, box-shadow .25s; }
-.network-chip:hover { box-shadow: 0 0 22px rgba(123,228,255,.12); }
-
-/* ── MOBILE WOW: hero con vignette laterali ──────────────────
-   Sfumature sui bordi laterali per dare profondità.
-   --------------------------------------------------------- */
-@media (max-width: 768px) {
-  .hero::before {
-    background:
-      linear-gradient(90deg, rgba(2,8,22,.3) 0%, transparent 15%, transparent 85%, rgba(2,8,22,.3) 100%),
-      linear-gradient(174deg, rgba(155,215,255,.1) 0%, transparent 42%),
-      radial-gradient(ellipse 70% 22% at 50% 0%, rgba(80,165,255,.12), transparent 65%);
-  }
-}
-
-/* ── MOBILE WOW: sezione fondatori — foto leggermente più grandi */
-@media (max-width: 768px) {
-  .founder-card > img { width: 80px; height: 80px; }
-  .founder-card { padding: 16px 14px 18px; }
-}
-
-/* ── MOBILE WOW: hero stats — sfondo più intenso ─────────────*/
-@media (max-width: 768px) {
-  .hero-stats {
-    background: rgba(4,16,40,.65);
-    border-color: rgba(123,228,255,.2);
-  }
-  .hero-stat strong { color: var(--cyan-2); }
-}
-
-/* ── MOBILE WOW: glass card con bordo superiore sottile ──────
-   Un filo di luce in cima a ogni card mobile.
-   --------------------------------------------------------- */
-@media (max-width: 768px) {
-  .glass-card {
-    border-top-color: rgba(123,228,255,.28);
-  }
-  .glass-card::after {
-    background: linear-gradient(180deg,
-      rgba(255,255,255,.06) 0%,
-      transparent 40%);
-  }
-}
-
-/* ── MOBILE WOW: bottoni hero a tutto schermo più impatto ─────*/
-@media (max-width: 768px) {
-  .btn-primary {
-    box-shadow: 0 10px 30px rgba(100,200,255,.3), inset 0 1px 0 rgba(255,255,255,.28);
-  }
-  .hero-cta-row .btn {
-    font-size: 1.02rem;
-    min-height: 52px;
-    border-radius: 14px;
-  }
-}
-
-/* ── MOBILE WOW: section kicker più visibile ─────────────────*/
-@media (max-width: 768px) {
-  .section-kicker {
-    font-size: .66rem;
-    letter-spacing: .22em;
-    color: var(--cyan);
-  }
-  .section-heading::before { width: 32px; height: 2.5px; }
-}
-
-/* ── MOBILE: sezione In evidenza — cards full width ──────────*/
-@media (max-width: 768px) {
-  .section-intro .section-grid {
-    grid-template-columns: 1fr;
-    gap: 12px;
-  }
-  .info-card { padding: 20px; }
-  .info-card h2 { font-size: 1.15rem; }
-}
-
-/* ── MOBILE: poster evento proporzionato ─────────────────────*/
-@media (max-width: 768px) {
-  .poster-card > img { max-width: 260px; }
-  .poster-card { padding: 16px; gap: 14px; }
-}
-
-/* ── MOBILE: ricerca card — 1 col ────────────────────────────*/
-@media (max-width: 768px) {
-  .research-showcase-grid { margin-top: 18px; }
-  .research-card { padding: 20px; }
-}
-
-/* ── MOBILE: timeline compatta ───────────────────────────────*/
-@media (max-width: 768px) {
-  .timeline li { grid-template-columns: 68px 1fr; gap: 10px; }
-  .timeline strong { width: 64px; height: 28px; font-size: .78rem; }
-}
-
-/* ── MOBILE: sezione contatti ────────────────────────────────*/
-@media (max-width: 768px) {
-  .contact-card--rich { padding: 18px; gap: 10px; }
-  .energy-icon { width: 44px; height: 44px; border-radius: 13px; }
-}
-
-/* ── MOBILE: attività didattiche/pubblicazioni ───────────────
-   Più piccole anche su mobile.
-   --------------------------------------------------------- */
-@media (max-width: 768px) {
-  .teaching-card > img {
-    height: 160px;
-    padding: 6px;
-  }
-  .feature-card > img {
-    height: 150px;
-    padding: 8px;
-  }
-}
-
-/* ── MOBILE: content card orizzontali — fix JS stagger ───────
-   Assicura che il layout orizzontale regga quando JS aggiunge .reveal.
-   --------------------------------------------------------- */
-@media (max-width: 768px) {
-  .content-grid .content-card.reveal,
-  .content-grid .content-card.is-visible {
-    display: flex;
-  }
-}
-
-
-/* ==========================================================
-   FINAL9 — nav dropdown mobile, dialog, wow desktop
-   ========================================================== */
-
-/* ── NAV DROPDOWN MOBILE: toggle JS ─────────────────────────
-   Desktop: hover. Mobile: click con aria-expanded via JS.
-   --------------------------------------------------------- */
-.nav-dropdown-btn {
-  background: none; border: none; cursor: pointer; padding: 0;
-  font: inherit; color: inherit;
-}
-
-/* Desktop: il panel si apre su hover (già c'era) */
-@media (min-width: 769px) {
-  .nav-dropdown:hover .nav-dropdown-panel,
-  .nav-dropdown.is-open .nav-dropdown-panel {
-    opacity: 1; visibility: visible;
-    transform: translateX(-50%) translateY(0);
-  }
-}
-
-/* Mobile: il panel si apre solo con .is-open (JS toggle) */
-@media (max-width: 768px) {
-  .nav-dropdown { margin: 2px 0; }
-  .nav-dropdown-btn {
-    display: flex; align-items: center; justify-content: space-between;
-    width: 100%; padding: 12px 16px; border-radius: 12px;
-    font-size: .98rem; font-weight: 600; color: var(--cyan-2);
-    background: rgba(123,228,255,.05);
-    border: 1px solid rgba(123,228,255,.12) !important;
-    transition: background .15s;
-  }
-  .nav-dropdown-btn::after {
-    content: "";
-    display: block; width: 18px; height: 18px; flex-shrink: 0;
-    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 18 18' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M4 7l5 5 5-5' stroke='%237be4ff' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/contain no-repeat;
-    transition: transform .22s cubic-bezier(.22,.68,0,1.2);
-  }
-  .nav-dropdown.is-open .nav-dropdown-btn::after {
-    transform: rotate(180deg);
-  }
-  /* Panel: nascosto di default, visibile solo con .is-open */
-  .nav-dropdown-panel {
-    position: static !important;
-    transform: none !important;
-    opacity: 0 !important;
-    visibility: hidden !important;
-    max-height: 0 !important;
-    overflow: hidden !important;
-    padding: 0 !important;
-    border: 0 !important;
-    box-shadow: none !important;
-    background: transparent !important;
-    transition: opacity .22s ease, max-height .28s ease, visibility .22s !important;
-  }
-  .nav-dropdown.is-open .nav-dropdown-panel {
-    opacity: 1 !important;
-    visibility: visible !important;
-    max-height: 300px !important;
-    padding: 4px 6px 8px 14px !important;
-  }
-  .nav-dropdown-panel a {
-    padding: 10px 14px; font-size: .9rem;
-    border-radius: 10px; color: var(--muted);
-    display: flex; align-items: center; gap: 8px;
-  }
-  .nav-dropdown-panel a::before {
-    content: ""; width: 5px; height: 5px; border-radius: 50%;
-    background: rgba(123,228,255,.45); flex-shrink: 0;
-  }
-}
-
-/* ── DIALOGS: contrasto migliorato ──────────────────────────
-   Sfondo più scuro, campo input ben leggibile, label bianche.
-   --------------------------------------------------------- */
-.dialog__inner {
-  background: linear-gradient(160deg, rgba(4,16,38,.98), rgba(2,10,28,.99)) !important;
-  border: 1px solid rgba(123,228,255,.2) !important;
-}
-.field span {
-  color: var(--cyan-2) !important;
-  font-size: .82rem !important;
-  font-weight: 600 !important;
-  letter-spacing: .04em !important;
-  text-transform: uppercase !important;
-}
-.field input, .field textarea, .field select {
-  background: rgba(8,24,52,.85) !important;
-  border: 1px solid rgba(123,228,255,.22) !important;
-  color: #edf7ff !important;
-  font-size: .94rem !important;
-}
-.field input:focus, .field textarea:focus, .field select:focus {
-  border-color: rgba(123,228,255,.5) !important;
-  box-shadow: 0 0 0 3px rgba(123,228,255,.12) !important;
-  background: rgba(10,28,60,.9) !important;
-}
-.field input::placeholder, .field textarea::placeholder {
-  color: rgba(200,230,255,.3) !important;
-}
-.field select option { background: #041428; color: #edf7ff; }
-
-/* Dialog header modern — già definito, rinforziamo */
-.dialog__head--modern {
-  border-bottom: 1px solid rgba(123,228,255,.15) !important;
-  padding-bottom: 16px !important;
-  margin-bottom: 0 !important;
-}
-.dialog__inner h3 { color: var(--text); }
-
-/* ── DESKTOP WOW: gradient border sulle glass-card al hover ─
-   --------------------------------------------------------- */
-.glass-card {
-  transition: transform .3s cubic-bezier(.22,.68,0,1.4),
-              box-shadow .3s, border-color .3s;
-}
-
-/* ── DESKTOP WOW: cursore subacqueo (solo desktop) ───────────
-   Una piccola bolla che segue il mouse.
-   --------------------------------------------------------- */
-#cursor-bubble {
-  position: fixed; z-index: 9999; pointer-events: none;
-  width: 24px; height: 24px; border-radius: 50%;
-  border: 1.5px solid rgba(123,228,255,.5);
-  background: rgba(123,228,255,.06);
-  box-shadow: 0 0 12px rgba(123,228,255,.2);
-  transform: translate(-50%, -50%);
-  transition: transform .08s linear, width .2s, height .2s, opacity .3s;
-  opacity: 0;
-}
-body:hover #cursor-bubble { opacity: 1; }
-
-/* ── DESKTOP WOW: shimmer sulle activity card ────────────────*/
-@keyframes shimmerSlide {
-  0%   { transform: translateX(-100%) skewX(-15deg); }
-  100% { transform: translateX(200%)  skewX(-15deg); }
-}
-.activity-card::after {
-  content: "";
-  position: absolute; top: 0; left: 0; width: 50%; height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,.06), transparent);
-  transform: translateX(-100%) skewX(-15deg);
-  pointer-events: none; border-radius: inherit;
-}
-.activity-card:hover::after {
-  animation: shimmerSlide .6s ease forwards;
-}
-
-/* ── MOBILE: brand em visibile ───────────────────────────────*/
-@media (max-width: 768px) {
-  .brand-copy { overflow: hidden; min-width: 0; }
-  .brand em:first-of-type {
-    display: block !important;
-    font-size: .62rem !important;
-    color: rgba(237,247,255,.52) !important;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-}
-
-/* ── MOBILE: hero header sempre fisso (già sticky) ───────────
-   z-index alto per stare sopra qualsiasi contenuto animato.
-   --------------------------------------------------------- */
-@media (max-width: 768px) {
-  .site-header {
-    position: sticky !important;
-    top: 0 !important;
-    z-index: 200 !important;
-  }
-}
-
-
-/* ==========================================================
-   FINAL10 — 7 modifiche mobile + desktop
-   ========================================================== */
-
-/* ── 1. BRAND MOBILE: nome più grande, tagline ordinata ──────*/
+/* ── BRAND MOBILE ── */
 @media (max-width: 768px) {
   .brand { gap: 11px; align-items: center; }
   .brand img { width: 44px; height: 44px; }
-  .brand strong {
-    font-size: 1.02rem;
-    font-weight: 800;
-    letter-spacing: -.01em;
-    white-space: nowrap;
-    display: block;
-  }
+  .brand strong { font-size: 1.02rem; font-weight: 800; letter-spacing: -.01em; white-space: nowrap; display: block; }
   .brand-copy { gap: 1px; }
   .brand em:first-of-type {
-    font-size: .63rem !important;
-    color: rgba(237,247,255,.5) !important;
-    letter-spacing: .03em;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: calc(100vw - 110px);
+    display: block; font-size: .63rem; color: rgba(237,247,255,.5);
+    letter-spacing: .03em; white-space: nowrap; overflow: hidden;
+    text-overflow: ellipsis; max-width: calc(100vw - 110px);
   }
 }
 
-/* ── 2. INFO CARDS (In evidenza / Visione / Contenuti):
-        diverse per colore accento, icona in alto, hover distinto ────────── */
+/* ── INFO CARDS: icone e colori distinti ── */
 .info-card {
-  padding: 28px 26px 26px;
-  overflow: hidden;
-  transition: transform .3s cubic-bezier(.22,.68,0,1.4),
-              box-shadow .3s, border-color .3s;
+  padding: 28px 26px 26px; overflow: hidden;
+  transition: transform .3s cubic-bezier(.22,.68,0,1.4), box-shadow .3s, border-color .3s;
 }
 .info-card:hover { transform: translateY(-5px); }
-
-/* Icona SVG in cima */
 .info-card__icon {
-  width: 44px; height: 44px;
-  display: flex; align-items: center; justify-content: center;
+  width: 44px; height: 44px; display: flex; align-items: center; justify-content: center;
   border-radius: 14px; margin-bottom: 18px;
   transition: transform .3s cubic-bezier(.22,.68,0,1.4);
 }
 .info-card__icon svg { width: 28px; height: 28px; }
 .info-card:hover .info-card__icon { transform: scale(1.12) translateY(-2px); }
 
-/* Card 1: network — tono verde-ciano */
 .info-card--network {
-  background:
-    radial-gradient(ellipse 80% 55% at 50% -10%, rgba(0,200,180,.14), transparent 55%),
+  background: radial-gradient(ellipse 80% 55% at 50% -10%, rgba(0,200,180,.14), transparent 55%),
     linear-gradient(160deg, rgba(5,28,58,.82), rgba(3,16,40,.92));
   border-color: rgba(0,220,180,.2);
 }
-.info-card--network .info-card__icon {
-  background: rgba(0,220,180,.1); border: 1px solid rgba(0,220,180,.22);
-  color: #4dffd6;
-}
+.info-card--network .info-card__icon { background: rgba(0,220,180,.1); border: 1px solid rgba(0,220,180,.22); color: #4dffd6; }
 .info-card--network .section-kicker { color: #4dffd6; }
 .info-card--network:hover { border-color: rgba(0,220,180,.38); box-shadow: var(--shadow), 0 0 40px rgba(0,200,180,.1); }
+.info-card--network::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, #4dffd6, transparent); border-radius: 2px 2px 0 0; }
 
-/* Card 2: visione — tono azzurro */
 .info-card--vision {
-  background:
-    radial-gradient(ellipse 80% 55% at 50% -10%, rgba(0,140,255,.16), transparent 55%),
+  background: radial-gradient(ellipse 80% 55% at 50% -10%, rgba(0,140,255,.16), transparent 55%),
     linear-gradient(160deg, rgba(5,24,60,.82), rgba(3,14,42,.92));
   border-color: rgba(80,160,255,.22);
 }
-.info-card--vision .info-card__icon {
-  background: rgba(80,160,255,.1); border: 1px solid rgba(80,160,255,.24);
-  color: var(--cyan-2);
-}
+.info-card--vision .info-card__icon { background: rgba(80,160,255,.1); border: 1px solid rgba(80,160,255,.24); color: var(--cyan-2); }
 .info-card--vision:hover { border-color: rgba(100,180,255,.4); box-shadow: var(--shadow), 0 0 40px rgba(0,120,255,.12); }
+.info-card--vision::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--cyan-2), transparent); }
 
-/* Card 3: contenuti — tono viola-blu */
 .info-card--content {
-  background:
-    radial-gradient(ellipse 80% 55% at 50% -10%, rgba(100,80,255,.14), transparent 55%),
+  background: radial-gradient(ellipse 80% 55% at 50% -10%, rgba(100,80,255,.14), transparent 55%),
     linear-gradient(160deg, rgba(8,20,56,.82), rgba(5,12,38,.92));
   border-color: rgba(130,100,255,.2);
 }
-.info-card--content .info-card__icon {
-  background: rgba(130,100,255,.1); border: 1px solid rgba(130,100,255,.24);
-  color: #b4a6ff;
-}
+.info-card--content .info-card__icon { background: rgba(130,100,255,.1); border: 1px solid rgba(130,100,255,.24); color: #b4a6ff; }
 .info-card--content .section-kicker { color: #b4a6ff; }
 .info-card--content:hover { border-color: rgba(150,120,255,.38); box-shadow: var(--shadow), 0 0 40px rgba(100,80,255,.1); }
+.info-card--content::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, #b4a6ff, transparent); }
 
-/* Riflesso interno distintivo per ogni card */
-.info-card--network::before,
-.info-card--vision::before,
-.info-card--content::before {
-  content: ""; position: absolute; top: 0; left: 0; right: 0; height: 2px;
-  border-radius: 2px 2px 0 0;
-}
-.info-card--network::before { background: linear-gradient(90deg, transparent, #4dffd6, transparent); }
-.info-card--vision::before  { background: linear-gradient(90deg, transparent, var(--cyan-2), transparent); }
-.info-card--content::before { background: linear-gradient(90deg, transparent, #b4a6ff, transparent); }
-
-/* Mobile: 1 colonna con card orizzontali compatte */
 @media (max-width: 768px) {
-  .section-intro .section-grid {
-    grid-template-columns: 1fr;
-    gap: 10px;
-  }
-  .info-card {
-    display: flex; align-items: flex-start; gap: 16px;
-    padding: 18px 20px;
-  }
-  .info-card__icon {
-    width: 46px; height: 46px; flex-shrink: 0; margin-bottom: 0;
-    border-radius: 12px;
-  }
+  .section-intro .section-grid { grid-template-columns: 1fr; gap: 12px; }
+  .info-card { display: flex; flex-direction: row; align-items: flex-start; gap: 14px; padding: 18px; }
+  .info-card__icon { width: 48px; height: 48px; flex-shrink: 0; margin-bottom: 0; border-radius: 13px; align-self: flex-start; }
   .info-card__icon svg { width: 26px; height: 26px; }
-  .info-card-body { flex: 1; min-width: 0; }
-  /* h2 e p dentro .info-card-body — usiamo selettori diretti */
-  .info-card .section-kicker { margin-bottom: 4px; font-size: .62rem; }
-  .info-card h2 { font-size: 1rem; margin-bottom: 5px; }
-  .info-card p  { font-size: .85rem; }
-}
-
-/* ── 3. TIMELINE MOBILE: puntini collegati alle date ─────────*/
-@media (max-width: 768px) {
-  .timeline {
-    position: relative;
-    padding-left: 28px;
-  }
-  /* Linea verticale */
-  .timeline::before {
-    content: "";
-    position: absolute; left: 8px; top: 16px; bottom: 16px;
-    width: 2px;
-    background: linear-gradient(180deg,
-      var(--cyan-2) 0%,
-      rgba(123,228,255,.4) 60%,
-      transparent 100%);
-    border-radius: 2px;
-  }
-  .timeline li {
-    grid-template-columns: 1fr;
-    gap: 4px;
-    position: relative;
-    padding-left: 0;
-    margin-bottom: 4px;
-  }
-  /* Puntino per ogni data */
-  .timeline li::after {
-    content: "";
-    position: absolute;
-    left: -24px; top: 7px;
-    width: 10px; height: 10px;
-    border-radius: 50%;
-    background: var(--cyan-2);
-    box-shadow: 0 0 10px rgba(123,228,255,.6), 0 0 20px rgba(123,228,255,.3);
-    border: 2px solid rgba(2,10,24,.8);
-  }
-  /* Ultima data: puntino più grande e pulsante */
-  .timeline li:last-child::after {
-    width: 12px; height: 12px;
-    left: -25px; top: 6px;
-    background: radial-gradient(circle, #fff 20%, var(--cyan-2) 60%);
-    animation: dotPulse 2s ease-in-out infinite;
-  }
-  .timeline li::before { display: none; }
-  .timeline strong {
-    width: auto; height: auto; display: inline-block;
-    padding: 0; background: none; border: none;
-    color: var(--cyan-2); font-size: .9rem; font-weight: 700;
-    border-radius: 0;
-  }
-  .timeline span { font-size: .86rem; color: var(--muted); }
-}
-
-/* ── 4. ICONE MACROAREE: x3 su mobile ───────────────────────*/
-@media (max-width: 768px) {
-  .activity-asset {
-    width: 140px !important;
-    height: 140px !important;
-    margin-bottom: 18px !important;
-  }
-  .activity-card { padding: 28px 16px 22px !important; }
-  /* 2 card per riga su mobile */
-  .activity-grid-row { grid-template-columns: repeat(2,1fr) !important; gap: 12px !important; }
-}
-@media (max-width: 400px) {
-  .activity-asset { width: 110px !important; height: 110px !important; }
-}
-
-/* ── 5. RESEARCH CARDS: sfondi e accenti visivamente distinti ─*/
-.research-card--hyperbaric {
-  background: linear-gradient(145deg, rgba(0,60,140,.72) 0%, rgba(5,17,36,.96) 55%);
-  border-color: rgba(80,160,255,.22);
-  border-top: 2px solid rgba(80,160,255,.6) !important;
-}
-.research-card--hyperbaric::before {
-  background:
-    radial-gradient(circle at 85% 15%, rgba(80,160,255,.2), transparent 35%),
-    linear-gradient(180deg, rgba(255,255,255,.04), transparent 50%);
-}
-.research-card--aerospace {
-  background: linear-gradient(145deg, rgba(0,80,100,.7) 0%, rgba(5,16,34,.96) 55%);
-  border-color: rgba(0,200,255,.2);
-  border-top: 2px solid rgba(0,200,255,.55) !important;
-}
-.research-card--aerospace::before {
-  background:
-    radial-gradient(circle at 85% 15%, rgba(0,200,255,.18), transparent 35%),
-    linear-gradient(180deg, rgba(255,255,255,.04), transparent 50%);
-}
-.research-card--human {
-  background: linear-gradient(145deg, rgba(0,100,80,.68) 0%, rgba(4,15,32,.96) 55%);
-  border-color: rgba(0,220,180,.2);
-  border-top: 2px solid rgba(0,220,180,.5) !important;
-}
-.research-card--human::before {
-  background:
-    radial-gradient(circle at 85% 15%, rgba(0,220,180,.16), transparent 35%),
-    linear-gradient(180deg, rgba(255,255,255,.04), transparent 50%);
-}
-.research-card--didattica {
-  background: linear-gradient(145deg, rgba(80,40,160,.65) 0%, rgba(6,19,40,.96) 55%);
-  border-color: rgba(140,100,255,.22);
-  border-top: 2px solid rgba(140,100,255,.5) !important;
-}
-.research-card--didattica::before {
-  background:
-    radial-gradient(circle at 85% 15%, rgba(140,100,255,.18), transparent 35%),
-    linear-gradient(180deg, rgba(255,255,255,.04), transparent 50%);
-}
-/* Micro-label colorato per ogni card */
-.research-card--hyperbaric .micro-label { color: rgba(130,190,255,.9); }
-.research-card--aerospace  .micro-label { color: rgba(80,220,255,.9); }
-.research-card--human      .micro-label { color: rgba(80,240,200,.9); }
-.research-card--didattica  .micro-label { color: rgba(180,150,255,.9); }
-
-/* ── 6. TEACHING POSTER: orizzontale su mobile ───────────────*/
-@media (max-width: 768px) {
-  .teaching-poster-grid--horiz {
-    grid-template-columns: 1fr !important;
-    gap: 0 !important;
-  }
-  .teaching-poster-grid--horiz .teaching-card {
-    display: flex !important;
-    flex-direction: row !important;
-    align-items: flex-start !important;
-    gap: 16px !important;
-    padding: 16px !important;
-    border-bottom: 1px solid rgba(123,228,255,.08);
-    border-radius: 0 !important;
-  }
-  .teaching-poster-grid--horiz .teaching-card:first-child {
-    border-radius: 20px 20px 0 0 !important;
-  }
-  .teaching-poster-grid--horiz .teaching-card:last-child {
-    border-bottom: none;
-    border-radius: 0 0 20px 20px !important;
-  }
-  .teaching-poster-grid--horiz .teaching-card > img {
-    width: 90px !important;
-    height: 120px !important;
-    max-height: 120px !important;
-    flex-shrink: 0 !important;
-    object-fit: cover !important;
-    border-radius: 10px !important;
-    padding: 0 !important;
-    background: rgba(4,14,32,.4) !important;
-    margin-bottom: 0 !important;
-  }
-  .teaching-poster-grid--horiz .teaching-card-text {
-    flex: 1; min-width: 0;
-  }
-  .teaching-poster-grid--horiz .teaching-card .section-kicker {
-    margin-bottom: 4px; font-size: .6rem;
-  }
-  .teaching-poster-grid--horiz .teaching-card h4 {
-    font-size: .96rem; margin-bottom: 6px; line-height: 1.3;
-  }
-  .teaching-poster-grid--horiz .teaching-card p {
-    font-size: .82rem; line-height: 1.5;
-  }
-}
-
-/* ── 7. ICONE CONTATTI: diverse + tasti con energia ──────────*/
-
-/* Rimuovi la vecchia energy-icon dove sostituita */
-.contact-icon {
-  width: 54px; height: 54px;
-  border-radius: 16px; margin-bottom: 10px;
-  display: flex; align-items: center; justify-content: center;
-  position: relative; flex-shrink: 0;
-  transition: transform .3s cubic-bezier(.22,.68,0,1.4);
-}
-.contact-icon svg { width: 28px; height: 28px; }
-.contact-card--rich:hover .contact-icon { transform: scale(1.1) translateY(-2px); }
-
-/* Icona 1 — Email: verde acqua */
-.contact-icon--msg {
-  background: rgba(0,220,180,.1);
-  border: 1px solid rgba(0,220,180,.25);
-  color: #4dffd6;
-  box-shadow: 0 0 20px rgba(0,220,180,.12), inset 0 0 10px rgba(0,220,180,.06);
-}
-.contact-icon--msg::after {
-  content: ""; position: absolute; inset: -1px; border-radius: 17px;
-  background: linear-gradient(135deg, rgba(0,220,180,.3), transparent 55%);
-  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor; mask-composite: exclude;
-}
-
-/* Icona 2 — Docenza: azzurro */
-.contact-icon--edu {
-  background: rgba(80,160,255,.1);
-  border: 1px solid rgba(80,160,255,.25);
-  color: var(--cyan-2);
-  box-shadow: 0 0 20px rgba(80,160,255,.12), inset 0 0 10px rgba(80,160,255,.06);
-}
-.contact-icon--edu::after {
-  content: ""; position: absolute; inset: -1px; border-radius: 17px;
-  background: linear-gradient(135deg, rgba(80,160,255,.3), transparent 55%);
-  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor; mask-composite: exclude;
-}
-
-/* Icona 3 — Candidatura: viola */
-.contact-icon--join {
-  background: rgba(140,100,255,.1);
-  border: 1px solid rgba(140,100,255,.25);
-  color: #c4b0ff;
-  box-shadow: 0 0 20px rgba(140,100,255,.12), inset 0 0 10px rgba(140,100,255,.06);
-}
-.contact-icon--join::after {
-  content: ""; position: absolute; inset: -1px; border-radius: 17px;
-  background: linear-gradient(135deg, rgba(140,100,255,.3), transparent 55%);
-  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor; mask-composite: exclude;
-}
-
-/* Card contatti: bordo top colorato diverso */
-.contact-card--msg  { border-top: 2px solid rgba(0,220,180,.45) !important; }
-.contact-card--edu  { border-top: 2px solid rgba(80,160,255,.45) !important; }
-.contact-card--join { border-top: 2px solid rgba(140,100,255,.45) !important; }
-
-/* Bottoni con energia nelle card contatti */
-.contact-card--msg  .btn-electric {
-  background: linear-gradient(135deg, rgba(0,200,160,.9), rgba(0,160,200,.85)) !important;
-  border-color: rgba(0,220,180,.4) !important;
-  color: rgba(2,28,24,.95) !important;
-}
-.contact-card--edu  .btn-electric {
-  background: linear-gradient(135deg, rgba(16,130,255,.96), rgba(0,192,255,.9)) !important;
-  border-color: rgba(80,180,255,.4) !important;
-  color: rgba(2,12,28,.96) !important;
-}
-.contact-card--join .btn-electric {
-  background: linear-gradient(135deg, rgba(120,80,255,.9), rgba(160,100,255,.85)) !important;
-  border-color: rgba(140,100,255,.4) !important;
-  color: rgba(12,6,28,.96) !important;
-}
-
-/* Energia pulsante su tutti i btn-electric delle contact card */
-@keyframes energyPulse {
-  0%,100% { box-shadow: 0 8px 26px rgba(0,0,0,.22), 0 0 0 0 rgba(123,228,255,.2); }
-  50%      { box-shadow: 0 10px 32px rgba(0,0,0,.28), 0 0 0 6px rgba(123,228,255,0); }
-}
-.contact-card--rich .btn-electric {
-  animation: energyPulse 3s ease-in-out infinite;
-}
-.contact-card--rich .btn-electric:hover {
-  animation: none;
-  transform: translateY(-2px) scale(1.02);
-}
-
-/* ── MOBILE: info-card layout orizzontale — wrappa testo ─────*/
-@media (max-width: 768px) {
-  /* il testo nell'info-card (h2 + p + kicker) deve stare vicino all'icona */
+  .info-card-body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
+  .info-card .section-kicker { font-size: .6rem; margin-bottom: 2px; }
+  .info-card h2 { font-size: 1rem; line-height: 1.2; margin-bottom: 5px; }
+  .info-card p { font-size: .83rem; line-height: 1.5; margin: 0; }
   .info-card > :not(.info-card__icon) { flex: 1; min-width: 0; }
 }
 
+/* ── TIMELINE — DESKTOP: raggio di luce, zero puntini ── */
+.timeline-card { position: relative; overflow: visible; }
 
-/* ==========================================================
-   FINAL11 — correzioni mobile layout
-   ========================================================== */
-
-/* ── 1. INFO-CARD MOBILE: layout corretto con .info-card-body ─
-   L'icona sta a sx, tutto il testo a dx ben organizzato.
-   --------------------------------------------------------- */
-@media (max-width: 768px) {
-
-  .section-intro .section-grid {
-    grid-template-columns: 1fr !important;
-    gap: 12px !important;
-  }
-
-  .info-card {
-    display: flex !important;
-    flex-direction: row !important;
-    align-items: flex-start !important;
-    gap: 14px !important;
-    padding: 18px 18px 18px 16px !important;
-    min-height: 0 !important;
-  }
-
-  .info-card__icon {
-    width: 48px !important;
-    height: 48px !important;
-    flex-shrink: 0 !important;
-    margin-bottom: 0 !important;
-    border-radius: 13px !important;
-    align-self: flex-start !important;
-  }
-  .info-card__icon svg { width: 26px !important; height: 26px !important; }
-
-  .info-card-body {
-    flex: 1 !important;
-    min-width: 0 !important;
-    display: flex !important;
-    flex-direction: column !important;
-    gap: 4px !important;
-  }
-
-  .info-card .section-kicker {
-    font-size: .6rem !important;
-    margin-bottom: 2px !important;
-    letter-spacing: .18em !important;
-  }
-  .info-card h2 {
-    font-size: 1.0rem !important;
-    line-height: 1.2 !important;
-    margin-bottom: 5px !important;
-    letter-spacing: -.02em !important;
-  }
-  .info-card p {
-    font-size: .83rem !important;
-    line-height: 1.5 !important;
-    margin: 0 !important;
-  }
-
-  /* Assicura che il riflesso top non interferisca */
-  .info-card--network::before,
-  .info-card--vision::before,
-  .info-card--content::before {
-    height: 1.5px;
-  }
-}
-
-/* ── 2. ACTIVITY CARD MOBILE: griglia e testo organizzati ────
-   2×2, icona sopra centrata, testo leggibile, no word-a-riga
-   --------------------------------------------------------- */
-@media (max-width: 768px) {
-
-  .activity-grid-row {
-    grid-template-columns: repeat(2, 1fr) !important;
-    gap: 12px !important;
-  }
-
-  .activity-card {
-    text-align: center !important;
-    padding: 22px 14px 18px !important;
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    gap: 0 !important;
-  }
-
-  .activity-asset {
-    width: 90px !important;
-    height: 90px !important;
-    margin: 0 auto 12px !important;
-  }
-
-  .activity-card .micro-label {
-    font-size: .56rem !important;
-    letter-spacing: .14em !important;
-    margin-bottom: 4px !important;
-  }
-
-  .activity-card h3 {
-    font-size: .96rem !important;
-    line-height: 1.2 !important;
-    margin-bottom: 6px !important;
-    font-weight: 700 !important;
-  }
-
-  .activity-card p {
-    font-size: .78rem !important;
-    line-height: 1.45 !important;
-    color: var(--muted) !important;
-    margin: 0 0 8px !important;
-    /* Limita a 3 righe per non sforare */
-    display: -webkit-box !important;
-    -webkit-line-clamp: 3 !important;
-    -webkit-box-orient: vertical !important;
-    overflow: hidden !important;
-  }
-
-  .activity-card .text-link {
-    font-size: .76rem !important;
-    margin-top: 4px !important;
-  }
-}
-
-/* ── 3. TEACHING CARD: img-wrap con overlay hover + download ─*/
-.teaching-card-img-wrap {
-  position: relative;
-  overflow: hidden;
-  border-radius: 12px;
-  cursor: pointer;
-  flex-shrink: 0;
-}
-.teaching-card-img-wrap img {
-  display: block;
-  transition: transform .35s cubic-bezier(.22,.68,0,1.2), filter .35s;
-}
-.teaching-card-img-wrap:hover img {
-  transform: scale(1.06);
-  filter: brightness(1.08);
-}
-.teaching-card-img-overlay {
-  position: absolute; inset: 0;
-  background: rgba(2,10,28,.45);
-  display: flex; align-items: center; justify-content: center;
-  opacity: 0; transition: opacity .28s;
-  color: #fff;
-}
-.teaching-card-img-wrap:hover .teaching-card-img-overlay { opacity: 1; }
-
-/* Download link dentro teaching-card */
-.tc-download {
-  display: inline-flex; align-items: center; gap: 6px;
-  padding: 6px 12px; border-radius: 999px;
-  font-size: .76rem; font-weight: 600;
-  background: rgba(123,228,255,.09);
-  border: 1px solid rgba(123,228,255,.2);
-  color: var(--cyan-2);
-  transition: background .2s, border-color .2s;
-  margin-bottom: 8px;
-  white-space: nowrap;
-}
-.tc-download:hover { background: rgba(123,228,255,.16); border-color: rgba(123,228,255,.35); }
-
-/* Mobile: img-wrap più piccolo per layout orizzontale */
-@media (max-width: 768px) {
-  .teaching-poster-grid--horiz .teaching-card-img-wrap {
-    width: 88px !important;
-    height: auto !important;
-    flex-shrink: 0 !important;
-    align-self: flex-start !important;
-  }
-  .teaching-poster-grid--horiz .teaching-card-img-wrap img {
-    width: 88px !important;
-    height: 116px !important;
-    object-fit: cover !important;
-  }
-  .tc-download {
-    font-size: .72rem;
-    padding: 5px 10px;
-  }
-}
-
-/* ── 4. HERO STATS: 5 stat + infinito ───────────────────────*/
-.hero-stat--infinity strong {
-  font-size: 1.9rem !important;
-  line-height: 1 !important;
-  letter-spacing: 0 !important;
-  font-weight: 300 !important;
-}
-
-/* Su mobile le 5 stat vanno in griglia 3+2 */
-@media (max-width: 768px) {
-  .hero-stats {
-    flex-wrap: wrap !important;
-    max-width: 100% !important;
-  }
-  .hero-stat {
-    flex: 1 1 calc(33.33% - 2px) !important;
-    min-width: 80px !important;
-    padding: 12px 8px !important;
-    border-right: 1px solid rgba(123,228,255,.1) !important;
-    border-bottom: 1px solid rgba(123,228,255,.08) !important;
-  }
-  /* ultima riga: 2 stat centrate */
-  .hero-stat:nth-child(4),
-  .hero-stat:nth-child(5) {
-    flex: 1 1 calc(50% - 1px) !important;
-    border-bottom: none !important;
-  }
-  .hero-stat:nth-child(3),
-  .hero-stat:nth-child(5) { border-right: none !important; }
-  .hero-stat strong { font-size: 1.2rem !important; }
-  .hero-stat span   { font-size: .68rem !important; }
-  .hero-stat--infinity strong { font-size: 1.6rem !important; }
-}
-
-@media (max-width: 400px) {
-  .hero-stat { padding: 10px 6px !important; }
-  .hero-stat strong { font-size: 1.05rem !important; }
-}
-
-
-/* ==========================================================
-   FINAL12 — desktop fixes: teaching, timeline, dialog, fondatori
-   ========================================================== */
-
-/* ── 1. TEACHING CARDS DESKTOP: locandine come poster compatti ─
-   Max-height ridotta, centrate, con sfondo scuro contenuto.
-   --------------------------------------------------------- */
-.teaching-card-img-wrap {
-  max-height: 220px;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(4,14,32,.5);
-  border-radius: 12px;
-  margin-bottom: 14px;
-}
-.teaching-card-img-wrap img {
-  width: auto !important;
-  max-width: 100% !important;
-  height: auto !important;
-  max-height: 200px !important;
-  object-fit: contain !important;
-  border-radius: 10px !important;
-  margin-bottom: 0 !important;
-  padding: 6px !important;
-  background: transparent !important;
-}
-
-/* ── 2. TIMELINE DESKTOP: puntini luminosi come mobile ──────── */
-.timeline-card { overflow: visible; }
-.timeline {
-  position: relative;
-  padding-left: 24px;
-}
-/* Linea verticale luminosa */
-.timeline::before {
-  content: "";
-  position: absolute; left: 6px; top: 16px; bottom: 16px;
-  width: 2px;
-  background: linear-gradient(180deg,
-    var(--cyan-2) 0%,
-    rgba(123,228,255,.5) 50%,
-    transparent 100%);
-  border-radius: 2px;
-}
-.timeline li {
-  position: relative;
-  padding-left: 0;
-}
-/* Puntino per ogni voce */
-.timeline li::after {
-  content: "";
-  position: absolute;
-  left: -20px; top: 8px;
-  width: 10px; height: 10px;
-  border-radius: 50%;
-  background: var(--cyan-2);
-  box-shadow: 0 0 10px rgba(123,228,255,.7), 0 0 22px rgba(123,228,255,.3);
-  border: 2px solid rgba(2,10,24,.8);
-  z-index: 1;
-}
-/* Ultimo puntino: più grande e pulsante */
-.timeline li:last-child::after {
-  width: 12px; height: 12px;
-  left: -21px; top: 7px;
-  background: radial-gradient(circle, #fff 20%, var(--cyan-2) 65%);
-  box-shadow: 0 0 14px rgba(123,228,255,.9), 0 0 30px rgba(123,228,255,.4);
-  animation: dotPulse 2s ease-in-out infinite;
-}
-/* Nascondi la vecchia linea verticale ::before sulle li */
-.timeline li::before { display: none !important; }
-/* Anno badge: allineato al puntino */
-.timeline strong {
-  font-weight: 700;
-  color: var(--cyan-2);
-  font-size: .9rem;
-}
-
-/* ── 4. DIALOG: centrato + messaggio successo visibile ──────── */
-
-/* Forza centratura orizzontale e verticale */
-dialog {
-  position: fixed !important;
-  inset: 0 !important;
-  margin: auto !important;
-  left: 50% !important;
-  top: 50% !important;
-  transform: translate(-50%, -50%) !important;
-}
-/* Quando aperto con showModal, il browser usa position:fixed auto-centrato
-   ma alcuni browser non lo fanno bene — forziamo via ::backdrop trick */
-.dialog {
-  border: 0 !important;
-  padding: 0 !important;
-  max-width: min(780px, calc(100% - 24px)) !important;
-  width: 100% !important;
-  background: transparent !important;
-  /* Posizione centrata garantita */
-  position: fixed !important;
-  top: 50% !important;
-  left: 50% !important;
-  transform: translate(-50%, -50%) !important;
-  margin: 0 !important;
-}
-
-/* Messaggio di successo: più visibile e celebrativo */
-.form__status.is-success {
-  color: #4dffd6 !important;
-  font-size: .96rem !important;
-  font-weight: 600 !important;
-  padding: 14px 18px !important;
-  background: rgba(0,220,180,.1) !important;
-  border: 1px solid rgba(0,220,180,.25) !important;
-  border-radius: 12px !important;
-  display: flex !important;
-  align-items: center !important;
-  gap: 10px !important;
-  margin-top: 8px !important;
-  animation: fadeInUp .4s ease both !important;
-}
-.form__status.is-success::before {
-  content: "✓";
-  width: 26px; height: 26px;
-  background: rgba(0,220,180,.2);
-  border: 1px solid rgba(0,220,180,.35);
-  border-radius: 50%;
-  display: inline-flex; align-items: center; justify-content: center;
-  flex-shrink: 0;
-  font-weight: 700; font-size: .9rem;
-}
-
-.form__status.is-error {
-  color: #ff8a8a !important;
-  font-size: .92rem !important;
-  padding: 12px 16px !important;
-  background: rgba(255,80,80,.08) !important;
-  border: 1px solid rgba(255,80,80,.2) !important;
-  border-radius: 12px !important;
-  margin-top: 8px !important;
-}
-
-/* ── 5. FOUNDER CARDS: effetto vetro 3D ─────────────────────── */
-.founder-card {
-  /* Reset precedenti */
-  background:
-    linear-gradient(135deg,
-      rgba(255,255,255,.12) 0%,
-      rgba(200,230,255,.06) 18%,
-      rgba(120,190,255,.04) 36%,
-      rgba(8,26,58,.55) 55%,
-      rgba(4,16,38,.72) 100%) !important;
-  border: 1px solid rgba(200,235,255,.28) !important;
-  box-shadow:
-    0 20px 50px rgba(0,0,0,.45),
-    0 0 0 1px rgba(255,255,255,.06),
-    inset 0 1.5px 0 rgba(255,255,255,.18),
-    inset 0 -1px 0 rgba(120,200,255,.08),
-    inset 1px 0 0 rgba(255,255,255,.06),
-    inset -1px 0 0 rgba(120,200,255,.04) !important;
-  backdrop-filter: blur(24px) saturate(1.8) brightness(1.04) !important;
-  -webkit-backdrop-filter: blur(24px) saturate(1.8) brightness(1.04) !important;
-  transform-style: preserve-3d !important;
-  transition:
-    transform .4s cubic-bezier(.22,.68,0,1.3),
-    box-shadow .4s,
-    border-color .3s !important;
-}
-
-/* Riflesso vetro in alto a sinistra */
-.founder-card::before {
-  content: "" !important;
-  position: absolute !important; top: 0 !important; left: 0 !important;
-  right: 0 !important; height: 50% !important;
-  background: linear-gradient(160deg,
-    rgba(255,255,255,.13) 0%,
-    rgba(210,240,255,.06) 25%,
-    transparent 55%) !important;
-  pointer-events: none !important; z-index: 0 !important;
-  border-radius: inherit !important;
-}
-
-/* Linea decorativa sotto foto — riflesso orizzontale */
-.founder-card::after {
-  content: "" !important;
-  position: absolute !important;
-  left: 14px !important; right: 14px !important; top: 118px !important;
-  height: 1px !important;
-  background: linear-gradient(90deg,
-    transparent,
-    rgba(123,228,255,.35) 30%,
-    rgba(200,240,255,.6) 50%,
-    rgba(123,228,255,.35) 70%,
-    transparent) !important;
-}
-
-/* Hover 3D: lieve inclinazione */
-.founder-card:hover {
-  transform: translateY(-6px) rotateX(3deg) rotateY(-1.5deg) !important;
-  border-color: rgba(220,248,255,.45) !important;
-  box-shadow:
-    0 30px 70px rgba(0,0,0,.52),
-    0 0 60px rgba(80,190,255,.1),
-    inset 0 1.5px 0 rgba(255,255,255,.24),
-    inset 0 -1px 0 rgba(120,210,255,.1) !important;
-}
-
-/* Foto fondatore: circolare con glow + shimmer al hover */
-.founder-card > img {
-  border-radius: 50% !important;
-  border: 1.5px solid rgba(200,240,255,.3) !important;
-  box-shadow:
-    0 6px 20px rgba(0,0,0,.4),
-    0 0 0 4px rgba(123,228,255,.06) !important;
-  transition: transform .35s cubic-bezier(.22,.68,0,1.3),
-              box-shadow .35s, filter .35s !important;
-  position: relative !important; z-index: 1 !important;
-}
-.founder-card:hover > img {
-  transform: scale(1.06) translateY(-3px) !important;
-  box-shadow:
-    0 10px 28px rgba(0,0,0,.5),
-    0 0 0 6px rgba(123,228,255,.1),
-    0 0 24px rgba(80,190,255,.35) !important;
-  filter: brightness(1.06) !important;
-}
-
-/* Role badge: più visibile */
-.founder-role {
-  background: rgba(123,228,255,.1) !important;
-  border: 1px solid rgba(123,228,255,.22) !important;
-  color: var(--cyan-2) !important;
-  font-size: .6rem !important;
-  letter-spacing: .14em !important;
-  font-weight: 700 !important;
-}
-
-/* Founder card: varianti colore vetro lievemente diverse */
-.founder-card--silvio  { border-color: rgba(180,230,255,.3) !important; }
-.founder-card--luigi   { border-color: rgba(160,215,255,.28) !important; }
-.founder-card--vincenzo{ border-color: rgba(170,225,255,.28) !important; }
-.founder-card--dario   { border-color: rgba(150,210,255,.26) !important; }
-.founder-card--matteo  { border-color: rgba(190,235,255,.3) !important; }
-
-/* Mobile: 3D ridotto per performance */
-@media (max-width: 768px) {
-  .founder-card:hover {
-    transform: translateY(-3px) !important;
-  }
-  .founder-card {
-    backdrop-filter: blur(14px) !important;
-    -webkit-backdrop-filter: blur(14px) !important;
-  }
-}
-
-
-/* ==========================================================
-   FINAL12 — 5 modifiche desktop
-   ========================================================== */
-
-/* ── 1. TEACHING CARD DESKTOP: locandine più piccole ─────────
-   Layout a 2 colonne, locandine ridotte come "cartoline"
-   non come poster a schermo intero.
-   --------------------------------------------------------- */
-.teaching-poster-grid {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 22px;
-  align-items: start;
-}
-
-/* Wrap immagine: altezza contenuta e centrata */
-.teaching-card-img-wrap {
-  max-height: 220px;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(4,14,32,.5);
-  border-radius: 12px;
-  margin-bottom: 14px;
-}
-.teaching-card-img-wrap img {
-  width: auto !important;
-  max-width: 100% !important;
-  height: auto !important;
-  max-height: 200px !important;
-  object-fit: contain !important;
-  border-radius: 10px !important;
-  padding: 0 !important;
-}
-
-/* ── 2. TIMELINE DESKTOP: luminosa con puntini e linea glow ──
-   Stessa estetica della versione mobile, adattata al layout
-   2-colonne del desktop (anno | testo).
-   --------------------------------------------------------- */
-.timeline-card {
-  position: relative;
-}
-.timeline {
-  position: relative;
-  padding-left: 0;
-}
-
-/* Linea verticale luminosa */
-.timeline::before {
-  content: "";
-  position: absolute;
-  left: 39px; top: 16px; bottom: 16px;
-  width: 2px;
-  background: linear-gradient(180deg,
-    var(--cyan-2) 0%,
-    rgba(123,228,255,.5) 50%,
-    rgba(123,228,255,.12) 100%);
-  border-radius: 2px;
-  box-shadow: 0 0 10px rgba(123,228,255,.3);
-}
-
-/* Puntino luminoso per ogni voce */
-.timeline li {
-  position: relative;
-}
-.timeline li::after {
-  content: "";
-  position: absolute;
-  left: 31px; top: 8px;
-  width: 10px; height: 10px;
-  border-radius: 50%;
-  background: var(--cyan-2);
-  box-shadow: 0 0 12px rgba(123,228,255,.7),
-              0 0 24px rgba(123,228,255,.3);
-  border: 2px solid rgba(2,10,24,.9);
-  z-index: 1;
-}
-/* Ultimo: puntino più grande con animazione */
-.timeline li:last-child::after {
-  width: 13px; height: 13px;
-  left: 29px; top: 7px;
-  background: radial-gradient(circle, #fff 15%, var(--cyan-2) 55%);
-  box-shadow: 0 0 16px rgba(123,228,255,.8),
-              0 0 32px rgba(123,228,255,.4);
-  animation: dotPulse 2.2s ease-in-out infinite;
-}
-
-/* Badge anno: più bello, con glow */
-.timeline strong {
-  background: rgba(123,228,255,.1) !important;
-  border: 1px solid rgba(123,228,255,.22) !important;
-  color: var(--cyan-2) !important;
-  font-weight: 700 !important;
-  box-shadow: 0 0 12px rgba(123,228,255,.15),
-              inset 0 1px 0 rgba(255,255,255,.08) !important;
-  transition: box-shadow .3s, background .3s !important;
-}
-.timeline li:hover strong {
-  background: rgba(123,228,255,.18) !important;
-  box-shadow: 0 0 22px rgba(123,228,255,.3) !important;
-}
-
-/* Testo anno */
-.timeline span {
-  color: var(--muted);
-  font-size: .92rem;
-  line-height: 1.55;
-}
-.timeline li:last-child span { color: var(--text); }
-
-/* ── 3. DIALOG: centrato nella viewport ──────────────────────
-   Il browser gestisce il centramento del <dialog> nativo
-   con margin: auto. Forziamo anche su tutti i browser.
-   --------------------------------------------------------- */
-.dialog {
-  margin: auto !important;
-  position: fixed !important;
-  top: 50% !important;
-  left: 50% !important;
-  transform: translate(-50%, -50%) !important;
-  max-width: min(780px, calc(100% - 32px)) !important;
-  width: 100% !important;
-  max-height: calc(100vh - 40px) !important;
-  overflow-y: auto !important;
-}
-/* Sovrascriviamo con approccio più compatibile */
-dialog.dialog {
-  position: fixed;
-  inset: 0;
-  margin: auto;
-  top: 0; left: 0; right: 0; bottom: 0;
-  width: min(780px, calc(100% - 32px));
-  max-height: 90vh;
-  overflow-y: auto;
-  transform: none !important;
-}
-
-/* ── 4. FORM SUCCESS: messaggio visibile e prominente ────────
-   Il form__status già esiste ma lo rendiamo più visibile.
-   --------------------------------------------------------- */
-.form__status {
-  margin-top: 14px;
-  padding: 12px 16px;
-  border-radius: 12px;
-  font-size: .92rem;
-  font-weight: 600;
-  min-height: 0;
-  transition: all .3s ease;
-}
-.form__status:empty {
-  padding: 0;
-  margin: 0;
-}
-.form__status.is-success {
-  color: #4dffd6 !important;
-  background: rgba(0,220,180,.1) !important;
-  border: 1px solid rgba(0,220,180,.25) !important;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.form__status.is-success::before {
-  content: "✓";
-  width: 22px; height: 22px;
-  background: rgba(0,220,180,.2);
-  border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  font-size: .88rem; flex-shrink: 0;
-}
-.form__status.is-error {
-  color: #ff8fa3 !important;
-  background: rgba(255,80,100,.08) !important;
-  border: 1px solid rgba(255,80,100,.2) !important;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.form__status.is-error::before {
-  content: "✕";
-  width: 22px; height: 22px;
-  background: rgba(255,80,100,.15);
-  border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  font-size: .88rem; flex-shrink: 0;
-}
-
-/* ── 5. FOUNDER CARD 3D VETRO ────────────────────────────────
-   Effetto vetro tridimensionale:
-   - prospettiva 3D al hover (rotateX/Y leggero)
-   - strato riflesso in movimento con il mouse via CSS custom prop
-   - bordo superiore luminoso
-   - foto circolare con alone colorato
-   - sfondo con depth gradient
-   --------------------------------------------------------- */
-
-/* Contenitore per perspective 3D */
-.founders-grid {
-  perspective: 1200px;
-}
-
-.founder-card {
-  transform-style: preserve-3d;
-  transition: transform .4s cubic-bezier(.22,.68,0,1.15),
-              box-shadow .4s, border-color .3s !important;
-  cursor: default;
-  /* Vetro: bordo luminoso top */
-  border-top: 1px solid rgba(220,248,255,.35) !important;
-}
-
-/* Layer vetro: riflesso interno sfumato che simula il vetro */
-.founder-card::before {
-  content: "" !important;
-  position: absolute !important;
-  inset: 0 !important;
-  border-radius: inherit !important;
-  pointer-events: none !important;
-  z-index: 1 !important;
-  background:
-    linear-gradient(135deg,
-      rgba(255,255,255,.14) 0%,
-      rgba(255,255,255,.06) 18%,
-      rgba(200,240,255,.03) 35%,
-      transparent 55%,
-      rgba(123,228,255,.04) 80%,
-      rgba(123,228,255,.08) 100%) !important;
-  mix-blend-mode: screen;
-}
-
-/* Bordo riflesso perimetrale — simula vetro spesso */
-.founder-card::after {
-  content: "" !important;
-  position: absolute !important;
-  inset: 0 !important;
-  border-radius: inherit !important;
-  pointer-events: none !important;
-  z-index: 2 !important;
-  background: none !important;
-  border: 1px solid rgba(255,255,255,.1) !important;
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.18),
-    inset 0 -1px 0 rgba(0,0,0,.2),
-    inset 1px 0 0 rgba(255,255,255,.07),
-    inset -1px 0 0 rgba(0,0,0,.1) !important;
-}
-
-/* Hover: inclinazione 3D + glow profondo */
-.founder-card:hover {
-  transform: translateY(-8px) rotateX(4deg) rotateY(-2deg) !important;
-  box-shadow:
-    0 30px 70px rgba(0,0,0,.55),
-    0 0 50px rgba(80,200,255,.14),
-    0 0 100px rgba(0,100,255,.08),
-    inset 0 1px 0 rgba(255,255,255,.22) !important;
-  border-color: rgba(180,240,255,.4) !important;
-}
-
-/* Foto: circolare con alone colorato individuale */
-.founder-card > img {
-  position: relative; z-index: 3;
-  width: 96px !important;
-  height: 96px !important;
-  border-radius: 50% !important;
-  margin-bottom: 14px !important;
-  border: 2px solid rgba(123,228,255,.3) !important;
-  object-fit: cover !important;
-  transition: transform .4s cubic-bezier(.22,.68,0,1.2),
-              box-shadow .4s, filter .4s !important;
-}
-.founder-card:hover > img {
-  transform: translateZ(20px) scale(1.06) !important;
-  box-shadow:
-    0 8px 24px rgba(0,0,0,.4),
-    0 0 28px rgba(123,228,255,.4) !important;
-  filter: brightness(1.08) saturate(1.1) !important;
-}
-
-/* Contenuto testo: sopra i layer */
-.founder-card > * { position: relative; z-index: 3; }
-
-/* Sfondo profondo per ogni card — simula diversi strati di vetro */
-.founder-card--silvio  {
-  background:
-    radial-gradient(circle at 20% 0%, rgba(180,232,255,.18) 0%, transparent 35%),
-    radial-gradient(circle at 80% 100%, rgba(80,160,255,.08) 0%, transparent 35%),
-    linear-gradient(160deg, rgba(8,28,65,.88), rgba(4,14,40,.96)) !important;
-}
-.founder-card--luigi {
-  background:
-    radial-gradient(circle at 20% 0%, rgba(160,220,255,.16) 0%, transparent 35%),
-    radial-gradient(circle at 80% 100%, rgba(60,140,255,.08) 0%, transparent 35%),
-    linear-gradient(160deg, rgba(7,25,60,.88), rgba(4,12,36,.96)) !important;
-}
-.founder-card--vincenzo {
-  background:
-    radial-gradient(circle at 20% 0%, rgba(170,232,255,.16) 0%, transparent 35%),
-    radial-gradient(circle at 80% 100%, rgba(70,150,255,.08) 0%, transparent 35%),
-    linear-gradient(160deg, rgba(6,24,58,.88), rgba(3,12,36,.96)) !important;
-}
-.founder-card--dario {
-  background:
-    radial-gradient(circle at 20% 0%, rgba(150,210,255,.16) 0%, transparent 35%),
-    radial-gradient(circle at 80% 100%, rgba(50,130,255,.08) 0%, transparent 35%),
-    linear-gradient(160deg, rgba(5,22,54,.88), rgba(3,10,32,.96)) !important;
-}
-.founder-card--matteo {
-  background:
-    radial-gradient(circle at 20% 0%, rgba(190,240,255,.16) 0%, transparent 35%),
-    radial-gradient(circle at 80% 100%, rgba(100,170,255,.08) 0%, transparent 35%),
-    linear-gradient(160deg, rgba(7,26,60,.88), rgba(4,14,38,.96)) !important;
-}
-
-/* Riduzione effetti su mobile */
-@media (max-width: 768px) {
-  .founders-grid { perspective: none; }
-  .founder-card:hover { transform: translateY(-3px) !important; }
-  .founder-card:hover > img { transform: scale(1.04) !important; }
-}
-@media (prefers-reduced-motion: reduce) {
-  .founder-card, .founder-card:hover { transform: none !important; transition: box-shadow .3s !important; }
-  .founder-card > img, .founder-card:hover > img { transform: none !important; }
-}
-
-
-/* ==========================================================
-   FINAL13 — 6 fix definitivi (sovrascrivono tutto sopra)
-   ========================================================== */
-
-/* ── 1. DIALOG: centrato in modo definitivo ──────────────────
-   Il problema: `left: 50%; transform: translate(-50%,-50%)`
-   spostava il dialog fuori schermo perché <dialog> nativo
-   usa già un suo posizionamento. Soluzione pulita: solo
-   margin:auto + inset:0 su position:fixed. Zero transform.
-   --------------------------------------------------------- */
-.dialog {
-  position: fixed !important;
-  inset: 0 !important;
-  margin: auto !important;
-  top: 0 !important; left: 0 !important;
-  right: 0 !important; bottom: 0 !important;
-  transform: none !important;
-  width: min(780px, calc(100% - 32px)) !important;
-  max-height: 90vh !important;
-  overflow-y: auto !important;
-  background: transparent !important;
-  border: 0 !important;
-  padding: 0 !important;
-}
-/* Assicura che ::backdrop copra tutto */
-.dialog::backdrop {
-  background: rgba(1,5,13,.78) !important;
-  backdrop-filter: blur(6px) !important;
-}
-
-/* ── 2. TIMELINE DESKTOP: solo raggio di luce, zero puntini ──
-   Rimuove tutti i puntini (::after) sul desktop.
-   Linea verticale come raggio luminoso continuo.
-   Il badge anno rimane pulito senza nulla sopra.
-   --------------------------------------------------------- */
-
-/* Annulla TUTTI i puntini precedenti sul desktop */
-.timeline li::after {
-  display: none !important;
-  content: none !important;
-}
-.timeline li:last-child::after {
-  display: none !important;
-  content: none !important;
-  animation: none !important;
-}
-
-/* Raggio di luce che unisce tutte le date */
-.timeline {
-  position: relative !important;
-  padding-left: 0 !important;
-}
-.timeline::before {
-  content: "" !important;
-  position: absolute !important;
-  left: 39px !important;
-  top: 8px !important;
-  bottom: 8px !important;
-  width: 2px !important;
-  background: linear-gradient(180deg,
-    transparent 0%,
-    rgba(123,228,255,.6) 8%,
-    var(--cyan-2) 30%,
-    rgba(123,228,255,.8) 55%,
-    rgba(123,228,255,.4) 80%,
-    transparent 100%) !important;
-  box-shadow:
-    0 0 6px rgba(123,228,255,.5),
-    0 0 18px rgba(123,228,255,.2) !important;
-  border-radius: 2px !important;
-  animation: timelineGlow 3s ease-in-out infinite alternate !important;
-}
-@keyframes timelineGlow {
-  from { opacity: .7; filter: blur(0px); }
-  to   { opacity: 1;  filter: blur(.4px); box-shadow: 0 0 10px rgba(123,228,255,.7), 0 0 28px rgba(123,228,255,.3); }
-}
-
-/* Badge anno: pulito, nessun overlap */
-.timeline li {
-  display: grid !important;
-  grid-template-columns: 80px 1fr !important;
-  gap: 14px !important;
-  align-items: start !important;
-  position: relative !important;
-  padding-left: 0 !important;
-}
-.timeline li::before { display: none !important; }
-.timeline strong {
-  display: inline-flex !important;
-  width: 78px !important; height: 32px !important;
-  align-items: center !important; justify-content: center !important;
-  border-radius: 999px !important;
-  background: rgba(123,228,255,.1) !important;
-  border: 1px solid rgba(123,228,255,.24) !important;
-  color: var(--cyan-2) !important;
-  font-size: .84rem !important; font-weight: 700 !important;
-  letter-spacing: .02em !important;
-  box-shadow: 0 0 10px rgba(123,228,255,.15) !important;
-  position: relative !important; z-index: 1 !important;
-}
-.timeline li:hover strong {
-  background: rgba(123,228,255,.18) !important;
-  box-shadow: 0 0 20px rgba(123,228,255,.3) !important;
-}
-.timeline span {
-  color: var(--muted) !important;
-  font-size: .92rem !important;
-  line-height: 1.55 !important;
-  padding-top: 6px !important;
-}
-.timeline li:last-child span { color: var(--text) !important; }
-
-/* Su mobile: puntini (già definiti sopra nei blocchi mobile) */
-@media (max-width: 768px) {
-  .timeline li::after {
-    display: block !important;
-    content: "" !important;
-    animation: dotPulse 2s ease-in-out infinite !important;
-  }
-  .timeline li:last-child::after {
-    display: block !important;
-    animation: dotPulse 2s ease-in-out infinite !important;
-  }
-  .timeline li {
-    grid-template-columns: 1fr !important;
-    padding-left: 0 !important;
-  }
-  .timeline strong {
-    width: auto !important; height: auto !important;
-    display: inline !important;
-    background: none !important; border: none !important;
-    box-shadow: none !important;
-    color: var(--cyan-2) !important;
-    font-size: .9rem !important;
-    padding: 0 !important;
-  }
-}
-
-/* ── 3. FOUNDER CARD: nuova animazione hover — spotlight ─────
-   Invece del 3D rotateX (che causava glitch), usiamo:
-   - sollevamento pulito translateY
-   - spotlight radiale che si accende sotto il cursore
-   - foto con leggero zoom + alone luminoso
-   - bordo che si illumina
-   --------------------------------------------------------- */
-.founder-card {
-  transition:
-    transform .35s cubic-bezier(.22,.68,0,1.3),
-    box-shadow .35s ease,
-    border-color .28s ease !important;
-  transform-style: flat !important; /* disabilita 3D */
-}
-.founder-card::before {
-  content: "" !important;
-  position: absolute !important; inset: 0 !important;
-  border-radius: inherit !important; pointer-events: none !important;
-  z-index: 1 !important;
-  background: radial-gradient(circle at 50% -10%,
-    rgba(180,240,255,.13) 0%,
-    rgba(120,200,255,.06) 30%,
-    transparent 65%) !important;
-  transition: opacity .35s !important;
-  opacity: 0 !important;
-}
-.founder-card:hover::before { opacity: 1 !important; }
-
-.founder-card:hover {
-  transform: translateY(-7px) !important;
-  border-color: rgba(160,240,255,.38) !important;
-  box-shadow:
-    0 24px 60px rgba(0,0,0,.5),
-    0 0 40px rgba(80,200,255,.1),
-    inset 0 1px 0 rgba(255,255,255,.16) !important;
-}
-.founder-card > img {
-  transition: transform .35s cubic-bezier(.22,.68,0,1.3),
-              box-shadow .35s, filter .3s !important;
-}
-.founder-card:hover > img {
-  transform: scale(1.07) !important;
-  box-shadow: 0 6px 22px rgba(0,0,0,.4), 0 0 22px rgba(123,228,255,.35) !important;
-  filter: brightness(1.06) saturate(1.1) !important;
-}
-/* Disabilita il 3D su tutti i breakpoint */
-@media (max-width: 768px) {
-  .founder-card:hover { transform: translateY(-3px) !important; }
-  .founder-card:hover > img { transform: scale(1.04) !important; }
-}
-@media (prefers-reduced-motion: reduce) {
-  .founder-card:hover { transform: none !important; }
-  .founder-card:hover > img { transform: none !important; }
-}
-
-/* ── 4. BTN SCOPRI LA RETE: elettricità potenziata ───────────
-   Raggio luminoso che attraversa il bottone + bordo pulsante.
-   --------------------------------------------------------- */
-.btn-rete-cta {
-  position: relative !important;
-  overflow: hidden !important;
-  display: inline-flex !important;
-  align-items: center !important;
-  gap: 9px !important;
-  min-height: 52px !important;
-  padding: 0 28px !important;
-  font-size: .97rem !important;
-  font-weight: 700 !important;
-  border-radius: 14px !important;
-  background: linear-gradient(135deg,
-    rgba(16,130,255,.97),
-    rgba(0,195,255,.92)) !important;
-  border: 1px solid rgba(100,220,255,.5) !important;
-  color: rgba(2,12,28,.96) !important;
-  box-shadow:
-    0 10px 32px rgba(0,120,255,.3),
-    inset 0 1px 0 rgba(255,255,255,.3) !important;
-  cursor: pointer !important;
-  transition: transform .22s cubic-bezier(.22,.68,0,1.4),
-              box-shadow .22s !important;
-}
-/* Raggio 1: scan veloce */
-.btn-rete-cta::before {
-  content: "" !important;
-  position: absolute !important;
-  top: -10% !important; width: 55px !important; height: 120% !important;
-  background: linear-gradient(105deg,
-    transparent 0%,
-    rgba(255,255,255,.08) 30%,
-    rgba(255,255,255,.62) 50%,
-    rgba(255,255,255,.08) 70%,
-    transparent 100%) !important;
-  transform: skewX(-16deg) translateX(-120px) !important;
-  animation: reteLightning 2.2s ease-in-out infinite !important;
-}
-@keyframes reteLightning {
-  0%   { transform: skewX(-16deg) translateX(-120px); opacity: 0; }
-  8%   { opacity: 1; }
-  55%  { transform: skewX(-16deg) translateX(320px); opacity: 0; }
-  100% { transform: skewX(-16deg) translateX(320px); opacity: 0; }
-}
-/* Raggio 2: flash secondario sfasato */
-.btn-rete-cta::after {
-  content: "" !important;
-  position: absolute !important;
-  inset: 0 !important; border-radius: inherit !important;
-  border: 1.5px solid rgba(160,230,255,.55) !important;
-  animation: reteGlow 2.2s ease-in-out infinite !important;
-  pointer-events: none !important;
-}
-@keyframes reteGlow {
-  0%,100% { box-shadow: 0 0 0 0 rgba(0,200,255,0); opacity: .6; }
-  30%     { box-shadow: 0 0 22px 4px rgba(0,200,255,.25); opacity: 1; }
-  55%     { box-shadow: 0 0 0 0 rgba(0,200,255,0); opacity: .6; }
-}
-.btn-rete-cta:hover {
-  transform: translateY(-2px) scale(1.02) !important;
-  box-shadow:
-    0 16px 44px rgba(0,140,255,.42),
-    0 0 60px rgba(0,200,255,.22),
-    inset 0 1px 0 rgba(255,255,255,.35) !important;
-}
-
-/* ── 5. TEACHING CARD DESKTOP: locandine 2x più grandi ───────
-   max-height portata a 420px — le locandine verticali
-   si vedono nella loro interezza come veri poster.
-   --------------------------------------------------------- */
-.teaching-card-img-wrap {
-  max-height: 420px !important;
-  overflow: hidden !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  background: rgba(4,14,32,.5) !important;
-  border-radius: 14px !important;
-  margin-bottom: 16px !important;
-}
-.teaching-card-img-wrap img {
-  width: auto !important;
-  max-width: 100% !important;
-  height: auto !important;
-  max-height: 400px !important;
-  object-fit: contain !important;
-  border-radius: 12px !important;
-  padding: 0 !important;
-}
-/* Mobile: dimensioni ridotte (già gestite sopra ma ri-affermiamo) */
-@media (max-width: 768px) {
-  .teaching-card-img-wrap {
-    max-height: none !important;
-    height: auto !important;
-    width: 88px !important;
-    flex-shrink: 0 !important;
-    align-self: flex-start !important;
-  }
-  .teaching-card-img-wrap img {
-    width: 88px !important;
-    height: 116px !important;
-    max-height: 116px !important;
-    object-fit: cover !important;
-  }
-}
-
-/* ── 6. FEATURE CARD IMMAGINI: stessa altezza uniforme ───────
-   Entrambe le immagini nelle pubblicazioni hanno la stessa
-   altezza fissa con object-fit: cover centrato.
-   --------------------------------------------------------- */
-#contenuti-articoli .feature-card > img,
-.articoli-grid .feature-card > img {
-  width: 100% !important;
-  height: 240px !important;
-  max-height: 240px !important;
-  min-height: 240px !important;
-  object-fit: cover !important;
-  object-position: center top !important;
-  border-radius: 14px !important;
-  margin-bottom: 16px !important;
-  background: rgba(4,14,32,.5) !important;
-  padding: 0 !important;
-  display: block !important;
-}
-/* UHM logo: stesso box ma con contain + padding per non tagliarlo */
-#contenuti-articoli .feature-card > img[src*="UHM"],
-#contenuti-articoli .feature-card > img[src*="logo"],
-.articoli-grid .feature-card > img[src*="UHM"],
-.articoli-grid .feature-card > img[src*="logo"] {
-  object-fit: contain !important;
-  object-position: center !important;
-  padding: 24px !important;
-  background: rgba(5,18,42,.7) !important;
-}
-/* Mobile: altezza proporzionata */
-@media (max-width: 768px) {
-  #contenuti-articoli .feature-card > img,
-  .articoli-grid .feature-card > img {
-    height: 170px !important;
-    min-height: 170px !important;
-  }
-}
-
-
-/* ==========================================================
-   FINAL14 — 3 modifiche precise
-   ========================================================== */
-
-/* ── 1. PUBBLICAZIONI: immagini intere, stessa dimensione ────
-   object-fit: contain  →  si vede tutto Space&Blue
-   height fissa uguale per entrambe
-   --------------------------------------------------------- */
-#contenuti-articoli .feature-card > img,
-.articoli-grid .feature-card > img {
-  width: 100% !important;
-  height: 260px !important;
-  max-height: 260px !important;
-  min-height: 260px !important;
-  object-fit: contain !important;
-  object-position: center !important;
-  border-radius: 14px !important;
-  margin-bottom: 16px !important;
-  background: rgba(4,14,32,.55) !important;
-  padding: 10px !important;
-  display: block !important;
-}
-@media (max-width: 768px) {
-  #contenuti-articoli .feature-card > img,
-  .articoli-grid .feature-card > img {
-    height: 190px !important;
-    min-height: 190px !important;
-  }
-}
-
-/* ── 2. TIMELINE: alone luminoso dietro il riquadro date ─────
-   Un radial-gradient glow posizionato dietro la colonna
-   delle date (sinistra della card), come se le date
-   emanassero luce.
-   --------------------------------------------------------- */
-.timeline-card {
-  position: relative !important;
-  overflow: visible !important;
-}
-/* Alone dietro la colonna sinistra (date) */
+/* Glow dietro la card */
 .timeline-card::before {
-  content: "" !important;
-  position: absolute !important;
-  left: -18px !important;
-  top: 10% !important;
-  width: 120px !important;
-  height: 80% !important;
-  background: radial-gradient(ellipse at 40% 50%,
-    rgba(123,228,255,.18) 0%,
-    rgba(80,180,255,.09) 35%,
-    transparent 70%) !important;
-  filter: blur(14px) !important;
-  pointer-events: none !important;
-  z-index: 0 !important;
-  animation: tlGlow 4s ease-in-out infinite alternate !important;
+  content: ""; position: absolute;
+  left: -18px; top: 10%; width: 120px; height: 80%;
+  background: radial-gradient(ellipse 80% 60% at 50% 50%, rgba(123,228,255,.18) 0%, rgba(80,180,255,.08) 40%, transparent 70%);
+  filter: blur(14px); pointer-events: none; z-index: 0;
+  animation: timelineLightPulse 4s ease-in-out infinite alternate;
 }
-@keyframes tlGlow {
-  from { opacity: .6; transform: scaleY(.9); }
-  to   { opacity: 1;  transform: scaleY(1.05); }
-}
-/* Ensure content is above the glow */
-.timeline-card .section-kicker,
-.timeline li { position: relative; z-index: 1; }
-
-/* ── 3. FONDATORI: animazione entrata da sinistra a cascata ──
-   Ogni card parte da translateX proporzionale alla posizione
-   (la prima parte da più lontano, l'ultima quasi ferma)
-   con delay crescente. Effetto "scivolano da sinistra
-   e si fermano al loro posto" — come carte che si schierano.
-   --------------------------------------------------------- */
-
-/* Reset: rimuovi il 3D / spotlight precedente */
-.founders-grid {
-  perspective: none !important;
-}
-
-/* Stato iniziale: ogni card fuori schermo a sinistra */
-#fondatori .founders-grid .reveal {
-  opacity: 0 !important;
-  transform: translateX(-70px) !important;
-  transition:
-    opacity .65s cubic-bezier(.25,.46,.45,.94),
-    transform .65s cubic-bezier(.22,.68,0,1.05) !important;
-}
-
-/* Delay progressivo: la prima card arriva per prima,
-   le successive con ritardo crescente → effetto cascata */
-#fondatori .founders-grid > *:nth-child(1) { transition-delay: .00s !important; }
-#fondatori .founders-grid > *:nth-child(2) { transition-delay: .10s !important; }
-#fondatori .founders-grid > *:nth-child(3) { transition-delay: .20s !important; }
-#fondatori .founders-grid > *:nth-child(4) { transition-delay: .30s !important; }
-#fondatori .founders-grid > *:nth-child(5) { transition-delay: .40s !important; }
-
-/* Quando è visibile: torna in posizione */
-#fondatori .founders-grid .reveal.is-visible {
-  opacity: 1 !important;
-  transform: translateX(0) !important;
-}
-
-/* Hover: sollevamento semplice e pulito */
-.founder-card:hover {
-  transform: translateY(-7px) !important;
-  border-color: rgba(160,240,255,.38) !important;
-  box-shadow:
-    0 22px 55px rgba(0,0,0,.48),
-    0 0 36px rgba(80,200,255,.1),
-    inset 0 1px 0 rgba(255,255,255,.14) !important;
-}
-.founder-card:hover > img {
-  transform: scale(1.07) !important;
-  box-shadow: 0 6px 20px rgba(0,0,0,.38), 0 0 20px rgba(123,228,255,.32) !important;
-  filter: brightness(1.06) saturate(1.1) !important;
-}
-
-/* Mobile: animazione semplice, no translate ampio */
-@media (max-width: 768px) {
-  #fondatori .founders-grid .reveal {
-    transform: translateY(20px) !important;
-  }
-  #fondatori .founders-grid .reveal.is-visible {
-    transform: none !important;
-  }
-  .founder-card:hover { transform: translateY(-3px) !important; }
-}
-@media (prefers-reduced-motion: reduce) {
-  #fondatori .founders-grid .reveal {
-    transform: none !important;
-    opacity: 1 !important;
-    transition: none !important;
-  }
-}
-
-
-/* ==========================================================
-   FINAL14 — 3 fix + uniformità pubblicazioni
-   ========================================================== */
-
-/* ── 1. PUBBLICAZIONI: entrambe le immagini viste per intero ─
-   object-fit: contain  → vede tutta la locandina
-   altezza fissa uguale → stessa dimensione le due card
-   --------------------------------------------------------- */
-#contenuti-articoli .feature-card > img,
-.articoli-grid .feature-card > img {
-  width: 100% !important;
-  height: 260px !important;
-  max-height: 260px !important;
-  min-height: 260px !important;
-  object-fit: contain !important;
-  object-position: center !important;
-  border-radius: 14px !important;
-  margin-bottom: 16px !important;
-  background: rgba(4,14,32,.55) !important;
-  padding: 12px !important;
-  display: block !important;
-}
-/* Mobile */
-@media (max-width: 768px) {
-  #contenuti-articoli .feature-card > img,
-  .articoli-grid .feature-card > img {
-    height: 190px !important;
-    min-height: 190px !important;
-  }
-}
-
-/* ── 2. TIMELINE: effetto luce dietro il riquadro ────────────
-   Un alone radiale posizionato dietro la timeline-card
-   che simula una fonte luminosa subacquea.
-   --------------------------------------------------------- */
-.timeline-card {
-  position: relative !important;
-  overflow: visible !important;
-}
-/* Alone dietro la card — visibile perché overflow:visible */
-.timeline-card::before {
-  content: "" !important;
-  position: absolute !important;
-  left: -18px !important;
-  top: 10% !important;
-  width: 120px !important;
-  height: 80% !important;
-  background:
-    radial-gradient(ellipse 80% 60% at 50% 50%,
-      rgba(123,228,255,.18) 0%,
-      rgba(80,180,255,.08) 40%,
-      transparent 70%) !important;
-  filter: blur(14px) !important;
-  pointer-events: none !important;
-  z-index: 0 !important;
-  animation: timelineLightPulse 4s ease-in-out infinite alternate !important;
+.timeline-card::after {
+  content: ""; position: absolute;
+  left: 24px; top: 0; bottom: 0; width: 56px;
+  background: radial-gradient(ellipse 100% 100% at 50% 50%, rgba(123,228,255,.1) 0%, transparent 70%);
+  filter: blur(8px); pointer-events: none; z-index: 0;
+  animation: timelineLightPulse 4s ease-in-out infinite alternate-reverse;
 }
 @keyframes timelineLightPulse {
   from { opacity: .5; transform: scaleY(.9); }
   to   { opacity: 1;  transform: scaleY(1.08); }
 }
-/* Alone aggiuntivo a destra della linea */
-.timeline-card::after {
-  content: "" !important;
-  position: absolute !important;
-  left: 24px !important;
-  top: 0 !important; bottom: 0 !important;
-  width: 56px !important;
-  background:
-    radial-gradient(ellipse 100% 100% at 50% 50%,
-      rgba(123,228,255,.1) 0%,
-      transparent 70%) !important;
-  filter: blur(8px) !important;
-  pointer-events: none !important;
-  z-index: 0 !important;
-  animation: timelineLightPulse 4s ease-in-out infinite alternate-reverse !important;
+.timeline-card .section-kicker, .timeline li { position: relative; z-index: 1; }
+
+.timeline { position: relative; padding-left: 0; }
+.timeline::before {
+  content: ""; position: absolute;
+  left: 39px; top: 8px; bottom: 8px; width: 2px;
+  background: linear-gradient(180deg, transparent 0%, rgba(123,228,255,.6) 8%, var(--cyan-2) 30%, rgba(123,228,255,.8) 55%, rgba(123,228,255,.4) 80%, transparent 100%);
+  box-shadow: 0 0 6px rgba(123,228,255,.5), 0 0 18px rgba(123,228,255,.2);
+  border-radius: 2px;
+  animation: timelineGlow 3s ease-in-out infinite alternate;
 }
-/* Il kicker e la lista rimangono sopra il glow */
-.timeline-card .section-kicker,
-.timeline li { position: relative; z-index: 1; }
+@keyframes timelineGlow {
+  from { opacity: .7; }
+  to   { opacity: 1; box-shadow: 0 0 10px rgba(123,228,255,.7), 0 0 28px rgba(123,228,255,.3); }
+}
+.timeline li {
+  display: grid; grid-template-columns: 80px 1fr;
+  gap: 14px; align-items: start; position: relative;
+}
+/* Nessun puntino sul desktop */
+.timeline li::before, .timeline li::after { display: none; }
+.timeline strong {
+  display: inline-flex; width: 78px; height: 32px;
+  align-items: center; justify-content: center; border-radius: 999px;
+  background: rgba(123,228,255,.1); border: 1px solid rgba(123,228,255,.24);
+  color: var(--cyan-2); font-size: .84rem; font-weight: 700;
+  box-shadow: 0 0 10px rgba(123,228,255,.15);
+  position: relative; z-index: 1;
+  transition: background .3s, box-shadow .3s;
+}
+.timeline li:hover strong { background: rgba(123,228,255,.18); box-shadow: 0 0 20px rgba(123,228,255,.3); }
+.timeline span { color: var(--muted); font-size: .92rem; line-height: 1.55; padding-top: 6px; }
+.timeline li:last-child span { color: var(--text); }
 
-/* ── 3. FONDATORI: entrano da sinistra con stagger e
-        si "atterrano" con rimbalzo — effetto wow ─────────────
-   Ogni card ha un translateX diverso + delay progressivo.
-   L'easing cubic-bezier(.22,.68,0,1.2) dà il rimbalzo.
-   --------------------------------------------------------- */
+/* TIMELINE MOBILE: linea verticale + puntini, NO overlap con le scritte */
+@media (max-width: 768px) {
+  .timeline-card::before, .timeline-card::after { display: none; } /* Nascondi glow sul mobile */
+  .timeline { padding-left: 26px; position: relative; }
+  .timeline::before {
+    content: ""; position: absolute;
+    left: 6px; top: 16px; bottom: 16px; width: 2px;
+    background: linear-gradient(180deg, var(--cyan-2) 0%, rgba(123,228,255,.4) 60%, transparent 100%);
+    border-radius: 2px; box-shadow: 0 0 8px rgba(123,228,255,.3);
+    animation: none;
+  }
+  .timeline li {
+    grid-template-columns: 1fr;
+    gap: 3px; padding-left: 0; margin-bottom: 16px;
+  }
+  /* Puntino a sinistra, lontano dal testo */
+  .timeline li::after {
+    display: block;
+    content: ""; position: absolute;
+    left: -22px; top: 6px;
+    width: 9px; height: 9px; border-radius: 50%;
+    background: var(--cyan-2);
+    box-shadow: 0 0 8px rgba(123,228,255,.6);
+    border: 2px solid rgba(2,10,24,.8);
+    z-index: 2;
+  }
+  .timeline li:last-child::after {
+    width: 11px; height: 11px; left: -23px; top: 5px;
+    background: radial-gradient(circle, #fff 20%, var(--cyan-2) 60%);
+    animation: dotPulse 2s ease-in-out infinite;
+  }
+  .timeline li::before { display: none; }
+  /* Anno: testo cyan senza pill */
+  .timeline strong {
+    display: inline; width: auto; height: auto;
+    background: none; border: none; box-shadow: none;
+    color: var(--cyan-2); font-size: .9rem; font-weight: 700;
+    padding: 0; border-radius: 0;
+  }
+  .timeline span { display: block; font-size: .86rem; color: var(--muted); padding-top: 0; }
+}
 
-/* Override del .reveal generico per i fondatori */
-#fondatori .founders-grid .founder-card {
-  opacity: 0 !important;
-  transform: translateX(-60px) !important;
+/* ── ACTIVITY CARDS: sfondi, icone, layout ── */
+.activity-grid-row { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+.activity-card {
+  text-align: center; padding: 32px 20px 26px;
+  transition: transform .3s cubic-bezier(.22,.68,0,1.4), box-shadow .3s, border-color .3s;
+  overflow: hidden;
+}
+.activity-card:hover { transform: translateY(-5px); border-color: var(--border-hi); box-shadow: var(--shadow), var(--glow); }
+.activity-card::before {
+  content: ""; position: absolute; inset: -1px; border-radius: inherit; padding: 1px;
+  background: linear-gradient(135deg, rgba(180,230,255,.3) 0%, transparent 50%, rgba(160,220,255,.24) 100%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor; mask-composite: exclude;
+  opacity: 0; transition: opacity .3s;
+}
+.activity-card:hover::before { opacity: 1; }
+.activity-card::after {
+  content: ""; position: absolute; top: 0; left: 0; width: 50%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.06), transparent);
+  transform: translateX(-100%) skewX(-15deg);
+  pointer-events: none; border-radius: inherit;
+}
+.activity-card:hover::after { animation: shimmerSlide .6s ease forwards; }
+@keyframes shimmerSlide { 0%{transform:translateX(-100%) skewX(-15deg);} 100%{transform:translateX(200%) skewX(-15deg);} }
+
+.activity-asset {
+  width: 150px; height: 150px; object-fit: contain;
+  margin: 0 auto 20px; display: block;
+  filter: drop-shadow(0 0 14px rgba(124,243,255,.28)) drop-shadow(0 0 32px rgba(80,180,255,.14));
+  transition: transform .4s cubic-bezier(.22,.68,0,1.4), filter .4s;
+}
+.activity-card:hover .activity-asset {
+  transform: scale(1.1) translateY(-6px);
+  filter: drop-shadow(0 0 24px rgba(124,243,255,.55)) drop-shadow(0 0 52px rgba(80,200,255,.28));
+}
+.activity-card--ricerca      { background: radial-gradient(ellipse 80% 50% at 50% -5%, rgba(0,120,255,.16), transparent 60%), linear-gradient(160deg, rgba(8,32,78,.82), rgba(4,17,44,.92)); border-color: rgba(80,160,255,.2); }
+.activity-card--formazione   { background: radial-gradient(ellipse 80% 50% at 50% -5%, rgba(0,155,220,.14), transparent 60%), linear-gradient(160deg, rgba(6,36,68,.82), rgba(3,19,42,.92)); border-color: rgba(60,178,238,.2); }
+.activity-card--pubblicazioni{ background: radial-gradient(ellipse 80% 50% at 50% -5%, rgba(0,100,200,.16), transparent 60%), linear-gradient(160deg, rgba(5,27,62,.82), rgba(3,15,38,.92)); border-color: rgba(40,138,218,.2); }
+.activity-card--media        { background: radial-gradient(ellipse 80% 50% at 50% -5%, rgba(0,175,200,.14), transparent 60%), linear-gradient(160deg, rgba(4,30,56,.82), rgba(2,17,34,.92)); border-color: rgba(0,198,228,.18); }
+.activity-card--ricerca:hover      { border-color: rgba(100,180,255,.45); box-shadow: var(--shadow), 0 0 40px rgba(0,100,255,.14); }
+.activity-card--formazione:hover   { border-color: rgba(60,200,255,.45);  box-shadow: var(--shadow), 0 0 40px rgba(0,160,220,.14); }
+.activity-card--pubblicazioni:hover{ border-color: rgba(60,160,240,.45);  box-shadow: var(--shadow), 0 0 40px rgba(0,120,200,.14); }
+.activity-card--media:hover        { border-color: rgba(0,220,245,.45);   box-shadow: var(--shadow), 0 0 40px rgba(0,200,230,.14); }
+
+@media (max-width: 900px)  { .activity-grid-row { grid-template-columns: repeat(2, 1fr); } .activity-asset { width: 120px; height: 120px; } }
+@media (max-width: 768px)  { .activity-grid-row { grid-template-columns: repeat(2, 1fr); gap: 12px; } .activity-asset { width: 90px; height: 90px; } .activity-card { padding: 22px 14px 18px; display: flex; flex-direction: column; align-items: center; } .activity-card p { font-size: .78rem; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; } }
+@media (max-width: 400px)  { .activity-asset { width: 80px; height: 80px; } .activity-grid-row { grid-template-columns: 1fr; } }
+
+/* ── POSTER EVENTO ── */
+.poster-card { padding: 20px; display: flex; flex-direction: column; gap: 16px; align-items: center; transition: box-shadow .3s; }
+.poster-card > img { width: 100%; max-width: 320px; height: auto; border-radius: var(--radius-sm); object-fit: cover; margin: 0 auto; box-shadow: 0 18px 50px rgba(0,0,0,.5), 0 0 35px rgba(80,170,255,.1); border: 1px solid rgba(120,210,255,.2); transition: transform .4s cubic-bezier(.22,.68,0,1.4), box-shadow .4s; }
+.poster-card:hover > img { transform: translateY(-5px) rotate(.3deg); box-shadow: 0 26px 64px rgba(0,0,0,.55), 0 0 50px rgba(80,200,255,.15); }
+.poster-card .btn { width: 100%; }
+@media (max-width: 768px) { .poster-card > img { max-width: 260px; } }
+
+/* ── FONDATORI 3D VETRO: entrata da sinistra con rimbalzo ── */
+.founders-grid { perspective: 1200px; }
+.founder-card {
+  padding: 18px 16px 20px; min-width: 0; text-align: left; overflow: hidden;
+  border-top: 1px solid rgba(220,248,255,.35);
+  transform-style: flat;
+  transition: transform .35s cubic-bezier(.22,.68,0,1.3), box-shadow .35s, border-color .28s;
+  /* Animazione entrata */
+  opacity: 0;
+  transform: translateX(-60px);
   transition:
     opacity .65s ease,
-    transform .65s cubic-bezier(.22,.68,0,1.2) !important;
+    transform .65s cubic-bezier(.22,.68,0,1.2),
+    box-shadow .35s ease,
+    border-color .28s ease;
 }
-#fondatori .founders-grid .founder-card.is-visible {
-  opacity: 1 !important;
-  transform: translateX(0) !important;
+.founder-card.is-visible { opacity: 1; transform: translateX(0); }
+
+/* Stagger delay */
+#fondatori .founders-grid > *:nth-child(1) { transition-delay: .00s; }
+#fondatori .founders-grid > *:nth-child(2) { transition-delay: .10s; }
+#fondatori .founders-grid > *:nth-child(3) { transition-delay: .20s; }
+#fondatori .founders-grid > *:nth-child(4) { transition-delay: .30s; }
+#fondatori .founders-grid > *:nth-child(5) { transition-delay: .40s; }
+
+/* Vetro 3D: layer riflesso */
+.founder-card::before {
+  content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; z-index: 1;
+  background: linear-gradient(135deg, rgba(255,255,255,.14) 0%, rgba(255,255,255,.06) 18%, rgba(200,240,255,.03) 35%, transparent 55%, rgba(123,228,255,.04) 80%, rgba(123,228,255,.08) 100%);
+  mix-blend-mode: screen;
+  opacity: 0; transition: opacity .35s;
+}
+.founder-card:hover::before { opacity: 1; }
+
+/* Bordo vetro spesso */
+.founder-card::after {
+  content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; z-index: 2;
+  background: none;
+  border: 1px solid rgba(255,255,255,.1);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.18), inset 0 -1px 0 rgba(0,0,0,.2), inset 1px 0 0 rgba(255,255,255,.07), inset -1px 0 0 rgba(0,0,0,.1);
 }
 
-/* Stagger: ogni card parte un po' dopo la precedente */
-#fondatori .founders-grid > *:nth-child(1) { transition-delay: .00s !important; }
-#fondatori .founders-grid > *:nth-child(2) { transition-delay: .10s !important; }
-#fondatori .founders-grid > *:nth-child(3) { transition-delay: .20s !important; }
-#fondatori .founders-grid > *:nth-child(4) { transition-delay: .30s !important; }
-#fondatori .founders-grid > *:nth-child(5) { transition-delay: .40s !important; }
+/* Hover: sollevamento + spotlight */
+.founder-card:hover {
+  transform: translateX(0) translateY(-7px) !important;
+  border-color: rgba(160,240,255,.38) !important;
+  box-shadow: 0 24px 60px rgba(0,0,0,.5), 0 0 40px rgba(80,200,255,.1), inset 0 1px 0 rgba(255,255,255,.16) !important;
+}
 
-/* Su mobile: entrano dal basso (no translateX per evitare overflow) */
+/* Foto */
+.founder-card > img {
+  width: 96px; height: 96px; margin: 0 0 14px;
+  border-radius: 50%; border: 2px solid rgba(123,228,255,.3);
+  object-fit: cover; position: relative; z-index: 3;
+  transition: transform .35s cubic-bezier(.22,.68,0,1.3), box-shadow .35s, filter .3s;
+}
+.founder-card:hover > img { transform: scale(1.07); box-shadow: 0 6px 22px rgba(0,0,0,.4), 0 0 22px rgba(123,228,255,.35); filter: brightness(1.06) saturate(1.1); }
+.founder-card > * { position: relative; z-index: 3; }
+.founder-card h3 { margin-bottom: 7px; font-size: .96rem; }
+.founder-card p  { color: rgba(237,247,255,.74); font-size: .84rem; }
+
+/* Sfondi individuali */
+.founder-card--silvio  { background: radial-gradient(circle at 20% 0%, rgba(180,232,255,.18) 0%, transparent 35%), radial-gradient(circle at 80% 100%, rgba(80,160,255,.08) 0%, transparent 35%), linear-gradient(160deg, rgba(8,28,65,.88), rgba(4,14,40,.96)); }
+.founder-card--luigi   { background: radial-gradient(circle at 20% 0%, rgba(160,220,255,.16) 0%, transparent 35%), radial-gradient(circle at 80% 100%, rgba(60,140,255,.08) 0%, transparent 35%), linear-gradient(160deg, rgba(7,25,60,.88), rgba(4,12,36,.96)); }
+.founder-card--vincenzo{ background: radial-gradient(circle at 20% 0%, rgba(170,232,255,.16) 0%, transparent 35%), radial-gradient(circle at 80% 100%, rgba(70,150,255,.08) 0%, transparent 35%), linear-gradient(160deg, rgba(6,24,58,.88), rgba(3,12,36,.96)); }
+.founder-card--dario   { background: radial-gradient(circle at 20% 0%, rgba(150,210,255,.16) 0%, transparent 35%), radial-gradient(circle at 80% 100%, rgba(50,130,255,.08) 0%, transparent 35%), linear-gradient(160deg, rgba(5,22,54,.88), rgba(3,10,32,.96)); }
+.founder-card--matteo  { background: radial-gradient(circle at 20% 0%, rgba(190,240,255,.16) 0%, transparent 35%), radial-gradient(circle at 80% 100%, rgba(100,170,255,.08) 0%, transparent 35%), linear-gradient(160deg, rgba(7,26,60,.88), rgba(4,14,38,.96)); }
+
+@media (max-width: 1180px) { .founders-grid { grid-template-columns: repeat(3, minmax(0,1fr)); } }
+@media (max-width: 768px)  { .founders-grid { grid-template-columns: 1fr; perspective: none; } .founder-card { opacity: 0; transform: translateY(28px); } .founder-card.is-visible { transform: none; } .founder-card:hover { transform: translateY(-3px) !important; } .founder-card > img { width: 80px; height: 80px; } }
+@media (prefers-reduced-motion: reduce) { .founder-card { opacity: 1 !important; transform: none !important; transition: box-shadow .3s !important; } .founder-card:hover { transform: none !important; } }
+
+/* ── REVEAL — animazioni entrata organizzate per sezione ── */
+/* Base: tutto da sinistra con fade */
+.reveal, .reveal-left, .reveal-right {
+  opacity: 0;
+  transform: translateX(-44px);
+  transition: opacity .7s cubic-bezier(.25,.46,.45,.94), transform .7s cubic-bezier(.22,.68,0,1.1);
+  will-change: opacity, transform;
+}
+.reveal.is-visible, .reveal-left.is-visible, .reveal-right.is-visible {
+  opacity: 1; transform: none;
+}
+/* Varianti direzione */
+.reveal-right        { transform: translateX(44px); }
+/* Sezioni specifiche */
+#visione .reveal-right  { transform: translateX(44px); }
+#rete-home .reveal-right { transform: translateX(44px); }
+#eventi .reveal-right   { transform: translateX(44px); }
+/* Ricerca: alternato sx/dx */
+#ricerca .research-showcase-grid > *:nth-child(odd)  { transform: translateX(-40px); opacity: 0; transition: opacity .7s ease, transform .7s cubic-bezier(.22,.68,0,1.15); }
+#ricerca .research-showcase-grid > *:nth-child(even) { transform: translateX(40px);  opacity: 0; transition: opacity .7s .08s ease, transform .7s .08s cubic-bezier(.22,.68,0,1.15); }
+#ricerca .research-showcase-grid > *:nth-child(3)    { transition-delay: .04s; }
+#ricerca .research-showcase-grid > *:nth-child(4)    { transition-delay: .12s; }
+#ricerca .research-showcase-grid > *.is-visible      { transform: none; opacity: 1; }
+/* Contatti: ventaglio */
+#contatti .contact-grid-visible > *:nth-child(1) { transform: translateX(-40px) translateY(16px); opacity: 0; transition: opacity .68s ease, transform .68s cubic-bezier(.22,.68,0,1.15); }
+#contatti .contact-grid-visible > *:nth-child(2) { transform: translateY(30px);                   opacity: 0; transition: opacity .68s .1s ease, transform .68s .1s cubic-bezier(.22,.68,0,1.15); }
+#contatti .contact-grid-visible > *:nth-child(3) { transform: translateX(40px) translateY(16px);  opacity: 0; transition: opacity .68s .2s ease, transform .68s .2s cubic-bezier(.22,.68,0,1.15); }
+#contatti .contact-grid-visible > *.is-visible   { transform: none; opacity: 1; }
+/* Mobile: solo translateY (no overflow orizzontale) */
 @media (max-width: 768px) {
-  #fondatori .founders-grid .founder-card {
-    transform: translateY(28px) !important;
-  }
-  #fondatori .founders-grid .founder-card.is-visible {
-    transform: translateY(0) !important;
-  }
+  .reveal, .reveal-left, .reveal-right { transform: translateY(22px); }
+  .reveal.is-visible, .reveal-left.is-visible, .reveal-right.is-visible { transform: none; }
+  #ricerca .research-showcase-grid > *:nth-child(odd),
+  #ricerca .research-showcase-grid > *:nth-child(even) { transform: translateY(22px); }
+  #contatti .contact-grid-visible > *:nth-child(1),
+  #contatti .contact-grid-visible > *:nth-child(2),
+  #contatti .contact-grid-visible > *:nth-child(3) { transform: translateY(22px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .reveal, .reveal-left, .reveal-right { opacity: 1; transform: none; transition: none; }
+  #ricerca .research-showcase-grid > *, #contatti .contact-grid-visible > * { opacity: 1; transform: none; transition: none; }
 }
 
+/* ── RESEARCH CARDS: sfondi e accenti distinti ── */
+.research-showcase-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 18px; margin-top: 26px; }
+.research-card { padding: 26px; display: flex; flex-direction: column; gap: 12px; border-radius: var(--radius); overflow: hidden; min-height: 0; transition: transform .3s cubic-bezier(.22,.68,0,1.4), box-shadow .3s, border-color .3s; }
+.research-card:hover { transform: translateY(-4px); border-color: var(--border-hi); box-shadow: var(--shadow), var(--glow); }
+.research-card::before { content: ""; position: absolute; inset: 0; pointer-events: none; background: radial-gradient(circle at 85% 15%, rgba(190,242,255,.09), transparent 36%); }
+.research-card h3 { margin: 0 0 4px; } .research-card p { margin: 0; color: rgba(237,247,255,.82); }
+.research-tags { display: flex; flex-wrap: wrap; gap: 7px; margin-top: auto; padding-top: 4px; }
+.research-tags span { padding: 6px 12px; border-radius: 999px; font-size: .7rem; letter-spacing: .08em; text-transform: uppercase; color: rgba(229,248,255,.9); background: rgba(123,228,255,.07); border: 1px solid rgba(123,228,255,.14); }
+.research-card .btn { margin-top: 6px; align-self: flex-start; }
+.research-card--hyperbaric { background: linear-gradient(145deg, rgba(0,60,140,.72) 0%, rgba(5,17,36,.96) 55%); border-color: rgba(80,160,255,.22); border-top: 2px solid rgba(80,160,255,.6); }
+.research-card--aerospace  { background: linear-gradient(145deg, rgba(0,80,100,.7)  0%, rgba(5,16,34,.96) 55%); border-color: rgba(0,200,255,.2);  border-top: 2px solid rgba(0,200,255,.55); }
+.research-card--human      { background: linear-gradient(145deg, rgba(0,100,80,.68) 0%, rgba(4,15,32,.96) 55%); border-color: rgba(0,220,180,.2);  border-top: 2px solid rgba(0,220,180,.5); }
+.research-card--didattica  { background: linear-gradient(145deg, rgba(80,40,160,.65)0%, rgba(6,19,40,.96) 55%); border-color: rgba(140,100,255,.22);border-top: 2px solid rgba(140,100,255,.5); }
+.research-card--hyperbaric .micro-label { color: rgba(130,190,255,.9); }
+.research-card--aerospace  .micro-label { color: rgba(80,220,255,.9); }
+.research-card--human      .micro-label { color: rgba(80,240,200,.9); }
+.research-card--didattica  .micro-label { color: rgba(180,150,255,.9); }
+@media (max-width: 768px) { .research-showcase-grid { grid-template-columns: 1fr; margin-top: 18px; } .research-card { padding: 20px; } }
+
+/* ── TEACHING CARD: img-wrap + download + lightbox ── */
+.teaching-card { display: flex; flex-direction: column; transition: transform .3s, box-shadow .3s, border-color .3s; }
+.teaching-card:hover { transform: translateY(-3px); border-color: var(--border-hi); box-shadow: var(--shadow-sm), var(--glow); }
+.teaching-card-img-wrap {
+  max-height: 420px; overflow: hidden; display: flex;
+  align-items: center; justify-content: center;
+  background: rgba(4,14,32,.5); border-radius: 14px; margin-bottom: 16px;
+  position: relative; cursor: pointer;
+}
+.teaching-card-img-wrap img { width: auto; max-width: 100%; height: auto; max-height: 400px; object-fit: contain; border-radius: 12px; display: block; transition: transform .35s cubic-bezier(.22,.68,0,1.2), filter .35s; }
+.teaching-card-img-wrap:hover img { transform: scale(1.04); filter: brightness(1.06); }
+.teaching-card-img-overlay { position: absolute; inset: 0; background: rgba(2,10,28,.45); display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity .28s; color: #fff; }
+.teaching-card-img-wrap:hover .teaching-card-img-overlay { opacity: 1; }
+.tc-download { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 999px; font-size: .76rem; font-weight: 600; background: rgba(123,228,255,.09); border: 1px solid rgba(123,228,255,.2); color: var(--cyan-2); transition: background .2s, border-color .2s; margin-bottom: 8px; white-space: nowrap; }
+.tc-download:hover { background: rgba(123,228,255,.16); border-color: rgba(123,228,255,.35); }
+@media (max-width: 768px) {
+  .teaching-poster-grid { grid-template-columns: 1fr; gap: 0; }
+  .teaching-card { display: flex; flex-direction: row; align-items: flex-start; gap: 16px; padding: 16px; border-bottom: 1px solid rgba(123,228,255,.08); border-radius: 0; }
+  .teaching-card:first-child { border-radius: 20px 20px 0 0; }
+  .teaching-card:last-child  { border-bottom: none; border-radius: 0 0 20px 20px; }
+  .teaching-card-img-wrap { max-height: none; width: 88px; height: auto; flex-shrink: 0; align-self: flex-start; margin-bottom: 0; }
+  .teaching-card-img-wrap img { width: 88px; height: 116px; max-height: 116px; object-fit: cover; }
+}
+
+/* ── PUBBLICAZIONI: stessa altezza, viste per intero ── */
+#contenuti-articoli .feature-card > img,
+.articoli-grid .feature-card > img {
+  width: 100%; height: 260px; max-height: 260px; min-height: 260px;
+  object-fit: contain; object-position: center;
+  border-radius: 14px; margin-bottom: 16px;
+  background: rgba(4,14,32,.55); padding: 12px; display: block;
+}
+@media (max-width: 768px) {
+  #contenuti-articoli .feature-card > img, .articoli-grid .feature-card > img { height: 190px; min-height: 190px; }
+}
+
+/* ── CONTATTI: icone, colori, bottoni ── */
+.contact-grid-3 { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 20px; }
+.contact-card--rich { display: flex; flex-direction: column; gap: 12px; padding: 24px; }
+.contact-card--rich h3 { margin: 0 0 4px; }
+.contact-card--rich .btn { margin-top: auto; width: 100%; }
+.contact-icon { width: 54px; height: 54px; border-radius: 16px; margin-bottom: 10px; display: flex; align-items: center; justify-content: center; position: relative; flex-shrink: 0; transition: transform .3s cubic-bezier(.22,.68,0,1.4); }
+.contact-icon svg { width: 28px; height: 28px; }
+.contact-card--rich:hover .contact-icon { transform: scale(1.1) translateY(-2px); }
+.contact-icon--msg  { background: rgba(0,220,180,.1);  border: 1px solid rgba(0,220,180,.25);  color: #4dffd6; box-shadow: 0 0 20px rgba(0,220,180,.12); }
+.contact-icon--edu  { background: rgba(80,160,255,.1);  border: 1px solid rgba(80,160,255,.25);  color: var(--cyan-2); box-shadow: 0 0 20px rgba(80,160,255,.12); }
+.contact-icon--join { background: rgba(140,100,255,.1); border: 1px solid rgba(140,100,255,.25); color: #c4b0ff; box-shadow: 0 0 20px rgba(140,100,255,.12); }
+.contact-card--msg  { border-top: 2px solid rgba(0,220,180,.45); }
+.contact-card--edu  { border-top: 2px solid rgba(80,160,255,.45); }
+.contact-card--join { border-top: 2px solid rgba(140,100,255,.45); }
+.contact-card--msg  .btn-electric { background: linear-gradient(135deg, rgba(0,200,160,.9), rgba(0,160,200,.85)); border-color: rgba(0,220,180,.4); color: rgba(2,28,24,.95); }
+.contact-card--edu  .btn-electric { background: linear-gradient(135deg, rgba(16,130,255,.96), rgba(0,192,255,.9)); border-color: rgba(80,180,255,.4); color: rgba(2,12,28,.96); }
+.contact-card--join .btn-electric { background: linear-gradient(135deg, rgba(120,80,255,.9), rgba(160,100,255,.85)); border-color: rgba(140,100,255,.4); color: rgba(12,6,28,.96); }
+@keyframes energyPulse { 0%,100%{box-shadow:0 8px 26px rgba(0,0,0,.22),0 0 0 0 rgba(123,228,255,.2);} 50%{box-shadow:0 10px 32px rgba(0,0,0,.28),0 0 0 6px rgba(123,228,255,0);} }
+.contact-card--rich .btn-electric { animation: energyPulse 3s ease-in-out infinite; }
+.contact-card--rich .btn-electric:hover { animation: none; transform: translateY(-2px) scale(1.02); }
+@media (max-width: 1100px) { .contact-grid-3 { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 768px)  { .contact-grid-3 { grid-template-columns: 1fr; gap: 12px; } .contact-card--rich { min-height: 0; padding: 18px; } }
+
+/* ── DIALOG: centrato, contrasto migliorato ── */
+.dialog {
+  position: fixed; inset: 0; margin: auto;
+  top: 0; left: 0; right: 0; bottom: 0;
+  transform: none;
+  width: min(780px, calc(100% - 32px));
+  max-height: 90vh; overflow-y: auto;
+  background: transparent; border: 0; padding: 0;
+}
+.dialog::backdrop { background: rgba(1,5,13,.78); backdrop-filter: blur(6px); }
+.dialog__inner {
+  border-radius: 26px; border: 1px solid rgba(123,228,255,.2);
+  background: linear-gradient(160deg, rgba(4,16,38,.98), rgba(2,10,28,.99));
+  box-shadow: var(--shadow), var(--glow), inset 0 1px 0 rgba(255,255,255,.04);
+  padding: 24px; backdrop-filter: blur(20px);
+}
+.dialog__head--modern { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; margin-bottom: 6px; padding-bottom: 16px; border-bottom: 1px solid rgba(120,210,255,.15); }
+.dialog__head-text { display: flex; flex-direction: column; gap: 4px; }
+.dialog__kicker { font-size: .68rem; letter-spacing: .2em; text-transform: uppercase; color: var(--cyan-2); font-weight: 600; }
+.dialog__desc { color: var(--muted); font-size: .9rem; line-height: 1.6; margin: 10px 0 18px; padding-bottom: 16px; border-bottom: 1px solid rgba(120,210,255,.07); }
+.dialog__close { width: 34px; min-height: 34px; padding: 0; border-radius: 9px; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.dialog__actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+.field span { color: var(--cyan-2); font-size: .82rem; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; }
+.field input, .field textarea, .field select { background: rgba(8,24,52,.85); border: 1px solid rgba(123,228,255,.22); color: #edf7ff; }
+.field input:focus, .field textarea:focus, .field select:focus { border-color: rgba(123,228,255,.5); box-shadow: 0 0 0 3px rgba(123,228,255,.12); background: rgba(10,28,60,.9); }
+.form__status { margin-top: 14px; padding: 12px 16px; border-radius: 12px; font-size: .92rem; font-weight: 600; min-height: 0; transition: all .3s; }
+.form__status:empty { padding: 0; margin: 0; }
+.form__status.is-success { color: #4dffd6; background: rgba(0,220,180,.1); border: 1px solid rgba(0,220,180,.25); display: flex; align-items: center; gap: 10px; }
+.form__status.is-success::before { content: "✓"; width: 22px; height: 22px; background: rgba(0,220,180,.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: .88rem; flex-shrink: 0; }
+.form__status.is-error { color: #ff8fa3; background: rgba(255,80,100,.08); border: 1px solid rgba(255,80,100,.2); display: flex; align-items: center; gap: 10px; }
+.form__status.is-error::before { content: "✕"; width: 22px; height: 22px; background: rgba(255,80,100,.15); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: .88rem; flex-shrink: 0; }
+.form__fineprint { margin-top: 6px; font-size: .76rem; color: var(--soft); line-height: 1.4; }
+.form__fineprint a { color: var(--cyan-2); }
+@media (max-width: 768px) { .dialog { max-width: calc(100% - 16px); } .dialog__head--modern { flex-direction: column; gap: 8px; } .dialog .split-2, .dialog .section-grid.split-2 { grid-template-columns: 1fr; } }
+
+/* ── BTN RETE: elettricità ── */
+.btn-rete-cta {
+  position: relative; overflow: hidden;
+  display: inline-flex; align-items: center; gap: 9px;
+  min-height: 52px; padding: 0 28px; font-size: .97rem; font-weight: 700;
+  border-radius: 14px;
+  background: linear-gradient(135deg, rgba(16,130,255,.97), rgba(0,195,255,.92));
+  border: 1px solid rgba(100,220,255,.5); color: rgba(2,12,28,.96);
+  box-shadow: 0 10px 32px rgba(0,120,255,.3), inset 0 1px 0 rgba(255,255,255,.3);
+  cursor: pointer;
+  transition: transform .22s cubic-bezier(.22,.68,0,1.4), box-shadow .22s;
+}
+.btn-rete-cta::before {
+  content: ""; position: absolute;
+  top: -10%; width: 55px; height: 120%;
+  background: linear-gradient(105deg, transparent 0%, rgba(255,255,255,.08) 30%, rgba(255,255,255,.62) 50%, rgba(255,255,255,.08) 70%, transparent 100%);
+  transform: skewX(-16deg) translateX(-120px);
+  animation: reteLightning 2.2s ease-in-out infinite;
+}
+@keyframes reteLightning { 0%{transform:skewX(-16deg) translateX(-120px);opacity:0;} 8%{opacity:1;} 55%{transform:skewX(-16deg) translateX(320px);opacity:0;} 100%{transform:skewX(-16deg) translateX(320px);opacity:0;} }
+.btn-rete-cta::after { content: ""; position: absolute; inset: 0; border-radius: inherit; border: 1.5px solid rgba(160,230,255,.55); animation: reteGlow 2.2s ease-in-out infinite; pointer-events: none; }
+@keyframes reteGlow { 0%,100%{box-shadow:0 0 0 0 rgba(0,200,255,0);opacity:.6;} 30%{box-shadow:0 0 22px 4px rgba(0,200,255,.25);opacity:1;} 55%{box-shadow:0 0 0 0 rgba(0,200,255,0);opacity:.6;} }
+.btn-rete-cta:hover { transform: translateY(-2px) scale(1.02); box-shadow: 0 16px 44px rgba(0,140,255,.42), 0 0 60px rgba(0,200,255,.22), inset 0 1px 0 rgba(255,255,255,.35); }
+@media (max-width: 768px) { .btn-rete-cta { width: 100%; justify-content: center; } }
+
+/* ── BTN CANDIDATI ── */
+.btn-candidati-cta {
+  background: rgba(6,20,48,.64); border: 1px solid rgba(120,210,255,.3); color: rgba(200,240,255,.92);
+  border-radius: 14px; min-height: 52px; padding: 0 24px;
+  display: inline-flex; align-items: center; gap: 9px;
+  backdrop-filter: blur(10px); cursor: pointer; position: relative; overflow: hidden;
+  transition: transform .25s cubic-bezier(.22,.68,0,1.4), box-shadow .25s, border-color .25s;
+  font-weight: 600; font-size: .94rem;
+}
+.btn-candidati-cta::before { display: none; }
+.btn-candidati-cta::after { content: ""; position: absolute; inset: -1px; border-radius: inherit; background: linear-gradient(90deg, transparent, rgba(120,230,255,.48) 50%, transparent); -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude; animation: borderFlow 3.4s linear infinite; }
+.btn-candidati-cta:hover { transform: translateY(-2px); background: rgba(10,32,70,.78); border-color: rgba(140,225,255,.55); box-shadow: 0 12px 36px rgba(0,0,0,.28), 0 0 30px rgba(80,200,255,.12); }
+@media (max-width: 768px) { .btn-candidati-cta { width: 100%; justify-content: center; } }
+
+/* ── MOBILE: mobile-only sezioni ── */
+@media (max-width: 768px) {
+  html, body { overflow-x: hidden; max-width: 100vw; }
+  * { min-width: 0; }
+  main, .section { overflow-x: clip; }
+  body::before { background: url("assets/ocean-mobile.jpg") center top / cover no-repeat; }
+  .container { padding: 0 16px; }
+  .site-header { position: sticky; top: 0; z-index: 200; width: 100%; max-width: 100vw; }
+  .nav-wrap { min-height: 66px; padding: 0 16px; justify-content: space-between; gap: 0; }
+  .brand { flex: 1; overflow: hidden; gap: 10px; }
+  .hero { min-height: 100svh; padding: 56px 0 44px; }
+  .hero h1 { font-size: clamp(2rem, 10vw, 3rem); }
+  .hero-lead { font-size: .96rem; }
+  .hero-cta-row { flex-direction: column; align-items: stretch; gap: 10px; }
+  .hero-cta-row .btn { width: 100%; }
+  .hero-stats { flex-wrap: wrap; }
+  .hero-stat { flex: 1 1 calc(33.33% - 2px); min-width: 80px; padding: 12px 8px; border-right: 1px solid rgba(123,228,255,.1); border-bottom: 1px solid rgba(123,228,255,.08); }
+  .hero-stat:nth-child(4), .hero-stat:nth-child(5) { flex: 1 1 calc(50% - 1px); border-bottom: none; }
+  .hero-stat:nth-child(3), .hero-stat:nth-child(5) { border-right: none; }
+  .hero-stat strong { font-size: 1.2rem; }
+  .hero-stat span   { font-size: .68rem; }
+  .hero-stat--infinity strong { font-size: 1.6rem; }
+  .section { padding: 56px 0; }
+  .glass-card { padding: 18px; border-radius: 20px; }
+  .cards-grid { gap: 13px; }
+  .vision-layout, .rete-home-grid, .event-grid, .split-2, .split-2-1, .split-3, .research-showcase-grid, .course-poster-grid { grid-template-columns: 1fr; }
+  .network-visual-stage { min-height: 190px; }
+  .network-copy--cards  { grid-template-columns: 1fr; gap: 9px; }
+  .bullet-cloud { overflow-x: hidden; }
+  .bullet-cloud span { max-width: 100%; word-break: break-word; }
+  .hero::before, .hero::after { animation: none; opacity: .5; }
+  .light-scattering { animation: none; opacity: .6; }
+  .particles { animation: none; opacity: .12; }
+  .section-heading::before { width: 32px; height: 2.5px; }
+  #dust-canvas { position: absolute; }
+  .footer-grid { flex-direction: column; align-items: center; text-align: center; gap: 10px; }
+  .footer-grid nav { justify-content: center; }
+  .glass-card { border-top-color: rgba(123,228,255,.28); }
+}
+@media (max-width: 560px) {
+  .hero h1 { font-size: clamp(1.85rem, 9vw, 2.4rem); }
+  .hero-stat { flex: 1 1 100%; border-right: none; border-bottom: 1px solid rgba(123,228,255,.08); }
+  .hero-stat:last-child { border-bottom: none; }
+  .hero-stats { flex-direction: column; }
+  .btn { width: 100%; }
+  .activity-grid-row { grid-template-columns: 1fr; }
+}
+@media (max-width: 400px) { .activity-asset { width: 80px; height: 80px; } }
+
+/* ── NAV MOBILE: hamburger + dropdown ── */
+@media (max-width: 768px) {
+  .nav-burger { display: inline-flex; flex-direction: column; justify-content: center; gap: 5px; width: 42px; height: 42px; flex-shrink: 0; border: 1px solid rgba(123,228,255,.18); border-radius: 11px; padding: 0 10px; background: rgba(6,20,44,.7); cursor: pointer; }
+  .nav-burger span { display: block; height: 2px; background: var(--text); border-radius: 2px; }
+  .site-nav { position: absolute; top: calc(100% + 10px); right: 8px; left: auto; width: min(300px, calc(100vw - 16px)); display: grid; gap: 0; background: rgba(3,14,32,.97); border: 1px solid rgba(123,228,255,.2); border-radius: 20px; padding: 10px; box-shadow: 0 24px 60px rgba(0,0,0,.6); backdrop-filter: blur(24px); opacity: 0; visibility: hidden; transform: translateY(-10px) scale(.97); transform-origin: top right; transition: opacity .22s cubic-bezier(.22,.68,0,1.2), transform .22s, visibility .22s; max-height: calc(100svh - 94px); overflow-y: auto; z-index: 200; }
+  .nav-toggle:checked ~ .site-nav { opacity: 1; visibility: visible; transform: translateY(0) scale(1); }
+  .site-nav > a { display: block; padding: 12px 16px; border-radius: 12px; font-size: .98rem; font-weight: 600; color: var(--text); transition: background .15s; }
+  .site-nav > a:hover { background: rgba(123,228,255,.09); color: var(--cyan-2); }
+  .nav-dropdown { background: rgba(123,228,255,.04); border-radius: 14px; border: 1px solid rgba(123,228,255,.1); margin: 2px 0; overflow: hidden; }
+  .nav-dropdown-btn { display: flex; align-items: center; justify-content: space-between; width: 100%; padding: 12px 16px; border-radius: 12px; font-size: .98rem; font-weight: 600; color: var(--cyan-2); background: transparent; border: none; cursor: pointer; transition: background .15s; }
+  .nav-dropdown-btn::after { content: ""; display: block; width: 18px; height: 18px; flex-shrink: 0; background: url("data:image/svg+xml,%3Csvg viewBox='0 0 18 18' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M4 7l5 5 5-5' stroke='%237be4ff' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/contain no-repeat; transition: transform .22s cubic-bezier(.22,.68,0,1.2); }
+  .nav-dropdown.is-open .nav-dropdown-btn::after { transform: rotate(180deg); }
+  .nav-dropdown-panel { position: static; transform: none; opacity: 0; visibility: hidden; max-height: 0; overflow: hidden; padding: 0; border: 0; box-shadow: none; background: transparent; transition: opacity .22s, max-height .28s, visibility .22s; }
+  .nav-dropdown.is-open .nav-dropdown-panel { opacity: 1; visibility: visible; max-height: 300px; padding: 4px 6px 8px 14px; }
+  .nav-dropdown-panel a { padding: 10px 14px; font-size: .9rem; border-radius: 10px; color: var(--muted); display: flex; align-items: center; gap: 8px; }
+  .nav-dropdown-panel a::before { content: ""; width: 5px; height: 5px; border-radius: 50%; background: rgba(123,228,255,.45); flex-shrink: 0; }
+  .nav-dropdown-panel a:hover { background: rgba(123,228,255,.09); color: var(--text); }
+}
+@media (min-width: 769px) { .nav-dropdown:hover .nav-dropdown-panel, .nav-dropdown.is-open .nav-dropdown-panel { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); } }
+
+/* ── SECTION HEADING accent line ── */
+.section-heading::before { content: ""; display: block; width: 44px; height: 3px; border-radius: 999px; background: linear-gradient(90deg, var(--cyan), var(--blue)); margin-bottom: 16px; box-shadow: 0 0 12px rgba(123,228,255,.4); }
+
+/* ── CANVAS DUST ── */
+#dust-canvas { position: fixed; inset: 0; z-index: -1; pointer-events: none; width: 100%; height: 100%; }
+
+/* ── CURSOR BUBBLE ── */
+#cursor-bubble { position: fixed; z-index: 9999; pointer-events: none; width: 24px; height: 24px; border-radius: 50%; border: 1.5px solid rgba(123,228,255,.5); background: rgba(123,228,255,.06); box-shadow: 0 0 12px rgba(123,228,255,.2); transform: translate(-50%, -50%); transition: transform .08s linear, width .2s, height .2s, opacity .3s; opacity: 0; }
+body:hover #cursor-bubble { opacity: 1; }
+
+/* ── HERO STATS: infinito ── */
+.hero-stat--infinity strong { font-size: 1.9rem; line-height: 1; font-weight: 300; }
+
+/* ── CONTENT GRID: mobile orizzontale ── */
+@media (max-width: 768px) {
+  .content-grid { grid-template-columns: 1fr; gap: 0; }
+  .content-grid .content-card { display: flex; flex-direction: row; align-items: center; gap: 16px; padding: 16px; border-radius: 18px; border-bottom: 1px solid rgba(123,228,255,.08); }
+  .content-grid .content-card:last-child { border-bottom: none; }
+  .content-grid .content-card img { width: 80px; height: 80px; flex-shrink: 0; object-fit: cover; border-radius: 12px; margin-bottom: 0; }
+  .content-grid .content-card.reveal, .content-grid .content-card.is-visible { display: flex; }
+}
+
+/* ── DIALOG MODALI CONTATTI: mobile ── */
+@media (max-width: 768px) {
+  .dialog__head--modern { flex-direction: column; align-items: flex-start; gap: 8px; }
+}
+
+/* ── PREFERS-REDUCED-MOTION: sicurezza globale ── */
 @media (prefers-reduced-motion: reduce) {
-  #fondatori .founders-grid .founder-card {
-    opacity: 1 !important;
-    transform: none !important;
-    transition: none !important;
-  }
+  .reveal, .reveal-left, .reveal-right { opacity: 1; transform: none; transition: none; }
+  #ricerca .research-showcase-grid > *, #contatti .contact-grid-visible > * { opacity: 1; transform: none; transition: none; }
+  .timeline-card::before, .timeline-card::after { animation: none; }
+  .timeline::before { animation: none; }
+  .btn-rete-cta::before { animation: none; }
+  .btn-rete-cta::after { animation: none; }
+  .btn-candidati-cta::after { animation: none; }
+  .contact-card--rich .btn-electric { animation: none; }
+  #dust-canvas { display: none; }
 }
