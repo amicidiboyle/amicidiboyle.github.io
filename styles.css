@@ -850,27 +850,77 @@ body::after {
   }
   .nav-burger span { display: block; height: 2px; background: var(--text); border-radius: 2px; }
 
-  /* Menu mobile */
+  /* Menu mobile — scende dall'angolo dx sotto il burger */
   .site-nav {
-    position: absolute; top: calc(100% + 8px); left: 8px; right: 8px;
-    width: calc(100% - 16px);
-    display: grid; gap: 0; background: rgba(3,13,30,.97);
-    border: 1px solid rgba(123,228,255,.16); border-radius: 18px;
-    padding: 8px; box-shadow: var(--shadow);
-    opacity: 0; visibility: hidden; transform: translateY(-8px);
-    transition: opacity .2s, transform .2s, visibility .2s;
-    max-height: calc(100svh - 86px); overflow-y: auto; z-index: 200;
+    position: absolute; top: calc(100% + 10px); right: 8px; left: auto;
+    width: min(300px, calc(100vw - 16px));
+    display: grid; gap: 0;
+    background: rgba(3,14,32,.97);
+    border: 1px solid rgba(123,228,255,.2); border-radius: 20px;
+    padding: 10px; box-shadow: 0 24px 60px rgba(0,0,0,.6), 0 0 0 1px rgba(123,228,255,.06);
+    backdrop-filter: blur(24px);
+    opacity: 0; visibility: hidden; transform: translateY(-10px) scale(.97);
+    transform-origin: top right;
+    transition: opacity .22s cubic-bezier(.22,.68,0,1.2),
+                transform .22s cubic-bezier(.22,.68,0,1.2), visibility .22s;
+    max-height: calc(100svh - 94px); overflow-y: auto; z-index: 200;
   }
-  .nav-toggle:checked ~ .site-nav { opacity: 1; visibility: visible; transform: translateY(0); }
-  .site-nav > a { display: block; padding: 13px 16px; border-radius: 11px; font-size: 1rem; color: var(--text); }
-  .site-nav > a:hover { background: rgba(123,228,255,.08); }
-  .nav-dropdown > span { display: block; padding: 13px 16px; border-radius: 11px; font-size: 1rem; color: var(--text); }
+  .nav-toggle:checked ~ .site-nav {
+    opacity: 1; visibility: visible; transform: translateY(0) scale(1);
+  }
+  .site-nav > a {
+    display: block; padding: 12px 16px; border-radius: 12px;
+    font-size: .98rem; font-weight: 600; color: var(--text);
+    transition: background .15s, color .15s;
+  }
+  .site-nav > a:hover { background: rgba(123,228,255,.09); color: var(--cyan-2); }
+
+  /* Separatore visivo tra gruppi */
+  .site-nav > a + .nav-dropdown { margin-top: 4px; }
+  .nav-dropdown + a { margin-top: 4px; }
+
+  /* Attività: dropdown raggruppato con sfondo distinto */
+  .nav-dropdown {
+    background: rgba(123,228,255,.04);
+    border-radius: 14px;
+    border: 1px solid rgba(123,228,255,.1);
+    margin: 2px 0;
+    overflow: hidden;
+  }
+  .nav-dropdown > span {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 12px 16px; font-size: .98rem; font-weight: 600;
+    color: var(--cyan-2); cursor: default;
+  }
+  .nav-dropdown > span::after {
+    content: ""; display: block; width: 16px; height: 16px; flex-shrink: 0;
+    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M4 6l4 4 4-4' stroke='%237be4ff' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/contain no-repeat;
+    opacity: .7;
+  }
   .nav-dropdown-panel {
     position: static; transform: none; display: grid;
     opacity: 1; visibility: visible; background: transparent;
-    border: 0; box-shadow: none; padding: 0 0 0 16px;
+    border: 0; box-shadow: none;
+    padding: 0 8px 8px 8px;
+    border-top: 1px solid rgba(123,228,255,.08);
   }
-  .nav-dropdown-panel a { padding: 9px 14px; font-size: .92rem; color: var(--muted); }
+  .nav-dropdown-panel a {
+    padding: 10px 14px; font-size: .92rem; border-radius: 10px;
+    color: var(--muted); transition: background .15s, color .15s;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .nav-dropdown-panel a::before {
+    content: ""; width: 5px; height: 5px; border-radius: 50%;
+    background: rgba(123,228,255,.4); flex-shrink: 0;
+  }
+  .nav-dropdown-panel a:hover { background: rgba(123,228,255,.09); color: var(--text); }
+
+  /* Separatore prima di Rete/Podcast */
+  .site-nav > a[href="rete.html"],
+  .site-nav > a[href="podcast.html"] {
+    border-top: 1px solid rgba(123,228,255,.08);
+    margin-top: 4px; padding-top: 14px;
+  }
 
   /* Hero */
   .hero { min-height: 100svh; padding: 56px 0 44px; }
@@ -898,10 +948,38 @@ body::after {
   .cards-grid      { gap: 13px; }
   .ticker-track    { font-size: .68rem; }
 
-  /* Icone attività */
-  .activity-asset { width: 90px; height: 90px; }
-  .activity-card  { padding: 26px 16px 22px; }
+  /* Icone macroaree — più grandi su mobile */
+  .activity-asset { width: 120px; height: 120px; }
+  .activity-card  { padding: 28px 16px 22px; }
   .activity-grid-row { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 12px; }
+
+  /* Contenuti: cards orizzontali una sotto l'altra (non affiancate) */
+  .content-grid {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  .content-grid .content-card {
+    display: flex; flex-direction: row; align-items: center;
+    gap: 16px; padding: 16px;
+    border-radius: 18px;
+    border-bottom: 1px solid rgba(123,228,255,.08);
+  }
+  .content-grid .content-card:last-child { border-bottom: none; }
+  .content-grid .content-card img {
+    width: 80px; height: 80px; flex-shrink: 0;
+    object-fit: cover; border-radius: 12px;
+    margin-bottom: 0;
+  }
+  .content-grid .content-card-text { flex: 1; min-width: 0; }
+  .content-grid .content-card .section-kicker { margin-bottom: 4px; font-size: .6rem; }
+  .content-grid .content-card h3 { font-size: .96rem; margin-bottom: 4px; line-height: 1.3; }
+  .content-grid .content-card p  { font-size: .82rem; line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .content-grid .content-card .text-link { font-size: .82rem; margin-top: 6px; }
+
+  /* Reveal: solo fade verticale su mobile (no translateX = no overflow) */
+  .reveal, .reveal-left, .reveal-right {
+    transform: translateY(22px);
+  }
 
   /* Tutte le griglie → 1 colonna */
   .split-2, .split-3, .event-grid, .rete-home-grid,
@@ -954,4 +1032,196 @@ body::after {
   .activity-asset { width: 80px; height: 80px; }
   .poster-card > img { max-width: 220px; }
   .activity-grid-row { grid-template-columns: 1fr; }
+}
+
+
+/* ==========================================================
+   MIGLIORIE GRAFICHE — desktop + mobile
+   ========================================================== */
+
+/* ── DESKTOP: immagini teaching e articoli giuste ────────────
+   Locandine proporzionate, non enormi.
+   --------------------------------------------------------- */
+.teaching-card > img {
+  width: 100%;
+  height: 200px;
+  object-fit: contain;
+  object-position: center top;
+  border-radius: 12px;
+  margin-bottom: 12px;
+  background: rgba(4,14,32,.6);
+  padding: 8px;
+}
+.feature-card > img {
+  width: 100%;
+  height: 190px;
+  object-fit: contain;
+  object-position: center;
+  border-radius: 12px;
+  margin-bottom: 14px;
+  background: rgba(4,14,32,.6);
+  padding: 12px;
+}
+/* UHM logo e loghi publisher: più compatti */
+.feature-card > img[src*="UHM"],
+.feature-card > img[src*="logo"] {
+  height: 140px;
+  padding: 20px;
+}
+
+/* ── DESKTOP WOW: sezioni con bordo luminoso top ─────────────
+   Una sottile linea cyan che marca visivamente ogni sezione.
+   --------------------------------------------------------- */
+.section-heading::before {
+  content: "";
+  display: block;
+  width: 44px; height: 3px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--cyan), var(--blue));
+  margin-bottom: 16px;
+  box-shadow: 0 0 12px rgba(123,228,255,.4);
+}
+
+/* ── DESKTOP WOW: hero stats counter glow al hover ───────────
+   Ogni stat brillа di cyan quando si hover.
+   --------------------------------------------------------- */
+.hero-stat:hover strong {
+  text-shadow: 0 0 18px rgba(123,228,255,.6);
+  transition: text-shadow .3s;
+}
+
+/* ── DESKTOP WOW: card con bordo superiore colorato ──────────
+   Ogni research-card ha una striscia colorata in cima.
+   --------------------------------------------------------- */
+.research-card--hyperbaric { border-top: 2px solid rgba(80,160,255,.5); }
+.research-card--aerospace  { border-top: 2px solid rgba(60,200,255,.5); }
+.research-card--human      { border-top: 2px solid rgba(100,230,200,.45); }
+.research-card--didattica  { border-top: 2px solid rgba(160,220,255,.45); }
+
+/* ── DESKTOP WOW: network chips con shimmer ──────────────────
+   Bordo animato sulle chip della sezione Rete.
+   (già presente ma rafforziamo)
+   --------------------------------------------------------- */
+.network-chip { transition: border-color .25s, transform .25s, box-shadow .25s; }
+.network-chip:hover { box-shadow: 0 0 22px rgba(123,228,255,.12); }
+
+/* ── MOBILE WOW: hero con vignette laterali ──────────────────
+   Sfumature sui bordi laterali per dare profondità.
+   --------------------------------------------------------- */
+@media (max-width: 768px) {
+  .hero::before {
+    background:
+      linear-gradient(90deg, rgba(2,8,22,.3) 0%, transparent 15%, transparent 85%, rgba(2,8,22,.3) 100%),
+      linear-gradient(174deg, rgba(155,215,255,.1) 0%, transparent 42%),
+      radial-gradient(ellipse 70% 22% at 50% 0%, rgba(80,165,255,.12), transparent 65%);
+  }
+}
+
+/* ── MOBILE WOW: sezione fondatori — foto leggermente più grandi */
+@media (max-width: 768px) {
+  .founder-card > img { width: 80px; height: 80px; }
+  .founder-card { padding: 16px 14px 18px; }
+}
+
+/* ── MOBILE WOW: hero stats — sfondo più intenso ─────────────*/
+@media (max-width: 768px) {
+  .hero-stats {
+    background: rgba(4,16,40,.65);
+    border-color: rgba(123,228,255,.2);
+  }
+  .hero-stat strong { color: var(--cyan-2); }
+}
+
+/* ── MOBILE WOW: glass card con bordo superiore sottile ──────
+   Un filo di luce in cima a ogni card mobile.
+   --------------------------------------------------------- */
+@media (max-width: 768px) {
+  .glass-card {
+    border-top-color: rgba(123,228,255,.28);
+  }
+  .glass-card::after {
+    background: linear-gradient(180deg,
+      rgba(255,255,255,.06) 0%,
+      transparent 40%);
+  }
+}
+
+/* ── MOBILE WOW: bottoni hero a tutto schermo più impatto ─────*/
+@media (max-width: 768px) {
+  .btn-primary {
+    box-shadow: 0 10px 30px rgba(100,200,255,.3), inset 0 1px 0 rgba(255,255,255,.28);
+  }
+  .hero-cta-row .btn {
+    font-size: 1.02rem;
+    min-height: 52px;
+    border-radius: 14px;
+  }
+}
+
+/* ── MOBILE WOW: section kicker più visibile ─────────────────*/
+@media (max-width: 768px) {
+  .section-kicker {
+    font-size: .66rem;
+    letter-spacing: .22em;
+    color: var(--cyan);
+  }
+  .section-heading::before { width: 32px; height: 2.5px; }
+}
+
+/* ── MOBILE: sezione In evidenza — cards full width ──────────*/
+@media (max-width: 768px) {
+  .section-intro .section-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .info-card { padding: 20px; }
+  .info-card h2 { font-size: 1.15rem; }
+}
+
+/* ── MOBILE: poster evento proporzionato ─────────────────────*/
+@media (max-width: 768px) {
+  .poster-card > img { max-width: 260px; }
+  .poster-card { padding: 16px; gap: 14px; }
+}
+
+/* ── MOBILE: ricerca card — 1 col ────────────────────────────*/
+@media (max-width: 768px) {
+  .research-showcase-grid { margin-top: 18px; }
+  .research-card { padding: 20px; }
+}
+
+/* ── MOBILE: timeline compatta ───────────────────────────────*/
+@media (max-width: 768px) {
+  .timeline li { grid-template-columns: 68px 1fr; gap: 10px; }
+  .timeline strong { width: 64px; height: 28px; font-size: .78rem; }
+}
+
+/* ── MOBILE: sezione contatti ────────────────────────────────*/
+@media (max-width: 768px) {
+  .contact-card--rich { padding: 18px; gap: 10px; }
+  .energy-icon { width: 44px; height: 44px; border-radius: 13px; }
+}
+
+/* ── MOBILE: attività didattiche/pubblicazioni ───────────────
+   Più piccole anche su mobile.
+   --------------------------------------------------------- */
+@media (max-width: 768px) {
+  .teaching-card > img {
+    height: 160px;
+    padding: 6px;
+  }
+  .feature-card > img {
+    height: 150px;
+    padding: 8px;
+  }
+}
+
+/* ── MOBILE: content card orizzontali — fix JS stagger ───────
+   Assicura che il layout orizzontale regga quando JS aggiunge .reveal.
+   --------------------------------------------------------- */
+@media (max-width: 768px) {
+  .content-grid .content-card.reveal,
+  .content-grid .content-card.is-visible {
+    display: flex;
+  }
 }
