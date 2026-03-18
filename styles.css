@@ -1414,3 +1414,382 @@ body:hover #cursor-bubble { opacity: 1; }
     z-index: 200 !important;
   }
 }
+
+
+/* ==========================================================
+   FINAL10 — 7 modifiche mobile + desktop
+   ========================================================== */
+
+/* ── 1. BRAND MOBILE: nome più grande, tagline ordinata ──────*/
+@media (max-width: 768px) {
+  .brand { gap: 11px; align-items: center; }
+  .brand img { width: 44px; height: 44px; }
+  .brand strong {
+    font-size: 1.02rem;
+    font-weight: 800;
+    letter-spacing: -.01em;
+    white-space: nowrap;
+    display: block;
+  }
+  .brand-copy { gap: 1px; }
+  .brand em:first-of-type {
+    font-size: .63rem !important;
+    color: rgba(237,247,255,.5) !important;
+    letter-spacing: .03em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: calc(100vw - 110px);
+  }
+}
+
+/* ── 2. INFO CARDS (In evidenza / Visione / Contenuti):
+        diverse per colore accento, icona in alto, hover distinto ────────── */
+.info-card {
+  padding: 28px 26px 26px;
+  overflow: hidden;
+  transition: transform .3s cubic-bezier(.22,.68,0,1.4),
+              box-shadow .3s, border-color .3s;
+}
+.info-card:hover { transform: translateY(-5px); }
+
+/* Icona SVG in cima */
+.info-card__icon {
+  width: 44px; height: 44px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 14px; margin-bottom: 18px;
+  transition: transform .3s cubic-bezier(.22,.68,0,1.4);
+}
+.info-card__icon svg { width: 28px; height: 28px; }
+.info-card:hover .info-card__icon { transform: scale(1.12) translateY(-2px); }
+
+/* Card 1: network — tono verde-ciano */
+.info-card--network {
+  background:
+    radial-gradient(ellipse 80% 55% at 50% -10%, rgba(0,200,180,.14), transparent 55%),
+    linear-gradient(160deg, rgba(5,28,58,.82), rgba(3,16,40,.92));
+  border-color: rgba(0,220,180,.2);
+}
+.info-card--network .info-card__icon {
+  background: rgba(0,220,180,.1); border: 1px solid rgba(0,220,180,.22);
+  color: #4dffd6;
+}
+.info-card--network .section-kicker { color: #4dffd6; }
+.info-card--network:hover { border-color: rgba(0,220,180,.38); box-shadow: var(--shadow), 0 0 40px rgba(0,200,180,.1); }
+
+/* Card 2: visione — tono azzurro */
+.info-card--vision {
+  background:
+    radial-gradient(ellipse 80% 55% at 50% -10%, rgba(0,140,255,.16), transparent 55%),
+    linear-gradient(160deg, rgba(5,24,60,.82), rgba(3,14,42,.92));
+  border-color: rgba(80,160,255,.22);
+}
+.info-card--vision .info-card__icon {
+  background: rgba(80,160,255,.1); border: 1px solid rgba(80,160,255,.24);
+  color: var(--cyan-2);
+}
+.info-card--vision:hover { border-color: rgba(100,180,255,.4); box-shadow: var(--shadow), 0 0 40px rgba(0,120,255,.12); }
+
+/* Card 3: contenuti — tono viola-blu */
+.info-card--content {
+  background:
+    radial-gradient(ellipse 80% 55% at 50% -10%, rgba(100,80,255,.14), transparent 55%),
+    linear-gradient(160deg, rgba(8,20,56,.82), rgba(5,12,38,.92));
+  border-color: rgba(130,100,255,.2);
+}
+.info-card--content .info-card__icon {
+  background: rgba(130,100,255,.1); border: 1px solid rgba(130,100,255,.24);
+  color: #b4a6ff;
+}
+.info-card--content .section-kicker { color: #b4a6ff; }
+.info-card--content:hover { border-color: rgba(150,120,255,.38); box-shadow: var(--shadow), 0 0 40px rgba(100,80,255,.1); }
+
+/* Riflesso interno distintivo per ogni card */
+.info-card--network::before,
+.info-card--vision::before,
+.info-card--content::before {
+  content: ""; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  border-radius: 2px 2px 0 0;
+}
+.info-card--network::before { background: linear-gradient(90deg, transparent, #4dffd6, transparent); }
+.info-card--vision::before  { background: linear-gradient(90deg, transparent, var(--cyan-2), transparent); }
+.info-card--content::before { background: linear-gradient(90deg, transparent, #b4a6ff, transparent); }
+
+/* Mobile: 1 colonna con card orizzontali compatte */
+@media (max-width: 768px) {
+  .section-intro .section-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  .info-card {
+    display: flex; align-items: flex-start; gap: 16px;
+    padding: 18px 20px;
+  }
+  .info-card__icon {
+    width: 46px; height: 46px; flex-shrink: 0; margin-bottom: 0;
+    border-radius: 12px;
+  }
+  .info-card__icon svg { width: 26px; height: 26px; }
+  .info-card-body { flex: 1; min-width: 0; }
+  /* h2 e p dentro .info-card-body — usiamo selettori diretti */
+  .info-card .section-kicker { margin-bottom: 4px; font-size: .62rem; }
+  .info-card h2 { font-size: 1rem; margin-bottom: 5px; }
+  .info-card p  { font-size: .85rem; }
+}
+
+/* ── 3. TIMELINE MOBILE: puntini collegati alle date ─────────*/
+@media (max-width: 768px) {
+  .timeline {
+    position: relative;
+    padding-left: 28px;
+  }
+  /* Linea verticale */
+  .timeline::before {
+    content: "";
+    position: absolute; left: 8px; top: 16px; bottom: 16px;
+    width: 2px;
+    background: linear-gradient(180deg,
+      var(--cyan-2) 0%,
+      rgba(123,228,255,.4) 60%,
+      transparent 100%);
+    border-radius: 2px;
+  }
+  .timeline li {
+    grid-template-columns: 1fr;
+    gap: 4px;
+    position: relative;
+    padding-left: 0;
+    margin-bottom: 4px;
+  }
+  /* Puntino per ogni data */
+  .timeline li::after {
+    content: "";
+    position: absolute;
+    left: -24px; top: 7px;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--cyan-2);
+    box-shadow: 0 0 10px rgba(123,228,255,.6), 0 0 20px rgba(123,228,255,.3);
+    border: 2px solid rgba(2,10,24,.8);
+  }
+  /* Ultima data: puntino più grande e pulsante */
+  .timeline li:last-child::after {
+    width: 12px; height: 12px;
+    left: -25px; top: 6px;
+    background: radial-gradient(circle, #fff 20%, var(--cyan-2) 60%);
+    animation: dotPulse 2s ease-in-out infinite;
+  }
+  .timeline li::before { display: none; }
+  .timeline strong {
+    width: auto; height: auto; display: inline-block;
+    padding: 0; background: none; border: none;
+    color: var(--cyan-2); font-size: .9rem; font-weight: 700;
+    border-radius: 0;
+  }
+  .timeline span { font-size: .86rem; color: var(--muted); }
+}
+
+/* ── 4. ICONE MACROAREE: x3 su mobile ───────────────────────*/
+@media (max-width: 768px) {
+  .activity-asset {
+    width: 140px !important;
+    height: 140px !important;
+    margin-bottom: 18px !important;
+  }
+  .activity-card { padding: 28px 16px 22px !important; }
+  /* 2 card per riga su mobile */
+  .activity-grid-row { grid-template-columns: repeat(2,1fr) !important; gap: 12px !important; }
+}
+@media (max-width: 400px) {
+  .activity-asset { width: 110px !important; height: 110px !important; }
+}
+
+/* ── 5. RESEARCH CARDS: sfondi e accenti visivamente distinti ─*/
+.research-card--hyperbaric {
+  background: linear-gradient(145deg, rgba(0,60,140,.72) 0%, rgba(5,17,36,.96) 55%);
+  border-color: rgba(80,160,255,.22);
+  border-top: 2px solid rgba(80,160,255,.6) !important;
+}
+.research-card--hyperbaric::before {
+  background:
+    radial-gradient(circle at 85% 15%, rgba(80,160,255,.2), transparent 35%),
+    linear-gradient(180deg, rgba(255,255,255,.04), transparent 50%);
+}
+.research-card--aerospace {
+  background: linear-gradient(145deg, rgba(0,80,100,.7) 0%, rgba(5,16,34,.96) 55%);
+  border-color: rgba(0,200,255,.2);
+  border-top: 2px solid rgba(0,200,255,.55) !important;
+}
+.research-card--aerospace::before {
+  background:
+    radial-gradient(circle at 85% 15%, rgba(0,200,255,.18), transparent 35%),
+    linear-gradient(180deg, rgba(255,255,255,.04), transparent 50%);
+}
+.research-card--human {
+  background: linear-gradient(145deg, rgba(0,100,80,.68) 0%, rgba(4,15,32,.96) 55%);
+  border-color: rgba(0,220,180,.2);
+  border-top: 2px solid rgba(0,220,180,.5) !important;
+}
+.research-card--human::before {
+  background:
+    radial-gradient(circle at 85% 15%, rgba(0,220,180,.16), transparent 35%),
+    linear-gradient(180deg, rgba(255,255,255,.04), transparent 50%);
+}
+.research-card--didattica {
+  background: linear-gradient(145deg, rgba(80,40,160,.65) 0%, rgba(6,19,40,.96) 55%);
+  border-color: rgba(140,100,255,.22);
+  border-top: 2px solid rgba(140,100,255,.5) !important;
+}
+.research-card--didattica::before {
+  background:
+    radial-gradient(circle at 85% 15%, rgba(140,100,255,.18), transparent 35%),
+    linear-gradient(180deg, rgba(255,255,255,.04), transparent 50%);
+}
+/* Micro-label colorato per ogni card */
+.research-card--hyperbaric .micro-label { color: rgba(130,190,255,.9); }
+.research-card--aerospace  .micro-label { color: rgba(80,220,255,.9); }
+.research-card--human      .micro-label { color: rgba(80,240,200,.9); }
+.research-card--didattica  .micro-label { color: rgba(180,150,255,.9); }
+
+/* ── 6. TEACHING POSTER: orizzontale su mobile ───────────────*/
+@media (max-width: 768px) {
+  .teaching-poster-grid--horiz {
+    grid-template-columns: 1fr !important;
+    gap: 0 !important;
+  }
+  .teaching-poster-grid--horiz .teaching-card {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: flex-start !important;
+    gap: 16px !important;
+    padding: 16px !important;
+    border-bottom: 1px solid rgba(123,228,255,.08);
+    border-radius: 0 !important;
+  }
+  .teaching-poster-grid--horiz .teaching-card:first-child {
+    border-radius: 20px 20px 0 0 !important;
+  }
+  .teaching-poster-grid--horiz .teaching-card:last-child {
+    border-bottom: none;
+    border-radius: 0 0 20px 20px !important;
+  }
+  .teaching-poster-grid--horiz .teaching-card > img {
+    width: 90px !important;
+    height: 120px !important;
+    max-height: 120px !important;
+    flex-shrink: 0 !important;
+    object-fit: cover !important;
+    border-radius: 10px !important;
+    padding: 0 !important;
+    background: rgba(4,14,32,.4) !important;
+    margin-bottom: 0 !important;
+  }
+  .teaching-poster-grid--horiz .teaching-card-text {
+    flex: 1; min-width: 0;
+  }
+  .teaching-poster-grid--horiz .teaching-card .section-kicker {
+    margin-bottom: 4px; font-size: .6rem;
+  }
+  .teaching-poster-grid--horiz .teaching-card h4 {
+    font-size: .96rem; margin-bottom: 6px; line-height: 1.3;
+  }
+  .teaching-poster-grid--horiz .teaching-card p {
+    font-size: .82rem; line-height: 1.5;
+  }
+}
+
+/* ── 7. ICONE CONTATTI: diverse + tasti con energia ──────────*/
+
+/* Rimuovi la vecchia energy-icon dove sostituita */
+.contact-icon {
+  width: 54px; height: 54px;
+  border-radius: 16px; margin-bottom: 10px;
+  display: flex; align-items: center; justify-content: center;
+  position: relative; flex-shrink: 0;
+  transition: transform .3s cubic-bezier(.22,.68,0,1.4);
+}
+.contact-icon svg { width: 28px; height: 28px; }
+.contact-card--rich:hover .contact-icon { transform: scale(1.1) translateY(-2px); }
+
+/* Icona 1 — Email: verde acqua */
+.contact-icon--msg {
+  background: rgba(0,220,180,.1);
+  border: 1px solid rgba(0,220,180,.25);
+  color: #4dffd6;
+  box-shadow: 0 0 20px rgba(0,220,180,.12), inset 0 0 10px rgba(0,220,180,.06);
+}
+.contact-icon--msg::after {
+  content: ""; position: absolute; inset: -1px; border-radius: 17px;
+  background: linear-gradient(135deg, rgba(0,220,180,.3), transparent 55%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor; mask-composite: exclude;
+}
+
+/* Icona 2 — Docenza: azzurro */
+.contact-icon--edu {
+  background: rgba(80,160,255,.1);
+  border: 1px solid rgba(80,160,255,.25);
+  color: var(--cyan-2);
+  box-shadow: 0 0 20px rgba(80,160,255,.12), inset 0 0 10px rgba(80,160,255,.06);
+}
+.contact-icon--edu::after {
+  content: ""; position: absolute; inset: -1px; border-radius: 17px;
+  background: linear-gradient(135deg, rgba(80,160,255,.3), transparent 55%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor; mask-composite: exclude;
+}
+
+/* Icona 3 — Candidatura: viola */
+.contact-icon--join {
+  background: rgba(140,100,255,.1);
+  border: 1px solid rgba(140,100,255,.25);
+  color: #c4b0ff;
+  box-shadow: 0 0 20px rgba(140,100,255,.12), inset 0 0 10px rgba(140,100,255,.06);
+}
+.contact-icon--join::after {
+  content: ""; position: absolute; inset: -1px; border-radius: 17px;
+  background: linear-gradient(135deg, rgba(140,100,255,.3), transparent 55%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor; mask-composite: exclude;
+}
+
+/* Card contatti: bordo top colorato diverso */
+.contact-card--msg  { border-top: 2px solid rgba(0,220,180,.45) !important; }
+.contact-card--edu  { border-top: 2px solid rgba(80,160,255,.45) !important; }
+.contact-card--join { border-top: 2px solid rgba(140,100,255,.45) !important; }
+
+/* Bottoni con energia nelle card contatti */
+.contact-card--msg  .btn-electric {
+  background: linear-gradient(135deg, rgba(0,200,160,.9), rgba(0,160,200,.85)) !important;
+  border-color: rgba(0,220,180,.4) !important;
+  color: rgba(2,28,24,.95) !important;
+}
+.contact-card--edu  .btn-electric {
+  background: linear-gradient(135deg, rgba(16,130,255,.96), rgba(0,192,255,.9)) !important;
+  border-color: rgba(80,180,255,.4) !important;
+  color: rgba(2,12,28,.96) !important;
+}
+.contact-card--join .btn-electric {
+  background: linear-gradient(135deg, rgba(120,80,255,.9), rgba(160,100,255,.85)) !important;
+  border-color: rgba(140,100,255,.4) !important;
+  color: rgba(12,6,28,.96) !important;
+}
+
+/* Energia pulsante su tutti i btn-electric delle contact card */
+@keyframes energyPulse {
+  0%,100% { box-shadow: 0 8px 26px rgba(0,0,0,.22), 0 0 0 0 rgba(123,228,255,.2); }
+  50%      { box-shadow: 0 10px 32px rgba(0,0,0,.28), 0 0 0 6px rgba(123,228,255,0); }
+}
+.contact-card--rich .btn-electric {
+  animation: energyPulse 3s ease-in-out infinite;
+}
+.contact-card--rich .btn-electric:hover {
+  animation: none;
+  transform: translateY(-2px) scale(1.02);
+}
+
+/* ── MOBILE: info-card layout orizzontale — wrappa testo ─────*/
+@media (max-width: 768px) {
+  /* il testo nell'info-card (h2 + p + kicker) deve stare vicino all'icona */
+  .info-card > :not(.info-card__icon) { flex: 1; min-width: 0; }
+}
