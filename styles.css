@@ -2204,3 +2204,50 @@ main, .site-header, .section, .alt-section {
   .event-meta span { width: 100% !important; }
   .bullet-cloud span { width: 100% !important; border-radius: 14px !important; }
 }
+
+
+/* ── DIALOG MODERNI ─────────────────────────────────────── */
+.dialog__head--modern {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 6px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(120,210,255,.1);
+}
+.dialog__head-text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.dialog__kicker {
+  font-size: .68rem;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--cyan-2);
+  font-weight: 600;
+}
+.dialog__desc {
+  color: var(--muted);
+  font-size: .9rem;
+  line-height: 1.6;
+  margin: 10px 0 18px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(120,210,255,.07);
+}
+.dialog__close {
+  width: 36px !important;
+  height: 36px !important;
+  min-height: 36px !important;
+  padding: 0 !important;
+  border-radius: 10px !important;
+  flex-shrink: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+.dialog__close:hover {
+  background: rgba(120,210,255,.1) !important;
+  border-color: rgba(120,210,255,.3) !important;
+}
