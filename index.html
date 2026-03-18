@@ -39,9 +39,9 @@
       <nav class="site-nav" aria-label="Navigazione principale">
         <a href="#home">Home</a>
         <a href="#visione">Visione</a>
-        <div class="nav-dropdown">
-          <span>Attività</span>
-          <div class="nav-dropdown-panel">
+        <div class="nav-dropdown" id="navDropdown">
+          <button class="nav-dropdown-btn" aria-expanded="false" aria-controls="navDropdownPanel">Attività</button>
+          <div class="nav-dropdown-panel" id="navDropdownPanel" role="menu">
             <a href="#attivita">Aree</a>
             <a href="#ricerca">Ricerca</a>
             <a href="#formazione">Formazione</a>
@@ -85,7 +85,7 @@
               <span>Fondatori</span>
             </div>
             <div class="hero-stat">
-              <strong>24+</strong>
+              <strong>25+</strong>
               <span>Episodi podcast</span>
             </div>
             <div class="hero-stat">
@@ -538,7 +538,7 @@
             <div class="energy-icon"></div>
             <h3>Contatto generale</h3>
             <p>Per domande, progetti, richieste editoriali o informazioni generali.</p>
-            <p><strong>Email diretta:</strong> <a href="/cdn-cgi/l/email-protection#e881868e87a88985818b818c818a8791848dc6819c"><span class="__cf_email__" data-cfemail="7e171018113e1f13171d171a171c1107121b50170a">[info@amicidiboyle.it]</span></a></p>
+            <p><strong>Email diretta:</strong> <a href="/cdn-cgi/l/email-protection#e881868e87a88985818b818c818a8791848dc6819c"><span class="__cf_email__" data-cfemail="7e171018113e1f13171d171a171c1107121b50170a">[email&#160;protected]</span></a></p>
             <button class="btn btn-electric btn-block" type="button" data-open-dialog="contattiDialog">Apri modulo contatti</button>
           </article>
           <article class="glass-card contact-card contact-card--rich reveal" data-delay="100">
@@ -688,6 +688,66 @@
       const onScroll = () => hdr.classList.toggle('scrolled', window.scrollY > 40);
       window.addEventListener('scroll', onScroll, { passive: true });
       onScroll();
+    })();
+
+    /* ---- Mobile nav dropdown toggle ---- */
+    (function(){
+      var btn = document.querySelector('.nav-dropdown-btn');
+      var panel = document.getElementById('navDropdownPanel');
+      var dropdown = document.getElementById('navDropdown');
+      if (!btn || !panel) return;
+
+      btn.addEventListener('click', function(e){
+        e.stopPropagation();
+        var open = btn.getAttribute('aria-expanded') === 'true';
+        btn.setAttribute('aria-expanded', !open);
+        dropdown.classList.toggle('is-open', !open);
+      });
+
+      /* Chiudi cliccando fuori */
+      document.addEventListener('click', function(){
+        btn.setAttribute('aria-expanded', 'false');
+        dropdown.classList.remove('is-open');
+      });
+
+      /* Chiudi dopo click su un link del panel */
+      panel.querySelectorAll('a').forEach(function(a){
+        a.addEventListener('click', function(){
+          btn.setAttribute('aria-expanded', 'false');
+          dropdown.classList.remove('is-open');
+          /* Chiudi anche hamburger */
+          var toggle = document.getElementById('nav-toggle');
+          if (toggle) toggle.checked = false;
+        });
+      });
+
+      /* Su desktop torna al :hover — rimuovi is-open se viewport largo */
+      window.addEventListener('resize', function(){
+        if (window.innerWidth > 768) {
+          btn.setAttribute('aria-expanded', 'false');
+          dropdown.classList.remove('is-open');
+        }
+      }, { passive: true });
+    })();
+
+    /* ---- Chiudi hamburger dopo click su link nav ---- */
+    (function(){
+      var toggle = document.getElementById('nav-toggle');
+      if (!toggle) return;
+      document.querySelectorAll('.site-nav > a').forEach(function(a){
+        a.addEventListener('click', function(){
+          toggle.checked = false;
+        });
+      });
+      /* Chiudi hamburger su click fuori */
+      document.addEventListener('click', function(e){
+        var nav = document.querySelector('.site-nav');
+        var burger = document.querySelector('.nav-burger');
+        if (!nav || !burger) return;
+        if (!nav.contains(e.target) && !burger.contains(e.target) && !toggle.contains(e.target)) {
+          toggle.checked = false;
+        }
+      });
     })();
 
     /* ---- Scroll reveal: tutto da sinistra, sezione per sezione ---- */
@@ -884,6 +944,34 @@
     document.addEventListener('visibilitychange', function(){
       if (document.hidden){ cancelAnimationFrame(raf); paused = true; }
       else if (paused){ paused = false; draw(); }
+    });
+  })();
+  </script>
+
+  <!-- Cursore subacqueo (solo desktop) -->
+  <div id="cursor-bubble" aria-hidden="true"></div>
+  <script>
+  (function(){
+    var isMob = window.matchMedia('(max-width:768px)').matches || !window.matchMedia('(pointer:fine)').matches;
+    if (isMob) return;
+    var el = document.getElementById('cursor-bubble');
+    if (!el) return;
+    var x = 0, y = 0, tx = 0, ty = 0;
+    document.addEventListener('mousemove', function(e){
+      tx = e.clientX; ty = e.clientY;
+    }, {passive:true});
+    /* Segui il mouse con leggero lag */
+    (function loop(){
+      x += (tx - x) * 0.14;
+      y += (ty - y) * 0.14;
+      el.style.left = x + 'px';
+      el.style.top  = y + 'px';
+      requestAnimationFrame(loop);
+    })();
+    /* Ingrandisci su elementi interattivi */
+    document.querySelectorAll('a,button,.btn,.glass-card,.activity-card,.founder-card').forEach(function(el2){
+      el2.addEventListener('mouseenter', function(){ el.style.width='40px'; el.style.height='40px'; el.style.background='rgba(123,228,255,.1)'; });
+      el2.addEventListener('mouseleave', function(){ el.style.width='24px'; el.style.height='24px'; el.style.background='rgba(123,228,255,.06)'; });
     });
   })();
   </script>
