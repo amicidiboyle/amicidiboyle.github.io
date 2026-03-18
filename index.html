@@ -19,7 +19,7 @@
   <meta name="twitter:card"       content="summary_large_image" />
 </head>
 <body>
-  <canvas id="dust-canvas" aria-hidden="true"></canvas>
+  <canvas id="dust-canvas" aria-hidden="true" style="position:fixed;inset:0;z-index:-2;pointer-events:none;width:100%;height:100%;"></canvas>
   <a class="skip-link" href="#contenuto">Vai al contenuto</a>
 
   <header class="site-header">
@@ -338,7 +338,7 @@
           </div>
         </div>
         <article class="glass-card poster-card reveal reveal-right">
-          <img src="assets/corsi/thedayafter.jpg" alt="Locandina The Day After" loading="lazy" decoding="async" onerror="this.style.display='none'" />
+          <img src="assets/corsi/thedayafter.png" alt="Locandina The Day After" loading="lazy" decoding="async" onerror="this.style.display='none'" />
           <a class="btn btn-ghost btn-block" href="assets/corsi/thedayafter.pdf" target="_blank" rel="noopener">Scarica il programma completo</a>
         </article>
       </div>
@@ -567,6 +567,8 @@
     </div>
   </footer>
 
+
+  <!-- MODALI CONTATTI -->
   <dialog class="dialog" id="contattiDialog" aria-label="Modulo contatto generale">
     <div class="dialog__inner">
       <div class="dialog__head">
@@ -574,11 +576,11 @@
         <button type="button" class="btn btn-ghost" data-close-dialog>Chiudi</button>
       </div>
       <form id="contactFormGeneral" class="form modalForm" action="https://formspree.io/f/xzdareqw" method="POST" accept-charset="UTF-8">
-        <input type="hidden" name="_subject" value="Messaggio dal sito Amici di Boyle" />
-        <label class="field"><span>Nome</span><input name="name" type="text" placeholder="Nome e cognome" required /></label>
+        <input type="hidden" name="_subject" value="Nuovo contatto generale dal sito Amici di Boyle" />
+        <label class="field"><span>Nome</span><input name="name" type="text" autocomplete="name" placeholder="Nome e Cognome" required /></label>
         <div class="section-grid split-2">
           <label class="field"><span>Email</span><input name="email" type="email" autocomplete="email" placeholder="nome@dominio.it" required /></label>
-          <label class="field"><span>Oggetto</span><input name="subject" type="text" placeholder="Oggetto del messaggio" required /></label>
+          <label class="field"><span>Oggetto</span><input name="subject" type="text" placeholder="Es. collaborazione, richiesta informazioni" required /></label>
         </div>
         <label class="field"><span>Messaggio</span><textarea name="message" rows="5" placeholder="Due righe, chiare. Contesto e richiesta." required></textarea></label>
         <div class="dialog__actions">
@@ -586,6 +588,7 @@
           <button type="button" class="btn btn-ghost" data-close-dialog>Annulla</button>
         </div>
         <p class="form__status" id="statusGeneral" aria-live="polite"></p>
+        <p class="form__fineprint">Invio tramite Formspree. In alternativa: <a href="mailto:info@amicidiboyle.it">info@amicidiboyle.it</a></p>
       </form>
     </div>
   </dialog>
@@ -609,6 +612,7 @@
           <button type="button" class="btn btn-ghost" data-close-dialog>Annulla</button>
         </div>
         <p class="form__status" id="statusTeaching" aria-live="polite"></p>
+        <p class="form__fineprint">Invio tramite Formspree. In alternativa: <a href="mailto:info@amicidiboyle.it">info@amicidiboyle.it</a></p>
       </form>
     </div>
   </dialog>
@@ -626,7 +630,7 @@
           <label class="field"><span>Email</span><input name="email" type="email" autocomplete="email" placeholder="nome@dominio.it" required /></label>
         </div>
         <div class="section-grid split-2">
-          <label class="field"><span>Profilo professionale</span><input name="subject" type="text" placeholder="Es. anestesista, tecnico iperbarico, ricercatore" required /></label>
+          <label class="field"><span>Profilo professionale</span><input name="subject" type="text" placeholder="Es. anestesista, tecnico iperbarico, ricercatore, subacqueo professionale" required /></label>
           <label class="field"><span>Area principale di interesse</span>
             <select name="area_interesse" required>
               <option value="">Seleziona un'area</option>
@@ -645,6 +649,7 @@
           <button type="button" class="btn btn-ghost" data-close-dialog>Annulla</button>
         </div>
         <p class="form__status" id="statusBoyle" aria-live="polite"></p>
+        <p class="form__fineprint">Candidatura soggetta a valutazione.</p>
       </form>
     </div>
   </dialog>
@@ -747,7 +752,7 @@
         });
       }
       wireForm('contactFormGeneral', 'statusGeneral', 'submitGeneral', 'Messaggio inviato correttamente.');
-      reForm('contactFormTeaching', 'statusTeaching', 'submitTeaching', 'Richiesta inviata correttamente.');
+      wireForm('contactFormTeaching', 'statusTeaching', 'submitTeaching', 'Richiesta inviata correttamente.');
       wireForm('contactFormBoyle', 'statusBoyle', 'submitBoyle', 'Candidatura inviata correttamente.');
     })();
   </script>
