@@ -1179,3 +1179,292 @@ body::after {
   .activity-card:hover .activity-asset { transform: none !important; }
   .founder-card:hover { transform: none !important; }
 }
+
+
+/* =========================================================
+   PATCH v3 — 6 correzioni puntuali
+   ========================================================= */
+
+/* ── 1. RIMUOVI residui podcast teaser ─────────────────────
+   Il teaser è rimosso dall'HTML, ma annulliamo ogni stile
+   rimasto per sicurezza.
+   --------------------------------------------------------- */
+.hero-podcast-teaser,
+.hero-podcast-link,
+.hero-podcast-cover,
+.hero-podcast-info,
+.hero-podcast-label,
+.hero-podcast-title,
+.hero-podcast-sub,
+.hero-podcast-arrow { display: none !important; }
+
+/* ── 2. ANIMAZIONI ENTRATA PIÙ DINAMICHE ───────────────────
+   Diverse direzioni per diverse sezioni.
+   --------------------------------------------------------- */
+
+/* Sezione hero: fade dal basso (già c'è reveal) */
+.hero-content { transition-delay: .1s; }
+
+/* Evidenza: 3 card salgono con stagger */
+.section-intro .info-card:nth-child(1) { transition-delay: .05s; }
+.section-intro .info-card:nth-child(2) { transition-delay: .18s; }
+.section-intro .info-card:nth-child(3) { transition-delay: .31s; }
+
+/* Visione: testo da sx, timeline da dx — già impostato */
+/* Fondatori: ogni card scende da angolazioni diverse */
+.founders-grid .founder-card:nth-child(1) { transform: translate3d(-30px, 20px, 0); }
+.founders-grid .founder-card:nth-child(2) { transform: translate3d(0, 30px, 0); }
+.founders-grid .founder-card:nth-child(3) { transform: translate3d(30px, 20px, 0); }
+.founders-grid .founder-card:nth-child(4) { transform: translate3d(-20px, 28px, 0); }
+.founders-grid .founder-card:nth-child(5) { transform: translate3d(20px, 28px, 0); }
+.founders-grid .founder-card.is-visible   { transform: none !important; }
+
+/* Ricerca: card alternano sx/dx */
+.research-showcase-grid .research-card:nth-child(odd)  { transform: translateX(-36px) translateY(16px); opacity: 0; transition: opacity .7s ease, transform .7s cubic-bezier(.22,.68,0,1.15); }
+.research-showcase-grid .research-card:nth-child(even) { transform: translateX(36px) translateY(16px);  opacity: 0; transition: opacity .7s ease, transform .7s cubic-bezier(.22,.68,0,1.15); }
+.research-showcase-grid .research-card.is-visible      { transform: none; opacity: 1; }
+.research-showcase-grid .research-card:nth-child(2)    { transition-delay: .12s; }
+.research-showcase-grid .research-card:nth-child(3)    { transition-delay: .08s; }
+.research-showcase-grid .research-card:nth-child(4)    { transition-delay: .2s; }
+
+/* Rete: testo da sx, box da dx — già impostato */
+/* Contenuti: 4 card salgono con stagger */
+.content-grid .content-card:nth-child(1) { transition-delay: .04s; }
+.content-grid .content-card:nth-child(2) { transition-delay: .14s; }
+.content-grid .content-card:nth-child(3) { transition-delay: .24s; }
+.content-grid .content-card:nth-child(4) { transition-delay: .34s; }
+
+/* Evento: già reveal-left + reveal-right */
+/* Formazione: sale dal basso con lieve zoom */
+#formazione .glass-card.courses-showcase {
+  transform: scale(.97) translateY(24px);
+  transition: opacity .75s ease, transform .75s cubic-bezier(.22,.68,0,1.15);
+}
+#formazione .glass-card.courses-showcase.is-visible { transform: none; }
+
+/* Contatti: 3 card entrano a ventaglio */
+.contact-grid-3 .contact-card--rich:nth-child(1) { transform: translateX(-28px) translateY(20px); opacity: 0; transition: opacity .68s ease, transform .68s cubic-bezier(.22,.68,0,1.15); }
+.contact-grid-3 .contact-card--rich:nth-child(2) { transform: translateY(28px); opacity: 0; transition: opacity .68s .1s ease, transform .68s .1s cubic-bezier(.22,.68,0,1.15); }
+.contact-grid-3 .contact-card--rich:nth-child(3) { transform: translateX(28px) translateY(20px); opacity: 0; transition: opacity .68s .2s ease, transform .68s .2s cubic-bezier(.22,.68,0,1.15); }
+.contact-grid-3 .contact-card--rich.is-visible   { transform: none; opacity: 1; }
+
+@media (prefers-reduced-motion: reduce) {
+  .founders-grid .founder-card,
+  .research-showcase-grid .research-card,
+  .contact-grid-3 .contact-card--rich,
+  #formazione .glass-card.courses-showcase { transform: none !important; opacity: 1 !important; transition: none !important; }
+}
+
+/* ── 3. ATTIVITÀ: 4 card su riga singola, icone grandi,
+        sfondi diversi con giochi di luce ─────────────────
+   --------------------------------------------------------- */
+.activity-grid-row {
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  gap: 18px !important;
+}
+@media (max-width: 900px) {
+  .activity-grid-row { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+}
+@media (max-width: 560px) {
+  .activity-grid-row { grid-template-columns: 1fr !important; }
+}
+
+/* Icona grande — singola definizione */
+.activity-asset {
+  width: 130px !important;
+  height: 130px !important;
+  object-fit: contain !important;
+  margin: 0 auto 20px !important;
+  display: block !important;
+  position: relative;
+  z-index: 1;
+  filter:
+    drop-shadow(0 0 14px rgba(124,243,255,.3))
+    drop-shadow(0 0 32px rgba(80,180,255,.14)) !important;
+  transition: transform .4s cubic-bezier(.22,.68,0,1.4), filter .4s !important;
+}
+.activity-card:hover .activity-asset {
+  transform: scale(1.1) translateY(-7px) !important;
+  filter:
+    drop-shadow(0 0 24px rgba(124,243,255,.58))
+    drop-shadow(0 0 52px rgba(80,200,255,.28)) !important;
+}
+
+/* Sfondi tonalità blu diverse */
+.activity-card--ricerca {
+  background:
+    radial-gradient(ellipse 80% 50% at 50% -10%, rgba(0,120,255,.18), transparent 60%),
+    linear-gradient(160deg, rgba(8,34,80,.82), rgba(4,18,46,.92)) !important;
+  border-color: rgba(80,160,255,.22) !important;
+}
+.activity-card--formazione {
+  background:
+    radial-gradient(ellipse 80% 50% at 50% -10%, rgba(0,160,220,.16), transparent 60%),
+    linear-gradient(160deg, rgba(6,38,70,.82), rgba(3,20,44,.92)) !important;
+  border-color: rgba(60,180,240,.22) !important;
+}
+.activity-card--pubblicazioni {
+  background:
+    radial-gradient(ellipse 80% 50% at 50% -10%, rgba(0,100,200,.18), transparent 60%),
+    linear-gradient(160deg, rgba(5,28,64,.82), rgba(3,16,40,.92)) !important;
+  border-color: rgba(40,140,220,.22) !important;
+}
+.activity-card--media {
+  background:
+    radial-gradient(ellipse 80% 50% at 50% -10%, rgba(0,180,200,.15), transparent 60%),
+    linear-gradient(160deg, rgba(4,32,58,.82), rgba(2,18,36,.92)) !important;
+  border-color: rgba(0,200,230,.2) !important;
+}
+
+/* Anello luminoso perimetrale sulle card attività */
+.activity-card {
+  overflow: hidden;
+  padding: 28px 20px 24px !important;
+}
+.activity-card::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg,
+    rgba(180,230,255,.35) 0%,
+    rgba(100,200,255,.12) 25%,
+    transparent 50%,
+    rgba(100,200,255,.08) 75%,
+    rgba(160,220,255,.3) 100%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box,
+                linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity .35s ease;
+}
+.activity-card:hover::before { opacity: 1; }
+
+/* Glow al hover per ogni variante */
+.activity-card--ricerca:hover      { border-color: rgba(100,180,255,.45) !important; box-shadow: var(--shadow), 0 0 40px rgba(0,100,255,.14) !important; }
+.activity-card--formazione:hover   { border-color: rgba(60,200,255,.45) !important;  box-shadow: var(--shadow), 0 0 40px rgba(0,160,220,.14) !important; }
+.activity-card--pubblicazioni:hover{ border-color: rgba(60,160,240,.45) !important;  box-shadow: var(--shadow), 0 0 40px rgba(0,120,200,.14) !important; }
+.activity-card--media:hover        { border-color: rgba(0,220,245,.45) !important;   box-shadow: var(--shadow), 0 0 40px rgba(0,200,230,.14) !important; }
+
+@media (max-width: 768px) {
+  .activity-asset { width: 100px !important; height: 100px !important; }
+}
+@media (max-width: 560px) {
+  .activity-asset { width: 80px !important; height: 80px !important; }
+}
+
+/* ── 4. POSTER EVENTO THEDAYAFTER: immagine ben visibile ────
+   --------------------------------------------------------- */
+.poster-card {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 18px !important;
+  padding: 22px !important;
+  align-items: center !important;
+}
+.poster-card > img {
+  display: block !important;
+  width: 100% !important;
+  max-width: 320px !important;
+  height: auto !important;
+  aspect-ratio: auto !important;
+  border-radius: 16px !important;
+  object-fit: cover !important;
+  margin: 0 auto !important;
+  box-shadow: 0 18px 50px rgba(0,0,0,.5),
+              0 0 35px rgba(80,170,255,.1) !important;
+  border: 1px solid rgba(120,210,255,.2) !important;
+  transition: transform .4s cubic-bezier(.22,.68,0,1.4), box-shadow .4s !important;
+  flex-shrink: 0 !important;
+}
+.poster-card:hover > img {
+  transform: translateY(-5px) rotate(.3deg) !important;
+  box-shadow: 0 28px 65px rgba(0,0,0,.55),
+              0 0 50px rgba(80,200,255,.15) !important;
+}
+.poster-card .btn-block {
+  width: 100% !important;
+  flex-shrink: 0 !important;
+}
+@media (max-width: 560px) {
+  .poster-card > img { max-width: 220px !important; }
+}
+
+/* ── 5. IMMAGINI DIDATTICHE E ARTICOLI: altezza controllata ─
+   --------------------------------------------------------- */
+
+/* Teaching cards: immagine proporzionata, non gigante */
+.teaching-poster-grid--compact .teaching-card img {
+  width: 100% !important;
+  aspect-ratio: 3 / 2 !important;
+  max-height: 220px !important;
+  object-fit: cover !important;
+  border-radius: 14px !important;
+  margin-bottom: 14px !important;
+}
+
+/* Articoli feature-card: immagine proporzionata */
+.articoli-grid .feature-card img,
+#contenuti-articoli .feature-card img {
+  width: 100% !important;
+  aspect-ratio: 16 / 7 !important;
+  max-height: 200px !important;
+  object-fit: cover !important;
+  object-position: center top !important;
+  border-radius: 14px !important;
+  margin-bottom: 16px !important;
+}
+/* Immagine UHM logo: contain invece di cover */
+#contenuti-articoli .feature-card img[src*="UHM_logo"] {
+  object-fit: contain !important;
+  background: rgba(6,20,42,.6) !important;
+  padding: 16px !important;
+  max-height: 140px !important;
+}
+
+/* Contenuti (4 card nella sezione #contenuti): stessa cosa */
+.content-grid .content-card img {
+  width: 100% !important;
+  aspect-ratio: 4 / 3 !important;
+  max-height: 180px !important;
+  object-fit: cover !important;
+  border-radius: 14px !important;
+  margin-bottom: 14px !important;
+}
+
+/* ── 6. CONTATTI: forza visibilità e layout a 3 colonne ─────
+   Problema: cards-grid-3 poteva essere sovrascritto da altri
+   media query. Forziamo con selettore specifico.
+   --------------------------------------------------------- */
+.contact-grid-visible {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: 22px !important;
+}
+.contact-grid-visible .contact-card--rich {
+  display: flex !important;
+  flex-direction: column !important;
+  min-height: 280px !important;
+}
+/* Assicura che il bottone stia sempre in fondo */
+.contact-card--rich .btn-electric.btn-block {
+  margin-top: auto !important;
+  width: 100% !important;
+}
+
+@media (max-width: 1180px) {
+  .contact-grid-visible { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+}
+@media (max-width: 768px) {
+  .contact-grid-visible { grid-template-columns: 1fr !important; }
+  .contact-grid-visible .contact-card--rich { min-height: 0 !important; }
+}
+
+/* ── MOBILE GENERALE: sicurezza ─────────────────────────────
+   --------------------------------------------------------- */
+@media (max-width: 768px) {
+  .activity-grid-row { gap: 14px !important; }
+  .poster-card > img { max-width: 260px !important; }
+}
