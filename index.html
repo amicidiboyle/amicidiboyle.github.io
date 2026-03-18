@@ -271,7 +271,7 @@
       <div class="container rete-home-grid">
         <div class="reveal reveal-left">
           <p class="section-kicker">La Rete di Boyle</p>
-          <h2>Una rete selettiva ma aperta a chi fa davvero</h2>
+          <h2>Una rete selettiva aperta a chi fa</h2>
           <p class="section-lead">La rete di professionisti e ricercatori degli Amici di Boyle è un ecosistema multidisciplinare dedicato alla medicina subacquea e iperbarica, alla medicina aerospaziale, agli ambienti estremi, alla fisiologia umana e alla sicurezza.</p>
           <p>Entrare nella Rete di Boyle significa condividere idee, eventi e studi, collaborare a progetti comuni e dare visibilità a iniziative di qualità, con un’impronta concreta e internazionale.</p>
           <div class="cta-row">
@@ -870,7 +870,16 @@
       document.querySelectorAll('[data-open-dialog]').forEach(btn => {
         btn.addEventListener('click', () => {
           const dlg = document.getElementById(btn.getAttribute('data-open-dialog'));
-          if (dlg && typeof dlg.showModal === 'function') dlg.showModal();
+          if (!dlg || typeof dlg.showModal !== 'function') return;
+          dlg.showModal();
+          /* Centra il dialog nella viewport su tutti i browser */
+          dlg.style.margin = 'auto';
+          dlg.style.position = 'fixed';
+          dlg.style.inset = '0';
+          dlg.style.width = 'min(780px, calc(100% - 32px))';
+          dlg.style.maxHeight = '90vh';
+          dlg.style.overflowY = 'auto';
+          dlg.style.transform = 'none';
         });
       });
       document.querySelectorAll('[data-close-dialog]').forEach(btn => {
@@ -895,7 +904,7 @@
           e.preventDefault();
           const originalText = submit.textContent;
           submit.disabled = true;
-          submit.textContent = 'Invio in corso...';
+          submit.textContent = 'Invio in corso…';
           status.textContent = '';
           status.className = 'form__status';
           try{
@@ -908,12 +917,15 @@
               form.reset();
               status.textContent = successText;
               status.classList.add('is-success');
+              status.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+              const dlg = form.closest('dialog');
+              if(dlg) setTimeout(() => dlg.close(), 2800);
             } else {
-              status.textContent = 'Invio non riuscito. Controlla i campi oppure usa l’email diretta.';
+              status.textContent = 'Invio non riuscito. Controlla i campi o scrivi a info@amicidiboyle.it';
               status.classList.add('is-error');
             }
           } catch(err){
-            status.textContent = 'Errore di rete. Riprova tra poco oppure scrivi a info@amicidiboyle.it.';
+            status.textContent = 'Errore di rete. Riprova o scrivi a info@amicidiboyle.it';
             status.classList.add('is-error');
           } finally {
             submit.disabled = false;
