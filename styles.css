@@ -1731,3 +1731,183 @@ body::after {
   .btn-electric::before, .btn-rete-cta::before { animation-duration: 3.5s !important; }
   .activity-grid-row { gap: 12px !important; }
 }
+
+
+/* =========================================================
+   PATCH v5 — FIX DEFINITIVO CONTATTI + ANIMAZIONI PULITE
+   ========================================================= */
+
+/* Annulla TUTTI i conflitti precedenti sulle contact card */
+.contact-grid-3 .contact-card--rich:nth-child(1),
+.contact-grid-3 .contact-card--rich:nth-child(2),
+.contact-grid-3 .contact-card--rich:nth-child(3) {
+  transform: none;
+  opacity: 1;
+  transition: none;
+}
+
+/* Le contact card ora usano il sistema .reveal standard */
+.contact-card--rich.reveal {
+  opacity: 0 !important;
+  transform: translateX(-50px) !important;
+  transition: opacity .7s ease, transform .7s cubic-bezier(.22,.68,0,1.15) !important;
+}
+.contact-card--rich.reveal.is-visible {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+/* Annulla anche i conflitti fondatori */
+.founders-grid .founder-card:nth-child(1),
+.founders-grid .founder-card:nth-child(2),
+.founders-grid .founder-card:nth-child(3),
+.founders-grid .founder-card:nth-child(4),
+.founders-grid .founder-card:nth-child(5) {
+  /* gestiti dal sistema reveal standard */
+}
+
+/* SISTEMA REVEAL UNICO E DEFINITIVO ─────────────────────────
+   Tutto da sinistra, con dissolenza, sezione per sezione.
+   Il JS usa IntersectionObserver con rootMargin generoso.
+   --------------------------------------------------------- */
+
+/* Qualsiasi elemento .reveal: da sinistra + fade */
+.reveal,
+.reveal-left,
+.reveal-right {
+  opacity: 0 !important;
+  transform: translateX(-48px) !important;
+  transition:
+    opacity .72s cubic-bezier(.25,.46,.45,.94),
+    transform .72s cubic-bezier(.22,.68,0,1.1) !important;
+  will-change: opacity, transform !important;
+}
+
+/* Tutti visibili quando intercettati */
+.reveal.is-visible,
+.reveal-left.is-visible,
+.reveal-right.is-visible {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+/* Stagger progressivo per i figli diretti */
+.stagger > *:nth-child(1).reveal,
+.stagger > *:nth-child(1).reveal-left  { transition-delay: .04s !important; }
+.stagger > *:nth-child(2).reveal,
+.stagger > *:nth-child(2).reveal-left  { transition-delay: .14s !important; }
+.stagger > *:nth-child(3).reveal,
+.stagger > *:nth-child(3).reveal-left  { transition-delay: .24s !important; }
+.stagger > *:nth-child(4).reveal,
+.stagger > *:nth-child(4).reveal-left  { transition-delay: .34s !important; }
+.stagger > *:nth-child(5).reveal,
+.stagger > *:nth-child(5).reveal-left  { transition-delay: .44s !important; }
+
+/* data-delay override via attributo (gestito in JS) */
+
+/* Safe: prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  .reveal, .reveal-left, .reveal-right {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
+/* ── IMMAGINI TEACHING E PUBBLICAZIONI: fix definitivo ───────
+   Stessa altezza fissa dei poster corsi.
+   --------------------------------------------------------- */
+
+/* Tutte le immagini nelle teaching-card */
+.teaching-card > img,
+.teaching-card img:first-child,
+[class*="teaching"] img {
+  display: block !important;
+  width: 100% !important;
+  height: 200px !important;
+  max-height: 200px !important;
+  min-height: 0 !important;
+  object-fit: cover !important;
+  object-position: center top !important;
+  border-radius: 14px !important;
+  margin-bottom: 14px !important;
+  aspect-ratio: unset !important;
+}
+
+/* Tutte le immagini nelle feature-card (articoli e pubblicazioni) */
+.feature-card > img,
+.feature-card img:first-child {
+  display: block !important;
+  width: 100% !important;
+  height: 190px !important;
+  max-height: 190px !important;
+  min-height: 0 !important;
+  object-fit: cover !important;
+  object-position: center top !important;
+  border-radius: 14px !important;
+  margin-bottom: 14px !important;
+  aspect-ratio: unset !important;
+}
+
+/* Logo UHM: treat differently */
+.feature-card img[src*="UHM"],
+.feature-card img[src*="logo"] {
+  object-fit: contain !important;
+  object-position: center center !important;
+  background: rgba(5,16,38,.7) !important;
+  padding: 18px !important;
+}
+
+/* Content grid (sezione Contenuti) */
+.content-card > img,
+.content-card img:first-child {
+  display: block !important;
+  width: 100% !important;
+  height: 170px !important;
+  max-height: 170px !important;
+  object-fit: cover !important;
+  object-position: center top !important;
+  border-radius: 14px !important;
+  margin-bottom: 14px !important;
+  aspect-ratio: unset !important;
+}
+
+/* ── CONTACT GRID: forza display ─────────────────────────────
+   --------------------------------------------------------- */
+#contatti .container > div:last-child,
+.contact-grid-3,
+.contact-grid-visible {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: 22px !important;
+}
+.contact-card--rich {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 14px !important;
+  min-height: 260px !important;
+  padding: 24px !important;
+  background: rgba(8,26,52,.62) !important;
+  border: 1px solid rgba(120,210,255,.18) !important;
+  border-radius: 26px !important;
+  backdrop-filter: blur(18px) saturate(1.4) !important;
+  -webkit-backdrop-filter: blur(18px) saturate(1.4) !important;
+  position: relative !important;
+  box-shadow: 0 20px 50px rgba(0,0,0,.32), inset 0 1px 0 rgba(255,255,255,.06) !important;
+}
+.contact-card--rich h3 { margin: 0 0 6px; color: var(--text); }
+.contact-card--rich p  { color: var(--muted); margin: 0 0 6px; }
+.contact-card--rich .btn-electric.btn-block,
+.contact-card--rich .btn.btn-block {
+  margin-top: auto !important;
+  width: 100% !important;
+}
+@media (max-width: 1100px) {
+  .contact-grid-3,
+  .contact-grid-visible { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+}
+@media (max-width: 700px) {
+  .contact-grid-3,
+  .contact-grid-visible { grid-template-columns: 1fr !important; }
+  .contact-card--rich { min-height: 0 !important; }
+}
