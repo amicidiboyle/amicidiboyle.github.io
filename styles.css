@@ -2013,3 +2013,582 @@ body:hover #cursor-bubble { opacity: 1; }
   .hero-stat { padding: 10px 6px !important; }
   .hero-stat strong { font-size: 1.05rem !important; }
 }
+
+
+/* ==========================================================
+   FINAL12 — desktop fixes: teaching, timeline, dialog, fondatori
+   ========================================================== */
+
+/* ── 1. TEACHING CARDS DESKTOP: locandine come poster compatti ─
+   Max-height ridotta, centrate, con sfondo scuro contenuto.
+   --------------------------------------------------------- */
+.teaching-card-img-wrap {
+  max-height: 220px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(4,14,32,.5);
+  border-radius: 12px;
+  margin-bottom: 14px;
+}
+.teaching-card-img-wrap img {
+  width: auto !important;
+  max-width: 100% !important;
+  height: auto !important;
+  max-height: 200px !important;
+  object-fit: contain !important;
+  border-radius: 10px !important;
+  margin-bottom: 0 !important;
+  padding: 6px !important;
+  background: transparent !important;
+}
+
+/* ── 2. TIMELINE DESKTOP: puntini luminosi come mobile ──────── */
+.timeline-card { overflow: visible; }
+.timeline {
+  position: relative;
+  padding-left: 24px;
+}
+/* Linea verticale luminosa */
+.timeline::before {
+  content: "";
+  position: absolute; left: 6px; top: 16px; bottom: 16px;
+  width: 2px;
+  background: linear-gradient(180deg,
+    var(--cyan-2) 0%,
+    rgba(123,228,255,.5) 50%,
+    transparent 100%);
+  border-radius: 2px;
+}
+.timeline li {
+  position: relative;
+  padding-left: 0;
+}
+/* Puntino per ogni voce */
+.timeline li::after {
+  content: "";
+  position: absolute;
+  left: -20px; top: 8px;
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: var(--cyan-2);
+  box-shadow: 0 0 10px rgba(123,228,255,.7), 0 0 22px rgba(123,228,255,.3);
+  border: 2px solid rgba(2,10,24,.8);
+  z-index: 1;
+}
+/* Ultimo puntino: più grande e pulsante */
+.timeline li:last-child::after {
+  width: 12px; height: 12px;
+  left: -21px; top: 7px;
+  background: radial-gradient(circle, #fff 20%, var(--cyan-2) 65%);
+  box-shadow: 0 0 14px rgba(123,228,255,.9), 0 0 30px rgba(123,228,255,.4);
+  animation: dotPulse 2s ease-in-out infinite;
+}
+/* Nascondi la vecchia linea verticale ::before sulle li */
+.timeline li::before { display: none !important; }
+/* Anno badge: allineato al puntino */
+.timeline strong {
+  font-weight: 700;
+  color: var(--cyan-2);
+  font-size: .9rem;
+}
+
+/* ── 4. DIALOG: centrato + messaggio successo visibile ──────── */
+
+/* Forza centratura orizzontale e verticale */
+dialog {
+  position: fixed !important;
+  inset: 0 !important;
+  margin: auto !important;
+  left: 50% !important;
+  top: 50% !important;
+  transform: translate(-50%, -50%) !important;
+}
+/* Quando aperto con showModal, il browser usa position:fixed auto-centrato
+   ma alcuni browser non lo fanno bene — forziamo via ::backdrop trick */
+.dialog {
+  border: 0 !important;
+  padding: 0 !important;
+  max-width: min(780px, calc(100% - 24px)) !important;
+  width: 100% !important;
+  background: transparent !important;
+  /* Posizione centrata garantita */
+  position: fixed !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  margin: 0 !important;
+}
+
+/* Messaggio di successo: più visibile e celebrativo */
+.form__status.is-success {
+  color: #4dffd6 !important;
+  font-size: .96rem !important;
+  font-weight: 600 !important;
+  padding: 14px 18px !important;
+  background: rgba(0,220,180,.1) !important;
+  border: 1px solid rgba(0,220,180,.25) !important;
+  border-radius: 12px !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  margin-top: 8px !important;
+  animation: fadeInUp .4s ease both !important;
+}
+.form__status.is-success::before {
+  content: "✓";
+  width: 26px; height: 26px;
+  background: rgba(0,220,180,.2);
+  border: 1px solid rgba(0,220,180,.35);
+  border-radius: 50%;
+  display: inline-flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  font-weight: 700; font-size: .9rem;
+}
+
+.form__status.is-error {
+  color: #ff8a8a !important;
+  font-size: .92rem !important;
+  padding: 12px 16px !important;
+  background: rgba(255,80,80,.08) !important;
+  border: 1px solid rgba(255,80,80,.2) !important;
+  border-radius: 12px !important;
+  margin-top: 8px !important;
+}
+
+/* ── 5. FOUNDER CARDS: effetto vetro 3D ─────────────────────── */
+.founder-card {
+  /* Reset precedenti */
+  background:
+    linear-gradient(135deg,
+      rgba(255,255,255,.12) 0%,
+      rgba(200,230,255,.06) 18%,
+      rgba(120,190,255,.04) 36%,
+      rgba(8,26,58,.55) 55%,
+      rgba(4,16,38,.72) 100%) !important;
+  border: 1px solid rgba(200,235,255,.28) !important;
+  box-shadow:
+    0 20px 50px rgba(0,0,0,.45),
+    0 0 0 1px rgba(255,255,255,.06),
+    inset 0 1.5px 0 rgba(255,255,255,.18),
+    inset 0 -1px 0 rgba(120,200,255,.08),
+    inset 1px 0 0 rgba(255,255,255,.06),
+    inset -1px 0 0 rgba(120,200,255,.04) !important;
+  backdrop-filter: blur(24px) saturate(1.8) brightness(1.04) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(1.8) brightness(1.04) !important;
+  transform-style: preserve-3d !important;
+  transition:
+    transform .4s cubic-bezier(.22,.68,0,1.3),
+    box-shadow .4s,
+    border-color .3s !important;
+}
+
+/* Riflesso vetro in alto a sinistra */
+.founder-card::before {
+  content: "" !important;
+  position: absolute !important; top: 0 !important; left: 0 !important;
+  right: 0 !important; height: 50% !important;
+  background: linear-gradient(160deg,
+    rgba(255,255,255,.13) 0%,
+    rgba(210,240,255,.06) 25%,
+    transparent 55%) !important;
+  pointer-events: none !important; z-index: 0 !important;
+  border-radius: inherit !important;
+}
+
+/* Linea decorativa sotto foto — riflesso orizzontale */
+.founder-card::after {
+  content: "" !important;
+  position: absolute !important;
+  left: 14px !important; right: 14px !important; top: 118px !important;
+  height: 1px !important;
+  background: linear-gradient(90deg,
+    transparent,
+    rgba(123,228,255,.35) 30%,
+    rgba(200,240,255,.6) 50%,
+    rgba(123,228,255,.35) 70%,
+    transparent) !important;
+}
+
+/* Hover 3D: lieve inclinazione */
+.founder-card:hover {
+  transform: translateY(-6px) rotateX(3deg) rotateY(-1.5deg) !important;
+  border-color: rgba(220,248,255,.45) !important;
+  box-shadow:
+    0 30px 70px rgba(0,0,0,.52),
+    0 0 60px rgba(80,190,255,.1),
+    inset 0 1.5px 0 rgba(255,255,255,.24),
+    inset 0 -1px 0 rgba(120,210,255,.1) !important;
+}
+
+/* Foto fondatore: circolare con glow + shimmer al hover */
+.founder-card > img {
+  border-radius: 50% !important;
+  border: 1.5px solid rgba(200,240,255,.3) !important;
+  box-shadow:
+    0 6px 20px rgba(0,0,0,.4),
+    0 0 0 4px rgba(123,228,255,.06) !important;
+  transition: transform .35s cubic-bezier(.22,.68,0,1.3),
+              box-shadow .35s, filter .35s !important;
+  position: relative !important; z-index: 1 !important;
+}
+.founder-card:hover > img {
+  transform: scale(1.06) translateY(-3px) !important;
+  box-shadow:
+    0 10px 28px rgba(0,0,0,.5),
+    0 0 0 6px rgba(123,228,255,.1),
+    0 0 24px rgba(80,190,255,.35) !important;
+  filter: brightness(1.06) !important;
+}
+
+/* Role badge: più visibile */
+.founder-role {
+  background: rgba(123,228,255,.1) !important;
+  border: 1px solid rgba(123,228,255,.22) !important;
+  color: var(--cyan-2) !important;
+  font-size: .6rem !important;
+  letter-spacing: .14em !important;
+  font-weight: 700 !important;
+}
+
+/* Founder card: varianti colore vetro lievemente diverse */
+.founder-card--silvio  { border-color: rgba(180,230,255,.3) !important; }
+.founder-card--luigi   { border-color: rgba(160,215,255,.28) !important; }
+.founder-card--vincenzo{ border-color: rgba(170,225,255,.28) !important; }
+.founder-card--dario   { border-color: rgba(150,210,255,.26) !important; }
+.founder-card--matteo  { border-color: rgba(190,235,255,.3) !important; }
+
+/* Mobile: 3D ridotto per performance */
+@media (max-width: 768px) {
+  .founder-card:hover {
+    transform: translateY(-3px) !important;
+  }
+  .founder-card {
+    backdrop-filter: blur(14px) !important;
+    -webkit-backdrop-filter: blur(14px) !important;
+  }
+}
+
+
+/* ==========================================================
+   FINAL12 — 5 modifiche desktop
+   ========================================================== */
+
+/* ── 1. TEACHING CARD DESKTOP: locandine più piccole ─────────
+   Layout a 2 colonne, locandine ridotte come "cartoline"
+   non come poster a schermo intero.
+   --------------------------------------------------------- */
+.teaching-poster-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px;
+  align-items: start;
+}
+
+/* Wrap immagine: altezza contenuta e centrata */
+.teaching-card-img-wrap {
+  max-height: 220px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(4,14,32,.5);
+  border-radius: 12px;
+  margin-bottom: 14px;
+}
+.teaching-card-img-wrap img {
+  width: auto !important;
+  max-width: 100% !important;
+  height: auto !important;
+  max-height: 200px !important;
+  object-fit: contain !important;
+  border-radius: 10px !important;
+  padding: 0 !important;
+}
+
+/* ── 2. TIMELINE DESKTOP: luminosa con puntini e linea glow ──
+   Stessa estetica della versione mobile, adattata al layout
+   2-colonne del desktop (anno | testo).
+   --------------------------------------------------------- */
+.timeline-card {
+  position: relative;
+}
+.timeline {
+  position: relative;
+  padding-left: 0;
+}
+
+/* Linea verticale luminosa */
+.timeline::before {
+  content: "";
+  position: absolute;
+  left: 39px; top: 16px; bottom: 16px;
+  width: 2px;
+  background: linear-gradient(180deg,
+    var(--cyan-2) 0%,
+    rgba(123,228,255,.5) 50%,
+    rgba(123,228,255,.12) 100%);
+  border-radius: 2px;
+  box-shadow: 0 0 10px rgba(123,228,255,.3);
+}
+
+/* Puntino luminoso per ogni voce */
+.timeline li {
+  position: relative;
+}
+.timeline li::after {
+  content: "";
+  position: absolute;
+  left: 31px; top: 8px;
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: var(--cyan-2);
+  box-shadow: 0 0 12px rgba(123,228,255,.7),
+              0 0 24px rgba(123,228,255,.3);
+  border: 2px solid rgba(2,10,24,.9);
+  z-index: 1;
+}
+/* Ultimo: puntino più grande con animazione */
+.timeline li:last-child::after {
+  width: 13px; height: 13px;
+  left: 29px; top: 7px;
+  background: radial-gradient(circle, #fff 15%, var(--cyan-2) 55%);
+  box-shadow: 0 0 16px rgba(123,228,255,.8),
+              0 0 32px rgba(123,228,255,.4);
+  animation: dotPulse 2.2s ease-in-out infinite;
+}
+
+/* Badge anno: più bello, con glow */
+.timeline strong {
+  background: rgba(123,228,255,.1) !important;
+  border: 1px solid rgba(123,228,255,.22) !important;
+  color: var(--cyan-2) !important;
+  font-weight: 700 !important;
+  box-shadow: 0 0 12px rgba(123,228,255,.15),
+              inset 0 1px 0 rgba(255,255,255,.08) !important;
+  transition: box-shadow .3s, background .3s !important;
+}
+.timeline li:hover strong {
+  background: rgba(123,228,255,.18) !important;
+  box-shadow: 0 0 22px rgba(123,228,255,.3) !important;
+}
+
+/* Testo anno */
+.timeline span {
+  color: var(--muted);
+  font-size: .92rem;
+  line-height: 1.55;
+}
+.timeline li:last-child span { color: var(--text); }
+
+/* ── 3. DIALOG: centrato nella viewport ──────────────────────
+   Il browser gestisce il centramento del <dialog> nativo
+   con margin: auto. Forziamo anche su tutti i browser.
+   --------------------------------------------------------- */
+.dialog {
+  margin: auto !important;
+  position: fixed !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  max-width: min(780px, calc(100% - 32px)) !important;
+  width: 100% !important;
+  max-height: calc(100vh - 40px) !important;
+  overflow-y: auto !important;
+}
+/* Sovrascriviamo con approccio più compatibile */
+dialog.dialog {
+  position: fixed;
+  inset: 0;
+  margin: auto;
+  top: 0; left: 0; right: 0; bottom: 0;
+  width: min(780px, calc(100% - 32px));
+  max-height: 90vh;
+  overflow-y: auto;
+  transform: none !important;
+}
+
+/* ── 4. FORM SUCCESS: messaggio visibile e prominente ────────
+   Il form__status già esiste ma lo rendiamo più visibile.
+   --------------------------------------------------------- */
+.form__status {
+  margin-top: 14px;
+  padding: 12px 16px;
+  border-radius: 12px;
+  font-size: .92rem;
+  font-weight: 600;
+  min-height: 0;
+  transition: all .3s ease;
+}
+.form__status:empty {
+  padding: 0;
+  margin: 0;
+}
+.form__status.is-success {
+  color: #4dffd6 !important;
+  background: rgba(0,220,180,.1) !important;
+  border: 1px solid rgba(0,220,180,.25) !important;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.form__status.is-success::before {
+  content: "✓";
+  width: 22px; height: 22px;
+  background: rgba(0,220,180,.2);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: .88rem; flex-shrink: 0;
+}
+.form__status.is-error {
+  color: #ff8fa3 !important;
+  background: rgba(255,80,100,.08) !important;
+  border: 1px solid rgba(255,80,100,.2) !important;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.form__status.is-error::before {
+  content: "✕";
+  width: 22px; height: 22px;
+  background: rgba(255,80,100,.15);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: .88rem; flex-shrink: 0;
+}
+
+/* ── 5. FOUNDER CARD 3D VETRO ────────────────────────────────
+   Effetto vetro tridimensionale:
+   - prospettiva 3D al hover (rotateX/Y leggero)
+   - strato riflesso in movimento con il mouse via CSS custom prop
+   - bordo superiore luminoso
+   - foto circolare con alone colorato
+   - sfondo con depth gradient
+   --------------------------------------------------------- */
+
+/* Contenitore per perspective 3D */
+.founders-grid {
+  perspective: 1200px;
+}
+
+.founder-card {
+  transform-style: preserve-3d;
+  transition: transform .4s cubic-bezier(.22,.68,0,1.15),
+              box-shadow .4s, border-color .3s !important;
+  cursor: default;
+  /* Vetro: bordo luminoso top */
+  border-top: 1px solid rgba(220,248,255,.35) !important;
+}
+
+/* Layer vetro: riflesso interno sfumato che simula il vetro */
+.founder-card::before {
+  content: "" !important;
+  position: absolute !important;
+  inset: 0 !important;
+  border-radius: inherit !important;
+  pointer-events: none !important;
+  z-index: 1 !important;
+  background:
+    linear-gradient(135deg,
+      rgba(255,255,255,.14) 0%,
+      rgba(255,255,255,.06) 18%,
+      rgba(200,240,255,.03) 35%,
+      transparent 55%,
+      rgba(123,228,255,.04) 80%,
+      rgba(123,228,255,.08) 100%) !important;
+  mix-blend-mode: screen;
+}
+
+/* Bordo riflesso perimetrale — simula vetro spesso */
+.founder-card::after {
+  content: "" !important;
+  position: absolute !important;
+  inset: 0 !important;
+  border-radius: inherit !important;
+  pointer-events: none !important;
+  z-index: 2 !important;
+  background: none !important;
+  border: 1px solid rgba(255,255,255,.1) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.18),
+    inset 0 -1px 0 rgba(0,0,0,.2),
+    inset 1px 0 0 rgba(255,255,255,.07),
+    inset -1px 0 0 rgba(0,0,0,.1) !important;
+}
+
+/* Hover: inclinazione 3D + glow profondo */
+.founder-card:hover {
+  transform: translateY(-8px) rotateX(4deg) rotateY(-2deg) !important;
+  box-shadow:
+    0 30px 70px rgba(0,0,0,.55),
+    0 0 50px rgba(80,200,255,.14),
+    0 0 100px rgba(0,100,255,.08),
+    inset 0 1px 0 rgba(255,255,255,.22) !important;
+  border-color: rgba(180,240,255,.4) !important;
+}
+
+/* Foto: circolare con alone colorato individuale */
+.founder-card > img {
+  position: relative; z-index: 3;
+  width: 96px !important;
+  height: 96px !important;
+  border-radius: 50% !important;
+  margin-bottom: 14px !important;
+  border: 2px solid rgba(123,228,255,.3) !important;
+  object-fit: cover !important;
+  transition: transform .4s cubic-bezier(.22,.68,0,1.2),
+              box-shadow .4s, filter .4s !important;
+}
+.founder-card:hover > img {
+  transform: translateZ(20px) scale(1.06) !important;
+  box-shadow:
+    0 8px 24px rgba(0,0,0,.4),
+    0 0 28px rgba(123,228,255,.4) !important;
+  filter: brightness(1.08) saturate(1.1) !important;
+}
+
+/* Contenuto testo: sopra i layer */
+.founder-card > * { position: relative; z-index: 3; }
+
+/* Sfondo profondo per ogni card — simula diversi strati di vetro */
+.founder-card--silvio  {
+  background:
+    radial-gradient(circle at 20% 0%, rgba(180,232,255,.18) 0%, transparent 35%),
+    radial-gradient(circle at 80% 100%, rgba(80,160,255,.08) 0%, transparent 35%),
+    linear-gradient(160deg, rgba(8,28,65,.88), rgba(4,14,40,.96)) !important;
+}
+.founder-card--luigi {
+  background:
+    radial-gradient(circle at 20% 0%, rgba(160,220,255,.16) 0%, transparent 35%),
+    radial-gradient(circle at 80% 100%, rgba(60,140,255,.08) 0%, transparent 35%),
+    linear-gradient(160deg, rgba(7,25,60,.88), rgba(4,12,36,.96)) !important;
+}
+.founder-card--vincenzo {
+  background:
+    radial-gradient(circle at 20% 0%, rgba(170,232,255,.16) 0%, transparent 35%),
+    radial-gradient(circle at 80% 100%, rgba(70,150,255,.08) 0%, transparent 35%),
+    linear-gradient(160deg, rgba(6,24,58,.88), rgba(3,12,36,.96)) !important;
+}
+.founder-card--dario {
+  background:
+    radial-gradient(circle at 20% 0%, rgba(150,210,255,.16) 0%, transparent 35%),
+    radial-gradient(circle at 80% 100%, rgba(50,130,255,.08) 0%, transparent 35%),
+    linear-gradient(160deg, rgba(5,22,54,.88), rgba(3,10,32,.96)) !important;
+}
+.founder-card--matteo {
+  background:
+    radial-gradient(circle at 20% 0%, rgba(190,240,255,.16) 0%, transparent 35%),
+    radial-gradient(circle at 80% 100%, rgba(100,170,255,.08) 0%, transparent 35%),
+    linear-gradient(160deg, rgba(7,26,60,.88), rgba(4,14,38,.96)) !important;
+}
+
+/* Riduzione effetti su mobile */
+@media (max-width: 768px) {
+  .founders-grid { perspective: none; }
+  .founder-card:hover { transform: translateY(-3px) !important; }
+  .founder-card:hover > img { transform: scale(1.04) !important; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .founder-card, .founder-card:hover { transform: none !important; transition: box-shadow .3s !important; }
+  .founder-card > img, .founder-card:hover > img { transform: none !important; }
+}
