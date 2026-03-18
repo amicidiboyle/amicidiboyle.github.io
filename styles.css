@@ -838,8 +838,10 @@ body::after {
   .nav-wrap { min-height: 66px; padding: 0 16px; justify-content: space-between; gap: 0; }
   .brand { flex: 1; overflow: hidden; gap: 10px; }
   .brand img { width: 40px; height: 40px; }
-  .brand strong { font-size: .88rem; }
-  .brand em, .brand-sub { display: none; }
+  .brand strong { font-size: .88rem; white-space: nowrap; }
+  /* Mostra la prima em (tagline breve) su mobile, nascondi solo brand-sub */
+  .brand em { display: block; font-size: .64rem; color: var(--soft); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .brand-sub { display: none; }
 
   /* Hamburger */
   .nav-burger {
@@ -1039,34 +1041,48 @@ body::after {
    MIGLIORIE GRAFICHE — desktop + mobile
    ========================================================== */
 
-/* ── DESKTOP: immagini teaching e articoli giuste ────────────
-   Locandine proporzionate, non enormi.
-   --------------------------------------------------------- */
+/* ── DESKTOP: locandine teaching e pubblicazioni — layout verticale ─────
+   Carte più alte, locandina visibile per intero proporzionata.
+   -------------------------------------------------------------------- */
+.teaching-card {
+  display: flex; flex-direction: column;
+}
 .teaching-card > img {
   width: 100%;
-  height: 200px;
+  height: auto;
+  max-height: 320px;
   object-fit: contain;
   object-position: center top;
   border-radius: 12px;
-  margin-bottom: 12px;
-  background: rgba(4,14,32,.6);
-  padding: 8px;
+  margin-bottom: 14px;
+  background: rgba(4,14,32,.55);
+  padding: 10px;
+}
+.teaching-poster-grid {
+  grid-template-columns: repeat(2,minmax(0,1fr));
+  gap: 22px;
+  align-items: start;
+}
+
+/* Feature-card articoli: layout verticale con immagine proporzionata */
+.feature-card {
+  display: flex; flex-direction: column;
 }
 .feature-card > img {
   width: 100%;
-  height: 190px;
+  height: auto;
+  max-height: 280px;
   object-fit: contain;
   object-position: center;
   border-radius: 12px;
-  margin-bottom: 14px;
-  background: rgba(4,14,32,.6);
-  padding: 12px;
+  margin-bottom: 16px;
+  background: rgba(4,14,32,.55);
+  padding: 14px;
 }
-/* UHM logo e loghi publisher: più compatti */
 .feature-card > img[src*="UHM"],
 .feature-card > img[src*="logo"] {
-  height: 140px;
-  padding: 20px;
+  max-height: 160px;
+  padding: 22px;
 }
 
 /* ── DESKTOP WOW: sezioni con bordo luminoso top ─────────────
@@ -1223,5 +1239,178 @@ body::after {
   .content-grid .content-card.reveal,
   .content-grid .content-card.is-visible {
     display: flex;
+  }
+}
+
+
+/* ==========================================================
+   FINAL9 — nav dropdown mobile, dialog, wow desktop
+   ========================================================== */
+
+/* ── NAV DROPDOWN MOBILE: toggle JS ─────────────────────────
+   Desktop: hover. Mobile: click con aria-expanded via JS.
+   --------------------------------------------------------- */
+.nav-dropdown-btn {
+  background: none; border: none; cursor: pointer; padding: 0;
+  font: inherit; color: inherit;
+}
+
+/* Desktop: il panel si apre su hover (già c'era) */
+@media (min-width: 769px) {
+  .nav-dropdown:hover .nav-dropdown-panel,
+  .nav-dropdown.is-open .nav-dropdown-panel {
+    opacity: 1; visibility: visible;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+/* Mobile: il panel si apre solo con .is-open (JS toggle) */
+@media (max-width: 768px) {
+  .nav-dropdown { margin: 2px 0; }
+  .nav-dropdown-btn {
+    display: flex; align-items: center; justify-content: space-between;
+    width: 100%; padding: 12px 16px; border-radius: 12px;
+    font-size: .98rem; font-weight: 600; color: var(--cyan-2);
+    background: rgba(123,228,255,.05);
+    border: 1px solid rgba(123,228,255,.12) !important;
+    transition: background .15s;
+  }
+  .nav-dropdown-btn::after {
+    content: "";
+    display: block; width: 18px; height: 18px; flex-shrink: 0;
+    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 18 18' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M4 7l5 5 5-5' stroke='%237be4ff' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/contain no-repeat;
+    transition: transform .22s cubic-bezier(.22,.68,0,1.2);
+  }
+  .nav-dropdown.is-open .nav-dropdown-btn::after {
+    transform: rotate(180deg);
+  }
+  /* Panel: nascosto di default, visibile solo con .is-open */
+  .nav-dropdown-panel {
+    position: static !important;
+    transform: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    max-height: 0 !important;
+    overflow: hidden !important;
+    padding: 0 !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    background: transparent !important;
+    transition: opacity .22s ease, max-height .28s ease, visibility .22s !important;
+  }
+  .nav-dropdown.is-open .nav-dropdown-panel {
+    opacity: 1 !important;
+    visibility: visible !important;
+    max-height: 300px !important;
+    padding: 4px 6px 8px 14px !important;
+  }
+  .nav-dropdown-panel a {
+    padding: 10px 14px; font-size: .9rem;
+    border-radius: 10px; color: var(--muted);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .nav-dropdown-panel a::before {
+    content: ""; width: 5px; height: 5px; border-radius: 50%;
+    background: rgba(123,228,255,.45); flex-shrink: 0;
+  }
+}
+
+/* ── DIALOGS: contrasto migliorato ──────────────────────────
+   Sfondo più scuro, campo input ben leggibile, label bianche.
+   --------------------------------------------------------- */
+.dialog__inner {
+  background: linear-gradient(160deg, rgba(4,16,38,.98), rgba(2,10,28,.99)) !important;
+  border: 1px solid rgba(123,228,255,.2) !important;
+}
+.field span {
+  color: var(--cyan-2) !important;
+  font-size: .82rem !important;
+  font-weight: 600 !important;
+  letter-spacing: .04em !important;
+  text-transform: uppercase !important;
+}
+.field input, .field textarea, .field select {
+  background: rgba(8,24,52,.85) !important;
+  border: 1px solid rgba(123,228,255,.22) !important;
+  color: #edf7ff !important;
+  font-size: .94rem !important;
+}
+.field input:focus, .field textarea:focus, .field select:focus {
+  border-color: rgba(123,228,255,.5) !important;
+  box-shadow: 0 0 0 3px rgba(123,228,255,.12) !important;
+  background: rgba(10,28,60,.9) !important;
+}
+.field input::placeholder, .field textarea::placeholder {
+  color: rgba(200,230,255,.3) !important;
+}
+.field select option { background: #041428; color: #edf7ff; }
+
+/* Dialog header modern — già definito, rinforziamo */
+.dialog__head--modern {
+  border-bottom: 1px solid rgba(123,228,255,.15) !important;
+  padding-bottom: 16px !important;
+  margin-bottom: 0 !important;
+}
+.dialog__inner h3 { color: var(--text); }
+
+/* ── DESKTOP WOW: gradient border sulle glass-card al hover ─
+   --------------------------------------------------------- */
+.glass-card {
+  transition: transform .3s cubic-bezier(.22,.68,0,1.4),
+              box-shadow .3s, border-color .3s;
+}
+
+/* ── DESKTOP WOW: cursore subacqueo (solo desktop) ───────────
+   Una piccola bolla che segue il mouse.
+   --------------------------------------------------------- */
+#cursor-bubble {
+  position: fixed; z-index: 9999; pointer-events: none;
+  width: 24px; height: 24px; border-radius: 50%;
+  border: 1.5px solid rgba(123,228,255,.5);
+  background: rgba(123,228,255,.06);
+  box-shadow: 0 0 12px rgba(123,228,255,.2);
+  transform: translate(-50%, -50%);
+  transition: transform .08s linear, width .2s, height .2s, opacity .3s;
+  opacity: 0;
+}
+body:hover #cursor-bubble { opacity: 1; }
+
+/* ── DESKTOP WOW: shimmer sulle activity card ────────────────*/
+@keyframes shimmerSlide {
+  0%   { transform: translateX(-100%) skewX(-15deg); }
+  100% { transform: translateX(200%)  skewX(-15deg); }
+}
+.activity-card::after {
+  content: "";
+  position: absolute; top: 0; left: 0; width: 50%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.06), transparent);
+  transform: translateX(-100%) skewX(-15deg);
+  pointer-events: none; border-radius: inherit;
+}
+.activity-card:hover::after {
+  animation: shimmerSlide .6s ease forwards;
+}
+
+/* ── MOBILE: brand em visibile ───────────────────────────────*/
+@media (max-width: 768px) {
+  .brand-copy { overflow: hidden; min-width: 0; }
+  .brand em:first-of-type {
+    display: block !important;
+    font-size: .62rem !important;
+    color: rgba(237,247,255,.52) !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+/* ── MOBILE: hero header sempre fisso (già sticky) ───────────
+   z-index alto per stare sopra qualsiasi contenuto animato.
+   --------------------------------------------------------- */
+@media (max-width: 768px) {
+  .site-header {
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 200 !important;
   }
 }
