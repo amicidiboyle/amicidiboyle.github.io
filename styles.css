@@ -2931,3 +2931,262 @@ dialog.dialog {
     min-height: 170px !important;
   }
 }
+
+
+/* ==========================================================
+   FINAL14 — 3 modifiche precise
+   ========================================================== */
+
+/* ── 1. PUBBLICAZIONI: immagini intere, stessa dimensione ────
+   object-fit: contain  →  si vede tutto Space&Blue
+   height fissa uguale per entrambe
+   --------------------------------------------------------- */
+#contenuti-articoli .feature-card > img,
+.articoli-grid .feature-card > img {
+  width: 100% !important;
+  height: 260px !important;
+  max-height: 260px !important;
+  min-height: 260px !important;
+  object-fit: contain !important;
+  object-position: center !important;
+  border-radius: 14px !important;
+  margin-bottom: 16px !important;
+  background: rgba(4,14,32,.55) !important;
+  padding: 10px !important;
+  display: block !important;
+}
+@media (max-width: 768px) {
+  #contenuti-articoli .feature-card > img,
+  .articoli-grid .feature-card > img {
+    height: 190px !important;
+    min-height: 190px !important;
+  }
+}
+
+/* ── 2. TIMELINE: alone luminoso dietro il riquadro date ─────
+   Un radial-gradient glow posizionato dietro la colonna
+   delle date (sinistra della card), come se le date
+   emanassero luce.
+   --------------------------------------------------------- */
+.timeline-card {
+  position: relative !important;
+  overflow: visible !important;
+}
+/* Alone dietro la colonna sinistra (date) */
+.timeline-card::before {
+  content: "" !important;
+  position: absolute !important;
+  left: -18px !important;
+  top: 10% !important;
+  width: 120px !important;
+  height: 80% !important;
+  background: radial-gradient(ellipse at 40% 50%,
+    rgba(123,228,255,.18) 0%,
+    rgba(80,180,255,.09) 35%,
+    transparent 70%) !important;
+  filter: blur(14px) !important;
+  pointer-events: none !important;
+  z-index: 0 !important;
+  animation: tlGlow 4s ease-in-out infinite alternate !important;
+}
+@keyframes tlGlow {
+  from { opacity: .6; transform: scaleY(.9); }
+  to   { opacity: 1;  transform: scaleY(1.05); }
+}
+/* Ensure content is above the glow */
+.timeline-card .section-kicker,
+.timeline li { position: relative; z-index: 1; }
+
+/* ── 3. FONDATORI: animazione entrata da sinistra a cascata ──
+   Ogni card parte da translateX proporzionale alla posizione
+   (la prima parte da più lontano, l'ultima quasi ferma)
+   con delay crescente. Effetto "scivolano da sinistra
+   e si fermano al loro posto" — come carte che si schierano.
+   --------------------------------------------------------- */
+
+/* Reset: rimuovi il 3D / spotlight precedente */
+.founders-grid {
+  perspective: none !important;
+}
+
+/* Stato iniziale: ogni card fuori schermo a sinistra */
+#fondatori .founders-grid .reveal {
+  opacity: 0 !important;
+  transform: translateX(-70px) !important;
+  transition:
+    opacity .65s cubic-bezier(.25,.46,.45,.94),
+    transform .65s cubic-bezier(.22,.68,0,1.05) !important;
+}
+
+/* Delay progressivo: la prima card arriva per prima,
+   le successive con ritardo crescente → effetto cascata */
+#fondatori .founders-grid > *:nth-child(1) { transition-delay: .00s !important; }
+#fondatori .founders-grid > *:nth-child(2) { transition-delay: .10s !important; }
+#fondatori .founders-grid > *:nth-child(3) { transition-delay: .20s !important; }
+#fondatori .founders-grid > *:nth-child(4) { transition-delay: .30s !important; }
+#fondatori .founders-grid > *:nth-child(5) { transition-delay: .40s !important; }
+
+/* Quando è visibile: torna in posizione */
+#fondatori .founders-grid .reveal.is-visible {
+  opacity: 1 !important;
+  transform: translateX(0) !important;
+}
+
+/* Hover: sollevamento semplice e pulito */
+.founder-card:hover {
+  transform: translateY(-7px) !important;
+  border-color: rgba(160,240,255,.38) !important;
+  box-shadow:
+    0 22px 55px rgba(0,0,0,.48),
+    0 0 36px rgba(80,200,255,.1),
+    inset 0 1px 0 rgba(255,255,255,.14) !important;
+}
+.founder-card:hover > img {
+  transform: scale(1.07) !important;
+  box-shadow: 0 6px 20px rgba(0,0,0,.38), 0 0 20px rgba(123,228,255,.32) !important;
+  filter: brightness(1.06) saturate(1.1) !important;
+}
+
+/* Mobile: animazione semplice, no translate ampio */
+@media (max-width: 768px) {
+  #fondatori .founders-grid .reveal {
+    transform: translateY(20px) !important;
+  }
+  #fondatori .founders-grid .reveal.is-visible {
+    transform: none !important;
+  }
+  .founder-card:hover { transform: translateY(-3px) !important; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #fondatori .founders-grid .reveal {
+    transform: none !important;
+    opacity: 1 !important;
+    transition: none !important;
+  }
+}
+
+
+/* ==========================================================
+   FINAL14 — 3 fix + uniformità pubblicazioni
+   ========================================================== */
+
+/* ── 1. PUBBLICAZIONI: entrambe le immagini viste per intero ─
+   object-fit: contain  → vede tutta la locandina
+   altezza fissa uguale → stessa dimensione le due card
+   --------------------------------------------------------- */
+#contenuti-articoli .feature-card > img,
+.articoli-grid .feature-card > img {
+  width: 100% !important;
+  height: 260px !important;
+  max-height: 260px !important;
+  min-height: 260px !important;
+  object-fit: contain !important;
+  object-position: center !important;
+  border-radius: 14px !important;
+  margin-bottom: 16px !important;
+  background: rgba(4,14,32,.55) !important;
+  padding: 12px !important;
+  display: block !important;
+}
+/* Mobile */
+@media (max-width: 768px) {
+  #contenuti-articoli .feature-card > img,
+  .articoli-grid .feature-card > img {
+    height: 190px !important;
+    min-height: 190px !important;
+  }
+}
+
+/* ── 2. TIMELINE: effetto luce dietro il riquadro ────────────
+   Un alone radiale posizionato dietro la timeline-card
+   che simula una fonte luminosa subacquea.
+   --------------------------------------------------------- */
+.timeline-card {
+  position: relative !important;
+  overflow: visible !important;
+}
+/* Alone dietro la card — visibile perché overflow:visible */
+.timeline-card::before {
+  content: "" !important;
+  position: absolute !important;
+  left: -18px !important;
+  top: 10% !important;
+  width: 120px !important;
+  height: 80% !important;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 50%,
+      rgba(123,228,255,.18) 0%,
+      rgba(80,180,255,.08) 40%,
+      transparent 70%) !important;
+  filter: blur(14px) !important;
+  pointer-events: none !important;
+  z-index: 0 !important;
+  animation: timelineLightPulse 4s ease-in-out infinite alternate !important;
+}
+@keyframes timelineLightPulse {
+  from { opacity: .5; transform: scaleY(.9); }
+  to   { opacity: 1;  transform: scaleY(1.08); }
+}
+/* Alone aggiuntivo a destra della linea */
+.timeline-card::after {
+  content: "" !important;
+  position: absolute !important;
+  left: 24px !important;
+  top: 0 !important; bottom: 0 !important;
+  width: 56px !important;
+  background:
+    radial-gradient(ellipse 100% 100% at 50% 50%,
+      rgba(123,228,255,.1) 0%,
+      transparent 70%) !important;
+  filter: blur(8px) !important;
+  pointer-events: none !important;
+  z-index: 0 !important;
+  animation: timelineLightPulse 4s ease-in-out infinite alternate-reverse !important;
+}
+/* Il kicker e la lista rimangono sopra il glow */
+.timeline-card .section-kicker,
+.timeline li { position: relative; z-index: 1; }
+
+/* ── 3. FONDATORI: entrano da sinistra con stagger e
+        si "atterrano" con rimbalzo — effetto wow ─────────────
+   Ogni card ha un translateX diverso + delay progressivo.
+   L'easing cubic-bezier(.22,.68,0,1.2) dà il rimbalzo.
+   --------------------------------------------------------- */
+
+/* Override del .reveal generico per i fondatori */
+#fondatori .founders-grid .founder-card {
+  opacity: 0 !important;
+  transform: translateX(-60px) !important;
+  transition:
+    opacity .65s ease,
+    transform .65s cubic-bezier(.22,.68,0,1.2) !important;
+}
+#fondatori .founders-grid .founder-card.is-visible {
+  opacity: 1 !important;
+  transform: translateX(0) !important;
+}
+
+/* Stagger: ogni card parte un po' dopo la precedente */
+#fondatori .founders-grid > *:nth-child(1) { transition-delay: .00s !important; }
+#fondatori .founders-grid > *:nth-child(2) { transition-delay: .10s !important; }
+#fondatori .founders-grid > *:nth-child(3) { transition-delay: .20s !important; }
+#fondatori .founders-grid > *:nth-child(4) { transition-delay: .30s !important; }
+#fondatori .founders-grid > *:nth-child(5) { transition-delay: .40s !important; }
+
+/* Su mobile: entrano dal basso (no translateX per evitare overflow) */
+@media (max-width: 768px) {
+  #fondatori .founders-grid .founder-card {
+    transform: translateY(28px) !important;
+  }
+  #fondatori .founders-grid .founder-card.is-visible {
+    transform: translateY(0) !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #fondatori .founders-grid .founder-card {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
