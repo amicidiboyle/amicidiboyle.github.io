@@ -1468,3 +1468,266 @@ body::after {
   .activity-grid-row { gap: 14px !important; }
   .poster-card > img { max-width: 260px !important; }
 }
+
+
+/* =========================================================
+   PATCH v4 — Fix definitivi
+   ========================================================= */
+
+/* ── 1. ANIMAZIONI: da sx/dx con dissolenza ─────────────────
+   Riscrittura completa del sistema reveal.
+   .reveal          = dal basso + fade
+   .reveal-left     = da sinistra + fade
+   .reveal-right    = da destra + fade
+   Tutti con is-visible che azzera tutto.
+   --------------------------------------------------------- */
+.reveal {
+  opacity: 0 !important;
+  transform: translateY(36px) !important;
+  transition:
+    opacity .72s cubic-bezier(.22,.68,0,1.1),
+    transform .72s cubic-bezier(.22,.68,0,1.15) !important;
+}
+.reveal-left {
+  opacity: 0 !important;
+  transform: translateX(-54px) !important;
+  transition:
+    opacity .68s cubic-bezier(.22,.68,0,1.1),
+    transform .68s cubic-bezier(.22,.68,0,1.15) !important;
+}
+.reveal-right {
+  opacity: 0 !important;
+  transform: translateX(54px) !important;
+  transition:
+    opacity .68s cubic-bezier(.22,.68,0,1.1),
+    transform .68s cubic-bezier(.22,.68,0,1.15) !important;
+}
+.reveal.is-visible,
+.reveal-left.is-visible,
+.reveal-right.is-visible {
+  opacity: 1 !important;
+  transform: translate3d(0,0,0) !important;
+}
+
+/* Direzioni specifiche per sezione — assegnate via stagger JS già presente */
+/* Visione: testo da sx, timeline da dx */
+#visione .reveal-left  { transform: translateX(-54px) !important; }
+#visione .reveal-right { transform: translateX(54px) !important; }
+
+/* Fondatori: ogni card da angolo diverso */
+#fondatori .founders-grid > *:nth-child(1) { transform: translateX(-44px) translateY(16px) !important; }
+#fondatori .founders-grid > *:nth-child(2) { transform: translateX(-22px) translateY(28px) !important; }
+#fondatori .founders-grid > *:nth-child(3) { transform: translateY(34px) !important; }
+#fondatori .founders-grid > *:nth-child(4) { transform: translateX(22px) translateY(28px) !important; }
+#fondatori .founders-grid > *:nth-child(5) { transform: translateX(44px) translateY(16px) !important; }
+#fondatori .founders-grid > *.is-visible   { transform: none !important; }
+
+/* Rete: testo da sx, box da dx */
+#rete-home .reveal-left  { transform: translateX(-54px) !important; }
+#rete-home .reveal-right { transform: translateX(54px) !important; }
+
+/* Evento: testo da sx, poster da dx */
+#eventi .reveal-left  { transform: translateX(-54px) !important; }
+#eventi .reveal-right { transform: translateX(54px) !important; }
+
+/* Ricerca: card dispari da sx, pari da dx */
+#ricerca .research-showcase-grid > *:nth-child(odd)  { transform: translateX(-44px) translateY(12px) !important; }
+#ricerca .research-showcase-grid > *:nth-child(even) { transform: translateX(44px) translateY(12px) !important; }
+#ricerca .research-showcase-grid > *.is-visible      { transform: none !important; }
+
+/* Contatti: a ventaglio */
+#contatti .contact-grid-visible > *:nth-child(1) { transform: translateX(-40px) translateY(18px) !important; }
+#contatti .contact-grid-visible > *:nth-child(2) { transform: translateY(34px) !important; }
+#contatti .contact-grid-visible > *:nth-child(3) { transform: translateX(40px) translateY(18px) !important; }
+#contatti .contact-grid-visible > *.is-visible   { transform: none !important; }
+
+/* Evidenza: 3 card ognuna dalla sua parte */
+.section-intro .section-grid > *:nth-child(1) { transform: translateX(-44px) !important; }
+.section-intro .section-grid > *:nth-child(2) { transform: translateY(30px) !important; }
+.section-intro .section-grid > *:nth-child(3) { transform: translateX(44px) !important; }
+.section-intro .section-grid > *.is-visible   { transform: none !important; }
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal, .reveal-left, .reveal-right {
+    opacity: 1 !important; transform: none !important; transition: none !important;
+  }
+}
+
+/* ── 2. BOTTONE SCOPRI LA RETE: elettricità ─────────────────
+   --------------------------------------------------------- */
+.btn-electric,
+.btn-rete-cta {
+  position: relative !important;
+  overflow: hidden !important;
+  background: linear-gradient(135deg, rgba(16,130,255,.96), rgba(0,200,255,.9)) !important;
+  border: 1px solid rgba(80,200,255,.5) !important;
+  color: rgba(2,12,28,.96) !important;
+  font-weight: 700 !important;
+  box-shadow:
+    0 8px 28px rgba(0,120,255,.28),
+    0 0 0 0 rgba(0,180,255,0),
+    inset 0 1px 0 rgba(255,255,255,.28) !important;
+  transition: transform .22s cubic-bezier(.22,.68,0,1.4),
+              box-shadow .22s ease !important;
+}
+/* Scan lampo che attraversa */
+.btn-electric::before,
+.btn-rete-cta::before {
+  content: "" !important;
+  position: absolute !important;
+  top: 0 !important; left: 0 !important;
+  width: 60px !important; height: 100% !important;
+  background: linear-gradient(105deg,
+    transparent 0%,
+    rgba(255,255,255,.08) 30%,
+    rgba(255,255,255,.55) 50%,
+    rgba(255,255,255,.08) 70%,
+    transparent 100%) !important;
+  transform: skewX(-18deg) translateX(-120px) !important;
+  animation: electricFlash 2.6s ease-in-out infinite !important;
+}
+@keyframes electricFlash {
+  0%   { transform: skewX(-18deg) translateX(-120px); }
+  55%  { transform: skewX(-18deg) translateX(calc(var(--btn-w, 260px) + 120px)); }
+  100% { transform: skewX(-18deg) translateX(calc(var(--btn-w, 260px) + 120px)); }
+}
+/* Bordo pulsante */
+.btn-electric::after,
+.btn-rete-cta::after {
+  content: "" !important;
+  position: absolute !important;
+  inset: 0 !important;
+  border-radius: inherit !important;
+  border: 1.5px solid rgba(120,220,255,.5) !important;
+  animation: borderPulse 2.6s ease-in-out infinite !important;
+  pointer-events: none !important;
+}
+@keyframes borderPulse {
+  0%,100% { box-shadow: 0 0 0 0 rgba(0,200,255,0); opacity: .7; }
+  50%     { box-shadow: 0 0 18px 3px rgba(0,200,255,.22); opacity: 1; }
+}
+.btn-electric:hover,
+.btn-rete-cta:hover {
+  transform: translateY(-2px) scale(1.02) !important;
+  box-shadow:
+    0 14px 40px rgba(0,140,255,.38),
+    0 0 60px rgba(0,200,255,.2),
+    inset 0 1px 0 rgba(255,255,255,.32) !important;
+}
+
+/* Il btn-block nella sezione contatti mantiene il layout */
+.contact-card--rich .btn-electric.btn-block {
+  width: 100% !important;
+  margin-top: auto !important;
+}
+
+/* ── 3. ICONE MACROAREE: ancora più grandi ──────────────────
+   --------------------------------------------------------- */
+.activity-asset {
+  width: 180px !important;
+  height: 180px !important;
+  object-fit: contain !important;
+  margin: 0 auto 22px !important;
+  display: block !important;
+  filter:
+    drop-shadow(0 0 18px rgba(124,243,255,.34))
+    drop-shadow(0 0 40px rgba(80,180,255,.18)) !important;
+  transition: transform .4s cubic-bezier(.22,.68,0,1.4), filter .4s !important;
+}
+.activity-card:hover .activity-asset {
+  transform: scale(1.12) translateY(-8px) !important;
+  filter:
+    drop-shadow(0 0 30px rgba(124,243,255,.62))
+    drop-shadow(0 0 64px rgba(80,200,255,.32)) !important;
+}
+.activity-card { padding: 34px 22px 28px !important; }
+@media (max-width: 900px) { .activity-asset { width: 130px !important; height: 130px !important; } }
+@media (max-width: 560px) { .activity-asset { width: 100px !important; height: 100px !important; } }
+
+/* ── 4. IMMAGINI DIDATTICHE E PUBBLICAZIONI ─────────────────
+   Come i poster dei corsi: altezza fissa, object-fit cover,
+   border-radius, niente overflow.
+   --------------------------------------------------------- */
+
+/* Teaching cards — stesso stile dei course-poster-card */
+.teaching-card img,
+.teaching-poster-grid .teaching-card img,
+.teaching-poster-grid--compact .teaching-card img {
+  display: block !important;
+  width: 100% !important;
+  height: 220px !important;
+  max-height: 220px !important;
+  aspect-ratio: unset !important;
+  object-fit: cover !important;
+  object-position: center top !important;
+  border-radius: 14px !important;
+  margin-bottom: 14px !important;
+  background: rgba(4,14,30,.7) !important;
+}
+
+/* Articoli (feature-card nella sezione contenuti-articoli) */
+#contenuti-articoli .feature-card img,
+.articoli-grid .feature-card img {
+  display: block !important;
+  width: 100% !important;
+  height: 200px !important;
+  max-height: 200px !important;
+  aspect-ratio: unset !important;
+  object-fit: cover !important;
+  object-position: center top !important;
+  border-radius: 14px !important;
+  margin-bottom: 14px !important;
+}
+/* Logo UHM: contain su sfondo scuro */
+#contenuti-articoli .feature-card img[src*="UHM"] {
+  object-fit: contain !important;
+  object-position: center !important;
+  background: rgba(6,18,40,.65) !important;
+  padding: 20px !important;
+  height: 180px !important;
+}
+
+/* Contenuti 4 card */
+.content-grid .content-card img {
+  height: 180px !important;
+  max-height: 180px !important;
+  width: 100% !important;
+  object-fit: cover !important;
+  border-radius: 14px !important;
+  margin-bottom: 14px !important;
+}
+
+/* ── 5. CANVAS PULVISCOLO: forza visibilità ─────────────────
+   Il canvas ha z-index:-2, deve stare sopra body::after (-4)
+   ma sotto il contenuto (0+).
+   Su mobile: position absolute per non bloccare scroll iOS.
+   --------------------------------------------------------- */
+#dust-canvas {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: -2 !important;
+  pointer-events: none !important;
+  width: 100% !important;
+  height: 100% !important;
+  opacity: 1 !important;
+}
+@media (max-width: 768px) {
+  #dust-canvas { position: absolute !important; }
+}
+
+/* ── 6. FORM FINEPRINT ──────────────────────────────────────
+   --------------------------------------------------------- */
+.form__fineprint {
+  margin: 8px 0 0;
+  font-size: .78rem;
+  color: var(--soft);
+  line-height: 1.4;
+}
+.form__fineprint a { color: var(--cyan-2); text-decoration: underline; }
+
+/* ── MOBILE GENERALE ────────────────────────────────────────
+   --------------------------------------------------------- */
+@media (max-width: 768px) {
+  .btn-electric::before, .btn-rete-cta::before { animation-duration: 3.5s !important; }
+  .activity-grid-row { gap: 12px !important; }
+}
