@@ -85,16 +85,20 @@
               <span>Fondatori</span>
             </div>
             <div class="hero-stat">
-              <strong>24+</strong>
+              <strong>25+</strong>
               <span>Episodi podcast</span>
-            </div>
-            <div class="hero-stat">
-              <strong>1000+</strong>
-              <span>Visualizzazioni</span>
             </div>
             <div class="hero-stat">
               <strong>2023</strong>
               <span>Anno di fondazione</span>
+            </div>
+            <div class="hero-stat">
+              <strong>10.000+</strong>
+              <span>Visualizzazioni</span>
+            </div>
+            <div class="hero-stat hero-stat--infinity">
+              <strong aria-label="Infinito">∞</strong>
+              <span>Idee</span>
             </div>
           </div></div>
       </div>
@@ -116,9 +120,11 @@
               <path d="M20 17v4M14 28l5-7M26 28l-5-7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
             </svg>
           </div>
+          <div class="info-card-body">
           <p class="section-kicker">In evidenza</p>
           <h2>Network di professionisti di alto livello</h2>
           <p>Esperti in medicina subacquea e iperbarica, rianimazione, medicina spaziale e ambienti estremi con identità scientifica e visione operativa.</p>
+          </div>
         </article>
         <article class="glass-card info-card info-card--vision reveal">
           <div class="info-card__icon" aria-hidden="true">
@@ -128,9 +134,11 @@
               <path d="M20 8v4M20 28v4M8 20H4M36 20h-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
             </svg>
           </div>
+          <div class="info-card-body">
           <p class="section-kicker">Visione</p>
           <h2>Clinica, ricerca e ambienti estremi</h2>
           <p>Professionisti di prima linea che uniscono competenze mediche, ingegneristiche e scientifiche per sviluppare soluzioni operative in scenari ad alta complessità.</p>
+          </div>
         </article>
         <article class="glass-card info-card info-card--content reveal">
           <div class="info-card__icon" aria-hidden="true">
@@ -141,9 +149,11 @@
               <path d="M28 12l1.5 1.5L32 10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
           </div>
+          <div class="info-card-body">
           <p class="section-kicker">Contenuti</p>
           <h2>Podcast, lezioni, articoli, eventi</h2>
           <p>Materiali chiari, aggiornati, applicabili. Non solo teoria: corsi, risorse, pubblicazioni e occasioni concrete di collaborazione.</p>
+          </div>
         </article>
       </div>
     </section>
@@ -481,16 +491,30 @@
           </div>
           <div class="teaching-poster-grid teaching-poster-grid--compact teaching-poster-grid--horiz">
             <article class="glass-card teaching-card">
-              <img src="assets/lezioni/ADE_Medicina%20Subacquea.webp" alt="ADE Medicina Subacquea e Iperbarica" loading="lazy" decoding="async" />
+              <div class="teaching-card-img-wrap" data-src="assets/lezioni/ADE_Medicina%20Subacquea.webp">
+                <img src="assets/lezioni/ADE_Medicina%20Subacquea.webp" alt="ADE Medicina Subacquea e Iperbarica" loading="lazy" decoding="async" />
+                <div class="teaching-card-img-overlay" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" width="20" height="20"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></div>
+              </div>
               <div class="teaching-card-text">
+                <a class="tc-download" href="assets/lezioni/ADE_Medicina%20Subacquea.webp" download>
+                  <svg viewBox="0 0 16 16" fill="none" width="13" height="13"><path d="M8 2v8M4 7l4 4 4-4M2 13h12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+                  Scarica
+                </a>
                 <p class="section-kicker">Lezione</p>
               <h4>ADE Medicina Subacquea &amp; Iperbarica</h4>
               <p>Attività didattica elettiva e materiali di docenza universitaria presso l’Università degli Studi dell’Insubria.</p>
               </div>
             </article>
             <article class="glass-card teaching-card">
-              <img src="assets/lezioni/ADE_Medicina%20Spaziale.webp" alt="ADE Medicina Spaziale" loading="lazy" decoding="async" />
+              <div class="teaching-card-img-wrap" data-src="assets/lezioni/ADE_Medicina%20Spaziale.webp">
+                <img src="assets/lezioni/ADE_Medicina%20Spaziale.webp" alt="ADE Medicina Spaziale" loading="lazy" decoding="async" />
+                <div class="teaching-card-img-overlay" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" width="20" height="20"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></div>
+              </div>
               <div class="teaching-card-text">
+                <a class="tc-download" href="assets/lezioni/ADE_Medicina%20Spaziale.webp" download>
+                  <svg viewBox="0 0 16 16" fill="none" width="13" height="13"><path d="M8 2v8M4 7l4 4 4-4M2 13h12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+                  Scarica
+                </a>
                 <p class="section-kicker">Lezione</p>
               <h4>ADE Medicina Spaziale</h4>
               <p>Docenza universitaria dedicata alla medicina spaziale e agli ambienti estremi, con approccio fisiologico e applicativo.</p>
@@ -992,6 +1016,36 @@
   })();
   </script>
 
+
+  <script>
+  /* ── Lightbox locandine ── */
+  (function(){
+    var lb = document.getElementById('tc-lightbox');
+    var lbImg = document.getElementById('tc-lightbox-img');
+    var lbClose = document.getElementById('tc-lightbox-close');
+    if (!lb || !lbImg) return;
+
+    document.querySelectorAll('.teaching-card-img-wrap').forEach(function(wrap){
+      wrap.style.cursor = 'pointer';
+      wrap.addEventListener('click', function(){
+        var src = wrap.getAttribute('data-src');
+        lbImg.src = src;
+        lbImg.alt = wrap.querySelector('img').alt;
+        lb.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+      });
+    });
+
+    function closeLb(){
+      lb.style.display = 'none';
+      lbImg.src = '';
+      document.body.style.overflow = '';
+    }
+    lbClose.addEventListener('click', closeLb);
+    lb.addEventListener('click', function(e){ if(e.target === lb) closeLb(); });
+    document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeLb(); });
+  })();
+  </script>
   <!-- Cursore subacqueo (solo desktop) -->
   <div id="cursor-bubble" aria-hidden="true"></div>
   <script>
@@ -1019,5 +1073,11 @@
     });
   })();
   </script>
+
+  <!-- Lightbox locandine -->
+  <div id="tc-lightbox" style="display:none;position:fixed;inset:0;z-index:9000;background:rgba(1,6,16,.9);backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:20px;" role="dialog" aria-label="Anteprima locandina" aria-modal="true">
+    <button id="tc-lightbox-close" style="position:absolute;top:16px;right:20px;background:rgba(123,228,255,.12);border:1px solid rgba(123,228,255,.3);border-radius:50%;width:44px;height:44px;cursor:pointer;color:#edf7ff;font-size:1.4rem;display:flex;align-items:center;justify-content:center;" aria-label="Chiudi">✕</button>
+    <img id="tc-lightbox-img" src="" alt="" style="max-width:min(92vw,600px);max-height:88vh;border-radius:18px;box-shadow:0 32px 80px rgba(0,0,0,.7);border:1px solid rgba(123,228,255,.2);object-fit:contain;" />
+  </div>
 </body>
 </html>
