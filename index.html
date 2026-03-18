@@ -85,11 +85,11 @@
               <span>Fondatori</span>
             </div>
             <div class="hero-stat">
-              <strong>25+</strong>
+              <strong>24+</strong>
               <span>Episodi podcast</span>
             </div>
             <div class="hero-stat">
-              <strong>10000+</strong>
+              <strong>1000+</strong>
               <span>Visualizzazioni</span>
             </div>
             <div class="hero-stat">
@@ -107,17 +107,40 @@
 
 <section class="section section-intro" id="evidenza">
       <div class="container section-grid split-3 stagger">
-        <article class="glass-card info-card reveal">
+        <article class="glass-card info-card info-card--network reveal">
+          <div class="info-card__icon" aria-hidden="true">
+            <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="20" cy="12" r="5" stroke="currentColor" stroke-width="1.6"/>
+              <circle cx="8"  cy="30" r="4" stroke="currentColor" stroke-width="1.6"/>
+              <circle cx="32" cy="30" r="4" stroke="currentColor" stroke-width="1.6"/>
+              <path d="M20 17v4M14 28l5-7M26 28l-5-7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+            </svg>
+          </div>
           <p class="section-kicker">In evidenza</p>
           <h2>Network di professionisti di alto livello</h2>
           <p>Esperti in medicina subacquea e iperbarica, rianimazione, medicina spaziale e ambienti estremi con identità scientifica e visione operativa.</p>
         </article>
-        <article class="glass-card info-card reveal">
+        <article class="glass-card info-card info-card--vision reveal">
+          <div class="info-card__icon" aria-hidden="true">
+            <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M20 8C13 8 7 14 7 20s6 12 13 12 13-6 13-12S27 8 20 8z" stroke="currentColor" stroke-width="1.6"/>
+              <circle cx="20" cy="20" r="4" stroke="currentColor" stroke-width="1.6"/>
+              <path d="M20 8v4M20 28v4M8 20H4M36 20h-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+            </svg>
+          </div>
           <p class="section-kicker">Visione</p>
           <h2>Clinica, ricerca e ambienti estremi</h2>
           <p>Professionisti di prima linea che uniscono competenze mediche, ingegneristiche e scientifiche per sviluppare soluzioni operative in scenari ad alta complessità.</p>
         </article>
-        <article class="glass-card info-card reveal">
+        <article class="glass-card info-card info-card--content reveal">
+          <div class="info-card__icon" aria-hidden="true">
+            <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="8" y="10" width="24" height="22" rx="3" stroke="currentColor" stroke-width="1.6"/>
+              <path d="M13 17h14M13 22h10M13 27h7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+              <circle cx="30" cy="12" r="5" fill="currentColor" fill-opacity=".12" stroke="currentColor" stroke-width="1.4"/>
+              <path d="M28 12l1.5 1.5L32 10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
           <p class="section-kicker">Contenuti</p>
           <h2>Podcast, lezioni, articoli, eventi</h2>
           <p>Materiali chiari, aggiornati, applicabili. Non solo teoria: corsi, risorse, pubblicazioni e occasioni concrete di collaborazione.</p>
@@ -347,7 +370,7 @@
         </div>
         <article class="glass-card poster-card reveal reveal-right">
           <img src="assets/corsi/thedayafter.png" alt="Locandina The Day After" loading="lazy" decoding="async" onerror="this.style.display='none'" />
-          <a class="btn btn-ghost btn-block" href="assets/corsi/thedayafter.pdf" target="_blank" rel="noopener">Scarica il programma completo</a>
+          <a class="btn btn-ghost btn-block" href="assets/corsi/the_day_after_brochure.pdf" target="_blank" rel="noopener">Scarica il programma completo</a>
         </article>
       </div>
     </section>
@@ -456,18 +479,22 @@
             <h3>Attività didattiche elettive</h3>
             <p>Moduli didattici tenuti presso il Corso di Laurea in Medicina e Chirurgia dell'Università degli Studi dell'Insubria, con materiali scaricabili e accesso alle locandine degli eventi.</p>
           </div>
-          <div class="teaching-poster-grid teaching-poster-grid--compact">
+          <div class="teaching-poster-grid teaching-poster-grid--compact teaching-poster-grid--horiz">
             <article class="glass-card teaching-card">
               <img src="assets/lezioni/ADE_Medicina%20Subacquea.webp" alt="ADE Medicina Subacquea e Iperbarica" loading="lazy" decoding="async" />
-              <p class="section-kicker">Lezione</p>
+              <div class="teaching-card-text">
+                <p class="section-kicker">Lezione</p>
               <h4>ADE Medicina Subacquea &amp; Iperbarica</h4>
               <p>Attività didattica elettiva e materiali di docenza universitaria presso l’Università degli Studi dell’Insubria.</p>
+              </div>
             </article>
             <article class="glass-card teaching-card">
               <img src="assets/lezioni/ADE_Medicina%20Spaziale.webp" alt="ADE Medicina Spaziale" loading="lazy" decoding="async" />
-              <p class="section-kicker">Lezione</p>
+              <div class="teaching-card-text">
+                <p class="section-kicker">Lezione</p>
               <h4>ADE Medicina Spaziale</h4>
               <p>Docenza universitaria dedicata alla medicina spaziale e agli ambienti estremi, con approccio fisiologico e applicativo.</p>
+              </div>
             </article>
           </div>
         </div>
@@ -534,15 +561,26 @@
           <p>Tre canali distinti per rispondere a esigenze diverse: collaborazioni generali, docenze e incontri, candidature alla Rete. Ogni richiesta arriva direttamente a chi di competenza.</p>
         </div>
         <div class="cards-grid cards-grid-3 contact-grid-3 contact-grid-visible">
-          <article class="glass-card contact-card contact-card--rich reveal">
-            <div class="energy-icon"></div>
+          <article class="glass-card contact-card contact-card--rich contact-card--msg reveal">
+            <div class="contact-icon contact-icon--msg" aria-hidden="true">
+              <svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="7" y="12" width="30" height="22" rx="4" stroke="currentColor" stroke-width="1.7"/>
+                <path d="M7 16l15 10 15-10" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+              </svg>
+            </div>
             <h3>Contatto generale</h3>
             <p>Per domande, progetti, richieste editoriali o informazioni generali.</p>
             <p><strong>Email diretta:</strong> <a href="/cdn-cgi/l/email-protection#e881868e87a88985818b818c818a8791848dc6819c"><span class="__cf_email__" data-cfemail="7e171018113e1f13171d171a171c1107121b50170a">[email&#160;protected]</span></a></p>
             <button class="btn btn-electric btn-block" type="button" data-open-dialog="contattiDialog">Apri modulo contatti</button>
           </article>
-          <article class="glass-card contact-card contact-card--rich reveal" data-delay="100">
-            <div class="energy-icon"></div>
+          <article class="glass-card contact-card contact-card--rich contact-card--edu reveal" data-delay="100">
+            <div class="contact-icon contact-icon--edu" aria-hidden="true">
+              <svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="6" y="8" width="32" height="22" rx="3" stroke="currentColor" stroke-width="1.7"/>
+                <path d="M14 36h16M22 30v6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+                <path d="M14 18h16M14 23h10" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+              </svg>
+            </div>
             <h3>Proponi incontro o docenza</h3>
             <p>Per università, corsi, congressi, attività didattiche e collaborazioni strutturate.</p>
             <ul class="download-list compact-list">
@@ -552,8 +590,14 @@
             </ul>
             <button class="btn btn-electric btn-block" type="button" data-open-dialog="incontroDialog">Apri modulo docenza</button>
           </article>
-          <article class="glass-card contact-card contact-card--rich reveal" data-delay="200">
-            <div class="energy-icon"></div>
+          <article class="glass-card contact-card contact-card--rich contact-card--join reveal" data-delay="200">
+            <div class="contact-icon contact-icon--join" aria-hidden="true">
+              <svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="18" cy="16" r="6" stroke="currentColor" stroke-width="1.7"/>
+                <path d="M6 36c0-5 5-9 12-9" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+                <path d="M30 24v12M24 30h12" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+              </svg>
+            </div>
             <h3>Diventa un Amico di Boyle</h3>
             <p>Entra nella rete. Puoi presentarti, indicare la tua area principale di interesse e candidarti alla futura Rete di Boyle.</p>
             <button class="btn btn-electric btn-block" type="button" data-open-dialog="boyleDialog">Candidati ora</button>
