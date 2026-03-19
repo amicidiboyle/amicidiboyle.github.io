@@ -783,3 +783,158 @@ a { color: inherit; text-decoration: none; }
 .header, .hero, .members-section, .cta-section, .footer { position: relative; z-index: 2; }
 /* Modal: sopra tutto, NON sovrascrivere position:fixed */
 .modal { z-index: 9000 !important; position: fixed !important; }
+
+
+/* ==========================================================
+   RETE v9 — tag aree, benefici, email wall, crescita
+   ========================================================== */
+
+/* ── TAG AREA ── */
+.member-tags {
+  display: flex; flex-wrap: wrap; gap: 6px;
+  justify-content: center;
+  margin: 6px 0 8px;
+  position: relative; z-index: 2;
+}
+.member-tag {
+  display: inline-flex; align-items: center;
+  padding: 3px 10px; border-radius: 999px;
+  font-size: .62rem; font-weight: 700; letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--tag-color, #7be4ff);
+  background: color-mix(in srgb, var(--tag-color, #7be4ff) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--tag-color, #7be4ff) 30%, transparent);
+  transition: background .2s, box-shadow .2s;
+}
+/* Fallback per browser senza color-mix */
+@supports not (color: color-mix(in srgb, red 50%, blue)) {
+  .member-tag { background: rgba(123,228,255,.1); border: 1px solid rgba(123,228,255,.24); }
+}
+.member-card:hover .member-tag {
+  box-shadow: 0 0 10px color-mix(in srgb, var(--tag-color, #7be4ff) 35%, transparent);
+}
+
+/* ── HERO STAT "In crescita" ── */
+.hero__stat--growing .hero__stat-n {
+  color: #4dffd6 !important;
+  font-size: 1.4rem !important;
+  animation: growPulse 2s ease-in-out infinite;
+}
+@keyframes growPulse {
+  0%,100% { transform: scale(1); }
+  50%      { transform: scale(1.15); text-shadow: 0 0 16px #4dffd6; }
+}
+
+/* ── EMAIL LOCK BUTTON ── */
+.member-email-btn {
+  cursor: pointer;
+  opacity: .55;
+  transition: opacity .2s, transform .2s;
+}
+.member-email-btn:hover {
+  opacity: 1;
+  transform: translateY(-2px) scale(1.06);
+  color: var(--r-cyan2);
+}
+.member-email-btn .icon { stroke: currentColor; fill: none; }
+
+/* ── EMAIL WALL MODAL ── */
+.email-wall {
+  position: fixed; inset: 0; z-index: 9500;
+  display: none; align-items: center; justify-content: center;
+  padding: 24px;
+  background: rgba(1,6,16,.8); backdrop-filter: blur(10px);
+}
+.email-wall.is-open { display: flex; }
+.email-wall__dialog {
+  position: relative;
+  width: min(480px, 100%);
+  background: linear-gradient(160deg, rgba(4,16,38,.98), rgba(2,10,28,.99));
+  border: 1px solid rgba(123,228,255,.2); border-radius: 28px;
+  padding: 36px 32px 28px;
+  box-shadow: 0 32px 80px rgba(0,0,0,.55);
+  text-align: center;
+}
+.email-wall__close {
+  position: absolute; top: 14px; right: 14px;
+  width: 36px; height: 36px; border-radius: 50%;
+  background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12);
+  color: #fff; cursor: pointer; font-size: 1rem;
+  display: flex; align-items: center; justify-content: center;
+  transition: background .2s;
+}
+.email-wall__close:hover { background: rgba(255,255,255,.14); }
+.email-wall__icon {
+  width: 64px; height: 64px; margin: 0 auto 18px;
+  border-radius: 18px; display: flex; align-items: center; justify-content: center;
+  background: rgba(123,228,255,.08); border: 1px solid rgba(123,228,255,.2);
+  color: var(--r-cyan2);
+}
+.email-wall__title { font-size: 1.3rem; font-weight: 700; letter-spacing: -.03em; margin-bottom: 12px; }
+.email-wall__text { color: var(--r-muted); font-size: .92rem; line-height: 1.65; margin-bottom: 22px; }
+.email-wall__actions { display: flex; flex-direction: column; align-items: center; gap: 14px; }
+.email-wall__note { font-size: .78rem; color: var(--r-soft); }
+.email-wall__note a { color: var(--r-cyan2); }
+
+/* ── BENEFITS SECTION ── */
+.benefits-section { padding: 80px 0 56px; }
+.benefits-header { max-width: 680px; margin: 0 auto 44px; text-align: center; }
+.benefits-eyebrow {
+  display: inline-block; margin-bottom: 12px;
+  font-size: .68rem; letter-spacing: .22em; text-transform: uppercase;
+  color: var(--r-cyan2); font-weight: 600;
+}
+.benefits-title { font-size: clamp(1.7rem,3.2vw,2.6rem); font-weight: 700; letter-spacing: -.04em; margin-bottom: 12px; }
+.benefits-sub { color: var(--r-muted); font-size: .96rem; line-height: 1.65; }
+
+.benefits-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0,1fr));
+  gap: 18px;
+}
+.benefit-card {
+  padding: 28px 24px;
+  border-radius: 20px;
+  border: 1px solid rgba(120,210,255,.14);
+  background: rgba(5,18,46,.5);
+  backdrop-filter: blur(16px);
+  transition: transform .3s cubic-bezier(.22,.68,0,1.3), border-color .25s, box-shadow .25s;
+}
+.benefit-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(120,210,255,.3);
+  box-shadow: 0 16px 44px rgba(0,0,0,.35), 0 0 30px rgba(80,180,255,.08);
+}
+.benefit-icon {
+  width: 52px; height: 52px; border-radius: 16px; margin-bottom: 18px;
+  display: flex; align-items: center; justify-content: center;
+  transition: transform .3s cubic-bezier(.22,.68,0,1.3);
+}
+.benefit-card:hover .benefit-icon { transform: scale(1.1) translateY(-2px); }
+.benefit-icon--cyan   { background: rgba(123,228,255,.1); border: 1px solid rgba(123,228,255,.22); color: #a8eeff; }
+.benefit-icon--green  { background: rgba(77,255,214,.1);  border: 1px solid rgba(77,255,214,.22);  color: #4dffd6; }
+.benefit-icon--purple { background: rgba(196,176,255,.1); border: 1px solid rgba(196,176,255,.22); color: #c4b0ff; }
+.benefit-icon--orange { background: rgba(255,179,71,.1);  border: 1px solid rgba(255,179,71,.22);  color: #ffb347; }
+.benefit-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 10px; letter-spacing: -.02em; }
+.benefit-card p  { font-size: .85rem; color: var(--r-muted); line-height: 1.6; margin: 0; }
+
+/* ── TOP ACCENT LINE per ogni benefit ── */
+.benefit-card:nth-child(1) { border-top: 2px solid rgba(123,228,255,.4); }
+.benefit-card:nth-child(2) { border-top: 2px solid rgba(77,255,214,.4); }
+.benefit-card:nth-child(3) { border-top: 2px solid rgba(196,176,255,.4); }
+.benefit-card:nth-child(4) { border-top: 2px solid rgba(255,179,71,.4); }
+.benefit-card:nth-child(5) { border-top: 2px solid rgba(77,255,214,.4); }
+.benefit-card:nth-child(6) { border-top: 2px solid rgba(123,228,255,.4); }
+
+/* Responsive benefits */
+@media (max-width: 1024px) { .benefits-grid { grid-template-columns: repeat(2,1fr); } }
+@media (max-width: 600px)  { .benefits-grid { grid-template-columns: 1fr; } }
+
+/* Mobile */
+@media (max-width: 768px) {
+  .benefits-section { padding: 56px 0 36px; }
+  .benefit-card { padding: 22px 18px; }
+  .email-wall__dialog { padding: 28px 22px 24px; }
+  .member-tags { gap: 5px; }
+  .member-tag { font-size: .58rem; padding: 3px 8px; }
+}
