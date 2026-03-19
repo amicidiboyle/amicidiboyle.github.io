@@ -608,3 +608,175 @@ a { color: inherit; text-decoration: none; }
   .cta-box::after { animation: none !important; }
   .hero::after { animation: none !important; }
 }
+
+
+/* ==========================================================
+   RETE WOW v3 — canvas immersivo, card lingotto, icone
+   ========================================================== */
+
+/* ── CANVAS: visibile ovunque, opacità aumentata ── */
+#synapseCanvas {
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  z-index: 0 !important;
+  pointer-events: none !important;
+  opacity: .55 !important;  /* più visibile */
+  display: block !important; /* annulla display:none dei blocchi precedenti */
+}
+/* Annulla tutte le regole display:none precedenti */
+.members-section #synapseCanvas { display: block !important; }
+
+/* Header e sezioni sopra il canvas */
+.header, .hero, .members-section .container,
+.cta-section .container, .footer, .modal {
+  position: relative;
+  z-index: 2;
+}
+.hero { z-index: 2; }
+
+/* ── CARD LINGOTTO TRASPARENTE ── */
+/* Effetto: vetro spesso, bordo frastagliato luminoso,
+   riflesso angolare come cristallo, profondità 3D */
+.member-card {
+  background:
+    /* strato riflesso angolare superiore */
+    linear-gradient(135deg,
+      rgba(255,255,255,.14) 0%,
+      rgba(255,255,255,.04) 15%,
+      transparent 30%,
+      transparent 70%,
+      rgba(255,255,255,.02) 85%,
+      rgba(255,255,255,.06) 100%),
+    /* vetro tintato */
+    rgba(8,24,58,.18) !important;
+
+  border: 1px solid rgba(180,240,255,.28) !important;
+
+  box-shadow:
+    /* bordo superiore luminoso (spigolo del lingotto) */
+    inset 0 2px 0 rgba(255,255,255,.28),
+    /* bordo laterale sx */
+    inset 2px 0 0 rgba(255,255,255,.1),
+    /* bordo inferiore scuro (profondità) */
+    inset 0 -2px 0 rgba(0,0,0,.3),
+    /* bordo laterale dx scuro */
+    inset -1px 0 0 rgba(0,0,0,.15),
+    /* ombra esterna profonda */
+    0 20px 60px rgba(0,0,0,.55),
+    /* alone cyan esterno */
+    0 0 0 1px rgba(124,243,255,.06) !important;
+
+  backdrop-filter: blur(24px) saturate(1.6) brightness(1.08) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(1.6) brightness(1.08) !important;
+  overflow: visible !important; /* permette al glow di uscire */
+}
+
+/* Riflesso interno come vetro molato */
+.member-card::before {
+  content: "" !important;
+  position: absolute !important;
+  inset: 0 !important;
+  border-radius: inherit !important;
+  pointer-events: none !important;
+  z-index: 0 !important;
+  background:
+    /* diagonale brillante principale */
+    linear-gradient(145deg,
+      rgba(255,255,255,.18) 0%,
+      rgba(255,255,255,.06) 12%,
+      transparent 28%,
+      transparent 72%,
+      rgba(200,240,255,.04) 88%,
+      rgba(200,240,255,.1) 100%) !important;
+  mix-blend-mode: screen !important;
+  transition: opacity .3s !important;
+  opacity: .9 !important;
+}
+
+/* Bordo vetro multi-strato */
+.member-card::after {
+  content: "" !important;
+  position: absolute !important;
+  inset: 0 !important;
+  border-radius: inherit !important;
+  pointer-events: none !important;
+  z-index: 3 !important;
+  background: none !important;
+  /* Simula spessore del vetro con bordi multipli */
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.35),
+    inset 0 -1px 0 rgba(0,0,0,.35),
+    inset 1px 0 0 rgba(255,255,255,.18),
+    inset -1px 0 0 rgba(0,0,0,.2),
+    inset 0 2px 6px rgba(255,255,255,.08),
+    inset 0 -2px 6px rgba(0,0,0,.15) !important;
+}
+
+/* Hover del lingotto: si solleva e splende */
+.member-card:hover {
+  box-shadow:
+    inset 0 2px 0 rgba(255,255,255,.38),
+    inset 2px 0 0 rgba(255,255,255,.18),
+    inset 0 -2px 0 rgba(0,0,0,.28),
+    inset -1px 0 0 rgba(0,0,0,.12),
+    0 36px 80px rgba(0,0,0,.65),
+    0 0 60px rgba(100,220,255,.22),
+    0 0 120px rgba(60,160,255,.1) !important;
+  border-color: rgba(160,240,255,.6) !important;
+}
+
+/* ── ICONE LINKEDIN/EMAIL: più in basso ── */
+.member-links {
+  margin-top: 18px !important;  /* era ~10px */
+  padding-top: 12px !important;
+}
+
+/* ── EXTRA WOW: shimmer sulla card al hover ── */
+@keyframes cardShimmer {
+  0%   { transform: translateX(-100%) skewX(-12deg); }
+  100% { transform: translateX(220%)  skewX(-12deg); }
+}
+.member-card:hover .member-photo-wrap::before {
+  content: "";
+  position: absolute;
+  inset: -30% auto -30% -20%;
+  width: 35%;
+  background: linear-gradient(90deg,
+    transparent,
+    rgba(255,255,255,.18),
+    transparent);
+  animation: cardShimmer .55s ease forwards;
+  pointer-events: none;
+  z-index: 10;
+}
+.member-photo-wrap { position: relative; overflow: hidden; }
+
+/* ── EXTRA WOW: numero membri nel hero con glow ── */
+.hero__stat-n {
+  font-size: 1.8rem !important;
+  font-weight: 800 !important;
+  letter-spacing: -.05em !important;
+  transition: text-shadow .4s, color .4s !important;
+}
+.hero__stat:hover .hero__stat-n {
+  color: #fff !important;
+  text-shadow: 0 0 24px var(--r-cyan2), 0 0 48px rgba(123,228,255,.4) !important;
+}
+
+/* Mobile: disabilita 3D tilt, riduci opacità canvas */
+@media (max-width: 768px) {
+  #synapseCanvas { opacity: .35 !important; }
+  .member-card {
+    transform: none !important;
+    overflow: hidden !important;
+  }
+  .member-card:hover {
+    transform: translateY(-4px) !important;
+  }
+  .member-links {
+    margin-top: 14px !important;
+    padding-top: 10px !important;
+  }
+}
