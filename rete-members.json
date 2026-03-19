@@ -1,100 +1,114 @@
 [
   {
     "name": "Simona Damiano",
-    "role": "Cardiologa pediatra, Ospedale del Ponte. Expert Diver SSI. Focus: ecocardiografia.",
-    "city": "Varese",
+    "role": "Cardiologa pediatra, Ospedale del Ponte, Varese. Expert Diver, Scuba Schools International. Focus: ecocardiografia.",
     "img": "simona-damiano.jpg",
-    "linkedin": "https://www.linkedin.com/"
+    "city": "Varese",
+    "linkedin": "",
+    "email": "simona.damiano@asst-settelaghi.it"
   },
   {
     "name": "Andrea Murdock Alpini",
-    "role": "Esploratore subacqueo, PSAI Diving Instructor, CEO PHY Diving. Focus: relitti e cave sommerse.",
-    "city": "Italia",
+    "role": "Esploratore subacqueo, divulgatore, PSAI Diving Instructor, CEO PHY Diving. Focus: esplorazione di relitti e cave sommerse.",
     "img": "andrea-alpini.jpg",
-    "linkedin": "https://www.linkedin.com/in/andrea-murdock-alpini-050505228/"
+    "city": "Italia",
+    "linkedin": "https://www.linkedin.com/in/andrea-murdock-alpini-050505228/",
+    "email": "exploration@wreckdiving.com"
   },
   {
     "name": "Valerio Zerbi",
-    "role": "Ingegnere Biomedico, Professore Associato di Neuroscienze, Università di Ginevra. Focus: translational neuroscience.",
-    "city": "Ginevra, CH",
+    "role": "Ingegnere Biomedico, Professore Associato di Neuroscienze, Università di Ginevra, Svizzera. Focus: translational neuroscience.",
     "img": "valerio-zerbi.jpg",
-    "linkedin": "https://www.linkedin.com/in/valerio-zerbi-a95b7725/"
+    "city": "Ginevra, CH",
+    "linkedin": "https://www.linkedin.com/in/valerio-zerbi-a95b7725/",
+    "email": "zerbiv@hotmail.com"
   },
   {
     "name": "Erika Borotto",
-    "role": "Specialista in Anestesia e Rianimazione. Presidente Inside Trauma Emergency and Critical Care. Focus: Critical Care.",
-    "city": "Varese",
+    "role": "Specialista in Anestesia e Rianimazione. Presidente Inside Trauma Emergency and Critical Care. Italia. Focus: Critical Care.",
     "img": "erika-borotto.jpg",
-    "linkedin": "https://www.linkedin.com/in/erika-borotto-79a4a796/"
+    "city": "Varese",
+    "linkedin": "https://www.linkedin.com/in/erika-borotto-79a4a796/",
+    "email": "erika.borotto@asst-settelaghi.it"
   },
   {
     "name": "Andrea Galvani",
-    "role": "Medico Iperbarico e Subacqueo. Consigliere Nazionale SIMSI. Responsabile Scientifico Centro Iperbarico RSM. Focus: offshore e dive medicine.",
-    "city": "San Marino",
+    "role": "Medico Iperbarico e Subacqueo. Consigliere Nazionale SIMSI. Responsabile Scientifico del Centro Iperbarico Repubblica di San Marino. Focus: offshore e dive medicine.",
     "img": "andrea-galvani.jpg",
-    "linkedin": "https://www.linkedin.com/in/agalv86/"
+    "city": "San Marino",
+    "linkedin": "https://www.linkedin.com/in/agalv86/",
+    "email": "andrea.galvani@example.com"
   },
   {
     "name": "Federica Giuffrida",
     "role": "Specialista in Anestesia e Rianimazione. Critical Care Medicine. Soccorso Alpino. Focus: Medicina di Montagna e Soccorso in Ambienti Impervi.",
-    "city": "Varese",
     "img": "federica-giuffrida.jpg",
-    "linkedin": "https://www.linkedin.com/in/federica-giuffrida-76609a9a/"
+    "city": "Varese",
+    "linkedin": "https://www.linkedin.com/in/federica-giuffrida-76609a9a/",
+    "email": "federica.giuffrida@asst-settelaghi.it"
   },
   {
     "name": "Paolo Calzavacca",
-    "role": "Specialista in Anestesia e Rianimazione, ICU IRCCS San Gerardo. Focus: intensive care e monitoraggio avanzato.",
-    "city": "Monza",
+    "role": "Specialista in Anestesia e Rianimazione, ICU IRCCS San Gerardo del Tintori - Monza. Expert Diver. Focus: ExtraCorporeal Membrane Oxygenation.",
     "img": "paolo-calzavacca.jpg",
-    "linkedin": "https://www.linkedin.com/in/paolo-calzavacca/"
+    "city": "Monza",
+    "linkedin": "https://www.linkedin.com/in/paolo-calzavacca-6549623a/",
+    "email": "p.calzavacca@gmail.com"
   },
   {
     "name": "Erion Xhepa",
-    "role": "Dive Master · Senior Interventional Cardiologist, Cardiac Catheterization Lab. Focus: cardiologia interventistica.",
-    "city": "Monaco di Baviera",
+    "role": "Dive Master|Senior Interventional Cardiologist, Cardiac Catheter Laboratory,TUM University Hospital German Heart Center. Munich.",
     "img": "erion-xhepa.jpg",
-    "linkedin": "https://www.linkedin.com/"
+    "city": "Monaco di Baviera",
+    "linkedin": "https://www.linkedin.com/in/erion-xhepa-a21bb86a/",
+    "email": "xhepa@dhm.mhn.de"
   },
   {
     "name": "David James Marsland",
-    "role": "Esercito Italiano, Corpi Speciali, Paracadutisti Col Moschin. Focus: medicina militare e ambienti ostili.",
-    "city": "Italia",
+    "role": "Esercito Italiano. Corpi Speciali. Paracadutisti Col Moschin. Focus: Primo Intervento in Aree di Guerra.",
     "img": "james-m.jpg",
-    "linkedin": "https://www.linkedin.com/"
+    "city": "Italia",
+    "linkedin": "",
+    "email": ""
   },
   {
     "name": "Tommaso Antonio Giacon",
-    "role": "Specialista in Anestesia e Rianimazione. Medico Iperbarico e Subacqueo. Focus: medicina perioperatoria.",
-    "city": "Auckland, NZ",
+    "role": "Specialista in Anestesia e Rianimazione. Medico Iperbarico e Subacqueo. Crew Medical Officer, Analog Astronaut. Focus: Fisiologia in Ambienti Estremi",
     "img": "tommaso-giacon.jpg",
-    "linkedin": "https://www.linkedin.com/"
+    "city": "Auckland, NZ",
+    "linkedin": "https://www.linkedin.com/in/tommaso-antonio-giacon-613b58208/",
+    "email": "nostromo.giacon@gmail.com"
   },
   {
     "name": "Tiago Miguel Cardoso",
-    "role": "Specialista in Anestesia e Rianimazione. Istruttore ETC. Dive Doctor. Focus: emergenza extraospedaliera.",
-    "city": "Porto, PT",
+    "role": "Specialista in Anestesia e Rianimazione. Istruttore ETC. Dive Expert. Medico HEMS, Porto. Portogallo. Focus: Rianimazione in Ambienti Estremi",
     "img": "tiago-cardoso.jpg",
-    "linkedin": "https://www.linkedin.com/"
+    "city": "Porto, PT",
+    "linkedin": "https://www.linkedin.com/in/tiago-miguel-cardoso-a2b85019/",
+    "email": "tiago12525@gmail.com"
   },
   {
     "name": "Federica Venturelli",
-    "role": "Dive Expert · Medicina Interna. Medico Iperbarico e Subacqueo.",
-    "city": "Treviso",
+    "role": "Dive Expert| Medicina Interna. Medico Iperbarico e Subacqueo. Treviso.",
     "img": "federica-venturelli.jpg",
-    "linkedin": "https://www.linkedin.com/"
+    "city": "Treviso",
+    "linkedin": "",
+    "email": ""
   },
   {
     "name": "Giulio Saletti",
-    "role": "Specialist Hyperbaric Refuge Chamber and Special Projects, WEWALTER Italy. Focus: Safety for Industry, Civil and Defence.",
-    "city": "Milano",
+    "role": "Specialist in Hyperbaric Refuge Chamber and Special Projetcs, WEWALTER Italy. Focus:Safety for Industry, Civil and Defence",
     "img": "giulio-saletti.jpg",
-    "linkedin": "https://www.linkedin.com/in/giulio-saletti-24626668/"
+    "city": "Milano",
+    "linkedin": "https://www.linkedin.com/in/giulio-saletti-24626668/",
+    "email": "giulio.saletti@wewalter.it"
   },
   {
     "name": "Gabriele Soldini",
-    "role": "Direttore DEA Chirurgico Gravedona. Venue Medical Officer. Chirurgia d'Urgenza. Focus: Mass Gathering Medicine.",
-    "city": "Gravedona",
+    "role": "Direttore DEA Chirurgico Gravedona. Venue Medical Officer. Chirurgia d'Urgenza. Focus: Mass Gathering Medicine",
     "img": "gabriele-soldini.jpg",
-    "linkedin": "https://www.linkedin.com/in/gabriele-soldini-4263a569/"
+    "city": "Gravedona",
+    "linkedin": "https://www.linkedin.com/in/gabriele-soldini-4263a569/",
+    "email": ""
   }
 ]
