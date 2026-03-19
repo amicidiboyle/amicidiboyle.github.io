@@ -1085,5 +1085,65 @@
     <button id="tc-lightbox-close" style="position:absolute;top:16px;right:20px;background:rgba(123,228,255,.12);border:1px solid rgba(123,228,255,.3);border-radius:50%;width:44px;height:44px;cursor:pointer;color:#edf7ff;font-size:1.4rem;display:flex;align-items:center;justify-content:center;" aria-label="Chiudi">✕</button>
     <img id="tc-lightbox-img" src="" alt="" style="max-width:min(92vw,600px);max-height:88vh;border-radius:18px;box-shadow:0 32px 80px rgba(0,0,0,.7);border:1px solid rgba(123,228,255,.2);object-fit:contain;" />
   </div>
+
+  <!-- Quick nav mobile: floating button -->
+  <div id="mobile-quicknav" aria-label="Navigazione rapida" style="display:none;">
+    <button id="mobile-quicknav-btn" aria-label="Navigazione rapida" aria-expanded="false">
+      <svg viewBox="0 0 22 22" fill="none" width="20" height="20"><path d="M4 6h14M4 11h14M4 16h14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+    <div id="mobile-quicknav-panel" role="menu" aria-hidden="true">
+      <a href="#home">↑ Inizio</a>
+      <a href="#visione">Visione</a>
+      <a href="#attivita">Aree</a>
+      <a href="#fondatori">Fondatori</a>
+      <a href="#rete-home">Rete</a>
+      <a href="#contenuti">Contenuti</a>
+      <a href="#ricerca">Ricerca</a>
+      <a href="#formazione">Formazione</a>
+      <a href="#partner">Partner</a>
+      <a href="#contatti">Contatti</a>
+    </div>
+  </div>
+  <script>
+  (function(){
+    var isMob = window.innerWidth <= 768;
+    if (!isMob) return;
+    var wrap = document.getElementById('mobile-quicknav');
+    var btn  = document.getElementById('mobile-quicknav-btn');
+    var panel= document.getElementById('mobile-quicknav-panel');
+    if (!wrap || !btn || !panel) return;
+    wrap.style.display = 'block';
+
+    /* Mostra solo dopo 300px di scroll */
+    window.addEventListener('scroll', function(){
+      wrap.classList.toggle('qn-visible', window.scrollY > 300);
+    }, {passive:true});
+
+    btn.addEventListener('click', function(){
+      var open = panel.getAttribute('aria-hidden') === 'false';
+      panel.setAttribute('aria-hidden', open ? 'true' : 'false');
+      btn.setAttribute('aria-expanded', !open);
+      btn.classList.toggle('qn-open', !open);
+    });
+
+    /* Chiudi dopo click su link */
+    panel.querySelectorAll('a').forEach(function(a){
+      a.addEventListener('click', function(){
+        panel.setAttribute('aria-hidden','true');
+        btn.setAttribute('aria-expanded','false');
+        btn.classList.remove('qn-open');
+      });
+    });
+
+    /* Chiudi su click fuori */
+    document.addEventListener('click', function(e){
+      if (!wrap.contains(e.target)) {
+        panel.setAttribute('aria-hidden','true');
+        btn.setAttribute('aria-expanded','false');
+        btn.classList.remove('qn-open');
+      }
+    });
+  })();
+  </script>
 </body>
 </html>
