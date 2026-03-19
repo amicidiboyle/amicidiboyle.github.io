@@ -3,65 +3,61 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Rete di Boyle | Gli Amici di Boyle</title>
-  <meta name="description" content="La rete di professionisti e ricercatori degli Amici di Boyle." />
-  <link rel="preload" as="image" href="assets/rete-background.jpg" fetchpriority="high">
+  <title>Rete di Boyle · Gli Amici di Boyle</title>
+  <meta name="description" content="La rete di professionisti e ricercatori degli Amici di Boyle: medicina subacquea, iperbarica, ambienti estremi, fisiologia umana e sicurezza." />
+  <meta name="theme-color" content="#031427" />
+  <link rel="icon" href="assets/logo.png" type="image/png" />
   <link rel="stylesheet" href="rete.css" />
 </head>
 <body>
-  <main class="page">
-    <div class="topbar">
-      <a class="back-link" href="index.html">← Torna alla home</a>
-    </div>
+  <a class="skip" href="#contenuto">Vai al contenuto</a>
 
-    
-    <section class="hero">
+  <!-- HEADER (stesso dell'home) -->
+  <header class="header" role="banner">
+    <div class="container header__inner">
+      <a class="brand" href="index.html" aria-label="Gli Amici di Boyle — Home">
+        <img src="assets/logo.png" alt="Logo" width="52" height="52" />
+        <span class="brand__text">
+          <strong>Gli Amici di Boyle</strong>
+          <em>Diving &amp; Hyperbaric Medicine · Research &amp; Education</em>
+        </span>
+      </a>
+      <nav class="nav--desktop">
+        <a href="index.html">Home</a>
+        <a href="index.html#visione">Visione</a>
+        <a href="index.html#ricerca">Ricerca</a>
+        <a class="nav-active" href="rete.html" aria-current="page">Rete</a>
+        <a href="podcast.html">Podcast</a>
+        <a class="nav-cta" href="index.html#contatti">Contatti</a>
+      </nav>
+      <button class="nav-mobile-btn" id="navMobileBtn" aria-label="Apri menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="nav-mobile-panel" id="navMobilePanel" aria-hidden="true">
+        <a href="index.html">Home</a>
+        <a href="index.html#visione">Visione</a>
+        <a href="index.html#ricerca">Ricerca</a>
+        <a href="rete.html">Rete</a>
+        <a href="podcast.html">Podcast</a>
+        <a href="index.html#contatti">Contatti</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="contenuto">
+
+    <!-- HERO con connectome -->
+    <section class="hero" id="top">
       <div class="hero__connectome" aria-hidden="true">
         <svg class="connectome-svg" viewBox="0 0 1400 520" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
           <defs>
-            <filter id="glow-line" x="-20%" y="-20%" width="140%" height="140%">
-              <feGaussianBlur stdDeviation="1.8" result="blur"/>
-              <feMerge>
-                <feMergeNode in="blur"/>
-                <feMergeNode in="SourceGraphic"/>
-              </feMerge>
-            </feMerge>
-            </filter>
-            <filter id="glow-node" x="-80%" y="-80%" width="260%" height="260%">
-              <feGaussianBlur stdDeviation="3.5" result="blur"/>
-              <feMerge>
-                <feMergeNode in="blur"/>
-                <feMergeNode in="SourceGraphic"/>
-              </feMerge>
-            </feMerge>
-            </filter>
-            <linearGradient id="lineGradA" x1="0" y1="0" x2="1" y2="0">
-              <stop offset="0%" stop-color="#d9fbff" stop-opacity="0.05"/>
-              <stop offset="50%" stop-color="#9aefff" stop-opacity="0.22"/>
-              <stop offset="100%" stop-color="#d9fbff" stop-opacity="0.05"/>
-            </linearGradient>
-            <linearGradient id="lineGradB" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0%" stop-color="#d9fbff" stop-opacity="0.04"/>
-              <stop offset="50%" stop-color="#7cf3ff" stop-opacity="0.18"/>
-              <stop offset="100%" stop-color="#d9fbff" stop-opacity="0.04"/>
-            </linearGradient>
-            <radialGradient id="nodeGrad" cx="50%" cy="50%" r="50%">
-              <stop offset="0%" stop-color="#ffffff" stop-opacity="0.98"/>
-              <stop offset="45%" stop-color="#bff8ff" stop-opacity="0.88"/>
-              <stop offset="100%" stop-color="#7cf3ff" stop-opacity="0.2"/>
-            </radialGradient>
-            <mask id="connectomeFade">
-              <rect width="1400" height="520" fill="white"/>
-              <rect x="0" y="0" width="520" height="520" fill="url(#leftFade)"/>
-            </mask>
-            <linearGradient id="leftFade" x1="0" y1="0" x2="1" y2="0">
-              <stop offset="0%" stop-color="black"/>
-              <stop offset="45%" stop-color="black"/>
-              <stop offset="80%" stop-color="white"/>
-              <stop offset="100%" stop-color="white"/>
-            </linearGradient>
+            <filter id="glow-line"><feGaussianBlur stdDeviation="1.8" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+            <filter id="glow-node"><feGaussianBlur stdDeviation="3.5" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+            <linearGradient id="lineGradA" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#d9fbff" stop-opacity="0.04"/><stop offset="50%" stop-color="#9aefff" stop-opacity="0.22"/><stop offset="100%" stop-color="#d9fbff" stop-opacity="0.04"/></linearGradient>
+            <radialGradient id="nodeGrad" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#ffffff" stop-opacity="0.98"/><stop offset="45%" stop-color="#bff8ff" stop-opacity="0.88"/><stop offset="100%" stop-color="#7cf3ff" stop-opacity="0.18"/></radialGradient>
+            <mask id="connectomeFade"><rect width="1400" height="520" fill="white"/><rect x="0" y="0" width="520" height="520" fill="url(#leftFade)"/></mask>
+            <linearGradient id="leftFade" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="black"/><stop offset="45%" stop-color="black"/><stop offset="80%" stop-color="white"/><stop offset="100%" stop-color="white"/></linearGradient>
           </defs>
-
           <g class="connectome-base" mask="url(#connectomeFade)">
             <g class="connectome-links" filter="url(#glow-line)">
               <path id="path-a" d="M 420 145 C 560 70, 770 90, 930 160 S 1160 240, 1310 150" />
@@ -73,34 +69,18 @@
               <path id="path-g" d="M 745 85 C 780 180, 780 280, 745 405" class="link-faint" />
               <path id="path-h" d="M 560 118 C 635 210, 665 305, 640 420" class="link-soft" />
               <path id="path-i" d="M 905 118 C 850 200, 820 288, 835 392" class="link-soft" />
-              <path id="path-j" d="M 470 180 C 650 205, 820 185, 1005 150 S 1200 120, 1300 140" class="link-faint" />
               <path id="path-k" d="M 440 268 C 595 255, 760 305, 915 285 S 1140 220, 1305 250" class="link-soft" />
-              <path id="path-l" d="M 500 360 C 635 300, 780 330, 930 360 S 1145 400, 1315 375" class="link-faint" />
             </g>
-
             <g class="connectome-nodes" filter="url(#glow-node)">
-              <circle cx="455" cy="128" r="5.4" class="node node-1"/>
-              <circle cx="598" cy="98" r="4.6" class="node node-2"/>
-              <circle cx="734" cy="114" r="6.2" class="node node-3"/>
-              <circle cx="880" cy="144" r="5.2" class="node node-4"/>
-              <circle cx="1045" cy="175" r="4.6" class="node node-5"/>
-              <circle cx="1214" cy="165" r="6.4" class="node node-6"/>
-              <circle cx="520" cy="220" r="4.2" class="node node-7"/>
-              <circle cx="690" cy="196" r="5.8" class="node node-8"/>
-              <circle cx="846" cy="224" r="4.8" class="node node-9"/>
-              <circle cx="1012" cy="260" r="6.6" class="node node-10"/>
-              <circle cx="1156" cy="286" r="4.9" class="node node-11"/>
-              <circle cx="595" cy="300" r="4.8" class="node node-12"/>
-              <circle cx="742" cy="334" r="5.9" class="node node-13"/>
-              <circle cx="896" cy="318" r="4.1" class="node node-14"/>
-              <circle cx="1088" cy="348" r="5.7" class="node node-15"/>
-              <circle cx="1260" cy="332" r="4.7" class="node node-16"/>
-              <circle cx="655" cy="410" r="3.9" class="node node-17"/>
-              <circle cx="830" cy="392" r="4.5" class="node node-18"/>
-              <circle cx="953" cy="380" r="3.9" class="node node-19"/>
-              <circle cx="1188" cy="395" r="4.5" class="node node-20"/>
+              <circle cx="455" cy="128" r="5.4" class="node node-1"/><circle cx="598" cy="98" r="4.6" class="node node-2"/>
+              <circle cx="734" cy="114" r="6.2" class="node node-3"/><circle cx="880" cy="144" r="5.2" class="node node-4"/>
+              <circle cx="1045" cy="175" r="4.6" class="node node-5"/><circle cx="1214" cy="165" r="6.4" class="node node-6"/>
+              <circle cx="520" cy="220" r="4.2" class="node node-7"/><circle cx="690" cy="196" r="5.8" class="node node-8"/>
+              <circle cx="846" cy="224" r="4.8" class="node node-9"/><circle cx="1012" cy="260" r="6.6" class="node node-10"/>
+              <circle cx="1156" cy="286" r="4.9" class="node node-11"/><circle cx="595" cy="300" r="4.8" class="node node-12"/>
+              <circle cx="742" cy="334" r="5.9" class="node node-13"/><circle cx="896" cy="318" r="4.1" class="node node-14"/>
+              <circle cx="1088" cy="348" r="5.7" class="node node-15"/><circle cx="1260" cy="332" r="4.7" class="node node-16"/>
             </g>
-
             <g class="travelers">
               <circle r="3.8" class="traveler traveler-a"><animateMotion dur="7.2s" repeatCount="indefinite" rotate="auto"><mpath href="#path-a"/></animateMotion></circle>
               <circle r="3.1" class="traveler traveler-b"><animateMotion dur="8.9s" begin="-2.1s" repeatCount="indefinite" rotate="auto"><mpath href="#path-b"/></animateMotion></circle>
@@ -108,466 +88,354 @@
               <circle r="2.9" class="traveler traveler-d"><animateMotion dur="6.6s" begin="-1.8s" repeatCount="indefinite" rotate="auto"><mpath href="#path-d"/></animateMotion></circle>
               <circle r="3.2" class="traveler traveler-e"><animateMotion dur="9.6s" begin="-3.8s" repeatCount="indefinite" rotate="auto"><mpath href="#path-e"/></animateMotion></circle>
               <circle r="3.4" class="traveler traveler-f"><animateMotion dur="8.2s" begin="-4.6s" repeatCount="indefinite" rotate="auto"><mpath href="#path-f"/></animateMotion></circle>
-              <circle r="2.6" class="traveler traveler-g"><animateMotion dur="7.8s" begin="-2.8s" repeatCount="indefinite" rotate="auto"><mpath href="#path-k"/></animateMotion></circle>
             </g>
           </g>
         </svg>
       </div>
-
       <div class="hero__content">
-        <div class="hero__eyebrow">Network scientifico</div>
-        <h1 class="hero__title">
-          <span class="glow">Rete</span>
-          di Boyle
-        </h1>
-        <p class="hero__subtitle">
-          La rete di professionisti e ricercatori degli “Amici di Boyle”, un ecosistema multidisciplinare dedicato
-          alla medicina subacquea e iperbarica, agli ambienti estremi, alla fisiologia umana e alla sicurezza.
-        </p>
+        <div class="hero__eyebrow">Network scientifico · Ambienti estremi</div>
+        <h1 class="hero__title"><span class="hero__glow">Rete</span> di Boyle</h1>
+        <p class="hero__subtitle">Un ecosistema multidisciplinare di professionisti, ricercatori e innovatori dedicati alla medicina subacquea, iperbarica, aerospaziale e alla fisiologia degli ambienti estremi.</p>
+        <div class="hero__cta">
+          <button class="btn-electric" id="open-network-modal" type="button">
+            <span class="btn-electric__inner">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+              Candidati alla rete
+            </span>
+          </button>
+          <a class="btn-ghost" href="#members">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="8" cy="5" r="3"/><path d="M2 14c0-3.3 2.7-6 6-6s6 2.7 6 6"/></svg>
+            Esplora i profili
+          </a>
+        </div>
+        <div class="hero__stats">
+          <div class="hero__stat"><span class="hero__stat-n" id="memberCount">14</span><span class="hero__stat-l">Membri</span></div>
+          <div class="hero__stat"><span class="hero__stat-n">8+</span><span class="hero__stat-l">Specialità</span></div>
+          <div class="hero__stat"><span class="hero__stat-n">6</span><span class="hero__stat-l">Nazioni</span></div>
+        </div>
       </div>
     </section>
 
-
-    <section class="members-grid">
-
-      <article class="member-card">
-        <div class="member-photo-wrap">
-          <img class="member-photo" src="assets/rete/simona-damiano.jpg" alt="Simona Damiano" />
+    <!-- GRIGLIA MEMBRI -->
+    <section class="members-section" id="members">
+      <div class="container">
+        <div class="members-header">
+          <h2 class="members-title">I Membri della Rete</h2>
+          <p class="members-sub">Professionisti selezionati per competenza, curiosità e impatto operativo.</p>
         </div>
-        <h2 class="member-name">Simona Damiano</h2>
-        <p class="member-role">Cardiologa pediatra, Ospedale del Ponte, Varese. Expert Diver, Scuba Schools International. Focus: ecocardiografia.</p>
-        <div class="member-links">
-          <a class="icon-btn" href="https://www.linkedin.com/" aria-label="LinkedIn di Simona Damiano" target="_blank" rel="noopener noreferrer">
-            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.94 8.5H3.56V20h3.38V8.5ZM5.25 3A2.03 2.03 0 1 0 5.3 7.06 2.03 2.03 0 0 0 5.25 3Zm4.23 5.5V20h3.38v-5.7c0-1.5.28-2.95 2.14-2.95 1.83 0 1.86 1.71 1.86 3.05V20h3.39v-6.29c0-3.09-.67-5.46-4.28-5.46-1.73 0-2.88.95-3.35 1.85h-.05V8.5H9.48Z"/></svg>
-          </a>
-          <a class="icon-btn" href="mailto:simona.damiano@asst-settelaghi.it" aria-label="Email di Simona Damiano">
-            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6.75A2.75 2.75 0 0 1 5.75 4h12.5A2.75 2.75 0 0 1 21 6.75v10.5A2.75 2.75 0 0 1 18.25 20H5.75A2.75 2.75 0 0 1 3 17.25V6.75Zm2.2-.25 6.27 5.05a.83.83 0 0 0 1.06 0L18.8 6.5H5.2Zm13.8 1.46-5.42 4.36a2.33 2.33 0 0 1-2.96 0L5.2 7.96v9.29c0 .3.25.55.55.55h12.5c.3 0 .55-.25.55-.55V7.96Z"/></svg>
-          </a>
-        </div>
-      </article>
-
-      <article class="member-card">
-        <div class="member-photo-wrap">
-          <img class="member-photo" src="assets/rete/andrea-alpini.jpg" alt="Andrea Murdoch Alpini" />
-        </div>
-        <h2 class="member-name">Andrea Murdock Alpini</h2>
-        <p class="member-role">Esploratore subacqueo, divulgatore, PSAI Diving Instructor, CEO PHY Diving. Focus: esplorazione di relitti e cave sommerse.</p>
-        <div class="member-links">
-          <a class="icon-btn" href="https://www.linkedin.com/in/andrea-murdock-alpini-050505228/" aria-label="LinkedIn di Andrea Murdock Alpini" target="_blank" rel="noopener noreferrer">
-            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.94 8.5H3.56V20h3.38V8.5ZM5.25 3A2.03 2.03 0 1 0 5.3 7.06 2.03 2.03 0 0 0 5.25 3Zm4.23 5.5V20h3.38v-5.7c0-1.5.28-2.95 2.14-2.95 1.83 0 1.86 1.71 1.86 3.05V20h3.39v-6.29c0-3.09-.67-5.46-4.28-5.46-1.73 0-2.88.95-3.35 1.85h-.05V8.5H9.48Z"/></svg>
-          </a>
-          <a class="icon-btn" href="mailto:exploration@wreckdiving.com" aria-label="Email di Andrea Murdock Alpini">
-            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6.75A2.75 2.75 0 0 1 5.75 4h12.5A2.75 2.75 0 0 1 21 6.75v10.5A2.75 2.75 0 0 1 18.25 20H5.75A2.75 2.75 0 0 1 3 17.25V6.75Zm2.2-.25 6.27 5.05a.83.83 0 0 0 1.06 0L18.8 6.5H5.2Zm13.8 1.46-5.42 4.36a2.33 2.33 0 0 1-2.96 0L5.2 7.96v9.29c0 .3.25.55.55.55h12.5c.3 0 .55-.25.55-.55V7.96Z"/></svg>
-          </a>
-        </div>
-      </article>
-
-      <article class="member-card">
-        <div class="member-photo-wrap">
-          <img class="member-photo" src="assets/rete/valerio-zerbi.jpg" alt="Valerio Zerbi" />
-        </div>
-        <h2 class="member-name">Valerio Zerbi</h2>
-        <p class="member-role">Ingegnere Biomedico, Professore Associato di Neuroscienze, Università di Ginevra, Svizzera. Focus: translational neuroscience.</p>
-        <div class="member-links">
-          <a class="icon-btn" href="https://www.linkedin.com/in/valerio-zerbi-a95b7725/" aria-label="LinkedIn di Valerio Zerbi" target="_blank" rel="noopener noreferrer">
-            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.94 8.5H3.56V20h3.38V8.5ZM5.25 3A2.03 2.03 0 1 0 5.3 7.06 2.03 2.03 0 0 0 5.25 3Zm4.23 5.5V20h3.38v-5.7c0-1.5.28-2.95 2.14-2.95 1.83 0 1.86 1.71 1.86 3.05V20h3.39v-6.29c0-3.09-.67-5.46-4.28-5.46-1.73 0-2.88.95-3.35 1.85h-.05V8.5H9.48Z"/></svg>
-          </a>
-          <a class="icon-btn" href="mailto:zerbiv@hotmail.com" aria-label="Email di Valerio Zerbi">
-            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6.75A2.75 2.75 0 0 1 5.75 4h12.5A2.75 2.75 0 0 1 21 6.75v10.5A2.75 2.75 0 0 1 18.25 20H5.75A2.75 2.75 0 0 1 3 17.25V6.75Zm2.2-.25 6.27 5.05a.83.83 0 0 0 1.06 0L18.8 6.5H5.2Zm13.8 1.46-5.42 4.36a2.33 2.33 0 0 1-2.96 0L5.2 7.96v9.29c0 .3.25.55.55.55h12.5c.3 0 .55-.25.55-.55V7.96Z"/></svg>
-          </a>
-        </div>
-      </article>
-
-      <article class="member-card">
-        <div class="member-photo-wrap">
-          <img class="member-photo" src="assets/rete/erika-borotto.jpg" alt="Erika Borotto" />
-        </div>
-        <h2 class="member-name">Erika Borotto</h2>
-        <p class="member-role">Specialista in Anestesia e Rianimazione. Presidente Inside Trauma Emergency and Critical Care. Italia. Focus: Critical Care.</p>
-        <div class="member-links">
-          <a class="icon-btn" href="https://www.linkedin.com/in/erika-borotto-79a4a796/" aria-label="LinkedIn di Erika Borotto" target="_blank" rel="noopener noreferrer">
-            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.94 8.5H3.56V20h3.38V8.5ZM5.25 3A2.03 2.03 0 1 0 5.3 7.06 2.03 2.03 0 0 0 5.25 3Zm4.23 5.5V20h3.38v-5.7c0-1.5.28-2.95 2.14-2.95 1.83 0 1.86 1.71 1.86 3.05V20h3.39v-6.29c0-3.09-.67-5.46-4.28-5.46-1.73 0-2.88.95-3.35 1.85h-.05V8.5H9.48Z"/></svg>
-          </a>
-          <a class="icon-btn" href="mailto:erika.borotto@asst-settelaghi.it" aria-label="Email di Erika Borotto">
-            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6.75A2.75 2.75 0 0 1 5.75 4h12.5A2.75 2.75 0 0 1 21 6.75v10.5A2.75 2.75 0 0 1 18.25 20H5.75A2.75 2.75 0 0 1 3 17.25V6.75Zm2.2-.25 6.27 5.05a.83.83 0 0 0 1.06 0L18.8 6.5H5.2Zm13.8 1.46-5.42 4.36a2.33 2.33 0 0 1-2.96 0L5.2 7.96v9.29c0 .3.25.55.55.55h12.5c.3 0 .55-.25.55-.55V7.96Z"/></svg>
-          </a>
-        </div>
-      </article>
-
-      <article class="member-card">
-        <div class="member-photo-wrap">
-          <img class="member-photo" src="assets/rete/andrea-galvani.jpg" alt="Andrea Galvani" />
-        </div>
-        <h2 class="member-name">Andrea Galvani</h2>
-        <p class="member-role">Medico Iperbarico e Subacqueo. Consigliere Nazionale SIMSI. Responsabile Scientifico del Centro Iperbarico Repubblica di San Marino. Focus: offshore e dive medicine.</p>
-        <div class="member-links">
-          <a class="icon-btn" href="https://www.linkedin.com/in/agalv86/" aria-label="LinkedIn di Andrea Galvani" target="_blank" rel="noopener noreferrer">
-            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.94 8.5H3.56V20h3.38V8.5ZM5.25 3A2.03 2.03 0 1 0 5.3 7.06 2.03 2.03 0 0 0 5.25 3Zm4.23 5.5V20h3.38v-5.7c0-1.5.28-2.95 2.14-2.95 1.83 0 1.86 1.71 1.86 3.05V20h3.39v-6.29c0-3.09-.67-5.46-4.28-5.46-1.73 0-2.88.95-3.35 1.85h-.05V8.5H9.48Z"/></svg>
-          </a>
-          <a class="icon-btn" href="mailto:andrea.galvani@example.com" aria-label="Email di Andrea Galvani">
-            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6.75A2.75 2.75 0 0 1 5.75 4h12.5A2.75 2.75 0 0 1 21 6.75v10.5A2.75 2.75 0 0 1 18.25 20H5.75A2.75 2.75 0 0 1 3 17.25V6.75Zm2.2-.25 6.27 5.05a.83.83 0 0 0 1.06 0L18.8 6.5H5.2Zm13.8 1.46-5.42 4.36a2.33 2.33 0 0 1-2.96 0L5.2 7.96v9.29c0 .3.25.55.55.55h12.5c.3 0 .55-.25.55-.55V7.96Z"/></svg>
-          </a>
-        </div>
-      </article>
-
-      <article class="member-card">
-        <div class="member-photo-wrap">
-          <img class="member-photo" src="assets/rete/federica-giuffrida.jpg" alt="Federica Giuffrida" />
-        </div>
-        <h2 class="member-name">Federica Giuffrida</h2>
-        <p class="member-role">Specialista in Anestesia e Rianimazione. Critical Care Medicine. Soccorso Alpino. Focus: Medicina di Montagna e Soccorso in Ambienti Impervi.</p>
-        <div class="member-links">
-          <a class="icon-btn" href="https://www.linkedin.com/in/federica-giuffrida-76609a9a/" aria-label="LinkedIn di Federica Giuffrida" target="_blank" rel="noopener noreferrer">
-            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.94 8.5H3.56V20h3.38V8.5ZM5.25 3A2.03 2.03 0 1 0 5.3 7.06 2.03 2.03 0 0 0 5.25 3Zm4.23 5.5V20h3.38v-5.7c0-1.5.28-2.95 2.14-2.95 1.83 0 1.86 1.71 1.86 3.05V20h3.39v-6.29c0-3.09-.67-5.46-4.28-5.46-1.73 0-2.88.95-3.35 1.85h-.05V8.5H9.48Z"/></svg>
-          </a>
-          <a class="icon-btn" href="mailto:federica.giuffrida@asst-settelaghi.it" aria-label="Email di Federica Giuffrida">
-            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6.75A2.75 2.75 0 0 1 5.75 4h12.5A2.75 2.75 0 0 1 21 6.75v10.5A2.75 2.75 0 0 1 18.25 20H5.75A2.75 2.75 0 0 1 3 17.25V6.75Zm2.2-.25 6.27 5.05a.83.83 0 0 0 1.06 0L18.8 6.5H5.2Zm13.8 1.46-5.42 4.36a2.33 2.33 0 0 1-2.96 0L5.2 7.96v9.29c0 .3.25.55.55.55h12.5c.3 0 .55-.25.55-.55V7.96Z"/></svg>
-          </a>
-        </div>
-      </article>
-      
-      <article class="member-card">
-        <div class="member-photo-wrap">
-          <img class="member-photo" src="assets/rete/paolo-calzavacca.jpg" alt="Paolo Calzavacca" />
-        </div>
-        <h2 class="member-name">Paolo Calzavacca</h2>
-        <p class="member-role">Specialista in Anestesia e Rianimazione, ICU IRCCS San Gerardo del Tintori - Monza. Expert Diver. Focus: ExtraCorporeal Membrane Oxygenation.</p>
-        <div class="member-links">
-          <a class="icon-btn" href="https://www.linkedin.com/in/paolo-calzavacca-6549623a/" aria-label="LinkedIn di Paolo Calzavacca" target="_blank" rel="noopener noreferrer">
-            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.94 8.5H3.56V20h3.38V8.5ZM5.25 3A2.03 2.03 0 1 0 5.3 7.06 2.03 2.03 0 0 0 5.25 3Zm4.23 5.5V20h3.38v-5.7c0-1.5.28-2.95 2.14-2.95 1.83 0 1.86 1.71 1.86 3.05V20h3.39v-6.29c0-3.09-.67-5.46-4.28-5.46-1.73 0-2.88.95-3.35 1.85h-.05V8.5H9.48Z"/></svg>
-          </a>
-          <a class="icon-btn" href="mailto:p.calzavacca@gmail.com" aria-label="Email di Paolo Calzavacca">
-            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6.75A2.75 2.75 0 0 1 5.75 4h12.5A2.75 2.75 0 0 1 21 6.75v10.5A2.75 2.75 0 0 1 18.25 20H5.75A2.75 2.75 0 0 1 3 17.25V6.75Zm2.2-.25 6.27 5.05a.83.83 0 0 0 1.06 0L18.8 6.5H5.2Zm13.8 1.46-5.42 4.36a2.33 2.33 0 0 1-2.96 0L5.2 7.96v9.29c0 .3.25.55.55.55h12.5c.3 0 .55-.25.55-.55V7.96Z"/></svg>
-          </a>
-        </div>
-      </article>
-<article class="member-card">
-        <div class="member-photo-wrap">
-          <img class="member-photo" src="assets/rete/erion-xhepa.jpg" alt="Erion Xhepa" />
-        </div>
-        <h2 class="member-name">Erion Xhepa</h2>
-        <p class="member-role">Dive Master|Senior Interventional Cardiologist, Cardiac Catheter Laboratory,TUM University Hospital German Heart Center. Munich.</p>
-        <div class="member-links">
-          <a class="icon-btn" href="https://www.linkedin.com/in/erion-xhepa-a21bb86a/" aria-label="LinkedIn di Erion Xhepa" target="_blank" rel="noopener noreferrer">
-            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.94 8.5H3.56V20h3.38V8.5ZM5.25 3A2.03 2.03 0 1 0 5.3 7.06 2.03 2.03 0 0 0 5.25 3Zm4.23 5.5V20h3.38v-5.7c0-1.5.28-2.95 2.14-2.95 1.83 0 1.86 1.71 1.86 3.05V20h3.39v-6.29c0-3.09-.67-5.46-4.28-5.46-1.73 0-2.88.95-3.35 1.85h-.05V8.5H9.48Z"/></svg>
-          </a>
-          <a class="icon-btn" href="mailto:xhepa@dhm.mhn.de" aria-label="Email di Erion Xhepa">
-            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6.75A2.75 2.75 0 0 1 5.75 4h12.5A2.75 2.75 0 0 1 21 6.75v10.5A2.75 2.75 0 0 1 18.25 20H5.75A2.75 2.75 0 0 1 3 17.25V6.75Zm2.2-.25 6.27 5.05a.83.83 0 0 0 1.06 0L18.8 6.5H5.2Zm13.8 1.46-5.42 4.36a2.33 2.33 0 0 1-2.96 0L5.2 7.96v9.29c0 .3.25.55.55.55h12.5c.3 0 .55-.25.55-.55V7.96Z"/></svg>
-          </a>
-        </div>
-      </article>
-       <article class="member-card">
-        <div class="member-photo-wrap">
-          <img class="member-photo" src="assets/rete/james-m.jpg" alt="james m" />
-        </div>
-        <h2 class="member-name">David James Marsland</h2>
-        <p class="member-role">Esercito Italiano. Corpi Speciali. Paracadutisti Col Moschin. Focus: Primo Intervento in Aree di Guerra.</p>
-        <div class="member-links">
-          <a class="icon-btn" href="https://www.linkedin.com/in/" aria-label="LinkedIn di James M" target="_blank" rel="noopener noreferrer">
-            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.94 8.5H3.56V20h3.38V8.5ZM5.25 3A2.03 2.03 0 1 0 5.3 7.06 2.03 2.03 0 0 0 5.25 3Zm4.23 5.5V20h3.38v-5.7c0-1.5.28-2.95 2.14-2.95 1.83 0 1.86 1.71 1.86 3.05V20h3.39v-6.29c0-3.09-.67-5.46-4.28-5.46-1.73 0-2.88.95-3.35 1.85h-.05V8.5H9.48Z"/></svg>
-          </a>
-          <a class="icon-btn" href="mailto:James" aria-label="Email di James M">
-            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6.75A2.75 2.75 0 0 1 5.75 4h12.5A2.75 2.75 0 0 1 21 6.75v10.5A2.75 2.75 0 0 1 18.25 20H5.75A2.75 2.75 0 0 1 3 17.25V6.75Zm2.2-.25 6.27 5.05a.83.83 0 0 0 1.06 0L18.8 6.5H5.2Zm13.8 1.46-5.42 4.36a2.33 2.33 0 0 1-2.96 0L5.2 7.96v9.29c0 .3.25.55.55.55h12.5c.3 0 .55-.25.55-.55V7.96Z"/></svg>
-          </a>
-        </div>
-      </article>
-      </article>
-       <article class="member-card">
-        <div class="member-photo-wrap">
-          <img class="member-photo" src="assets/rete/tommaso-giacon.jpg" alt="Tommaso Antonio Giacon" />
-        </div>
-        <h2 class="member-name">Tommaso Antonio Giacon</h2>
-        <p class="member-role"> Specialista in Anestesia e Rianimazione. Medico Iperbarico e Subacqueo. Crew Medical Officer, Analog Astronaut. Focus: Fisiologia in Ambienti Estremi</p>
-        <div class="member-links">
-          <a class="icon-btn" href="https://www.linkedin.com/in/tommaso-antonio-giacon-613b58208/" aria-label="LinkedIn di Tommaso Antonio Giacon" target="_blank" rel="noopener noreferrer">
-            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.94 8.5H3.56V20h3.38V8.5ZM5.25 3A2.03 2.03 0 1 0 5.3 7.06 2.03 2.03 0 0 0 5.25 3Zm4.23 5.5V20h3.38v-5.7c0-1.5.28-2.95 2.14-2.95 1.83 0 1.86 1.71 1.86 3.05V20h3.39v-6.29c0-3.09-.67-5.46-4.28-5.46-1.73 0-2.88.95-3.35 1.85h-.05V8.5H9.48Z"/></svg>
-          </a>
-          <a class="icon-btn" href="mailto:nostromo.giacon@gmail.com" aria-label="Email di James M">
-            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6.75A2.75 2.75 0 0 1 5.75 4h12.5A2.75 2.75 0 0 1 21 6.75v10.5A2.75 2.75 0 0 1 18.25 20H5.75A2.75 2.75 0 0 1 3 17.25V6.75Zm2.2-.25 6.27 5.05a.83.83 0 0 0 1.06 0L18.8 6.5H5.2Zm13.8 1.46-5.42 4.36a2.33 2.33 0 0 1-2.96 0L5.2 7.96v9.29c0 .3.25.55.55.55h12.5c.3 0 .55-.25.55-.55V7.96Z"/></svg>
-          </a>
-        </div>
-      </article>
-      </article>
-       <article class="member-card">
-        <div class="member-photo-wrap">
-          <img class="member-photo" src="assets/rete/tiago-cardoso.jpg" alt="Tiago Cardoso" />
-        </div>
-        <h2 class="member-name">Tiago Miguel Cardoso</h2>
-        <p class="member-role"> Specialista in Anestesia e Rianimazione. Istruttore ETC. Dive Expert. Medico HEMS, Porto. Portogallo. Focus: Rianimazione in Ambienti Estremi</p>
-        <div class="member-links">
-          <a class="icon-btn" href="https://www.linkedin.com/in/tiago-miguel-cardoso-a2b85019/" aria-label="LinkedIn di Tiago Miguel Cardoso" target="_blank" rel="noopener noreferrer">
-            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.94 8.5H3.56V20h3.38V8.5ZM5.25 3A2.03 2.03 0 1 0 5.3 7.06 2.03 2.03 0 0 0 5.25 3Zm4.23 5.5V20h3.38v-5.7c0-1.5.28-2.95 2.14-2.95 1.83 0 1.86 1.71 1.86 3.05V20h3.39v-6.29c0-3.09-.67-5.46-4.28-5.46-1.73 0-2.88.95-3.35 1.85h-.05V8.5H9.48Z"/></svg>
-          </a>
-          <a class="icon-btn" href="mailto:tiago12525@gmail.com." aria-label="Email di Tiago Miguel Cardoso">
-            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6.75A2.75 2.75 0 0 1 5.75 4h12.5A2.75 2.75 0 0 1 21 6.75v10.5A2.75 2.75 0 0 1 18.25 20H5.75A2.75 2.75 0 0 1 3 17.25V6.75Zm2.2-.25 6.27 5.05a.83.83 0 0 0 1.06 0L18.8 6.5H5.2Zm13.8 1.46-5.42 4.36a2.33 2.33 0 0 1-2.96 0L5.2 7.96v9.29c0 .3.25.55.55.55h12.5c.3 0 .55-.25.55-.55V7.96Z"/></svg>
-          </a>
-        </div>
-      </article>
-       </article>
-<article class="member-card">
-        <div class="member-photo-wrap">
-          <img class="member-photo" src="assets/rete/federica-venturelli.jpg" alt="Federica Venturelli" />
-        </div>
-        <h2 class="member-name">Federica Venturelli</h2>
-        <p class="member-role">Dive Expert| Medicina Interna. Medico Iperbarico e Subacqueo. Treviso.</p>
-        <div class="member-links">
-          <a class="icon-btn" href="https://www.linkedin.com/" aria-label="LinkedIn di Federica Venturelli" target="_blank" rel="noopener noreferrer">
-            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.94 8.5H3.56V20h3.38V8.5ZM5.25 3A2.03 2.03 0 1 0 5.3 7.06 2.03 2.03 0 0 0 5.25 3Zm4.23 5.5V20h3.38v-5.7c0-1.5.28-2.95 2.14-2.95 1.83 0 1.86 1.71 1.86 3.05V20h3.39v-6.29c0-3.09-.67-5.46-4.28-5.46-1.73 0-2.88.95-3.35 1.85h-.05V8.5H9.48Z"/></svg>
-          </a>
-          <a class="icon-btn" href="mailto:federica.venturelli@" aria-label="Email di Federica Venturelli">
-            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6.75A2.75 2.75 0 0 1 5.75 4h12.5A2.75 2.75 0 0 1 21 6.75v10.5A2.75 2.75 0 0 1 18.25 20H5.75A2.75 2.75 0 0 1 3 17.25V6.75Zm2.2-.25 6.27 5.05a.83.83 0 0 0 1.06 0L18.8 6.5H5.2Zm13.8 1.46-5.42 4.36a2.33 2.33 0 0 1-2.96 0L5.2 7.96v9.29c0 .3.25.55.55.55h12.5c.3 0 .55-.25.55-.55V7.96Z"/></svg>
-          </a>
-        </div>
-      </article>
-      </article>
-       <article class="member-card">
-        <div class="member-photo-wrap">
-          <img class="member-photo" src="assets/rete/giulio-saletti.jpg" alt="Giulio Saletti" />
-        </div>
-        <h2 class="member-name">Giulio Saletti</h2>
-        <p class="member-role"> Specialist in Hyperbaric Refuge Chamber and Special Projetcs, WEWALTER Italy. Focus:Safety for Industry, Civil and Defence</p>
-        <div class="member-links">
-          <a class="icon-btn" href="https://www.linkedin.com/in/giulio-saletti-24626668/" aria-label="LinkedIn di Giulio Saletti" target="_blank" rel="noopener noreferrer">
-            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.94 8.5H3.56V20h3.38V8.5ZM5.25 3A2.03 2.03 0 1 0 5.3 7.06 2.03 2.03 0 0 0 5.25 3Zm4.23 5.5V20h3.38v-5.7c0-1.5.28-2.95 2.14-2.95 1.83 0 1.86 1.71 1.86 3.05V20h3.39v-6.29c0-3.09-.67-5.46-4.28-5.46-1.73 0-2.88.95-3.35 1.85h-.05V8.5H9.48Z"/></svg>
-          </a>
-          <a class="icon-btn" href="mailto:giulio.saletti@wewalter.it" aria-label="Email di Giulio Saletti">
-            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6.75A2.75 2.75 0 0 1 5.75 4h12.5A2.75 2.75 0 0 1 21 6.75v10.5A2.75 2.75 0 0 1 18.25 20H5.75A2.75 2.75 0 0 1 3 17.25V6.75Zm2.2-.25 6.27 5.05a.83.83 0 0 0 1.06 0L18.8 6.5H5.2Zm13.8 1.46-5.42 4.36a2.33 2.33 0 0 1-2.96 0L5.2 7.96v9.29c0 .3.25.55.55.55h12.5c.3 0 .55-.25.55-.55V7.96Z"/></svg>
-          </a>
-        </div>
-      </article>
-       </article>
-       <article class="member-card">
-        <div class="member-photo-wrap">
-          <img class="member-photo" src="assets/rete/gabriele-soldini.jpg" alt="james m" />
-        </div>
-        <h2 class="member-name">Gabriele Soldini</h2>
-        <p class="member-role">Direttore DEA Chirurgico Gravedona. Venue Medical Officer. Chirurgia d'Urgenza. Focus: Mass Gathering Medicine </p>
-        <div class="member-links">
-          <a class="icon-btn" href="https://www.linkedin.com/in/gabriele-soldini-4263a569/" aria-label="LinkedIn di Gabriele Soldini" target="_blank" rel="noopener noreferrer">
-            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.94 8.5H3.56V20h3.38V8.5ZM5.25 3A2.03 2.03 0 1 0 5.3 7.06 2.03 2.03 0 0 0 5.25 3Zm4.23 5.5V20h3.38v-5.7c0-1.5.28-2.95 2.14-2.95 1.83 0 1.86 1.71 1.86 3.05V20h3.39v-6.29c0-3.09-.67-5.46-4.28-5.46-1.73 0-2.88.95-3.35 1.85h-.05V8.5H9.48Z"/></svg>
-          </a>
-          <a class="icon-btn" href="mailto:James" aria-label="Email di James M">
-            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6.75A2.75 2.75 0 0 1 5.75 4h12.5A2.75 2.75 0 0 1 21 6.75v10.5A2.75 2.75 0 0 1 18.25 20H5.75A2.75 2.75 0 0 1 3 17.25V6.75Zm2.2-.25 6.27 5.05a.83.83 0 0 0 1.06 0L18.8 6.5H5.2Zm13.8 1.46-5.42 4.36a2.33 2.33 0 0 1-2.96 0L5.2 7.96v9.29c0 .3.25.55.55.55h12.5c.3 0 .55-.25.55-.55V7.96Z"/></svg>
-          </a>
-        </div>
-      </article>
+        <!-- Canvas sinaptico dietro le card -->
+        <canvas id="synapseCanvas" aria-hidden="true"></canvas>
+        <!-- Le card vengono iniettate da JS -->
+        <div class="members-grid" id="membersGrid" role="list"></div>
+      </div>
     </section>
 
-    <section class="cta-box">
-      <h2>Vuoi entrare nella Rete di Boyle?</h2>
-      <p>
-        La rete è aperta a professionisti, ricercatori e collaboratori interessati alla medicina subacquea,
-        iperbarica, alla gestione globale del paziente critico, agli ambienti estremi.
-        Gli Amici di Boyle sono una rete di professionisti curiosi, competenti e appassionati di fisiologia umana,
-        neuroscienze, medicina spaziale, sicurezza e innovazione.
-      </p>
-      <button class="btn-electric" id="open-network-modal" type="button">
-        <span>Candidati alla rete</span>
-      </button>
+    <!-- CTA ENTRATA RETE -->
+    <section class="cta-section">
+      <div class="container">
+        <div class="cta-box">
+          <div class="cta-box__bg" aria-hidden="true"></div>
+          <div class="cta-box__content">
+            <h2 class="cta-box__title">Vuoi entrare nella Rete di Boyle?</h2>
+            <p class="cta-box__text">La rete è aperta a professionisti, ricercatori e collaboratori con competenze in medicina subacquea, iperbarica, ambienti estremi, fisiologia umana, sicurezza e innovazione.</p>
+            <button class="btn-electric" id="open-network-modal-2" type="button">
+              <span class="btn-electric__inner">Candidati ora</span>
+            </button>
+          </div>
+        </div>
+      </div>
     </section>
+
   </main>
 
-  <div class="modal" id="network-modal" aria-hidden="true">
-    <div class="modal__dialog" role="dialog" aria-modal="true" aria-labelledby="network-modal-title">
-      <button class="modal__close" id="close-network-modal" type="button" aria-label="Chiudi finestra">✕</button>
-
-      <h2 class="modal__title" id="network-modal-title">Entra nella Rete Smart degli Amici di Boyle!</h2>
-      <p class="modal__text">
-        Compila il modulo per candidarti alla rete. La richiesta verrà inviata al team degli Amici di Boyle per la valutazione.
-      </p>
-
+  <!-- MODAL CANDIDATURA -->
+  <div class="modal" id="network-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal__dialog">
+      <button class="modal__close" id="close-network-modal" type="button" aria-label="Chiudi">✕</button>
+      <div class="modal__head">
+        <span class="modal__kicker">Rete di Boyle</span>
+        <h2 class="modal__title" id="modal-title">Connettiamo menti brillanti</h2>
+        <p class="modal__desc">La rete è selettiva e orientata a chi opera davvero negli ambienti estremi. Presentati: valuteremo il profilo e ti contatteremo.</p>
+      </div>
       <form class="network-form" id="network-form" action="https://formspree.io/f/xzdareqw" method="POST">
-        <input type="hidden" name="_subject" value="Nuova candidatura alla Rete di Boyle">
-        <input type="hidden" name="_language" value="it">
-       
-        <input type="hidden" id="cand-snippet" name="codice_card_html">
-
+        <input type="hidden" name="_subject" value="Nuova candidatura alla Rete di Boyle" />
+        <input type="hidden" name="_language" value="it" />
+        <input type="hidden" id="cand-snippet" name="codice_card_html" />
         <div class="form-grid">
           <div class="field">
-            <label for="cand-name">Nome e Cognome</label>
-            <input id="cand-name" name="nome" type="text" required placeholder="Es. Maria Rossi">
+            <label for="cand-name">NOME E COGNOME</label>
+            <input id="cand-name" name="nome" type="text" required placeholder="Nome e Cognome" />
           </div>
-
           <div class="field">
-            <label for="cand-email">Email</label>
-            <input id="cand-email" name="email" type="email" required placeholder="nome@email.it">
+            <label for="cand-email">EMAIL</label>
+            <input id="cand-email" name="email" type="email" required placeholder="nome@dominio.it" />
           </div>
-
           <div class="field">
-            <label for="cand-affiliation">Affiliazione</label>
-            <input id="cand-affiliation" name="affiliazione" type="text" placeholder="Ospedale, Università, Centro, Azienda">
+            <label for="cand-affiliation">AFFILIAZIONE</label>
+            <input id="cand-affiliation" name="affiliazione" type="text" placeholder="Ospedale, Università, Centro, Azienda" />
           </div>
-
           <div class="field">
-            <label for="cand-role">Ruolo / Professione</label>
-            <input id="cand-role" name="ruolo" type="text" placeholder="Es. Medico iperbarico, ricercatore, ingegnere biomedico">
+            <label for="cand-role">QUALIFICA PROFESSIONALE</label>
+            <input id="cand-role" name="ruolo" type="text" placeholder="Es. Medico iperbarico, ricercatore, ingegnere biomedico" />
           </div>
-
           <div class="field field--full">
-            <label for="cand-interest">Area di interesse / Focus</label>
-            <input id="cand-interest" name="focus" type="text" placeholder="Es. Medicina iperbarica, neuroscienze, fisiologia, soccorso in ambienti estremi">
+            <label for="cand-interest">AREA DI INTERESSE / FOCUS</label>
+            <input id="cand-interest" name="focus" type="text" placeholder="Es. Medicina iperbarica, neuroscienze, fisiologia, soccorso estremo" />
           </div>
-
           <div class="field field--full">
-            <label for="cand-linkedin">Profilo LinkedIn</label>
-            <input id="cand-linkedin" name="linkedin" type="url" placeholder="https://www.linkedin.com/in/...">
+            <label for="cand-city">CITTÀ / NAZIONE</label>
+            <input id="cand-city" name="citta" type="text" placeholder="Es. Milano, Italia" />
           </div>
-
           <div class="field field--full">
-            <label for="cand-bio">Breve presentazione</label>
-            <textarea id="cand-bio" name="presentazione" placeholder="Racconta in poche righe chi sei, cosa fai e perché vorresti entrare nella Rete di Boyle."></textarea>
+            <label for="cand-linkedin">PROFILO LINKEDIN</label>
+            <input id="cand-linkedin" name="linkedin" type="url" placeholder="https://www.linkedin.com/in/..." />
+          </div>
+          <div class="field field--full">
+            <label for="cand-bio">PRESENTAZIONE E MOTIVAZIONE</label>
+            <textarea id="cand-bio" name="presentazione" placeholder="Racconta chi sei, cosa fai e perché vorresti entrare nella Rete di Boyle."></textarea>
           </div>
         </div>
-
         <div class="modal__actions">
           <button class="btn-electric" type="submit">
-            <span>Invia candidatura</span>
+            <span class="btn-electric__inner">Invia candidatura</span>
           </button>
         </div>
-
-        <div class="form-status" id="form-status"></div>
+        <div class="form-status" id="form-status" aria-live="polite"></div>
       </form>
     </div>
   </div>
 
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__brand">
+        <img src="assets/logo.png" alt="" width="30" height="30" aria-hidden="true" />
+        <span>© 2026 Gli Amici di Boyle</span>
+      </div>
+      <nav class="footer__links">
+        <a href="index.html">Home</a>
+        <a href="podcast.html">Podcast</a>
+        <a href="#top">↑ Su</a>
+        <a href="index.html#contatti">Contatti</a>
+      </nav>
+    </div>
+  </footer>
+
   <script>
-    const modal = document.getElementById('network-modal');
-    const openBtn = document.getElementById('open-network-modal');
-    const closeBtn = document.getElementById('close-network-modal');
-    const form = document.getElementById('network-form');
-    const statusBox = document.getElementById('form-status');
+  /* ════════════════════════════════════════════════
+     MEMBERS DATA — driven by rete-members.json
+     ════════════════════════════════════════════════ */
+  const MEMBERS_URL = 'rete-members.json';
 
-    const nameInput = document.getElementById('cand-name');
-    const emailInput = document.getElementById('cand-email');
-    const affiliationInput = document.getElementById('cand-affiliation');
-    const roleInput = document.getElementById('cand-role');
-    const interestInput = document.getElementById('cand-interest');
-    const linkedinInput = document.getElementById('cand-linkedin');
-    const bioInput = document.getElementById('cand-bio');
-    const snippetField = document.getElementById('cand-snippet');
+  const LI_ICON = `<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.94 8.5H3.56V20h3.38V8.5ZM5.25 3A2.03 2.03 0 1 0 5.3 7.06 2.03 2.03 0 0 0 5.25 3Zm4.23 5.5V20h3.38v-5.7c0-1.5.28-2.95 2.14-2.95 1.83 0 1.86 1.71 1.86 3.05V20h3.39v-6.29c0-3.09-.67-5.46-4.28-5.46-1.73 0-2.88.95-3.35 1.85h-.05V8.5H9.48Z"/></svg>`;
 
-    function openModal(){
-      modal.classList.add('is-open');
-      modal.setAttribute('aria-hidden', 'false');
-      document.body.style.overflow = 'hidden';
-      setTimeout(() => nameInput.focus(), 50);
-      updateSnippet();
+  function renderCard(m) {
+    const li = m.linkedin && m.linkedin !== 'https://www.linkedin.com/'
+      ? `<a class="icon-btn" href="${m.linkedin}" aria-label="LinkedIn di ${m.name}" target="_blank" rel="noopener">${LI_ICON}</a>`
+      : '';
+    return `
+      <article class="member-card reveal" role="listitem">
+        <div class="member-photo-wrap">
+          <img class="member-photo" src="assets/rete/${m.img}" alt="${m.name}" loading="lazy" onerror="this.style.background='rgba(5,18,46,.8)';this.style.opacity='.4'" />
+        </div>
+        <h2 class="member-name">${m.name}</h2>
+        <p class="member-role">${m.role}</p>
+        <div class="member-location">
+          <span class="member-location__line" aria-hidden="true"></span>
+          <span class="member-location__city">
+            <svg width="11" height="11" viewBox="0 0 14 14" fill="currentColor" aria-hidden="true"><path d="M7 0a5 5 0 0 0-5 5c0 4 5 9 5 9s5-5 5-9a5 5 0 0 0-5-5Zm0 7a2 2 0 1 1 0-4 2 2 0 0 1 0 4Z"/></svg>
+            ${m.city || 'Italia'}
+          </span>
+          <span class="member-location__line" aria-hidden="true"></span>
+        </div>
+        <div class="member-links">${li}</div>
+      </article>`;
+  }
+
+  async function loadMembers() {
+    const grid = document.getElementById('membersGrid');
+    const countEl = document.getElementById('memberCount');
+    try {
+      const res = await fetch(MEMBERS_URL);
+      if (!res.ok) throw new Error('fetch failed');
+      const members = await res.json();
+      grid.innerHTML = members.map(renderCard).join('');
+      if (countEl) countEl.textContent = members.length;
+      initReveal();
+      initSynapseCanvas(members.length);
+    } catch(e) {
+      grid.innerHTML = '<p style="color:rgba(237,247,255,.5);padding:20px;">Caricamento profili non disponibile.</p>';
     }
+  }
 
-    function closeModal(){
-      modal.classList.remove('is-open');
-      modal.setAttribute('aria-hidden', 'true');
-      document.body.style.overflow = '';
-    }
-
-    function escapeHtml(str){
-      return (str || '')
-        .replaceAll('&', '&amp;')
-        .replaceAll('<', '&lt;')
-        .replaceAll('>', '&gt;')
-        .replaceAll('"', '&quot;')
-        .replaceAll("'", '&#39;');
-    }
-
-    function slugify(str){
-      return (str || '')
-        .toLowerCase()
-        .normalize('NFD')
-        .replace(/[\u0300-\u036f]/g, '')
-        .replace(/[^a-z0-9]+/g, '-')
-        .replace(/^-+|-+$/g, '')
-        .replace(/-{2,}/g, '-');
-    }
-
-    function buildRoleLine(){
-      const parts = [];
-      if(roleInput.value.trim()) parts.push(roleInput.value.trim());
-      if(affiliationInput.value.trim()) parts.push(affiliationInput.value.trim());
-      if(interestInput.value.trim()) parts.push('Focus: ' + interestInput.value.trim());
-      if(bioInput.value.trim()) parts.push(bioInput.value.trim());
-      return parts.join('. ');
-    }
-
-    function buildCardSnippet(){
-      const fullName = nameInput.value.trim() || 'Nome Cognome';
-      const safeName = escapeHtml(fullName);
-      const email = emailInput.value.trim() || 'email@example.com';
-      const linkedin = linkedinInput.value.trim() || 'https://www.linkedin.com/';
-      const slug = slugify(fullName || 'nome-cognome') || 'nome-cognome';
-      const roleLine = escapeHtml(buildRoleLine() || 'Ruolo / breve descrizione.');
-
-      return `<article class="member-card">
-  <div class="member-photo-wrap">
-    <img class="member-photo" src="assets/rete/${slug}.jpg" alt="${safeName}" />
-  </div>
-  <h2 class="member-name">${safeName}</h2>
-  <p class="member-role">${roleLine}</p>
-  <div class="member-links">
-    <a class="icon-btn" href="${escapeHtml(linkedin)}" aria-label="LinkedIn di ${safeName}" target="_blank" rel="noopener noreferrer">
-      <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.94 8.5H3.56V20h3.38V8.5ZM5.25 3A2.03 2.03 0 1 0 5.3 7.06 2.03 2.03 0 0 0 5.25 3Zm4.23 5.5V20h3.38v-5.7c0-1.5.28-2.95 2.14-2.95 1.83 0 1.86 1.71 1.86 3.05V20h3.39v-6.29c0-3.09-.67-5.46-4.28-5.46-1.73 0-2.88.95-3.35 1.85h-.05V8.5H9.48Z"/></svg>
-    </a>
-    <a class="icon-btn" href="mailto:${escapeHtml(email)}" aria-label="Email di ${safeName}">
-      <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6.75A2.75 2.75 0 0 1 5.75 4h12.5A2.75 2.75 0 0 1 21 6.75v10.5A2.75 2.75 0 0 1 18.25 20H5.75A2.75 2.75 0 0 1 3 17.25V6.75Zm2.2-.25 6.27 5.05a.83.83 0 0 0 1.06 0L18.8 6.5H5.2Zm13.8 1.46-5.42 4.36a2.33 2.33 0 0 1-2.96 0L5.2 7.96v9.29c0 .3.25.55.55.55h12.5c.3 0 .55-.25.55-.55V7.96Z"/></svg>
-    </a>
-  </div>
-</article>`;
-    }
-
-    function updateSnippet(){
-      snippetField.value = buildCardSnippet();
-    }
-
-    [nameInput, emailInput, affiliationInput, roleInput, interestInput, linkedinInput, bioInput]
-      .forEach(el => el.addEventListener('input', updateSnippet));
-
-    openBtn.addEventListener('click', openModal);
-    closeBtn.addEventListener('click', closeModal);
-
-    modal.addEventListener('click', (e) => {
-      if(e.target === modal) closeModal();
-    });
-
-    document.addEventListener('keydown', (e) => {
-      if(e.key === 'Escape' && modal.classList.contains('is-open')){
-        closeModal();
-      }
-    });
-
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      updateSnippet();
-      statusBox.textContent = 'Invio in corso...';
-      statusBox.classList.remove('error');
-
-      try{
-        const response = await fetch(form.action, {
-          method: 'POST',
-          body: new FormData(form),
-          headers: {
-            'Accept': 'application/json'
-          }
-        });
-
-        if(response.ok){
-          statusBox.textContent = 'Candidatura inviata correttamente.';
-          statusBox.classList.remove('error');
-          form.reset();
-          updateSnippet();
-          setTimeout(() => {
-            closeModal();
-            statusBox.textContent = '';
-          }, 1800);
-        }else{
-          statusBox.textContent = 'Invio non riuscito. Riprova tra poco.';
-          statusBox.classList.add('error');
+  /* ── Scroll reveal ── */
+  function initReveal() {
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          setTimeout(() => e.target.classList.add('is-visible'), +(e.target.dataset.delay||0));
+          obs.unobserve(e.target);
         }
-      }catch(err){
-        statusBox.textContent = 'Errore di rete. Controlla la connessione e riprova.';
-        statusBox.classList.add('error');
-      }
-    });
+      });
+    }, { threshold: 0.08 });
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+  }
 
-    updateSnippet();
+  /* ── Synapse canvas behind cards ── */
+  function initSynapseCanvas(nMembers) {
+    const canvas = document.getElementById('synapseCanvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    const grid = document.getElementById('membersGrid');
+    
+    function resize() {
+      canvas.width  = grid.offsetWidth;
+      canvas.height = grid.offsetHeight;
+    }
+    resize();
+    window.addEventListener('resize', resize, {passive:true});
+
+    /* Create nodes at card positions */
+    let nodes = [];
+    function buildNodes() {
+      nodes = [];
+      const cards = grid.querySelectorAll('.member-card');
+      cards.forEach(card => {
+        const r = card.getBoundingClientRect();
+        const gr = grid.getBoundingClientRect();
+        nodes.push({
+          x: r.left - gr.left + r.width/2,
+          y: r.top  - gr.top  + r.height/2,
+          vx: (Math.random()-.5)*.3,
+          vy: (Math.random()-.5)*.3,
+          r: 3 + Math.random()*2,
+          pulse: Math.random()*Math.PI*2,
+        });
+      });
+      /* Extra floating nodes */
+      for (let i=0; i<18; i++) {
+        nodes.push({
+          x: Math.random()*canvas.width,
+          y: Math.random()*canvas.height,
+          vx:(Math.random()-.5)*.4,
+          vy:(Math.random()-.5)*.4,
+          r: 1.5+Math.random(),
+          pulse: Math.random()*Math.PI*2,
+          floating: true,
+        });
+      }
+    }
+    setTimeout(buildNodes, 400);
+
+    function draw(t) {
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+      if (!nodes.length) { requestAnimationFrame(draw); return; }
+
+      /* Update floating nodes */
+      nodes.forEach(n => {
+        if (!n.floating) return;
+        n.x += n.vx; n.y += n.vy;
+        n.pulse += .018;
+        if (n.x<0||n.x>canvas.width)  n.vx *= -1;
+        if (n.y<0||n.y>canvas.height) n.vy *= -1;
+      });
+
+      /* Draw connections */
+      const MAX_D = 220;
+      for (let i=0;i<nodes.length;i++) {
+        for (let j=i+1;j<nodes.length;j++) {
+          const dx = nodes[i].x - nodes[j].x;
+          const dy = nodes[i].y - nodes[j].y;
+          const d  = Math.sqrt(dx*dx+dy*dy);
+          if (d > MAX_D) continue;
+          const alpha = (1 - d/MAX_D) * .14;
+          ctx.beginPath();
+          ctx.moveTo(nodes[i].x, nodes[i].y);
+          ctx.lineTo(nodes[j].x, nodes[j].y);
+          ctx.strokeStyle = `rgba(120,230,255,${alpha})`;
+          ctx.lineWidth = .6;
+          ctx.stroke();
+        }
+      }
+
+      /* Draw nodes */
+      nodes.forEach(n => {
+        const pulse = .6 + .4*Math.sin(n.pulse + t*.001);
+        const r = n.r * pulse;
+        const grd = ctx.createRadialGradient(n.x,n.y,0,n.x,n.y,r*3);
+        grd.addColorStop(0,'rgba(190,245,255,.9)');
+        grd.addColorStop(.4,'rgba(100,220,255,.4)');
+        grd.addColorStop(1,'rgba(80,180,255,0)');
+        ctx.beginPath();
+        ctx.arc(n.x,n.y,r*3,0,Math.PI*2);
+        ctx.fillStyle = grd;
+        ctx.fill();
+        ctx.beginPath();
+        ctx.arc(n.x,n.y,r,0,Math.PI*2);
+        ctx.fillStyle = 'rgba(200,248,255,.85)';
+        ctx.fill();
+      });
+
+      requestAnimationFrame(draw);
+    }
+    requestAnimationFrame(draw);
+  }
+
+  /* ── Modal ── */
+  function openModal()  { document.getElementById('network-modal').classList.add('is-open'); document.body.style.overflow='hidden'; }
+  function closeModal() { document.getElementById('network-modal').classList.remove('is-open'); document.body.style.overflow=''; }
+
+  document.getElementById('open-network-modal')?.addEventListener('click', openModal);
+  document.getElementById('open-network-modal-2')?.addEventListener('click', openModal);
+  document.getElementById('close-network-modal')?.addEventListener('click', closeModal);
+  document.getElementById('network-modal')?.addEventListener('click', e => { if(e.target===e.currentTarget) closeModal(); });
+  document.addEventListener('keydown', e => { if(e.key==='Escape') closeModal(); });
+
+  /* ── Form submit ── */
+  const form = document.getElementById('network-form');
+  const statusBox = document.getElementById('form-status');
+  form?.addEventListener('submit', async e => {
+    e.preventDefault();
+    statusBox.textContent = 'Invio in corso…';
+    statusBox.className = 'form-status';
+    try {
+      const res = await fetch(form.action, { method:'POST', body:new FormData(form), headers:{'Accept':'application/json'} });
+      if (res.ok) {
+        statusBox.textContent = '✓ Candidatura inviata correttamente. Ti contatteremo presto.';
+        statusBox.className = 'form-status is-success';
+        form.reset();
+        setTimeout(closeModal, 2800);
+      } else {
+        statusBox.textContent = 'Invio non riuscito. Scrivi a info@amicidiboyle.it';
+        statusBox.className = 'form-status is-error';
+      }
+    } catch(err) {
+      statusBox.textContent = 'Errore di rete. Scrivi a info@amicidiboyle.it';
+      statusBox.className = 'form-status is-error';
+    }
+  });
+
+  /* ── Mobile nav ── */
+  const mBtn = document.getElementById('navMobileBtn');
+  const mPanel = document.getElementById('navMobilePanel');
+  mBtn?.addEventListener('click', () => {
+    const open = mPanel.getAttribute('aria-hidden')==='false';
+    mPanel.setAttribute('aria-hidden', String(open));
+    mBtn.setAttribute('aria-expanded', String(!open));
+    mBtn.classList.toggle('is-open', !open);
+  });
+  mPanel?.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    mPanel.setAttribute('aria-hidden','true');
+    mBtn?.classList.remove('is-open');
+  }));
+  document.addEventListener('click', e => {
+    if (!mBtn?.contains(e.target) && !mPanel?.contains(e.target)) {
+      mPanel?.setAttribute('aria-hidden','true');
+      mBtn?.classList.remove('is-open');
+    }
+  });
+
+  /* ── Init ── */
+  loadMembers();
   </script>
 </body>
 </html>
