@@ -111,9 +111,10 @@
           </a>
         </div>
         <div class="hero__stats">
-          <div class="hero__stat"><span class="hero__stat-n" id="memberCount">14</span><span class="hero__stat-l">Membri</span></div>
+          <div class="hero__stat"><span class="hero__stat-n" id="memberCount">14</span><span class="hero__stat-l">Membri attivi</span></div>
           <div class="hero__stat"><span class="hero__stat-n">8+</span><span class="hero__stat-l">Specialità</span></div>
           <div class="hero__stat"><span class="hero__stat-n">6</span><span class="hero__stat-l">Nazioni</span></div>
+          <div class="hero__stat hero__stat--growing"><span class="hero__stat-n">↑</span><span class="hero__stat-l">In crescita</span></div>
         </div>
       </div>
     </section>
@@ -128,6 +129,79 @@
 
         <!-- Le card vengono iniettate da JS -->
         <div class="members-grid" id="membersGrid" role="list"></div>
+      </div>
+    </section>
+
+    <!-- EMAIL MEMBERS ONLY MODAL -->
+    <div class="email-wall" id="emailWall" aria-hidden="true">
+      <div class="email-wall__dialog">
+        <button class="email-wall__close" id="emailWallClose" aria-label="Chiudi">✕</button>
+        <div class="email-wall__icon">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+        </div>
+        <h3 class="email-wall__title">Contatti riservati ai membri</h3>
+        <p class="email-wall__text">Gli indirizzi email diretti dei professionisti della Rete di Boyle sono visibili solo ai membri attivi. È uno dei vantaggi concreti di far parte della rete.</p>
+        <div class="email-wall__actions">
+          <button class="btn-electric" id="emailWallJoin">
+            <span class="btn-electric__inner">Candidati alla rete</span>
+          </button>
+          <p class="email-wall__note">Sei già membro? Scrivi a <a href="mailto:info@amicidiboyle.it">info@amicidiboyle.it</a> per ottenere l'accesso completo.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- VANTAGGI DELLA RETE -->
+    <section class="benefits-section">
+      <div class="container">
+        <div class="benefits-header reveal">
+          <p class="benefits-eyebrow">Perché entrare</p>
+          <h2 class="benefits-title">Cosa significa far parte della Rete di Boyle</h2>
+          <p class="benefits-sub">La rete non è una directory. È un ecosistema attivo dove ogni membro contribuisce e riceve valore concreto.</p>
+        </div>
+        <div class="benefits-grid">
+          <div class="benefit-card reveal">
+            <div class="benefit-icon benefit-icon--cyan">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            </div>
+            <h3>Accesso ai contatti diretti</h3>
+            <p>Cerca un esperto di medicina iperbarica per un congresso, un relatore specializzato, un collaboratore scientifico. Gli indirizzi email diretti di tutti i membri sono visibili solo a chi è dentro la rete.</p>
+          </div>
+          <div class="benefit-card reveal" data-delay="60">
+            <div class="benefit-icon benefit-icon--green">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+            </div>
+            <h3>Visibilità sul portale</h3>
+            <p>La tua card è visibile a tutti i visitatori del sito. Chi lo desidera può arricchirla con CV scaricabile, pubblicazioni e link professionali — un profilo completo accessibile da tutta la community.</p>
+          </div>
+          <div class="benefit-card reveal" data-delay="120">
+            <div class="benefit-icon benefit-icon--purple">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+            </div>
+            <h3>Contribuisci alla newsletter</h3>
+            <p>Ogni membro può proporre un articolo, un caso clinico o un contributo divulgativo per la newsletter degli Amici di Boyle, distribuita a tutta la community e ai partner del progetto.</p>
+          </div>
+          <div class="benefit-card reveal" data-delay="60">
+            <div class="benefit-icon benefit-icon--orange">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M22 10v6M2 10l10-8 10 8M4 20v-6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v6"/></svg>
+            </div>
+            <h3>Pubblica i tuoi corsi</h3>
+            <p>Hai un corso, un congresso o un'iniziativa formativa? La sezione formazione del portale è aperta ai membri per pubblicizzare eventi e attività didattiche direttamente sul sito.</p>
+          </div>
+          <div class="benefit-card reveal" data-delay="120">
+            <div class="benefit-icon benefit-icon--cyan">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2v-4M9 21H5a2 2 0 0 1-2-2v-4m0 0h18"/></svg>
+            </div>
+            <h3>Collaborazioni scientifiche</h3>
+            <p>I membri vengono coinvolti nelle iniziative di ricerca degli Amici di Boyle e possono essere invitati a collaborare a studi, protocolli e pubblicazioni scientifiche con il team e i partner del progetto.</p>
+          </div>
+          <div class="benefit-card reveal" data-delay="180">
+            <div class="benefit-icon benefit-icon--green">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+            </div>
+            <h3>Prima fila sulle iniziative</h3>
+            <p>Congressi, workshop, progetti editoriali, attività formative e collaborative: i membri della rete vengono coinvolti per primi in tutte le iniziative degli Amici di Boyle, prima che siano aperte al pubblico.</p>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -230,20 +304,54 @@
   const LI_ICON = `<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.94 8.5H3.56V20h3.38V8.5ZM5.25 3A2.03 2.03 0 1 0 5.3 7.06 2.03 2.03 0 0 0 5.25 3Zm4.23 5.5V20h3.38v-5.7c0-1.5.28-2.95 2.14-2.95 1.83 0 1.86 1.71 1.86 3.05V20h3.39v-6.29c0-3.09-.67-5.46-4.28-5.46-1.73 0-2.88.95-3.35 1.85h-.05V8.5H9.48Z"/></svg>`;
 
   const EMAIL_ICON = `<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6.75A2.75 2.75 0 0 1 5.75 4h12.5A2.75 2.75 0 0 1 21 6.75v10.5A2.75 2.75 0 0 1 18.25 20H5.75A2.75 2.75 0 0 1 3 17.25V6.75Zm2.2-.25 6.27 5.05a.83.83 0 0 0 1.06 0L18.8 6.5H5.2Zm13.8 1.46-5.42 4.36a2.33 2.33 0 0 1-2.96 0L5.2 7.96v9.29c0 .3.25.55.55.55h12.5c.3 0 .55-.25.55-.55V7.96Z"/></svg>`;
+  const LOCK_ICON = `<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4" stroke-linecap="round"/></svg>`;
+
+  // Tag colori per area
+  const TAG_COLORS = {
+    'Iperbarica':       '#4fa8ff',
+    'Diving':           '#00d4ff',
+    'Critical Care':    '#4dffd6',
+    'Neuroscienze':     '#c4b0ff',
+    'Ricerca':          '#b4a6ff',
+    'Cardiologia':      '#ff8fa3',
+    'Trauma':           '#ffb347',
+    'Emergenza':        '#ff6b6b',
+    'HEMS':             '#ff6b6b',
+    'Spazio':           '#a8eeff',
+    'Montagna':         '#80ffd4',
+    'ECMO':             '#4dffd6',
+    'Safety':           '#ffd166',
+    'Chirurgia':        '#f8a5c2',
+    'Mass Gathering':   '#ffb347',
+    'Esplorazione':     '#00d4ff',
+    'Medicina Militare':'#c0c0ff',
+  };
+
+  function renderTags(tags) {
+    if (!tags || !tags.length) return '';
+    return '<div class="member-tags">' +
+      tags.map(t => {
+        const c = TAG_COLORS[t] || '#7be4ff';
+        return `<span class="member-tag" style="--tag-color:${c}">${t}</span>`;
+      }).join('') +
+    '</div>';
+  }
 
   function renderCard(m) {
     const li = m.linkedin && m.linkedin !== 'https://www.linkedin.com/'
       ? `<a class="icon-btn" href="${m.linkedin}" aria-label="LinkedIn di ${m.name}" target="_blank" rel="noopener">${LI_ICON}</a>`
       : '';
-    const email = m.email
-      ? `<a class="icon-btn" href="mailto:${m.email}" aria-label="Email di ${m.name}">${EMAIL_ICON}</a>`
-      : `<a class="icon-btn" href="mailto:info@amicidiboyle.it" aria-label="Contatta via info@amicidiboyle.it">${EMAIL_ICON}</a>`;
+    // Email: visibile solo ai membri — mostra lucchetto con tooltip per i non-membri
+    const emailBtn = m.email
+      ? `<button class="icon-btn member-email-btn" data-email="${m.email}" aria-label="Contatta ${m.name}" title="Visibile ai membri della Rete">${LOCK_ICON}</button>`
+      : '';
     return `
       <article class="member-card reveal" role="listitem">
         <div class="member-photo-wrap">
           <img class="member-photo" src="assets/rete/${m.img}" alt="${m.name}" loading="lazy" onerror="this.style.background='rgba(5,18,46,.8)';this.style.opacity='.4'" />
         </div>
         <h2 class="member-name">${m.name}</h2>
+        ${renderTags(m.tags)}
         <p class="member-role">${m.role}</p>
         <div class="member-location">
           <span class="member-location__line" aria-hidden="true"></span>
@@ -253,7 +361,7 @@
           </span>
           <span class="member-location__line" aria-hidden="true"></span>
         </div>
-        <div class="member-links">${li}${email}</div>
+        <div class="member-links">${li}${emailBtn}</div>
       </article>`;
   }
 
@@ -429,6 +537,33 @@
     requestAnimationFrame(draw);
   }
 
+  /* ── Email wall: mostra modal ai non-membri ── */
+  function initEmailWall() {
+    const wall = document.getElementById('emailWall');
+    const wallClose = document.getElementById('emailWallClose');
+    const wallJoin = document.getElementById('emailWallJoin');
+    if (!wall) return;
+
+    document.addEventListener('click', e => {
+      const btn = e.target.closest('.member-email-btn');
+      if (!btn) return;
+      e.preventDefault();
+      wall.setAttribute('aria-hidden','false');
+      wall.classList.add('is-open');
+      document.body.style.overflow = 'hidden';
+    });
+
+    function closeWall() {
+      wall.setAttribute('aria-hidden','true');
+      wall.classList.remove('is-open');
+      document.body.style.overflow = '';
+    }
+    wallClose?.addEventListener('click', closeWall);
+    wall?.addEventListener('click', e => { if (e.target === wall) closeWall(); });
+    wallJoin?.addEventListener('click', () => { closeWall(); openModal(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeWall(); });
+  }
+
   /* ── 3D Card Tilt: segue il mouse ── */
   function initCardTilt() {
     document.querySelectorAll('.member-card').forEach(card => {
@@ -498,6 +633,7 @@
       initCardTilt();
       initCounters();
       initCardPulse();
+      initEmailWall();
     }, 200);
   }
 
