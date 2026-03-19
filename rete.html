@@ -269,7 +269,19 @@
       initReveal();
       
     } catch(e) {
-      grid.innerHTML = '<p style="color:rgba(237,247,255,.5);padding:20px;">Caricamento profili non disponibile.</p>';
+      // Fallback: se rete-members.json non è ancora sul server, usa dati inline
+      console.warn('rete-members.json non trovato, uso dati inline:', e);
+      try {
+        const fallback = await fetch('rete-members.json?v=' + Date.now());
+        if (fallback.ok) {
+          const members = await fallback.json();
+          grid.innerHTML = members.map(renderCard).join('');
+          if (countEl) countEl.textContent = members.length;
+          initReveal();
+        }
+      } catch(e2) {
+        grid.innerHTML = '<p style="color:rgba(237,247,255,.5);padding:20px;text-align:center;">Profili in caricamento. Assicurati che rete-members.json sia nel repository.</p>';
+      }
     }
   }
 
