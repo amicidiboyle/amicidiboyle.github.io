@@ -412,8 +412,81 @@
   });
 
   /* ── Init ── */
-  loadMembers();
+  loadMembersEnhanced();
   initSynapseCanvas();
+
+  /* ── 3D Card Tilt: segue il mouse ── */
+  function initCardTilt() {
+    document.querySelectorAll('.member-card').forEach(card => {
+      card.addEventListener('mousemove', e => {
+        const r = card.getBoundingClientRect();
+        const x = (e.clientX - r.left) / r.width  - .5;  // -0.5 … 0.5
+        const y = (e.clientY - r.top)  / r.height - .5;
+        const ry =  x * 14;   // max 14deg sull'asse Y
+        const rx = -y * 10;   // max 10deg sull'asse X
+        card.style.setProperty('--rx', rx + 'deg');
+        card.style.setProperty('--ry', ry + 'deg');
+      });
+      card.addEventListener('mouseleave', () => {
+        card.style.setProperty('--rx', '0deg');
+        card.style.setProperty('--ry', '0deg');
+      });
+    });
+  }
+
+  /* ── Counter animato per le hero stats ── */
+  function animateCounter(el, target, duration) {
+    const isInfinity = el.textContent.includes('∞');
+    if (isInfinity) return;
+    const suffix = el.textContent.replace(/[0-9.,]/g, '');
+    const start = performance.now();
+    function step(now) {
+      const p = Math.min((now - start) / duration, 1);
+      const ease = 1 - Math.pow(1 - p, 3);
+      el.textContent = Math.round(target * ease) + suffix;
+      if (p < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+
+  function initCounters() {
+    const stats = document.querySelectorAll('.hero__stat-n');
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (!e.isIntersecting) return;
+        const el = e.target;
+        const raw = el.textContent.replace(/[^0-9]/g, '');
+        if (raw) animateCounter(el, parseInt(raw), 1200);
+        obs.unobserve(el);
+      });
+    }, { threshold: .8 });
+    stats.forEach(el => obs.observe(el));
+  }
+
+  /* ── Impulso luminoso tra le card ── */
+  function initCardPulse() {
+    const canvas = document.getElementById('synapseCanvas');
+    if (!canvas) return;
+    // Aggiunge un impulso extra quando si fa hover su una card
+    document.querySelectorAll('.member-card').forEach(card => {
+      card.addEventListener('mouseenter', () => {
+        card.classList.add('card-pulse-active');
+        setTimeout(() => card.classList.remove('card-pulse-active'), 600);
+      });
+    });
+  }
+
+  /* Inizializza dopo caricamento cards */
+  const origLoad = loadMembers;
+  async function loadMembersEnhanced() {
+    await loadMembers();
+    // Piccolo delay per attendere render DOM
+    setTimeout(() => {
+      initCardTilt();
+      initCounters();
+      initCardPulse();
+    }, 200);
+  }
   </script>
 </body>
 </html>
