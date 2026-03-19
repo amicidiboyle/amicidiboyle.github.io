@@ -1943,3 +1943,296 @@ body:hover #cursor-bubble { opacity: 1; }
   #mobile-quicknav-btn { animation: none !important; }
   #dust-canvas { display: none; }
 }
+
+
+/* ==========================================================
+   FINAL17 — bug fix desktop + mobile tweaks
+   ========================================================== */
+
+/* ── FIX ROOT: overflow-x clip causa shift a destra ──────────
+   Il clip + translateX dei reveal spostava visivamente il
+   contenuto. Soluzione: solo overflow-x:hidden su body,
+   clip rimosso dalle sezioni.
+   --------------------------------------------------------- */
+main, .section, .hero {
+  overflow-x: visible !important;
+  overflow-y: visible !important;
+}
+/* Solo il body previene la scrollbar orizzontale */
+html, body { overflow-x: hidden; }
+
+/* ── TEXT-LINK DESKTOP: assicura che funzionino ──────────────*/
+.text-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 16px;
+  color: var(--cyan-2);
+  font-weight: 600;
+  cursor: pointer;
+  transition: gap .2s, opacity .2s;
+}
+.text-link::after { content: "→"; transition: transform .2s; }
+.text-link:hover { opacity: .85; }
+.text-link:hover::after { transform: translateX(4px); }
+
+/* ── HERO LOGO: leggermente più grande ───────────────────────*/
+.brand img {
+  width: 56px !important;
+  height: 56px !important;
+}
+
+/* ── TICKER: più accattivante ────────────────────────────────
+   Sfondo sfumato con bordo luminoso. Freccia ▾ accanto al 
+   kicker. Pill con area corrente.
+   --------------------------------------------------------- */
+.ticker {
+  background: linear-gradient(90deg,
+    rgba(0,80,160,.12) 0%,
+    rgba(0,40,100,.06) 50%,
+    rgba(0,80,160,.10) 100%);
+  border-top: 1px solid rgba(123,228,255,.12);
+  border-bottom: 1px solid rgba(123,228,255,.08);
+  position: relative;
+  overflow: hidden;
+}
+/* Sfumature ai lati per effetto tunnel */
+.ticker::before,
+.ticker::after {
+  content: "";
+  position: absolute; top: 0; bottom: 0; width: 80px; z-index: 2;
+  pointer-events: none;
+}
+.ticker::before {
+  left: 0;
+  background: linear-gradient(90deg, rgba(2,10,24,.9), transparent);
+}
+.ticker::after {
+  right: 0;
+  background: linear-gradient(270deg, rgba(2,10,24,.9), transparent);
+}
+.ticker-track {
+  font-size: .7rem;
+  letter-spacing: .28em;
+  color: rgba(160,220,255,.6);
+  padding: 10px 0;
+}
+/* Puntini separatori colorati */
+.ticker-track { color: rgba(160,220,255,.55); }
+
+/* ── HERO STAT: linea divisoria tra stat 3 e 4 mobile ────────
+   La 4ª e 5ª stat sono in seconda riga (2 su 2).
+   Il confine tra la 3ª riga e la 4ª/5ª deve avere una linea.
+   --------------------------------------------------------- */
+@media (max-width: 768px) {
+  /* Linea tra riga 1 (1-2-3) e riga 2 (4-5) */
+  .hero-stat:nth-child(4) {
+    border-top: 1px solid rgba(123,228,255,.1) !important;
+  }
+  .hero-stat:nth-child(5) {
+    border-top: 1px solid rgba(123,228,255,.1) !important;
+  }
+  /* 4° stat: ha border-bottom:none già, ma serve border-right */
+  .hero-stat:nth-child(4) {
+    border-right: 1px solid rgba(123,228,255,.1) !important;
+  }
+}
+
+/* ── DESKTOP: rimuove overflow:clip da sezioni specifiche ─────
+   Già fatto sopra globalmente, qui per sicurezza su singole
+   sezioni che lo definivano inline.
+   --------------------------------------------------------- */
+#rete-home, #visione, #eventi, #fondatori,
+#ricerca, #formazione, #contatti, #contenuti {
+  overflow: visible !important;
+}
+
+/* ── DESKTOP: activity card — nessun overflow hidden che 
+   blocchi i link text-link ─────────────────────────────────*/
+.activity-card { overflow: visible !important; }
+.activity-card::before { overflow: hidden; border-radius: inherit; }
+
+/* ── MOBILE: overflow clip solo sull'asse X ─────────────────*/
+@media (max-width: 768px) {
+  main, .section, .hero { overflow-x: clip !important; }
+}
+
+
+/* ==========================================================
+   FINAL17 — fix overflow shift + desktop bug + mobile tweaks
+   ========================================================== */
+
+/* ── ROOT FIX: overflow-x clip causa shift a destra ──────────
+   overflow-x:clip su .section + translateX sui reveal
+   sposta il layout di riferimento del browser.
+   Soluzione: clip SOLO sul body, sezioni libere.
+   --------------------------------------------------------- */
+main { overflow-x: visible !important; }
+.section { overflow: visible !important; }
+#rete-home, #visione, #eventi, #fondatori,
+#ricerca, #formazione, #contatti, #contenuti,
+#evidenza, #attivita, #partner { overflow: visible !important; }
+html, body { overflow-x: hidden; }
+
+/* ── HERO LOGO: più grande ────────────────────────────────── */
+.brand img {
+  width: 56px !important;
+  height: 56px !important;
+  filter: drop-shadow(0 0 14px rgba(123,228,255,.35));
+}
+
+/* ── TICKER: no sfondo bianco, bordi luminosi, sfumature ─── */
+.ticker {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(90deg,
+    rgba(0,60,140,.14),
+    rgba(0,30,80,.06) 40%,
+    rgba(0,30,80,.06) 60%,
+    rgba(0,60,140,.12));
+  border-top: 1px solid rgba(123,228,255,.14);
+  border-bottom: 1px solid rgba(123,228,255,.08);
+}
+.ticker::before,
+.ticker::after {
+  content: "";
+  position: absolute; top: 0; bottom: 0; width: 80px;
+  z-index: 2; pointer-events: none;
+}
+.ticker::before { left: 0;  background: linear-gradient(90deg,  rgba(2,10,24,.95), transparent); }
+.ticker::after  { right: 0; background: linear-gradient(270deg, rgba(2,10,24,.95), transparent); }
+.ticker-track {
+  display: flex; gap: 20px; align-items: center;
+  font-size: .68rem; letter-spacing: .22em;
+  color: rgba(150,210,255,.55);
+  white-space: nowrap;
+  padding: 9px 0;
+}
+.ticker-track span { flex-shrink: 0; }
+.ticker-dot {
+  color: rgba(123,228,255,.35) !important;
+  font-size: .5rem !important;
+  letter-spacing: 0 !important;
+}
+
+/* ── NAV DROPDOWN DESKTOP: no sfondo bianco ──────────────── */
+.nav-dropdown-panel {
+  background: rgba(4,14,36,.97) !important;
+  border: 1px solid rgba(123,228,255,.18) !important;
+}
+
+/* Freccia ▾ accanto a "Attività" su desktop */
+.nav-dropdown > .nav-dropdown-btn {
+  background: none;
+  border: none;
+  color: var(--text);
+  font: inherit;
+  font-size: .9rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 8px;
+  border-radius: 8px;
+  transition: background .2s, color .2s;
+}
+.nav-dropdown > .nav-dropdown-btn::after {
+  content: "▾";
+  font-size: .65rem;
+  opacity: .7;
+  transition: transform .22s;
+}
+.nav-dropdown:hover > .nav-dropdown-btn::after,
+.nav-dropdown.is-open > .nav-dropdown-btn::after { transform: rotate(180deg); }
+.nav-dropdown > .nav-dropdown-btn:hover,
+.nav-dropdown:hover > .nav-dropdown-btn { color: var(--cyan-2); background: rgba(123,228,255,.07); }
+
+/* ── TEXT-LINK DESKTOP: assicura funzionamento ───────────── */
+.text-link {
+  display: inline-flex !important;
+  align-items: center;
+  gap: 8px;
+  margin-top: 16px;
+  color: var(--cyan-2);
+  font-size: .88rem;
+  font-weight: 600;
+  letter-spacing: .02em;
+  cursor: pointer;
+  text-decoration: none;
+  transition: gap .2s, opacity .2s;
+  position: relative;
+  z-index: 2;
+}
+.text-link::after { content: "→"; transition: transform .2s; }
+.text-link:hover::after { transform: translateX(5px); }
+.activity-card { overflow: visible !important; }
+
+/* ── HERO STATS MOBILE: linea tra riga 1 e riga 2 ───────── */
+.hero-stat-divider {
+  display: none; /* nascosto su desktop */
+}
+@media (max-width: 768px) {
+  .hero-stat-divider {
+    display: block;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg,
+      transparent,
+      rgba(123,228,255,.25) 30%,
+      rgba(123,228,255,.25) 70%,
+      transparent);
+    flex: 0 0 100%;
+    margin: 0;
+    order: 3; /* viene dopo il 3° stat */
+  }
+  /* Quarta e quinta stat: seconda riga, senza border-top ridondante */
+  .hero-stat:nth-child(5),
+  .hero-stat:nth-child(6) {
+    border-top: none !important;
+  }
+}
+
+/* ── DESKTOP: prevent reveal translateX from shifting layout  */
+/* Wrap ogni sezione con overflow:hidden solo sull'asse X
+   ma senza usare clip (che è il colpevole dello shift).    */
+.section {
+  overflow-x: hidden;
+  overflow-y: visible;
+}
+/* Le sezioni con contenuto che esce (glow, orb) rimangono visibili */
+.hero, #visione, #rete-home, #eventi { overflow: visible; }
+/* Ma il contenuto dentro il container non può uscire */
+.section > .container { overflow: visible; }
+
+/* Il vero fix per lo shift: usa clip-path invece di overflow */
+.section.alt-section,
+#attivita, #fondatori, #ricerca,
+#formazione, #contenuti-articoli,
+#partner, #contatti {
+  clip-path: inset(0 0 0 0);
+}
+
+/* ── MOBILE: overflow-x clip solo su mobile ─────────────── */
+@media (max-width: 768px) {
+  main, .section, .hero { overflow-x: clip !important; }
+  .section { clip-path: none !important; }
+}
+
+/* ── POSTER EVENTO (the day after): centrato ─────────────── */
+.event-grid { align-items: start; }
+.poster-card {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+}
+.poster-card > img {
+  max-width: 320px !important;
+  width: 100% !important;
+  margin: 0 auto !important;
+  display: block !important;
+}
+@media (max-width: 768px) {
+  .poster-card > img { max-width: 260px !important; }
+}
