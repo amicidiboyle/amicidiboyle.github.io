@@ -5,7 +5,11 @@
     "img": "simona-damiano.jpg",
     "city": "Varese",
     "linkedin": "",
-    "email": "simona.damiano@asst-settelaghi.it"
+    "email": "simona.damiano@asst-settelaghi.it",
+    "tags": [
+      "Cardiologia",
+      "Diving"
+    ]
   },
   {
     "name": "Andrea Murdock Alpini",
@@ -13,7 +17,11 @@
     "img": "andrea-alpini.jpg",
     "city": "Italia",
     "linkedin": "https://www.linkedin.com/in/andrea-murdock-alpini-050505228/",
-    "email": "exploration@wreckdiving.com"
+    "email": "exploration@wreckdiving.com",
+    "tags": [
+      "Diving",
+      "Esplorazione"
+    ]
   },
   {
     "name": "Valerio Zerbi",
@@ -21,7 +29,11 @@
     "img": "valerio-zerbi.jpg",
     "city": "Ginevra, CH",
     "linkedin": "https://www.linkedin.com/in/valerio-zerbi-a95b7725/",
-    "email": "zerbiv@hotmail.com"
+    "email": "zerbiv@hotmail.com",
+    "tags": [
+      "Neuroscienze",
+      "Ricerca"
+    ]
   },
   {
     "name": "Erika Borotto",
@@ -29,7 +41,11 @@
     "img": "erika-borotto.jpg",
     "city": "Varese",
     "linkedin": "https://www.linkedin.com/in/erika-borotto-79a4a796/",
-    "email": "erika.borotto@asst-settelaghi.it"
+    "email": "erika.borotto@asst-settelaghi.it",
+    "tags": [
+      "Critical Care",
+      "Trauma"
+    ]
   },
   {
     "name": "Andrea Galvani",
@@ -37,7 +53,11 @@
     "img": "andrea-galvani.jpg",
     "city": "San Marino",
     "linkedin": "https://www.linkedin.com/in/agalv86/",
-    "email": "andrea.galvani@example.com"
+    "email": "andrea.galvani@example.com",
+    "tags": [
+      "Iperbarica",
+      "Diving"
+    ]
   },
   {
     "name": "Federica Giuffrida",
@@ -45,7 +65,11 @@
     "img": "federica-giuffrida.jpg",
     "city": "Varese",
     "linkedin": "https://www.linkedin.com/in/federica-giuffrida-76609a9a/",
-    "email": "federica.giuffrida@asst-settelaghi.it"
+    "email": "federica.giuffrida@asst-settelaghi.it",
+    "tags": [
+      "Critical Care",
+      "Montagna"
+    ]
   },
   {
     "name": "Paolo Calzavacca",
@@ -53,7 +77,11 @@
     "img": "paolo-calzavacca.jpg",
     "city": "Monza",
     "linkedin": "https://www.linkedin.com/in/paolo-calzavacca-6549623a/",
-    "email": "p.calzavacca@gmail.com"
+    "email": "p.calzavacca@gmail.com",
+    "tags": [
+      "Critical Care",
+      "ECMO"
+    ]
   },
   {
     "name": "Erion Xhepa",
@@ -61,7 +89,11 @@
     "img": "erion-xhepa.jpg",
     "city": "Monaco di Baviera",
     "linkedin": "https://www.linkedin.com/in/erion-xhepa-a21bb86a/",
-    "email": "xhepa@dhm.mhn.de"
+    "email": "xhepa@dhm.mhn.de",
+    "tags": [
+      "Cardiologia",
+      "Diving"
+    ]
   },
   {
     "name": "David James Marsland",
@@ -69,7 +101,11 @@
     "img": "james-m.jpg",
     "city": "Italia",
     "linkedin": "",
-    "email": ""
+    "email": "",
+    "tags": [
+      "Medicina Militare",
+      "Emergenza"
+    ]
   },
   {
     "name": "Tommaso Antonio Giacon",
@@ -77,7 +113,11 @@
     "img": "tommaso-giacon.jpg",
     "city": "Auckland, NZ",
     "linkedin": "https://www.linkedin.com/in/tommaso-antonio-giacon-613b58208/",
-    "email": "nostromo.giacon@gmail.com"
+    "email": "nostromo.giacon@gmail.com",
+    "tags": [
+      "Iperbarica",
+      "Spazio"
+    ]
   },
   {
     "name": "Tiago Miguel Cardoso",
@@ -85,7 +125,11 @@
     "img": "tiago-cardoso.jpg",
     "city": "Porto, PT",
     "linkedin": "https://www.linkedin.com/in/tiago-miguel-cardoso-a2b85019/",
-    "email": "tiago12525@gmail.com"
+    "email": "tiago12525@gmail.com",
+    "tags": [
+      "Emergenza",
+      "HEMS"
+    ]
   },
   {
     "name": "Federica Venturelli",
@@ -93,7 +137,11 @@
     "img": "federica-venturelli.jpg",
     "city": "Treviso",
     "linkedin": "",
-    "email": ""
+    "email": "",
+    "tags": [
+      "Iperbarica",
+      "Diving"
+    ]
   },
   {
     "name": "Giulio Saletti",
@@ -101,7 +149,11 @@
     "img": "giulio-saletti.jpg",
     "city": "Milano",
     "linkedin": "https://www.linkedin.com/in/giulio-saletti-24626668/",
-    "email": "giulio.saletti@wewalter.it"
+    "email": "giulio.saletti@wewalter.it",
+    "tags": [
+      "Safety",
+      "Iperbarica"
+    ]
   },
   {
     "name": "Gabriele Soldini",
@@ -109,6 +161,10 @@
     "img": "gabriele-soldini.jpg",
     "city": "Gravedona",
     "linkedin": "https://www.linkedin.com/in/gabriele-soldini-4263a569/",
-    "email": "dott.g.soldini@gmail.com"
+    "email": "dott.g.soldini@gmail.com",
+    "tags": [
+      "Chirurgia",
+      "Mass Gathering"
+    ]
   }
 ]
