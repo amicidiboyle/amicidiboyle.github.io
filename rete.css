@@ -370,10 +370,7 @@ a { color: inherit; text-decoration: none; }
 }
 
 /* Header/hero/sezioni sopra il canvas */
-.header, .hero, .members-section, .cta-section, .footer, .modal {
-  position: relative;
-  z-index: 1;
-}
+.header, .hero, .members-section, .cta-section, .footer, /* .modal z-index handled by .modal { z-index:9000 } above */
 
 /* Card: molto più trasparente, effetto vetro profondo */
 .member-card {
@@ -630,10 +627,7 @@ a { color: inherit; text-decoration: none; }
 
 /* Header e sezioni sopra il canvas */
 .header, .hero, .members-section .container,
-.cta-section .container, .footer, .modal {
-  position: relative;
-  z-index: 2;
-}
+.cta-section .container, .footer, 
 .hero { z-index: 2; }
 
 /* ── CARD LINGOTTO TRASPARENTE ── */
@@ -780,3 +774,12 @@ a { color: inherit; text-decoration: none; }
     padding-top: 10px !important;
   }
 }
+
+
+/* ── Z-INDEX FIX DEFINITIVO ── */
+/* Canvas: sotto tutto */
+#synapseCanvas { z-index: 0 !important; }
+/* Contenuto: sopra il canvas */
+.header, .hero, .members-section, .cta-section, .footer { position: relative; z-index: 2; }
+/* Modal: sopra tutto, NON sovrascrivere position:fixed */
+.modal { z-index: 9000 !important; position: fixed !important; }
