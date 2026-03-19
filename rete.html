@@ -10,6 +10,8 @@
   <link rel="stylesheet" href="rete.css" />
 </head>
 <body>
+  <!-- Canvas sinaptico globale -->
+  <canvas id="synapseCanvas" aria-hidden="true" style="position:fixed;inset:0;z-index:0;pointer-events:none;width:100%;height:100%;opacity:.35;"></canvas>
   <a class="skip" href="#contenuto">Vai al contenuto</a>
 
   <!-- HEADER (stesso dell'home) -->
@@ -123,8 +125,7 @@
           <h2 class="members-title">I Membri della Rete</h2>
           <p class="members-sub">Professionisti selezionati per competenza, curiosità e impatto operativo.</p>
         </div>
-        <!-- Canvas sinaptico dietro le card -->
-        <canvas id="synapseCanvas" aria-hidden="true"></canvas>
+
         <!-- Le card vengono iniettate da JS -->
         <div class="members-grid" id="membersGrid" role="list"></div>
       </div>
@@ -228,10 +229,15 @@
 
   const LI_ICON = `<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.94 8.5H3.56V20h3.38V8.5ZM5.25 3A2.03 2.03 0 1 0 5.3 7.06 2.03 2.03 0 0 0 5.25 3Zm4.23 5.5V20h3.38v-5.7c0-1.5.28-2.95 2.14-2.95 1.83 0 1.86 1.71 1.86 3.05V20h3.39v-6.29c0-3.09-.67-5.46-4.28-5.46-1.73 0-2.88.95-3.35 1.85h-.05V8.5H9.48Z"/></svg>`;
 
+  const EMAIL_ICON = `<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6.75A2.75 2.75 0 0 1 5.75 4h12.5A2.75 2.75 0 0 1 21 6.75v10.5A2.75 2.75 0 0 1 18.25 20H5.75A2.75 2.75 0 0 1 3 17.25V6.75Zm2.2-.25 6.27 5.05a.83.83 0 0 0 1.06 0L18.8 6.5H5.2Zm13.8 1.46-5.42 4.36a2.33 2.33 0 0 1-2.96 0L5.2 7.96v9.29c0 .3.25.55.55.55h12.5c.3 0 .55-.25.55-.55V7.96Z"/></svg>`;
+
   function renderCard(m) {
     const li = m.linkedin && m.linkedin !== 'https://www.linkedin.com/'
       ? `<a class="icon-btn" href="${m.linkedin}" aria-label="LinkedIn di ${m.name}" target="_blank" rel="noopener">${LI_ICON}</a>`
       : '';
+    const email = m.email
+      ? `<a class="icon-btn" href="mailto:${m.email}" aria-label="Email di ${m.name}">${EMAIL_ICON}</a>`
+      : `<a class="icon-btn" href="mailto:info@amicidiboyle.it" aria-label="Contatta via info@amicidiboyle.it">${EMAIL_ICON}</a>`;
     return `
       <article class="member-card reveal" role="listitem">
         <div class="member-photo-wrap">
@@ -247,7 +253,7 @@
           </span>
           <span class="member-location__line" aria-hidden="true"></span>
         </div>
-        <div class="member-links">${li}</div>
+        <div class="member-links">${li}${email}</div>
       </article>`;
   }
 
@@ -261,7 +267,7 @@
       grid.innerHTML = members.map(renderCard).join('');
       if (countEl) countEl.textContent = members.length;
       initReveal();
-      initSynapseCanvas(members.length);
+      
     } catch(e) {
       grid.innerHTML = '<p style="color:rgba(237,247,255,.5);padding:20px;">Caricamento profili non disponibile.</p>';
     }
@@ -280,99 +286,70 @@
     document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
   }
 
-  /* ── Synapse canvas behind cards ── */
-  function initSynapseCanvas(nMembers) {
+  /* ── Synapse canvas — full page fixed background ── */
+  function initSynapseCanvas() {
     const canvas = document.getElementById('synapseCanvas');
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
-    const grid = document.getElementById('membersGrid');
     
     function resize() {
-      canvas.width  = grid.offsetWidth;
-      canvas.height = grid.offsetHeight;
+      canvas.width  = window.innerWidth;
+      canvas.height = window.innerHeight;
     }
     resize();
     window.addEventListener('resize', resize, {passive:true});
 
-    /* Create nodes at card positions */
-    let nodes = [];
-    function buildNodes() {
-      nodes = [];
-      const cards = grid.querySelectorAll('.member-card');
-      cards.forEach(card => {
-        const r = card.getBoundingClientRect();
-        const gr = grid.getBoundingClientRect();
-        nodes.push({
-          x: r.left - gr.left + r.width/2,
-          y: r.top  - gr.top  + r.height/2,
-          vx: (Math.random()-.5)*.3,
-          vy: (Math.random()-.5)*.3,
-          r: 3 + Math.random()*2,
-          pulse: Math.random()*Math.PI*2,
-        });
-      });
-      /* Extra floating nodes */
-      for (let i=0; i<18; i++) {
-        nodes.push({
-          x: Math.random()*canvas.width,
-          y: Math.random()*canvas.height,
-          vx:(Math.random()-.5)*.4,
-          vy:(Math.random()-.5)*.4,
-          r: 1.5+Math.random(),
-          pulse: Math.random()*Math.PI*2,
-          floating: true,
-        });
-      }
-    }
-    setTimeout(buildNodes, 400);
+    /* 42 nodi flottanti su tutta la pagina */
+    const nodes = Array.from({length:42}, () => ({
+      x: Math.random() * window.innerWidth,
+      y: Math.random() * window.innerHeight,
+      vx: (Math.random()-.5) * .35,
+      vy: (Math.random()-.5) * .35,
+      r: 1.5 + Math.random() * 2.5,
+      pulse: Math.random() * Math.PI * 2,
+    }));
 
     function draw(t) {
       ctx.clearRect(0,0,canvas.width,canvas.height);
-      if (!nodes.length) { requestAnimationFrame(draw); return; }
 
-      /* Update floating nodes */
+      /* Move nodes */
       nodes.forEach(n => {
-        if (!n.floating) return;
         n.x += n.vx; n.y += n.vy;
-        n.pulse += .018;
-        if (n.x<0||n.x>canvas.width)  n.vx *= -1;
-        if (n.y<0||n.y>canvas.height) n.vy *= -1;
+        n.pulse += .014;
+        if (n.x < 0 || n.x > canvas.width)  n.vx *= -1;
+        if (n.y < 0 || n.y > canvas.height) n.vy *= -1;
       });
 
-      /* Draw connections */
-      const MAX_D = 220;
-      for (let i=0;i<nodes.length;i++) {
-        for (let j=i+1;j<nodes.length;j++) {
+      /* Connections */
+      const MAX_D = 200;
+      for (let i=0; i<nodes.length; i++) {
+        for (let j=i+1; j<nodes.length; j++) {
           const dx = nodes[i].x - nodes[j].x;
           const dy = nodes[i].y - nodes[j].y;
           const d  = Math.sqrt(dx*dx+dy*dy);
           if (d > MAX_D) continue;
-          const alpha = (1 - d/MAX_D) * .14;
+          const alpha = (1 - d/MAX_D) * .18;
           ctx.beginPath();
           ctx.moveTo(nodes[i].x, nodes[i].y);
           ctx.lineTo(nodes[j].x, nodes[j].y);
-          ctx.strokeStyle = `rgba(120,230,255,${alpha})`;
-          ctx.lineWidth = .6;
+          ctx.strokeStyle = `rgba(100,220,255,${alpha})`;
+          ctx.lineWidth = .7;
           ctx.stroke();
         }
       }
 
-      /* Draw nodes */
+      /* Nodes */
       nodes.forEach(n => {
-        const pulse = .6 + .4*Math.sin(n.pulse + t*.001);
-        const r = n.r * pulse;
-        const grd = ctx.createRadialGradient(n.x,n.y,0,n.x,n.y,r*3);
-        grd.addColorStop(0,'rgba(190,245,255,.9)');
-        grd.addColorStop(.4,'rgba(100,220,255,.4)');
-        grd.addColorStop(1,'rgba(80,180,255,0)');
-        ctx.beginPath();
-        ctx.arc(n.x,n.y,r*3,0,Math.PI*2);
-        ctx.fillStyle = grd;
-        ctx.fill();
-        ctx.beginPath();
-        ctx.arc(n.x,n.y,r,0,Math.PI*2);
-        ctx.fillStyle = 'rgba(200,248,255,.85)';
-        ctx.fill();
+        const s = .55 + .45 * Math.sin(n.pulse + t*.0008);
+        const r = n.r * s;
+        const grd = ctx.createRadialGradient(n.x,n.y,0,n.x,n.y,r*4);
+        grd.addColorStop(0,'rgba(180,240,255,.85)');
+        grd.addColorStop(.4,'rgba(90,200,255,.3)');
+        grd.addColorStop(1,'rgba(60,160,255,0)');
+        ctx.beginPath(); ctx.arc(n.x,n.y,r*4,0,Math.PI*2);
+        ctx.fillStyle = grd; ctx.fill();
+        ctx.beginPath(); ctx.arc(n.x,n.y,r,0,Math.PI*2);
+        ctx.fillStyle = 'rgba(190,245,255,.82)'; ctx.fill();
       });
 
       requestAnimationFrame(draw);
@@ -436,6 +413,7 @@
 
   /* ── Init ── */
   loadMembers();
+  initSynapseCanvas();
   </script>
 </body>
 </html>
