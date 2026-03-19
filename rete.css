@@ -438,3 +438,173 @@ a { color: inherit; text-decoration: none; }
 
 /* Rimuovi canvas dalla members-section (ora è fixed) */
 .members-section #synapseCanvas { display: none !important; }
+
+
+/* ==========================================================
+   RETE WOW v2 — 3D tilt, glow individuale, pulse, cinematic
+   ========================================================== */
+
+/* ── 1. CARD 3D TILT: prospettiva sul grid ── */
+.members-grid {
+  perspective: 1400px;
+  perspective-origin: 50% 40%;
+}
+
+/* La card riceve il tilt via JS (--rx, --ry custom props) */
+.member-card {
+  transform-style: preserve-3d;
+  transform:
+    perspective(1000px)
+    rotateX(var(--rx, 0deg))
+    rotateY(var(--ry, 0deg))
+    translateY(0);
+  transition:
+    transform .18s cubic-bezier(.22,.68,0,1.2),
+    box-shadow .18s,
+    border-color .18s !important;
+  will-change: transform;
+}
+/* Al hover il tilt viene applicato da JS, non serve translateY qui */
+.member-card:hover {
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.22),
+    0 28px 70px rgba(0,0,0,.5),
+    0 0 60px rgba(80,200,255,.18) !important;
+  border-color: rgba(124,243,255,.55) !important;
+}
+
+/* ── 2. FOTO: glow individuale colorato al hover ── */
+.member-photo-wrap {
+  transition: box-shadow .3s ease !important;
+}
+/* Ogni quinta card: colore diverso per varietà */
+.member-card:nth-child(5n+1):hover .member-photo-wrap {
+  box-shadow: 0 0 0 2px rgba(123,228,255,.5), 0 0 40px rgba(123,228,255,.5), 0 0 80px rgba(0,160,255,.2) !important;
+}
+.member-card:nth-child(5n+2):hover .member-photo-wrap {
+  box-shadow: 0 0 0 2px rgba(77,255,214,.5), 0 0 40px rgba(77,255,214,.45), 0 0 80px rgba(0,200,160,.2) !important;
+}
+.member-card:nth-child(5n+3):hover .member-photo-wrap {
+  box-shadow: 0 0 0 2px rgba(196,176,255,.5), 0 0 40px rgba(196,176,255,.45), 0 0 80px rgba(120,80,255,.2) !important;
+}
+.member-card:nth-child(5n+4):hover .member-photo-wrap {
+  box-shadow: 0 0 0 2px rgba(255,180,100,.45), 0 0 40px rgba(255,160,80,.4), 0 0 80px rgba(200,100,0,.18) !important;
+}
+.member-card:nth-child(5n+5):hover .member-photo-wrap {
+  box-shadow: 0 0 0 2px rgba(100,220,255,.5), 0 0 40px rgba(80,200,255,.45), 0 0 80px rgba(0,120,255,.2) !important;
+}
+
+/* ── 3. FOTO: scala al hover ── */
+.member-photo {
+  transition: transform .35s cubic-bezier(.22,.68,0,1.3), filter .3s !important;
+}
+.member-card:hover .member-photo {
+  transform: scale(1.07) !important;
+  filter: brightness(1.08) saturate(1.12) !important;
+}
+
+/* ── 4. NOME: glow al hover ── */
+.member-name {
+  transition: text-shadow .3s !important;
+}
+.member-card:hover .member-name {
+  text-shadow: 0 0 20px rgba(123,228,255,.5) !important;
+}
+
+/* ── 5. CONTATORE EROI: numeri animati ── */
+.hero__stat-n {
+  display: block;
+  transition: color .3s;
+}
+
+/* ── 6. RIGA CITTÀ: animazione pulse continua ── */
+@keyframes cityLinePulse {
+  0%,100% { opacity: .6; }
+  50%      { opacity: 1; box-shadow: 0 0 18px rgba(124,243,255,.5); }
+}
+.member-location__line {
+  animation: cityLinePulse 3s ease-in-out infinite !important;
+}
+.member-card:hover .member-location__line {
+  animation: none !important;
+  background: linear-gradient(90deg, transparent, rgba(124,243,255,.95), transparent) !important;
+  box-shadow: 0 0 20px rgba(124,243,255,.6) !important;
+}
+
+/* ── 7. REVEAL CINEMATICO: entrata a cascata con rotazione ── */
+.member-card {
+  opacity: 0;
+  transform:
+    perspective(800px)
+    rotateX(12deg)
+    translateY(40px)
+    scale(.94);
+}
+.member-card.is-visible {
+  opacity: 1;
+  transform:
+    perspective(1000px)
+    rotateX(var(--rx, 0deg))
+    rotateY(var(--ry, 0deg))
+    translateY(0)
+    scale(1);
+  transition:
+    opacity .7s cubic-bezier(.25,.46,.45,.94),
+    transform .7s cubic-bezier(.22,.68,0,1.15) !important;
+}
+
+/* ── 8. CTA BOX: bordo luminoso animato ── */
+@keyframes ctaBorderFlow {
+  0%   { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+.cta-box {
+  position: relative;
+}
+.cta-box::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: calc(var(--r-r) + 1px);
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(124,243,255,.5) 25%,
+    rgba(80,160,255,.4) 50%,
+    rgba(196,176,255,.5) 75%,
+    transparent 100%);
+  background-size: 200% 100%;
+  animation: ctaBorderFlow 4s linear infinite;
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  padding: 1px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── 9. HERO: particella flare sull'occhio ── */
+@keyframes heroFlare {
+  0%   { opacity: 0; transform: scale(.5) rotate(0deg); }
+  50%  { opacity: .8; transform: scale(1.1) rotate(180deg); }
+  100% { opacity: 0; transform: scale(.5) rotate(360deg); }
+}
+.hero::after {
+  content: "";
+  position: absolute;
+  width: 300px; height: 300px;
+  left: 8%; top: 10%;
+  background: radial-gradient(circle, rgba(124,243,255,.12) 0%, transparent 60%);
+  border-radius: 50%;
+  pointer-events: none;
+  animation: heroFlare 8s ease-in-out infinite;
+  z-index: 0;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .member-card { transform: none !important; transition: box-shadow .3s !important; }
+  .member-card.is-visible { transform: none !important; opacity: 1 !important; }
+  .member-location__line { animation: none !important; }
+  .cta-box::after { animation: none !important; }
+  .hero::after { animation: none !important; }
+}
