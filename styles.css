@@ -2764,3 +2764,21 @@ html, body { overflow-x: hidden; }
 @media (max-width: 768px) {
   #desktop-quicknav { display: none !important; }
 }
+
+
+/* ── LANG TOGGLE ── */
+.lang-toggle {
+  display: inline-flex; align-items: center; gap: 3px;
+  padding: 5px 12px; border-radius: 999px;
+  background: rgba(123,228,255,.08);
+  border: 1px solid rgba(123,228,255,.22);
+  color: var(--soft); font-size: .75rem; font-weight: 700;
+  letter-spacing: .08em; cursor: pointer;
+  transition: background .2s, border-color .2s, color .2s;
+  white-space: nowrap;
+}
+.lang-toggle:hover { background: rgba(123,228,255,.16); border-color: rgba(123,228,255,.4); color: var(--text); }
+#langCurrent { color: var(--cyan-2, #a8eeff); }
+.lang-sep { opacity: .35; }
+#langOther { opacity: .55; }
+@media (max-width: 768px) { .lang-toggle { display: none; } }
