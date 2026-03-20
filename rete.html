@@ -18,10 +18,10 @@
   <header class="header" role="banner">
     <div class="container header__inner">
       <a class="brand" href="index.html" aria-label="Gli Amici di Boyle — Home">
-        <img src="assets/logo.png" alt="Logo" width="52" height="52" />
+        <img src="assets/logo.png" alt="Logo Gli Amici di Boyle" width="52" height="52" />
         <span class="brand__text">
           <strong>Gli Amici di Boyle</strong>
-          <em>Diving &amp; Hyperbaric Medicine · Research &amp; Education</em>
+          <em>Extreme Medicine · Research &amp; Education</em>
         </span>
       </a>
       <nav class="nav--desktop">
@@ -142,10 +142,14 @@
         <h3 class="email-wall__title">Contatti riservati ai membri</h3>
         <p class="email-wall__text">Gli indirizzi email diretti dei professionisti della Rete di Boyle sono visibili solo ai membri attivi. È uno dei vantaggi concreti di far parte della rete.</p>
         <div class="email-wall__actions">
-          <button class="btn-electric" id="emailWallJoin">
-            <span class="btn-electric__inner">Candidati alla rete</span>
+          <button class="btn-electric" id="wallCodeBtn">
+            <span class="btn-electric__inner">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              Sono già membro — inserisci il codice
+            </span>
           </button>
-          <p class="email-wall__note">Sei già membro? Scrivi a <a href="mailto:info@amicidiboyle.it">info@amicidiboyle.it</a> per ottenere l'accesso completo.</p>
+          <button class="btn-ghost" id="emailWallJoin" style="min-height:44px;font-size:.88rem">Candidati alla rete →</button>
+          <p class="email-wall__note">Problemi? Scrivi a <a href="mailto:info@amicidiboyle.it">info@amicidiboyle.it</a></p>
         </div>
       </div>
     </div>
@@ -158,48 +162,42 @@
           <h2 class="benefits-title">Cosa significa far parte della Rete di Boyle</h2>
           <p class="benefits-sub">La rete non è una directory. È un ecosistema attivo dove ogni membro contribuisce e riceve valore concreto.</p>
         </div>
-        <div class="benefits-grid">
-          <div class="benefit-card reveal">
-            <div class="benefit-icon benefit-icon--cyan">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-            </div>
-            <h3>Accesso ai contatti diretti</h3>
-            <p>Cerca un esperto di medicina iperbarica per un congresso, un relatore specializzato, un collaboratore scientifico. Gli indirizzi email diretti di tutti i membri sono visibili solo a chi è dentro la rete.</p>
+        <div class="benefits-postit">
+          <div class="postit postit--yellow reveal">
+            <div class="postit__pin"></div>
+            <span class="postit__num">01</span>
+            <h3>Contatti diretti</h3>
+            <p>Email personali di tutti i membri visibili solo a chi è dentro. Trovi il relatore giusto, il collaboratore, lo specialista — in un click.</p>
           </div>
-          <div class="benefit-card reveal" data-delay="60">
-            <div class="benefit-icon benefit-icon--green">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
-            </div>
+          <div class="postit postit--cyan reveal" data-delay="80">
+            <div class="postit__pin"></div>
+            <span class="postit__num">02</span>
             <h3>Visibilità sul portale</h3>
-            <p>La tua card è visibile a tutti i visitatori del sito. Chi lo desidera può arricchirla con CV scaricabile, pubblicazioni e link professionali — un profilo completo accessibile da tutta la community.</p>
+            <p>La tua card è pubblica. Chi vuole può aggiungerci CV scaricabile, pubblicazioni, link. Un profilo professionale sempre aggiornato.</p>
           </div>
-          <div class="benefit-card reveal" data-delay="120">
-            <div class="benefit-icon benefit-icon--purple">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
-            </div>
-            <h3>Contribuisci alla newsletter</h3>
-            <p>Ogni membro può proporre un articolo, un caso clinico o un contributo divulgativo per la newsletter degli Amici di Boyle, distribuita a tutta la community e ai partner del progetto.</p>
+          <div class="postit postit--green reveal" data-delay="160">
+            <div class="postit__pin"></div>
+            <span class="postit__num">03</span>
+            <h3>Newsletter</h3>
+            <p>Proponi articoli, casi clinici, contributi divulgativi. Vai direttamente nella casella di tutti i membri e dei partner del progetto.</p>
           </div>
-          <div class="benefit-card reveal" data-delay="60">
-            <div class="benefit-icon benefit-icon--orange">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M22 10v6M2 10l10-8 10 8M4 20v-6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v6"/></svg>
-            </div>
+          <div class="postit postit--pink reveal" data-delay="80">
+            <div class="postit__pin"></div>
+            <span class="postit__num">04</span>
             <h3>Pubblica i tuoi corsi</h3>
-            <p>Hai un corso, un congresso o un'iniziativa formativa? La sezione formazione del portale è aperta ai membri per pubblicizzare eventi e attività didattiche direttamente sul sito.</p>
+            <p>Hai un corso, un congresso, un'iniziativa formativa? La sezione formazione è aperta ai membri per pubblicizzare eventi sul portale.</p>
           </div>
-          <div class="benefit-card reveal" data-delay="120">
-            <div class="benefit-icon benefit-icon--cyan">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2v-4M9 21H5a2 2 0 0 1-2-2v-4m0 0h18"/></svg>
-            </div>
-            <h3>Collaborazioni scientifiche</h3>
-            <p>I membri vengono coinvolti nelle iniziative di ricerca degli Amici di Boyle e possono essere invitati a collaborare a studi, protocolli e pubblicazioni scientifiche con il team e i partner del progetto.</p>
+          <div class="postit postit--purple reveal" data-delay="160">
+            <div class="postit__pin"></div>
+            <span class="postit__num">05</span>
+            <h3>Ricerca scientifica</h3>
+            <p>Studi, protocolli, pubblicazioni. I membri vengono invitati a collaborare nelle iniziative di ricerca degli Amici di Boyle.</p>
           </div>
-          <div class="benefit-card reveal" data-delay="180">
-            <div class="benefit-icon benefit-icon--green">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
-            </div>
-            <h3>Prima fila sulle iniziative</h3>
-            <p>Congressi, workshop, progetti editoriali, attività formative e collaborative: i membri della rete vengono coinvolti per primi in tutte le iniziative degli Amici di Boyle, prima che siano aperte al pubblico.</p>
+          <div class="postit postit--orange reveal" data-delay="240">
+            <div class="postit__pin"></div>
+            <span class="postit__num">06</span>
+            <h3>Prima fila</h3>
+            <p>Congressi, workshop, editoriali, formazione. I membri vengono coinvolti per primi, prima che le iniziative siano aperte al pubblico.</p>
           </div>
         </div>
       </div>
@@ -537,31 +535,110 @@
     requestAnimationFrame(draw);
   }
 
-  /* ── Email wall: mostra modal ai non-membri ── */
-  function initEmailWall() {
-    const wall = document.getElementById('emailWall');
-    const wallClose = document.getElementById('emailWallClose');
-    const wallJoin = document.getElementById('emailWallJoin');
-    if (!wall) return;
+  /* ── Sistema accesso email per membri ── */
+  const ACCESS_KEY = 'boyle_member_access';
+  // Codici validi — aggiungere/rimuovere qui quando cambiano i membri
+  const VALID_CODES = [
+    'BOYLE-2024-ALPHA', 'BOYLE-2024-BETA', 'BOYLE-2024-GAMMA',
+    'BOYLE-2024-DELTA', 'BOYLE-2025-ALPHA', 'BOYLE-2025-BETA',
+    'BOYLE-2025-GAMMA', 'BOYLE-FONDATORI', 'BOYLE-TEAM-01'
+  ];
 
+  function isMemberUnlocked() {
+    return sessionStorage.getItem(ACCESS_KEY) === 'true';
+  }
+
+  function unlockMemberEmails() {
+    sessionStorage.setItem(ACCESS_KEY, 'true');
+    // Mostra le email vere al posto dei lucchetti
+    document.querySelectorAll('.member-email-btn').forEach(btn => {
+      const email = btn.dataset.email;
+      if (!email) return;
+      const a = document.createElement('a');
+      a.className = 'icon-btn';
+      a.href = 'mailto:' + email;
+      a.setAttribute('aria-label', 'Email: ' + email);
+      a.title = email;
+      a.innerHTML = EMAIL_ICON;
+      btn.replaceWith(a);
+    });
+  }
+
+  function initEmailWall() {
+    // Se già sbloccato nella sessione, mostra subito le email
+    if (isMemberUnlocked()) { unlockMemberEmails(); return; }
+
+    const wall     = document.getElementById('emailWall');
+    const wallClose= document.getElementById('emailWallClose');
+    const wallJoin = document.getElementById('emailWallJoin');
+    const accModal = document.getElementById('accessModal');
+    const accClose = document.getElementById('accessModalClose');
+    const accInput = document.getElementById('accessCodeInput');
+    const accBtn   = document.getElementById('accessCodeSubmit');
+    const accStatus= document.getElementById('accessStatus');
+    const accJoin  = document.getElementById('accessJoin');
+
+    function closeWall() {
+      wall?.classList.remove('is-open');
+      wall?.setAttribute('aria-hidden','true');
+      document.body.style.overflow = '';
+    }
+    function closeAcc() {
+      accModal?.classList.remove('is-open');
+      accModal?.setAttribute('aria-hidden','true');
+      document.body.style.overflow = '';
+    }
+    function openAcc() {
+      closeWall();
+      accModal?.classList.add('is-open');
+      accModal?.setAttribute('aria-hidden','false');
+      document.body.style.overflow = 'hidden';
+      setTimeout(() => accInput?.focus(), 100);
+    }
+
+    // Click sul lucchetto → mostra wall con opzioni
     document.addEventListener('click', e => {
       const btn = e.target.closest('.member-email-btn');
-      if (!btn) return;
+      if (!btn || isMemberUnlocked()) return;
       e.preventDefault();
-      wall.setAttribute('aria-hidden','false');
-      wall.classList.add('is-open');
+      wall?.classList.add('is-open');
+      wall?.setAttribute('aria-hidden','false');
       document.body.style.overflow = 'hidden';
     });
 
-    function closeWall() {
-      wall.setAttribute('aria-hidden','true');
-      wall.classList.remove('is-open');
-      document.body.style.overflow = '';
-    }
     wallClose?.addEventListener('click', closeWall);
     wall?.addEventListener('click', e => { if (e.target === wall) closeWall(); });
     wallJoin?.addEventListener('click', () => { closeWall(); openModal(); });
-    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeWall(); });
+
+    // Pulsante "Inserisci codice" nella email wall
+    document.getElementById('wallCodeBtn')?.addEventListener('click', openAcc);
+
+    // Access code modal
+    accClose?.addEventListener('click', closeAcc);
+    accModal?.addEventListener('click', e => { if (e.target === accModal) closeAcc(); });
+    accJoin?.addEventListener('click', () => { closeAcc(); openModal(); });
+
+    function tryCode() {
+      const code = (accInput?.value || '').trim().toUpperCase();
+      if (VALID_CODES.includes(code)) {
+        accStatus.textContent = '✓ Accesso confermato. Benvenuto nella rete.';
+        accStatus.className = 'access-modal__status success';
+        unlockMemberEmails();
+        setTimeout(closeAcc, 1400);
+      } else {
+        accStatus.textContent = '✗ Codice non riconosciuto. Controlla l'email di benvenuto.';
+        accStatus.className = 'access-modal__status error';
+        accInput?.classList.add('shake');
+        setTimeout(() => accInput?.classList.remove('shake'), 500);
+      }
+    }
+    accBtn?.addEventListener('click', tryCode);
+    accInput?.addEventListener('keydown', e => { if (e.key === 'Enter') tryCode(); });
+
+    document.addEventListener('keydown', e => {
+      if (e.key !== 'Escape') return;
+      closeWall(); closeAcc();
+    });
   }
 
   /* ── 3D Card Tilt: segue il mouse ── */
