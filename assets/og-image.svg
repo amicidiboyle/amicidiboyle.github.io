@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#010c1e;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#021830;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#010e22;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="glow" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#7be4ff;stop-opacity:0.15" />
+      <stop offset="100%" style="stop-color:#3278ff;stop-opacity:0" />
+    </linearGradient>
+    <radialGradient id="spot" cx="30%" cy="40%" r="60%">
+      <stop offset="0%" style="stop-color:#1a4a9a;stop-opacity:0.4" />
+      <stop offset="100%" style="stop-color:#010c1e;stop-opacity:0" />
+    </radialGradient>
+    <filter id="blur1">
+      <feGaussianBlur stdDeviation="40"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect width="1200" height="630" fill="url(#spot)"/>
+
+  <!-- Synapse lines -->
+  <g stroke="rgba(123,228,255,0.12)" stroke-width="1" fill="none">
+    <path d="M0,200 Q300,150 600,220 Q900,290 1200,180"/>
+    <path d="M0,320 Q250,280 500,350 Q750,420 1200,300"/>
+    <path d="M0,420 Q200,380 450,440 Q700,500 1200,420"/>
+    <path d="M100,0 Q200,200 300,350 Q400,500 350,630"/>
+    <path d="M800,0 Q850,150 900,300 Q950,450 880,630"/>
+  </g>
+
+  <!-- Synapse nodes -->
+  <g fill="rgba(180,240,255,0.5)">
+    <circle cx="300" cy="155" r="3"/>
+    <circle cx="580" cy="225" r="2"/>
+    <circle cx="880" cy="185" r="3"/>
+    <circle cx="450" cy="355" r="2"/>
+    <circle cx="720" cy="310" r="3"/>
+    <circle cx="1050" cy="295" r="2"/>
+    <circle cx="200" cy="420" r="2"/>
+    <circle cx="650" cy="445" r="3"/>
+    <circle cx="950" cy="425" r="2"/>
+  </g>
+
+  <!-- Logo circle -->
+  <circle cx="96" cy="100" r="44" fill="rgba(123,228,255,0.08)" stroke="rgba(123,228,255,0.2)" stroke-width="1"/>
+  <text x="96" y="108" text-anchor="middle" font-family="system-ui,sans-serif" font-size="28" font-weight="800" fill="rgba(123,228,255,0.7)">B</text>
+
+  <!-- Main title -->
+  <text x="160" y="88" font-family="system-ui,-apple-system,sans-serif" font-size="15" font-weight="600" letter-spacing="3" fill="rgba(123,228,255,0.6)" text-transform="uppercase">GLI AMICI DI BOYLE</text>
+  <text x="160" y="112" font-family="system-ui,-apple-system,sans-serif" font-size="12" fill="rgba(200,230,255,0.4)" letter-spacing="1">Diving &amp; Hyperbaric Medicine · Research &amp; Education</text>
+
+  <!-- Hero headline -->
+  <text x="96" y="290" font-family="system-ui,-apple-system,sans-serif" font-size="72" font-weight="800" letter-spacing="-3" fill="white">Medicina degli</text>
+  <text x="96" y="370" font-family="system-ui,-apple-system,sans-serif" font-size="72" font-weight="800" letter-spacing="-3" fill="rgba(123,228,255,0.95)">ambienti estremi</text>
+
+  <!-- Subline -->
+  <text x="96" y="430" font-family="system-ui,-apple-system,sans-serif" font-size="20" fill="rgba(200,230,255,0.55)" letter-spacing="0.3">Ricerca · Formazione · Rete professionale</text>
+
+  <!-- URL badge -->
+  <rect x="96" y="540" width="220" height="38" rx="19" fill="rgba(123,228,255,0.08)" stroke="rgba(123,228,255,0.22)" stroke-width="1"/>
+  <text x="206" y="564" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="14" font-weight="600" fill="rgba(123,228,255,0.8)" letter-spacing="0.5">amicidiboyle.it</text>
+
+  <!-- Right side glow blob -->
+  <ellipse cx="950" cy="315" rx="350" ry="280" fill="rgba(30,80,200,0.06)" filter="url(#blur1)"/>
+</svg>
