@@ -166,5 +166,18 @@
       "Chirurgia",
       "Mass Gathering"
     ]
+  },
+  {
+    "name": "Matteo Denaro",
+    "role": "Palombaro, Tecnico Iperbarico, Advanced Diver CMAS (3 Stars). Marina Militare. Focus: Bounce and Saturation Diving, Submarine Rescue.",
+    "img": "matteo-denaro.jpg",
+    "city": "La Spezia, IT",
+    "linkedin": "https://www.linkedin.com/in/matteo-denaro-20b51a237",
+    "email": "matteo.denaro746@gmail.com",
+    "tags": [
+      "Diving",
+      "Medicina Militare",
+      "Safety"
+    ]
   }
 ]
