@@ -53,6 +53,9 @@
         <a href="podcast.html">Podcast</a>
         <a href="#partner">Partner</a>
         <a href="#contatti">Contatti</a>
+        <button class="lang-toggle" id="langToggle" aria-label="Cambia lingua / Switch language" title="Switch to English">
+          <span id="langCurrent">IT</span><span class="lang-sep"> · </span><span id="langOther">EN</span>
+        </button>
       </nav>
     </div>
   </header>
@@ -73,7 +76,7 @@
         <div class="hero-content reveal">
           <span class="hero-eyebrow">Medicina subacquea · Iperbarica · Aerospaziale · Safety</span>
           <h1>Medicina degli<br><span class="accent">ambienti estremi</span></h1>
-          <p class="hero-lead">Ricerca, formazione e rete professionale nella medicina degli ambienti estremi. Una rete multidisciplinare che unisce clinica, fisiologia, tecnologia e cultura della sicurezza.</p>
+          <p class="hero-lead" data-i18n="hero_lead">Ricerca, formazione e rete professionale nella medicina degli ambienti estremi. Una rete multidisciplinare che unisce clinica, fisiologia, tecnologia e cultura della sicurezza.</p>
           <div class="hero-cta-row">
             <a class="btn btn-primary" href="#visione">Scopri il progetto</a>
             <a class="btn btn-secondary" href="rete.html">Entra nella rete</a>
@@ -122,7 +125,7 @@
             </svg>
           </div>
           <div class="info-card-body">
-          <p class="section-kicker">In evidenza</p>
+          <p class="section-kicker" data-i18n-section="true">In evidenza</p>
           <h2>Network di professionisti di alto livello</h2>
           <p>Esperti in medicina subacquea e iperbarica, rianimazione, medicina spaziale e ambienti estremi con identità scientifica e visione operativa.</p>
           </div>
@@ -1198,6 +1201,163 @@
     }
     window.addEventListener('scroll', highlight, {passive:true});
     highlight();
+  })();
+  </script>
+
+  <!-- i18n: lingua IT/EN -->
+  <script>
+  (function(){
+    /* ── Translations ── */
+    var T = {
+      it: {
+        // Nav
+        'nav_home':'Home','nav_visione':'Visione','nav_ricerca':'Ricerca',
+        'nav_fondatori':'Fondatori','nav_rete':'Rete','nav_podcast':'Podcast',
+        'nav_partner':'Partner','nav_contatti':'Contatti',
+        // Hero
+        'hero_kicker':'Medicina subacquea · Iperbarica · Aerospaziale · Safety',
+        'hero_h1':'Medicina degli ambienti estremi',
+        'hero_lead':'Ricerca, formazione e rete professionale nella medicina degli ambienti estremi. Una rete multidisciplinare che unisce clinica, fisiologia, tecnologia e cultura della sicurezza.',
+        'hero_cta1':'Scopri il progetto',
+        'hero_cta2':'Entra nella rete',
+        'hero_cta3':'Ascolta il podcast',
+        // Stats
+        'stat_fondatori':'Fondatori','stat_episodi':'Episodi podcast',
+        'stat_anno':'Anno di fondazione','stat_views':'Visualizzazioni','stat_idee':'Idee',
+        // In evidenza
+        'ev_title':'Network di professionisti di alto livello',
+        'ev_text':'Esperti in medicina subacquea e iperbarica, rianimazione, medicina spaziale e ambienti estremi con identità scientifica e visione operativa.',
+        'vis_title':'Clinica, ricerca e ambienti estremi',
+        'vis_text':'Professionisti di prima linea che uniscono competenze mediche, ingegneristiche e scientifiche per sviluppare soluzioni operative in scenari ad alta complessità.',
+        'cont_title':'Podcast, lezioni, articoli, eventi',
+        'cont_text':'Materiali chiari, aggiornati, applicabili. Non solo teoria: corsi, risorse, pubblicazioni e occasioni concrete di collaborazione.',
+        // Visione
+        'vis_h2':'Rigore scientifico, impatto operativo',
+        'vis_p':'Essere un riferimento internazionale per innovazione e ricerca in medicina iperbarica e subacquea, con un approccio multidisciplinare che integra competenze mediche, tecnologiche e scientifiche di alto livello.',
+        // Attività
+        'att_h2':'Quattro direttrici chiare, con contenuti reali dentro',
+        'att_sub':'Ricerca, formazione, pubblicazioni e media organizzati in un ecosistema coerente, leggibile e utile.',
+        'att1_h3':'Ricerca','att1_p':'Studi clinici, collaborazioni scientifiche, progetti di ricerca e protocolli applicati alla medicina iperbarica e subacquea.',
+        'att2_h3':'Formazione','att2_p':'Docenze universitarie, corsi, congressi, materiali didattici e attività costruite per chi lavora sul campo.',
+        'att3_h3':'Pubblicazioni','att3_p':'Articoli, case report, contributi editoriali e materiali scientifici utili a clinici, operatori e ricercatori.',
+        'att4_h3':'Media','att4_p':'Podcast, interviste e contenuti divulgativi che rendono accessibile la medicina degli ambienti estremi.',
+        // Fondatori
+        'fond_h2':'Un progetto nato da clinici, ricercatori e ingegneri',
+        'fond_sub':'Professionisti attivi nella medicina degli ambienti estremi, nella ricerca e nella formazione, con profili complementari e competenze operative.',
+        // Rete home
+        'rete_h2':'Una rete selettiva aperta a chi fa',
+        'rete_cta':'Esplora la rete',
+        // CTA generico
+        'cta_scopri':'Scopri il progetto',
+        'cta_rete':'Entra nella rete',
+        'cta_candidati':'Candidati',
+        'footer_copy':'© 2026 Gli Amici di Boyle · Tutti i diritti riservati',
+      },
+      en: {
+        // Nav
+        'nav_home':'Home','nav_visione':'Vision','nav_ricerca':'Research',
+        'nav_fondatori':'Founders','nav_rete':'Network','nav_podcast':'Podcast',
+        'nav_partner':'Partners','nav_contatti':'Contact',
+        // Hero
+        'hero_kicker':'Underwater Medicine · Hyperbaric · Aerospace · Safety',
+        'hero_h1':'Medicine of Extreme Environments',
+        'hero_lead':'Research, education and professional network in extreme environment medicine. A multidisciplinary community bridging clinical practice, physiology, technology and safety culture.',
+        'hero_cta1':'Discover the project',
+        'hero_cta2':'Join the network',
+        'hero_cta3':'Listen to the podcast',
+        // Stats
+        'stat_fondatori':'Founders','stat_episodi':'Podcast episodes',
+        'stat_anno':'Founded','stat_views':'Views','stat_idee':'Ideas',
+        // In evidenza
+        'ev_title':'High-level professional network',
+        'ev_text':'Experts in underwater and hyperbaric medicine, critical care, space medicine and extreme environments with a scientific identity and an operational vision.',
+        'vis_title':'Clinical practice, research and extreme environments',
+        'vis_text':'Frontline professionals combining medical, engineering and scientific expertise to develop operational solutions in high-complexity scenarios.',
+        'cont_title':'Podcast, lectures, articles, events',
+        'cont_text':'Clear, current, applicable content. Not just theory: courses, resources, publications and concrete collaboration opportunities.',
+        // Visione
+        'vis_h2':'Scientific rigour, operational impact',
+        'vis_p':'To become an international reference for innovation and research in hyperbaric and underwater medicine, through a multidisciplinary approach integrating high-level medical, technological and scientific expertise.',
+        // Attività
+        'att_h2':'Four clear directions, with real content inside',
+        'att_sub':'Research, education, publications and media organised in a coherent, readable and useful ecosystem.',
+        'att1_h3':'Research','att1_p':'Clinical studies, scientific collaborations, research projects and protocols applied to hyperbaric and underwater medicine.',
+        'att2_h3':'Education','att2_p':'University lectures, courses, congresses, teaching materials and activities built for those working in the field.',
+        'att3_h3':'Publications','att3_p':'Articles, case reports, editorial contributions and scientific materials for clinicians, practitioners and researchers.',
+        'att4_h3':'Media','att4_p':'Podcast, interviews and educational content making extreme environment medicine accessible.',
+        // Fondatori
+        'fond_h2':'A project born from clinicians, researchers and engineers',
+        'fond_sub':'Professionals active in extreme environment medicine, research and education, with complementary profiles and operational expertise.',
+        // Rete home
+        'rete_h2':'A selective network open to those who do',
+        'rete_cta':'Explore the network',
+        // CTA
+        'cta_scopri':'Discover the project',
+        'cta_rete':'Join the network',
+        'cta_candidati':'Apply',
+        'footer_copy':'© 2026 Gli Amici di Boyle · All rights reserved',
+      }
+    };
+
+    /* ── Map: selector → translation key ── */
+    var MAP = [
+      ['.hero-kicker',            'hero_kicker'],
+      ['.hero-title',             'hero_h1'],
+      ['.hero-lead',              'hero_lead'],
+      ['#stat-fondatori',         'stat_fondatori'],
+      ['#stat-episodi',           'stat_episodi'],
+      ['#stat-anno',              'stat_anno'],
+      ['#stat-views',             'stat_views'],
+      ['#stat-idee',              'stat_idee'],
+    ];
+
+    var currentLang = localStorage.getItem('boyle_lang') || 'it';
+
+    function applyLang(lang) {
+      currentLang = lang;
+      localStorage.setItem('boyle_lang', lang);
+      var dict = T[lang];
+
+      /* Apply mapped selectors */
+      MAP.forEach(function(pair) {
+        var el = document.querySelector(pair[0]);
+        if (el && dict[pair[1]]) el.textContent = dict[pair[1]];
+      });
+
+      /* Apply data-i18n attributes */
+      document.querySelectorAll('[data-i18n]').forEach(function(el) {
+        var key = el.getAttribute('data-i18n');
+        if (dict[key]) el.textContent = dict[key];
+      });
+
+      /* Update toggle button */
+      var cur = document.getElementById('langCurrent');
+      var oth = document.getElementById('langOther');
+      if (cur) cur.textContent = lang.toUpperCase();
+      if (oth) oth.textContent = lang === 'it' ? 'EN' : 'IT';
+
+      /* Update html lang attr */
+      document.documentElement.lang = lang;
+
+      /* Update page title */
+      document.title = lang === 'en'
+        ? 'Gli Amici di Boyle · Research & Education'
+        : 'Gli Amici di Boyle · Research & Education';
+    }
+
+    /* Toggle on click */
+    document.addEventListener('click', function(e) {
+      if (e.target.closest('#langToggle')) {
+        applyLang(currentLang === 'it' ? 'en' : 'it');
+      }
+    });
+
+    /* Apply saved lang on load */
+    if (currentLang === 'en') {
+      document.addEventListener('DOMContentLoaded', function() {
+        applyLang('en');
+      });
+    }
   })();
   </script>
 </body>
