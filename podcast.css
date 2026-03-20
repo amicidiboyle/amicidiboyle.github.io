@@ -284,3 +284,14 @@ a   { color: inherit; text-decoration: none; }
   .season__tag { width: 34px; height: 34px; font-size: .68rem; }
   .podYT { padding: 22px; }
 }
+
+
+/* ── Brand uniforme alla home ── */
+.brand { display: flex; align-items: center; gap: 13px; min-width: 0; text-decoration: none; }
+.brand img, .brand__logo { width: 50px; height: 50px; flex-shrink: 0; filter: drop-shadow(0 0 12px rgba(123,228,255,.3)); transition: filter .3s; border-radius: 50%; }
+.brand:hover img { filter: drop-shadow(0 0 20px rgba(123,228,255,.55)); }
+.brand-copy { display: grid; gap: 2px; min-width: 0; overflow: hidden; }
+.brand-copy strong { font-size: .96rem; font-weight: 700; white-space: nowrap; color: var(--pod-text); display: block; }
+.brand-copy em { font-style: normal; font-size: .68rem; color: var(--pod-soft); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: block; }
+.brand-sub { font-size: .63rem !important; color: var(--pod-soft) !important; }
+@media (max-width: 768px) { .brand-sub { display: none !important; } }
