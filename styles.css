@@ -2452,3 +2452,120 @@ html, body { overflow-x: hidden; }
     transition: none !important;
   }
 }
+
+
+/* ════════════════════════════════════════════════════════
+   DESKTOP FLOATING SIDE NAV — punti sezione
+   ════════════════════════════════════════════════════════ */
+#desktop-quicknav {
+  position: fixed;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 500;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .35s ease;
+}
+#desktop-quicknav.dqn-visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+#desktop-quicknav ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 0; margin: 0;
+}
+#desktop-quicknav a {
+  display: block;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: rgba(123,228,255,.28);
+  border: 1.5px solid rgba(123,228,255,.38);
+  position: relative;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background .2s, transform .2s, border-color .2s, box-shadow .2s;
+}
+#desktop-quicknav a:hover,
+#desktop-quicknav a.dqn-active {
+  background: var(--cyan-2, #a8eeff);
+  border-color: var(--cyan-2, #a8eeff);
+  transform: scale(1.6);
+  box-shadow: 0 0 10px rgba(123,228,255,.65);
+}
+/* Tooltip label al hover */
+#desktop-quicknav a::after {
+  content: attr(data-label);
+  position: absolute;
+  right: calc(100% + 12px);
+  top: 50%;
+  transform: translateY(-50%) translateX(6px);
+  font-size: .72rem;
+  font-weight: 600;
+  letter-spacing: .06em;
+  color: #a8eeff;
+  white-space: nowrap;
+  background: rgba(4,14,36,.95);
+  border: 1px solid rgba(123,228,255,.22);
+  padding: 4px 10px;
+  border-radius: 8px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .18s, transform .18s;
+}
+#desktop-quicknav a:hover::after {
+  opacity: 1;
+  transform: translateY(-50%) translateX(0);
+}
+/* Linea dalla pallina attiva */
+#desktop-quicknav a.dqn-active::before {
+  content: "";
+  position: absolute;
+  right: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 16px; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(123,228,255,.6));
+  margin-right: 4px;
+}
+@media (max-width: 768px) {
+  #desktop-quicknav { display: none !important; }
+}
+
+/* ════════════════════════════════════════════════════════
+   TASTO IT/EN — stile uniforme al sito
+   ════════════════════════════════════════════════════════ */
+.lang-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 5px 12px;
+  border-radius: 999px;
+  background: rgba(123,228,255,.07);
+  border: 1px solid rgba(123,228,255,.22);
+  color: rgba(237,247,255,.65);
+  font-size: .74rem;
+  font-weight: 700;
+  letter-spacing: .1em;
+  cursor: pointer;
+  transition: background .2s, border-color .2s, color .2s;
+  white-space: nowrap;
+  line-height: 1;
+}
+.lang-toggle:hover {
+  background: rgba(123,228,255,.15);
+  border-color: rgba(123,228,255,.42);
+  color: #a8eeff;
+}
+#langCurrent {
+  color: var(--cyan-2, #a8eeff);
+  font-weight: 800;
+}
+.lang-sep { opacity: .28; font-weight: 400; }
+#langOther { opacity: .52; }
+@media (max-width: 768px) {
+  .lang-toggle { display: none; }
+}
