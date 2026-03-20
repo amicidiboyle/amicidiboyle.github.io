@@ -648,7 +648,7 @@
         unlockMemberEmails();
         setTimeout(closeAcc, 1400);
       } else {
-        accStatus.textContent = '✗ Codice non riconosciuto. Controlla l'email di benvenuto.';
+        accStatus.textContent = "✗ Codice non riconosciuto. Controlla l'email di benvenuto.";
         accStatus.className = 'access-modal__status error';
         accInput?.classList.add('shake');
         setTimeout(() => accInput?.classList.remove('shake'), 500);
