@@ -146,6 +146,92 @@
 
     <!-- EMAIL MEMBERS ONLY MODAL -->
     
+
+    <!-- ── PUBLISH EVENT: access wall ── -->
+    <div class="email-wall" id="publishWall" aria-hidden="true">
+      <div class="email-wall__dialog">
+        <button class="email-wall__close" id="publishWallClose" aria-label="Chiudi">✕</button>
+        <div class="email-wall__icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+        </div>
+        <h3 class="email-wall__title">Area riservata ai membri</h3>
+        <p class="email-wall__text">Pubblicare un evento sulla Rete di Boyle è riservato ai membri attivi. Se sei già membro, inserisci il tuo codice di accesso.</p>
+        <div class="email-wall__actions">
+          <button class="btn-electric" id="publishWallCodeBtn" type="button">
+            <span class="btn-electric__inner">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              Sono già membro — inserisci il codice
+            </span>
+          </button>
+          <button class="btn-ghost" id="publishWallJoin" style="min-height:44px;font-size:.88rem;margin-top:8px">Candidati alla rete →</button>
+          <p class="email-wall__note">Problemi? Scrivi a <a href="mailto:info@amicidiboyle.it">info@amicidiboyle.it</a></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── PUBLISH EVENT: form modal ── -->
+    <div class="modal" id="publishEventModal" aria-hidden="true" role="dialog" aria-labelledby="publishEventTitle">
+      <div class="modal__dialog" style="max-width:560px">
+        <div class="modal__head">
+          <div>
+            <p class="modal__kicker">Area membri</p>
+            <h3 class="modal__title" id="publishEventTitle">Pubblica il tuo evento</h3>
+          </div>
+          <button class="modal__close" id="publishEventClose" aria-label="Chiudi">✕</button>
+        </div>
+        <p class="modal__desc">Compila il form per proporre un evento o un corso da pubblicare sulla Rete di Boyle. Ti risponderemo entro 48 ore.</p>
+        <form class="modal__form" id="publishEventForm"
+              action="https://formspree.io/f/xpwzgkqv"
+              method="POST">
+          <input type="hidden" name="_subject" value="Proposta evento — Rete di Boyle" />
+          <div class="form-grid">
+            <div class="form-field">
+              <label for="ev-nome">Nome e cognome *</label>
+              <input type="text" id="ev-nome" name="nome" required autocomplete="name" />
+            </div>
+            <div class="form-field">
+              <label for="ev-email">Email *</label>
+              <input type="email" id="ev-email" name="email" required autocomplete="email" />
+            </div>
+            <div class="form-field form-field--full">
+              <label for="ev-titolo">Titolo dell'evento *</label>
+              <input type="text" id="ev-titolo" name="titolo_evento" required />
+            </div>
+            <div class="form-field">
+              <label for="ev-data">Data / periodo</label>
+              <input type="text" id="ev-data" name="data_evento" placeholder="es. 15 aprile 2025" />
+            </div>
+            <div class="form-field">
+              <label for="ev-luogo">Luogo / modalità</label>
+              <input type="text" id="ev-luogo" name="luogo" placeholder="es. Milano / Online" />
+            </div>
+            <div class="form-field form-field--full">
+              <label for="ev-desc">Descrizione breve *</label>
+              <textarea id="ev-desc" name="descrizione" rows="3" required placeholder="Argomento, obiettivi, pubblico target..."></textarea>
+            </div>
+            <div class="form-field form-field--full">
+              <label for="ev-link">Link esterno (sito evento, iscrizioni...)</label>
+              <input type="url" id="ev-link" name="link_esterno" placeholder="https://" />
+            </div>
+            <div class="form-field form-field--full">
+              <label for="ev-locandina">Link locandina (Drive, Dropbox, WeTransfer...)</label>
+              <input type="url" id="ev-locandina" name="link_locandina" placeholder="https://" />
+            </div>
+            <div class="form-field form-field--full">
+              <label for="ev-note">Note aggiuntive</label>
+              <textarea id="ev-note" name="note" rows="2" placeholder="Qualsiasi altra informazione utile..."></textarea>
+            </div>
+          </div>
+          <div class="modal__actions">
+            <button class="btn-electric" type="submit">
+              <span class="btn-electric__inner">Invia proposta</span>
+            </button>
+          </div>
+          <div class="form-status" id="publishEventStatus"></div>
+        </form>
+      </div>
+    </div>
+
     <!-- ACCESS CODE MODAL -->
     <div class="access-modal" id="accessModal" aria-hidden="true">
       <div class="access-modal__dialog">
@@ -187,56 +273,108 @@
     </div>
 
     <!-- VANTAGGI DELLA RETE -->
-    <section class="benefits-section">
+
+    
+    <!-- ── EVENTO + VANTAGGI ── -->
+    <section class="section rete-why-section">
       <div class="container">
-        <div class="benefits-header reveal">
-          <p class="benefits-eyebrow">Perché entrare</p>
-          <h2 class="benefits-title">Cosa significa far parte della Rete di Boyle</h2>
-          <p class="benefits-sub">La rete non è una directory. È un ecosistema attivo dove ogni membro contribuisce e riceve valore concreto.</p>
+
+        <!-- Header -->
+        <div class="rete-why-header reveal">
+          <p class="section-kicker">Perché entrare</p>
+          <h2 class="rete-why-title">Cosa significa far parte della Rete di Boyle</h2>
+          <p class="rete-why-sub">La rete non è una directory. È un ecosistema attivo dove ogni membro contribuisce e riceve valore concreto.</p>
         </div>
-        <div class="benefits-grid">
-          <div class="benefit-card reveal">
-            <div class="benefit-icon benefit-icon--cyan">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+
+        <!-- Grid: evento a sx, benefits a dx -->
+        <div class="rete-why-grid">
+
+          <!-- Card evento verticale -->
+          <div class="rete-event-card reveal">
+            <div class="rete-event-card__kicker">
+              <span class="rete-event-dot"></span>
+              Prossimo evento
             </div>
-            <h3>Accesso ai contatti diretti</h3>
-            <p>Cerca un esperto di medicina iperbarica per un congresso, un relatore specializzato, un collaboratore scientifico. Gli indirizzi email diretti di tutti i membri sono visibili solo a chi è dentro la rete.</p>
+            <article class="glass-card poster-card">
+              <img src="assets/corsi/thedayafter.png"
+                   alt="Locandina The Day After"
+                   loading="lazy"
+                   onerror="this.style.display='none'" />
+              <div class="rete-event-card__body">
+                <p class="section-kicker">Partner · ITCC</p>
+                <h3>The Day After</h3>
+                <p>Gestione del trauma maggiore oltre la fase acuta. Un corso in piena coerenza con la visione degli Amici di Boyle.</p>
+                <div class="event-meta">
+                  <span>Corso partner</span>
+                  <span>ITCC</span>
+                </div>
+              </div>
+              <a class="btn btn-ghost btn-block" href="assets/corsi/the_day_after_brochure.pdf" target="_blank" rel="noopener">Scarica il programma</a>
+            </article>
+            <button class="btn-secondary btn-block rete-event-publish-btn" id="publishEventBtn" type="button">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              Pubblica qui il tuo prossimo evento
+            </button>
           </div>
-          <div class="benefit-card reveal" data-delay="60">
-            <div class="benefit-icon benefit-icon--green">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+
+          <!-- Benefit cards -->
+          <div class="rete-benefits-stack">
+            <div class="benefit-card reveal">
+              <div class="benefit-icon benefit-icon--cyan">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+              </div>
+              <div>
+                <h3>Contatti diretti</h3>
+                <p>Email personali di tutti i membri, visibili solo a chi è dentro la rete.</p>
+              </div>
             </div>
-            <h3>Visibilità sul portale</h3>
-            <p>La tua card è visibile a tutti i visitatori del sito. Chi lo desidera può arricchirla con CV scaricabile, pubblicazioni e link professionali — un profilo completo accessibile da tutta la community.</p>
-          </div>
-          <div class="benefit-card reveal" data-delay="120">
-            <div class="benefit-icon benefit-icon--purple">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+            <div class="benefit-card reveal" data-delay="60">
+              <div class="benefit-icon benefit-icon--green">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+              </div>
+              <div>
+                <h3>Visibilità sul portale</h3>
+                <p>La tua card è pubblica. CV, pubblicazioni, link professionali — sempre aggiornati.</p>
+              </div>
             </div>
-            <h3>Contribuisci alla newsletter</h3>
-            <p>Ogni membro può proporre un articolo, un caso clinico o un contributo divulgativo per la newsletter degli Amici di Boyle, distribuita a tutta la community e ai partner del progetto.</p>
-          </div>
-          <div class="benefit-card reveal" data-delay="60">
-            <div class="benefit-icon benefit-icon--orange">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M22 10v6M2 10l10-8 10 8M4 20v-6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v6"/></svg>
+            <div class="benefit-card reveal" data-delay="120">
+              <div class="benefit-icon benefit-icon--purple">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+              </div>
+              <div>
+                <h3>Newsletter</h3>
+                <p>Proponi articoli, casi clinici, contributi. Arrivi direttamente a tutta la community.</p>
+              </div>
             </div>
-            <h3>Pubblica i tuoi corsi</h3>
-            <p>Hai un corso, un congresso o un'iniziativa formativa? La sezione formazione del portale è aperta ai membri per pubblicizzare eventi e attività didattiche direttamente sul sito.</p>
-          </div>
-          <div class="benefit-card reveal" data-delay="120">
-            <div class="benefit-icon benefit-icon--cyan">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2v-4M9 21H5a2 2 0 0 1-2-2v-4m0 0h18"/></svg>
+            <div class="benefit-card reveal" data-delay="60">
+              <div class="benefit-icon benefit-icon--orange">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M22 10v6M2 10l10-8 10 8M4 20v-6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v6"/></svg>
+              </div>
+              <div>
+                <h3>Pubblica i tuoi corsi</h3>
+                <p>Hai un evento formativo? La sezione formazione è aperta ai membri del portale.</p>
+              </div>
             </div>
-            <h3>Collaborazioni scientifiche</h3>
-            <p>I membri vengono coinvolti nelle iniziative di ricerca degli Amici di Boyle e possono essere invitati a collaborare a studi, protocolli e pubblicazioni scientifiche con il team e i partner del progetto.</p>
-          </div>
-          <div class="benefit-card reveal" data-delay="180">
-            <div class="benefit-icon benefit-icon--green">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+            <div class="benefit-card reveal" data-delay="120">
+              <div class="benefit-icon benefit-icon--cyan">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2v-4M9 21H5a2 2 0 0 1-2-2v-4m0 0h18"/></svg>
+              </div>
+              <div>
+                <h3>Ricerca scientifica</h3>
+                <p>Studi, protocolli, pubblicazioni. I membri vengono invitati alle iniziative di ricerca.</p>
+              </div>
             </div>
-            <h3>Prima fila sulle iniziative</h3>
-            <p>Congressi, workshop, progetti editoriali, attività formative e collaborative: i membri della rete vengono coinvolti per primi in tutte le iniziative degli Amici di Boyle, prima che siano aperte al pubblico.</p>
+            <div class="benefit-card reveal" data-delay="180">
+              <div class="benefit-icon benefit-icon--green">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+              </div>
+              <div>
+                <h3>Prima fila</h3>
+                <p>Congressi, workshop, editoriali. I membri vengono coinvolti per primi, prima del pubblico.</p>
+              </div>
+            </div>
           </div>
+
         </div>
       </div>
     </section>
@@ -678,6 +816,86 @@
     document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeWall(); closeAcc(); } });
   }
 
+  /* ── Pubblica evento: accesso riservato ai membri ── */
+  function initPublishEvent() {
+    const pubBtn       = document.getElementById('publishEventBtn');
+    const pubWall      = document.getElementById('publishWall');
+    const pubWallClose = document.getElementById('publishWallClose');
+    const pubWallCode  = document.getElementById('publishWallCodeBtn');
+    const pubWallJoin  = document.getElementById('publishWallJoin');
+    const pubModal     = document.getElementById('publishEventModal');
+    const pubClose     = document.getElementById('publishEventClose');
+    const pubForm      = document.getElementById('publishEventForm');
+    const pubStatus    = document.getElementById('publishEventStatus');
+
+    function closePubWall() {
+      pubWall?.classList.remove('is-open');
+      pubWall?.setAttribute('aria-hidden','true');
+      document.body.style.overflow = '';
+    }
+    function openPubModal() {
+      closePubWall();
+      pubModal?.classList.add('is-open');
+      pubModal?.setAttribute('aria-hidden','false');
+      document.body.style.overflow = 'hidden';
+    }
+    function closePubModal() {
+      pubModal?.classList.remove('is-open');
+      pubModal?.setAttribute('aria-hidden','true');
+      document.body.style.overflow = '';
+    }
+
+    pubBtn?.addEventListener('click', () => {
+      if (isMemberUnlocked()) { openPubModal(); }
+      else {
+        pubWall?.classList.add('is-open');
+        pubWall?.setAttribute('aria-hidden','false');
+        document.body.style.overflow = 'hidden';
+      }
+    });
+
+    pubWallClose?.addEventListener('click', closePubWall);
+    pubWall?.addEventListener('click', e => { if (e.target === pubWall) closePubWall(); });
+    pubWallJoin?.addEventListener('click', () => { closePubWall(); openModal(); });
+    pubWallCode?.addEventListener('click', () => {
+      closePubWall();
+      const accModal = document.getElementById('accessModal');
+      accModal?.classList.add('is-open');
+      accModal?.setAttribute('aria-hidden','false');
+      document.body.style.overflow = 'hidden';
+      setTimeout(() => document.getElementById('accessCodeInput')?.focus(), 100);
+    });
+
+    pubClose?.addEventListener('click', closePubModal);
+    pubModal?.addEventListener('click', e => { if (e.target === pubModal) closePubModal(); });
+
+    pubForm?.addEventListener('submit', async e => {
+      e.preventDefault();
+      const btn = pubForm.querySelector('button[type="submit"]');
+      if (btn) btn.disabled = true;
+      if (pubStatus) { pubStatus.textContent = 'Invio in corso...'; pubStatus.className = 'form-status'; }
+      try {
+        const res = await fetch(pubForm.action, {
+          method: 'POST', body: new FormData(pubForm),
+          headers: { 'Accept': 'application/json' }
+        });
+        if (res.ok) {
+          pubStatus.textContent = "✓ Proposta inviata. Ti risponderemo entro 48 ore.";
+          pubStatus.className = 'form-status success';
+          pubForm.reset();
+          setTimeout(closePubModal, 2800);
+        } else { throw new Error(); }
+      } catch {
+        pubStatus.textContent = "Errore nell'invio. Scrivi a info@amicidiboyle.it";
+        pubStatus.className = 'form-status error';
+      } finally { if (btn) btn.disabled = false; }
+    });
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') { closePubWall(); closePubModal(); }
+    });
+  }
+
   /* ── 3D Card Tilt: segue il mouse ── */
   function initCardTilt() {
     document.querySelectorAll('.member-card').forEach(card => {
@@ -850,6 +1068,7 @@
   /* ── INIT ── */
   loadMembersEnhanced();
   initSynapseCanvas();
+  initPublishEvent();
   </script>
 
   <!-- i18n: rete.html -->
