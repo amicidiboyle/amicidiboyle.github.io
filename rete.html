@@ -111,7 +111,7 @@
           </a>
         </div>
         <div class="hero__stats">
-          <div class="hero__stat"><span class="hero__stat-n" id="memberCount">14</span><span class="hero__stat-l">Membri attivi</span></div>
+          <div class="hero__stat"><span class="hero__stat-n" id="memberCount">15</span><span class="hero__stat-l">Membri attivi</span></div>
           <div class="hero__stat"><span class="hero__stat-n">8+</span><span class="hero__stat-l">Specialità</span></div>
           <div class="hero__stat"><span class="hero__stat-n">6</span><span class="hero__stat-l">Nazioni</span></div>
           <div class="hero__stat hero__stat--growing"><span class="hero__stat-n">↑</span><span class="hero__stat-l">In crescita</span></div>
@@ -133,6 +133,28 @@
     </section>
 
     <!-- EMAIL MEMBERS ONLY MODAL -->
+    <!-- ACCESS CODE MODAL -->
+    <div class="access-modal" id="accessModal" aria-hidden="true">
+      <div class="access-modal__dialog">
+        <button class="access-modal__close" id="accessModalClose" aria-label="Chiudi">✕</button>
+        <div class="access-modal__icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        </div>
+        <h3 class="access-modal__title">Accesso membri</h3>
+        <p class="access-modal__desc">Inserisci il codice che hai ricevuto nella email di benvenuto quando sei entrato nella Rete di Boyle.</p>
+        <div class="access-modal__form">
+          <input type="text" id="accessCodeInput" class="access-modal__input"
+            placeholder="es. BOYLE-2025-ALPHA"
+            autocomplete="off" autocapitalize="characters" spellcheck="false" />
+          <button class="btn-electric" id="accessCodeSubmit" type="button">
+            <span class="btn-electric__inner">Sblocca contatti</span>
+          </button>
+        </div>
+        <p class="access-modal__status" id="accessStatus"></p>
+        <p class="access-modal__note">Non hai ancora il codice? <button class="access-modal__link" id="accessJoin">Candidati alla rete</button></p>
+      </div>
+    </div>
+
     <div class="email-wall" id="emailWall" aria-hidden="true">
       <div class="email-wall__dialog">
         <button class="email-wall__close" id="emailWallClose" aria-label="Chiudi">✕</button>
