@@ -352,3 +352,589 @@ a { color: inherit; text-decoration: none; }
   .hero__cta { flex-direction: column; align-items: stretch; }
   .btn-electric, .btn-ghost { width: 100%; justify-content: center; }
 }
+
+
+/* ==========================================================
+   RETE v2.1 — card più trasparenti + canvas full-page
+   ========================================================== */
+
+/* Canvas fisso su tutta la pagina */
+#synapseCanvas {
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  z-index: 0 !important;
+  pointer-events: none !important;
+  opacity: .32 !important;
+}
+
+/* Header/hero/sezioni sopra il canvas */
+.header, .hero, .members-section, .cta-section, .footer, /* .modal z-index handled by .modal { z-index:9000 } above */
+
+/* Card: molto più trasparente, effetto vetro profondo */
+.member-card {
+  background:
+    linear-gradient(135deg,
+      rgba(255,255,255,.06) 0%,
+      rgba(255,255,255,.02) 20%,
+      rgba(4,18,46,.28) 60%,
+      rgba(2,10,28,.32) 100%) !important;
+  border: 1px solid rgba(160,230,255,.22) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.18),
+    inset 0 -1px 0 rgba(0,0,0,.15),
+    0 16px 48px rgba(0,0,0,.38),
+    0 0 0 1px rgba(124,243,255,.04) !important;
+  backdrop-filter: blur(22px) saturate(1.3) !important;
+  -webkit-backdrop-filter: blur(22px) saturate(1.3) !important;
+}
+
+/* Riflesso interno: più vistoso per effetto vetro realistico */
+.member-card::before {
+  background:
+    linear-gradient(135deg,
+      rgba(255,255,255,.18) 0%,
+      rgba(255,255,255,.08) 18%,
+      rgba(200,240,255,.04) 35%,
+      transparent 55%,
+      rgba(123,228,255,.04) 85%,
+      rgba(123,228,255,.1) 100%) !important;
+  mix-blend-mode: screen !important;
+  opacity: 1 !important;
+  transition: opacity .35s !important;
+}
+.member-card:hover::before { opacity: 1 !important; }
+
+/* Bordo vetro spesso, più luminoso */
+.member-card::after {
+  box-shadow:
+    inset 0 1.5px 0 rgba(255,255,255,.22),
+    inset 0 -1px 0 rgba(0,0,0,.22),
+    inset 1.5px 0 0 rgba(255,255,255,.1),
+    inset -1px 0 0 rgba(0,0,0,.12) !important;
+  border: 1px solid rgba(200,240,255,.12) !important;
+}
+
+/* Hover: alzarsi di più, glow sinergico con il canvas */
+.member-card:hover {
+  transform: translateY(-10px) !important;
+  border-color: rgba(124,243,255,.5) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.22),
+    inset 0 -1px 0 rgba(0,0,0,.15),
+    0 28px 70px rgba(0,0,0,.5),
+    0 0 60px rgba(80,200,255,.16) !important;
+}
+
+/* Riga città: più luminosa e visibile */
+.member-location__line {
+  background: linear-gradient(90deg, transparent, rgba(124,243,255,.7), transparent) !important;
+  box-shadow: 0 0 12px rgba(124,243,255,.35) !important;
+}
+
+/* Rimuovi canvas dalla members-section (ora è fixed) */
+.members-section #synapseCanvas { display: none !important; }
+
+
+/* ==========================================================
+   RETE WOW v2 — 3D tilt, glow individuale, pulse, cinematic
+   ========================================================== */
+
+/* ── 1. CARD 3D TILT: prospettiva sul grid ── */
+.members-grid {
+  perspective: 1400px;
+  perspective-origin: 50% 40%;
+}
+
+/* La card riceve il tilt via JS (--rx, --ry custom props) */
+.member-card {
+  transform-style: preserve-3d;
+  transform:
+    perspective(1000px)
+    rotateX(var(--rx, 0deg))
+    rotateY(var(--ry, 0deg))
+    translateY(0);
+  transition:
+    transform .18s cubic-bezier(.22,.68,0,1.2),
+    box-shadow .18s,
+    border-color .18s !important;
+  will-change: transform;
+}
+/* Al hover il tilt viene applicato da JS, non serve translateY qui */
+.member-card:hover {
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.22),
+    0 28px 70px rgba(0,0,0,.5),
+    0 0 60px rgba(80,200,255,.18) !important;
+  border-color: rgba(124,243,255,.55) !important;
+}
+
+/* ── 2. FOTO: glow individuale colorato al hover ── */
+.member-photo-wrap {
+  transition: box-shadow .3s ease !important;
+}
+/* Ogni quinta card: colore diverso per varietà */
+.member-card:nth-child(5n+1):hover .member-photo-wrap {
+  box-shadow: 0 0 0 2px rgba(123,228,255,.5), 0 0 40px rgba(123,228,255,.5), 0 0 80px rgba(0,160,255,.2) !important;
+}
+.member-card:nth-child(5n+2):hover .member-photo-wrap {
+  box-shadow: 0 0 0 2px rgba(77,255,214,.5), 0 0 40px rgba(77,255,214,.45), 0 0 80px rgba(0,200,160,.2) !important;
+}
+.member-card:nth-child(5n+3):hover .member-photo-wrap {
+  box-shadow: 0 0 0 2px rgba(196,176,255,.5), 0 0 40px rgba(196,176,255,.45), 0 0 80px rgba(120,80,255,.2) !important;
+}
+.member-card:nth-child(5n+4):hover .member-photo-wrap {
+  box-shadow: 0 0 0 2px rgba(255,180,100,.45), 0 0 40px rgba(255,160,80,.4), 0 0 80px rgba(200,100,0,.18) !important;
+}
+.member-card:nth-child(5n+5):hover .member-photo-wrap {
+  box-shadow: 0 0 0 2px rgba(100,220,255,.5), 0 0 40px rgba(80,200,255,.45), 0 0 80px rgba(0,120,255,.2) !important;
+}
+
+/* ── 3. FOTO: scala al hover ── */
+.member-photo {
+  transition: transform .35s cubic-bezier(.22,.68,0,1.3), filter .3s !important;
+}
+.member-card:hover .member-photo {
+  transform: scale(1.07) !important;
+  filter: brightness(1.08) saturate(1.12) !important;
+}
+
+/* ── 4. NOME: glow al hover ── */
+.member-name {
+  transition: text-shadow .3s !important;
+}
+.member-card:hover .member-name {
+  text-shadow: 0 0 20px rgba(123,228,255,.5) !important;
+}
+
+/* ── 5. CONTATORE EROI: numeri animati ── */
+.hero__stat-n {
+  display: block;
+  transition: color .3s;
+}
+
+/* ── 6. RIGA CITTÀ: animazione pulse continua ── */
+@keyframes cityLinePulse {
+  0%,100% { opacity: .6; }
+  50%      { opacity: 1; box-shadow: 0 0 18px rgba(124,243,255,.5); }
+}
+.member-location__line {
+  animation: cityLinePulse 3s ease-in-out infinite !important;
+}
+.member-card:hover .member-location__line {
+  animation: none !important;
+  background: linear-gradient(90deg, transparent, rgba(124,243,255,.95), transparent) !important;
+  box-shadow: 0 0 20px rgba(124,243,255,.6) !important;
+}
+
+/* ── 7. REVEAL CINEMATICO: entrata a cascata con rotazione ── */
+.member-card {
+  opacity: 0;
+  transform:
+    perspective(800px)
+    rotateX(12deg)
+    translateY(40px)
+    scale(.94);
+}
+.member-card.is-visible {
+  opacity: 1;
+  transform:
+    perspective(1000px)
+    rotateX(var(--rx, 0deg))
+    rotateY(var(--ry, 0deg))
+    translateY(0)
+    scale(1);
+  transition:
+    opacity .7s cubic-bezier(.25,.46,.45,.94),
+    transform .7s cubic-bezier(.22,.68,0,1.15) !important;
+}
+
+/* ── 8. CTA BOX: bordo luminoso animato ── */
+@keyframes ctaBorderFlow {
+  0%   { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+.cta-box {
+  position: relative;
+}
+.cta-box::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: calc(var(--r-r) + 1px);
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(124,243,255,.5) 25%,
+    rgba(80,160,255,.4) 50%,
+    rgba(196,176,255,.5) 75%,
+    transparent 100%);
+  background-size: 200% 100%;
+  animation: ctaBorderFlow 4s linear infinite;
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  padding: 1px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── 9. HERO: particella flare sull'occhio ── */
+@keyframes heroFlare {
+  0%   { opacity: 0; transform: scale(.5) rotate(0deg); }
+  50%  { opacity: .8; transform: scale(1.1) rotate(180deg); }
+  100% { opacity: 0; transform: scale(.5) rotate(360deg); }
+}
+.hero::after {
+  content: "";
+  position: absolute;
+  width: 300px; height: 300px;
+  left: 8%; top: 10%;
+  background: radial-gradient(circle, rgba(124,243,255,.12) 0%, transparent 60%);
+  border-radius: 50%;
+  pointer-events: none;
+  animation: heroFlare 8s ease-in-out infinite;
+  z-index: 0;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .member-card { transform: none !important; transition: box-shadow .3s !important; }
+  .member-card.is-visible { transform: none !important; opacity: 1 !important; }
+  .member-location__line { animation: none !important; }
+  .cta-box::after { animation: none !important; }
+  .hero::after { animation: none !important; }
+}
+
+
+/* ==========================================================
+   RETE WOW v3 — canvas immersivo, card lingotto, icone
+   ========================================================== */
+
+/* ── CANVAS: visibile ovunque, opacità aumentata ── */
+#synapseCanvas {
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  z-index: 0 !important;
+  pointer-events: none !important;
+  opacity: .55 !important;  /* più visibile */
+  display: block !important; /* annulla display:none dei blocchi precedenti */
+}
+/* Annulla tutte le regole display:none precedenti */
+.members-section #synapseCanvas { display: block !important; }
+
+/* Header e sezioni sopra il canvas */
+.header, .hero, .members-section .container,
+.cta-section .container, .footer, 
+.hero { z-index: 2; }
+
+/* ── CARD LINGOTTO TRASPARENTE ── */
+/* Effetto: vetro spesso, bordo frastagliato luminoso,
+   riflesso angolare come cristallo, profondità 3D */
+.member-card {
+  background:
+    /* strato riflesso angolare superiore */
+    linear-gradient(135deg,
+      rgba(255,255,255,.14) 0%,
+      rgba(255,255,255,.04) 15%,
+      transparent 30%,
+      transparent 70%,
+      rgba(255,255,255,.02) 85%,
+      rgba(255,255,255,.06) 100%),
+    /* vetro tintato */
+    rgba(8,24,58,.18) !important;
+
+  border: 1px solid rgba(180,240,255,.28) !important;
+
+  box-shadow:
+    /* bordo superiore luminoso (spigolo del lingotto) */
+    inset 0 2px 0 rgba(255,255,255,.28),
+    /* bordo laterale sx */
+    inset 2px 0 0 rgba(255,255,255,.1),
+    /* bordo inferiore scuro (profondità) */
+    inset 0 -2px 0 rgba(0,0,0,.3),
+    /* bordo laterale dx scuro */
+    inset -1px 0 0 rgba(0,0,0,.15),
+    /* ombra esterna profonda */
+    0 20px 60px rgba(0,0,0,.55),
+    /* alone cyan esterno */
+    0 0 0 1px rgba(124,243,255,.06) !important;
+
+  backdrop-filter: blur(24px) saturate(1.6) brightness(1.08) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(1.6) brightness(1.08) !important;
+  overflow: visible !important; /* permette al glow di uscire */
+}
+
+/* Riflesso interno come vetro molato */
+.member-card::before {
+  content: "" !important;
+  position: absolute !important;
+  inset: 0 !important;
+  border-radius: inherit !important;
+  pointer-events: none !important;
+  z-index: 0 !important;
+  background:
+    /* diagonale brillante principale */
+    linear-gradient(145deg,
+      rgba(255,255,255,.18) 0%,
+      rgba(255,255,255,.06) 12%,
+      transparent 28%,
+      transparent 72%,
+      rgba(200,240,255,.04) 88%,
+      rgba(200,240,255,.1) 100%) !important;
+  mix-blend-mode: screen !important;
+  transition: opacity .3s !important;
+  opacity: .9 !important;
+}
+
+/* Bordo vetro multi-strato */
+.member-card::after {
+  content: "" !important;
+  position: absolute !important;
+  inset: 0 !important;
+  border-radius: inherit !important;
+  pointer-events: none !important;
+  z-index: 3 !important;
+  background: none !important;
+  /* Simula spessore del vetro con bordi multipli */
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.35),
+    inset 0 -1px 0 rgba(0,0,0,.35),
+    inset 1px 0 0 rgba(255,255,255,.18),
+    inset -1px 0 0 rgba(0,0,0,.2),
+    inset 0 2px 6px rgba(255,255,255,.08),
+    inset 0 -2px 6px rgba(0,0,0,.15) !important;
+}
+
+/* Hover del lingotto: si solleva e splende */
+.member-card:hover {
+  box-shadow:
+    inset 0 2px 0 rgba(255,255,255,.38),
+    inset 2px 0 0 rgba(255,255,255,.18),
+    inset 0 -2px 0 rgba(0,0,0,.28),
+    inset -1px 0 0 rgba(0,0,0,.12),
+    0 36px 80px rgba(0,0,0,.65),
+    0 0 60px rgba(100,220,255,.22),
+    0 0 120px rgba(60,160,255,.1) !important;
+  border-color: rgba(160,240,255,.6) !important;
+}
+
+/* ── ICONE LINKEDIN/EMAIL: più in basso ── */
+.member-links {
+  margin-top: 18px !important;  /* era ~10px */
+  padding-top: 12px !important;
+}
+
+/* ── EXTRA WOW: shimmer sulla card al hover ── */
+@keyframes cardShimmer {
+  0%   { transform: translateX(-100%) skewX(-12deg); }
+  100% { transform: translateX(220%)  skewX(-12deg); }
+}
+.member-card:hover .member-photo-wrap::before {
+  content: "";
+  position: absolute;
+  inset: -30% auto -30% -20%;
+  width: 35%;
+  background: linear-gradient(90deg,
+    transparent,
+    rgba(255,255,255,.18),
+    transparent);
+  animation: cardShimmer .55s ease forwards;
+  pointer-events: none;
+  z-index: 10;
+}
+.member-photo-wrap { position: relative; overflow: hidden; }
+
+/* ── EXTRA WOW: numero membri nel hero con glow ── */
+.hero__stat-n {
+  font-size: 1.8rem !important;
+  font-weight: 800 !important;
+  letter-spacing: -.05em !important;
+  transition: text-shadow .4s, color .4s !important;
+}
+.hero__stat:hover .hero__stat-n {
+  color: #fff !important;
+  text-shadow: 0 0 24px var(--r-cyan2), 0 0 48px rgba(123,228,255,.4) !important;
+}
+
+/* Mobile: disabilita 3D tilt, riduci opacità canvas */
+@media (max-width: 768px) {
+  #synapseCanvas { opacity: .35 !important; }
+  .member-card {
+    transform: none !important;
+    overflow: hidden !important;
+  }
+  .member-card:hover {
+    transform: translateY(-4px) !important;
+  }
+  .member-links {
+    margin-top: 14px !important;
+    padding-top: 10px !important;
+  }
+}
+
+
+/* ── Z-INDEX FIX DEFINITIVO ── */
+/* Canvas: sotto tutto */
+#synapseCanvas { z-index: 0 !important; }
+/* Contenuto: sopra il canvas */
+.header, .hero, .members-section, .cta-section, .footer { position: relative; z-index: 2; }
+/* Modal: sopra tutto, NON sovrascrivere position:fixed */
+.modal { z-index: 9000 !important; position: fixed !important; }
+
+
+/* ==========================================================
+   RETE v9 — tag aree, benefici, email wall, crescita
+   ========================================================== */
+
+/* ── TAG AREA ── */
+.member-tags {
+  display: flex; flex-wrap: wrap; gap: 6px;
+  justify-content: center;
+  margin: 6px 0 8px;
+  position: relative; z-index: 2;
+}
+.member-tag {
+  display: inline-flex; align-items: center;
+  padding: 3px 10px; border-radius: 999px;
+  font-size: .62rem; font-weight: 700; letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--tag-color, #7be4ff);
+  background: color-mix(in srgb, var(--tag-color, #7be4ff) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--tag-color, #7be4ff) 30%, transparent);
+  transition: background .2s, box-shadow .2s;
+}
+/* Fallback per browser senza color-mix */
+@supports not (color: color-mix(in srgb, red 50%, blue)) {
+  .member-tag { background: rgba(123,228,255,.1); border: 1px solid rgba(123,228,255,.24); }
+}
+.member-card:hover .member-tag {
+  box-shadow: 0 0 10px color-mix(in srgb, var(--tag-color, #7be4ff) 35%, transparent);
+}
+
+/* ── HERO STAT "In crescita" ── */
+.hero__stat--growing .hero__stat-n {
+  color: #4dffd6 !important;
+  font-size: 1.4rem !important;
+  animation: growPulse 2s ease-in-out infinite;
+}
+@keyframes growPulse {
+  0%,100% { transform: scale(1); }
+  50%      { transform: scale(1.15); text-shadow: 0 0 16px #4dffd6; }
+}
+
+/* ── EMAIL LOCK BUTTON ── */
+.member-email-btn {
+  cursor: pointer;
+  opacity: .55;
+  transition: opacity .2s, transform .2s;
+}
+.member-email-btn:hover {
+  opacity: 1;
+  transform: translateY(-2px) scale(1.06);
+  color: var(--r-cyan2);
+}
+.member-email-btn .icon { stroke: currentColor; fill: none; }
+
+/* ── EMAIL WALL MODAL ── */
+.email-wall {
+  position: fixed; inset: 0; z-index: 9500;
+  display: none; align-items: center; justify-content: center;
+  padding: 24px;
+  background: rgba(1,6,16,.8); backdrop-filter: blur(10px);
+}
+.email-wall.is-open { display: flex; }
+.email-wall__dialog {
+  position: relative;
+  width: min(480px, 100%);
+  background: linear-gradient(160deg, rgba(4,16,38,.98), rgba(2,10,28,.99));
+  border: 1px solid rgba(123,228,255,.2); border-radius: 28px;
+  padding: 36px 32px 28px;
+  box-shadow: 0 32px 80px rgba(0,0,0,.55);
+  text-align: center;
+}
+.email-wall__close {
+  position: absolute; top: 14px; right: 14px;
+  width: 36px; height: 36px; border-radius: 50%;
+  background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12);
+  color: #fff; cursor: pointer; font-size: 1rem;
+  display: flex; align-items: center; justify-content: center;
+  transition: background .2s;
+}
+.email-wall__close:hover { background: rgba(255,255,255,.14); }
+.email-wall__icon {
+  width: 64px; height: 64px; margin: 0 auto 18px;
+  border-radius: 18px; display: flex; align-items: center; justify-content: center;
+  background: rgba(123,228,255,.08); border: 1px solid rgba(123,228,255,.2);
+  color: var(--r-cyan2);
+}
+.email-wall__title { font-size: 1.3rem; font-weight: 700; letter-spacing: -.03em; margin-bottom: 12px; }
+.email-wall__text { color: var(--r-muted); font-size: .92rem; line-height: 1.65; margin-bottom: 22px; }
+.email-wall__actions { display: flex; flex-direction: column; align-items: center; gap: 14px; }
+.email-wall__note { font-size: .78rem; color: var(--r-soft); }
+.email-wall__note a { color: var(--r-cyan2); }
+
+/* ── BENEFITS SECTION ── */
+.benefits-section { padding: 80px 0 56px; }
+.benefits-header { max-width: 680px; margin: 0 auto 44px; text-align: center; }
+.benefits-eyebrow {
+  display: inline-block; margin-bottom: 12px;
+  font-size: .68rem; letter-spacing: .22em; text-transform: uppercase;
+  color: var(--r-cyan2); font-weight: 600;
+}
+.benefits-title { font-size: clamp(1.7rem,3.2vw,2.6rem); font-weight: 700; letter-spacing: -.04em; margin-bottom: 12px; }
+.benefits-sub { color: var(--r-muted); font-size: .96rem; line-height: 1.65; }
+
+.benefits-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0,1fr));
+  gap: 18px;
+}
+.benefit-card {
+  padding: 28px 24px;
+  border-radius: 20px;
+  border: 1px solid rgba(120,210,255,.14);
+  background: rgba(5,18,46,.5);
+  backdrop-filter: blur(16px);
+  transition: transform .3s cubic-bezier(.22,.68,0,1.3), border-color .25s, box-shadow .25s;
+}
+.benefit-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(120,210,255,.3);
+  box-shadow: 0 16px 44px rgba(0,0,0,.35), 0 0 30px rgba(80,180,255,.08);
+}
+.benefit-icon {
+  width: 52px; height: 52px; border-radius: 16px; margin-bottom: 18px;
+  display: flex; align-items: center; justify-content: center;
+  transition: transform .3s cubic-bezier(.22,.68,0,1.3);
+}
+.benefit-card:hover .benefit-icon { transform: scale(1.1) translateY(-2px); }
+.benefit-icon--cyan   { background: rgba(123,228,255,.1); border: 1px solid rgba(123,228,255,.22); color: #a8eeff; }
+.benefit-icon--green  { background: rgba(77,255,214,.1);  border: 1px solid rgba(77,255,214,.22);  color: #4dffd6; }
+.benefit-icon--purple { background: rgba(196,176,255,.1); border: 1px solid rgba(196,176,255,.22); color: #c4b0ff; }
+.benefit-icon--orange { background: rgba(255,179,71,.1);  border: 1px solid rgba(255,179,71,.22);  color: #ffb347; }
+.benefit-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 10px; letter-spacing: -.02em; }
+.benefit-card p  { font-size: .85rem; color: var(--r-muted); line-height: 1.6; margin: 0; }
+
+/* ── TOP ACCENT LINE per ogni benefit ── */
+.benefit-card:nth-child(1) { border-top: 2px solid rgba(123,228,255,.4); }
+.benefit-card:nth-child(2) { border-top: 2px solid rgba(77,255,214,.4); }
+.benefit-card:nth-child(3) { border-top: 2px solid rgba(196,176,255,.4); }
+.benefit-card:nth-child(4) { border-top: 2px solid rgba(255,179,71,.4); }
+.benefit-card:nth-child(5) { border-top: 2px solid rgba(77,255,214,.4); }
+.benefit-card:nth-child(6) { border-top: 2px solid rgba(123,228,255,.4); }
+
+/* Responsive benefits */
+@media (max-width: 1024px) { .benefits-grid { grid-template-columns: repeat(2,1fr); } }
+@media (max-width: 600px)  { .benefits-grid { grid-template-columns: 1fr; } }
+
+/* Mobile */
+@media (max-width: 768px) {
+  .benefits-section { padding: 56px 0 36px; }
+  .benefit-card { padding: 22px 18px; }
+  .email-wall__dialog { padding: 28px 22px 24px; }
+  .member-tags { gap: 5px; }
+  .member-tag { font-size: .58rem; padding: 3px 8px; }
+}
