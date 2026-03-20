@@ -53,10 +53,10 @@
         <a href="podcast.html">Podcast</a>
         <a href="#partner">Partner</a>
         <a href="#contatti">Contatti</a>
-        <button class="lang-toggle" id="langToggle" aria-label="Cambia lingua / Switch language" title="Switch to English">
-          <span id="langCurrent">IT</span><span class="lang-sep"> · </span><span id="langOther">EN</span>
-        </button>
       </nav>
+      <button class="lang-toggle" id="langToggle" aria-label="Cambia lingua / Switch language" title="Switch to English">
+        <span id="langCurrent">IT</span><span class="lang-sep"> · </span><span id="langOther">EN</span>
+      </button>
     </div>
   </header>
 <div class="ticker">
@@ -1467,10 +1467,12 @@
         : 'Gli Amici di Boyle · Research & Education';
     }
 
-    /* Toggle on click */
+    /* Toggle on click — reload page to apply all translations */
     document.addEventListener('click', function(e) {
       if (e.target.closest('#langToggle')) {
-        applyLang(currentLang === 'it' ? 'en' : 'it');
+        var nl = currentLang === 'it' ? 'en' : 'it';
+        localStorage.setItem('boyle_lang', nl);
+        location.reload();
       }
     });
 
