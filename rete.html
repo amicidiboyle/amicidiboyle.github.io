@@ -41,6 +41,9 @@
         <a href="podcast.html">Podcast</a>
         <a class="nav-cta" href="index.html#contatti">Contatti</a>
       </nav>
+      <button class="lang-toggle" id="langToggle" onclick="(function(){var l=localStorage.getItem('boyle_lang')||'it';var nl=l==='it'?'en':'it';localStorage.setItem('boyle_lang',nl);location.reload();})()" aria-label="Switch language" title="Switch language">
+        <span id="langCurrent">IT</span><span class="lang-sep"> · </span><span id="langOther">EN</span>
+      </button>
       <button class="nav-mobile-btn" id="navMobileBtn" aria-label="Apri menu" aria-expanded="false">
         <span></span><span></span><span></span>
       </button>
@@ -847,6 +850,102 @@
   /* ── INIT ── */
   loadMembersEnhanced();
   initSynapseCanvas();
+  </script>
+
+  <!-- i18n: rete.html -->
+  <script>
+  (function(){
+    var lang = localStorage.getItem('boyle_lang') || 'it';
+    if (lang !== 'en') return; // nothing to do for Italian
+
+    var T = {
+      // Nav
+      'Visione':'Vision','Ricerca':'Research','Rete':'Network',
+      'Podcast':'Podcast','Contatti':'Contact','Home':'Home',
+      // Hero
+      'Network scientifico · Ambienti estremi':'Scientific Network · Extreme Environments',
+      'Rete di Boyle':'Boyle Network',
+      'Un ecosistema multidisciplinare di professionisti, ricercatori e innovatori dedicati alla medicina subacquea, iperbarica, aerospaziale e alla fisiologia degli ambienti estremi.':
+        'A multidisciplinary ecosystem of professionals, researchers and innovators dedicated to underwater, hyperbaric, aerospace medicine and the physiology of extreme environments.',
+      'Candidati alla rete':'Apply to the network',
+      'Esplora i profili':'Explore profiles',
+      'Membri attivi':'Active members',
+      'Specialità':'Specialties',
+      'Nazioni':'Nations',
+      'In crescita':'Growing',
+      // Members section
+      'I Membri della Rete':'Network Members',
+      'Professionisti selezionati per competenza, curiosità e impatto operativo.':
+        'Professionals selected for expertise, curiosity and operational impact.',
+      // Benefits
+      'Perché entrare':'Why join',
+      'Cosa significa far parte della Rete di Boyle':'What it means to be part of the Boyle Network',
+      'La rete non è una directory. È un ecosistema attivo dove ogni membro contribuisce e riceve valore concreto.':
+        'The network is not a directory. It is an active ecosystem where every member contributes and receives concrete value.',
+      'Accesso ai contatti diretti':'Direct contact access',
+      'Visibilità sul portale':'Portal visibility',
+      'Contribuisci alla newsletter':'Contribute to the newsletter',
+      'Pubblica i tuoi corsi':'Publish your courses',
+      'Collaborazioni scientifiche':'Scientific collaborations',
+      'Prima fila sulle iniziative':'Front row on initiatives',
+      // CTA
+      'Vuoi entrare nella Rete di Boyle?':'Want to join the Boyle Network?',
+      'La rete è aperta a professionisti, ricercatori e collaboratori con competenze in medicina subacquea, iperbarica, ambienti estremi, fisiologia umana, sicurezza e innovazione.':
+        'The network is open to professionals, researchers and collaborators with expertise in underwater, hyperbaric medicine, extreme environments, human physiology, safety and innovation.',
+      'Candidati ora':'Apply now',
+      // Modal
+      'Connettiamo menti brillanti':'Connecting brilliant minds',
+      'Invia candidatura':'Submit application',
+      // Footer
+      '© 2026 Gli Amici di Boyle':'© 2026 Gli Amici di Boyle',
+    };
+
+    // Translate text nodes
+    function walkAndTranslate(node) {
+      if (node.nodeType === 3) { // text node
+        var trimmed = node.textContent.trim();
+        if (T[trimmed]) node.textContent = node.textContent.replace(trimmed, T[trimmed]);
+      } else if (node.nodeType === 1 && !['SCRIPT','STYLE'].includes(node.tagName)) {
+        node.childNodes.forEach(walkAndTranslate);
+      }
+    }
+
+    // Translate nav links by text content
+    function translateNav() {
+      document.querySelectorAll('nav a, .nav--desktop a, .nav-mobile-panel a').forEach(function(a) {
+        var t = a.textContent.trim();
+        if (T[t]) a.textContent = T[t];
+      });
+    }
+
+    // Translate specific elements by selector
+    var MAP = [
+      ['.hero__eyebrow',  'Network scientifico · Ambienti estremi'],
+      ['.hero__title',    'Rete di Boyle'],
+      ['.hero__subtitle', 'Un ecosistema multidisciplinare di professionisti, ricercatori e innovatori dedicati alla medicina subacquea, iperbarica, aerospaziale e alla fisiologia degli ambienti estremi.'],
+      ['.members-section .section-heading h2', 'I Membri della Rete'],
+      ['.members-section .section-subheading',  'Professionisti selezionati per competenza, curiosità e impatto operativo.'],
+      ['.benefits-section .section-heading h2', 'Cosa significa far parte della Rete di Boyle'],
+      ['.cta-section h2', 'Vuoi entrare nella Rete di Boyle?'],
+      ['.hero__cta .btn-electric span', 'Candidati alla rete'],
+    ];
+
+    document.addEventListener('DOMContentLoaded', function() {
+      MAP.forEach(function(pair) {
+        var el = document.querySelector(pair[0]);
+        if (el && T[pair[1]]) el.textContent = T[pair[1]];
+      });
+      translateNav();
+      document.documentElement.lang = 'en';
+      document.title = 'Boyle Network · Gli Amici di Boyle';
+    });
+
+    // Update toggle button display
+    var cur = document.getElementById('langCurrent');
+    var oth = document.getElementById('langOther');
+    if (cur) cur.textContent = 'EN';
+    if (oth) oth.textContent = 'IT';
+  })();
   </script>
 </body>
 </html>
