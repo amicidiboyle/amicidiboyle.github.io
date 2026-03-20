@@ -8,6 +8,14 @@
   <meta name="theme-color" content="#031427" />
   <link rel="icon" href="assets/logo.png" type="image/png" />
   <link rel="stylesheet" href="rete.css" />
+  <style>
+    .modal{position:fixed;inset:0;z-index:9000;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(1,6,16,.78);backdrop-filter:blur(8px)}
+    .modal.is-open{display:flex}
+    .email-wall{position:fixed;inset:0;z-index:9500;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(1,6,16,.82);backdrop-filter:blur(10px)}
+    .email-wall.is-open{display:flex}
+    .access-modal{position:fixed;inset:0;z-index:9600;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(1,6,16,.88);backdrop-filter:blur(12px)}
+    .access-modal.is-open{display:flex}
+  </style>
 </head>
 <body>
   <!-- Canvas sinaptico globale -->
@@ -17,11 +25,12 @@
   <!-- HEADER (stesso dell'home) -->
   <header class="header" role="banner">
     <div class="container header__inner">
-      <a class="brand" href="index.html" aria-label="Gli Amici di Boyle — Home">
-        <img src="assets/logo.png" alt="Logo" width="52" height="52" />
-        <span class="brand__text">
+      <a class="brand" href="index.html" aria-label="Gli Amici di Boyle Home">
+        <img src="assets/logo.png" alt="Logo Gli Amici di Boyle" width="52" height="52" />
+        <span class="brand-copy">
           <strong>Gli Amici di Boyle</strong>
           <em>Diving &amp; Hyperbaric Medicine · Research &amp; Education</em>
+          <em class="brand-sub">Human Performance &amp; Safety in Extreme Environments</em>
         </span>
       </a>
       <nav class="nav--desktop">
@@ -133,6 +142,29 @@
     </section>
 
     <!-- EMAIL MEMBERS ONLY MODAL -->
+    
+    <!-- ACCESS CODE MODAL -->
+    <div class="access-modal" id="accessModal" aria-hidden="true">
+      <div class="access-modal__dialog">
+        <button class="access-modal__close" id="accessModalClose" aria-label="Chiudi">✕</button>
+        <div class="access-modal__icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        </div>
+        <h3 class="access-modal__title">Accesso membri</h3>
+        <p class="access-modal__desc">Inserisci il codice ricevuto nella email di benvenuto.</p>
+        <div class="access-modal__form">
+          <input type="text" id="accessCodeInput" class="access-modal__input"
+            placeholder="es. BOYLE-K7X2-COGNOME"
+            autocomplete="off" autocapitalize="characters" spellcheck="false" />
+          <button class="btn-electric" id="accessCodeSubmit" type="button">
+            <span class="btn-electric__inner">Sblocca contatti</span>
+          </button>
+        </div>
+        <p class="access-modal__status" id="accessStatus"></p>
+        <p class="access-modal__note">Non hai ancora il codice? <button class="access-modal__link" id="accessJoin">Candidati alla rete</button></p>
+      </div>
+    </div>
+
     <div class="email-wall" id="emailWall" aria-hidden="true">
       <div class="email-wall__dialog">
         <button class="email-wall__close" id="emailWallClose" aria-label="Chiudi">✕</button>
@@ -142,10 +174,11 @@
         <h3 class="email-wall__title">Contatti riservati ai membri</h3>
         <p class="email-wall__text">Gli indirizzi email diretti dei professionisti della Rete di Boyle sono visibili solo ai membri attivi. È uno dei vantaggi concreti di far parte della rete.</p>
         <div class="email-wall__actions">
-          <button class="btn-electric" id="emailWallJoin">
-            <span class="btn-electric__inner">Candidati alla rete</span>
+          <button class="btn-electric" id="wallCodeBtn" type="button">
+            <span class="btn-electric__inner">🔑 Sono già membro — inserisci il codice</span>
           </button>
-          <p class="email-wall__note">Sei già membro? Scrivi a <a href="mailto:info@amicidiboyle.it">info@amicidiboyle.it</a> per ottenere l'accesso completo.</p>
+          <button class="btn-ghost" id="emailWallJoin" style="min-height:44px;font-size:.88rem;margin-top:8px">Candidati alla rete →</button>
+          <p class="email-wall__note">Problemi? Scrivi a <a href="/cdn-cgi/l/email-protection#e48d8a828ba485898d878d808d868b9d8881ca8d90"><span class="__cf_email__" data-cfemail="f69f989099b6979b9f959f929f94998f9a93d89f82">[email&#160;protected]</span></a> per ottenere l'accesso completo.</p>
         </div>
       </div>
     </div>
@@ -295,7 +328,7 @@
     </div>
   </footer>
 
-  <script>
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
   /* ════════════════════════════════════════════════
      MEMBERS DATA — driven by rete-members.json
      ════════════════════════════════════════════════ */
@@ -537,31 +570,109 @@
     requestAnimationFrame(draw);
   }
 
-  /* ── Email wall: mostra modal ai non-membri ── */
+  /* ── Sistema accesso email per membri (codice personalizzato) ── */
+  const VALID_CODES = [
+    'BOYLE-K7X2-DAMIANO',
+    'BOYLE-9QM4-ALPINI',
+    'BOYLE-R3N8-ZERBI',
+    'BOYLE-F5W1-BOROTTO',
+    'BOYLE-M2J9-GALVANI',
+    'BOYLE-T6P3-GIUFFRIDA',
+    'BOYLE-W8L5-CALZAVACCA',
+    'BOYLE-N4R7-XHEPA',
+    'BOYLE-D1K6-MARSLAND',
+    'BOYLE-H3Y8-GIACON',
+    'BOYLE-C9F2-CARDOSO',
+    'BOYLE-V7Q4-VENTURELLI',
+    'BOYLE-X5B1-SALETTI',
+    'BOYLE-J2M8-SOLDINI',
+    'BOYLE-E6N3-DENARO',
+    'BOYLE-FONDATORI'
+  ];
+  const ACCESS_KEY = 'boyle_member_access';
+  const EMAIL_ICON_HTML = '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6.75A2.75 2.75 0 0 1 5.75 4h12.5A2.75 2.75 0 0 1 21 6.75v10.5A2.75 2.75 0 0 1 18.25 20H5.75A2.75 2.75 0 0 1 3 17.25V6.75Zm2.2-.25 6.27 5.05a.83.83 0 0 0 1.06 0L18.8 6.5H5.2Zm13.8 1.46-5.42 4.36a2.33 2.33 0 0 1-2.96 0L5.2 7.96v9.29c0 .3.25.55.55.55h12.5c.3 0 .55-.25.55-.55V7.96Z"/></svg>';
+
+  function isMemberUnlocked() { return sessionStorage.getItem(ACCESS_KEY) === 'true'; }
+
+  function unlockEmails() {
+    sessionStorage.setItem(ACCESS_KEY, 'true');
+    document.querySelectorAll('.member-email-btn').forEach(btn => {
+      const email = btn.dataset.email;
+      if (!email) return;
+      const a = document.createElement('a');
+      a.className = 'icon-btn';
+      a.href = 'mailto:' + email;
+      a.setAttribute('aria-label', email);
+      a.title = email;
+      a.innerHTML = EMAIL_ICON_HTML;
+      btn.replaceWith(a);
+    });
+  }
+
   function initEmailWall() {
-    const wall = document.getElementById('emailWall');
+    if (isMemberUnlocked()) { unlockEmails(); return; }
+
+    const wall      = document.getElementById('emailWall');
     const wallClose = document.getElementById('emailWallClose');
-    const wallJoin = document.getElementById('emailWallJoin');
-    if (!wall) return;
+    const wallJoin  = document.getElementById('emailWallJoin');
+    const wallCode  = document.getElementById('wallCodeBtn');
+    const accModal  = document.getElementById('accessModal');
+    const accClose  = document.getElementById('accessModalClose');
+    const accInput  = document.getElementById('accessCodeInput');
+    const accBtn    = document.getElementById('accessCodeSubmit');
+    const accStatus = document.getElementById('accessStatus');
+    const accJoin   = document.getElementById('accessJoin');
+
+    function closeWall() {
+      wall?.classList.remove('is-open');
+      wall?.setAttribute('aria-hidden','true');
+      document.body.style.overflow = '';
+    }
+    function closeAcc() {
+      accModal?.classList.remove('is-open');
+      accModal?.setAttribute('aria-hidden','true');
+      document.body.style.overflow = '';
+    }
+    function openAcc() {
+      closeWall();
+      accModal?.classList.add('is-open');
+      accModal?.setAttribute('aria-hidden','false');
+      document.body.style.overflow = 'hidden';
+      setTimeout(() => accInput?.focus(), 100);
+    }
 
     document.addEventListener('click', e => {
       const btn = e.target.closest('.member-email-btn');
-      if (!btn) return;
+      if (!btn || isMemberUnlocked()) return;
       e.preventDefault();
-      wall.setAttribute('aria-hidden','false');
-      wall.classList.add('is-open');
+      wall?.classList.add('is-open');
+      wall?.setAttribute('aria-hidden','false');
       document.body.style.overflow = 'hidden';
     });
 
-    function closeWall() {
-      wall.setAttribute('aria-hidden','true');
-      wall.classList.remove('is-open');
-      document.body.style.overflow = '';
-    }
     wallClose?.addEventListener('click', closeWall);
     wall?.addEventListener('click', e => { if (e.target === wall) closeWall(); });
     wallJoin?.addEventListener('click', () => { closeWall(); openModal(); });
-    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeWall(); });
+    wallCode?.addEventListener('click', openAcc);
+    accClose?.addEventListener('click', closeAcc);
+    accModal?.addEventListener('click', e => { if (e.target === accModal) closeAcc(); });
+    accJoin?.addEventListener('click', () => { closeAcc(); openModal(); });
+
+    function tryCode() {
+      const code = (accInput?.value || '').trim().toUpperCase();
+      if (VALID_CODES.includes(code)) {
+        if (accStatus) { accStatus.textContent = "✓ Accesso confermato. Benvenuto."; accStatus.className = 'access-modal__status success'; }
+        unlockEmails();
+        setTimeout(closeAcc, 1400);
+      } else {
+        if (accStatus) { accStatus.textContent = "✗ Codice non riconosciuto. Controlla l'email di benvenuto."; accStatus.className = 'access-modal__status error'; }
+        accInput?.classList.add('shake');
+        setTimeout(() => accInput?.classList.remove('shake'), 500);
+      }
+    }
+    accBtn?.addEventListener('click', tryCode);
+    accInput?.addEventListener('keydown', e => { if (e.key === 'Enter') tryCode(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeWall(); closeAcc(); } });
   }
 
   /* ── 3D Card Tilt: segue il mouse ── */
@@ -733,7 +844,6 @@
     }
   });
 
-  
   /* ── INIT ── */
   loadMembersEnhanced();
   initSynapseCanvas();
