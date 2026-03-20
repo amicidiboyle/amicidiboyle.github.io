@@ -354,7 +354,7 @@ a { color: inherit; text-decoration: none; }
 }
 
 /* Header/hero/sezioni sopra il canvas */
-.header, .hero, .members-section, .cta-section, .footer, /* .modal z-index handled by .modal { z-index:9000 } above */
+.header,  above */
 
 /* Card: molto più trasparente, effetto vetro profondo */
 .member-card {
@@ -610,9 +610,7 @@ a { color: inherit; text-decoration: none; }
 .members-section #synapseCanvas { display: block !important; }
 
 /* Header e sezioni sopra il canvas */
-.header, .hero, .members-section .container,
-.cta-section .container, .footer, 
-.hero { z-index: 2; }
+.header, 
 
 /* ── CARD LINGOTTO TRASPARENTE ── */
 /* Effetto: vetro spesso, bordo frastagliato luminoso,
@@ -764,7 +762,7 @@ a { color: inherit; text-decoration: none; }
 /* Canvas: sotto tutto */
 #synapseCanvas { z-index: 0 !important; }
 /* Contenuto: sopra il canvas */
-.header, .hero, .members-section, .cta-section, .footer { position: relative; z-index: 2; }
+.header, 
 /* Modal: sopra tutto, NON sovrascrivere position:fixed */
 .modal { z-index: 9000 !important; position: fixed !important; }
 
@@ -1037,12 +1035,6 @@ a { color: inherit; text-decoration: none; }
 .access-modal__link{background:none;border:none;color:var(--r-cyan2,#a8eeff);cursor:pointer;font:inherit;font-size:.78rem;text-decoration:underline;padding:0}
 
 
-/* ── Contenuto sopra canvas sinaptico ── */
-.header { position: sticky; top: 0; z-index: 200 !important; }
-.members-section,
-
-
-
 /* ════════════════════════════════════════════════════════
    PERCHÉ ENTRARE — evento SX + benefit cards DX
    ════════════════════════════════════════════════════════ */
@@ -1216,3 +1208,59 @@ a { color: inherit; text-decoration: none; }
 @media (max-width: 768px) {
   .lang-toggle { display: none; }
 }
+
+
+
+/* ════════════════════════════════════════════════════════
+   STACKING ORDER — definitivo
+   -3: ocean image (body::before)
+   -2: rimosso (body::after eliminato)
+    0: body background transparent
+    1: canvas sinapsi (position:fixed)
+    2: hero connectome SVG
+   10: contenuto hero (titolo, bottoni, stats)
+  200: header sticky
+ 9000: modali
+   ════════════════════════════════════════════════════════ */
+
+/* Canvas: sempre sopra l'oceano, sotto il contenuto */
+#synapseCanvas {
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  z-index: 1 !important;
+  pointer-events: none !important;
+  opacity: .62 !important;
+}
+
+/* Hero: NO isolation, NO z-index sul container (romperebbe il canvas fixed) */
+.hero {
+  position: relative !important;
+  isolation: auto !important;
+  z-index: auto !important;
+  overflow: visible !important;
+}
+
+/* Connectome SVG: sopra il canvas */
+.hero__connectome {
+  z-index: 2 !important;
+}
+
+/* Contenuto hero: sopra tutto */
+.hero__content {
+  position: relative !important;
+  z-index: 10 !important;
+}
+.hero__cta    { position: relative; z-index: 10; }
+.hero__stats  { position: relative; z-index: 10; }
+.hero__eyebrow{ position: relative; z-index: 10; }
+
+/* Header: sopra canvas e contenuto */
+.header { position: sticky !important; top: 0 !important; z-index: 200 !important; }
+
+/* Sezioni sotto hero: sopra canvas */
+.members-section,
+.rete-why-section,
+.cta-section,
+.footer { position: relative; z-index: 10; }
