@@ -10,18 +10,16 @@
   <link rel="stylesheet" href="rete.css" />
 </head>
 <body>
-  <!-- Canvas sinaptico globale -->
-  <canvas id="synapseCanvas" aria-hidden="true" style="position:fixed;inset:0;z-index:0;pointer-events:none;width:100%;height:100%;opacity:.35;"></canvas>
   <a class="skip" href="#contenuto">Vai al contenuto</a>
 
   <!-- HEADER (stesso dell'home) -->
   <header class="header" role="banner">
     <div class="container header__inner">
       <a class="brand" href="index.html" aria-label="Gli Amici di Boyle — Home">
-        <img src="assets/logo.png" alt="Logo Gli Amici di Boyle" width="52" height="52" />
+        <img src="assets/logo.png" alt="Logo" width="52" height="52" />
         <span class="brand__text">
           <strong>Gli Amici di Boyle</strong>
-          <em>Extreme Medicine · Research &amp; Education</em>
+          <em>Diving &amp; Hyperbaric Medicine · Research &amp; Education</em>
         </span>
       </a>
       <nav class="nav--desktop">
@@ -111,10 +109,9 @@
           </a>
         </div>
         <div class="hero__stats">
-          <div class="hero__stat"><span class="hero__stat-n" id="memberCount">15</span><span class="hero__stat-l">Membri attivi</span></div>
+          <div class="hero__stat"><span class="hero__stat-n" id="memberCount">14</span><span class="hero__stat-l">Membri</span></div>
           <div class="hero__stat"><span class="hero__stat-n">8+</span><span class="hero__stat-l">Specialità</span></div>
           <div class="hero__stat"><span class="hero__stat-n">6</span><span class="hero__stat-l">Nazioni</span></div>
-          <div class="hero__stat hero__stat--growing"><span class="hero__stat-n">↑</span><span class="hero__stat-l">In crescita</span></div>
         </div>
       </div>
     </section>
@@ -126,102 +123,10 @@
           <h2 class="members-title">I Membri della Rete</h2>
           <p class="members-sub">Professionisti selezionati per competenza, curiosità e impatto operativo.</p>
         </div>
-
+        <!-- Canvas sinaptico dietro le card -->
+        <canvas id="synapseCanvas" aria-hidden="true"></canvas>
         <!-- Le card vengono iniettate da JS -->
         <div class="members-grid" id="membersGrid" role="list"></div>
-      </div>
-    </section>
-
-    <!-- EMAIL MEMBERS ONLY MODAL -->
-    <!-- ACCESS CODE MODAL -->
-    <div class="access-modal" id="accessModal" aria-hidden="true">
-      <div class="access-modal__dialog">
-        <button class="access-modal__close" id="accessModalClose" aria-label="Chiudi">✕</button>
-        <div class="access-modal__icon">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-        </div>
-        <h3 class="access-modal__title">Accesso membri</h3>
-        <p class="access-modal__desc">Inserisci il codice che hai ricevuto nella email di benvenuto quando sei entrato nella Rete di Boyle.</p>
-        <div class="access-modal__form">
-          <input type="text" id="accessCodeInput" class="access-modal__input"
-            placeholder="es. BOYLE-2025-ALPHA"
-            autocomplete="off" autocapitalize="characters" spellcheck="false" />
-          <button class="btn-electric" id="accessCodeSubmit" type="button">
-            <span class="btn-electric__inner">Sblocca contatti</span>
-          </button>
-        </div>
-        <p class="access-modal__status" id="accessStatus"></p>
-        <p class="access-modal__note">Non hai ancora il codice? <button class="access-modal__link" id="accessJoin">Candidati alla rete</button></p>
-      </div>
-    </div>
-
-    <div class="email-wall" id="emailWall" aria-hidden="true">
-      <div class="email-wall__dialog">
-        <button class="email-wall__close" id="emailWallClose" aria-label="Chiudi">✕</button>
-        <div class="email-wall__icon">
-          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
-        </div>
-        <h3 class="email-wall__title">Contatti riservati ai membri</h3>
-        <p class="email-wall__text">Gli indirizzi email diretti dei professionisti della Rete di Boyle sono visibili solo ai membri attivi. È uno dei vantaggi concreti di far parte della rete.</p>
-        <div class="email-wall__actions">
-          <button class="btn-electric" id="wallCodeBtn">
-            <span class="btn-electric__inner">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-              Sono già membro — inserisci il codice
-            </span>
-          </button>
-          <button class="btn-ghost" id="emailWallJoin" style="min-height:44px;font-size:.88rem">Candidati alla rete →</button>
-          <p class="email-wall__note">Problemi? Scrivi a <a href="mailto:info@amicidiboyle.it">info@amicidiboyle.it</a></p>
-        </div>
-      </div>
-    </div>
-
-    <!-- VANTAGGI DELLA RETE -->
-    <section class="benefits-section">
-      <div class="container">
-        <div class="benefits-header reveal">
-          <p class="benefits-eyebrow">Perché entrare</p>
-          <h2 class="benefits-title">Cosa significa far parte della Rete di Boyle</h2>
-          <p class="benefits-sub">La rete non è una directory. È un ecosistema attivo dove ogni membro contribuisce e riceve valore concreto.</p>
-        </div>
-        <div class="benefits-postit">
-          <div class="postit postit--yellow reveal">
-            <div class="postit__pin"></div>
-            <span class="postit__num">01</span>
-            <h3>Contatti diretti</h3>
-            <p>Email personali di tutti i membri visibili solo a chi è dentro. Trovi il relatore giusto, il collaboratore, lo specialista — in un click.</p>
-          </div>
-          <div class="postit postit--cyan reveal" data-delay="80">
-            <div class="postit__pin"></div>
-            <span class="postit__num">02</span>
-            <h3>Visibilità sul portale</h3>
-            <p>La tua card è pubblica. Chi vuole può aggiungerci CV scaricabile, pubblicazioni, link. Un profilo professionale sempre aggiornato.</p>
-          </div>
-          <div class="postit postit--green reveal" data-delay="160">
-            <div class="postit__pin"></div>
-            <span class="postit__num">03</span>
-            <h3>Newsletter</h3>
-            <p>Proponi articoli, casi clinici, contributi divulgativi. Vai direttamente nella casella di tutti i membri e dei partner del progetto.</p>
-          </div>
-          <div class="postit postit--pink reveal" data-delay="80">
-            <div class="postit__pin"></div>
-            <span class="postit__num">04</span>
-            <h3>Pubblica i tuoi corsi</h3>
-            <p>Hai un corso, un congresso, un'iniziativa formativa? La sezione formazione è aperta ai membri per pubblicizzare eventi sul portale.</p>
-          </div>
-          <div class="postit postit--purple reveal" data-delay="160">
-            <div class="postit__pin"></div>
-            <span class="postit__num">05</span>
-            <h3>Ricerca scientifica</h3>
-            <p>Studi, protocolli, pubblicazioni. I membri vengono invitati a collaborare nelle iniziative di ricerca degli Amici di Boyle.</p>
-          </div>
-          <div class="postit postit--orange reveal" data-delay="240">
-            <div class="postit__pin"></div>
-            <span class="postit__num">06</span>
-            <h3>Prima fila</h3>
-            <p>Congressi, workshop, editoriali, formazione. I membri vengono coinvolti per primi, prima che le iniziative siano aperte al pubblico.</p>
-          </div>
-        </div>
       </div>
     </section>
 
@@ -323,47 +228,9 @@
 
   const LI_ICON = `<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.94 8.5H3.56V20h3.38V8.5ZM5.25 3A2.03 2.03 0 1 0 5.3 7.06 2.03 2.03 0 0 0 5.25 3Zm4.23 5.5V20h3.38v-5.7c0-1.5.28-2.95 2.14-2.95 1.83 0 1.86 1.71 1.86 3.05V20h3.39v-6.29c0-3.09-.67-5.46-4.28-5.46-1.73 0-2.88.95-3.35 1.85h-.05V8.5H9.48Z"/></svg>`;
 
-  const EMAIL_ICON = `<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6.75A2.75 2.75 0 0 1 5.75 4h12.5A2.75 2.75 0 0 1 21 6.75v10.5A2.75 2.75 0 0 1 18.25 20H5.75A2.75 2.75 0 0 1 3 17.25V6.75Zm2.2-.25 6.27 5.05a.83.83 0 0 0 1.06 0L18.8 6.5H5.2Zm13.8 1.46-5.42 4.36a2.33 2.33 0 0 1-2.96 0L5.2 7.96v9.29c0 .3.25.55.55.55h12.5c.3 0 .55-.25.55-.55V7.96Z"/></svg>`;
-  const LOCK_ICON = `<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4" stroke-linecap="round"/></svg>`;
-
-  // Tag colori per area
-  const TAG_COLORS = {
-    'Iperbarica':       '#4fa8ff',
-    'Diving':           '#00d4ff',
-    'Critical Care':    '#4dffd6',
-    'Neuroscienze':     '#c4b0ff',
-    'Ricerca':          '#b4a6ff',
-    'Cardiologia':      '#ff8fa3',
-    'Trauma':           '#ffb347',
-    'Emergenza':        '#ff6b6b',
-    'HEMS':             '#ff6b6b',
-    'Spazio':           '#a8eeff',
-    'Montagna':         '#80ffd4',
-    'ECMO':             '#4dffd6',
-    'Safety':           '#ffd166',
-    'Chirurgia':        '#f8a5c2',
-    'Mass Gathering':   '#ffb347',
-    'Esplorazione':     '#00d4ff',
-    'Medicina Militare':'#c0c0ff',
-  };
-
-  function renderTags(tags) {
-    if (!tags || !tags.length) return '';
-    return '<div class="member-tags">' +
-      tags.map(t => {
-        const c = TAG_COLORS[t] || '#7be4ff';
-        return `<span class="member-tag" style="--tag-color:${c}">${t}</span>`;
-      }).join('') +
-    '</div>';
-  }
-
   function renderCard(m) {
     const li = m.linkedin && m.linkedin !== 'https://www.linkedin.com/'
       ? `<a class="icon-btn" href="${m.linkedin}" aria-label="LinkedIn di ${m.name}" target="_blank" rel="noopener">${LI_ICON}</a>`
-      : '';
-    // Email: visibile solo ai membri — mostra lucchetto con tooltip per i non-membri
-    const emailBtn = m.email
-      ? `<button class="icon-btn member-email-btn" data-email="${m.email}" aria-label="Contatta ${m.name}" title="Visibile ai membri della Rete">${LOCK_ICON}</button>`
       : '';
     return `
       <article class="member-card reveal" role="listitem">
@@ -371,7 +238,6 @@
           <img class="member-photo" src="assets/rete/${m.img}" alt="${m.name}" loading="lazy" onerror="this.style.background='rgba(5,18,46,.8)';this.style.opacity='.4'" />
         </div>
         <h2 class="member-name">${m.name}</h2>
-        ${renderTags(m.tags)}
         <p class="member-role">${m.role}</p>
         <div class="member-location">
           <span class="member-location__line" aria-hidden="true"></span>
@@ -381,7 +247,7 @@
           </span>
           <span class="member-location__line" aria-hidden="true"></span>
         </div>
-        <div class="member-links">${li}${emailBtn}</div>
+        <div class="member-links">${li}</div>
       </article>`;
   }
 
@@ -395,21 +261,9 @@
       grid.innerHTML = members.map(renderCard).join('');
       if (countEl) countEl.textContent = members.length;
       initReveal();
-      
+      initSynapseCanvas(members.length);
     } catch(e) {
-      // Fallback: se rete-members.json non è ancora sul server, usa dati inline
-      console.warn('rete-members.json non trovato, uso dati inline:', e);
-      try {
-        const fallback = await fetch('rete-members.json?v=' + Date.now());
-        if (fallback.ok) {
-          const members = await fallback.json();
-          grid.innerHTML = members.map(renderCard).join('');
-          if (countEl) countEl.textContent = members.length;
-          initReveal();
-        }
-      } catch(e2) {
-        grid.innerHTML = '<p style="color:rgba(237,247,255,.5);padding:20px;text-align:center;">Profili in caricamento. Assicurati che rete-members.json sia nel repository.</p>';
-      }
+      grid.innerHTML = '<p style="color:rgba(237,247,255,.5);padding:20px;">Caricamento profili non disponibile.</p>';
     }
   }
 
@@ -426,389 +280,137 @@
     document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
   }
 
-  /* ── SYNAPSE CANVAS: rete neurale immersiva su tutta la pagina ── */
-  function initSynapseCanvas() {
+  /* ── Synapse canvas behind cards ── */
+  function initSynapseCanvas(nMembers) {
     const canvas = document.getElementById('synapseCanvas');
-    if (!canvas || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (!canvas) return;
     const ctx = canvas.getContext('2d');
-
-    // Canvas fixed, dimensioni viewport — scroll gestito via offset dei nodi
+    const grid = document.getElementById('membersGrid');
+    
     function resize() {
-      canvas.width  = window.innerWidth;
-      canvas.height = window.innerHeight;
+      canvas.width  = grid.offsetWidth;
+      canvas.height = grid.offsetHeight;
     }
     resize();
     window.addEventListener('resize', resize, {passive:true});
 
-    // 80 nodi: più dense connessioni, effetto immersivo
-    const N = 80;
-    // Distribuiti su un'area 3x alta rispetto alla viewport (copre tutto lo scroll)
-    const nodes = Array.from({length: N}, (_, i) => ({
-      x:  Math.random() * window.innerWidth,
-      y:  Math.random() * (window.innerHeight * 3),   // altura 3x per pagina lunga
-      vx: (Math.random() - .5) * .28,
-      vy: (Math.random() - .5) * .28,
-      r:  1.2 + Math.random() * 2.8,
-      pulse: Math.random() * Math.PI * 2,
-      bright: Math.random(),                           // nodi più o meno brillanti
-    }));
-
-    // Mouse tracking per repulsione/attrazione
-    let mouseX = -9999, mouseY = -9999, scrollY = 0;
-    window.addEventListener('mousemove', e => { mouseX = e.clientX; mouseY = e.clientY; }, {passive:true});
-    window.addEventListener('scroll', () => { scrollY = window.scrollY; }, {passive:true});
-
-    const MAX_D  = 180;   // distanza massima per connessione
-    const MAX_D2 = MAX_D * MAX_D;
+    /* Create nodes at card positions */
+    let nodes = [];
+    function buildNodes() {
+      nodes = [];
+      const cards = grid.querySelectorAll('.member-card');
+      cards.forEach(card => {
+        const r = card.getBoundingClientRect();
+        const gr = grid.getBoundingClientRect();
+        nodes.push({
+          x: r.left - gr.left + r.width/2,
+          y: r.top  - gr.top  + r.height/2,
+          vx: (Math.random()-.5)*.3,
+          vy: (Math.random()-.5)*.3,
+          r: 3 + Math.random()*2,
+          pulse: Math.random()*Math.PI*2,
+        });
+      });
+      /* Extra floating nodes */
+      for (let i=0; i<18; i++) {
+        nodes.push({
+          x: Math.random()*canvas.width,
+          y: Math.random()*canvas.height,
+          vx:(Math.random()-.5)*.4,
+          vy:(Math.random()-.5)*.4,
+          r: 1.5+Math.random(),
+          pulse: Math.random()*Math.PI*2,
+          floating: true,
+        });
+      }
+    }
+    setTimeout(buildNodes, 400);
 
     function draw(t) {
-      const ofs = scrollY;  // offset scroll per far scorrere i nodi con la pagina
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+      if (!nodes.length) { requestAnimationFrame(draw); return; }
 
-      // Muovi nodi
-      for (let i = 0; i < N; i++) {
-        const n = nodes[i];
-        n.x  += n.vx;
-        n.y  += n.vy;
-        n.pulse += .012;
+      /* Update floating nodes */
+      nodes.forEach(n => {
+        if (!n.floating) return;
+        n.x += n.vx; n.y += n.vy;
+        n.pulse += .018;
+        if (n.x<0||n.x>canvas.width)  n.vx *= -1;
+        if (n.y<0||n.y>canvas.height) n.vy *= -1;
+      });
 
-        // Rimbalzo sui bordi (largezza viewport, altezza 3x)
-        if (n.x < 0 || n.x > canvas.width)           n.vx *= -1;
-        if (n.y < 0 || n.y > canvas.height * 3)       n.vy *= -1;
-
-        // Leggera repulsione dal cursore (effetto interattivo)
-        const dx = n.x - mouseX;
-        const dy = (n.y - ofs) - mouseY;
-        const dm2 = dx*dx + dy*dy;
-        if (dm2 < 14400) {  // 120px
-          const f = .06 / Math.sqrt(dm2 + 1);
-          n.vx += dx * f;
-          n.vy += dy * f;
-          // Limita velocità
-          const spd = Math.sqrt(n.vx*n.vx + n.vy*n.vy);
-          if (spd > 1.2) { n.vx *= .8; n.vy *= .8; }
-        }
-      }
-
-      // Disegna connessioni
-      for (let i = 0; i < N; i++) {
-        const ni = nodes[i];
-        const niy = ni.y - ofs;
-        if (niy < -MAX_D || niy > canvas.height + MAX_D) continue; // fuori viewport
-
-        for (let j = i + 1; j < N; j++) {
-          const nj = nodes[j];
-          const njy = nj.y - ofs;
-          if (njy < -MAX_D || njy > canvas.height + MAX_D) continue;
-
-          const dx = ni.x - nj.x;
-          const dy = niy - njy;
-          const d2 = dx*dx + dy*dy;
-          if (d2 > MAX_D2) continue;
-
-          const d = Math.sqrt(d2);
-          const alpha = (1 - d / MAX_D) * .22 * ((ni.bright + nj.bright) * .5 + .3);
-
-          // Gradiente lungo la linea (effetto impulso elettrico)
-          const grd = ctx.createLinearGradient(ni.x, niy, nj.x, njy);
-          const pulse = .5 + .5 * Math.sin(t * .001 + ni.pulse + nj.pulse * .5);
-          grd.addColorStop(0,    `rgba(80,210,255,${alpha * .4})`);
-          grd.addColorStop(pulse, `rgba(160,240,255,${alpha})`);
-          grd.addColorStop(1,    `rgba(80,180,255,${alpha * .3})`);
-
+      /* Draw connections */
+      const MAX_D = 220;
+      for (let i=0;i<nodes.length;i++) {
+        for (let j=i+1;j<nodes.length;j++) {
+          const dx = nodes[i].x - nodes[j].x;
+          const dy = nodes[i].y - nodes[j].y;
+          const d  = Math.sqrt(dx*dx+dy*dy);
+          if (d > MAX_D) continue;
+          const alpha = (1 - d/MAX_D) * .14;
           ctx.beginPath();
-          ctx.moveTo(ni.x, niy);
-          ctx.lineTo(nj.x, njy);
-          ctx.strokeStyle = grd;
-          ctx.lineWidth = .65 + alpha * .8;
+          ctx.moveTo(nodes[i].x, nodes[i].y);
+          ctx.lineTo(nodes[j].x, nodes[j].y);
+          ctx.strokeStyle = `rgba(120,230,255,${alpha})`;
+          ctx.lineWidth = .6;
           ctx.stroke();
         }
       }
 
-      // Disegna nodi
-      for (let i = 0; i < N; i++) {
-        const n  = nodes[i];
-        const ny = n.y - ofs;
-        if (ny < -40 || ny > canvas.height + 40) continue;
-
-        const pulse = .5 + .5 * Math.sin(n.pulse + t * .0007);
-        const r = n.r * (.8 + .4 * pulse);
-        const brightness = n.bright * pulse;
-
-        // Alone esterno grande
-        const grd = ctx.createRadialGradient(n.x, ny, 0, n.x, ny, r * 5);
-        grd.addColorStop(0,   `rgba(180,245,255,${brightness * .7})`);
-        grd.addColorStop(.35, `rgba(100,220,255,${brightness * .28})`);
-        grd.addColorStop(1,   `rgba(60,160,255,0)`);
+      /* Draw nodes */
+      nodes.forEach(n => {
+        const pulse = .6 + .4*Math.sin(n.pulse + t*.001);
+        const r = n.r * pulse;
+        const grd = ctx.createRadialGradient(n.x,n.y,0,n.x,n.y,r*3);
+        grd.addColorStop(0,'rgba(190,245,255,.9)');
+        grd.addColorStop(.4,'rgba(100,220,255,.4)');
+        grd.addColorStop(1,'rgba(80,180,255,0)');
         ctx.beginPath();
-        ctx.arc(n.x, ny, r * 5, 0, Math.PI * 2);
+        ctx.arc(n.x,n.y,r*3,0,Math.PI*2);
         ctx.fillStyle = grd;
         ctx.fill();
-
-        // Nucleo brillante
         ctx.beginPath();
-        ctx.arc(n.x, ny, r, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(210,250,255,${.65 + brightness * .35})`;
+        ctx.arc(n.x,n.y,r,0,Math.PI*2);
+        ctx.fillStyle = 'rgba(200,248,255,.85)';
         ctx.fill();
-      }
+      });
 
       requestAnimationFrame(draw);
     }
     requestAnimationFrame(draw);
   }
 
-  /* ── Sistema accesso email per membri ── */
-  const ACCESS_KEY = 'boyle_member_access';
-  // Codici validi — aggiungere/rimuovere qui quando cambiano i membri
-  const VALID_CODES = [
-    'BOYLE-2024-ALPHA', 'BOYLE-2024-BETA', 'BOYLE-2024-GAMMA',
-    'BOYLE-2024-DELTA', 'BOYLE-2025-ALPHA', 'BOYLE-2025-BETA',
-    'BOYLE-2025-GAMMA', 'BOYLE-FONDATORI', 'BOYLE-TEAM-01'
-  ];
+  /* ── Modal ── */
+  function openModal()  { document.getElementById('network-modal').classList.add('is-open'); document.body.style.overflow='hidden'; }
+  function closeModal() { document.getElementById('network-modal').classList.remove('is-open'); document.body.style.overflow=''; }
 
-  function isMemberUnlocked() {
-    return sessionStorage.getItem(ACCESS_KEY) === 'true';
-  }
-
-  function unlockMemberEmails() {
-    sessionStorage.setItem(ACCESS_KEY, 'true');
-    // Mostra le email vere al posto dei lucchetti
-    document.querySelectorAll('.member-email-btn').forEach(btn => {
-      const email = btn.dataset.email;
-      if (!email) return;
-      const a = document.createElement('a');
-      a.className = 'icon-btn';
-      a.href = 'mailto:' + email;
-      a.setAttribute('aria-label', 'Email: ' + email);
-      a.title = email;
-      a.innerHTML = EMAIL_ICON;
-      btn.replaceWith(a);
-    });
-  }
-
-  function initEmailWall() {
-    // Se già sbloccato nella sessione, mostra subito le email
-    if (isMemberUnlocked()) { unlockMemberEmails(); return; }
-
-    const wall     = document.getElementById('emailWall');
-    const wallClose= document.getElementById('emailWallClose');
-    const wallJoin = document.getElementById('emailWallJoin');
-    const accModal = document.getElementById('accessModal');
-    const accClose = document.getElementById('accessModalClose');
-    const accInput = document.getElementById('accessCodeInput');
-    const accBtn   = document.getElementById('accessCodeSubmit');
-    const accStatus= document.getElementById('accessStatus');
-    const accJoin  = document.getElementById('accessJoin');
-
-    function closeWall() {
-      wall?.classList.remove('is-open');
-      wall?.setAttribute('aria-hidden','true');
-      document.body.style.overflow = '';
-    }
-    function closeAcc() {
-      accModal?.classList.remove('is-open');
-      accModal?.setAttribute('aria-hidden','true');
-      document.body.style.overflow = '';
-    }
-    function openAcc() {
-      closeWall();
-      accModal?.classList.add('is-open');
-      accModal?.setAttribute('aria-hidden','false');
-      document.body.style.overflow = 'hidden';
-      setTimeout(() => accInput?.focus(), 100);
-    }
-
-    // Click sul lucchetto → mostra wall con opzioni
-    document.addEventListener('click', e => {
-      const btn = e.target.closest('.member-email-btn');
-      if (!btn || isMemberUnlocked()) return;
-      e.preventDefault();
-      wall?.classList.add('is-open');
-      wall?.setAttribute('aria-hidden','false');
-      document.body.style.overflow = 'hidden';
-    });
-
-    wallClose?.addEventListener('click', closeWall);
-    wall?.addEventListener('click', e => { if (e.target === wall) closeWall(); });
-    wallJoin?.addEventListener('click', () => { closeWall(); openModal(); });
-
-    // Pulsante "Inserisci codice" nella email wall
-    document.getElementById('wallCodeBtn')?.addEventListener('click', openAcc);
-
-    // Access code modal
-    accClose?.addEventListener('click', closeAcc);
-    accModal?.addEventListener('click', e => { if (e.target === accModal) closeAcc(); });
-    accJoin?.addEventListener('click', () => { closeAcc(); openModal(); });
-
-    function tryCode() {
-      const code = (accInput?.value || '').trim().toUpperCase();
-      if (VALID_CODES.includes(code)) {
-        accStatus.textContent = '✓ Accesso confermato. Benvenuto nella rete.';
-        accStatus.className = 'access-modal__status success';
-        unlockMemberEmails();
-        setTimeout(closeAcc, 1400);
-      } else {
-        accStatus.textContent = '✗ Codice non riconosciuto. Controlla l'email di benvenuto.';
-        accStatus.className = 'access-modal__status error';
-        accInput?.classList.add('shake');
-        setTimeout(() => accInput?.classList.remove('shake'), 500);
-      }
-    }
-    accBtn?.addEventListener('click', tryCode);
-    accInput?.addEventListener('keydown', e => { if (e.key === 'Enter') tryCode(); });
-
-    document.addEventListener('keydown', e => {
-      if (e.key !== 'Escape') return;
-      closeWall(); closeAcc();
-    });
-  }
-
-  /* ── 3D Card Tilt: segue il mouse ── */
-  function initCardTilt() {
-    document.querySelectorAll('.member-card').forEach(card => {
-      card.addEventListener('mousemove', e => {
-        const r = card.getBoundingClientRect();
-        const x = (e.clientX - r.left) / r.width  - .5;  // -0.5 … 0.5
-        const y = (e.clientY - r.top)  / r.height - .5;
-        const ry =  x * 14;   // max 14deg sull'asse Y
-        const rx = -y * 10;   // max 10deg sull'asse X
-        card.style.setProperty('--rx', rx + 'deg');
-        card.style.setProperty('--ry', ry + 'deg');
-      });
-      card.addEventListener('mouseleave', () => {
-        card.style.setProperty('--rx', '0deg');
-        card.style.setProperty('--ry', '0deg');
-      });
-    });
-  }
-
-  /* ── Counter animato per le hero stats ── */
-  function animateCounter(el, target, duration) {
-    const isInfinity = el.textContent.includes('∞');
-    if (isInfinity) return;
-    const suffix = el.textContent.replace(/[0-9.,]/g, '');
-    const start = performance.now();
-    function step(now) {
-      const p = Math.min((now - start) / duration, 1);
-      const ease = 1 - Math.pow(1 - p, 3);
-      el.textContent = Math.round(target * ease) + suffix;
-      if (p < 1) requestAnimationFrame(step);
-    }
-    requestAnimationFrame(step);
-  }
-
-  function initCounters() {
-    const stats = document.querySelectorAll('.hero__stat-n');
-    const obs = new IntersectionObserver(entries => {
-      entries.forEach(e => {
-        if (!e.isIntersecting) return;
-        const el = e.target;
-        const raw = el.textContent.replace(/[^0-9]/g, '');
-        if (raw) animateCounter(el, parseInt(raw), 1200);
-        obs.unobserve(el);
-      });
-    }, { threshold: .8 });
-    stats.forEach(el => obs.observe(el));
-  }
-
-  /* ── Impulso luminoso tra le card ── */
-  function initCardPulse() {
-    const canvas = document.getElementById('synapseCanvas');
-    if (!canvas) return;
-    // Aggiunge un impulso extra quando si fa hover su una card
-    document.querySelectorAll('.member-card').forEach(card => {
-      card.addEventListener('mouseenter', () => {
-        card.classList.add('card-pulse-active');
-        setTimeout(() => card.classList.remove('card-pulse-active'), 600);
-      });
-    });
-  }
-
-  /* Inizializza dopo caricamento cards */
-  const origLoad = loadMembers;
-  async function loadMembersEnhanced() {
-    await loadMembers();
-    setTimeout(() => {
-      initCardTilt();
-      initCounters();
-      initCardPulse();
-      initEmailWall();
-    }, 200);
-  }
-
-  /* ── Modal apri/chiudi ── */
-  function openModal() {
-    document.getElementById('network-modal').classList.add('is-open');
-    document.body.style.overflow = 'hidden';
-  }
-  function closeModal() {
-    document.getElementById('network-modal').classList.remove('is-open');
-    document.body.style.overflow = '';
-  }
   document.getElementById('open-network-modal')?.addEventListener('click', openModal);
   document.getElementById('open-network-modal-2')?.addEventListener('click', openModal);
   document.getElementById('close-network-modal')?.addEventListener('click', closeModal);
-  document.getElementById('network-modal')?.addEventListener('click', e => { if (e.target === e.currentTarget) closeModal(); });
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+  document.getElementById('network-modal')?.addEventListener('click', e => { if(e.target===e.currentTarget) closeModal(); });
+  document.addEventListener('keydown', e => { if(e.key==='Escape') closeModal(); });
 
-  /* ── Slug helper ── */
-  function slugify(s) {
-    return (s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'')
-      .replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'').replace(/-{2,}/g,'-');
-  }
-
-  /* ── Costruisce lo snippet JSON da incollare in rete-members.json ── */
-  function buildJSONSnippet() {
-    const name  = (document.getElementById('cand-name')?.value||'').trim();
-    const email = (document.getElementById('cand-email')?.value||'').trim();
-    const role  = (document.getElementById('cand-role')?.value||'').trim();
-    const aff   = (document.getElementById('cand-affiliation')?.value||'').trim();
-    const city  = (document.getElementById('cand-city')?.value||'Italia').trim();
-    const li    = (document.getElementById('cand-linkedin')?.value||'').trim();
-    const focus = (document.getElementById('cand-interest')?.value||'').trim();
-    const slug  = slugify(name) || 'nuovo-membro';
-    let parts   = [];
-    if (role)  parts.push(role);
-    if (aff)   parts.push(aff);
-    if (focus) parts.push('Focus: ' + focus);
-    return JSON.stringify({
-      name,
-      role: parts.join('. '),
-      img:  slug + '.jpg',
-      city,
-      linkedin: li,
-      email
-    }, null, 2);
-  }
-
-  /* ── Form submit: inietta snippet + invia via fetch ── */
-  const netForm   = document.getElementById('network-form');
+  /* ── Form submit ── */
+  const form = document.getElementById('network-form');
   const statusBox = document.getElementById('form-status');
-  netForm?.addEventListener('submit', async e => {
+  form?.addEventListener('submit', async e => {
     e.preventDefault();
-    // Inietta snippet JSON nel campo hidden
-    const sf = document.getElementById('cand-snippet');
-    if (sf) sf.value = buildJSONSnippet();
-
-    if (statusBox) { statusBox.textContent = 'Invio in corso…'; statusBox.className = 'form-status'; }
+    statusBox.textContent = 'Invio in corso…';
+    statusBox.className = 'form-status';
     try {
-      const res = await fetch(netForm.action, {
-        method: 'POST',
-        body: new FormData(netForm),
-        headers: { 'Accept': 'application/json' }
-      });
+      const res = await fetch(form.action, { method:'POST', body:new FormData(form), headers:{'Accept':'application/json'} });
       if (res.ok) {
-        if (statusBox) {
-          statusBox.textContent = '✓ Candidatura inviata. Ti contatteremo presto.';
-          statusBox.className = 'form-status is-success';
-        }
-        netForm.reset();
+        statusBox.textContent = '✓ Candidatura inviata correttamente. Ti contatteremo presto.';
+        statusBox.className = 'form-status is-success';
+        form.reset();
         setTimeout(closeModal, 2800);
       } else {
-        if (statusBox) { statusBox.textContent = 'Invio non riuscito. Scrivi a info@amicidiboyle.it'; statusBox.className = 'form-status is-error'; }
+        statusBox.textContent = 'Invio non riuscito. Scrivi a info@amicidiboyle.it';
+        statusBox.className = 'form-status is-error';
       }
     } catch(err) {
-      if (statusBox) { statusBox.textContent = 'Errore di rete. Scrivi a info@amicidiboyle.it'; statusBox.className = 'form-status is-error'; }
+      statusBox.textContent = 'Errore di rete. Scrivi a info@amicidiboyle.it';
+      statusBox.className = 'form-status is-error';
     }
   });
 
@@ -816,7 +418,7 @@
   const mBtn = document.getElementById('navMobileBtn');
   const mPanel = document.getElementById('navMobilePanel');
   mBtn?.addEventListener('click', () => {
-    const open = mPanel.getAttribute('aria-hidden') === 'false';
+    const open = mPanel.getAttribute('aria-hidden')==='false';
     mPanel.setAttribute('aria-hidden', String(open));
     mBtn.setAttribute('aria-expanded', String(!open));
     mBtn.classList.toggle('is-open', !open);
@@ -832,10 +434,8 @@
     }
   });
 
-  
-  /* ── INIT ── */
-  loadMembersEnhanced();
-  initSynapseCanvas();
+  /* ── Init ── */
+  loadMembers();
   </script>
 </body>
 </html>
