@@ -31,8 +31,8 @@ body::before {
 body::after {
   content: ""; position: fixed; inset: 0; z-index: -2;
   background:
-    radial-gradient(ellipse 80% 40% at 50% 0%, rgba(0,40,140,.12), transparent 60%),
-    linear-gradient(180deg, rgba(2,10,24,.22) 0%, rgba(2,10,24,.04) 40%, rgba(2,10,24,.30) 100%);
+    radial-gradient(ellipse 70% 35% at 50% 0%, rgba(0,60,180,.08), transparent 55%),
+    linear-gradient(180deg, rgba(2,10,24,.12) 0%, rgba(2,10,24,.0) 50%, rgba(2,10,24,.18) 100%);
 }
 img { display: block; max-width: 100%; }
 a { color: inherit; text-decoration: none; }
@@ -107,8 +107,21 @@ a { color: inherit; text-decoration: none; }
 .hero__glow { color: var(--r-cyan2); text-shadow: 0 0 40px rgba(123,228,255,.4); }
 .hero__subtitle { font-size: 1.06rem; color: var(--r-muted); max-width: 58ch; line-height: 1.68; margin-bottom: 28px; }
 .hero__cta { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 32px; }
-.hero__stats { display: flex; gap: 0; background: rgba(5,18,46,.48); border: 1px solid rgba(123,228,255,.14); border-radius: 14px; overflow: hidden; backdrop-filter: blur(14px); max-width: 320px; }
-.hero__stat { flex: 1; padding: 14px 16px; text-align: center; border-right: 1px solid rgba(123,228,255,.1); }
+.hero__stats { display: flex; gap: 8px; background: transparent; border: none; backdrop-filter: none; max-width: 460px; overflow: visible; }
+.hero__stat {
+  flex: 1; padding: 12px 14px; text-align: center;
+  border-right: none;
+  background: rgba(4,16,46,.32);
+  border: 1px solid rgba(123,228,255,.2);
+  border-radius: 16px;
+  backdrop-filter: blur(12px);
+  transition: border-color .25s, transform .25s, background .25s;
+}
+.hero__stat:hover {
+  border-color: rgba(123,228,255,.45);
+  background: rgba(4,16,46,.48);
+  transform: translateY(-3px);
+}
 .hero__stat:last-child { border-right: 0; }
 .hero__stat-n { display: block; font-size: 1.5rem; font-weight: 700; color: var(--r-cyan2); letter-spacing: -.04em; line-height: 1; margin-bottom: 3px; }
 .hero__stat-l { font-size: .68rem; color: var(--r-soft); letter-spacing: .04em; }
@@ -149,8 +162,8 @@ a { color: inherit; text-decoration: none; }
 
 /* Canvas sinaptico */
 #synapseCanvas {
-  position: absolute; top: 0; left: 0; pointer-events: none;
-  width: 100%; height: 100%; z-index: 0; opacity: .72;
+  position: fixed; inset: 0; pointer-events: none;
+  width: 100vw; height: 100vh; z-index: 0; opacity: .65;
 }
 
 /* Grid carte */
@@ -1040,3 +1053,243 @@ a { color: inherit; text-decoration: none; }
 .access-modal__status.error{color:#ff8fa3}
 .access-modal__note{font-size:.78rem;color:var(--r-soft,rgba(237,247,255,.46))}
 .access-modal__link{background:none;border:none;color:var(--r-cyan2,#a8eeff);cursor:pointer;font:inherit;font-size:.78rem;text-decoration:underline;padding:0}
+
+
+/* ══════════════════════════════════════════════════════════════════
+   RETE WOW — miglioramenti grafici completi
+   ══════════════════════════════════════════════════════════════════ */
+
+/* ── Sfondo: oceano visibile, nessun velo ── */
+body::before {
+  background: url("assets/ocean-desktop.jpg") center top / cover no-repeat !important;
+}
+@media (max-width: 768px) {
+  body::before { background: url("assets/ocean-mobile.jpg") center top / cover no-repeat !important; }
+}
+
+/* ── Hero: nessun riquadro opaco, scritte sull'oceano ── */
+.hero__content::before { display: none !important; }
+.hero::before          { display: none !important; }
+.hero {
+  border-bottom: 1px solid rgba(123,228,255,.08) !important;
+  min-height: 92vh;
+  display: flex;
+  align-items: center;
+}
+
+/* ── Titolo: text-shadow per leggibilità sull'oceano ── */
+.hero__title {
+  font-size: clamp(3rem, 7vw, 6rem) !important;
+  letter-spacing: -.05em !important;
+  line-height: .88 !important;
+  text-shadow: 0 2px 32px rgba(0,10,40,.7), 0 0 80px rgba(0,10,60,.4) !important;
+}
+.hero__glow {
+  color: #a8eeff !important;
+  text-shadow: 0 0 50px rgba(123,228,255,.55), 0 2px 32px rgba(0,10,40,.7) !important;
+}
+.hero__subtitle {
+  text-shadow: 0 1px 16px rgba(0,10,40,.75) !important;
+  font-size: 1.1rem !important;
+  max-width: 54ch !important;
+}
+
+/* ── Connectome: più visibile ── */
+.hero__connectome { opacity: .62 !important; }
+.hero:hover .hero__connectome { opacity: .78 !important; }
+
+/* ── Stats card singole: niente bordo divisore centrale ── */
+.hero__stat:last-child { border-right: none !important; }
+.hero__stat-n {
+  font-size: 1.7rem !important;
+  font-weight: 800 !important;
+  letter-spacing: -.05em !important;
+}
+
+/* ── Card lingotto: trasparente, immersa nell'oceano ── */
+.member-card {
+  background:
+    linear-gradient(145deg,
+      rgba(255,255,255,.13) 0%,
+      rgba(255,255,255,.03) 15%,
+      transparent 30%,
+      rgba(4,16,46,.22) 70%,
+      rgba(4,16,46,.35) 100%) !important;
+  border: 1px solid rgba(185,238,255,.36) !important;
+  box-shadow:
+    inset 0 2.5px 0 rgba(255,255,255,.30),
+    inset 2px 0 0 rgba(255,255,255,.12),
+    inset 0 -2.5px 0 rgba(0,0,0,.32),
+    inset -1.5px 0 0 rgba(0,0,0,.16),
+    0 18px 52px rgba(0,0,0,.44),
+    0 0 36px rgba(100,200,255,.07) !important;
+  backdrop-filter: blur(6px) saturate(1.3) !important;
+  -webkit-backdrop-filter: blur(6px) saturate(1.3) !important;
+  overflow: visible !important;
+}
+
+/* Riflesso vetro */
+.member-card::before {
+  background: linear-gradient(145deg,
+    rgba(255,255,255,.18) 0%,
+    rgba(255,255,255,.05) 12%,
+    transparent 28%,
+    transparent 72%,
+    rgba(200,240,255,.04) 88%,
+    rgba(200,240,255,.09) 100%) !important;
+  mix-blend-mode: screen !important;
+}
+
+/* Spigoli vetro marcati */
+.member-card::after {
+  box-shadow:
+    inset 0 2px 0 rgba(255,255,255,.28),
+    inset 0 -2px 0 rgba(0,0,0,.30),
+    inset 2px 0 0 rgba(255,255,255,.12),
+    inset -2px 0 0 rgba(0,0,0,.16) !important;
+}
+
+/* Card hover: si solleva con glow */
+.member-card:hover {
+  transform: translateY(-8px) !important;
+  border-color: rgba(150,230,255,.55) !important;
+  box-shadow:
+    inset 0 2.5px 0 rgba(255,255,255,.35),
+    inset 2px 0 0 rgba(255,255,255,.16),
+    inset 0 -2.5px 0 rgba(0,0,0,.28),
+    inset -1.5px 0 0 rgba(0,0,0,.12),
+    0 32px 72px rgba(0,0,0,.55),
+    0 0 60px rgba(80,200,255,.18),
+    0 0 120px rgba(40,140,255,.08) !important;
+}
+
+/* ── Animazione ingresso: collisione laterale ── */
+@keyframes cardEnterLeft {
+  0%   { opacity:0; transform:perspective(900px) rotateY(-26deg) translateX(-60px) translateY(30px) scale(.88); filter:blur(3px); }
+  55%  { opacity:1; transform:perspective(900px) rotateY(6deg) translateX(9px) translateY(-4px) scale(1.03); filter:blur(0); }
+  78%  { transform:perspective(900px) rotateY(-2deg) translateX(-4px) translateY(2px) scale(.99); }
+  100% { transform:perspective(1000px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) translateY(0) scale(1); filter:blur(0); }
+}
+@keyframes cardEnterUp {
+  0%   { opacity:0; transform:perspective(900px) rotateX(20deg) translateY(60px) scale(.88); filter:blur(3px); }
+  60%  { opacity:1; transform:perspective(900px) rotateX(-4deg) translateY(-6px) scale(1.03); filter:blur(0); }
+  82%  { transform:perspective(900px) rotateX(2deg) translateY(3px) scale(.99); }
+  100% { transform:perspective(1000px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) translateY(0) scale(1); filter:blur(0); }
+}
+@keyframes cardEnterRight {
+  0%   { opacity:0; transform:perspective(900px) rotateY(26deg) translateX(60px) translateY(30px) scale(.88); filter:blur(3px); }
+  55%  { opacity:1; transform:perspective(900px) rotateY(-6deg) translateX(-9px) translateY(-4px) scale(1.03); filter:blur(0); }
+  78%  { transform:perspective(900px) rotateY(2deg) translateX(4px) translateY(2px) scale(.99); }
+  100% { transform:perspective(1000px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) translateY(0) scale(1); filter:blur(0); }
+}
+.member-card:nth-child(3n+1).is-visible { animation: cardEnterLeft  .92s cubic-bezier(.22,.68,0,1.08) both; }
+.member-card:nth-child(3n+2).is-visible { animation: cardEnterUp    .92s cubic-bezier(.22,.68,0,1.08) both; }
+.member-card:nth-child(3n+3).is-visible { animation: cardEnterRight .92s cubic-bezier(.22,.68,0,1.08) both; }
+
+/* Stagger */
+.member-card:nth-child(1){animation-delay:.00s} .member-card:nth-child(2){animation-delay:.10s}
+.member-card:nth-child(3){animation-delay:.20s} .member-card:nth-child(4){animation-delay:.07s}
+.member-card:nth-child(5){animation-delay:.17s} .member-card:nth-child(6){animation-delay:.27s}
+.member-card:nth-child(7){animation-delay:.04s} .member-card:nth-child(8){animation-delay:.14s}
+.member-card:nth-child(9){animation-delay:.24s} .member-card:nth-child(10){animation-delay:.03s}
+.member-card:nth-child(11){animation-delay:.13s} .member-card:nth-child(12){animation-delay:.23s}
+.member-card:nth-child(13){animation-delay:.06s} .member-card:nth-child(14){animation-delay:.16s}
+.member-card:nth-child(15){animation-delay:.26s}
+
+/* ── Grid: 4 colonne (15 membri = 4+4+4+3, più bilanciato) ── */
+.members-grid {
+  grid-template-columns: repeat(4, minmax(0,1fr)) !important;
+  perspective: 1400px;
+}
+@media (max-width: 1100px) { .members-grid { grid-template-columns: repeat(3, minmax(0,1fr)) !important; } }
+@media (max-width: 700px)  { .members-grid { grid-template-columns: repeat(2, minmax(0,1fr)) !important; } }
+@media (max-width: 480px)  { .members-grid { grid-template-columns: 1fr !important; } }
+
+/* ── Foto: glow colorato per colonna ── */
+.member-card:nth-child(4n+1):hover .member-photo-wrap { box-shadow: 0 0 0 2px rgba(123,228,255,.5), 0 0 38px rgba(123,228,255,.5), 0 0 70px rgba(0,160,255,.2) !important; }
+.member-card:nth-child(4n+2):hover .member-photo-wrap { box-shadow: 0 0 0 2px rgba(77,255,214,.5),  0 0 38px rgba(77,255,214,.45), 0 0 70px rgba(0,200,160,.2) !important; }
+.member-card:nth-child(4n+3):hover .member-photo-wrap { box-shadow: 0 0 0 2px rgba(196,176,255,.5), 0 0 38px rgba(196,176,255,.45), 0 0 70px rgba(120,80,255,.2) !important; }
+.member-card:nth-child(4n+4):hover .member-photo-wrap { box-shadow: 0 0 0 2px rgba(255,180,100,.45),0 0 38px rgba(255,160,80,.4),  0 0 70px rgba(200,100,0,.18) !important; }
+
+/* ── Tasto IT/EN: in linea con lo stile del sito ── */
+.lang-toggle {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 4px !important;
+  padding: 5px 13px !important;
+  border-radius: 999px !important;
+  background: rgba(123,228,255,.08) !important;
+  border: 1px solid rgba(123,228,255,.24) !important;
+  color: rgba(237,247,255,.7) !important;
+  font-size: .75rem !important;
+  font-weight: 700 !important;
+  letter-spacing: .1em !important;
+  cursor: pointer !important;
+  transition: background .2s, border-color .2s, color .2s !important;
+  white-space: nowrap !important;
+}
+.lang-toggle:hover {
+  background: rgba(123,228,255,.16) !important;
+  border-color: rgba(123,228,255,.42) !important;
+  color: #a8eeff !important;
+}
+#langCurrent { color: #a8eeff !important; font-weight: 800 !important; }
+.lang-sep { opacity: .3 !important; }
+#langOther { opacity: .55 !important; }
+
+/* ── Benefits section: sfondo meno opaco, si vede l'oceano ── */
+.benefits-section { background: transparent !important; }
+.benefit-card {
+  background: rgba(4,16,46,.38) !important;
+  backdrop-filter: blur(14px) !important;
+  border: 1px solid rgba(120,200,255,.16) !important;
+  transition: transform .3s cubic-bezier(.22,.68,0,1.3), border-color .25s, box-shadow .25s !important;
+}
+.benefit-card:hover {
+  transform: translateY(-5px) !important;
+  border-color: rgba(120,200,255,.32) !important;
+  box-shadow: 0 16px 44px rgba(0,0,0,.35), 0 0 28px rgba(80,180,255,.08) !important;
+}
+
+/* ── CTA box: bordo animato ── */
+@keyframes ctaBorderFlow {
+  0%   { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+.cta-box {
+  background: rgba(4,16,46,.35) !important;
+  backdrop-filter: blur(16px) !important;
+}
+.cta-box::after {
+  content: "" !important;
+  position: absolute !important;
+  inset: -1px !important;
+  border-radius: calc(var(--r-r, 24px) + 1px) !important;
+  background: linear-gradient(90deg,
+    transparent, rgba(124,243,255,.45) 25%,
+    rgba(80,160,255,.35) 50%,
+    rgba(196,176,255,.45) 75%,
+    transparent) !important;
+  background-size: 200% 100% !important;
+  animation: ctaBorderFlow 4s linear infinite !important;
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0) !important;
+  -webkit-mask-composite: xor !important;
+  mask-composite: exclude !important;
+  padding: 1px !important;
+  pointer-events: none !important;
+  z-index: 0 !important;
+}
+
+/* ── Mobile: disabilita animazioni complesse ── */
+@media (max-width: 768px) {
+  .member-card { overflow: hidden !important; }
+  .member-card.is-visible { animation: none !important; opacity: 1 !important; transform: none !important; }
+  .member-card { transition: opacity .5s ease, transform .5s ease !important; }
+  #synapseCanvas { opacity: .45 !important; }
+}
+
+/* ── Reduced motion ── */
+@media (prefers-reduced-motion: reduce) {
+  .member-card.is-visible { animation: none !important; }
+  .cta-box::after { animation: none !important; }
+}
