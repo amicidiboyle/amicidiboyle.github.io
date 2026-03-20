@@ -822,7 +822,17 @@
     /* ---- Scroll reveal: tutto da sinistra, sezione per sezione ---- */
     (function(){
       var prefersReduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      var targets = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale');
+      // Also observe specific mobile animation targets
+      document.querySelectorAll('.timeline li').forEach(function(el){
+        el.classList.add('reveal');
+      });
+      document.querySelectorAll('#ricerca .research-showcase-grid > *').forEach(function(el){
+        if (!el.classList.contains('reveal')) el.classList.add('reveal');
+      });
+      document.querySelectorAll('#formazione .course-poster-card').forEach(function(el){
+        if (!el.classList.contains('reveal')) el.classList.add('reveal');
+      });
+      var targets = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale, .info-card, .activity-card, .founder-card, .glass-card, .section-heading');
 
       /* Stagger sui contenitori .stagger */
       document.querySelectorAll('.stagger').forEach(function(parent){
@@ -1144,6 +1154,50 @@
         btn.classList.remove('qn-open');
       }
     });
+  })();
+  </script>
+
+  <!-- Desktop: floating side nav (appare dopo 400px scroll) -->
+  <nav id="desktop-quicknav" aria-label="Navigazione rapida" style="display:none">
+    <ul>
+      <li><a href="#home"      data-label="Home">⬤</a></li>
+      <li><a href="#visione"   data-label="Visione">⬤</a></li>
+      <li><a href="#attivita"  data-label="Aree">⬤</a></li>
+      <li><a href="#fondatori" data-label="Fondatori">⬤</a></li>
+      <li><a href="#rete-home" data-label="Rete">⬤</a></li>
+      <li><a href="#contenuti" data-label="Contenuti">⬤</a></li>
+      <li><a href="#ricerca"   data-label="Ricerca">⬤</a></li>
+      <li><a href="#formazione" data-label="Formazione">⬤</a></li>
+      <li><a href="#partner"   data-label="Partner">⬤</a></li>
+      <li><a href="#contatti"  data-label="Contatti">⬤</a></li>
+    </ul>
+  </nav>
+  <script>
+  /* ── Desktop floating side nav ── */
+  (function(){
+    var isMob = window.innerWidth <= 768;
+    if (isMob) return;
+    var nav = document.getElementById('desktop-quicknav');
+    if (!nav) return;
+    nav.style.display = 'block';
+
+    // Mostra dopo 400px
+    window.addEventListener('scroll', function(){
+      nav.classList.toggle('dqn-visible', window.scrollY > 400);
+    }, {passive:true});
+
+    // Evidenzia sezione corrente
+    var sections = Array.from(document.querySelectorAll('section[id]'));
+    var links    = Array.from(nav.querySelectorAll('a'));
+    function highlight() {
+      var scrollY = window.scrollY + window.innerHeight * .4;
+      var active  = sections.filter(s => s.offsetTop <= scrollY).pop();
+      links.forEach(function(a) {
+        a.classList.toggle('dqn-active', active && a.getAttribute('href') === '#' + active.id);
+      });
+    }
+    window.addEventListener('scroll', highlight, {passive:true});
+    highlight();
   })();
   </script>
 </body>
