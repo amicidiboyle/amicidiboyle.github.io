@@ -19,7 +19,7 @@
 </head>
 <body>
   <!-- Canvas sinaptico globale -->
-  <canvas id="synapseCanvas" aria-hidden="true" style="position:fixed;inset:0;z-index:0;pointer-events:none;width:100%;height:100%;opacity:.35;"></canvas>
+  <canvas id="synapseCanvas" aria-hidden="true" style="position:fixed;inset:0;z-index:0;pointer-events:none;width:100%;height:100%;opacity:.65;"></canvas>
   <a class="skip" href="#contenuto">Vai al contenuto</a>
 
   <!-- HEADER (stesso dell'home) -->
@@ -445,7 +445,6 @@
     if (!canvas || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     const ctx = canvas.getContext('2d');
 
-    // Canvas fixed, dimensioni viewport — scroll gestito via offset dei nodi
     function resize() {
       canvas.width  = window.innerWidth;
       canvas.height = window.innerHeight;
@@ -453,120 +452,90 @@
     resize();
     window.addEventListener('resize', resize, {passive:true});
 
-    // 80 nodi: più dense connessioni, effetto immersivo
+    // 80 nodi su area 3x viewport per coprire tutto lo scroll
     const N = 80;
-    // Distribuiti su un'area 3x alta rispetto alla viewport (copre tutto lo scroll)
-    const nodes = Array.from({length: N}, (_, i) => ({
+    const nodes = Array.from({length: N}, () => ({
       x:  Math.random() * window.innerWidth,
-      y:  Math.random() * (window.innerHeight * 3),   // altura 3x per pagina lunga
-      vx: (Math.random() - .5) * .28,
-      vy: (Math.random() - .5) * .28,
-      r:  1.2 + Math.random() * 2.8,
+      y:  Math.random() * (window.innerHeight * 3),
+      vx: (Math.random() - .5) * .3,
+      vy: (Math.random() - .5) * .3,
+      r:  1.4 + Math.random() * 2.6,
       pulse: Math.random() * Math.PI * 2,
-      bright: Math.random(),                           // nodi più o meno brillanti
+      bright: .4 + Math.random() * .6,
     }));
 
-    // Mouse tracking per repulsione/attrazione
     let mouseX = -9999, mouseY = -9999, scrollY = 0;
     window.addEventListener('mousemove', e => { mouseX = e.clientX; mouseY = e.clientY; }, {passive:true});
-    window.addEventListener('scroll', () => { scrollY = window.scrollY; }, {passive:true});
+    window.addEventListener('scroll',    () => { scrollY = window.scrollY; }, {passive:true});
 
-    const MAX_D  = 180;   // distanza massima per connessione
-    const MAX_D2 = MAX_D * MAX_D;
+    const MAX_D = 190, MAX_D2 = MAX_D * MAX_D;
 
     function draw(t) {
-      const ofs = scrollY;  // offset scroll per far scorrere i nodi con la pagina
+      const ofs = scrollY;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      // Muovi nodi
+      // Move nodes
       for (let i = 0; i < N; i++) {
         const n = nodes[i];
-        n.x  += n.vx;
-        n.y  += n.vy;
-        n.pulse += .012;
-
-        // Rimbalzo sui bordi (largezza viewport, altezza 3x)
-        if (n.x < 0 || n.x > canvas.width)           n.vx *= -1;
-        if (n.y < 0 || n.y > canvas.height * 3)       n.vy *= -1;
-
-        // Leggera repulsione dal cursore (effetto interattivo)
-        const dx = n.x - mouseX;
-        const dy = (n.y - ofs) - mouseY;
+        n.x += n.vx; n.y += n.vy; n.pulse += .013;
+        if (n.x < 0 || n.x > canvas.width)      n.vx *= -1;
+        if (n.y < 0 || n.y > canvas.height * 3)  n.vy *= -1;
+        // Mouse repulsion
+        const dx = n.x - mouseX, dy = (n.y - ofs) - mouseY;
         const dm2 = dx*dx + dy*dy;
-        if (dm2 < 14400) {  // 120px
-          const f = .06 / Math.sqrt(dm2 + 1);
-          n.vx += dx * f;
-          n.vy += dy * f;
-          // Limita velocità
+        if (dm2 < 12000) {
+          const f = .055 / Math.sqrt(dm2 + 1);
+          n.vx += dx * f; n.vy += dy * f;
           const spd = Math.sqrt(n.vx*n.vx + n.vy*n.vy);
-          if (spd > 1.2) { n.vx *= .8; n.vy *= .8; }
+          if (spd > 1.1) { n.vx *= .8; n.vy *= .8; }
         }
       }
 
-      // Disegna connessioni
+      // Draw connections
       for (let i = 0; i < N; i++) {
-        const ni = nodes[i];
-        const niy = ni.y - ofs;
-        if (niy < -MAX_D || niy > canvas.height + MAX_D) continue; // fuori viewport
-
+        const ni = nodes[i], niy = ni.y - ofs;
+        if (niy < -MAX_D || niy > canvas.height + MAX_D) continue;
         for (let j = i + 1; j < N; j++) {
-          const nj = nodes[j];
-          const njy = nj.y - ofs;
+          const nj = nodes[j], njy = nj.y - ofs;
           if (njy < -MAX_D || njy > canvas.height + MAX_D) continue;
-
-          const dx = ni.x - nj.x;
-          const dy = niy - njy;
+          const dx = ni.x - nj.x, dy = niy - njy;
           const d2 = dx*dx + dy*dy;
           if (d2 > MAX_D2) continue;
-
           const d = Math.sqrt(d2);
-          const alpha = (1 - d / MAX_D) * .22 * ((ni.bright + nj.bright) * .5 + .3);
-
-          // Gradiente lungo la linea (effetto impulso elettrico)
-          const grd = ctx.createLinearGradient(ni.x, niy, nj.x, njy);
+          const alpha = (1 - d / MAX_D) * .22 * ((ni.bright + nj.bright) * .5 + .2);
           const pulse = .5 + .5 * Math.sin(t * .001 + ni.pulse + nj.pulse * .5);
-          grd.addColorStop(0,    `rgba(80,210,255,${alpha * .4})`);
+          const grd = ctx.createLinearGradient(ni.x, niy, nj.x, njy);
+          grd.addColorStop(0,     `rgba(80,210,255,${alpha * .4})`);
           grd.addColorStop(pulse, `rgba(160,240,255,${alpha})`);
-          grd.addColorStop(1,    `rgba(80,180,255,${alpha * .3})`);
-
+          grd.addColorStop(1,     `rgba(80,180,255,${alpha * .3})`);
           ctx.beginPath();
           ctx.moveTo(ni.x, niy);
           ctx.lineTo(nj.x, njy);
           ctx.strokeStyle = grd;
-          ctx.lineWidth = .65 + alpha * .8;
+          ctx.lineWidth = .6 + alpha * .9;
           ctx.stroke();
         }
       }
 
-      // Disegna nodi
+      // Draw nodes
       for (let i = 0; i < N; i++) {
-        const n  = nodes[i];
-        const ny = n.y - ofs;
+        const n  = nodes[i], ny = n.y - ofs;
         if (ny < -40 || ny > canvas.height + 40) continue;
-
         const pulse = .5 + .5 * Math.sin(n.pulse + t * .0007);
         const r = n.r * (.8 + .4 * pulse);
-        const brightness = n.bright * pulse;
-
-        // Alone esterno grande
         const grd = ctx.createRadialGradient(n.x, ny, 0, n.x, ny, r * 5);
-        grd.addColorStop(0,   `rgba(180,245,255,${brightness * .7})`);
-        grd.addColorStop(.35, `rgba(100,220,255,${brightness * .28})`);
+        grd.addColorStop(0,   `rgba(180,245,255,${n.bright * .75})`);
+        grd.addColorStop(.35, `rgba(100,220,255,${n.bright * .28})`);
         grd.addColorStop(1,   `rgba(60,160,255,0)`);
-        ctx.beginPath();
-        ctx.arc(n.x, ny, r * 5, 0, Math.PI * 2);
-        ctx.fillStyle = grd;
-        ctx.fill();
-
-        // Nucleo brillante
-        ctx.beginPath();
-        ctx.arc(n.x, ny, r, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(210,250,255,${.65 + brightness * .35})`;
-        ctx.fill();
+        ctx.beginPath(); ctx.arc(n.x, ny, r * 5, 0, Math.PI * 2);
+        ctx.fillStyle = grd; ctx.fill();
+        ctx.beginPath(); ctx.arc(n.x, ny, r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(210,250,255,${.65 + n.bright * .35})`; ctx.fill();
       }
-
       requestAnimationFrame(draw);
     }
+    requestAnimationFrame(draw);
+  }
     requestAnimationFrame(draw);
   }
 
