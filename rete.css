@@ -30,9 +30,10 @@ body::before {
 }
 body::after {
   content: ""; position: fixed; inset: 0; z-index: -2;
-  background:
-    radial-gradient(ellipse 80% 40% at 50% 0%, rgba(0,40,140,.12), transparent 60%),
-    linear-gradient(180deg, rgba(2,10,24,.22) 0%, rgba(2,10,24,.04) 40%, rgba(2,10,24,.30) 100%);
+  background: linear-gradient(180deg,
+    rgba(0,8,20,.08) 0%,
+    transparent       45%,
+    rgba(0,8,20,.15) 100%);
 }
 img { display: block; max-width: 100%; }
 a { color: inherit; text-decoration: none; }
@@ -65,9 +66,10 @@ a { color: inherit; text-decoration: none; }
 
 /* ── HERO ── */
 .hero {
-  position: relative; min-height: 520px; padding: 36px 40px 32px;
+  position: relative; min-height: 92vh; padding: 36px 40px 32px;
   margin: 0; overflow: hidden; isolation: isolate;
-  border-bottom: 1px solid rgba(123,228,255,.1);
+  border-bottom: 1px solid rgba(123,228,255,.06);
+  display: flex; align-items: flex-start;
 }
 .hero::before { display: none; }
 .hero__connectome { position: absolute; inset: 0; z-index: 1; pointer-events: none; opacity: .44; transition: opacity .3s; }
@@ -107,9 +109,21 @@ a { color: inherit; text-decoration: none; }
 .hero__glow { color: var(--r-cyan2); text-shadow: 0 0 40px rgba(123,228,255,.4); }
 .hero__subtitle { font-size: 1.06rem; color: var(--r-muted); max-width: 58ch; line-height: 1.68; margin-bottom: 28px; }
 .hero__cta { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 32px; }
-.hero__stats { display: flex; gap: 0; background: rgba(5,18,46,.48); border: 1px solid rgba(123,228,255,.14); border-radius: 14px; overflow: hidden; backdrop-filter: blur(14px); max-width: 320px; }
-.hero__stat { flex: 1; padding: 14px 16px; text-align: center; border-right: 1px solid rgba(123,228,255,.1); }
-.hero__stat:last-child { border-right: 0; }
+.hero__stats { display: flex; gap: 6px; background: transparent; border: none; backdrop-filter: none; max-width: 420px; overflow: visible; }
+.hero__stat {
+  flex: 1; padding: 12px 14px; text-align: center;
+  background: rgba(3,12,32,.30);
+  border: 1px solid rgba(123,228,255,.18) !important;
+  border-right: 1px solid rgba(123,228,255,.18) !important;
+  border-radius: 14px;
+  backdrop-filter: blur(8px);
+  transition: border-color .25s, transform .2s;
+}
+.hero__stat:hover {
+  border-color: rgba(123,228,255,.38) !important;
+  transform: translateY(-2px);
+}
+.hero__stat:last-child { border-right: 1px solid rgba(123,228,255,.18) !important; }
 .hero__stat-n { display: block; font-size: 1.5rem; font-weight: 700; color: var(--r-cyan2); letter-spacing: -.04em; line-height: 1; margin-bottom: 3px; }
 .hero__stat-l { font-size: .68rem; color: var(--r-soft); letter-spacing: .04em; }
 
@@ -1040,3 +1054,85 @@ a { color: inherit; text-decoration: none; }
 .access-modal__status.error{color:#ff8fa3}
 .access-modal__note{font-size:.78rem;color:var(--r-soft,rgba(237,247,255,.46))}
 .access-modal__link{background:none;border:none;color:var(--r-cyan2,#a8eeff);cursor:pointer;font:inherit;font-size:.78rem;text-decoration:underline;padding:0}
+
+
+/* ════════════════════════════════════════════════════════
+   RETE — look "la_rete_che_vorrei.png"
+   Oceano dominante, scritte leggere, nessun overlay
+   ════════════════════════════════════════════════════════ */
+
+/* Titolo: grande, leggibile sull'oceano */
+.hero__title {
+  font-size: clamp(3rem, 6.5vw, 5.8rem) !important;
+  letter-spacing: -.05em !important;
+  line-height: .9 !important;
+  text-shadow:
+    0 2px 24px rgba(0,8,28,.65),
+    0 0  60px rgba(0,8,28,.35) !important;
+}
+.hero__glow {
+  color: #b8eeff !important;
+  text-shadow:
+    0 0 40px rgba(123,228,255,.5),
+    0 2px 24px rgba(0,8,28,.65) !important;
+}
+.hero__subtitle {
+  font-size: 1.08rem !important;
+  line-height: 1.7 !important;
+  text-shadow: 0 1px 14px rgba(0,8,28,.7) !important;
+  max-width: 52ch !important;
+}
+.hero__eyebrow {
+  background: rgba(123,228,255,.10) !important;
+  border-color: rgba(123,228,255,.25) !important;
+}
+
+/* Stat numbers */
+.hero__stat-n {
+  font-size: 1.65rem !important;
+  font-weight: 800 !important;
+  letter-spacing: -.05em !important;
+  color: var(--r-cyan2, #a8eeff) !important;
+}
+.hero__stat-l {
+  font-size: .66rem !important;
+  color: rgba(200,235,255,.7) !important;
+  line-height: 1.4 !important;
+}
+.hero__stat--growing .hero__stat-n {
+  color: #4dffd6 !important;
+}
+
+/* Connectome: ben visibile */
+.hero__connectome { opacity: .60 !important; }
+.hero:hover .hero__connectome { opacity: .75 !important; }
+
+/* Canvas: full-page per sinapsi ovunque */
+#synapseCanvas {
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  pointer-events: none !important;
+  opacity: .60 !important;
+}
+
+/* Nessuna riga divisoria hero */
+.hero { border-bottom: none !important; }
+
+/* "I Membri della Rete" heading: direttamente sull'oceano */
+.members-section {
+  background: transparent !important;
+}
+.section-heading {
+  text-shadow: 0 2px 20px rgba(0,8,28,.5) !important;
+}
+
+/* Mobile: hero più compatto */
+@media (max-width: 768px) {
+  .hero { min-height: 100svh !important; align-items: flex-start !important; }
+  .hero__title { font-size: clamp(2.4rem, 10vw, 3.2rem) !important; }
+  .hero__stats { max-width: 100% !important; flex-wrap: wrap !important; gap: 6px !important; }
+  .hero__stat { flex: 1 1 calc(50% - 3px) !important; min-width: 90px !important; }
+  #synapseCanvas { opacity: .40 !important; }
+}
