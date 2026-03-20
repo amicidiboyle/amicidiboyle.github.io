@@ -2432,53 +2432,7 @@ html, body { overflow-x: hidden; }
    DESKTOP FLOATING NAV + MOBILE ANIMATIONS MIGLIORATI
    ========================================================== */
 
-/* ── DESKTOP SIDE NAV ── */
-#desktop-quicknav {
-  position: fixed;
-  right: 18px; top: 50%;
-  transform: translateY(-50%);
-  z-index: 500;
-  opacity: 0; pointer-events: none;
-  transition: opacity .3s, transform .3s;
-  display: none; /* mostrato via JS su desktop */
-}
-#desktop-quicknav.dqn-visible {
-  opacity: 1; pointer-events: auto;
-  transform: translateY(-50%);
-}
-#desktop-quicknav ul {
-  list-style: none; display: flex; flex-direction: column; gap: 10px; padding: 0; margin: 0;
-}
-#desktop-quicknav a {
-  display: flex; align-items: center; justify-content: flex-end;
-  gap: 8px; color: rgba(123,228,255,.35);
-  font-size: .42rem; transition: color .2s, transform .2s;
-  position: relative; cursor: pointer;
-  text-decoration: none;
-}
-#desktop-quicknav a::after {
-  content: attr(data-label);
-  position: absolute; right: calc(100% + 10px); top: 50%;
-  transform: translateY(-50%);
-  font-size: .72rem; font-weight: 600; letter-spacing: .06em;
-  color: var(--cyan-2); white-space: nowrap;
-  background: rgba(4,14,36,.92); border: 1px solid rgba(123,228,255,.2);
-  padding: 4px 10px; border-radius: 8px;
-  opacity: 0; pointer-events: none;
-  transition: opacity .18s, transform .18s;
-  transform: translateY(-50%) translateX(4px);
-}
-#desktop-quicknav a:hover { color: var(--cyan-2); transform: scale(1.3); }
-#desktop-quicknav a:hover::after { opacity: 1; transform: translateY(-50%) translateX(0); }
-#desktop-quicknav a.dqn-active { color: var(--cyan-2); font-size: .55rem; }
-#desktop-quicknav a.dqn-active::before {
-  content: "";
-  position: absolute; right: 100%; top: 50%;
-  transform: translateY(-50%);
-  width: 22px; height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(123,228,255,.5));
-  margin-right: 4px;
-}
+/* desktop-quicknav: see clean block below */
 
 /* ── MOBILE ANIMATIONS MIGLIORATI ── */
 /* Base reveal su mobile: translateY con spring */
