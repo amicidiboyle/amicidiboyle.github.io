@@ -30,6 +30,9 @@
         <a class="nav-active" href="podcast.html" aria-current="page">Podcast</a>
         <a class="nav-cta" href="index.html#contatti">Contatti</a>
       </nav>
+      <button class="lang-toggle" id="langToggle" onclick="(function(){var l=localStorage.getItem('boyle_lang')||'it';var nl=l==='it'?'en':'it';localStorage.setItem('boyle_lang',nl);location.reload();})()" aria-label="Switch language" title="Switch language">
+        <span id="langCurrent">IT</span><span class="lang-sep"> · </span><span id="langOther">EN</span>
+      </button>
       <button class="nav-mobile-btn" id="navMobileBtn" aria-label="Apri menu" aria-expanded="false">
         <span></span><span></span><span></span>
       </button>
@@ -307,6 +310,52 @@
       mBtn?.classList.remove('is-open');
     }
   });
+  </script>
+
+  <!-- i18n: podcast.html -->
+  <script>
+  (function(){
+    var lang = localStorage.getItem('boyle_lang') || 'it';
+    if (lang !== 'en') return;
+
+    var T = {
+      'Visione':'Vision','Ricerca':'Research','Rete':'Network',
+      'Podcast':'Podcast','Contatti':'Contact','Home':'Home',
+      'Sotto Pressione':'Under Pressure',
+      'Il podcast degli Amici di Boyle':'The Amici di Boyle podcast',
+      'Episodi':'Episodes','Ascolta':'Listen',
+      'Ascolta su Spotify':'Listen on Spotify',
+      'Ascolta su Apple Podcasts':'Listen on Apple Podcasts',
+      'Tutti gli episodi':'All episodes',
+    };
+
+    function translateNav() {
+      document.querySelectorAll('nav a, .nav--desktop a').forEach(function(a) {
+        var t = a.textContent.trim();
+        if (T[t]) a.textContent = T[t];
+      });
+    }
+
+    var MAP = [
+      ['.pod-hero__title',    'Sotto Pressione'],
+      ['.pod-hero__subtitle', 'Il podcast degli Amici di Boyle'],
+    ];
+
+    document.addEventListener('DOMContentLoaded', function() {
+      MAP.forEach(function(pair) {
+        var el = document.querySelector(pair[0]);
+        if (el && T[pair[1]]) el.textContent = T[pair[1]];
+      });
+      translateNav();
+      document.documentElement.lang = 'en';
+      document.title = 'Under Pressure · Gli Amici di Boyle';
+    });
+
+    var cur = document.getElementById('langCurrent');
+    var oth = document.getElementById('langOther');
+    if (cur) cur.textContent = 'EN';
+    if (oth) oth.textContent = 'IT';
+  })();
   </script>
 </body>
 </html>
