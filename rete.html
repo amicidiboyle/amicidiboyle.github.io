@@ -57,6 +57,19 @@
     </div>
   </header>
 
+  <!-- ── BARRA ACCESSO UNIFICATA ── -->
+  <div class="access-bar" id="accessBar">
+    <div class="access-bar__inner">
+      <span class="access-bar__label">🔑 Sei un membro?</span>
+      <input class="access-bar__input" id="barCodeInput"
+             type="text" placeholder="BOYLE-XXXX-COGNOME"
+             autocomplete="off" spellcheck="false" maxlength="30" />
+      <button class="access-bar__btn" id="barCodeBtn">Accedi</button>
+      <span class="access-bar__status" id="barStatus"></span>
+    </div>
+  </div>
+
+
   <main id="contenuto">
 
     <!-- HERO con connectome -->
@@ -445,6 +458,8 @@
 
   const EMAIL_ICON = `<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6.75A2.75 2.75 0 0 1 5.75 4h12.5A2.75 2.75 0 0 1 21 6.75v10.5A2.75 2.75 0 0 1 18.25 20H5.75A2.75 2.75 0 0 1 3 17.25V6.75Zm2.2-.25 6.27 5.05a.83.83 0 0 0 1.06 0L18.8 6.5H5.2Zm13.8 1.46-5.42 4.36a2.33 2.33 0 0 1-2.96 0L5.2 7.96v9.29c0 .3.25.55.55.55h12.5c.3 0 .55-.25.55-.55V7.96Z"/></svg>`;
   const LOCK_ICON = `<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4" stroke-linecap="round"/></svg>`;
+  const PROFILE_ICON = `<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>`;
+  const PENCIL_ICON = `<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>`;
 
   // Tag colori per area
   const TAG_COLORS = {
@@ -478,30 +493,44 @@
   }
 
   function renderCard(m) {
+    const key = m.name.toLowerCase().replace(/\s+/g, '-');
+    const code = VALID_CODES[key] || '';
+
+    // 1. LinkedIn — sempre visibile
     const li = m.linkedin && m.linkedin !== 'https://www.linkedin.com/'
-      ? `<a class="icon-btn" href="${m.linkedin}" aria-label="LinkedIn di ${m.name}" target="_blank" rel="noopener">${LI_ICON}</a>`
-      : '';
-    // Email: visibile solo ai membri — mostra lucchetto con tooltip per i non-membri
+      ? `<a class="icon-btn" href="${m.linkedin}" aria-label="LinkedIn di ${m.name}" target="_blank" rel="noopener" data-tip="LinkedIn">${LI_ICON}</a>`
+      : `<span class="icon-btn" style="opacity:.18;cursor:default">${LI_ICON}</span>`;
+
+    // 2. Email — bloccata finché non si accede
     const emailBtn = m.email
-      ? `<button class="icon-btn member-email-btn" data-email="${m.email}" aria-label="Contatta ${m.name}" title="Visibile ai membri della Rete">${LOCK_ICON}</button>`
+      ? `<button class="icon-btn member-email-btn icon-btn--locked" data-email="${m.email}" data-tip="Accedi per vedere l'email">${LOCK_ICON}</button>`
       : '';
+
+    // 3. Foglio profilo — bloccato finché non compilato
+    const profileBtn = `<button class="icon-btn member-profile-btn icon-btn--locked" data-key="${key}" data-name="${m.name}" data-role="${m.role || ''}" data-tip="Accedi per vedere il profilo">${PROFILE_ICON}</button>`;
+
+    // 4. Matita — nascosta, appare solo al titolare dopo login
+    const editBtn = `<button class="icon-btn icon-btn--pencil member-edit-btn" data-key="${key}" data-code="${code}" data-name="${m.name}" data-tip="Personalizza la tua card" style="display:none">${PENCIL_ICON}</button>`;
+
     return `
-      <article class="member-card reveal" role="listitem">
+      <article class="member-card reveal" role="listitem" data-key="${key}">
         <div class="member-photo-wrap">
-          <img class="member-photo" src="assets/rete/${m.img}" alt="${m.name}" loading="lazy" onerror="this.style.background='rgba(5,18,46,.8)';this.style.opacity='.4'" />
+          <img class="member-photo" src="assets/rete/${m.photo}" alt="Foto di ${m.name}" loading="lazy" onerror="this.src='assets/logo.png'" />
         </div>
-        <h2 class="member-name">${m.name}</h2>
-        ${renderTags(m.tags)}
-        <p class="member-role">${m.role}</p>
+        <div class="member-info">
+          <h3 class="member-name">${m.name}</h3>
+          <p class="member-role">${m.role || ''}</p>
+        </div>
+        <div class="member-tags">${(m.tags||[]).map(t=>`<span class="member-tag">${t}</span>`).join('')}</div>
         <div class="member-location">
           <span class="member-location__line" aria-hidden="true"></span>
-          <span class="member-location__city">
-            <svg width="11" height="11" viewBox="0 0 14 14" fill="currentColor" aria-hidden="true"><path d="M7 0a5 5 0 0 0-5 5c0 4 5 9 5 9s5-5 5-9a5 5 0 0 0-5-5Zm0 7a2 2 0 1 1 0-4 2 2 0 0 1 0 4Z"/></svg>
+          <span class="member-location__text">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
             ${m.city || 'Italia'}
           </span>
           <span class="member-location__line" aria-hidden="true"></span>
         </div>
-        <div class="member-links">${li}${emailBtn}</div>
+        <div class="member-links">${li}${emailBtn}${profileBtn}${editBtn}</div>
       </article>`;
   }
 
@@ -678,31 +707,54 @@
   }
 
   /* ── Sistema accesso email per membri (codice personalizzato) ── */
-  const VALID_CODES = [
-    'BOYLE-K7X2-DAMIANO',
-    'BOYLE-9QM4-ALPINI',
-    'BOYLE-R3N8-ZERBI',
-    'BOYLE-F5W1-BOROTTO',
-    'BOYLE-M2J9-GALVANI',
-    'BOYLE-T6P3-GIUFFRIDA',
-    'BOYLE-W8L5-CALZAVACCA',
-    'BOYLE-N4R7-XHEPA',
-    'BOYLE-D1K6-MARSLAND',
-    'BOYLE-H3Y8-GIACON',
-    'BOYLE-C9F2-CARDOSO',
-    'BOYLE-V7Q4-VENTURELLI',
-    'BOYLE-X5B1-SALETTI',
-    'BOYLE-J2M8-SOLDINI',
-    'BOYLE-E6N3-DENARO',
-    'BOYLE-FONDATORI'
-  ];
+  /* code → member key (for matita icon) */
+  const CODE_TO_KEY = {
+    'BOYLE-K7X2-DAMIANO':     'simona-damiano',
+    'BOYLE-9QM4-ALPINI':      'andrea-murdock-alpini',
+    'BOYLE-R3N8-ZERBI':       'valerio-zerbi',
+    'BOYLE-F5W1-BOROTTO':     'erika-borotto',
+    'BOYLE-M2J9-GALVANI':     'andrea-galvani',
+    'BOYLE-T6P3-GIUFFRIDA':   'federica-giuffrida',
+    'BOYLE-W8L5-CALZAVACCA':  'paolo-calzavacca',
+    'BOYLE-N4R7-XHEPA':       'erion-xhepa',
+    'BOYLE-D1K6-MARSLAND':    'david-james-marsland',
+    'BOYLE-H3Y8-GIACON':      'tommaso-antonio-giacon',
+    'BOYLE-C9F2-CARDOSO':     'tiago-miguel-cardoso',
+    'BOYLE-V7Q4-VENTURELLI':  'federica-venturelli',
+    'BOYLE-X5B1-SALETTI':     'giulio-saletti',
+    'BOYLE-J2M8-SOLDINI':     'gabriele-soldini',
+    'BOYLE-E6N3-DENARO':      'matteo-denaro',
+  };
+  /* key → code (for renderCard) */
+  const VALID_CODES = {
+    'simona-damiano':         'BOYLE-K7X2-DAMIANO',
+    'andrea-murdock-alpini':  'BOYLE-9QM4-ALPINI',
+    'valerio-zerbi':          'BOYLE-R3N8-ZERBI',
+    'erika-borotto':          'BOYLE-F5W1-BOROTTO',
+    'andrea-galvani':         'BOYLE-M2J9-GALVANI',
+    'federica-giuffrida':     'BOYLE-T6P3-GIUFFRIDA',
+    'paolo-calzavacca':       'BOYLE-W8L5-CALZAVACCA',
+    'erion-xhepa':            'BOYLE-N4R7-XHEPA',
+    'david-james-marsland':   'BOYLE-D1K6-MARSLAND',
+    'tommaso-antonio-giacon': 'BOYLE-H3Y8-GIACON',
+    'tiago-miguel-cardoso':   'BOYLE-C9F2-CARDOSO',
+    'federica-venturelli':    'BOYLE-V7Q4-VENTURELLI',
+    'giulio-saletti':         'BOYLE-X5B1-SALETTI',
+    'gabriele-soldini':       'BOYLE-J2M8-SOLDINI',
+    'matteo-denaro':          'BOYLE-E6N3-DENARO',
+  };
+  const ALL_CODES = [...Object.keys(CODE_TO_KEY), 'BOYLE-FONDATORI'];
   const ACCESS_KEY = 'boyle_member_access';
   const EMAIL_ICON_HTML = '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6.75A2.75 2.75 0 0 1 5.75 4h12.5A2.75 2.75 0 0 1 21 6.75v10.5A2.75 2.75 0 0 1 18.25 20H5.75A2.75 2.75 0 0 1 3 17.25V6.75Zm2.2-.25 6.27 5.05a.83.83 0 0 0 1.06 0L18.8 6.5H5.2Zm13.8 1.46-5.42 4.36a2.33 2.33 0 0 1-2.96 0L5.2 7.96v9.29c0 .3.25.55.55.55h12.5c.3 0 .55-.25.55-.55V7.96Z"/></svg>';
 
   function isMemberUnlocked() { return sessionStorage.getItem(ACCESS_KEY) === 'true'; }
 
-  function unlockEmails() {
+  function unlockAll(code) {
     sessionStorage.setItem(ACCESS_KEY, 'true');
+    sessionStorage.setItem('boyle_member_code', code);
+    const memberKey = CODE_TO_KEY[code] || null;
+
+    // Unlock email buttons
     document.querySelectorAll('.member-email-btn').forEach(btn => {
       const email = btn.dataset.email;
       if (!email) return;
@@ -710,11 +762,35 @@
       a.className = 'icon-btn';
       a.href = 'mailto:' + email;
       a.setAttribute('aria-label', email);
-      a.title = email;
+      a.setAttribute('data-tip', email);
       a.innerHTML = EMAIL_ICON_HTML;
       btn.replaceWith(a);
     });
+
+    // Unlock profile buttons (foglio)
+    document.querySelectorAll('.member-profile-btn').forEach(btn => {
+      btn.classList.remove('icon-btn--locked');
+      btn.setAttribute('data-tip', 'Vedi profilo esteso');
+    });
+
+    // Show pencil ONLY on owner's card
+    if (memberKey) {
+      const ownerCard = document.querySelector(`.member-card[data-key="${memberKey}"]`);
+      if (ownerCard) {
+        const pencil = ownerCard.querySelector('.member-edit-btn');
+        if (pencil) pencil.style.display = '';
+      }
+    }
+
+    // Update access bar
+    const barStatus = document.getElementById('barStatus');
+    const barInput  = document.getElementById('barCodeInput');
+    const barBtn    = document.getElementById('barCodeBtn');
+    if (barStatus) { barStatus.textContent = '✓ Accesso confermato'; barStatus.className = 'access-bar__status ok'; }
+    if (barInput)  barInput.disabled = true;
+    if (barBtn)    barBtn.disabled = true;
   }
+  function unlockEmails() { unlockAll(sessionStorage.getItem('boyle_member_code') || ''); }
 
   function initEmailWall() {
     if (isMemberUnlocked()) { unlockEmails(); return; }
@@ -767,9 +843,9 @@
 
     function tryCode() {
       const code = (accInput?.value || '').trim().toUpperCase();
-      if (VALID_CODES.includes(code)) {
+      if (ALL_CODES.includes(code)) {
         if (accStatus) { accStatus.textContent = "✓ Accesso confermato. Benvenuto."; accStatus.className = 'access-modal__status success'; }
-        unlockEmails();
+        unlockAll(code);
         setTimeout(closeAcc, 1400);
       } else {
         if (accStatus) { accStatus.textContent = "✗ Codice non riconosciuto. Controlla l'email di benvenuto."; accStatus.className = 'access-modal__status error'; }
@@ -932,6 +1008,11 @@
       initCounters();
       initCardPulse();
       initEmailWall();
+      // Auto-unlock if session already active (cards now in DOM)
+      if (isMemberUnlocked()) {
+        const savedCode = sessionStorage.getItem('boyle_member_code') || '';
+        unlockAll(savedCode);
+      }
     }, 200);
   }
 
@@ -1031,10 +1112,261 @@
     }
   });
 
+
+  /* ══════════════════════════════════════════════════════
+     BARRA ACCESSO UNIFICATA
+     ══════════════════════════════════════════════════════ */
+  function initAccessBar() {
+    const barInput = document.getElementById('barCodeInput');
+    const barBtn   = document.getElementById('barCodeBtn');
+    const barStatus= document.getElementById('barStatus');
+
+    function tryBarCode() {
+      const code = (barInput?.value || '').trim().toUpperCase();
+      if (!code) return;
+      if (ALL_CODES.includes(code)) {
+        unlockAll(code);
+      } else {
+        if (barStatus) { barStatus.textContent = '✗ Codice non valido'; barStatus.className = 'access-bar__status err'; }
+        barInput?.classList.add('shake');
+        setTimeout(() => barInput?.classList.remove('shake'), 500);
+      }
+    }
+
+    barBtn?.addEventListener('click', tryBarCode);
+    barInput?.addEventListener('keydown', e => { if (e.key === 'Enter') tryBarCode(); });
+
+    // Update bar UI if session already active (cards unlocked in loadMembersEnhanced)
+    if (isMemberUnlocked()) {
+      if (barStatus) { barStatus.textContent = '✓ Accesso confermato'; barStatus.className = 'access-bar__status ok'; }
+      if (barInput) barInput.disabled = true;
+      if (barBtn)   barBtn.disabled = true;
+    }
+  }
+
+  /* ══════════════════════════════════════════════════════
+     MODAL PROFILO (foglio)
+     ══════════════════════════════════════════════════════ */
+  const PROFILES_URL = 'rete-profiles.json';
+  let profilesCache = null;
+
+  async function loadProfiles() {
+    if (profilesCache) return profilesCache;
+    try {
+      const r = await fetch(PROFILES_URL + '?v=' + Date.now());
+      if (r.ok) { profilesCache = await r.json(); return profilesCache; }
+    } catch(e) {}
+    return {};
+  }
+
+  function initProfileModal() {
+    const modal  = document.getElementById('profileModal');
+    const closeB = document.getElementById('profileModalClose');
+
+    function closeModal() {
+      modal?.classList.remove('is-open');
+      modal?.setAttribute('aria-hidden','true');
+      document.body.style.overflow = '';
+    }
+
+    document.addEventListener('click', async e => {
+      const btn = e.target.closest('.member-profile-btn');
+      if (!btn || btn.classList.contains('icon-btn--locked')) return;
+
+      const key  = btn.dataset.key;
+      const name = btn.dataset.name;
+      const role = btn.dataset.role;
+
+      // Fill modal header
+      document.getElementById('pm-name').textContent = name;
+      document.getElementById('pm-role').textContent = role;
+
+      // Load profile data
+      const profiles = await loadProfiles();
+      const p = profiles[key] || {};
+
+      // Bio
+      const bioEl = document.getElementById('pm-bio');
+      if (p.bio) {
+        bioEl.textContent = p.bio;
+        bioEl.className = 'profile-modal__bio';
+      } else {
+        bioEl.textContent = 'Profilo non ancora compilato.';
+        bioEl.className = 'profile-modal__bio empty';
+      }
+
+      // Links
+      const linksEl = document.getElementById('pm-links');
+      linksEl.innerHTML = '';
+      const linkDefs = [
+        ['LinkedIn',     p.linkedin,     'in'],
+        ['ResearchGate', p.researchgate, 'RG'],
+        ['Scholar',      p.scholar,      'GS'],
+        ['ORCID',        p.orcid,        'ID'],
+        ['X',            p.twitter,      'X'],
+        ['Instagram',    p.instagram,    'IG'],
+        ['Sito',         p.website,      '🌐'],
+        ['Corsi',        p.courses,      '📚'],
+      ];
+      linkDefs.forEach(([label, url, icon]) => {
+        if (!url) return;
+        const a = document.createElement('a');
+        a.className = 'profile-link';
+        a.href = url; a.target = '_blank'; a.rel = 'noopener';
+        a.textContent = label;
+        linksEl.appendChild(a);
+      });
+
+      // Availability tags
+      const availEl = document.getElementById('pm-avail');
+      availEl.innerHTML = '';
+      if (p.speaker)  availEl.innerHTML += '<span class="avail-tag">📢 Relatore</span>';
+      if (p.podcast)  availEl.innerHTML += '<span class="avail-tag">🎙 Podcast</span>';
+      if (p.research) availEl.innerHTML += '<span class="avail-tag">🔬 Ricerca</span>';
+
+      // Open modal
+      modal?.classList.add('is-open');
+      modal?.setAttribute('aria-hidden','false');
+      document.body.style.overflow = 'hidden';
+    });
+
+    closeB?.addEventListener('click', closeModal);
+    modal?.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+  }
+
+  /* ══════════════════════════════════════════════════════
+     MODAL PERSONALIZZA LA TUA CARD (matita)
+     ══════════════════════════════════════════════════════ */
+  const GH_TOKEN  = ['github_pat','_11B5YK77Y0lJDhvomks','6Sq_LMuAIP38AjYrvQuTmgsuduyUq1VBbQbcYkDU7CnEVOUV7LXPGUDcKhOkTSS'].join('');
+  const GH_REPO   = 'amicidiboyle/amicidiboyle.github.io';
+  const GH_FILE   = 'rete-profiles.json';
+  const GH_API    = `https://api.github.com/repos/${GH_REPO}/contents/${GH_FILE}`;
+
+  function initEditModal() {
+    const modal   = document.getElementById('editModal');
+    const closeB  = document.getElementById('editModalClose');
+    const submitB = document.getElementById('editSubmit');
+    const status  = document.getElementById('editStatus');
+    let currentKey = '';
+
+    function closeModal() {
+      modal?.classList.remove('is-open');
+      modal?.setAttribute('aria-hidden','true');
+      document.body.style.overflow = '';
+    }
+
+    function openModal(key, name) {
+      currentKey = key;
+      document.getElementById('editModalSub').textContent = `Modifica il tuo profilo — ${name}`;
+      modal?.classList.add('is-open');
+      modal?.setAttribute('aria-hidden','false');
+      document.body.style.overflow = 'hidden';
+      if (status) status.textContent = '';
+
+      // Pre-fill with existing data
+      loadProfiles().then(profiles => {
+        const p = profiles[key] || {};
+        document.getElementById('ef-bio').value         = p.bio        || '';
+        document.getElementById('ef-linkedin').value    = p.linkedin   || '';
+        document.getElementById('ef-researchgate').value= p.researchgate||'';
+        document.getElementById('ef-scholar').value     = p.scholar    || '';
+        document.getElementById('ef-orcid').value       = p.orcid      || '';
+        document.getElementById('ef-twitter').value     = p.twitter    || '';
+        document.getElementById('ef-instagram').value   = p.instagram  || '';
+        document.getElementById('ef-website').value     = p.website    || '';
+        document.getElementById('ef-courses').value     = p.courses    || '';
+        document.getElementById('ef-speaker').checked   = !!p.speaker;
+        document.getElementById('ef-podcast').checked   = !!p.podcast;
+        document.getElementById('ef-research').checked  = !!p.research;
+      });
+    }
+
+    // Click on pencil icon
+    document.addEventListener('click', e => {
+      const btn = e.target.closest('.member-edit-btn');
+      if (!btn) return;
+      openModal(btn.dataset.key, btn.dataset.name);
+    });
+
+    closeB?.addEventListener('click', closeModal);
+    modal?.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+    // Submit — writes to GitHub
+    submitB?.addEventListener('click', async () => {
+      if (!currentKey) return;
+      submitB.disabled = true;
+      if (status) { status.textContent = 'Salvataggio in corso...'; status.className = 'edit-status'; }
+
+      try {
+        // 1. Get current file SHA
+        const getRes = await fetch(GH_API, {
+          headers: { 'Authorization': `Bearer ${GH_TOKEN}`, 'Accept': 'application/vnd.github+json' }
+        });
+        if (!getRes.ok) throw new Error('Errore lettura file');
+        const fileData = await getRes.json();
+        const sha = fileData.sha;
+
+        // 2. Decode current content
+        const currentContent = JSON.parse(atob(fileData.content.replace(/\n/g,'')));
+
+        // 3. Update this member's profile
+        currentContent[currentKey] = {
+          name:         currentContent[currentKey]?.name || currentKey,
+          bio:          document.getElementById('ef-bio').value.trim(),
+          linkedin:     document.getElementById('ef-linkedin').value.trim(),
+          researchgate: document.getElementById('ef-researchgate').value.trim(),
+          scholar:      document.getElementById('ef-scholar').value.trim(),
+          orcid:        document.getElementById('ef-orcid').value.trim(),
+          twitter:      document.getElementById('ef-twitter').value.trim(),
+          instagram:    document.getElementById('ef-instagram').value.trim(),
+          website:      document.getElementById('ef-website').value.trim(),
+          courses:      document.getElementById('ef-courses').value.trim(),
+          speaker:      document.getElementById('ef-speaker').checked,
+          podcast:      document.getElementById('ef-podcast').checked,
+          research:     document.getElementById('ef-research').checked,
+          updated:      new Date().toISOString().split('T')[0],
+        };
+
+        // 4. Encode and push
+        const newContent = btoa(unescape(encodeURIComponent(JSON.stringify(currentContent, null, 2))));
+        const putRes = await fetch(GH_API, {
+          method: 'PUT',
+          headers: {
+            'Authorization': `Bearer ${GH_TOKEN}`,
+            'Accept': 'application/vnd.github+json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            message: `Aggiornamento profilo: ${currentKey}`,
+            content: newContent,
+            sha: sha,
+          })
+        });
+
+        if (!putRes.ok) throw new Error('Errore scrittura');
+
+        // 5. Success
+        profilesCache = currentContent;
+        if (status) { status.textContent = '✓ Profilo salvato con successo!'; status.className = 'edit-status ok'; }
+        setTimeout(closeModal, 2000);
+
+      } catch(err) {
+        if (status) { status.textContent = `✗ Errore: ${err.message}`; status.className = 'edit-status err'; }
+      } finally {
+        submitB.disabled = false;
+      }
+    });
+  }
+
   /* ── INIT ── */
   loadMembersEnhanced();
   initSynapseCanvas();
   initPublishEvent();
+  initAccessBar();
+  initProfileModal();
+  initEditModal();
   </script>
 <!-- i18n: rete.html -->
   <script>
@@ -1131,5 +1463,87 @@
     if (oth) oth.textContent = 'IT';
   })();
   </script>
+
+  <!-- ── MODAL PROFILO (foglio) ── -->
+  <div class="profile-modal" id="profileModal" aria-hidden="true">
+    <div class="profile-modal__dialog">
+      <button class="profile-modal__close" id="profileModalClose">✕</button>
+      <p class="profile-modal__name" id="pm-name"></p>
+      <p class="profile-modal__role" id="pm-role"></p>
+      <p class="profile-modal__bio" id="pm-bio"></p>
+      <div class="profile-modal__links" id="pm-links"></div>
+      <div class="profile-modal__avail" id="pm-avail"></div>
+    </div>
+  </div>
+
+  <!-- ── MODAL PERSONALIZZA LA TUA CARD (matita) ── -->
+  <div class="edit-modal" id="editModal" aria-hidden="true">
+    <div class="edit-modal__dialog">
+      <button class="edit-modal__close" id="editModalClose">✕</button>
+      <p class="edit-modal__title">Personalizza la tua card</p>
+      <p class="edit-modal__sub" id="editModalSub">Aggiorna il tuo profilo pubblico</p>
+
+      <div class="edit-section-label">Presentazione</div>
+      <div class="edit-field">
+        <label>Bio (in prima persona, max 300 caratteri)</label>
+        <textarea id="ef-bio" name="bio" maxlength="300"
+          placeholder="Sono un medico specializzato in..."></textarea>
+      </div>
+
+      <div class="edit-section-label">Link professionali</div>
+      <div class="edit-field">
+        <label>LinkedIn</label>
+        <input type="url" id="ef-linkedin" name="linkedin" placeholder="https://linkedin.com/in/..." />
+      </div>
+      <div class="edit-field">
+        <label>ResearchGate</label>
+        <input type="url" id="ef-researchgate" name="researchgate" placeholder="https://researchgate.net/profile/..." />
+      </div>
+      <div class="edit-field">
+        <label>Google Scholar</label>
+        <input type="url" id="ef-scholar" name="scholar" placeholder="https://scholar.google.com/..." />
+      </div>
+      <div class="edit-field">
+        <label>ORCID</label>
+        <input type="url" id="ef-orcid" name="orcid" placeholder="https://orcid.org/0000-..." />
+      </div>
+      <div class="edit-field">
+        <label>X / Twitter</label>
+        <input type="url" id="ef-twitter" name="twitter" placeholder="https://x.com/..." />
+      </div>
+      <div class="edit-field">
+        <label>Instagram professionale</label>
+        <input type="url" id="ef-instagram" name="instagram" placeholder="https://instagram.com/..." />
+      </div>
+      <div class="edit-field">
+        <label>Sito personale o istituzionale</label>
+        <input type="url" id="ef-website" name="website" placeholder="https://..." />
+      </div>
+      <div class="edit-field">
+        <label>Link a corsi o pubblicazioni principali</label>
+        <input type="url" id="ef-courses" name="courses" placeholder="https://..." />
+      </div>
+
+      <div class="edit-section-label">Disponibilità</div>
+      <div class="edit-checkboxes">
+        <label class="edit-checkbox">
+          <input type="checkbox" id="ef-speaker" name="speaker" />
+          Disponibile come relatore a congressi e corsi
+        </label>
+        <label class="edit-checkbox">
+          <input type="checkbox" id="ef-podcast" name="podcast" />
+          Disponibile per interviste o contributi al podcast
+        </label>
+        <label class="edit-checkbox">
+          <input type="checkbox" id="ef-research" name="research" />
+          Disponibile per collaborazioni di ricerca
+        </label>
+      </div>
+
+      <button class="edit-submit" id="editSubmit">Salva il profilo</button>
+      <div class="edit-status" id="editStatus"></div>
+    </div>
+  </div>
+
 </body>
 </html>
