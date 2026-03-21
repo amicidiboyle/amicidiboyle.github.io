@@ -39,10 +39,10 @@
         <a class="nav-active" href="rete.html" aria-current="page">Rete</a>
         <a href="podcast.html">Podcast</a>
         <a class="nav-cta" href="index.html#contatti">Contatti</a>
+        <button class="lang-toggle" id="langToggle" onclick="(function(){var l=localStorage.getItem('boyle_lang')||'it';var nl=l==='it'?'en':'it';localStorage.setItem('boyle_lang',nl);location.reload();})()" aria-label="Switch language">
+          <span id="langCurrent">IT</span><span class="lang-sep"> · </span><span id="langOther">EN</span>
+        </button>
       </nav>
-      <button class="lang-toggle" id="langToggle" onclick="(function(){var l=localStorage.getItem('boyle_lang')||'it';var nl=l==='it'?'en':'it';localStorage.setItem('boyle_lang',nl);location.reload();})()" aria-label="Switch language">
-        <span id="langCurrent">IT</span><span class="lang-sep"> · </span><span id="langOther">EN</span>
-      </button>
       <button class="nav-mobile-btn" id="navMobileBtn" aria-label="Apri menu" aria-expanded="false">
         <span></span><span></span><span></span>
       </button>
