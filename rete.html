@@ -454,6 +454,25 @@
      ════════════════════════════════════════════════ */
   const MEMBERS_URL = 'rete-members.json';
 
+  const TAG_COLORS = {
+    'Iperbarica':        '#4fa8ff',
+    'Diving':            '#00d4ff',
+    'Critical Care':     '#4dffd6',
+    'Neuroscienze':      '#c4b0ff',
+    'Ricerca':           '#b4a6ff',
+    'Cardiologia':       '#ff8fa3',
+    'Trauma':            '#ffb347',
+    'Emergenza':         '#ff6b6b',
+    'HEMS':              '#ff6b6b',
+    'Spazio':            '#a8eeff',
+    'Montagna':          '#80ffd4',
+    'ECMO':              '#4dffd6',
+    'Safety':            '#ffd166',
+    'Chirurgia':         '#f8a5c2',
+    'Mass Gathering':    '#ffb347',
+    'Esplorazione':      '#00d4ff',
+    'Medicina Militare': '#c0c0ff',
+  };
   const LI_ICON = `<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.94 8.5H3.56V20h3.38V8.5ZM5.25 3A2.03 2.03 0 1 0 5.3 7.06 2.03 2.03 0 0 0 5.25 3Zm4.23 5.5V20h3.38v-5.7c0-1.5.28-2.95 2.14-2.95 1.83 0 1.86 1.71 1.86 3.05V20h3.39v-6.29c0-3.09-.67-5.46-4.28-5.46-1.73 0-2.88.95-3.35 1.85h-.05V8.5H9.48Z"/></svg>`;
 
   const EMAIL_ICON = `<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6.75A2.75 2.75 0 0 1 5.75 4h12.5A2.75 2.75 0 0 1 21 6.75v10.5A2.75 2.75 0 0 1 18.25 20H5.75A2.75 2.75 0 0 1 3 17.25V6.75Zm2.2-.25 6.27 5.05a.83.83 0 0 0 1.06 0L18.8 6.5H5.2Zm13.8 1.46-5.42 4.36a2.33 2.33 0 0 1-2.96 0L5.2 7.96v9.29c0 .3.25.55.55.55h12.5c.3 0 .55-.25.55-.55V7.96Z"/></svg>`;
@@ -515,13 +534,13 @@
     return `
       <article class="member-card reveal" role="listitem" data-key="${key}">
         <div class="member-photo-wrap">
-          <img class="member-photo" src="assets/rete/${m.photo}" alt="Foto di ${m.name}" loading="lazy" onerror="this.src='assets/logo.png'" />
+          <img class="member-photo" src="assets/rete/${m.img}" alt="Foto di ${m.name}" loading="lazy" onerror="this.src='assets/logo.png'" />
         </div>
         <div class="member-info">
           <h3 class="member-name">${m.name}</h3>
           <p class="member-role">${m.role || ''}</p>
         </div>
-        <div class="member-tags">${(m.tags||[]).map(t=>`<span class="member-tag">${t}</span>`).join('')}</div>
+        <div class="member-tags">${(m.tags||[]).map(t=>(function(t){ const c = TAG_COLORS[t]||'#7be4ff'; return `<span class="member-tag" style="--tag-color:${c};border-color:${c}33;color:${c}">${t}</span>`; })(t)).join('')}</div>
         <div class="member-location">
           <span class="member-location__line" aria-hidden="true"></span>
           <span class="member-location__text">
