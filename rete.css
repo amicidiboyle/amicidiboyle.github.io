@@ -69,7 +69,7 @@ a { color: inherit; text-decoration: none; }
 
 /* ── HERO ── */
 .hero {
-  position: relative; min-height: 92vh; padding: 36px 40px 32px;
+  position: relative; min-height: auto; padding: 36px 40px 16px;
   margin: 0;
   border-bottom: none;
 }
@@ -146,7 +146,7 @@ a { color: inherit; text-decoration: none; }
 .btn-ghost:hover { border-color: rgba(123,228,255,.44); background: rgba(8,26,60,.75); transform: translateY(-2px); }
 
 /* ── MEMBERS SECTION ── */
-.members-section { padding: 68px 0 80px; position: relative; }
+.members-section { padding: 0 0 80px; position: relative; }
 .members-header { margin-bottom: 32px; }
 .members-title { font-size: clamp(1.8rem,3.5vw,2.8rem); font-weight: 700; letter-spacing: -.04em; margin-bottom: 8px; }
 .members-sub { color: var(--r-muted); font-size: .96rem; }
@@ -321,7 +321,7 @@ a { color: inherit; text-decoration: none; }
   .brand__text em { display: block; font-size: .58rem; white-space: normal; line-height: 1.3; }
   .nav--desktop { display: none; }
   .nav-mobile-btn { display: flex; }
-  .header { position: sticky; top: 0; z-index: 200; }
+  
   .hero { min-height: 420px; padding: 26px 18px 24px; }
   .hero__title { font-size: 2.6rem; }
   .hero__subtitle { font-size: .96rem; max-width: 100%; }
@@ -1263,7 +1263,7 @@ a { color: inherit; text-decoration: none; }
 .hero__eyebrow{ position: relative; z-index: 10; }
 
 /* Header: sopra canvas e contenuto */
-.header { position: sticky !important; top: 0 !important; z-index: 200 !important; }
+
 
 /* Sezioni sotto hero: sopra canvas */
 .members-section,
