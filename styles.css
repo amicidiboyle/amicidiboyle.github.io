@@ -162,6 +162,7 @@ body::after {
   box-shadow: var(--shadow); display: grid; gap: 2px;
   opacity: 0; visibility: hidden;
   transition: opacity .18s, transform .18s, visibility .18s;
+  pointer-events: none;
 }
 .nav-dropdown:hover .nav-dropdown-panel {
   opacity: 1; visibility: visible;
@@ -2569,3 +2570,5 @@ html, body { overflow-x: hidden; }
 @media (max-width: 768px) {
   .lang-toggle { display: none; }
 }
+
+.nav-dropdown.is-open .nav-dropdown-panel { pointer-events: auto; }
