@@ -120,6 +120,7 @@ body::after {
   -webkit-backdrop-filter: blur(20px) saturate(1.6);
   border-bottom: 1px solid rgba(120,210,255,.1);
   transition: background .3s;
+  overflow: visible;
 }
 .site-header.scrolled { background: rgba(2,10,22,.88); }
 
@@ -127,6 +128,7 @@ body::after {
   display: flex; align-items: center;
   justify-content: space-between;
   min-height: 74px; gap: 16px;
+  overflow: visible;
 }
 .brand { display: flex; align-items: center; gap: 13px; min-width: 0; }
 .brand img {
@@ -162,6 +164,7 @@ body::after {
   box-shadow: var(--shadow); display: grid; gap: 2px;
   opacity: 0; visibility: hidden;
   transition: opacity .18s, transform .18s, visibility .18s;
+  pointer-events: none;
 }
 .nav-dropdown:hover .nav-dropdown-panel {
   opacity: 1; visibility: visible;
@@ -2568,4 +2571,10 @@ html, body { overflow-x: hidden; }
 #langOther { opacity: .52; }
 @media (max-width: 768px) {
   .lang-toggle { display: none; }
+}
+
+/* Lang toggle inside nav — small separator */
+.site-nav .lang-toggle,
+.nav--desktop .lang-toggle {
+  margin-left: 8px;
 }
