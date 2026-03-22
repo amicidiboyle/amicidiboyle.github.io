@@ -68,7 +68,7 @@ a { color: inherit; text-decoration: none; }
 
 /* ── HERO ── */
 .hero {
-  position: relative; min-height: 92vh; padding: 36px 40px 32px;
+  position: relative; min-height: auto; padding: 36px 40px 8px;
   margin: 0;
   border-bottom: none;
 }
@@ -109,7 +109,7 @@ a { color: inherit; text-decoration: none; }
 .hero__title { font-size: clamp(2.8rem, 6vw, 5.2rem); font-weight: 800; letter-spacing: -.05em; line-height: .9; margin-bottom: 18px; }
 .hero__glow { color: var(--r-cyan2); text-shadow: 0 0 40px rgba(123,228,255,.4); }
 .hero__subtitle { font-size: 1.06rem; color: var(--r-muted); max-width: 58ch; line-height: 1.68; margin-bottom: 28px; }
-.hero__cta { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 32px; }
+.hero__cta { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 16px; }
 .hero__stats { display: flex; gap: 0; background: rgba(5,18,46,.48); border: 1px solid rgba(123,228,255,.14); border-radius: 14px; overflow: visible; backdrop-filter: blur(14px); max-width: 320px; }
 .hero__stat { flex: 1; padding: 14px 16px; text-align: center; border-right: 1px solid rgba(123,228,255,.1); }
 .hero__stat:last-child { border-right: 0; }
@@ -146,6 +146,7 @@ a { color: inherit; text-decoration: none; }
 
 /* ── MEMBERS SECTION ── */
 .members-section { padding: 0 0 80px; position: relative; }
+.members-header { padding-top: 8px; }
 .members-header { margin-bottom: 32px; }
 .members-title { font-size: clamp(1.8rem,3.5vw,2.8rem); font-weight: 700; letter-spacing: -.04em; margin-bottom: 8px; }
 .members-sub { color: var(--r-muted); font-size: .96rem; }
