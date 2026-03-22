@@ -57,19 +57,6 @@
     </div>
   </header>
 
-  <!-- ── BARRA ACCESSO UNIFICATA ── -->
-  <div class="access-bar" id="accessBar">
-    <div class="access-bar__inner">
-      <span class="access-bar__label">🔑 Sei un membro?</span>
-      <input class="access-bar__input" id="barCodeInput"
-             type="text" placeholder="BOYLE-XXXX-COGNOME"
-             autocomplete="off" spellcheck="false" maxlength="30" />
-      <button class="access-bar__btn" id="barCodeBtn">Accedi</button>
-      <span class="access-bar__status" id="barStatus"></span>
-    </div>
-  </div>
-
-
   <main id="contenuto">
 
     <!-- HERO con connectome -->
@@ -133,6 +120,13 @@
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="8" cy="5" r="3"/><path d="M2 14c0-3.3 2.7-6 6-6s6 2.7 6 6"/></svg>
             Esplora i profili
           </a>
+          <div class="hero-access-bar" id="accessBar">
+            <input class="hero-access-input" id="barCodeInput"
+                   type="text" placeholder="🔑 Codice membro"
+                   autocomplete="off" spellcheck="false" maxlength="30" />
+            <button class="hero-access-btn" id="barCodeBtn">Accedi</button>
+            <span class="hero-access-status" id="barStatus"></span>
+          </div>
         </div>
         <div class="hero__stats">
           <div class="hero__stat"><span class="hero__stat-n" id="memberCount">14</span><span class="hero__stat-l">Membri attivi</span></div>
@@ -501,9 +495,8 @@
       ? `<button class="icon-btn member-email-btn" data-email="${m.email}" aria-label="Contatta ${m.name}" title="Visibile ai membri della Rete">${LOCK_ICON}</button>`
       : '';
     const key = m.name.toLowerCase().replace(/\s+/g, '-');
-    const code = VALID_CODES[key] || '';
-    const profileBtn = `<button class="icon-btn member-profile-btn icon-btn--locked" data-key="${key}" data-name="${m.name}" data-role="${m.role||''}" data-tip="Accedi per vedere il profilo">${PROFILE_ICON}</button>`;
-    const editBtn = `<button class="icon-btn icon-btn--pencil member-edit-btn" data-key="${key}" data-name="${m.name}" data-tip="Personalizza la tua card" style="display:none">${PENCIL_ICON}</button>`;
+    const profileBtn = `<button class="icon-btn member-profile-btn icon-btn--locked" data-key="${key}" data-name="${m.name}" data-role="${m.role||''}" data-tip="Pagina personale">${PROFILE_ICON}</button>`;
+    const editBtn = `<button class="icon-btn icon-btn--pencil member-edit-btn" data-key="${key}" data-name="${m.name}" data-tip="Modifica profilo" style="display:none">${PENCIL_ICON}</button>`;
 
     return `
       <article class="member-card reveal" role="listitem" data-key="${key}">
@@ -750,7 +743,7 @@
       const a = document.createElement('a');
       a.className = 'icon-btn';
       a.href = 'mailto:' + email;
-      a.setAttribute('data-tip', email);
+      a.setAttribute('data-tip', 'Indirizzo e-mail');
       a.innerHTML = EMAIL_ICON_HTML;
       btn.replaceWith(a);
     });
@@ -758,12 +751,11 @@
     // Sblocca foglio profilo
     document.querySelectorAll('.member-profile-btn').forEach(btn => {
       btn.classList.remove('icon-btn--locked');
-      btn.setAttribute('data-tip', 'Vedi profilo esteso');
     });
 
     // Mostra matita solo al titolare
     if (memberKey) {
-      const ownerCard = document.querySelector(`.member-card[data-key="${memberKey}"]`);
+      const ownerCard = document.querySelector('[data-key="' + memberKey + '"]');
       if (ownerCard) {
         const pencil = ownerCard.querySelector('.member-edit-btn');
         if (pencil) pencil.style.display = '';
@@ -774,7 +766,11 @@
     const bs = document.getElementById('barStatus');
     const bi = document.getElementById('barCodeInput');
     const bb = document.getElementById('barCodeBtn');
-    if (bs) { bs.textContent = '✓ Accesso confermato'; bs.className = 'access-bar__status ok'; }
+    if (bs) {
+        const hasPencil = CODE_TO_KEY[code];
+        bs.textContent = hasPencil ? '✓ Accesso confermato — matita attiva sulla tua card' : '✓ Accesso confermato';
+        bs.className = 'hero-access-status ok';
+      }
     if (bi) bi.disabled = true;
     if (bb) bb.disabled = true;
   }
@@ -831,7 +827,7 @@
 
     function tryCode() {
       const code = (accInput?.value || '').trim().toUpperCase();
-      if (VALID_CODES.includes(code)) {
+      if (ALL_CODES.includes(code)) {
         if (accStatus) { accStatus.textContent = "✓ Accesso confermato. Benvenuto."; accStatus.className = 'access-modal__status success'; }
         unlockAll(code);
         setTimeout(closeAcc, 1400);
@@ -996,7 +992,6 @@
       initCounters();
       initCardPulse();
       initEmailWall();
-      // Auto-sblocco se sessione attiva
       if (isMemberUnlocked()) {
         unlockAll(sessionStorage.getItem('boyle_member_code') || '');
       }
@@ -1111,14 +1106,18 @@
       if (ALL_CODES.includes(code)) {
         unlockAll(code);
       } else {
-        if (bs) { bs.textContent = '✗ Codice non valido'; bs.className = 'access-bar__status err'; }
+        if (bs) { bs.textContent = '✗ Codice non valido'; bs.className = 'hero-access-status err'; }
         bi?.classList.add('shake'); setTimeout(()=>bi?.classList.remove('shake'),500);
       }
     }
     bb?.addEventListener('click', tryBar);
     bi?.addEventListener('keydown', e=>{ if(e.key==='Enter') tryBar(); });
     if (isMemberUnlocked()) {
-      if (bs) { bs.textContent = '✓ Accesso confermato'; bs.className = 'access-bar__status ok'; }
+      if (bs) {
+        const hasPencil = CODE_TO_KEY[code];
+        bs.textContent = hasPencil ? '✓ Accesso confermato — matita attiva sulla tua card' : '✓ Accesso confermato';
+        bs.className = 'hero-access-status ok';
+      }
       if (bi) bi.disabled = true;
       if (bb) bb.disabled = true;
     }
@@ -1155,19 +1154,20 @@
       bioEl.className = 'profile-modal__bio' + (p.bio ? '' : ' empty');
       const linksEl = document.getElementById('pm-links');
       linksEl.innerHTML = '';
-      [['LinkedIn',p.linkedin],['ResearchGate',p.researchgate],['Scholar',p.scholar],
-       ['ORCID',p.orcid],['X',p.twitter],['Instagram',p.instagram],
-       ['Sito',p.website],['Corsi',p.courses]].forEach(([l,u])=>{
+      [['LinkedIn',p.linkedin],['ResearchGate',p.researchgate],
+       ['Scholar',p.scholar],['ORCID',p.orcid],['X',p.twitter],
+       ['Instagram',p.instagram],['Sito',p.website],['Corsi',p.courses]
+      ].forEach(([l,u])=>{
         if(!u) return;
         const a=document.createElement('a');
         a.className='profile-link'; a.href=u; a.target='_blank'; a.rel='noopener';
         a.textContent=l; linksEl.appendChild(a);
       });
-      const availEl = document.getElementById('pm-avail');
-      availEl.innerHTML = '';
-      if(p.speaker) availEl.innerHTML += '<span class="avail-tag">📢 Relatore</span>';
-      if(p.podcast) availEl.innerHTML += '<span class="avail-tag">🎙 Podcast</span>';
-      if(p.research) availEl.innerHTML += '<span class="avail-tag">🔬 Ricerca</span>';
+      const availEl=document.getElementById('pm-avail');
+      availEl.innerHTML='';
+      if(p.speaker) availEl.innerHTML+='<span class="avail-tag">📢 Relatore</span>';
+      if(p.podcast) availEl.innerHTML+='<span class="avail-tag">🎙 Podcast</span>';
+      if(p.research) availEl.innerHTML+='<span class="avail-tag">🔬 Ricerca</span>';
       modal?.classList.add('is-open'); modal?.setAttribute('aria-hidden','false');
       document.body.style.overflow='hidden';
     });
@@ -1180,7 +1180,7 @@
   const GH_TOKEN = ['github_pat','_11B5YK77Y0lJDhvomks','6Sq_LMuAIP38AjYrvQuTmgsuduyUq1VBbQbcYkDU7CnEVOUV7LXPGUDcKhOkTSS'].join('');
   const GH_REPO  = 'amicidiboyle/amicidiboyle.github.io';
   const GH_FILE  = 'rete-profiles.json';
-  const GH_API   = `https://api.github.com/repos/${GH_REPO}/contents/${GH_FILE}`;
+  const GH_API   = 'https://api.github.com/repos/' + GH_REPO + '/contents/' + GH_FILE;
 
   function initEditModal() {
     const modal  = document.getElementById('editModal');
@@ -1232,20 +1232,20 @@
         const fileData=await getRes.json();
         const current=JSON.parse(atob(fileData.content.replace(/\n/g,'')));
         current[currentKey]={
-          name: current[currentKey]?.name||currentKey,
-          bio: document.getElementById('ef-bio').value.trim(),
-          linkedin: document.getElementById('ef-linkedin').value.trim(),
-          researchgate: document.getElementById('ef-researchgate').value.trim(),
-          scholar: document.getElementById('ef-scholar').value.trim(),
-          orcid: document.getElementById('ef-orcid').value.trim(),
-          twitter: document.getElementById('ef-twitter').value.trim(),
-          instagram: document.getElementById('ef-instagram').value.trim(),
-          website: document.getElementById('ef-website').value.trim(),
-          courses: document.getElementById('ef-courses').value.trim(),
-          speaker: document.getElementById('ef-speaker').checked,
-          podcast: document.getElementById('ef-podcast').checked,
-          research: document.getElementById('ef-research').checked,
-          updated: new Date().toISOString().split('T')[0],
+          name:current[currentKey]?.name||currentKey,
+          bio:document.getElementById('ef-bio').value.trim(),
+          linkedin:document.getElementById('ef-linkedin').value.trim(),
+          researchgate:document.getElementById('ef-researchgate').value.trim(),
+          scholar:document.getElementById('ef-scholar').value.trim(),
+          orcid:document.getElementById('ef-orcid').value.trim(),
+          twitter:document.getElementById('ef-twitter').value.trim(),
+          instagram:document.getElementById('ef-instagram').value.trim(),
+          website:document.getElementById('ef-website').value.trim(),
+          courses:document.getElementById('ef-courses').value.trim(),
+          speaker:document.getElementById('ef-speaker').checked,
+          podcast:document.getElementById('ef-podcast').checked,
+          research:document.getElementById('ef-research').checked,
+          updated:new Date().toISOString().split('T')[0],
         };
         const newContent=btoa(unescape(encodeURIComponent(JSON.stringify(current,null,2))));
         const putRes=await fetch(GH_API,{
@@ -1258,7 +1258,7 @@
         if(status){ status.textContent='✓ Profilo salvato!'; status.className='edit-status ok'; }
         setTimeout(closeModal,2000);
       } catch(err) {
-        if(status){ status.textContent='✗ Errore: '+err.message; status.className='edit-status err'; }
+        if(status){ status.textContent='✗ '+err.message; status.className='edit-status err'; }
       } finally { submit.disabled=false; }
     });
   }
@@ -1378,7 +1378,6 @@
       <div class="profile-modal__avail" id="pm-avail"></div>
     </div>
   </div>
-
   <!-- ── MODAL MATITA ── -->
   <div class="edit-modal" id="editModal" aria-hidden="true">
     <div class="edit-modal__dialog">
@@ -1388,14 +1387,14 @@
       <div class="edit-section-label">Presentazione</div>
       <div class="edit-field"><label>Bio (max 300 caratteri)</label><textarea id="ef-bio" maxlength="300" placeholder="Sono un medico specializzato in..."></textarea></div>
       <div class="edit-section-label">Link professionali</div>
-      <div class="edit-field"><label>LinkedIn</label><input type="url" id="ef-linkedin" placeholder="https://linkedin.com/in/..." /></div>
-      <div class="edit-field"><label>ResearchGate</label><input type="url" id="ef-researchgate" placeholder="https://researchgate.net/profile/..." /></div>
-      <div class="edit-field"><label>Google Scholar</label><input type="url" id="ef-scholar" placeholder="https://scholar.google.com/..." /></div>
-      <div class="edit-field"><label>ORCID</label><input type="url" id="ef-orcid" placeholder="https://orcid.org/0000-..." /></div>
-      <div class="edit-field"><label>X / Twitter</label><input type="url" id="ef-twitter" placeholder="https://x.com/..." /></div>
-      <div class="edit-field"><label>Instagram</label><input type="url" id="ef-instagram" placeholder="https://instagram.com/..." /></div>
-      <div class="edit-field"><label>Sito personale</label><input type="url" id="ef-website" placeholder="https://..." /></div>
-      <div class="edit-field"><label>Link corsi o pubblicazioni</label><input type="url" id="ef-courses" placeholder="https://..." /></div>
+      <div class="edit-field"><label>LinkedIn</label><input type="url" id="ef-linkedin" /></div>
+      <div class="edit-field"><label>ResearchGate</label><input type="url" id="ef-researchgate" /></div>
+      <div class="edit-field"><label>Google Scholar</label><input type="url" id="ef-scholar" /></div>
+      <div class="edit-field"><label>ORCID</label><input type="url" id="ef-orcid" /></div>
+      <div class="edit-field"><label>X / Twitter</label><input type="url" id="ef-twitter" /></div>
+      <div class="edit-field"><label>Instagram</label><input type="url" id="ef-instagram" /></div>
+      <div class="edit-field"><label>Sito personale</label><input type="url" id="ef-website" /></div>
+      <div class="edit-field"><label>Link corsi / pubblicazioni</label><input type="url" id="ef-courses" /></div>
       <div class="edit-section-label">Disponibilità</div>
       <div class="edit-checkboxes">
         <label class="edit-checkbox"><input type="checkbox" id="ef-speaker" /> Disponibile come relatore</label>
@@ -1406,6 +1405,5 @@
       <div class="edit-status" id="editStatus"></div>
     </div>
   </div>
-
 </body>
 </html>
