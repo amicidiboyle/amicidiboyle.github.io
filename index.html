@@ -3,1399 +3,1486 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Rete di Boyle · Gli Amici di Boyle</title>
-  <meta name="description" content="La rete di professionisti e ricercatori degli Amici di Boyle: medicina subacquea, iperbarica, ambienti estremi, fisiologia umana e sicurezza." />
-  <meta name="theme-color" content="#031427" />
+  <title>Gli Amici di Boyle · Research & Education</title>
+  <meta name="description" content="Gli Amici di Boyle: ricerca, formazione e rete professionale nella medicina subacquea, iperbarica e negli ambienti estremi." />
+  <meta name="theme-color" content="#041b33" />
+  <link rel="preload" as="image" href="assets/ocean-desktop.jpg" />
+  <link rel="preload" as="image" href="assets/ocean-mobile.jpg" media="(max-width: 768px)" />
   <link rel="icon" href="assets/logo.png" type="image/png" />
-  <link rel="stylesheet" href="rete.css" />
-  <style>
-    .modal{position:fixed;inset:0;z-index:9000;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(1,6,16,.78);backdrop-filter:blur(8px)}
-    .modal.is-open{display:flex}
-    .email-wall{position:fixed;inset:0;z-index:9500;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(1,6,16,.82);backdrop-filter:blur(10px)}
-    .email-wall.is-open{display:flex}
-    .access-modal{position:fixed;inset:0;z-index:9600;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(1,6,16,.88);backdrop-filter:blur(12px)}
-    .access-modal.is-open{display:flex}
-  </style>
+  <link rel="stylesheet" href="styles.css" />
+  <!-- Open Graph -->
+  <meta property="og:type"        content="website" />
+  <meta property="og:url"         content="https://www.amicidiboyle.it/" />
+  <meta property="og:title"       content="Gli Amici di Boyle · Research &amp; Education" />
+  <meta property="og:description" content="Ricerca, formazione e rete professionale nella medicina subacquea, iperbarica e negli ambienti estremi." />
+  <meta property="og:image"       content="https://www.amicidiboyle.it/assets/og-image.svg" />
+  <meta name="twitter:card"       content="summary_large_image" />
 </head>
 <body>
-  <!-- Canvas sinaptico globale -->
-  <canvas id="synapseCanvas" aria-hidden="true" style="position:fixed;inset:0;z-index:0;pointer-events:none;width:100%;height:100%;opacity:.35;"></canvas>
-  <a class="skip" href="#contenuto">Vai al contenuto</a>
+  <canvas id="dust-canvas" aria-hidden="true" style="position:fixed;inset:0;z-index:-2;pointer-events:none;width:100%;height:100%;"></canvas>
+  <a class="skip-link" href="#contenuto">Vai al contenuto</a>
 
-  <!-- HEADER (stesso dell'home) -->
-  <header class="header" role="banner">
-    <div class="container header__inner">
-      <a class="brand" href="index.html" aria-label="Gli Amici di Boyle — Home">
-        <img src="assets/logo.png" alt="Logo Gli Amici di Boyle" width="52" height="52" />
-        <span class="brand__text">
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a class="brand" href="index.html" aria-label="Gli Amici di Boyle Home">
+        <img src="assets/logo.png" alt="Logo Gli Amici di Boyle" width="56" height="56" />
+        <span class="brand-copy">
           <strong>Gli Amici di Boyle</strong>
           <em>Diving &amp; Hyperbaric Medicine · Research &amp; Education</em>
+          <em class="brand-sub">Human Performance &amp; Safety in Extreme Environments</em>
         </span>
       </a>
-      <nav class="nav--desktop">
-        <a href="index.html">Home</a>
-        <a href="index.html#visione">Visione</a>
-        <a href="index.html#ricerca">Ricerca</a>
-        <a class="nav-active" href="rete.html" aria-current="page">Rete</a>
-        <a href="podcast.html">Podcast</a>
-        <a class="nav-cta" href="index.html#contatti">Contatti</a>
-      </nav>
-      <button class="lang-toggle" id="langToggle" onclick="(function(){var l=localStorage.getItem('boyle_lang')||'it';var nl=l==='it'?'en':'it';localStorage.setItem('boyle_lang',nl);location.reload();})()" aria-label="Switch language">
-        <span id="langCurrent">IT</span><span class="lang-sep"> · </span><span id="langOther">EN</span>
-      </button>
-      <button class="nav-mobile-btn" id="navMobileBtn" aria-label="Apri menu" aria-expanded="false">
-        <span></span><span></span><span></span>
-      </button>
-      <div class="nav-mobile-panel" id="navMobilePanel" aria-hidden="true">
-        <a href="index.html">Home</a>
-        <a href="index.html#visione">Visione</a>
-        <a href="index.html#ricerca">Ricerca</a>
+
+      <input id="nav-toggle" class="nav-toggle" type="checkbox" aria-label="Apri menu" />
+      <label class="nav-burger" for="nav-toggle"><span></span><span></span><span></span></label>
+
+      <nav class="site-nav" aria-label="Navigazione principale">
+        <a href="#home">Home</a>
+        <a href="#visione">Visione</a>
+        <div class="nav-dropdown" id="navDropdown">
+          <button class="nav-dropdown-btn" aria-expanded="false" aria-controls="navDropdownPanel">Attività</button>
+          <div class="nav-dropdown-panel" id="navDropdownPanel" role="menu">
+            <a href="#attivita">Aree</a>
+            <a href="#ricerca">Ricerca</a>
+            <a href="#formazione">Formazione</a>
+            <a href="#contenuti">Contenuti</a>
+          </div>
+        </div>
+        <a href="#fondatori">Fondatori</a>
         <a href="rete.html">Rete</a>
         <a href="podcast.html">Podcast</a>
-        <a href="index.html#contatti">Contatti</a>
-      </div>
+        <a href="#partner">Partner</a>
+        <a href="#contatti">Contatti</a>
+      </nav>
+      <button class="lang-toggle" id="langToggle" aria-label="Cambia lingua / Switch language" title="Switch to English">
+        <span id="langCurrent">IT</span><span class="lang-sep"> · </span><span id="langOther">EN</span>
+      </button>
     </div>
   </header>
+<div class="ticker">
+  <div class="ticker-track" aria-hidden="true">
+    <span>AEROSPACE</span><span class="ticker-dot">·</span><span>EDUCATION</span><span class="ticker-dot">·</span><span>RESEARCH</span><span class="ticker-dot">·</span><span>PRESSURE</span><span class="ticker-dot">·</span><span>SAFETY</span><span class="ticker-dot">·</span><span>HYPERBARIC</span><span class="ticker-dot">·</span><span>DIVING</span><span class="ticker-dot">·</span><span>HUMAN PERFORMANCE</span><span class="ticker-dot">·</span>
+    <span>AEROSPACE</span><span class="ticker-dot">·</span><span>EDUCATION</span><span class="ticker-dot">·</span><span>RESEARCH</span><span class="ticker-dot">·</span><span>PRESSURE</span><span class="ticker-dot">·</span><span>SAFETY</span><span class="ticker-dot">·</span><span>HYPERBARIC</span><span class="ticker-dot">·</span><span>DIVING</span><span class="ticker-dot">·</span><span>HUMAN PERFORMANCE</span><span class="ticker-dot">·</span>
+  </div>
+</div>
+
 
   <main id="contenuto">
-
-    <!-- HERO con connectome -->
-    <section class="hero" id="top">
-      <div class="hero__connectome" aria-hidden="true">
-        <svg class="connectome-svg" viewBox="0 0 1400 520" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <filter id="glow-line"><feGaussianBlur stdDeviation="1.8" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-            <filter id="glow-node"><feGaussianBlur stdDeviation="3.5" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-            <linearGradient id="lineGradA" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#d9fbff" stop-opacity="0.04"/><stop offset="50%" stop-color="#9aefff" stop-opacity="0.22"/><stop offset="100%" stop-color="#d9fbff" stop-opacity="0.04"/></linearGradient>
-            <radialGradient id="nodeGrad" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#ffffff" stop-opacity="0.98"/><stop offset="45%" stop-color="#bff8ff" stop-opacity="0.88"/><stop offset="100%" stop-color="#7cf3ff" stop-opacity="0.18"/></radialGradient>
-            <mask id="connectomeFade"><rect width="1400" height="520" fill="white"/><rect x="0" y="0" width="520" height="520" fill="url(#leftFade)"/></mask>
-            <linearGradient id="leftFade" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="black"/><stop offset="45%" stop-color="black"/><stop offset="80%" stop-color="white"/><stop offset="100%" stop-color="white"/></linearGradient>
-          </defs>
-          <g class="connectome-base" mask="url(#connectomeFade)">
-            <g class="connectome-links" filter="url(#glow-line)">
-              <path id="path-a" d="M 420 145 C 560 70, 770 90, 930 160 S 1160 240, 1310 150" />
-              <path id="path-b" d="M 455 220 C 620 130, 790 160, 940 235 S 1160 330, 1325 245" />
-              <path id="path-c" d="M 390 305 C 560 225, 720 250, 865 320 S 1080 410, 1280 330" />
-              <path id="path-d" d="M 520 120 C 610 220, 730 300, 885 280 S 1110 185, 1275 215" />
-              <path id="path-e" d="M 600 95 C 700 180, 810 210, 930 185 S 1150 115, 1295 175" />
-              <path id="path-f" d="M 650 355 C 760 250, 905 240, 1045 285 S 1200 355, 1330 315" />
-              <path id="path-g" d="M 745 85 C 780 180, 780 280, 745 405" class="link-faint" />
-              <path id="path-h" d="M 560 118 C 635 210, 665 305, 640 420" class="link-soft" />
-              <path id="path-i" d="M 905 118 C 850 200, 820 288, 835 392" class="link-soft" />
-              <path id="path-k" d="M 440 268 C 595 255, 760 305, 915 285 S 1140 220, 1305 250" class="link-soft" />
-            </g>
-            <g class="connectome-nodes" filter="url(#glow-node)">
-              <circle cx="455" cy="128" r="5.4" class="node node-1"/><circle cx="598" cy="98" r="4.6" class="node node-2"/>
-              <circle cx="734" cy="114" r="6.2" class="node node-3"/><circle cx="880" cy="144" r="5.2" class="node node-4"/>
-              <circle cx="1045" cy="175" r="4.6" class="node node-5"/><circle cx="1214" cy="165" r="6.4" class="node node-6"/>
-              <circle cx="520" cy="220" r="4.2" class="node node-7"/><circle cx="690" cy="196" r="5.8" class="node node-8"/>
-              <circle cx="846" cy="224" r="4.8" class="node node-9"/><circle cx="1012" cy="260" r="6.6" class="node node-10"/>
-              <circle cx="1156" cy="286" r="4.9" class="node node-11"/><circle cx="595" cy="300" r="4.8" class="node node-12"/>
-              <circle cx="742" cy="334" r="5.9" class="node node-13"/><circle cx="896" cy="318" r="4.1" class="node node-14"/>
-              <circle cx="1088" cy="348" r="5.7" class="node node-15"/><circle cx="1260" cy="332" r="4.7" class="node node-16"/>
-            </g>
-            <g class="travelers">
-              <circle r="3.8" class="traveler traveler-a"><animateMotion dur="7.2s" repeatCount="indefinite" rotate="auto"><mpath href="#path-a"/></animateMotion></circle>
-              <circle r="3.1" class="traveler traveler-b"><animateMotion dur="8.9s" begin="-2.1s" repeatCount="indefinite" rotate="auto"><mpath href="#path-b"/></animateMotion></circle>
-              <circle r="3.5" class="traveler traveler-c"><animateMotion dur="10.4s" begin="-5.4s" repeatCount="indefinite" rotate="auto"><mpath href="#path-c"/></animateMotion></circle>
-              <circle r="2.9" class="traveler traveler-d"><animateMotion dur="6.6s" begin="-1.8s" repeatCount="indefinite" rotate="auto"><mpath href="#path-d"/></animateMotion></circle>
-              <circle r="3.2" class="traveler traveler-e"><animateMotion dur="9.6s" begin="-3.8s" repeatCount="indefinite" rotate="auto"><mpath href="#path-e"/></animateMotion></circle>
-              <circle r="3.4" class="traveler traveler-f"><animateMotion dur="8.2s" begin="-4.6s" repeatCount="indefinite" rotate="auto"><mpath href="#path-f"/></animateMotion></circle>
-            </g>
-          </g>
+    <section class="hero" id="home">
+      <div class="hero-bg" aria-hidden="true"></div>
+      <div class="light-scattering" aria-hidden="true"></div>
+      <div class="particles" aria-hidden="true"></div>
+      <div class="container">
+        <div class="hero-content reveal">
+          <span class="hero-eyebrow">Medicina subacquea · Iperbarica · Aerospaziale · Safety</span>
+          <h1>Medicina degli<br><span class="accent">ambienti estremi</span></h1>
+          <p class="hero-lead" data-i18n="hero_lead">Ricerca, formazione e rete professionale nella medicina degli ambienti estremi. Una rete multidisciplinare che unisce clinica, fisiologia, tecnologia e cultura della sicurezza.</p>
+          <div class="hero-cta-row">
+            <a class="btn btn-primary" href="#visione">Scopri il progetto</a>
+            <a class="btn btn-secondary" href="rete.html">Entra nella rete</a>
+            <a class="btn btn-ghost" href="podcast.html">Ascolta il podcast</a>
+          </div>
+          <div class="hero-stats">
+            <div class="hero-stat">
+              <strong>5</strong>
+              <span>Fondatori</span>
+            </div>
+            <div class="hero-stat">
+              <strong>25+</strong>
+              <span>Episodi podcast</span>
+            </div>
+            <div class="hero-stat">
+              <strong>2023</strong>
+              <span>Anno di fondazione</span>
+            </div>
+            <div class="hero-stat-divider" aria-hidden="true"></div>
+            <div class="hero-stat">
+              <strong>10.000+</strong>
+              <span>Visualizzazioni</span>
+            </div>
+            <div class="hero-stat hero-stat--infinity">
+              <strong aria-label="Infinito">∞</strong>
+              <span>Idee</span>
+            </div>
+          </div></div>
+      </div>
+      <div class="hero-scroll" aria-hidden="true">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+          <path d="M9 4v10M4 10l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
       </div>
-      <div class="hero__content">
-        <div class="hero__eyebrow">Network scientifico · Ambienti estremi</div>
-        <h1 class="hero__title"><span class="hero__glow">Rete</span> di Boyle</h1>
-        <p class="hero__subtitle">Un ecosistema multidisciplinare di professionisti, ricercatori e innovatori dedicati alla medicina subacquea, iperbarica, aerospaziale e alla fisiologia degli ambienti estremi.</p>
-        <div class="hero__cta">
-          <button class="btn-electric" id="open-network-modal" type="button">
-            <span class="btn-electric__inner">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-              Candidati alla rete
-            </span>
-          </button>
-          <a class="btn-ghost" href="#members">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="8" cy="5" r="3"/><path d="M2 14c0-3.3 2.7-6 6-6s6 2.7 6 6"/></svg>
-            Esplora i profili
-          </a>
+    </section>
+
+<section class="section section-intro" id="evidenza">
+      <div class="container section-grid split-3 stagger">
+        <article class="glass-card info-card info-card--network reveal">
+          <div class="info-card__icon" aria-hidden="true">
+            <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="20" cy="12" r="5" stroke="currentColor" stroke-width="1.6"/>
+              <circle cx="8"  cy="30" r="4" stroke="currentColor" stroke-width="1.6"/>
+              <circle cx="32" cy="30" r="4" stroke="currentColor" stroke-width="1.6"/>
+              <path d="M20 17v4M14 28l5-7M26 28l-5-7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="info-card-body">
+          <p class="section-kicker" data-i18n-section="true">In evidenza</p>
+          <h2 id="ev-title">Network di professionisti di alto livello</h2>
+          <p id="ev-text">Esperti in medicina subacquea e iperbarica, rianimazione, medicina spaziale e ambienti estremi con identità scientifica e visione operativa.</p>
+          </div>
+        </article>
+        <article class="glass-card info-card info-card--vision reveal">
+          <div class="info-card__icon" aria-hidden="true">
+            <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M20 8C13 8 7 14 7 20s6 12 13 12 13-6 13-12S27 8 20 8z" stroke="currentColor" stroke-width="1.6"/>
+              <circle cx="20" cy="20" r="4" stroke="currentColor" stroke-width="1.6"/>
+              <path d="M20 8v4M20 28v4M8 20H4M36 20h-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="info-card-body">
+          <p class="section-kicker">Visione</p>
+          <h2 id="vis-title">Clinica, ricerca e ambienti estremi</h2>
+          <p id="vis-text">Professionisti di prima linea che uniscono competenze mediche, ingegneristiche e scientifiche per sviluppare soluzioni operative in scenari ad alta complessità.</p>
+          </div>
+        </article>
+        <article class="glass-card info-card info-card--content reveal">
+          <div class="info-card__icon" aria-hidden="true">
+            <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="8" y="10" width="24" height="22" rx="3" stroke="currentColor" stroke-width="1.6"/>
+              <path d="M13 17h14M13 22h10M13 27h7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+              <circle cx="30" cy="12" r="5" fill="currentColor" fill-opacity=".12" stroke="currentColor" stroke-width="1.4"/>
+              <path d="M28 12l1.5 1.5L32 10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="info-card-body">
+          <p class="section-kicker">Contenuti</p>
+          <h2 id="cont-title">Podcast, lezioni, articoli, eventi</h2>
+          <p id="cont-text">Materiali chiari, aggiornati, applicabili. Non solo teoria: corsi, risorse, pubblicazioni e occasioni concrete di collaborazione.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="visione">
+      <div class="container section-grid vision-layout">
+        <div class="reveal reveal-left">
+          <p class="section-kicker">Visione</p>
+          <h2 id="vis-h2">Rigore scientifico, impatto operativo</h2>
+          <p class="section-lead">Essere un riferimento internazionale per innovazione e ricerca in medicina iperbarica e subacquea, con un approccio multidisciplinare che integra competenze mediche, tecnologiche e scientifiche di alto livello.</p>
+          <p>Amici di Boyle vuol dire ambienti estremi e gestione dell'emergenza negli scenari più complessi. Ricerca verificabile, metodi chiari e formazione continua, pensata per chi lavora sul campo.</p>
+          <div class="bullet-cloud">
+            <span>Professionisti di prima linea</span>
+            <span>Competenze che nascono dal lavoro sul campo</span>
+            <span>Clinica, ingegneria, fisiologia, safety</span>
+            <span>Formazione continua</span>
+            <span>Approccio multidisciplinare</span>
+          </div>
         </div>
-        <div class="hero-access-bar" id="accessBar">
-          <input class="hero-access-input" id="barCodeInput"
-                 type="text" placeholder="🔑  Inserisci il tuo codice membro"
-                 autocomplete="off" spellcheck="false" maxlength="30" />
-          <button class="hero-access-btn" id="barCodeBtn">Accedi</button>
-          <span class="hero-access-status" id="barStatus"></span>
-        </div>
-        <div class="hero__stats">
-          <div class="hero__stat"><span class="hero__stat-n" id="memberCount">14</span><span class="hero__stat-l">Membri attivi</span></div>
-          <div class="hero__stat"><span class="hero__stat-n">8+</span><span class="hero__stat-l">Specialità</span></div>
-          <div class="hero__stat"><span class="hero__stat-n">6</span><span class="hero__stat-l">Nazioni</span></div>
-          <div class="hero__stat hero__stat--growing"><span class="hero__stat-n">↑</span><span class="hero__stat-l">In crescita</span></div>
+        <div class="glass-card timeline-card reveal reveal-right">
+          <p class="section-kicker">Timeline</p>
+          <ol class="timeline">
+            <li><strong>2023</strong><span>Nasce il progetto e prende forma l’identità scientifica.</span></li>
+            <li><strong>2024</strong><span>Si consolidano collaborazioni, didattica e divulgazione.</span></li>
+            <li><strong>2025</strong><span>Crescono rete, podcast, materiali formativi e progetti editoriali.</span></li>
+            <li><strong>2026</strong><span>Obiettivo: piattaforma autorevole per ricerca, formazione e contenuti in medicina degli ambienti estremi.</span></li>
+          </ol>
         </div>
       </div>
     </section>
 
-    <!-- GRIGLIA MEMBRI -->
-    <section class="members-section" id="members">
+    <section class="section alt-section" id="attivita">
       <div class="container">
-        <div class="members-header">
-          <h2 class="members-title">I Membri della Rete</h2>
-          <p class="members-sub">Professionisti selezionati per competenza, curiosità e impatto operativo.</p>
+        <div class="section-heading reveal">
+          <p class="section-kicker">Aree di attività</p>
+          <h2 id="att-h2">Quattro direttrici chiare, con contenuti reali dentro</h2>
+          <p>Ricerca, formazione, pubblicazioni e media organizzati in un ecosistema coerente, leggibile e utile.</p>
         </div>
-
-        <!-- Le card vengono iniettate da JS -->
-        <div class="members-grid" id="membersGrid" role="list"></div>
+        <div class="cards-grid cards-grid-4 activity-grid-row stagger">
+          <article class="glass-card activity-card activity-card--ricerca reveal">
+            <img class="activity-asset" src="assets/ricerca.png" alt="Icona Ricerca" loading="lazy" decoding="async" />
+            <p class="micro-label">Macroarea 01</p>
+            <h3>Ricerca</h3>
+            <p>Studi clinici, collaborazioni scientifiche, progetti di ricerca e protocolli applicati alla medicina iperbarica e subacquea.</p>
+            <a class="text-link" href="#ricerca">Esplora la ricerca</a>
+          </article>
+          <article class="glass-card activity-card activity-card--formazione reveal">
+            <img class="activity-asset" src="assets/formazione.png" alt="Icona Formazione" loading="lazy" decoding="async" />
+            <p class="micro-label">Macroarea 02</p>
+            <h3>Formazione</h3>
+            <p>Docenze universitarie, corsi, congressi, materiali didattici e attività costruite per chi lavora sul campo.</p>
+            <a class="text-link" href="#formazione">Vai alla formazione</a>
+          </article>
+          <article class="glass-card activity-card activity-card--pubblicazioni reveal">
+            <img class="activity-asset" src="assets/pubblicazioni.png" alt="Icona Pubblicazioni" loading="lazy" decoding="async" />
+            <p class="micro-label">Macroarea 03</p>
+            <h3>Pubblicazioni</h3>
+            <p>Articoli, case report, contributi editoriali e materiali scientifici utili a clinici, operatori e ricercatori.</p>
+            <a class="text-link" href="#contenuti">Leggi le pubblicazioni</a>
+          </article>
+          <article class="glass-card activity-card activity-card--media reveal">
+            <img class="activity-asset" src="assets/media.png" alt="Icona Media" loading="lazy" decoding="async" />
+            <p class="micro-label">Macroarea 04</p>
+            <h3>Media</h3>
+            <p>Podcast, interviste e contenuti divulgativi che rendono accessibile la medicina degli ambienti estremi.</p>
+            <a class="text-link" href="podcast.html">Apri area media</a>
+          </article>
+        </div>
       </div>
     </section>
 
-    <!-- EMAIL MEMBERS ONLY MODAL -->
-    
-<!-- ── PUBLISH EVENT: access wall ── -->
-    <div class="email-wall" id="publishWall" aria-hidden="true">
-      <div class="email-wall__dialog">
-        <button class="email-wall__close" id="publishWallClose" aria-label="Chiudi">✕</button>
-        <div class="email-wall__icon">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+<section class="section alt-section" id="fondatori">
+      <div class="container">
+        <div class="section-heading reveal">
+          <p class="section-kicker">I Fondatori</p>
+          <h2 id="fond-h2">Un progetto nato da clinici, ricercatori e ingegneri</h2>
+          <p>Professionisti attivi nella medicina degli ambienti estremi, nella ricerca e nella formazione, con profili complementari e competenze operative.</p>
         </div>
-        <h3 class="email-wall__title">Area riservata ai membri</h3>
-        <p class="email-wall__text">Pubblicare un evento sulla Rete di Boyle è riservato ai membri attivi. Se sei già membro, inserisci il tuo codice di accesso.</p>
-        <div class="email-wall__actions">
-          <button class="btn-electric" id="publishWallCodeBtn" type="button">
-            <span class="btn-electric__inner">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-              Sono già membro — inserisci il codice
-            </span>
-          </button>
-          <button class="btn-ghost" id="publishWallJoin" style="min-height:44px;font-size:.88rem;margin-top:8px">Candidati alla rete →</button>
-          <p class="email-wall__note">Problemi? Scrivi a <a href="mailto:info@amicidiboyle.it">info@amicidiboyle.it</a></p>
+        <div class="cards-grid founders-grid stagger">
+          <article class="glass-card founder-card founder-card--3d founder-card--silvio reveal" data-delay="0">
+            <div class="founder-topline"><span class="founder-role">Fondatore</span><a class="linkedin-link linkedin-link--text" href="https://www.linkedin.com/in/silvio-zerbi/" aria-label="LinkedIn di Silvio Zerbi" target="_blank" rel="noopener">in</a></div>
+            <img src="images/silvio.zerbi.jpg" alt="Silvio Zerbi" loading="lazy" />
+            <h3>Dott. Silvio Zerbi</h3>
+            <p>Anestesista Rianimatore, Intensivista, Medico Subacqueo ed Iperbarico, Medico Aeronautico ed Aerospaziale.</p>
+          </article>
+          <article class="glass-card founder-card founder-card--3d founder-card--luigi reveal" data-delay="80">
+            <div class="founder-topline"><span class="founder-role">Direttore Ingegneria</span><a class="linkedin-link linkedin-link--text" href="https://www.linkedin.com/in/peppino601/" aria-label="LinkedIn di Luigi Tarsia" target="_blank" rel="noopener">in</a></div>
+            <img src="images/luigi.tarsia.jpg" alt="Luigi Tarsia" loading="lazy" />
+            <h3>Ing. Luigi Tarsia</h3>
+            <p>Ingegnere Nucleare e Biomedico, Specialista in Medicina Subacquea e Iperbarica, Aeronautica ed Aerospaziale.</p>
+          </article>
+          <article class="glass-card founder-card founder-card--3d founder-card--vincenzo reveal" data-delay="160">
+            <div class="founder-topline"><span class="founder-role">Responsabile Area Iperbarica</span><a class="linkedin-link linkedin-link--text" href="https://www.linkedin.com/in/vincenzo-benenati-29a815130/" aria-label="LinkedIn di Vincenzo Benenati" target="_blank" rel="noopener">in</a></div>
+            <img src="images/vincenzo.benenati.jpg" alt="Vincenzo Benenati" loading="lazy" />
+            <h3>Dott. Vincenzo Benenati</h3>
+            <p>Anestesista Rianimatore, Intensivista, Medico Iperbarico e Subacqueo.</p>
+          </article>
+          <article class="glass-card founder-card founder-card--3d founder-card--dario reveal" data-delay="240">
+            <div class="founder-topline"><span class="founder-role">Responsabile Area Diving</span><a class="linkedin-link linkedin-link--text" href="https://www.linkedin.com/in/dario-nicosia87/" aria-label="LinkedIn di Dario Nicosia" target="_blank" rel="noopener">in</a></div>
+            <img src="images/dario.nicosia.jpg" alt="Dario Nicosia" loading="lazy" />
+            <h3>Dott. Dario Nicosia</h3>
+            <p>Anestesista Rianimatore, Intensivista, Medico Iperbarico e Subacqueo, Medico HEMS 118.</p>
+          </article>
+          <article class="glass-card founder-card founder-card--3d founder-card--matteo reveal" data-delay="320">
+            <div class="founder-topline"><span class="founder-role">Capo Ricercatore</span><a class="linkedin-link linkedin-link--text" href="https://www.linkedin.com/in/paganinimatteo/" aria-label="LinkedIn di Matteo Paganini" target="_blank" rel="noopener">in</a></div>
+            <img src="images/matteo.paganini.jpg" alt="Matteo Paganini" loading="lazy" />
+            <h3>Dott. Matteo Paganini</h3>
+            <p>Ricercatore, Medico di Emergenza-Urgenza, PhD in Global Health, Humanitarian Aid and Disaster Medicine.</p>
+          </article>
         </div>
       </div>
-    </div>
+    </section>
 
-    <!-- ── PUBLISH EVENT: form modal ── -->
-    <div class="modal" id="publishEventModal" aria-hidden="true" role="dialog" aria-labelledby="publishEventTitle">
-      <div class="modal__dialog" style="max-width:560px">
-        <div class="modal__head">
-          <div>
-            <p class="modal__kicker">Area membri</p>
-            <h3 class="modal__title" id="publishEventTitle">Pubblica il tuo evento</h3>
-          </div>
-          <button class="modal__close" id="publishEventClose" aria-label="Chiudi">✕</button>
-        </div>
-        <p class="modal__desc">Compila il form per proporre un evento o un corso da pubblicare sulla Rete di Boyle. Ti risponderemo entro 48 ore.</p>
-        <form class="modal__form" id="publishEventForm"
-              action="https://formspree.io/f/xpwzgkqv"
-              method="POST">
-          <input type="hidden" name="_subject" value="Proposta evento — Rete di Boyle" />
-          <div class="form-grid">
-            <div class="form-field">
-              <label for="ev-nome">Nome e cognome *</label>
-              <input type="text" id="ev-nome" name="nome" required autocomplete="name" />
-            </div>
-            <div class="form-field">
-              <label for="ev-email">Email *</label>
-              <input type="email" id="ev-email" name="email" required autocomplete="email" />
-            </div>
-            <div class="form-field form-field--full">
-              <label for="ev-titolo">Titolo dell'evento *</label>
-              <input type="text" id="ev-titolo" name="titolo_evento" required />
-            </div>
-            <div class="form-field">
-              <label for="ev-data">Data / periodo</label>
-              <input type="text" id="ev-data" name="data_evento" placeholder="es. 15 aprile 2025" />
-            </div>
-            <div class="form-field">
-              <label for="ev-luogo">Luogo / modalità</label>
-              <input type="text" id="ev-luogo" name="luogo" placeholder="es. Milano / Online" />
-            </div>
-            <div class="form-field form-field--full">
-              <label for="ev-desc">Descrizione breve *</label>
-              <textarea id="ev-desc" name="descrizione" rows="3" required placeholder="Argomento, obiettivi, pubblico target..."></textarea>
-            </div>
-            <div class="form-field form-field--full">
-              <label for="ev-link">Link esterno (sito evento, iscrizioni...)</label>
-              <input type="url" id="ev-link" name="link_esterno" placeholder="https://" />
-            </div>
-            <div class="form-field form-field--full">
-              <label for="ev-locandina">Link locandina (Drive, Dropbox, WeTransfer...)</label>
-              <input type="url" id="ev-locandina" name="link_locandina" placeholder="https://" />
-            </div>
-            <div class="form-field form-field--full">
-              <label for="ev-note">Note aggiuntive</label>
-              <textarea id="ev-note" name="note" rows="2" placeholder="Qualsiasi altra informazione utile..."></textarea>
-            </div>
-          </div>
-          <div class="modal__actions">
-            <button class="btn-electric" type="submit">
-              <span class="btn-electric__inner">Invia proposta</span>
+    <section class="section" id="rete-home">
+      <div class="container rete-home-grid">
+        <div class="reveal reveal-left">
+          <p class="section-kicker">La Rete di Boyle</p>
+          <h2 id="rete-h2">Una rete selettiva aperta a chi fa</h2>
+          <p class="section-lead">La rete di professionisti e ricercatori degli Amici di Boyle è un ecosistema multidisciplinare dedicato alla medicina subacquea e iperbarica, alla medicina aerospaziale, agli ambienti estremi, alla fisiologia umana e alla sicurezza.</p>
+          <p>Entrare nella Rete di Boyle significa condividere idee, eventi e studi, collaborare a progetti comuni e dare visibilità a iniziative di qualità, con un’impronta concreta e internazionale.</p>
+          <div class="cta-row">
+            <a class="btn btn-primary btn-electric btn-rete-cta" href="rete.html">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="2.5" stroke="currentColor" stroke-width="1.4"/><path d="M8 1v2M8 13v2M1 8h2M13 8h2M3.05 3.05l1.41 1.41M11.54 11.54l1.41 1.41M11.54 3.05l-1.41 1.41M3.05 11.54l1.41 1.41" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+              Scopri la rete
+            </a>
+            <button class="btn btn-ghost btn-candidati-cta" type="button" data-open-dialog="boyleDialog">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6zM3 13c0-2.21 2.24-4 5-4s5 1.79 5 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+              Candidati ora
             </button>
           </div>
-          <div class="form-status" id="publishEventStatus"></div>
-        </form>
-      </div>
-    </div>
-
-
-    <!-- ACCESS CODE MODAL -->
-    <div class="access-modal" id="accessModal" aria-hidden="true">
-      <div class="access-modal__dialog">
-        <button class="access-modal__close" id="accessModalClose" aria-label="Chiudi">✕</button>
-        <div class="access-modal__icon">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
         </div>
-        <h3 class="access-modal__title">Accesso membri</h3>
-        <p class="access-modal__desc">Inserisci il codice ricevuto nella email di benvenuto.</p>
-        <div class="access-modal__form">
-          <input type="text" id="accessCodeInput" class="access-modal__input"
-            placeholder="es. BOYLE-K7X2-COGNOME"
-            autocomplete="off" autocapitalize="characters" spellcheck="false" />
-          <button class="btn-electric" id="accessCodeSubmit" type="button">
-            <span class="btn-electric__inner">Sblocca contatti</span>
-          </button>
-        </div>
-        <p class="access-modal__status" id="accessStatus"></p>
-        <p class="access-modal__note">Non hai ancora il codice? <button class="access-modal__link" id="accessJoin">Candidati alla rete</button></p>
-      </div>
-    </div>
-
-    <div class="email-wall" id="emailWall" aria-hidden="true">
-      <div class="email-wall__dialog">
-        <button class="email-wall__close" id="emailWallClose" aria-label="Chiudi">✕</button>
-        <div class="email-wall__icon">
-          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
-        </div>
-        <h3 class="email-wall__title">Contatti riservati ai membri</h3>
-        <p class="email-wall__text">Gli indirizzi email diretti dei professionisti della Rete di Boyle sono visibili solo ai membri attivi. È uno dei vantaggi concreti di far parte della rete.</p>
-        <div class="email-wall__actions">
-          <button class="btn-electric" id="wallCodeBtn" type="button">
-            <span class="btn-electric__inner">🔑 Sono già membro — inserisci il codice</span>
-          </button>
-          <button class="btn-ghost" id="emailWallJoin" style="min-height:44px;font-size:.88rem;margin-top:8px">Candidati alla rete →</button>
-          <p class="email-wall__note">Problemi? Scrivi a <a href="/cdn-cgi/l/email-protection#e48d8a828ba485898d878d808d868b9d8881ca8d90"><span class="__cf_email__" data-cfemail="f69f989099b6979b9f959f929f94998f9a93d89f82">[email&#160;protected]</span></a> per ottenere l'accesso completo.</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- VANTAGGI DELLA RETE -->
-    <!-- ── PERCHÉ ENTRARE + EVENTO ── -->
-    <section class="section rete-why-section">
-      <div class="container">
-
-        <div class="rete-why-header reveal">
-          <p class="section-kicker">Perché entrare</p>
-          <h2>Cosa significa far parte della Rete di Boyle</h2>
-          <p class="section-subheading">La rete non è una directory. È un ecosistema attivo dove ogni membro contribuisce e riceve valore concreto.</p>
-        </div>
-
-        <div class="rete-why-grid">
-
-          <!-- Colonna SX: evento in evidenza -->
-          <div class="rete-event-col reveal">
-            <p class="rete-event-kicker">
-              <span class="rete-event-dot"></span>
-              Prossimo evento
-            </p>
-            <article class="glass-card poster-card rete-event-poster-card">
-              <img src="assets/corsi/thedayafter.png"
-                   alt="Locandina The Day After"
-                   loading="lazy"
-                   onerror="this.style.display='none'" />
-              <div class="rete-event-info">
-                <p class="section-kicker" style="margin-bottom:4px">Partner · ITCC</p>
-                <h3 style="margin:0 0 8px;font-size:1.15rem;font-weight:800;letter-spacing:-.03em">The Day After</h3>
-                <p style="font-size:.84rem;line-height:1.6;color:var(--r-muted);margin:0 0 12px">Gestione del trauma maggiore oltre la fase acuta. In piena coerenza con la visione degli Amici di Boyle.</p>
-                <div class="event-meta" style="margin-bottom:16px">
-                  <span>6 Maggio 2026</span>
-                  <span>Corso partner</span>
-                </div>
-              </div>
-              <a class="btn btn-ghost btn-block" href="assets/corsi/the_day_after_brochure.pdf" target="_blank" rel="noopener">Scarica il programma</a>
+        <div class="network-box glass-panel network-box--image reveal reveal-right" aria-label="Visualizzazione della rete di Boyle">
+          <div class="network-visual-stage">
+            <img class="network-visual-image" src="assets/back_rete.png" alt="Visualizzazione della rete di Boyle" loading="lazy" decoding="async" onerror="this.style.display='none'" />
+            <span class="signal-beam s1"></span>
+            <span class="signal-beam s2"></span>
+            <span class="signal-beam s3"></span>
+            <span class="signal-beam s4"></span>
+            <span class="signal-node sn1"></span>
+            <span class="signal-node sn2"></span>
+            <span class="signal-node sn3"></span>
+          </div>
+          <div class="network-copy network-copy--cards">
+            <article class="glass-chip network-chip network-chip--a">
+              <strong>Esplora</strong>
+              <p>Profili, competenze e connessioni tra clinica, ricerca e ambienti estremi.</p>
             </article>
-            <button class="btn-secondary btn-block rete-event-publish-btn" id="publishEventBtn" type="button">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-              Pubblica qui il tuo prossimo evento
-            </button>
+            <article class="glass-chip network-chip network-chip--b">
+              <strong>Partecipa</strong>
+              <p>Eventi, idee, attività formative e contributi costruiti insieme alla rete.</p>
+            </article>
+            <article class="glass-chip network-chip network-chip--c">
+              <strong>Costruisci</strong>
+              <p>Nuovi progetti editoriali, scientifici e formativi con taglio operativo.</p>
+            </article>
           </div>
-
-          <!-- Colonna DX: benefit cards -->
-          <div class="rete-benefits-col">
-            <div class="benefit-card reveal">
-              <div class="benefit-icon benefit-icon--cyan"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
-              <div><h3>Contatti diretti</h3><p>Email personali di tutti i membri, visibili solo a chi è dentro la rete.</p></div>
-            </div>
-            <div class="benefit-card reveal" data-delay="60">
-              <div class="benefit-icon benefit-icon--green"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div>
-              <div><h3>Visibilità sul portale</h3><p>La tua card è pubblica. CV, pubblicazioni, link professionali — sempre aggiornati.</p></div>
-            </div>
-            <div class="benefit-card reveal" data-delay="120">
-              <div class="benefit-icon benefit-icon--purple"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></div>
-              <div><h3>Newsletter</h3><p>Proponi articoli, casi clinici, contributi. Arrivi direttamente a tutta la community.</p></div>
-            </div>
-            <div class="benefit-card reveal" data-delay="60">
-              <div class="benefit-icon benefit-icon--orange"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M22 10v6M2 10l10-8 10 8M4 20v-6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v6"/></svg></div>
-              <div><h3>Pubblica i tuoi corsi</h3><p>Hai un evento formativo? La sezione formazione è aperta ai membri del portale.</p></div>
-            </div>
-            <div class="benefit-card reveal" data-delay="120">
-              <div class="benefit-icon benefit-icon--cyan"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2v-4M9 21H5a2 2 0 0 1-2-2v-4m0 0h18"/></svg></div>
-              <div><h3>Ricerca scientifica</h3><p>Studi, protocolli, pubblicazioni. I membri vengono invitati alle iniziative di ricerca.</p></div>
-            </div>
-            <div class="benefit-card reveal" data-delay="180">
-              <div class="benefit-icon benefit-icon--green"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg></div>
-              <div><h3>Prima fila</h3><p>Congressi, workshop, editoriali. I membri vengono coinvolti per primi, prima del pubblico.</p></div>
-            </div>
-          </div>
-
         </div>
       </div>
     </section>
 
-
-    <!-- CTA ENTRATA RETE -->
-    <section class="cta-section">
+    <section class="section alt-section" id="contenuti">
       <div class="container">
-        <div class="cta-box">
-          <div class="cta-box__bg" aria-hidden="true"></div>
-          <div class="cta-box__content">
-            <h2 class="cta-box__title">Vuoi entrare nella Rete di Boyle?</h2>
-            <p class="cta-box__text">La rete è aperta a professionisti, ricercatori e collaboratori con competenze in medicina subacquea, iperbarica, ambienti estremi, fisiologia umana, sicurezza e innovazione.</p>
-            <button class="btn-electric" id="open-network-modal-2" type="button">
-              <span class="btn-electric__inner">Candidati ora</span>
-            </button>
+        <div class="section-heading reveal">
+          <p class="section-kicker">Contenuti</p>
+          <h2 id="cont-h2">Podcast, corsi, lezioni e pubblicazioni</h2>
+          <p>Materiali formativi e divulgativi raccolti in un archivio chiaro, consultabile e orientato alla pratica clinica e operativa.</p>
+        </div>
+        <div class="cards-grid cards-grid-4 content-grid stagger">
+          <article class="glass-card feature-card content-card reveal">
+            <img src="assets/sotto-pressione-cover.jpg" alt="Cover podcast Sotto Pressione" loading="lazy" decoding="async" />
+          <div class="content-card-text">
+            <p class="section-kicker">Podcast</p>
+            <h3>Sotto Pressione</h3>
+            <p>Pressione, immersione, fisiologia estrema e spazio in un formato divulgativo, chiaro e originale.</p>
+            <a class="text-link" href="podcast.html">Ascolta il podcast</a>
+                    </div>
+          </article>
+          <article class="glass-card feature-card content-card reveal">
+            <img src="assets/corsi/hypercare.jpg" alt="Locandina HyperCare" loading="lazy" decoding="async" />
+          <div class="content-card-text">
+            <p class="section-kicker">Corsi</p>
+            <h3>Corsi e formazione sul campo</h3>
+            <p>HyperCare, SIMAE Bologna, Rescue in Difficult Environment: programmi formativi certificati per clinici e operatori.</p>
+            <a class="text-link" href="#formazione">Vai ai corsi</a>
+                    </div>
+          </article>
+          <article class="glass-card feature-card content-card reveal">
+            <img src="assets/lezioni/ADE_Medicina%20Subacquea.webp" alt="ADE Medicina Subacquea e Iperbarica" loading="lazy" decoding="async" />
+          <div class="content-card-text">
+            <p class="section-kicker">Lezioni</p>
+            <h3>Docenza universitaria e materiali didattici</h3>
+            <p>Attività didattiche elettive e materiali di docenza universitaria presso l’Università degli Studi dell’Insubria.</p>
+            <a class="text-link" href="#formazione">Apri le lezioni</a>
+                    </div>
+          </article>
+          <article class="glass-card feature-card content-card reveal">
+            <img src="assets/pubblicazioni/Locandina_Space%26Blue.webp" alt="Copertina articolo Space &amp; Blue" loading="lazy" decoding="async" />
+          <div class="content-card-text">
+            <p class="section-kicker">Articoli</p>
+            <h3>Dall’abisso allo spazio</h3>
+            <p>Pubblicazioni divulgative e contributi scientifici legati alla medicina subacquea, iperbarica e agli ambienti estremi.</p>
+            <a class="text-link" href="#contenuti-articoli">Leggi gli articoli</a>
+                    </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="eventi">
+      <div class="container event-grid">
+        <div class="reveal reveal-left">
+          <p class="section-kicker">Prossimo evento</p>
+          <h2>The Day After</h2>
+          <p class="section-lead">Un corso del partner ITCC dedicato alla gestione del trauma maggiore oltre la fase acuta, in piena coerenza con una visione moderna della medicina degli ambienti estremi.</p>
+          <p>Entrare nella Rete di Boyle significa anche poter dare visibilità a eventi e iniziative di qualità, quando condividono rigore, utilità e valore formativo.</p>
+          <div class="event-meta">
+            <span>Partner · ITCC</span>
+            <span>Tipologia · Corso partner</span>
+          </div>
+          <div class="cta-row">
+            <a class="btn btn-primary" href="#partner">Scopri i partner</a>
+            <button class="btn btn-secondary" type="button" data-open-dialog="incontroDialog">Proponi un'attività</button>
+          </div>
+        </div>
+        <article class="glass-card poster-card reveal reveal-right">
+          <img src="assets/corsi/thedayafter.png" alt="Locandina The Day After" loading="lazy" decoding="async" onerror="this.style.display='none'" />
+          <a class="btn btn-ghost btn-block" href="assets/corsi/the_day_after_brochure.pdf" target="_blank" rel="noopener">Scarica il programma completo</a>
+        </article>
+      </div>
+    </section>
+
+    
+    <section class="section alt-section" id="ricerca">
+      <div class="container">
+        <div class="section-heading reveal">
+          <p class="section-kicker">Ricerca</p>
+          <h2 id="ric-h2">Ricerca applicata, protocolli e strumenti operativi</h2>
+          <p class="section-lead">Dal razionale fisiologico alla pratica clinica e organizzativa, con strumenti pensati per chi lavora sul campo.</p>
+        </div>
+        <div class="research-showcase-grid stagger">
+          <article class="glass-card research-card research-card--hyperbaric reveal">
+            <p class="micro-label">Hyperbaric · Metodi e protocolli</p>
+            <h3>Ossigenoterapia iperbarica</h3>
+            <p>Indicazioni, sicurezza, qualità e razionale fisiologico tradotti in protocolli leggibili e applicabili, con taglio concreto e utilizzabile.</p>
+            <div class="research-tags">
+              <span>Evidence-based</span>
+              <span>Procedure</span>
+              <span>Sicurezza</span>
+            </div>
+            <a class="btn btn-secondary" href="#contatti">Collabora</a>
+          </article>
+          <article class="glass-card research-card research-card--aerospace reveal">
+            <p class="micro-label">Aerospace · Ambienti estremi</p>
+            <h3>Dall’abisso allo spazio</h3>
+            <p>Adattamenti fisiologici tra iperbarismo e microgravità: pressione, gas, performance e limiti operativi letti in una chiave davvero interdisciplinare.</p>
+            <div class="research-tags">
+              <span>Fisiologia</span>
+              <span>Performance</span>
+              <span>Scenario estremo</span>
+            </div>
+            <a class="btn btn-secondary" href="podcast.html">Podcast</a>
+          </article>
+          <article class="glass-card research-card research-card--human reveal">
+            <p class="micro-label">Human factors · Safety</p>
+            <h3>Decision-making e checklist</h3>
+            <p>Dalla rianimazione al soccorso avanzato: comunicazione, team-work, error management e strumenti utili per sistemi complessi.</p>
+            <div class="research-tags">
+              <span>Checklist</span>
+              <span>Team-work</span>
+              <span>Safety</span>
+            </div>
+            <a class="btn btn-secondary" href="#formazione">Corsi</a>
+          </article>
+          <article class="glass-card research-card research-card--didattica reveal">
+            <p class="micro-label">Lezioni e attività</p>
+            <h3>Docenze, moduli e incontri</h3>
+            <p>Disponibili per lezioni e corsi presso università, aziende e associazioni interessate alle applicazioni della medicina iperbarica e subacquea.</p>
+            <div class="research-tags">
+              <span>Università</span>
+              <span>Aziende</span>
+              <span>Associazioni</span>
+            </div>
+            <button class="btn btn-primary" type="button" data-open-dialog="incontroDialog">Proponi un incontro</button>
+          </article>
+        </div>
+      </div>
+    </section>
+
+
+    <section class="section" id="formazione">
+      <div class="container">
+        <div class="section-heading reveal">
+          <p class="section-kicker">Formazione</p>
+          <h2 id="form-h2">Docenze, corsi e materiali didattici</h2>
+          <p class="section-lead">Un archivio formativo organizzato con criteri editoriali chiari: programmi completi, locandine leggibili e materiali pensati per clinici, operatori e subacquei.</p>
+        </div>
+
+        <div class="glass-card courses-showcase reveal">
+          <div class="courses-intro">
+            <div>
+              <p class="section-kicker">Corsi</p>
+              <h3>Corsi, congressi e docenze</h3>
+              <p>Programmi certificati in medicina subacquea, iperbarica e degli ambienti estremi. Accesso diretto alle locandine e ai documenti ufficiali.</p>
+            </div>
+          </div>
+          <div class="course-poster-grid">
+            <article class="glass-card course-poster-card">
+              <img src="assets/corsi/hypercare.jpg" alt="Locandina HyperCare" loading="lazy" decoding="async" onerror="this.style.display='none'" />
+              <h4>HyperCare</h4>
+              <a class="btn btn-secondary btn-block" href="assets/corsi/hypercare.pdf" target="_blank" rel="noopener">Download programma completo</a>
+            </article>
+            <article class="glass-card course-poster-card">
+              <img src="assets/corsi/simae-bologna.jpg" alt="Locandina SIMAE Bologna" loading="lazy" decoding="async" onerror="this.style.display='none'" />
+              <h4>SIMAE Bologna</h4>
+              <a class="btn btn-secondary btn-block" href="assets/corsi/simae-bologna.pdf" target="_blank" rel="noopener">Download programma completo</a>
+            </article>
+            <article class="glass-card course-poster-card">
+              <img src="assets/corsi/RDE.jpg" alt="Locandina Rescue in Difficult Environment" loading="lazy" decoding="async" onerror="this.style.display='none'" />
+              <h4>Rescue in Difficult Environment</h4>
+              <a class="btn btn-secondary btn-block" href="assets/corsi/RDE.pdf" target="_blank" rel="noopener">Download programma completo</a>
+            </article>
+            <article class="glass-card course-poster-card">
+              <img src="assets/corsi/I.E.M.I.G.jpg" alt="Locandina Italian Emergency Medicine Interest Group" loading="lazy" decoding="async" onerror="this.style.display='none'" />
+              <h4>Italian Emergency Medicine Interest Group</h4>
+              <a class="btn btn-secondary btn-block" href="assets/corsi/I.E.M.I.G.pdf" target="_blank" rel="noopener">Download programma completo</a>
+            </article>
+          </div>
+        </div>
+
+        <div class="teaching-blocks reveal">
+          <div class="section-heading section-heading--compact">
+            <p class="section-kicker">Docenze universitarie</p>
+            <h3>Attività didattiche elettive</h3>
+            <p>Moduli didattici tenuti presso il Corso di Laurea in Medicina e Chirurgia dell'Università degli Studi dell'Insubria, con materiali scaricabili e accesso alle locandine degli eventi.</p>
+          </div>
+          <div class="teaching-poster-grid teaching-poster-grid--compact teaching-poster-grid--horiz">
+            <article class="glass-card teaching-card">
+              <div class="teaching-card-img-wrap" data-src="assets/lezioni/ADE_Medicina%20Subacquea.webp">
+                <img src="assets/lezioni/ADE_Medicina%20Subacquea.webp" alt="ADE Medicina Subacquea e Iperbarica" loading="lazy" decoding="async" />
+                <div class="teaching-card-img-overlay" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" width="20" height="20"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></div>
+              </div>
+              <div class="teaching-card-text">
+                <a class="tc-download" href="assets/lezioni/ADE_Medicina%20Subacquea.webp" download>
+                  <svg viewBox="0 0 16 16" fill="none" width="13" height="13"><path d="M8 2v8M4 7l4 4 4-4M2 13h12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+                  Scarica
+                </a>
+                <p class="section-kicker">Lezione</p>
+              <h4>ADE Medicina Subacquea &amp; Iperbarica</h4>
+              <p>Attività didattica elettiva e materiali di docenza universitaria presso l’Università degli Studi dell’Insubria.</p>
+              </div>
+            </article>
+            <article class="glass-card teaching-card">
+              <div class="teaching-card-img-wrap" data-src="assets/lezioni/ADE_Medicina%20Spaziale.webp">
+                <img src="assets/lezioni/ADE_Medicina%20Spaziale.webp" alt="ADE Medicina Spaziale" loading="lazy" decoding="async" />
+                <div class="teaching-card-img-overlay" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" width="20" height="20"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></div>
+              </div>
+              <div class="teaching-card-text">
+                <a class="tc-download" href="assets/lezioni/ADE_Medicina%20Spaziale.webp" download>
+                  <svg viewBox="0 0 16 16" fill="none" width="13" height="13"><path d="M8 2v8M4 7l4 4 4-4M2 13h12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+                  Scarica
+                </a>
+                <p class="section-kicker">Lezione</p>
+              <h4>ADE Medicina Spaziale</h4>
+              <p>Docenza universitaria dedicata alla medicina spaziale e agli ambienti estremi, con approccio fisiologico e applicativo.</p>
+              </div>
+            </article>
           </div>
         </div>
       </div>
     </section>
 
+    
+    <section class="section alt-section" id="contenuti-articoli">
+      <div class="container">
+        <div class="section-heading section-heading--compact reveal">
+          <p class="section-kicker">Articoli e pubblicazioni</p>
+          <h3 id="pub-h2">Pubblicazioni e articoli scientifici</h3>
+          <p>Lavori peer-reviewed, case report e contributi divulgativi sulla medicina subacquea, iperbarica e degli ambienti estremi. Accesso diretto ai PDF.</p>
+        </div>
+        <div class="section-grid split-2 articoli-grid">
+          <article class="glass-card feature-card">
+            <img src="assets/pubblicazioni/Locandina_Space%26Blue.webp" alt="Copertina Space &amp; Blue" loading="lazy" decoding="async" />
+            <p class="section-kicker">Pubblicazioni</p>
+            <h3>Dall’abisso allo spazio: adattamenti fisiologici umani in ambienti estremi</h3>
+            <p>Un contributo divulgativo che mette in dialogo immersione subacquea, pressione, fisiologia e spazio.</p>
+            <a class="text-link" href="https://www.economiadellospazio.it/autore/dott-silvio-zerbi/" target="_blank" rel="noopener">Leggi l’articolo</a>
+          </article>
+          <article class="glass-card feature-card">
+            <img src="assets/pubblicazioni/UHM_logo.png" alt="Undersea and Hyperbaric Medicine Journal" loading="lazy" decoding="async" />
+            <p class="section-kicker">Pubblicazione tecnica</p>
+            <h3>Technical Suitability of Implantable Cardiac Devices for Recreational Diving</h3>
+            <p>Articolo tecnico sulla compatibilità dei dispositivi cardiaci impiantabili con l’attività subacquea ricreativa.</p>
+            <a class="text-link" href="assets/pubblicazioni/technical_suitability_cardiac_devices_diving.pdf" target="_blank" rel="noopener">Apri PDF</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+
+    <section class="section" id="partner">
+      <div class="container">
+        <div class="section-heading reveal">
+          <p class="section-kicker">Partner</p>
+          <h2 id="part-h2">Collaborazioni e realtà affini</h2>
+          <p>Realtà che condividono attenzione per formazione, trauma e ambienti estremi.</p>
+        </div>
+        <div class="section-grid split-2">
+          <article class="glass-card feature-card partner-feature">
+            <img class="partner-logo" src="assets/itecc_logo.png" alt="Logo Inside Trauma" loading="lazy" decoding="async" />
+            <h3>Inside Trauma</h3>
+            <p>Progetto dedicato al trauma care, con approccio pratico, formazione e contenuti di qualità.</p>
+            <a class="btn btn-primary" href="https://www.insidetrauma.it/" target="_blank" rel="noopener">Visita il sito</a>
+          </article>
+          <article class="glass-card contact-card">
+            <div class="energy-icon"></div>
+            <h3>Proponi una collaborazione</h3>
+            <p>Università, società scientifiche, corsi, congressi, iniziative editoriali e partner operativi: uno spazio aperto a collaborazioni qualificate.</p>
+            <button class="btn btn-secondary" type="button" data-open-dialog="incontroDialog">Parliamone</button>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section alt-section" id="contatti">
+      <div class="container">
+        <div class="section-heading reveal">
+          <p class="section-kicker">Contatti</p>
+          <h2 id="cont2-h2">Collaborazioni, docenze, corsi e candidature</h2>
+          <p>Tre canali distinti per rispondere a esigenze diverse: collaborazioni generali, docenze e incontri, candidature alla Rete. Ogni richiesta arriva direttamente a chi di competenza.</p>
+        </div>
+        <div class="cards-grid cards-grid-3 contact-grid-3 contact-grid-visible">
+          <article class="glass-card contact-card contact-card--rich contact-card--msg reveal">
+            <div class="contact-icon contact-icon--msg" aria-hidden="true">
+              <svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="7" y="12" width="30" height="22" rx="4" stroke="currentColor" stroke-width="1.7"/>
+                <path d="M7 16l15 10 15-10" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <h3>Contatto generale</h3>
+            <p>Per domande, progetti, richieste editoriali o informazioni generali.</p>
+            <p><strong>Email:</strong> <a href="/cdn-cgi/l/email-protection#dcb5b2bab39cbdb1b5bfb5b8b5beb3a5b0b9f2b5a8" style="color:var(--cyan-2);"><span class="__cf_email__" data-cfemail="eb82858d84ab8a868288828f82898492878ec5829f">[email&#160;protected]</span></a></p>
+            <button class="btn btn-electric btn-block" type="button" data-open-dialog="contattiDialog">Apri modulo contatti</button>
+          </article>
+          <article class="glass-card contact-card contact-card--rich contact-card--edu reveal" data-delay="100">
+            <div class="contact-icon contact-icon--edu" aria-hidden="true">
+              <svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="6" y="8" width="32" height="22" rx="3" stroke="currentColor" stroke-width="1.7"/>
+                <path d="M14 36h16M22 30v6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+                <path d="M14 18h16M14 23h10" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <h3>Proponi incontro o docenza</h3>
+            <p>Per università, corsi, congressi, attività didattiche e collaborazioni strutturate.</p>
+            <ul class="download-list compact-list">
+              <li>Lezioni e corsi specialistici</li>
+              <li>Collaborazioni scientifiche</li>
+              <li>Eventi e docenze</li>
+            </ul>
+            <button class="btn btn-electric btn-block" type="button" data-open-dialog="incontroDialog">Apri modulo docenza</button>
+          </article>
+          <article class="glass-card contact-card contact-card--rich contact-card--join reveal" data-delay="200">
+            <div class="contact-icon contact-icon--join" aria-hidden="true">
+              <svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="18" cy="16" r="6" stroke="currentColor" stroke-width="1.7"/>
+                <path d="M6 36c0-5 5-9 12-9" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+                <path d="M30 24v12M24 30h12" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <h3>Diventa un Amico di Boyle</h3>
+            <p>Entra nella rete. Puoi presentarti, indicare la tua area principale di interesse e candidarti alla futura Rete di Boyle.</p>
+            <button class="btn btn-electric btn-block" type="button" data-open-dialog="boyleDialog">Candidati ora</button>
+          </article>
+        </div>
+      </div>
+    </section>
   </main>
 
-  <!-- MODAL CANDIDATURA -->
-  <div class="modal" id="network-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="modal-title">
-    <div class="modal__dialog">
-      <button class="modal__close" id="close-network-modal" type="button" aria-label="Chiudi">✕</button>
-      <div class="modal__head">
-        <span class="modal__kicker">Rete di Boyle</span>
-        <h2 class="modal__title" id="modal-title">Connettiamo menti brillanti</h2>
-        <p class="modal__desc">La rete è selettiva e orientata a chi opera davvero negli ambienti estremi. Presentati: valuteremo il profilo e ti contatteremo.</p>
-      </div>
-      <form class="network-form" id="network-form" action="https://formspree.io/f/xzdareqw" method="POST">
-        <input type="hidden" name="_subject" value="Nuova candidatura alla Rete di Boyle" />
-        <input type="hidden" name="_language" value="it" />
-        <input type="hidden" id="cand-snippet" name="codice_card_html" />
-        <div class="form-grid">
-          <div class="field">
-            <label for="cand-name">NOME E COGNOME</label>
-            <input id="cand-name" name="nome" type="text" required placeholder="Nome e Cognome" />
-          </div>
-          <div class="field">
-            <label for="cand-email">EMAIL</label>
-            <input id="cand-email" name="email" type="email" required placeholder="nome@dominio.it" />
-          </div>
-          <div class="field">
-            <label for="cand-affiliation">AFFILIAZIONE</label>
-            <input id="cand-affiliation" name="affiliazione" type="text" placeholder="Ospedale, Università, Centro, Azienda" />
-          </div>
-          <div class="field">
-            <label for="cand-role">QUALIFICA PROFESSIONALE</label>
-            <input id="cand-role" name="ruolo" type="text" placeholder="Es. Medico iperbarico, ricercatore, ingegnere biomedico" />
-          </div>
-          <div class="field field--full">
-            <label for="cand-interest">AREA DI INTERESSE / FOCUS</label>
-            <input id="cand-interest" name="focus" type="text" placeholder="Es. Medicina iperbarica, neuroscienze, fisiologia, soccorso estremo" />
-          </div>
-          <div class="field field--full">
-            <label for="cand-city">CITTÀ / NAZIONE</label>
-            <input id="cand-city" name="citta" type="text" placeholder="Es. Milano, Italia" />
-          </div>
-          <div class="field field--full">
-            <label for="cand-linkedin">PROFILO LINKEDIN</label>
-            <input id="cand-linkedin" name="linkedin" type="url" placeholder="https://www.linkedin.com/in/..." />
-          </div>
-          <div class="field field--full">
-            <label for="cand-bio">PRESENTAZIONE E MOTIVAZIONE</label>
-            <textarea id="cand-bio" name="presentazione" placeholder="Racconta chi sei, cosa fai e perché vorresti entrare nella Rete di Boyle."></textarea>
-          </div>
-        </div>
-        <div class="modal__actions">
-          <button class="btn-electric" type="submit">
-            <span class="btn-electric__inner">Invia candidatura</span>
-          </button>
-        </div>
-        <div class="form-status" id="form-status" aria-live="polite"></div>
-      </form>
-    </div>
-  </div>
-
-  <footer class="footer">
-    <div class="container footer__inner">
-      <div class="footer__brand">
-        <img src="assets/logo.png" alt="" width="30" height="30" aria-hidden="true" />
-        <span>© 2026 Gli Amici di Boyle</span>
-      </div>
-      <nav class="footer__links">
-        <a href="index.html">Home</a>
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <p>© Gli Amici di Boyle · Medicina subacquea, iperbarica e ambienti estremi.</p>
+      <nav aria-label="Footer navigation">
+        <a href="#home">Home</a>
+        <a href="#visione">Visione</a>
+        <a href="rete.html">Rete</a>
         <a href="podcast.html">Podcast</a>
-        <a href="#top">↑ Su</a>
-        <a href="index.html#contatti">Contatti</a>
       </nav>
     </div>
   </footer>
 
-  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-  /* ════════════════════════════════════════════════
-     MEMBERS DATA — driven by rete-members.json
-     ════════════════════════════════════════════════ */
-  const MEMBERS_URL = 'rete-members.json';
 
-  const LI_ICON = `<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.94 8.5H3.56V20h3.38V8.5ZM5.25 3A2.03 2.03 0 1 0 5.3 7.06 2.03 2.03 0 0 0 5.25 3Zm4.23 5.5V20h3.38v-5.7c0-1.5.28-2.95 2.14-2.95 1.83 0 1.86 1.71 1.86 3.05V20h3.39v-6.29c0-3.09-.67-5.46-4.28-5.46-1.73 0-2.88.95-3.35 1.85h-.05V8.5H9.48Z"/></svg>`;
-
-  const EMAIL_ICON = `<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6.75A2.75 2.75 0 0 1 5.75 4h12.5A2.75 2.75 0 0 1 21 6.75v10.5A2.75 2.75 0 0 1 18.25 20H5.75A2.75 2.75 0 0 1 3 17.25V6.75Zm2.2-.25 6.27 5.05a.83.83 0 0 0 1.06 0L18.8 6.5H5.2Zm13.8 1.46-5.42 4.36a2.33 2.33 0 0 1-2.96 0L5.2 7.96v9.29c0 .3.25.55.55.55h12.5c.3 0 .55-.25.55-.55V7.96Z"/></svg>`;
-  const LOCK_ICON = `<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4" stroke-linecap="round"/></svg>`;
-  const PROFILE_ICON = `<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>`;
-  const PENCIL_ICON = `<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>`;
-
-  // Tag colori per area
-  const TAG_COLORS = {
-    'Iperbarica':       '#4fa8ff',
-    'Diving':           '#00d4ff',
-    'Critical Care':    '#4dffd6',
-    'Neuroscienze':     '#c4b0ff',
-    'Ricerca':          '#b4a6ff',
-    'Cardiologia':      '#ff8fa3',
-    'Trauma':           '#ffb347',
-    'Emergenza':        '#ff6b6b',
-    'HEMS':             '#ff6b6b',
-    'Spazio':           '#a8eeff',
-    'Montagna':         '#80ffd4',
-    'ECMO':             '#4dffd6',
-    'Safety':           '#ffd166',
-    'Chirurgia':        '#f8a5c2',
-    'Mass Gathering':   '#ffb347',
-    'Esplorazione':     '#00d4ff',
-    'Medicina Militare':'#c0c0ff',
-  };
-
-  function renderTags(tags) {
-    if (!tags || !tags.length) return '';
-    return '<div class="member-tags">' +
-      tags.map(t => {
-        const c = TAG_COLORS[t] || '#7be4ff';
-        return `<span class="member-tag" style="--tag-color:${c}">${t}</span>`;
-      }).join('') +
-    '</div>';
-  }
-
-  function renderCard(m) {
-    const li = m.linkedin && m.linkedin !== 'https://www.linkedin.com/'
-      ? `<a class="icon-btn" href="${m.linkedin}" aria-label="LinkedIn di ${m.name}" target="_blank" rel="noopener">${LI_ICON}</a>`
-      : '';
-    // Email: visibile solo ai membri — mostra lucchetto con tooltip per i non-membri
-    const emailBtn = m.email
-      ? `<button class="icon-btn member-email-btn" data-email="${m.email}" aria-label="Contatta ${m.name}" title="Visibile ai membri della Rete">${LOCK_ICON}</button>`
-      : '';
-    const key = m.name.toLowerCase().replace(/\s+/g, '-');
-    const profileBtn = `<button class="icon-btn member-profile-btn icon-btn--locked" data-key="${key}" data-name="${m.name}" data-role="${m.role||''}" data-tip="Pagina personale">${PROFILE_ICON}</button>`;
-    const editBtn = `<button class="icon-btn icon-btn--pencil member-edit-btn" data-key="${key}" data-name="${m.name}" data-tip="Modifica profilo" style="display:none">${PENCIL_ICON}</button>`;
-
-    return `
-      <article class="member-card reveal" role="listitem" data-key="${key}">
-        <div class="member-photo-wrap">
-          <img class="member-photo" src="assets/rete/${m.img}" alt="${m.name}" loading="lazy" onerror="this.style.background='rgba(5,18,46,.8)';this.style.opacity='.4'" />
+  <!-- MODALI CONTATTI -->
+  <dialog class="dialog" id="contattiDialog" aria-label="Modulo contatto generale">
+    <div class="dialog__inner">
+      <div class="dialog__head dialog__head--modern">
+        <div class="dialog__head-text">
+          <span class="dialog__kicker">Contatto generale</span>
+          <h3 style="margin:0;">Scrivici</h3>
         </div>
-        <h2 class="member-name">${m.name}</h2>
-        ${renderTags(m.tags)}
-        <p class="member-role">${m.role}</p>
-        <div class="member-location">
-          <span class="member-location__line" aria-hidden="true"></span>
-          <span class="member-location__city">
-            <svg width="11" height="11" viewBox="0 0 14 14" fill="currentColor" aria-hidden="true"><path d="M7 0a5 5 0 0 0-5 5c0 4 5 9 5 9s5-5 5-9a5 5 0 0 0-5-5Zm0 7a2 2 0 1 1 0-4 2 2 0 0 1 0 4Z"/></svg>
-            ${m.city || 'Italia'}
-          </span>
-          <span class="member-location__line" aria-hidden="true"></span>
+        <button type="button" class="btn btn-ghost dialog__close" data-close-dialog aria-label="Chiudi">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M2 2l14 14M16 2L2 16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+      <p class="dialog__desc">Per domande, proposte di collaborazione, richieste editoriali o informazioni generali sul progetto.</p>
+      <form id="contactFormGeneral" class="form modalForm" action="https://formspree.io/f/xzdareqw" method="POST" accept-charset="UTF-8">
+        <input type="hidden" name="_subject" value="Nuovo contatto generale — Gli Amici di Boyle" />
+        <label class="field"><span>Nome e cognome</span><input name="name" type="text" autocomplete="name" placeholder="Come ti chiami?" required /></label>
+        <div class="section-grid split-2">
+          <label class="field"><span>Email</span><input name="email" type="email" autocomplete="email" placeholder="nome@dominio.it" required /></label>
+          <label class="field"><span>Oggetto</span><input name="subject" type="text" placeholder="In breve, di cosa si tratta" required /></label>
         </div>
-        <div class="member-links">${li}${emailBtn}${profileBtn}${editBtn}</div>
-      </article>`;
-  }
+        <label class="field"><span>Messaggio</span><textarea name="message" rows="4" placeholder="Descrivi la tua richiesta o proposta. Più è chiara, prima rispondiamo." required></textarea></label>
+        <div class="dialog__actions">
+          <button id="submitGeneral" type="submit" class="btn btn-primary btn-electric">Invia messaggio</button>
+          <button type="button" class="btn btn-ghost" data-close-dialog>Annulla</button>
+        </div>
+        <p class="form__status" id="statusGeneral" aria-live="polite"></p>
+        <p class="form__fineprint">Risponderemo entro 48 ore. In alternativa: <a href="/cdn-cgi/l/email-protection#d8b1b6beb798b9b5b1bbb1bcb1bab7a1b4bdf6b1ac"><span class="__cf_email__" data-cfemail="177e79717857767a7e747e737e75786e7b72397e63">[email&#160;protected]</span></a></p>
+      </form>
+    </div>
+  </dialog>
 
-  async function loadMembers() {
-    const grid = document.getElementById('membersGrid');
-    const countEl = document.getElementById('memberCount');
-    try {
-      const res = await fetch(MEMBERS_URL);
-      if (!res.ok) throw new Error('fetch failed');
-      const members = await res.json();
-      grid.innerHTML = members.map(renderCard).join('');
-      if (countEl) countEl.textContent = members.length;
-      initReveal();
-      
-    } catch(e) {
-      // Fallback: se rete-members.json non è ancora sul server, usa dati inline
-      console.warn('rete-members.json non trovato, uso dati inline:', e);
-      try {
-        const fallback = await fetch('rete-members.json?v=' + Date.now());
-        if (fallback.ok) {
-          const members = await fallback.json();
-          grid.innerHTML = members.map(renderCard).join('');
-          if (countEl) countEl.textContent = members.length;
-          initReveal();
-        }
-      } catch(e2) {
-        grid.innerHTML = '<p style="color:rgba(237,247,255,.5);padding:20px;text-align:center;">Profili in caricamento. Assicurati che rete-members.json sia nel repository.</p>';
-      }
-    }
-  }
+  <dialog class="dialog" id="incontroDialog" aria-label="Modulo incontro o docenza">
+    <div class="dialog__inner">
+      <div class="dialog__head dialog__head--modern">
+        <div class="dialog__head-text">
+          <span class="dialog__kicker">Formazione e docenza</span>
+          <h3 style="margin:0;">Proponi un incontro</h3>
+        </div>
+        <button type="button" class="btn btn-ghost dialog__close" data-close-dialog aria-label="Chiudi">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M2 2l14 14M16 2L2 16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+      <p class="dialog__desc">Per docenze universitarie, corsi specialistici, congressi, seminari e collaborazioni strutturate con enti e istituzioni.</p>
+      <form id="contactFormTeaching" class="form modalForm" action="https://formspree.io/f/xzdareqw" method="POST" accept-charset="UTF-8">
+        <input type="hidden" name="_subject" value="Richiesta docenza o incontro — Gli Amici di Boyle" />
+        <label class="field"><span>Nome o ente richiedente</span><input name="name" type="text" placeholder="Nome, università, società scientifica, azienda…" required /></label>
+        <div class="section-grid split-2">
+          <label class="field"><span>Email di riferimento</span><input name="email" type="email" autocomplete="email" placeholder="nome@dominio.it" required /></label>
+          <label class="field"><span>Tipo di attività</span><input name="subject" type="text" placeholder="Docenza, congresso, seminario, corso…" required /></label>
+        </div>
+        <label class="field"><span>Contesto e dettagli</span><textarea name="message" rows="4" placeholder="Descrivi l'evento, la data prevista, il pubblico di riferimento e qualsiasi altra informazione utile." required></textarea></label>
+        <div class="dialog__actions">
+          <button id="submitTeaching" type="submit" class="btn btn-primary btn-electric">Invia richiesta</button>
+          <button type="button" class="btn btn-ghost" data-close-dialog>Annulla</button>
+        </div>
+        <p class="form__status" id="statusTeaching" aria-live="polite"></p>
+        <p class="form__fineprint">Valuteremo la richiesta e risponderemo entro 48 ore. In alternativa: <a href="/cdn-cgi/l/email-protection#aec7c0c8c1eecfc3c7cdc7cac7ccc1d7c2cb80c7da"><span class="__cf_email__" data-cfemail="86efe8e0e9c6e7ebefe5efe2efe4e9ffeae3a8eff2">[email&#160;protected]</span></a></p>
+      </form>
+    </div>
+  </dialog>
 
-  /* ── Scroll reveal ── */
-  function initReveal() {
-    const obs = new IntersectionObserver(entries => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          setTimeout(() => e.target.classList.add('is-visible'), +(e.target.dataset.delay||0));
-          obs.unobserve(e.target);
-        }
+  <dialog class="dialog" id="boyleDialog" aria-label="Candidatura Amico di Boyle">
+    <div class="dialog__inner">
+      <div class="dialog__head dialog__head--modern">
+        <div class="dialog__head-text">
+          <span class="dialog__kicker">Rete di Boyle</span>
+          <h3 style="margin:0;">Connettiamo menti brillanti</h3>
+        </div>
+        <button type="button" class="btn btn-ghost dialog__close" data-close-dialog aria-label="Chiudi">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M2 2l14 14M16 2L2 16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+      <p class="dialog__desc">La Rete di Boyle è selettiva e orientata a chi opera davvero negli ambienti estremi. Presentati: valuteremo il profilo e ti contatteremo.</p>
+      <form id="contactFormBoyle" class="form modalForm" action="https://formspree.io/f/xzdareqw" method="POST" accept-charset="UTF-8">
+        <input type="hidden" name="_subject" value="Candidatura Rete di Boyle" />
+        <div class="section-grid split-2">
+          <label class="field"><span>Nome e Cognome</span><input name="name" type="text" placeholder="Nome e Cognome" required /></label>
+          <label class="field"><span>Email</span><input name="email" type="email" autocomplete="email" placeholder="nome@dominio.it" required /></label>
+        </div>
+        <div class="section-grid split-2">
+          <label class="field"><span>Qualifica professionale</span><input name="subject" type="text" placeholder="Es. anestesista, ingegnere biomedico, ricercatore…" required /></label>
+          <label class="field"><span>Area di interesse principale</span>
+            <select name="area_interesse" required>
+              <option value="">Seleziona un'area</option>
+              <option>Medicina iperbarica e subacquea</option>
+              <option>Ingegneria iperbarica e subacquea</option>
+              <option>Medicina di montagna</option>
+              <option>Medicina spaziale</option>
+              <option>Ingegneria spaziale</option>
+              <option>Altri ambienti estremi di interesse</option>
+            </select>
+          </label>
+        </div>
+        <label class="field"><span>Presentazione e motivazione</span><textarea name="message" rows="4" placeholder="Chi sei, cosa fai, perché vuoi entrare nella Rete di Boyle e cosa puoi portare al progetto." required></textarea></label>
+        <div class="dialog__actions">
+          <button id="submitBoyle" type="submit" class="btn btn-primary btn-electric">Invia candidatura</button>
+          <button type="button" class="btn btn-ghost" data-close-dialog>Annulla</button>
+        </div>
+        <p class="form__status" id="statusBoyle" aria-live="polite"></p>
+        <p class="form__fineprint">Le candidature vengono valutate dal team. Riceverai risposta entro 5–7 giorni lavorativi.</p>
+      </form>
+    </div>
+  </dialog>
+
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    /* ---- Header scrolled class ---- */
+    (function(){
+      const hdr = document.querySelector('.site-header');
+      if (!hdr) return;
+      const onScroll = () => hdr.classList.toggle('scrolled', window.scrollY > 40);
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+    })();
+
+    /* ---- Mobile nav dropdown toggle ---- */
+    (function(){
+      var btn = document.querySelector('.nav-dropdown-btn');
+      var panel = document.getElementById('navDropdownPanel');
+      var dropdown = document.getElementById('navDropdown');
+      if (!btn || !panel) return;
+
+      btn.addEventListener('click', function(e){
+        e.stopPropagation();
+        var open = btn.getAttribute('aria-expanded') === 'true';
+        btn.setAttribute('aria-expanded', !open);
+        dropdown.classList.toggle('is-open', !open);
       });
-    }, { threshold: 0.08 });
-    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
-  }
 
-  /* ── SYNAPSE CANVAS: rete neurale immersiva su tutta la pagina ── */
-  function initSynapseCanvas() {
-    const canvas = document.getElementById('synapseCanvas');
-    if (!canvas || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    const ctx = canvas.getContext('2d');
+      /* Chiudi cliccando fuori */
+      document.addEventListener('click', function(){
+        btn.setAttribute('aria-expanded', 'false');
+        dropdown.classList.remove('is-open');
+      });
 
-    // Canvas fixed, dimensioni viewport — scroll gestito via offset dei nodi
-    function resize() {
-      canvas.width  = window.innerWidth;
-      canvas.height = window.innerHeight;
-    }
-    resize();
-    window.addEventListener('resize', resize, {passive:true});
-
-    // 80 nodi: più dense connessioni, effetto immersivo
-    const N = 80;
-    // Distribuiti su un'area 3x alta rispetto alla viewport (copre tutto lo scroll)
-    const nodes = Array.from({length: N}, (_, i) => ({
-      x:  Math.random() * window.innerWidth,
-      y:  Math.random() * (window.innerHeight * 3),   // altura 3x per pagina lunga
-      vx: (Math.random() - .5) * .28,
-      vy: (Math.random() - .5) * .28,
-      r:  1.2 + Math.random() * 2.8,
-      pulse: Math.random() * Math.PI * 2,
-      bright: Math.random(),                           // nodi più o meno brillanti
-    }));
-
-    // Mouse tracking per repulsione/attrazione
-    let mouseX = -9999, mouseY = -9999, scrollY = 0;
-    window.addEventListener('mousemove', e => { mouseX = e.clientX; mouseY = e.clientY; }, {passive:true});
-    window.addEventListener('scroll', () => { scrollY = window.scrollY; }, {passive:true});
-
-    const MAX_D  = 180;   // distanza massima per connessione
-    const MAX_D2 = MAX_D * MAX_D;
-
-    function draw(t) {
-      const ofs = scrollY;  // offset scroll per far scorrere i nodi con la pagina
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      // Muovi nodi
-      for (let i = 0; i < N; i++) {
-        const n = nodes[i];
-        n.x  += n.vx;
-        n.y  += n.vy;
-        n.pulse += .012;
-
-        // Rimbalzo sui bordi (largezza viewport, altezza 3x)
-        if (n.x < 0 || n.x > canvas.width)           n.vx *= -1;
-        if (n.y < 0 || n.y > canvas.height * 3)       n.vy *= -1;
-
-        // Leggera repulsione dal cursore (effetto interattivo)
-        const dx = n.x - mouseX;
-        const dy = (n.y - ofs) - mouseY;
-        const dm2 = dx*dx + dy*dy;
-        if (dm2 < 14400) {  // 120px
-          const f = .06 / Math.sqrt(dm2 + 1);
-          n.vx += dx * f;
-          n.vy += dy * f;
-          // Limita velocità
-          const spd = Math.sqrt(n.vx*n.vx + n.vy*n.vy);
-          if (spd > 1.2) { n.vx *= .8; n.vy *= .8; }
-        }
-      }
-
-      // Disegna connessioni
-      for (let i = 0; i < N; i++) {
-        const ni = nodes[i];
-        const niy = ni.y - ofs;
-        if (niy < -MAX_D || niy > canvas.height + MAX_D) continue; // fuori viewport
-
-        for (let j = i + 1; j < N; j++) {
-          const nj = nodes[j];
-          const njy = nj.y - ofs;
-          if (njy < -MAX_D || njy > canvas.height + MAX_D) continue;
-
-          const dx = ni.x - nj.x;
-          const dy = niy - njy;
-          const d2 = dx*dx + dy*dy;
-          if (d2 > MAX_D2) continue;
-
-          const d = Math.sqrt(d2);
-          const alpha = (1 - d / MAX_D) * .22 * ((ni.bright + nj.bright) * .5 + .3);
-
-          // Gradiente lungo la linea (effetto impulso elettrico)
-          const grd = ctx.createLinearGradient(ni.x, niy, nj.x, njy);
-          const pulse = .5 + .5 * Math.sin(t * .001 + ni.pulse + nj.pulse * .5);
-          grd.addColorStop(0,    `rgba(80,210,255,${alpha * .4})`);
-          grd.addColorStop(pulse, `rgba(160,240,255,${alpha})`);
-          grd.addColorStop(1,    `rgba(80,180,255,${alpha * .3})`);
-
-          ctx.beginPath();
-          ctx.moveTo(ni.x, niy);
-          ctx.lineTo(nj.x, njy);
-          ctx.strokeStyle = grd;
-          ctx.lineWidth = .65 + alpha * .8;
-          ctx.stroke();
-        }
-      }
-
-      // Disegna nodi
-      for (let i = 0; i < N; i++) {
-        const n  = nodes[i];
-        const ny = n.y - ofs;
-        if (ny < -40 || ny > canvas.height + 40) continue;
-
-        const pulse = .5 + .5 * Math.sin(n.pulse + t * .0007);
-        const r = n.r * (.8 + .4 * pulse);
-        const brightness = n.bright * pulse;
-
-        // Alone esterno grande
-        const grd = ctx.createRadialGradient(n.x, ny, 0, n.x, ny, r * 5);
-        grd.addColorStop(0,   `rgba(180,245,255,${brightness * .7})`);
-        grd.addColorStop(.35, `rgba(100,220,255,${brightness * .28})`);
-        grd.addColorStop(1,   `rgba(60,160,255,0)`);
-        ctx.beginPath();
-        ctx.arc(n.x, ny, r * 5, 0, Math.PI * 2);
-        ctx.fillStyle = grd;
-        ctx.fill();
-
-        // Nucleo brillante
-        ctx.beginPath();
-        ctx.arc(n.x, ny, r, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(210,250,255,${.65 + brightness * .35})`;
-        ctx.fill();
-      }
-
-      requestAnimationFrame(draw);
-    }
-    requestAnimationFrame(draw);
-  }
-
-  /* ── Sistema accesso email per membri (codice personalizzato) ── */
-  const CODE_TO_KEY = {
-    'BOYLE-K7X2-DAMIANO':    'simona-damiano',
-    'BOYLE-9QM4-ALPINI':     'andrea-murdock-alpini',
-    'BOYLE-R3N8-ZERBI':      'valerio-zerbi',
-    'BOYLE-F5W1-BOROTTO':    'erika-borotto',
-    'BOYLE-M2J9-GALVANI':    'andrea-galvani',
-    'BOYLE-T6P3-GIUFFRIDA':  'federica-giuffrida',
-    'BOYLE-W8L5-CALZAVACCA': 'paolo-calzavacca',
-    'BOYLE-N4R7-XHEPA':      'erion-xhepa',
-    'BOYLE-D1K6-MARSLAND':   'david-james-marsland',
-    'BOYLE-H3Y8-GIACON':     'tommaso-antonio-giacon',
-    'BOYLE-C9F2-CARDOSO':    'tiago-miguel-cardoso',
-    'BOYLE-V7Q4-VENTURELLI': 'federica-venturelli',
-    'BOYLE-X5B1-SALETTI':    'giulio-saletti',
-    'BOYLE-J2M8-SOLDINI':    'gabriele-soldini',
-    'BOYLE-E6N3-DENARO':     'matteo-denaro',
-  };
-  const VALID_CODES = {
-    'simona-damiano':         'BOYLE-K7X2-DAMIANO',
-    'andrea-murdock-alpini':  'BOYLE-9QM4-ALPINI',
-    'valerio-zerbi':          'BOYLE-R3N8-ZERBI',
-    'erika-borotto':          'BOYLE-F5W1-BOROTTO',
-    'andrea-galvani':         'BOYLE-M2J9-GALVANI',
-    'federica-giuffrida':     'BOYLE-T6P3-GIUFFRIDA',
-    'paolo-calzavacca':       'BOYLE-W8L5-CALZAVACCA',
-    'erion-xhepa':            'BOYLE-N4R7-XHEPA',
-    'david-james-marsland':   'BOYLE-D1K6-MARSLAND',
-    'tommaso-antonio-giacon': 'BOYLE-H3Y8-GIACON',
-    'tiago-miguel-cardoso':   'BOYLE-C9F2-CARDOSO',
-    'federica-venturelli':    'BOYLE-V7Q4-VENTURELLI',
-    'giulio-saletti':         'BOYLE-X5B1-SALETTI',
-    'gabriele-soldini':       'BOYLE-J2M8-SOLDINI',
-    'matteo-denaro':          'BOYLE-E6N3-DENARO',
-  };
-  const ALL_CODES = [...Object.keys(CODE_TO_KEY), 'BOYLE-FONDATORI'];
-  const ACCESS_KEY = 'boyle_member_access';
-  const EMAIL_ICON_HTML = '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6.75A2.75 2.75 0 0 1 5.75 4h12.5A2.75 2.75 0 0 1 21 6.75v10.5A2.75 2.75 0 0 1 18.25 20H5.75A2.75 2.75 0 0 1 3 17.25V6.75Zm2.2-.25 6.27 5.05a.83.83 0 0 0 1.06 0L18.8 6.5H5.2Zm13.8 1.46-5.42 4.36a2.33 2.33 0 0 1-2.96 0L5.2 7.96v9.29c0 .3.25.55.55.55h12.5c.3 0 .55-.25.55-.55V7.96Z"/></svg>';
-
-  function isMemberUnlocked() { return sessionStorage.getItem(ACCESS_KEY) === 'true'; }
-
-  function unlockAll(code) {
-    sessionStorage.setItem(ACCESS_KEY, 'true');
-    sessionStorage.setItem('boyle_member_code', code);
-    const memberKey = CODE_TO_KEY[code] || null;
-
-    // Sblocca email
-    document.querySelectorAll('.member-email-btn').forEach(btn => {
-      const email = btn.dataset.email;
-      if (!email) return;
-      const a = document.createElement('a');
-      a.className = 'icon-btn';
-      a.href = 'mailto:' + email;
-      a.setAttribute('data-tip', 'Indirizzo e-mail');
-      a.innerHTML = EMAIL_ICON_HTML;
-      btn.replaceWith(a);
-    });
-
-    // Sblocca foglio profilo
-    document.querySelectorAll('.member-profile-btn').forEach(btn => {
-      btn.classList.remove('icon-btn--locked');
-    });
-
-    // Mostra matita solo al titolare
-    if (memberKey) {
-      const ownerCard = document.querySelector('[data-key="' + memberKey + '"]');
-      if (ownerCard) {
-        const pencil = ownerCard.querySelector('.member-edit-btn');
-        if (pencil) pencil.style.display = '';
-      }
-    }
-
-    // Aggiorna barra accesso
-    const bs = document.getElementById('barStatus');
-    const bi = document.getElementById('barCodeInput');
-    const bb = document.getElementById('barCodeBtn');
-    if (bs) { bs.textContent = '✓ Accesso confermato'; bs.className = 'hero-access-status ok'; }
-    if (bi) bi.disabled = true;
-    if (bb) bb.disabled = true;
-  }
-  function unlockEmails() { unlockAll(sessionStorage.getItem('boyle_member_code') || ''); }
-
-  function initEmailWall() {
-    if (isMemberUnlocked()) { unlockEmails(); return; }
-
-    const wall      = document.getElementById('emailWall');
-    const wallClose = document.getElementById('emailWallClose');
-    const wallJoin  = document.getElementById('emailWallJoin');
-    const wallCode  = document.getElementById('wallCodeBtn');
-    const accModal  = document.getElementById('accessModal');
-    const accClose  = document.getElementById('accessModalClose');
-    const accInput  = document.getElementById('accessCodeInput');
-    const accBtn    = document.getElementById('accessCodeSubmit');
-    const accStatus = document.getElementById('accessStatus');
-    const accJoin   = document.getElementById('accessJoin');
-
-    function closeWall() {
-      wall?.classList.remove('is-open');
-      wall?.setAttribute('aria-hidden','true');
-      document.body.style.overflow = '';
-    }
-    function closeAcc() {
-      accModal?.classList.remove('is-open');
-      accModal?.setAttribute('aria-hidden','true');
-      document.body.style.overflow = '';
-    }
-    function openAcc() {
-      closeWall();
-      accModal?.classList.add('is-open');
-      accModal?.setAttribute('aria-hidden','false');
-      document.body.style.overflow = 'hidden';
-      setTimeout(() => accInput?.focus(), 100);
-    }
-
-    document.addEventListener('click', e => {
-      const btn = e.target.closest('.member-email-btn');
-      if (!btn || isMemberUnlocked()) return;
-      e.preventDefault();
-      wall?.classList.add('is-open');
-      wall?.setAttribute('aria-hidden','false');
-      document.body.style.overflow = 'hidden';
-    });
-
-    wallClose?.addEventListener('click', closeWall);
-    wall?.addEventListener('click', e => { if (e.target === wall) closeWall(); });
-    wallJoin?.addEventListener('click', () => { closeWall(); openModal(); });
-    wallCode?.addEventListener('click', openAcc);
-    accClose?.addEventListener('click', closeAcc);
-    accModal?.addEventListener('click', e => { if (e.target === accModal) closeAcc(); });
-    accJoin?.addEventListener('click', () => { closeAcc(); openModal(); });
-
-    function tryCode() {
-      const code = (accInput?.value || '').trim().toUpperCase();
-      if (ALL_CODES.includes(code)) {
-        if (accStatus) { accStatus.textContent = "✓ Accesso confermato. Benvenuto."; accStatus.className = 'access-modal__status success'; }
-        unlockAll(code);
-        setTimeout(closeAcc, 1400);
-      } else {
-        if (accStatus) { accStatus.textContent = "✗ Codice non riconosciuto. Controlla l'email di benvenuto."; accStatus.className = 'access-modal__status error'; }
-        accInput?.classList.add('shake');
-        setTimeout(() => accInput?.classList.remove('shake'), 500);
-      }
-    }
-    accBtn?.addEventListener('click', tryCode);
-    accInput?.addEventListener('keydown', e => { if (e.key === 'Enter') tryCode(); });
-    document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeWall(); closeAcc(); } });
-  }
-
-/* ── Pubblica evento: accesso riservato ai membri ── */
-  function initPublishEvent() {
-    const pubBtn       = document.getElementById('publishEventBtn');
-    const pubWall      = document.getElementById('publishWall');
-    const pubWallClose = document.getElementById('publishWallClose');
-    const pubWallCode  = document.getElementById('publishWallCodeBtn');
-    const pubWallJoin  = document.getElementById('publishWallJoin');
-    const pubModal     = document.getElementById('publishEventModal');
-    const pubClose     = document.getElementById('publishEventClose');
-    const pubForm      = document.getElementById('publishEventForm');
-    const pubStatus    = document.getElementById('publishEventStatus');
-
-    function closePubWall() {
-      pubWall?.classList.remove('is-open');
-      pubWall?.setAttribute('aria-hidden','true');
-      document.body.style.overflow = '';
-    }
-    function openPubModal() {
-      closePubWall();
-      pubModal?.classList.add('is-open');
-      pubModal?.setAttribute('aria-hidden','false');
-      document.body.style.overflow = 'hidden';
-    }
-    function closePubModal() {
-      pubModal?.classList.remove('is-open');
-      pubModal?.setAttribute('aria-hidden','true');
-      document.body.style.overflow = '';
-    }
-
-    pubBtn?.addEventListener('click', () => {
-      if (isMemberUnlocked()) { openPubModal(); }
-      else {
-        pubWall?.classList.add('is-open');
-        pubWall?.setAttribute('aria-hidden','false');
-        document.body.style.overflow = 'hidden';
-      }
-    });
-
-    pubWallClose?.addEventListener('click', closePubWall);
-    pubWall?.addEventListener('click', e => { if (e.target === pubWall) closePubWall(); });
-    pubWallJoin?.addEventListener('click', () => { closePubWall(); openModal(); });
-    pubWallCode?.addEventListener('click', () => {
-      closePubWall();
-      const accModal = document.getElementById('accessModal');
-      accModal?.classList.add('is-open');
-      accModal?.setAttribute('aria-hidden','false');
-      document.body.style.overflow = 'hidden';
-      setTimeout(() => document.getElementById('accessCodeInput')?.focus(), 100);
-    });
-
-    pubClose?.addEventListener('click', closePubModal);
-    pubModal?.addEventListener('click', e => { if (e.target === pubModal) closePubModal(); });
-
-    pubForm?.addEventListener('submit', async e => {
-      e.preventDefault();
-      const btn = pubForm.querySelector('button[type="submit"]');
-      if (btn) btn.disabled = true;
-      if (pubStatus) { pubStatus.textContent = 'Invio in corso...'; pubStatus.className = 'form-status'; }
-      try {
-        const res = await fetch(pubForm.action, {
-          method: 'POST', body: new FormData(pubForm),
-          headers: { 'Accept': 'application/json' }
+      /* Chiudi dopo click su un link del panel */
+      panel.querySelectorAll('a').forEach(function(a){
+        a.addEventListener('click', function(){
+          btn.setAttribute('aria-expanded', 'false');
+          dropdown.classList.remove('is-open');
+          /* Chiudi anche hamburger */
+          var toggle = document.getElementById('nav-toggle');
+          if (toggle) toggle.checked = false;
         });
-        if (res.ok) {
-          pubStatus.textContent = "✓ Proposta inviata. Ti risponderemo entro 48 ore.";
-          pubStatus.className = 'form-status success';
-          pubForm.reset();
-          setTimeout(closePubModal, 2800);
-        } else { throw new Error(); }
-      } catch {
-        pubStatus.textContent = "Errore nell'invio. Scrivi a info@amicidiboyle.it";
-        pubStatus.className = 'form-status error';
-      } finally { if (btn) btn.disabled = false; }
-    });
-
-    document.addEventListener('keydown', e => {
-      if (e.key === 'Escape') { closePubWall(); closePubModal(); }
-    });
-  }
-
-  /* ── 3D Card Tilt: segue il mouse ── */
-  function initCardTilt() {
-    document.querySelectorAll('.member-card').forEach(card => {
-      card.addEventListener('mousemove', e => {
-        const r = card.getBoundingClientRect();
-        const x = (e.clientX - r.left) / r.width  - .5;  // -0.5 … 0.5
-        const y = (e.clientY - r.top)  / r.height - .5;
-        const ry =  x * 14;   // max 14deg sull'asse Y
-        const rx = -y * 10;   // max 10deg sull'asse X
-        card.style.setProperty('--rx', rx + 'deg');
-        card.style.setProperty('--ry', ry + 'deg');
       });
-      card.addEventListener('mouseleave', () => {
-        card.style.setProperty('--rx', '0deg');
-        card.style.setProperty('--ry', '0deg');
-      });
-    });
-  }
 
-  /* ── Counter animato per le hero stats ── */
-  function animateCounter(el, target, duration) {
-    const isInfinity = el.textContent.includes('∞');
-    if (isInfinity) return;
-    const suffix = el.textContent.replace(/[0-9.,]/g, '');
-    const start = performance.now();
-    function step(now) {
-      const p = Math.min((now - start) / duration, 1);
-      const ease = 1 - Math.pow(1 - p, 3);
-      el.textContent = Math.round(target * ease) + suffix;
-      if (p < 1) requestAnimationFrame(step);
-    }
-    requestAnimationFrame(step);
-  }
-
-  function initCounters() {
-    const stats = document.querySelectorAll('.hero__stat-n');
-    const obs = new IntersectionObserver(entries => {
-      entries.forEach(e => {
-        if (!e.isIntersecting) return;
-        const el = e.target;
-        const raw = el.textContent.replace(/[^0-9]/g, '');
-        if (raw) animateCounter(el, parseInt(raw), 1200);
-        obs.unobserve(el);
-      });
-    }, { threshold: .8 });
-    stats.forEach(el => obs.observe(el));
-  }
-
-  /* ── Impulso luminoso tra le card ── */
-  function initCardPulse() {
-    const canvas = document.getElementById('synapseCanvas');
-    if (!canvas) return;
-    // Aggiunge un impulso extra quando si fa hover su una card
-    document.querySelectorAll('.member-card').forEach(card => {
-      card.addEventListener('mouseenter', () => {
-        card.classList.add('card-pulse-active');
-        setTimeout(() => card.classList.remove('card-pulse-active'), 600);
-      });
-    });
-  }
-
-  /* Inizializza dopo caricamento cards */
-  const origLoad = loadMembers;
-  async function loadMembersEnhanced() {
-    await loadMembers();
-    setTimeout(() => {
-      initCardTilt();
-      initCounters();
-      initCardPulse();
-      initEmailWall();
-      if (isMemberUnlocked()) {
-        unlockAll(sessionStorage.getItem('boyle_member_code') || '');
-      }
-    }, 200);
-  }
-
-  /* ── Modal apri/chiudi ── */
-  function openModal() {
-    document.getElementById('network-modal').classList.add('is-open');
-    document.body.style.overflow = 'hidden';
-  }
-  function closeModal() {
-    document.getElementById('network-modal').classList.remove('is-open');
-    document.body.style.overflow = '';
-  }
-  document.getElementById('open-network-modal')?.addEventListener('click', openModal);
-  document.getElementById('open-network-modal-2')?.addEventListener('click', openModal);
-  document.getElementById('close-network-modal')?.addEventListener('click', closeModal);
-  document.getElementById('network-modal')?.addEventListener('click', e => { if (e.target === e.currentTarget) closeModal(); });
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
-
-  /* ── Slug helper ── */
-  function slugify(s) {
-    return (s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'')
-      .replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'').replace(/-{2,}/g,'-');
-  }
-
-  /* ── Costruisce lo snippet JSON da incollare in rete-members.json ── */
-  function buildJSONSnippet() {
-    const name  = (document.getElementById('cand-name')?.value||'').trim();
-    const email = (document.getElementById('cand-email')?.value||'').trim();
-    const role  = (document.getElementById('cand-role')?.value||'').trim();
-    const aff   = (document.getElementById('cand-affiliation')?.value||'').trim();
-    const city  = (document.getElementById('cand-city')?.value||'Italia').trim();
-    const li    = (document.getElementById('cand-linkedin')?.value||'').trim();
-    const focus = (document.getElementById('cand-interest')?.value||'').trim();
-    const slug  = slugify(name) || 'nuovo-membro';
-    let parts   = [];
-    if (role)  parts.push(role);
-    if (aff)   parts.push(aff);
-    if (focus) parts.push('Focus: ' + focus);
-    return JSON.stringify({
-      name,
-      role: parts.join('. '),
-      img:  slug + '.jpg',
-      city,
-      linkedin: li,
-      email
-    }, null, 2);
-  }
-
-  /* ── Form submit: inietta snippet + invia via fetch ── */
-  const netForm   = document.getElementById('network-form');
-  const statusBox = document.getElementById('form-status');
-  netForm?.addEventListener('submit', async e => {
-    e.preventDefault();
-    // Inietta snippet JSON nel campo hidden
-    const sf = document.getElementById('cand-snippet');
-    if (sf) sf.value = buildJSONSnippet();
-
-    if (statusBox) { statusBox.textContent = 'Invio in corso…'; statusBox.className = 'form-status'; }
-    try {
-      const res = await fetch(netForm.action, {
-        method: 'POST',
-        body: new FormData(netForm),
-        headers: { 'Accept': 'application/json' }
-      });
-      if (res.ok) {
-        if (statusBox) {
-          statusBox.textContent = '✓ Candidatura inviata. Ti contatteremo presto.';
-          statusBox.className = 'form-status is-success';
+      /* Su desktop torna al :hover — rimuovi is-open se viewport largo */
+      window.addEventListener('resize', function(){
+        if (window.innerWidth > 768) {
+          btn.setAttribute('aria-expanded', 'false');
+          dropdown.classList.remove('is-open');
         }
-        netForm.reset();
-        setTimeout(closeModal, 2800);
-      } else {
-        if (statusBox) { statusBox.textContent = 'Invio non riuscito. Scrivi a info@amicidiboyle.it'; statusBox.className = 'form-status is-error'; }
-      }
-    } catch(err) {
-      if (statusBox) { statusBox.textContent = 'Errore di rete. Scrivi a info@amicidiboyle.it'; statusBox.className = 'form-status is-error'; }
-    }
-  });
+      }, { passive: true });
+    })();
 
-  /* ── Mobile nav ── */
-  const mBtn = document.getElementById('navMobileBtn');
-  const mPanel = document.getElementById('navMobilePanel');
-  mBtn?.addEventListener('click', () => {
-    const open = mPanel.getAttribute('aria-hidden') === 'false';
-    mPanel.setAttribute('aria-hidden', String(open));
-    mBtn.setAttribute('aria-expanded', String(!open));
-    mBtn.classList.toggle('is-open', !open);
-  });
-  mPanel?.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
-    mPanel.setAttribute('aria-hidden','true');
-    mBtn?.classList.remove('is-open');
-  }));
-  document.addEventListener('click', e => {
-    if (!mBtn?.contains(e.target) && !mPanel?.contains(e.target)) {
-      mPanel?.setAttribute('aria-hidden','true');
-      mBtn?.classList.remove('is-open');
-    }
-  });
-
-
-  /* ── BARRA ACCESSO ── */
-  function initAccessBar() {
-    const bi = document.getElementById('barCodeInput');
-    const bb = document.getElementById('barCodeBtn');
-    const bs = document.getElementById('barStatus');
-    function tryBar() {
-      const code = (bi?.value||'').trim().toUpperCase();
-      if (!code) return;
-      if (ALL_CODES.includes(code)) {
-        unlockAll(code);
-      } else {
-        if (bs) { bs.textContent = '✗ Codice non valido'; bs.className = 'hero-access-status err'; }
-        bi?.classList.add('shake'); setTimeout(()=>bi?.classList.remove('shake'),500);
-      }
-    }
-    bb?.addEventListener('click', tryBar);
-    bi?.addEventListener('keydown', e=>{ if(e.key==='Enter') tryBar(); });
-    if (isMemberUnlocked()) {
-      if (bs) { bs.textContent = '✓ Accesso confermato'; bs.className = 'hero-access-status ok'; }
-      if (bi) bi.disabled = true;
-      if (bb) bb.disabled = true;
-    }
-  }
-
-  /* ── MODAL PROFILO ── */
-  const PROFILES_URL = 'rete-profiles.json';
-  let profilesCache = null;
-  async function loadProfiles() {
-    if (profilesCache) return profilesCache;
-    try {
-      const r = await fetch(PROFILES_URL+'?v='+Date.now());
-      if (r.ok) { profilesCache = await r.json(); return profilesCache; }
-    } catch(e) {}
-    return {};
-  }
-
-  function initProfileModal() {
-    const modal = document.getElementById('profileModal');
-    const closeB = document.getElementById('profileModalClose');
-    function closeModal() {
-      modal?.classList.remove('is-open'); modal?.setAttribute('aria-hidden','true');
-      document.body.style.overflow='';
-    }
-    document.addEventListener('click', async e => {
-      const btn = e.target.closest('.member-profile-btn');
-      if (!btn || btn.classList.contains('icon-btn--locked')) return;
-      document.getElementById('pm-name').textContent = btn.dataset.name;
-      document.getElementById('pm-role').textContent = btn.dataset.role;
-      const profiles = await loadProfiles();
-      const p = profiles[btn.dataset.key] || {};
-      const bioEl = document.getElementById('pm-bio');
-      bioEl.textContent = p.bio || 'Profilo non ancora compilato.';
-      bioEl.className = 'profile-modal__bio' + (p.bio ? '' : ' empty');
-      const linksEl = document.getElementById('pm-links');
-      linksEl.innerHTML = '';
-      [['LinkedIn',p.linkedin],['ResearchGate',p.researchgate],
-       ['Scholar',p.scholar],['ORCID',p.orcid],['X',p.twitter],
-       ['Instagram',p.instagram],['Sito',p.website],['Corsi',p.courses]
-      ].forEach(([l,u])=>{
-        if(!u) return;
-        const a=document.createElement('a');
-        a.className='profile-link'; a.href=u; a.target='_blank'; a.rel='noopener';
-        a.textContent=l; linksEl.appendChild(a);
-      });
-      const availEl=document.getElementById('pm-avail');
-      availEl.innerHTML='';
-      if(p.speaker) availEl.innerHTML+='<span class="avail-tag">📢 Relatore</span>';
-      if(p.podcast) availEl.innerHTML+='<span class="avail-tag">🎙 Podcast</span>';
-      if(p.research) availEl.innerHTML+='<span class="avail-tag">🔬 Ricerca</span>';
-      modal?.classList.add('is-open'); modal?.setAttribute('aria-hidden','false');
-      document.body.style.overflow='hidden';
-    });
-    closeB?.addEventListener('click', closeModal);
-    modal?.addEventListener('click', e=>{ if(e.target===modal) closeModal(); });
-    document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeModal(); });
-  }
-
-  /* ── MODAL MATITA ── */
-  const GH_TOKEN = ['github_pat','_11B5YK77Y0lJDhvomks','6Sq_LMuAIP38AjYrvQuTmgsuduyUq1VBbQbcYkDU7CnEVOUV7LXPGUDcKhOkTSS'].join('');
-  const GH_REPO  = 'amicidiboyle/amicidiboyle.github.io';
-  const GH_FILE  = 'rete-profiles.json';
-  const GH_API   = 'https://api.github.com/repos/' + GH_REPO + '/contents/' + GH_FILE;
-
-  function initEditModal() {
-    const modal  = document.getElementById('editModal');
-    const closeB = document.getElementById('editModalClose');
-    const submit = document.getElementById('editSubmit');
-    const status = document.getElementById('editStatus');
-    let currentKey = '';
-    function closeModal() {
-      modal?.classList.remove('is-open'); modal?.setAttribute('aria-hidden','true');
-      document.body.style.overflow='';
-    }
-    function openModal(key, name) {
-      currentKey = key;
-      document.getElementById('editModalSub').textContent = 'Modifica il profilo — '+name;
-      modal?.classList.add('is-open'); modal?.setAttribute('aria-hidden','false');
-      document.body.style.overflow='hidden';
-      if(status) status.textContent='';
-      loadProfiles().then(profiles=>{
-        const p=profiles[key]||{};
-        document.getElementById('ef-bio').value=p.bio||'';
-        document.getElementById('ef-linkedin').value=p.linkedin||'';
-        document.getElementById('ef-researchgate').value=p.researchgate||'';
-        document.getElementById('ef-scholar').value=p.scholar||'';
-        document.getElementById('ef-orcid').value=p.orcid||'';
-        document.getElementById('ef-twitter').value=p.twitter||'';
-        document.getElementById('ef-instagram').value=p.instagram||'';
-        document.getElementById('ef-website').value=p.website||'';
-        document.getElementById('ef-courses').value=p.courses||'';
-        document.getElementById('ef-speaker').checked=!!p.speaker;
-        document.getElementById('ef-podcast').checked=!!p.podcast;
-        document.getElementById('ef-research').checked=!!p.research;
-      });
-    }
-    document.addEventListener('click', e=>{
-      const btn=e.target.closest('.member-edit-btn');
-      if(!btn) return;
-      openModal(btn.dataset.key, btn.dataset.name);
-    });
-    closeB?.addEventListener('click', closeModal);
-    modal?.addEventListener('click', e=>{ if(e.target===modal) closeModal(); });
-    document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeModal(); });
-    submit?.addEventListener('click', async ()=>{
-      if(!currentKey) return;
-      submit.disabled=true;
-      if(status){ status.textContent='Salvataggio...'; status.className='edit-status'; }
-      try {
-        const getRes=await fetch(GH_API,{headers:{'Authorization':'Bearer '+GH_TOKEN,'Accept':'application/vnd.github+json'}});
-        if(!getRes.ok) throw new Error('Errore lettura file');
-        const fileData=await getRes.json();
-        const current=JSON.parse(atob(fileData.content.replace(/\n/g,'')));
-        current[currentKey]={
-          name:current[currentKey]?.name||currentKey,
-          bio:document.getElementById('ef-bio').value.trim(),
-          linkedin:document.getElementById('ef-linkedin').value.trim(),
-          researchgate:document.getElementById('ef-researchgate').value.trim(),
-          scholar:document.getElementById('ef-scholar').value.trim(),
-          orcid:document.getElementById('ef-orcid').value.trim(),
-          twitter:document.getElementById('ef-twitter').value.trim(),
-          instagram:document.getElementById('ef-instagram').value.trim(),
-          website:document.getElementById('ef-website').value.trim(),
-          courses:document.getElementById('ef-courses').value.trim(),
-          speaker:document.getElementById('ef-speaker').checked,
-          podcast:document.getElementById('ef-podcast').checked,
-          research:document.getElementById('ef-research').checked,
-          updated:new Date().toISOString().split('T')[0],
-        };
-        const newContent=btoa(unescape(encodeURIComponent(JSON.stringify(current,null,2))));
-        const putRes=await fetch(GH_API,{
-          method:'PUT',
-          headers:{'Authorization':'Bearer '+GH_TOKEN,'Accept':'application/vnd.github+json','Content-Type':'application/json'},
-          body:JSON.stringify({message:'Profilo: '+currentKey,content:newContent,sha:fileData.sha})
+    /* ---- Chiudi hamburger dopo click su link nav ---- */
+    (function(){
+      var toggle = document.getElementById('nav-toggle');
+      if (!toggle) return;
+      document.querySelectorAll('.site-nav > a').forEach(function(a){
+        a.addEventListener('click', function(){
+          toggle.checked = false;
         });
-        if(!putRes.ok) throw new Error('Errore scrittura');
-        profilesCache=current;
-        if(status){ status.textContent='✓ Profilo salvato!'; status.className='edit-status ok'; }
-        setTimeout(closeModal,2000);
-      } catch(err) {
-        if(status){ status.textContent='✗ '+err.message; status.className='edit-status err'; }
-      } finally { submit.disabled=false; }
-    });
-  }
+      });
+      /* Chiudi hamburger su click fuori */
+      document.addEventListener('click', function(e){
+        var nav = document.querySelector('.site-nav');
+        var burger = document.querySelector('.nav-burger');
+        if (!nav || !burger) return;
+        if (!nav.contains(e.target) && !burger.contains(e.target) && !toggle.contains(e.target)) {
+          toggle.checked = false;
+        }
+      });
+    })();
 
-  /* ── INIT ── */
-  loadMembersEnhanced();
-  initSynapseCanvas();
-  initAccessBar();
-  initProfileModal();
-  initEditModal();
-  initPublishEvent();
+    /* ---- Scroll reveal: tutto da sinistra, sezione per sezione ---- */
+    (function(){
+      var prefersReduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      // Also observe specific mobile animation targets
+      document.querySelectorAll('.timeline li').forEach(function(el){
+        el.classList.add('reveal');
+      });
+      document.querySelectorAll('#ricerca .research-showcase-grid > *').forEach(function(el){
+        if (!el.classList.contains('reveal')) el.classList.add('reveal');
+      });
+      document.querySelectorAll('#formazione .course-poster-card').forEach(function(el){
+        if (!el.classList.contains('reveal')) el.classList.add('reveal');
+      });
+      var targets = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale, .info-card, .activity-card, .founder-card, .glass-card, .section-heading');
+
+      /* Stagger sui contenitori .stagger */
+      document.querySelectorAll('.stagger').forEach(function(parent){
+        Array.from(parent.children).forEach(function(child, i){
+          if (!child.classList.contains('reveal') &&
+              !child.classList.contains('reveal-left') &&
+              !child.classList.contains('reveal-right')) {
+            child.classList.add('reveal');
+          }
+          child.style.transitionDelay = (0.05 + i * 0.1) + 's';
+        });
+      });
+
+      /* Se data-delay presente, usalo come delay */
+      targets = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale');
+      targets.forEach(function(el){
+        var d = el.getAttribute('data-delay');
+        if (d) el.style.transitionDelay = (parseInt(d,10)/1000) + 's';
+      });
+
+      if (prefersReduce) {
+        targets.forEach(function(el){ el.classList.add('is-visible'); });
+        return;
+      }
+
+      /* IntersectionObserver con rootMargin generoso (cattura anche elementi in fondo) */
+      if (!window.IntersectionObserver) {
+        targets.forEach(function(el){ el.classList.add('is-visible'); });
+        return;
+      }
+      var io = new IntersectionObserver(function(entries){
+        entries.forEach(function(entry){
+          if (entry.isIntersecting){
+            entry.target.classList.add('is-visible');
+            io.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.05, rootMargin: '0px 0px 80px 0px' });
+
+      targets.forEach(function(el){ io.observe(el); });
+    })();
   </script>
-<!-- i18n: rete.html -->
+
   <script>
-  (function(){
-    var lang = localStorage.getItem('boyle_lang') || 'it';
-    if (lang !== 'en') return; // nothing to do for Italian
+    (function(){
+      document.querySelectorAll('[data-open-dialog]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const dlg = document.getElementById(btn.getAttribute('data-open-dialog'));
+          if (!dlg || typeof dlg.showModal !== 'function') return;
+          /* Reset stile prima di aprire */
+          dlg.style.cssText = '';
+          dlg.showModal();
+        });
+      });
+      document.querySelectorAll('[data-close-dialog]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const dlg = btn.closest('dialog');
+          if (dlg) dlg.close();
+        });
+      });
+      document.querySelectorAll('dialog').forEach(dlg => {
+        dlg.addEventListener('click', (e) => {
+          const inner = dlg.querySelector('.dialog__inner');
+          if (inner && !inner.contains(e.target)) dlg.close();
+        });
+      });
 
-    var T = {
-      // Nav
-      'Visione':'Vision','Ricerca':'Research','Rete':'Network',
-      'Podcast':'Podcast','Contatti':'Contact','Home':'Home',
-      // Hero
-      'Network scientifico · Ambienti estremi':'Scientific Network · Extreme Environments',
-      'Rete di Boyle':'Boyle Network',
-      'Un ecosistema multidisciplinare di professionisti, ricercatori e innovatori dedicati alla medicina subacquea, iperbarica, aerospaziale e alla fisiologia degli ambienti estremi.':
-        'A multidisciplinary ecosystem of professionals, researchers and innovators dedicated to underwater, hyperbaric, aerospace medicine and the physiology of extreme environments.',
-      'Candidati alla rete':'Apply to the network',
-      'Esplora i profili':'Explore profiles',
-      'Membri attivi':'Active members',
-      'Specialità':'Specialties',
-      'Nazioni':'Nations',
-      'In crescita':'Growing',
-      // Members section
-      'I Membri della Rete':'Network Members',
-      'Professionisti selezionati per competenza, curiosità e impatto operativo.':
-        'Professionals selected for expertise, curiosity and operational impact.',
-      // Benefits
-      'Perché entrare':'Why join',
-      'Cosa significa far parte della Rete di Boyle':'What it means to be part of the Boyle Network',
-      'La rete non è una directory. È un ecosistema attivo dove ogni membro contribuisce e riceve valore concreto.':
-        'The network is not a directory. It is an active ecosystem where every member contributes and receives concrete value.',
-      'Accesso ai contatti diretti':'Direct contact access',
-      'Visibilità sul portale':'Portal visibility',
-      'Contribuisci alla newsletter':'Contribute to the newsletter',
-      'Pubblica i tuoi corsi':'Publish your courses',
-      'Collaborazioni scientifiche':'Scientific collaborations',
-      'Prima fila sulle iniziative':'Front row on initiatives',
-      // CTA
-      'Vuoi entrare nella Rete di Boyle?':'Want to join the Boyle Network?',
-      'La rete è aperta a professionisti, ricercatori e collaboratori con competenze in medicina subacquea, iperbarica, ambienti estremi, fisiologia umana, sicurezza e innovazione.':
-        'The network is open to professionals, researchers and collaborators with expertise in underwater, hyperbaric medicine, extreme environments, human physiology, safety and innovation.',
-      'Candidati ora':'Apply now',
-      // Modal
-      'Connettiamo menti brillanti':'Connecting brilliant minds',
-      'Invia candidatura':'Submit application',
-      // Footer
-      '© 2026 Gli Amici di Boyle':'© 2026 Gli Amici di Boyle',
-    };
-
-    // Translate text nodes
-    function walkAndTranslate(node) {
-      if (node.nodeType === 3) { // text node
-        var trimmed = node.textContent.trim();
-        if (T[trimmed]) node.textContent = node.textContent.replace(trimmed, T[trimmed]);
-      } else if (node.nodeType === 1 && !['SCRIPT','STYLE'].includes(node.tagName)) {
-        node.childNodes.forEach(walkAndTranslate);
+      async function wireForm(formId, statusId, submitId, successText){
+        const form = document.getElementById(formId);
+        const status = document.getElementById(statusId);
+        const submit = document.getElementById(submitId);
+        if(!form || !status || !submit) return;
+        form.addEventListener('submit', async function(e){
+          e.preventDefault();
+          const originalText = submit.textContent;
+          submit.disabled = true;
+          submit.textContent = 'Invio in corso…';
+          status.textContent = '';
+          status.className = 'form__status';
+          try{
+            const response = await fetch(form.action, {
+              method: 'POST',
+              body: new FormData(form),
+              headers: { 'Accept': 'application/json' }
+            });
+            if(response.ok){
+              form.reset();
+              status.textContent = successText;
+              status.classList.add('is-success');
+              status.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+              const dlg = form.closest('dialog');
+              if(dlg) setTimeout(() => dlg.close(), 2800);
+            } else {
+              status.textContent = 'Invio non riuscito. Controlla i campi o scrivi a info@amicidiboyle.it';
+              status.classList.add('is-error');
+            }
+          } catch(err){
+            status.textContent = 'Errore di rete. Riprova o scrivi a info@amicidiboyle.it';
+            status.classList.add('is-error');
+          } finally {
+            submit.disabled = false;
+            submit.textContent = originalText;
+          }
+        });
       }
+      wireForm('contactFormGeneral', 'statusGeneral', 'submitGeneral', 'Messaggio inviato correttamente.');
+      wireForm('contactFormTeaching', 'statusTeaching', 'submitTeaching', 'Richiesta inviata correttamente.');
+      wireForm('contactFormBoyle', 'statusBoyle', 'submitBoyle', 'Candidatura inviata correttamente.');
+    })();
+  </script>
+
+  <script>
+  /* === PULVISCOLO SOMMERSO + RAGGI DI LUCE === */
+  (function(){
+    var canvas = document.getElementById('dust-canvas');
+    if (!canvas) return;
+    var ctx = canvas.getContext('2d');
+    var W, H, motes = [], raf;
+    var paused = false;
+
+    function resize(){
+      W = canvas.width  = window.innerWidth;
+      H = canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resize, {passive:true});
+    resize();
+
+    function mkMote(fromBottom){
+      var t = Math.random();
+      return {
+        x: Math.random() * W,
+        y: fromBottom ? H + 5 + Math.random()*50 : Math.random()*H,
+        /* tre categorie: pulviscolo fine, medio, bolla rara */
+        r:   t < 0.55 ? 0.4 + Math.random()*1.0
+           : t < 0.85 ? 1.0 + Math.random()*1.8
+           :             1.8 + Math.random()*2.8,
+        spd: t < 0.55 ? 0.06 + Math.random()*0.20
+           : t < 0.85 ? 0.12 + Math.random()*0.30
+           :             0.20 + Math.random()*0.42,
+        drift: (Math.random()-0.5)*0.18,
+        op:   t < 0.55 ? 0.025 + Math.random()*0.09
+           : t < 0.85 ? 0.04  + Math.random()*0.12
+           :             0.05  + Math.random()*0.14,
+        wb:  Math.random()*Math.PI*2,
+        wbA: 0.12 + Math.random()*0.55,
+        wbS: 0.005 + Math.random()*0.014,
+        isFine: t < 0.55,
+        isBubble: t >= 0.85,
+      };
     }
 
-    // Translate nav links by text content
-    function translateNav() {
-      document.querySelectorAll('nav a, .nav--desktop a, .nav-mobile-panel a').forEach(function(a) {
-        var t = a.textContent.trim();
-        if (T[t]) a.textContent = T[t];
-      });
+    /* Profondità maggiore → più motes */
+    for (var i = 0; i < 140; i++) motes.push(mkMote(false));
+
+    function draw(){
+      ctx.clearRect(0,0,W,H);
+      for (var i = 0; i < motes.length; i++){
+        var m = motes[i];
+        m.y -= m.spd;
+        m.wb += m.wbS;
+        m.x += m.drift + Math.sin(m.wb)*m.wbA;
+        if (m.y < -m.r*3) Object.assign(m, mkMote(true));
+
+        ctx.save();
+        ctx.globalAlpha = m.op;
+        if (m.isBubble){
+          /* Bolla: cerchio vuoto con highlight */
+          ctx.beginPath();
+          ctx.arc(m.x, m.y, m.r, 0, Math.PI*2);
+          ctx.strokeStyle = 'rgba(160,230,255,0.8)';
+          ctx.lineWidth = 0.55;
+          ctx.stroke();
+          ctx.beginPath();
+          ctx.arc(m.x - m.r*0.28, m.y - m.r*0.3, m.r*0.22, 0, Math.PI*2);
+          ctx.fillStyle = 'rgba(255,255,255,0.6)';
+          ctx.fill();
+        } else {
+          /* Pulviscolo fine / medio: punto radiale sfumato */
+          var g = ctx.createRadialGradient(m.x, m.y, 0, m.x, m.y, m.r*(m.isFine?2:2.8));
+          g.addColorStop(0,   'rgba(210,242,255,0.95)');
+          g.addColorStop(0.35,'rgba(170,225,255,0.45)');
+          g.addColorStop(1,   'rgba(130,200,255,0)');
+          ctx.beginPath();
+          ctx.arc(m.x, m.y, m.r*(m.isFine?2:2.8), 0, Math.PI*2);
+          ctx.fillStyle = g;
+          ctx.fill();
+        }
+        ctx.restore();
+      }
+      raf = requestAnimationFrame(draw);
     }
 
-    // Translate specific elements by selector
-    var MAP = [
-      ['.hero__eyebrow',  'Network scientifico · Ambienti estremi'],
-      ['.hero__title',    'Rete di Boyle'],
-      ['.hero__subtitle', 'Un ecosistema multidisciplinare di professionisti, ricercatori e innovatori dedicati alla medicina subacquea, iperbarica, aerospaziale e alla fisiologia degli ambienti estremi.'],
-      ['.members-section .section-heading h2', 'I Membri della Rete'],
-      ['.members-section .section-subheading',  'Professionisti selezionati per competenza, curiosità e impatto operativo.'],
-      ['.benefits-section .section-heading h2', 'Cosa significa far parte della Rete di Boyle'],
-      ['.cta-section h2', 'Vuoi entrare nella Rete di Boyle?'],
-      ['.hero__cta .btn-electric span', 'Candidati alla rete'],
-    ];
-
-    document.addEventListener('DOMContentLoaded', function() {
-      MAP.forEach(function(pair) {
-        var el = document.querySelector(pair[0]);
-        if (el && T[pair[1]]) el.textContent = T[pair[1]];
-      });
-      translateNav();
-      document.documentElement.lang = 'en';
-      document.title = 'Boyle Network · Gli Amici di Boyle';
+    draw();
+    document.addEventListener('visibilitychange', function(){
+      if (document.hidden){ cancelAnimationFrame(raf); paused = true; }
+      else if (paused){ paused = false; draw(); }
     });
-
-    // Update toggle button display
-    var cur = document.getElementById('langCurrent');
-    var oth = document.getElementById('langOther');
-    if (cur) cur.textContent = 'EN';
-    if (oth) oth.textContent = 'IT';
   })();
   </script>
 
-  <!-- ── MODAL PROFILO ── -->
-  <div class="profile-modal" id="profileModal" aria-hidden="true">
-    <div class="profile-modal__dialog">
-      <button class="profile-modal__close" id="profileModalClose">✕</button>
-      <p class="profile-modal__name" id="pm-name"></p>
-      <p class="profile-modal__role" id="pm-role"></p>
-      <p class="profile-modal__bio" id="pm-bio"></p>
-      <div class="profile-modal__links" id="pm-links"></div>
-      <div class="profile-modal__avail" id="pm-avail"></div>
+
+  <script>
+  /* ── Lightbox locandine ── */
+  (function(){
+    var lb = document.getElementById('tc-lightbox');
+    var lbImg = document.getElementById('tc-lightbox-img');
+    var lbClose = document.getElementById('tc-lightbox-close');
+    if (!lb || !lbImg) return;
+
+    document.querySelectorAll('.teaching-card-img-wrap').forEach(function(wrap){
+      wrap.style.cursor = 'pointer';
+      wrap.addEventListener('click', function(){
+        var src = wrap.getAttribute('data-src');
+        lbImg.src = src;
+        lbImg.alt = wrap.querySelector('img').alt;
+        lb.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+      });
+    });
+
+    function closeLb(){
+      lb.style.display = 'none';
+      lbImg.src = '';
+      document.body.style.overflow = '';
+    }
+    lbClose.addEventListener('click', closeLb);
+    lb.addEventListener('click', function(e){ if(e.target === lb) closeLb(); });
+    document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeLb(); });
+  })();
+  </script>
+  <!-- Cursore subacqueo (solo desktop) -->
+  <div id="cursor-bubble" aria-hidden="true"></div>
+  <script>
+  (function(){
+    var isMob = window.matchMedia('(max-width:768px)').matches || !window.matchMedia('(pointer:fine)').matches;
+    if (isMob) return;
+    var el = document.getElementById('cursor-bubble');
+    if (!el) return;
+    var x = 0, y = 0, tx = 0, ty = 0;
+    document.addEventListener('mousemove', function(e){
+      tx = e.clientX; ty = e.clientY;
+    }, {passive:true});
+    /* Segui il mouse con leggero lag */
+    (function loop(){
+      x += (tx - x) * 0.14;
+      y += (ty - y) * 0.14;
+      el.style.left = x + 'px';
+      el.style.top  = y + 'px';
+      requestAnimationFrame(loop);
+    })();
+    /* Ingrandisci su elementi interattivi */
+    document.querySelectorAll('a,button,.btn,.glass-card,.activity-card,.founder-card').forEach(function(el2){
+      el2.addEventListener('mouseenter', function(){ el.style.width='40px'; el.style.height='40px'; el.style.background='rgba(123,228,255,.1)'; });
+      el2.addEventListener('mouseleave', function(){ el.style.width='24px'; el.style.height='24px'; el.style.background='rgba(123,228,255,.06)'; });
+    });
+  })();
+  </script>
+
+  <!-- Lightbox locandine -->
+  <div id="tc-lightbox" style="display:none;position:fixed;inset:0;z-index:9000;background:rgba(1,6,16,.9);backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:20px;" role="dialog" aria-label="Anteprima locandina" aria-modal="true">
+    <button id="tc-lightbox-close" style="position:absolute;top:16px;right:20px;background:rgba(123,228,255,.12);border:1px solid rgba(123,228,255,.3);border-radius:50%;width:44px;height:44px;cursor:pointer;color:#edf7ff;font-size:1.4rem;display:flex;align-items:center;justify-content:center;" aria-label="Chiudi">✕</button>
+    <img id="tc-lightbox-img" src="" alt="" style="max-width:min(92vw,600px);max-height:88vh;border-radius:18px;box-shadow:0 32px 80px rgba(0,0,0,.7);border:1px solid rgba(123,228,255,.2);object-fit:contain;" />
+  </div>
+
+  <!-- Quick nav mobile: floating button -->
+  <div id="mobile-quicknav" aria-label="Navigazione rapida" style="display:none;">
+    <button id="mobile-quicknav-btn" aria-label="Navigazione rapida" aria-expanded="false">
+      <svg viewBox="0 0 22 22" fill="none" width="20" height="20"><path d="M4 6h14M4 11h14M4 16h14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+    <div id="mobile-quicknav-panel" role="menu" aria-hidden="true">
+      <a href="#home">↑ Inizio</a>
+      <a href="#visione">Visione</a>
+      <a href="#attivita">Aree</a>
+      <a href="#fondatori">Fondatori</a>
+      <a href="#rete-home">Rete</a>
+      <a href="#contenuti">Contenuti</a>
+      <a href="#ricerca">Ricerca</a>
+      <a href="#formazione">Formazione</a>
+      <a href="#partner">Partner</a>
+      <a href="#contatti">Contatti</a>
     </div>
   </div>
-  <!-- ── MODAL MATITA ── -->
-  <div class="edit-modal" id="editModal" aria-hidden="true">
-    <div class="edit-modal__dialog">
-      <button class="edit-modal__close" id="editModalClose">✕</button>
-      <p class="edit-modal__title">Personalizza la tua card</p>
-      <p class="edit-modal__sub" id="editModalSub"></p>
-      <div class="edit-section-label">Presentazione</div>
-      <div class="edit-field"><label>Bio (max 300 caratteri)</label><textarea id="ef-bio" maxlength="300" placeholder="Sono un medico specializzato in..."></textarea></div>
-      <div class="edit-section-label">Link professionali</div>
-      <div class="edit-field"><label>LinkedIn</label><input type="url" id="ef-linkedin" /></div>
-      <div class="edit-field"><label>ResearchGate</label><input type="url" id="ef-researchgate" /></div>
-      <div class="edit-field"><label>Google Scholar</label><input type="url" id="ef-scholar" /></div>
-      <div class="edit-field"><label>ORCID</label><input type="url" id="ef-orcid" /></div>
-      <div class="edit-field"><label>X / Twitter</label><input type="url" id="ef-twitter" /></div>
-      <div class="edit-field"><label>Instagram</label><input type="url" id="ef-instagram" /></div>
-      <div class="edit-field"><label>Sito personale</label><input type="url" id="ef-website" /></div>
-      <div class="edit-field"><label>Link corsi / pubblicazioni</label><input type="url" id="ef-courses" /></div>
-      <div class="edit-section-label">Disponibilità</div>
-      <div class="edit-checkboxes">
-        <label class="edit-checkbox"><input type="checkbox" id="ef-speaker" /> Disponibile come relatore</label>
-        <label class="edit-checkbox"><input type="checkbox" id="ef-podcast" /> Disponibile per il podcast</label>
-        <label class="edit-checkbox"><input type="checkbox" id="ef-research" /> Disponibile per ricerca</label>
-      </div>
-      <button class="edit-submit" id="editSubmit">Salva il profilo</button>
-      <div class="edit-status" id="editStatus"></div>
-    </div>
-  </div>
+  <script>
+  (function(){
+    var isMob = window.innerWidth <= 768;
+    if (!isMob) return;
+    var wrap = document.getElementById('mobile-quicknav');
+    var btn  = document.getElementById('mobile-quicknav-btn');
+    var panel= document.getElementById('mobile-quicknav-panel');
+    if (!wrap || !btn || !panel) return;
+    wrap.style.display = 'block';
+
+    /* Mostra solo dopo 300px di scroll */
+    window.addEventListener('scroll', function(){
+      wrap.classList.toggle('qn-visible', window.scrollY > 300);
+    }, {passive:true});
+
+    btn.addEventListener('click', function(){
+      var open = panel.getAttribute('aria-hidden') === 'false';
+      panel.setAttribute('aria-hidden', open ? 'true' : 'false');
+      btn.setAttribute('aria-expanded', !open);
+      btn.classList.toggle('qn-open', !open);
+    });
+
+    /* Chiudi dopo click su link */
+    panel.querySelectorAll('a').forEach(function(a){
+      a.addEventListener('click', function(){
+        panel.setAttribute('aria-hidden','true');
+        btn.setAttribute('aria-expanded','false');
+        btn.classList.remove('qn-open');
+      });
+    });
+
+    /* Chiudi su click fuori */
+    document.addEventListener('click', function(e){
+      if (!wrap.contains(e.target)) {
+        panel.setAttribute('aria-hidden','true');
+        btn.setAttribute('aria-expanded','false');
+        btn.classList.remove('qn-open');
+      }
+    });
+  })();
+  </script>
+
+  <!-- Desktop: floating side nav (appare dopo 400px scroll) -->
+  <nav id="desktop-quicknav" aria-label="Navigazione rapida" style="display:none">
+    <ul>
+      <li><a href="#home"       data-label="Home"       aria-label="Vai a Home"></a></li>
+      <li><a href="#visione"    data-label="Visione"    aria-label="Vai a Visione"></a></li>
+      <li><a href="#attivita"   data-label="Aree"       aria-label="Vai ad Aree"></a></li>
+      <li><a href="#fondatori"  data-label="Fondatori"  aria-label="Vai a Fondatori"></a></li>
+      <li><a href="#rete-home"  data-label="Rete"       aria-label="Vai a Rete"></a></li>
+      <li><a href="#contenuti"  data-label="Contenuti"  aria-label="Vai a Contenuti"></a></li>
+      <li><a href="#ricerca"    data-label="Ricerca"    aria-label="Vai a Ricerca"></a></li>
+      <li><a href="#formazione" data-label="Formazione" aria-label="Vai a Formazione"></a></li>
+      <li><a href="#partner"    data-label="Partner"    aria-label="Vai a Partner"></a></li>
+      <li><a href="#contatti"   data-label="Contatti"   aria-label="Vai a Contatti"></a></li>
+    </ul>
+  </nav>
+  <script>
+  /* ── Desktop floating side nav ── */
+  (function(){
+    var isMob = window.innerWidth <= 768;
+    if (isMob) return;
+    var nav = document.getElementById('desktop-quicknav');
+    if (!nav) return;
+    nav.style.display = 'block';
+
+    // Mostra dopo 400px
+    window.addEventListener('scroll', function(){
+      nav.classList.toggle('dqn-visible', window.scrollY > 400);
+    }, {passive:true});
+
+    // Evidenzia sezione corrente
+    var sections = Array.from(document.querySelectorAll('section[id]'));
+    var links    = Array.from(nav.querySelectorAll('a'));
+    function highlight() {
+      var scrollY = window.scrollY + window.innerHeight * .4;
+      var active  = sections.filter(s => s.offsetTop <= scrollY).pop();
+      links.forEach(function(a) {
+        a.classList.toggle('dqn-active', active && a.getAttribute('href') === '#' + active.id);
+      });
+    }
+    window.addEventListener('scroll', highlight, {passive:true});
+    highlight();
+  })();
+  </script>
+
+  <!-- i18n: lingua IT/EN -->
+  <script>
+  (function(){
+    /* ── Translations ── */
+    var T = {
+      it: {
+        // Nav
+        'nav_home':'Home','nav_visione':'Visione','nav_attivita':'Attività',
+        'nav_ricerca':'Ricerca','nav_formazione':'Formazione','nav_contenuti':'Contenuti',
+        'nav_fondatori':'Fondatori','nav_rete':'Rete','nav_podcast':'Podcast',
+        'nav_partner':'Partner','nav_contatti':'Contatti',
+        // Hero
+        'hero_kicker':'Medicina subacquea · Iperbarica · Aerospaziale · Safety',
+        'hero_h1':'Medicina degli ambienti estremi',
+        'hero_lead':'Ricerca, formazione e rete professionale nella medicina degli ambienti estremi. Una rete multidisciplinare che unisce clinica, fisiologia, tecnologia e cultura della sicurezza.',
+        'hero_cta1':'Scopri il progetto','hero_cta2':'Entra nella rete','hero_cta3':'Ascolta il podcast',
+        // Stats
+        'stat_fondatori':'Fondatori','stat_episodi':'Episodi podcast',
+        'stat_anno':'Anno di fondazione','stat_views':'Visualizzazioni','stat_idee':'Idee',
+        // In evidenza
+        'ev_title':'Network di professionisti di alto livello',
+        'ev_text':'Esperti in medicina subacquea e iperbarica, rianimazione, medicina spaziale e ambienti estremi con identità scientifica e visione operativa.',
+        'vis_title':'Clinica, ricerca e ambienti estremi',
+        'vis_text':'Professionisti di prima linea che uniscono competenze mediche, ingegneristiche e scientifiche per sviluppare soluzioni operative in scenari ad alta complessità.',
+        'cont_title':'Podcast, lezioni, articoli, eventi',
+        'cont_text':'Materiali chiari, aggiornati, applicabili. Non solo teoria: corsi, risorse, pubblicazioni e occasioni concrete di collaborazione.',
+        // Visione
+        'vis_h2':'Rigore scientifico, impatto operativo',
+        'vis_p':'Essere un riferimento internazionale per innovazione e ricerca in medicina iperbarica e subacquea, con un approccio multidisciplinare che integra competenze mediche, tecnologiche e scientifiche di alto livello.',
+        'vis_bullet1':'Professionisti di prima linea',
+        'vis_bullet2':'Competenze dal lavoro sul campo',
+        'vis_bullet3':'Clinica, ingegneria, fisiologia, safety',
+        'vis_bullet4':'Formazione continua',
+        'vis_bullet5':'Approccio multidisciplinare',
+        // Attività
+        'att_kicker':'Aree di attività',
+        'att_h2':'Quattro direttrici chiare, con contenuti reali dentro',
+        'att_sub':'Ricerca, formazione, pubblicazioni e media organizzati in un ecosistema coerente, leggibile e utile.',
+        'att1_k':'Macroarea 01','att1_h3':'Ricerca',
+        'att1_p':'Studi clinici, collaborazioni scientifiche, progetti di ricerca e protocolli applicati alla medicina iperbarica e subacquea.',
+        'att1_cta':'Esplora la ricerca',
+        'att2_k':'Macroarea 02','att2_h3':'Formazione',
+        'att2_p':'Docenze universitarie, corsi, congressi, materiali didattici e attività costruite per chi lavora sul campo.',
+        'att2_cta':'Vai alla formazione',
+        'att3_k':'Macroarea 03','att3_h3':'Pubblicazioni',
+        'att3_p':'Articoli, case report, contributi editoriali e materiali scientifici utili a clinici, operatori e ricercatori.',
+        'att3_cta':'Leggi le pubblicazioni',
+        'att4_k':'Macroarea 04','att4_h3':'Media',
+        'att4_p':'Podcast, interviste e contenuti divulgativi che rendono accessibile la medicina degli ambienti estremi.',
+        'att4_cta':'Apri area media',
+        // Fondatori
+        'fond_kicker':'I Fondatori',
+        'fond_h2':'Un progetto nato da clinici, ricercatori e ingegneri',
+        'fond_sub':'Professionisti attivi nella medicina degli ambienti estremi, nella ricerca e nella formazione, con profili complementari e competenze operative.',
+        // Rete home
+        'rete_kicker':'La Rete di Boyle',
+        'rete_h2':'Una rete selettiva aperta a chi fa',
+        'rete_p':'La rete di professionisti e ricercatori degli Amici di Boyle è un ecosistema multidisciplinare dedicato alla medicina subacquea e iperbarica, alla medicina aerospaziale, agli ambienti estremi, alla fisiologia umana e alla sicurezza.',
+        'rete_part1':'Esplora','rete_part2':'Partecipa','rete_part3':'Costruisci',
+        'rete_cta_main':'Scopri la rete',
+        // Contenuti
+        'cont_kicker':'Contenuti',
+        'cont_h2':'Podcast, corsi, lezioni e pubblicazioni',
+        'cont_podcast_title':'Sotto Pressione',
+        'cont_podcast_p':'Il podcast di Luigi Tarsia sulla medicina degli ambienti estremi.',
+        'cont_podcast_cta':'Ascolta il podcast',
+        // Ricerca
+        'ric_kicker':'Ricerca',
+        'ric_h2':'Ricerca applicata, protocolli e strumenti operativi',
+        'ric_sub':'Studi, collaborazioni e strumenti nati dall'esperienza diretta sul campo.',
+        // Formazione
+        'form_kicker':'Formazione',
+        'form_h2':'Docenze, corsi e materiali didattici',
+        'form_sub':'Attività formative costruite per chi opera in ambienti estremi.',
+        // Pubblicazioni
+        'pub_kicker':'Pubblicazioni',
+        'pub_h2':'Pubblicazioni e articoli scientifici',
+        'pub_sub':'Contributi editoriali, case report e materiali di riferimento.',
+        // Partner
+        'part_kicker':'Partner',
+        'part_h2':'Collaborazioni e realtà affini',
+        'part_sub':'Istituzioni, aziende e organizzazioni che condividono la nostra visione.',
+        // Contatti
+        'cont2_kicker':'Contatti',
+        'cont2_h2':'Collaborazioni, docenze, corsi e candidature',
+        'cont2_sub':'Scrivici per qualsiasi proposta. Rispondiamo a tutto.',
+        'cont2_cta1':'Scrivici','cont2_cta2':'Proponi un corso','cont2_cta3':'Candidati alla rete',
+        // Footer
+        'footer_copy':'© 2026 Gli Amici di Boyle · Tutti i diritti riservati',
+      },
+      en: {
+        // Nav
+        'nav_home':'Home','nav_visione':'Vision','nav_attivita':'Activities',
+        'nav_ricerca':'Research','nav_formazione':'Education','nav_contenuti':'Content',
+        'nav_fondatori':'Founders','nav_rete':'Network','nav_podcast':'Podcast',
+        'nav_partner':'Partners','nav_contatti':'Contact',
+        // Hero
+        'hero_kicker':'Underwater Medicine · Hyperbaric · Aerospace · Safety',
+        'hero_h1':'Medicine of Extreme Environments',
+        'hero_lead':'Research, education and professional network in extreme environment medicine. A multidisciplinary community bridging clinical practice, physiology, technology and safety culture.',
+        'hero_cta1':'Discover the project','hero_cta2':'Join the network','hero_cta3':'Listen to the podcast',
+        // Stats
+        'stat_fondatori':'Founders','stat_episodi':'Podcast episodes',
+        'stat_anno':'Founded','stat_views':'Views','stat_idee':'Ideas',
+        // In evidenza
+        'ev_title':'High-level professional network',
+        'ev_text':'Experts in underwater and hyperbaric medicine, critical care, space medicine and extreme environments — with a scientific identity and an operational vision.',
+        'vis_title':'Clinical practice, research and extreme environments',
+        'vis_text':'Frontline professionals combining medical, engineering and scientific expertise to develop operational solutions in high-complexity scenarios.',
+        'cont_title':'Podcast, lectures, articles, events',
+        'cont_text':'Clear, current, applicable content. Not just theory: courses, resources, publications and concrete collaboration opportunities.',
+        // Visione
+        'vis_h2':'Scientific rigour, operational impact',
+        'vis_p':'To become an international reference for innovation and research in hyperbaric and underwater medicine, through a multidisciplinary approach integrating high-level medical, technological and scientific expertise.',
+        'vis_bullet1':'Frontline professionals',
+        'vis_bullet2':'Expertise born from field practice',
+        'vis_bullet3':'Medicine, engineering, physiology, safety',
+        'vis_bullet4':'Continuous education',
+        'vis_bullet5':'Multidisciplinary approach',
+        // Attività
+        'att_kicker':'Areas of activity',
+        'att_h2':'Four clear directions, with real content inside',
+        'att_sub':'Research, education, publications and media organised in a coherent, readable and useful ecosystem.',
+        'att1_k':'Area 01','att1_h3':'Research',
+        'att1_p':'Clinical studies, scientific collaborations, research projects and protocols applied to hyperbaric and underwater medicine.',
+        'att1_cta':'Explore research',
+        'att2_k':'Area 02','att2_h3':'Education',
+        'att2_p':'University lectures, courses, congresses, teaching materials and activities built for those working in the field.',
+        'att2_cta':'Go to education',
+        'att3_k':'Area 03','att3_h3':'Publications',
+        'att3_p':'Articles, case reports, editorial contributions and scientific materials for clinicians, practitioners and researchers.',
+        'att3_cta':'Read publications',
+        'att4_k':'Area 04','att4_h3':'Media',
+        'att4_p':'Podcast, interviews and educational content making extreme environment medicine accessible.',
+        'att4_cta':'Open media area',
+        // Fondatori
+        'fond_kicker':'The Founders',
+        'fond_h2':'A project born from clinicians, researchers and engineers',
+        'fond_sub':'Professionals active in extreme environment medicine, research and education, with complementary profiles and operational expertise.',
+        // Rete home
+        'rete_kicker':'The Boyle Network',
+        'rete_h2':'A selective network open to those who do',
+        'rete_p':'The Amici di Boyle professional network is a multidisciplinary ecosystem dedicated to underwater and hyperbaric medicine, aerospace medicine, extreme environments, human physiology and safety.',
+        'rete_part1':'Explore','rete_part2':'Participate','rete_part3':'Build',
+        'rete_cta_main':'Discover the network',
+        // Contenuti
+        'cont_kicker':'Content',
+        'cont_h2':'Podcast, courses, lectures and publications',
+        'cont_podcast_title':'Under Pressure',
+        'cont_podcast_p':'Luigi Tarsia's podcast on medicine in extreme environments.',
+        'cont_podcast_cta':'Listen to the podcast',
+        // Ricerca
+        'ric_kicker':'Research',
+        'ric_h2':'Applied research, protocols and operational tools',
+        'ric_sub':'Studies, collaborations and tools born from direct field experience.',
+        // Formazione
+        'form_kicker':'Education',
+        'form_h2':'Lectures, courses and teaching materials',
+        'form_sub':'Educational activities built for those operating in extreme environments.',
+        // Pubblicazioni
+        'pub_kicker':'Publications',
+        'pub_h2':'Publications and scientific articles',
+        'pub_sub':'Editorial contributions, case reports and reference materials.',
+        // Partner
+        'part_kicker':'Partners',
+        'part_h2':'Collaborations and aligned organisations',
+        'part_sub':'Institutions, companies and organisations sharing our vision.',
+        // Contatti
+        'cont2_kicker':'Contact',
+        'cont2_h2':'Collaborations, lectures, courses and applications',
+        'cont2_sub':'Write to us for any proposal. We reply to everything.',
+        'cont2_cta1':'Write to us','cont2_cta2':'Propose a course','cont2_cta3':'Apply to the network',
+        // Footer
+        'footer_copy':'© 2026 Gli Amici di Boyle · All rights reserved',
+      }
+    };
+
+    /* ── Map: selector → translation key (completa) ── */
+    var MAP = [
+      // Hero
+      ['.hero-kicker',                    'hero_kicker'],
+      ['.hero-title',                     'hero_h1'],
+      ['[data-i18n="hero_lead"]',         'hero_lead'],
+      // Hero CTAs
+      ['[href="#visione"].btn--primary',  'hero_cta1'],
+      ['[href="rete.html"].btn--primary', 'hero_cta2'],
+      ['[href="podcast.html"].btn--ghost','hero_cta3'],
+      // Hero stats
+      ['#stat-fondatori',  'stat_fondatori'],
+      ['#stat-episodi',    'stat_episodi'],
+      ['#stat-anno',       'stat_anno'],
+      ['#stat-views',      'stat_views'],
+      ['#stat-idee',       'stat_idee'],
+      // In evidenza cards
+      ['#ev-title',   'ev_title'],   ['#ev-text',   'ev_text'],
+      ['#vis-title',  'vis_title'],  ['#vis-text',  'vis_text'],
+      ['#cont-title', 'cont_title'], ['#cont-text', 'cont_text'],
+      // Visione
+      ['#vis-h2',  'vis_h2'],
+      ['#vis-p',   'vis_p'],
+      // Attività
+      ['#att-h2',   'att_h2'],
+      ['#att-sub',  'att_sub'],
+      ['#att1-k',   'att1_k'],  ['#att1-h3',  'att1_h3'],  ['#att1-p',  'att1_p'],
+      ['#att2-k',   'att2_k'],  ['#att2-h3',  'att2_h3'],  ['#att2-p',  'att2_p'],
+      ['#att3-k',   'att3_k'],  ['#att3-h3',  'att3_h3'],  ['#att3-p',  'att3_p'],
+      ['#att4-k',   'att4_k'],  ['#att4-h3',  'att4_h3'],  ['#att4-p',  'att4_p'],
+      // Fondatori
+      ['#fond-h2',  'fond_h2'], ['#fond-sub', 'fond_sub'],
+      // Rete home
+      ['#rete-h2',  'rete_h2'], ['#rete-p',   'rete_p'],
+      // Contenuti
+      ['#cont-h2',        'cont_h2'],
+      ['#cont-podcast-p', 'cont_podcast_p'],
+      // Ricerca
+      ['#ric-h2',  'ric_h2'],
+      // Formazione
+      ['#form-h2', 'form_h2'],
+      // Pubblicazioni
+      ['#pub-h2',  'pub_h2'],
+      // Partner
+      ['#part-h2', 'part_h2'],
+      // Contatti
+      ['#cont2-h2',  'cont2_h2'],
+      ['#cont2-sub', 'cont2_sub'],
+      // Footer
+      ['.footer-copy', 'footer_copy'],
+    ];
+
+    var currentLang = localStorage.getItem('boyle_lang') || 'it';
+
+    function applyLang(lang) {
+      currentLang = lang;
+      localStorage.setItem('boyle_lang', lang);
+      var dict = T[lang];
+
+      /* Apply mapped selectors */
+      MAP.forEach(function(pair) {
+        var el = document.querySelector(pair[0]);
+        if (el && dict[pair[1]]) el.textContent = dict[pair[1]];
+      });
+
+      /* Apply data-i18n attributes */
+      document.querySelectorAll('[data-i18n]').forEach(function(el) {
+        var key = el.getAttribute('data-i18n');
+        if (dict[key]) el.textContent = dict[key];
+      });
+
+      /* Update toggle button */
+      var cur = document.getElementById('langCurrent');
+      var oth = document.getElementById('langOther');
+      if (cur) cur.textContent = lang.toUpperCase();
+      if (oth) oth.textContent = lang === 'it' ? 'EN' : 'IT';
+
+      /* Update html lang attr */
+      document.documentElement.lang = lang;
+
+      /* Update page title */
+            document.title = lang === 'en'
+        ? 'Gli Amici di Boyle · Research & Education'
+        : 'Gli Amici di Boyle · Research & Education';
+    }
+
+    /* Toggle on click — reload page to apply all translations */
+    document.addEventListener('click', function(e) {
+      if (e.target.closest('#langToggle')) {
+        var nl = currentLang === 'it' ? 'en' : 'it';
+        localStorage.setItem('boyle_lang', nl);
+        location.reload();
+      }
+    });
+
+    /* Apply saved lang on load */
+    if (currentLang === 'en') {
+      document.addEventListener('DOMContentLoaded', function() {
+        applyLang('en');
+      });
+    }
+  })();
+  </script>
 </body>
 </html>
