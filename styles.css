@@ -162,7 +162,6 @@ body::after {
   box-shadow: var(--shadow); display: grid; gap: 2px;
   opacity: 0; visibility: hidden;
   transition: opacity .18s, transform .18s, visibility .18s;
-  pointer-events: none;
 }
 .nav-dropdown:hover .nav-dropdown-panel {
   opacity: 1; visibility: visible;
@@ -2571,4 +2570,20 @@ html, body { overflow-x: hidden; }
   .lang-toggle { display: none; }
 }
 
-.nav-dropdown.is-open .nav-dropdown-panel { pointer-events: auto; }
+/* ── Amici di Boyle button (home) ── */
+.btn-amici-home {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 12px 24px; border-radius: 999px;
+  background: linear-gradient(135deg, rgba(77,255,180,.18), rgba(0,200,140,.14));
+  border: 1px solid rgba(77,255,180,.38);
+  color: #4dffd6;
+  font-size: .9rem; font-weight: 700;
+  text-decoration: none; cursor: pointer;
+  transition: background .22s, border-color .22s, transform .18s;
+}
+.btn-amici-home:hover {
+  background: linear-gradient(135deg, rgba(77,255,180,.28), rgba(0,200,140,.24));
+  border-color: rgba(77,255,180,.65);
+  transform: translateY(-2px);
+}
+.cta-row--two { flex-wrap: wrap; }
