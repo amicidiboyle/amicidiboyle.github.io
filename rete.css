@@ -1626,3 +1626,43 @@ a { color: inherit; text-decoration: none; }
   .join-grid { grid-template-columns: 1fr; }
   .amici-benefits-inline { grid-template-columns: 1fr; }
 }
+
+
+/* ── SEZIONE PROSSIMO EVENTO (dopo candidature) ── */
+.next-event-section {
+  padding: 60px 0 80px;
+  border-top: 1px solid rgba(123,228,255,.08);
+}
+.next-event-grid {
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  gap: 40px;
+  align-items: start;
+  max-width: 860px;
+  margin: 0 auto;
+}
+.next-event-cta {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 28px;
+  border-radius: 20px;
+  background: rgba(123,228,255,.04);
+  border: 1px solid rgba(123,228,255,.1);
+}
+.next-event-cta__title {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #edf7ff;
+  margin: 0;
+  letter-spacing: -.02em;
+}
+.next-event-cta__text {
+  font-size: .86rem;
+  line-height: 1.7;
+  color: rgba(237,247,255,.6);
+  margin: 0;
+}
+@media (max-width: 768px) {
+  .next-event-grid { grid-template-columns: 1fr; max-width: 480px; }
+}
