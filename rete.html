@@ -496,7 +496,7 @@
       : '';
     const key = m.name.toLowerCase().replace(/\s+/g, '-');
     const profileBtn = `<button class="icon-btn member-profile-btn icon-btn--locked" data-key="${key}" data-name="${m.name}" data-role="${m.role||''}" data-tip="Pagina personale">${PROFILE_ICON}</button>`;
-    const editBtn = `<button class="icon-btn icon-btn--pencil member-edit-btn" data-key="${key}" data-name="${m.name}" data-tip="Modifica profilo" style="display:none">${PENCIL_ICON}</button>`;
+    const editBtn = `<button class="icon-btn icon-btn--pencil member-edit-btn icon-btn--locked" data-key="${key}" data-name="${m.name}" data-tip="Modifica profilo">${PENCIL_ICON}</button>`;
 
     return `
       <article class="member-card reveal" role="listitem" data-key="${key}">
@@ -753,12 +753,15 @@
       btn.classList.remove('icon-btn--locked');
     });
 
-    // Mostra matita solo al titolare
+    // Attiva matita solo al titolare
     if (memberKey) {
       const ownerCard = document.querySelector('[data-key="' + memberKey + '"]');
       if (ownerCard) {
         const pencil = ownerCard.querySelector('.member-edit-btn');
-        if (pencil) pencil.style.display = '';
+        if (pencil) {
+          pencil.classList.remove('icon-btn--locked');
+          pencil.setAttribute('data-tip', 'Personalizza la tua card');
+        }
       }
     }
 
