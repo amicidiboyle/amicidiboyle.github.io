@@ -1407,3 +1407,222 @@ a { color: inherit; text-decoration: none; }
   .member-role { font-size: .78rem; padding-bottom: 110px; }
   .member-card { min-height: 380px; }
 }
+
+
+/* ════════════════════════════════════════════════════════
+   JOIN GRID — Rete di Boyle + Amici di Boyle
+   ════════════════════════════════════════════════════════ */
+
+.join-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin: 0 auto;
+  max-width: 960px;
+}
+
+.join-card {
+  border-radius: 24px;
+  padding: 32px 28px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Rete — bordo ciano */
+.join-card--rete {
+  background: linear-gradient(140deg, rgba(8,28,68,.72), rgba(4,14,34,.85));
+  border: 1px solid rgba(123,228,255,.28);
+  box-shadow: 0 0 60px rgba(123,228,255,.06);
+}
+.join-card--rete::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(123,228,255,.08), transparent);
+  pointer-events: none;
+}
+
+/* Amici — bordo verde */
+.join-card--amici {
+  background: linear-gradient(140deg, rgba(4,40,28,.72), rgba(2,20,14,.85));
+  border: 1px solid rgba(77,255,180,.28);
+  box-shadow: 0 0 60px rgba(77,255,180,.06);
+}
+.join-card--amici::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(77,255,180,.08), transparent);
+  pointer-events: none;
+}
+
+/* Badge */
+.join-card__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: .65rem;
+  font-weight: 800;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  background: rgba(123,228,255,.12);
+  border: 1px solid rgba(123,228,255,.25);
+  color: #a8eeff;
+  width: fit-content;
+}
+.join-card__badge--amici {
+  background: rgba(77,255,180,.12);
+  border-color: rgba(77,255,180,.25);
+  color: #4dffd6;
+}
+
+/* Title */
+.join-card__title {
+  font-size: clamp(1.1rem, 1.6vw, 1.4rem);
+  font-weight: 800;
+  color: #edf7ff;
+  line-height: 1.25;
+  letter-spacing: -.03em;
+  margin: 0;
+}
+
+/* Text */
+.join-card__text {
+  font-size: .88rem;
+  line-height: 1.7;
+  color: rgba(237,247,255,.65);
+  margin: 0;
+}
+
+/* Benefits */
+.join-card__benefits {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  flex: 1;
+}
+.join-card__benefits span {
+  font-size: .8rem;
+  color: rgba(237,247,255,.72);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.join-card--rete .join-card__benefits span::before { content: ''; }
+
+/* CTA button Amici — verde */
+.btn-amici {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px 28px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, rgba(77,255,180,.22), rgba(0,200,140,.18));
+  border: 1px solid rgba(77,255,180,.4);
+  color: #4dffd6;
+  font-size: .9rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background .22s, border-color .22s, transform .18s;
+  width: 100%;
+  margin-top: auto;
+}
+.btn-amici:hover {
+  background: linear-gradient(135deg, rgba(77,255,180,.32), rgba(0,200,140,.28));
+  border-color: rgba(77,255,180,.65);
+  transform: translateY(-2px);
+}
+
+/* ════════════════════════════════════════════════════════
+   MODAL AMICI DI BOYLE
+   ════════════════════════════════════════════════════════ */
+
+.modal__dialog--amici {
+  border-color: rgba(77,255,180,.22) !important;
+}
+.modal__kicker--amici {
+  color: #4dffd6 !important;
+  border-color: rgba(77,255,180,.2) !important;
+  background: rgba(77,255,180,.08) !important;
+}
+
+/* Vantaggi inline nel modal */
+.amici-benefits-inline {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  padding: 16px;
+  background: rgba(77,255,180,.04);
+  border: 1px solid rgba(77,255,180,.12);
+  border-radius: 14px;
+  margin-bottom: 20px;
+}
+.amici-benefit-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: .78rem;
+  color: rgba(237,247,255,.75);
+  line-height: 1.4;
+}
+.amici-benefit-item svg {
+  color: #4dffd6;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.amici-benefit-item--note {
+  grid-column: 1 / -1;
+  color: rgba(77,255,180,.7);
+  font-style: italic;
+  font-size: .74rem;
+}
+.amici-benefit-item--note svg { color: rgba(77,255,180,.7); }
+
+/* Select nel form */
+.network-form select {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 14px;
+  border: 1px solid rgba(123,228,255,.2);
+  background: rgba(255,255,255,.04);
+  color: var(--r-text, #edf7ff);
+  font-size: .9rem;
+  outline: none;
+  appearance: none;
+  cursor: pointer;
+  transition: border-color .2s;
+}
+.network-form select:focus { border-color: rgba(77,255,180,.45); }
+.modal__dialog--amici .network-form select:focus { border-color: rgba(77,255,180,.45); }
+
+/* Submit button Amici */
+.btn-amici-submit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 28px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, rgba(77,255,180,.2), rgba(0,200,140,.16));
+  border: 1px solid rgba(77,255,180,.4);
+  color: #4dffd6;
+  font-size: .9rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background .22s, border-color .22s;
+  width: 100%;
+}
+.btn-amici-submit:hover {
+  background: linear-gradient(135deg, rgba(77,255,180,.3), rgba(0,200,140,.26));
+  border-color: rgba(77,255,180,.65);
+}
+.btn-amici-submit:disabled { opacity: .5; cursor: default; }
+
+/* Responsive */
+@media (max-width: 768px) {
+  .join-grid { grid-template-columns: 1fr; }
+  .amici-benefits-inline { grid-template-columns: 1fr; }
+}
