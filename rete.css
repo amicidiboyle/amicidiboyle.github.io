@@ -245,6 +245,7 @@ a { color: inherit; text-decoration: none; }
   position: absolute; bottom: 14px; left: 0; right: 0;
   display: flex; gap: 8px; align-items: center;
   justify-content: center; padding: 0 16px;
+  overflow: visible; z-index: 20;
 }
 .icon-btn {
   width: 40px; height: 40px; border-radius: 999px;
@@ -1290,13 +1291,17 @@ a { color: inherit; text-decoration: none; }
 .icon-btn[data-tip] { position: relative; }
 .icon-btn[data-tip]::after {
   content: attr(data-tip);
-  position: absolute; bottom: calc(100% + 8px); left: 50%;
-  transform: translateX(-50%);
-  background: rgba(2,14,36,.95); color: #edf7ff;
-  font-size: .62rem; white-space: nowrap;
-  padding: 4px 8px; border-radius: 6px;
+  position: absolute;
+  bottom: calc(100% + 10px);
+  left: 50%; transform: translateX(-50%);
+  background: rgba(0,20,50,.96);
+  color: #a8eeff;
+  border: 1px solid rgba(123,228,255,.3);
+  font-size: .7rem; font-weight: 600;
+  white-space: nowrap;
+  padding: 5px 10px; border-radius: 8px;
   pointer-events: none; opacity: 0;
-  transition: opacity .15s; z-index: 999;
+  transition: opacity .18s; z-index: 9999;
 }
 .icon-btn[data-tip]:hover::after { opacity: 1; }
 
@@ -1377,11 +1382,16 @@ a { color: inherit; text-decoration: none; }
   .hero-access-input { min-width: 0; font-size:.75rem; padding:8px 14px; }
 }
 
-/* ── Profile btn sbloccata: illuminazione ── */
+/* ── Profile btn: colore caldo, illuminazione ── */
+.member-profile-btn {
+  color: #ffd166;
+  border-color: rgba(255,209,102,.25);
+}
 .member-profile-btn:not(.icon-btn--locked):hover {
   transform: translateY(-2px) scale(1.06);
-  background: rgba(124,243,255,.14);
-  border-color: rgba(124,243,255,.44);
+  background: rgba(255,209,102,.14);
+  border-color: rgba(255,209,102,.5);
+  color: #ffd166;
 }
 
 /* ── Matita: colore e hover ── */
