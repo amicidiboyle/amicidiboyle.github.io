@@ -2587,3 +2587,58 @@ html, body { overflow-x: hidden; }
   transform: translateY(-2px);
 }
 .cta-row--two { flex-wrap: wrap; }
+
+/* ── Bottone split Rete / Amici (home) ── */
+.btn-split-community {
+  display: inline-flex;
+  align-items: stretch;
+  border-radius: 999px;
+  overflow: hidden;
+  text-decoration: none;
+  border: 1px solid rgba(123,228,255,.3);
+  transition: transform .18s, box-shadow .2s;
+  box-shadow: 0 0 0 0 rgba(123,228,255,.0);
+}
+.btn-split-community:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 28px rgba(77,200,200,.18);
+}
+.btn-split__rete {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 12px 22px;
+  background: linear-gradient(135deg, rgba(123,228,255,.16), rgba(82,158,255,.12));
+  color: #a8eeff;
+  font-size: .88rem;
+  font-weight: 700;
+  transition: background .2s;
+}
+.btn-split-community:hover .btn-split__rete {
+  background: linear-gradient(135deg, rgba(123,228,255,.26), rgba(82,158,255,.2));
+}
+.btn-split__divider {
+  width: 1px;
+  background: linear-gradient(180deg, rgba(123,228,255,.15), rgba(77,255,180,.15));
+  flex-shrink: 0;
+}
+.btn-split__amici {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 12px 22px;
+  background: linear-gradient(135deg, rgba(77,255,180,.18), rgba(0,200,140,.14));
+  color: #4dffd6;
+  font-size: .88rem;
+  font-weight: 700;
+  transition: background .2s;
+  border-left: 1px solid rgba(77,255,180,.15);
+}
+.btn-split-community:hover .btn-split__amici {
+  background: linear-gradient(135deg, rgba(77,255,180,.28), rgba(0,200,140,.24));
+}
+@media (max-width: 480px) {
+  .btn-split-community { flex-direction: column; border-radius: 18px; }
+  .btn-split__divider { width: 100%; height: 1px; }
+  .btn-split__amici { border-left: none; border-top: 1px solid rgba(77,255,180,.15); }
+}
