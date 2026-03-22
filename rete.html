@@ -810,6 +810,8 @@
       document.body.style.overflow = 'hidden';
       setTimeout(() => accInput?.focus(), 100);
     }
+    // Espone openAcc globalmente
+    window._openAccessModal = openAcc;
 
     document.addEventListener('click', e => {
       const btn = e.target.closest('.member-email-btn');
@@ -1221,7 +1223,7 @@
       const btn=e.target.closest('.member-edit-btn');
       if(!btn) return;
       if(btn.classList.contains('icon-btn--locked')) {
-        openAcc(); return;
+        window._openAccessModal?.(); return;
       }
       openModal(btn.dataset.key, btn.dataset.name);
     });
