@@ -363,7 +363,7 @@
           <div class="join-card join-card--rete">
             <div class="join-card__badge">Rete di Boyle</div>
             <h2 class="join-card__title">Sei un professionista degli ambienti estremi?</h2>
-            <p class="join-card__text">La Rete di Boyle è riservata a medici, ricercatori e ingegneri con un curriculum validato in medicina subacquea, iperbarica, aerospaziale, safety o fisiologia degli ambienti estremi. L'accesso è selettivo e valutato caso per caso.</p>
+            <p class="join-card__text">La Rete di Boyle è riservata a medici, ricercatori, ingegneri e operatori militari con un curriculum validato in medicina subacquea, iperbarica, aerospaziale, safety, medicina militare o fisiologia degli ambienti estremi. L'accesso è selettivo e valutato caso per caso.</p>
             <div class="join-card__benefits">
               <span>✓ Card pubblica nella griglia</span>
               <span>✓ Contatti diretti dei membri</span>
@@ -1327,20 +1327,17 @@
     modal?.addEventListener('click', e => { if (e.target === modal) closeAmici(); });
     document.addEventListener('keydown', e => { if (e.key === 'Escape') closeAmici(); });
 
-    // Genera codice FRIEND al submit
     form?.addEventListener('submit', async e => {
       e.preventDefault();
       const nameVal = (document.getElementById('amici-name')?.value || '').trim();
       if (!nameVal) return;
 
-      // Genera codice: FRIEND-XXXX-COGNOME
       const cognome = nameVal.split(' ').pop().toUpperCase()
         .normalize('NFD').replace(/[\u0300-\u036f]/g,'')
         .replace(/[^A-Z]/g,'').slice(0,8);
       const rand = Math.random().toString(36).substring(2,6).toUpperCase();
       const friendCode = 'FRIEND-' + rand + '-' + cognome;
 
-      // Inietta nel campo hidden
       const hiddenCode = document.getElementById('amici-codice-hidden');
       if (hiddenCode) hiddenCode.value = friendCode;
 
@@ -1356,7 +1353,7 @@
         });
         if (res.ok) {
           if (statusBox) {
-            statusBox.innerHTML = '✓ Bentornato! Riceverai a breve un\'email con il tuo codice personale <strong>' + friendCode + '</strong> e le istruzioni per accedere alla community.';
+            statusBox.innerHTML = "✓ Iscrizione ricevuta! A breve riceverai un'email con il codice personale <strong>" + friendCode + "</strong>.";
             statusBox.className = 'form-status is-success';
           }
           form.reset();
@@ -1366,7 +1363,7 @@
         }
       } catch(err) {
         if (statusBox) {
-          statusBox.textContent = "Errore nell\'invio. Scrivi a info@amicidiboyle.it";
+          statusBox.textContent = "Errore nell'invio. Scrivi a info@amicidiboyle.it";
           statusBox.className = 'form-status is-error';
         }
       } finally {
