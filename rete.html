@@ -399,6 +399,42 @@
       </div>
     </section>
 
+  <!-- ── PROSSIMO EVENTO ── -->
+  <section class="section next-event-section" id="prossimo-evento">
+    <div class="container">
+      <div class="section-heading reveal" style="margin-bottom:32px">
+        <p class="section-kicker">
+          <span class="rete-event-dot"></span>
+          Prossimo evento
+        </p>
+        <h2 style="font-size:clamp(1.4rem,2.2vw,2rem);margin:8px 0 0">Resta aggiornato sulle iniziative della community</h2>
+      </div>
+      <div class="next-event-grid reveal">
+        <article class="glass-card poster-card rete-event-poster-card">
+          <img src="assets/corsi/thedayafter.png" alt="Locandina The Day After" loading="lazy" onerror="this.style.display='none'" />
+          <div class="rete-event-info">
+            <p class="section-kicker" style="margin-bottom:4px">Partner · ITCC</p>
+            <h3 style="margin:0 0 8px;font-size:1.15rem;font-weight:800;letter-spacing:-.03em">The Day After</h3>
+            <p style="font-size:.84rem;line-height:1.6;color:var(--r-muted);margin:0 0 12px">Gestione del trauma maggiore oltre la fase acuta. In piena coerenza con la visione degli Amici di Boyle.</p>
+            <div class="event-meta" style="margin-bottom:16px">
+              <span>6 Maggio 2026</span>
+              <span>Corso partner</span>
+            </div>
+          </div>
+          <a class="btn btn-ghost btn-block" href="assets/corsi/the_day_after_brochure.pdf" target="_blank" rel="noopener">Scarica il programma</a>
+        </article>
+        <div class="next-event-cta">
+          <p class="next-event-cta__title">Hai un evento da proporre?</p>
+          <p class="next-event-cta__text">Sei un membro della Rete o un Amico di Boyle? Proponi corsi, congressi o iniziative legate agli ambienti estremi. La pubblicazione è riservata alla community.</p>
+          <button class="rete-event-publish-btn btn-secondary btn-block" id="publishEventBtn2" type="button">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+            Proponi un evento
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
   </main>
 
   <!-- MODAL CANDIDATURA -->
@@ -1001,6 +1037,16 @@
       pubModal?.setAttribute('aria-hidden','true');
       document.body.style.overflow = '';
     }
+
+    // Secondo bottone "Proponi un evento" (sezione prossimo evento)
+    document.getElementById('publishEventBtn2')?.addEventListener('click', () => {
+      if (isMemberUnlocked()) { openPubModal(); }
+      else {
+        pubWall?.classList.add('is-open');
+        pubWall?.setAttribute('aria-hidden','false');
+        document.body.style.overflow = 'hidden';
+      }
+    });
 
     pubBtn?.addEventListener('click', () => {
       if (isMemberUnlocked()) { openPubModal(); }
