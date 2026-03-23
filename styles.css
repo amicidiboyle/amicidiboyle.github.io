@@ -115,13 +115,16 @@ body::after {
 /* ── HEADER ── */
 .site-header {
   position: sticky; top: 0; z-index: 80;
-  background: rgba(2,10,22,.82);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border-bottom: 1px solid rgba(120,210,255,.1);
+  background: linear-gradient(180deg, rgba(3,18,52,.92) 0%, rgba(2,12,36,.88) 100%);
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
+  border-bottom: 1px solid rgba(60,160,255,.14);
+  box-shadow: 0 1px 0 rgba(30,120,255,.08), 0 4px 24px rgba(0,0,0,.18);
   transition: background .3s;
 }
-.site-header.scrolled { background: rgba(2,10,22,.95); }
+.site-header.scrolled {
+  background: linear-gradient(180deg, rgba(2,12,38,.97) 0%, rgba(1,8,26,.97) 100%);
+}
 
 .nav-wrap {
   display: flex; align-items: center;
