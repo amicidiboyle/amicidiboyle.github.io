@@ -78,9 +78,18 @@
           <h1 data-i18n-html="hero_h1">Medicina degli<br><span class="accent">ambienti estremi</span></h1>
           <p class="hero-lead" data-i18n="hero_lead">Ricerca, formazione e rete professionale nella medicina degli ambienti estremi. Una rete multidisciplinare che unisce clinica, fisiologia, tecnologia e cultura della sicurezza.</p>
           <div class="hero-cta-row">
-            <a class="btn btn-primary" href="#visione" data-i18n="hero_cta1">Scopri il progetto</a>
-            <a class="btn btn-secondary" href="rete.html" data-i18n="hero_cta2">Scopri la rete</a>
-            <a class="btn btn-ghost" href="podcast.html" data-i18n="hero_cta3">Ascolta il podcast</a>
+            <a class="btn btn-primary hero-btn-main" href="#visione" data-i18n="hero_cta1">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+              Scopri il progetto
+            </a>
+            <a class="btn btn-secondary hero-btn-rete" href="rete.html" data-i18n="hero_cta2">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="5" r="3"/><circle cx="5" cy="19" r="3"/><circle cx="19" cy="19" r="3"/><path d="M12 8v3M7.2 17.3l3.3-3.8M16.8 17.3l-3.3-3.8"/></svg>
+              Scopri la rete
+            </a>
+            <a class="btn btn-ghost hero-btn-podcast" href="podcast.html" data-i18n="hero_cta3">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
+              Ascolta il podcast
+            </a>
           </div>
           <div class="hero-stats">
             <div class="hero-stat">
@@ -88,7 +97,7 @@
               <span data-i18n="stat_fondatori">Fondatori</span>
             </div>
             <div class="hero-stat">
-              <strong>25+</strong>
+              <strong>27+</strong>
               <span data-i18n="stat_episodi">Episodi podcast</span>
             </div>
             <div class="hero-stat">
@@ -127,7 +136,7 @@
           <div class="info-card-body">
           <p class="section-kicker" data-i18n-section="true">In evidenza</p>
           <h2 id="ev-title">Network di professionisti di alto livello</h2>
-          <p id="ev-text">Esperti in medicina subacquea e iperbarica, rianimazione, medicina spaziale e ambienti estremi con identità scientifica e visione operativa.</p>
+          <p id="ev-text" data-i18n="ev_text">Esperti in medicina subacquea e iperbarica, rianimazione, medicina spaziale e ambienti estremi con identità scientifica e visione operativa.</p>
           </div>
         </article>
         <article class="glass-card info-card info-card--vision reveal">
@@ -141,7 +150,7 @@
           <div class="info-card-body">
           <p class="section-kicker">Visione</p>
           <h2 id="vis-title">Clinica, ricerca e ambienti estremi</h2>
-          <p id="vis-text">Professionisti di prima linea che uniscono competenze mediche, ingegneristiche e scientifiche per sviluppare soluzioni operative in scenari ad alta complessità.</p>
+          <p id="vis-text" data-i18n="vis_text">Professionisti di prima linea che uniscono competenze mediche, ingegneristiche e scientifiche per sviluppare soluzioni operative in scenari ad alta complessità.</p>
           </div>
         </article>
         <article class="glass-card info-card info-card--content reveal">
@@ -505,11 +514,11 @@
               <div class="teaching-card-text">
                 <a class="tc-download" href="assets/lezioni/ADE_Medicina%20Subacquea.webp" download>
                   <svg viewBox="0 0 16 16" fill="none" width="13" height="13"><path d="M8 2v8M4 7l4 4 4-4M2 13h12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
-                  Scarica
+                  <span data-i18n="tc_download">Scarica</span>
                 </a>
-                <p class="section-kicker">Lezione</p>
-              <h4>ADE Medicina Subacquea &amp; Iperbarica</h4>
-              <p>Attività didattica elettiva e materiali di docenza universitaria presso l’Università degli Studi dell’Insubria.</p>
+                <p class="section-kicker" data-i18n="tc_lez_k">Lezione</p>
+              <h4 data-i18n="tc1_h4">ADE Medicina Subacquea &amp; Iperbarica</h4>
+              <p data-i18n="tc1_p">Attività didattica elettiva e materiali di docenza universitaria presso l’Università degli Studi dell’Insubria.</p>
               </div>
             </article>
             <article class="glass-card teaching-card">
@@ -520,11 +529,11 @@
               <div class="teaching-card-text">
                 <a class="tc-download" href="assets/lezioni/ADE_Medicina%20Spaziale.webp" download>
                   <svg viewBox="0 0 16 16" fill="none" width="13" height="13"><path d="M8 2v8M4 7l4 4 4-4M2 13h12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
-                  Scarica
+                  <span data-i18n="tc_download">Scarica</span>
                 </a>
-                <p class="section-kicker">Lezione</p>
-              <h4>ADE Medicina Spaziale</h4>
-              <p>Docenza universitaria dedicata alla medicina spaziale e agli ambienti estremi, con approccio fisiologico e applicativo.</p>
+                <p class="section-kicker" data-i18n="tc_lez_k">Lezione</p>
+              <h4 data-i18n="tc2_h4">ADE Medicina Spaziale</h4>
+              <p data-i18n="tc2_p">Docenza universitaria dedicata alla medicina spaziale e agli ambienti estremi, con approccio fisiologico e applicativo.</p>
               </div>
             </article>
           </div>
@@ -663,7 +672,7 @@
           <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M2 2l14 14M16 2L2 16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
         </button>
       </div>
-      <p class="dialog__desc">Per domande, proposte di collaborazione, richieste editoriali o informazioni generali sul progetto.</p>
+      <p class="dialog__desc" data-i18n="dlg1_desc">Per domande, proposte di collaborazione, richieste editoriali o informazioni generali sul progetto.</p>
       <form id="contactFormGeneral" class="form modalForm" action="https://formspree.io/f/xzdareqw" method="POST" accept-charset="UTF-8">
         <input type="hidden" name="_subject" value="Nuovo contatto generale — Gli Amici di Boyle" />
         <label class="field"><span>Nome e cognome</span><input name="name" type="text" autocomplete="name" placeholder="Come ti chiami?" required /></label>
@@ -693,7 +702,7 @@
           <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M2 2l14 14M16 2L2 16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
         </button>
       </div>
-      <p class="dialog__desc">Per docenze universitarie, corsi specialistici, congressi, seminari e collaborazioni strutturate con enti e istituzioni.</p>
+      <p class="dialog__desc" data-i18n="dlg2_desc">Per docenze universitarie, corsi specialistici, congressi, seminari e collaborazioni strutturate con enti e istituzioni.</p>
       <form id="contactFormTeaching" class="form modalForm" action="https://formspree.io/f/xzdareqw" method="POST" accept-charset="UTF-8">
         <input type="hidden" name="_subject" value="Richiesta docenza o incontro — Gli Amici di Boyle" />
         <label class="field"><span>Nome o ente richiedente</span><input name="name" type="text" placeholder="Nome, università, società scientifica, azienda…" required /></label>
@@ -723,7 +732,7 @@
           <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M2 2l14 14M16 2L2 16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
         </button>
       </div>
-      <p class="dialog__desc">La Rete di Boyle è selettiva e orientata a chi opera davvero negli ambienti estremi. Presentati: valuteremo il profilo e ti contatteremo.</p>
+      <p class="dialog__desc" data-i18n="dlg3_desc">La Rete di Boyle è selettiva e orientata a chi opera davvero negli ambienti estremi. Presentati: valuteremo il profilo e ti contatteremo.</p>
       <form id="contactFormBoyle" class="form modalForm" action="https://formspree.io/f/xzdareqw" method="POST" accept-charset="UTF-8">
         <input type="hidden" name="_subject" value="Candidatura Rete di Boyle" />
         <div class="section-grid split-2">
@@ -1359,6 +1368,17 @@
         'part2_h3':'Proponi una collaborazione',
         'part2_p':'Università, società scientifiche, corsi, congressi, iniziative editoriali e partner operativi: uno spazio aperto a collaborazioni qualificate.',
         'part2_cta':'Parliamone',
+        // Teaching cards
+        'tc_download':'Scarica',
+        'tc_lez_k':'Lezione',
+        'tc1_h4':'ADE Medicina Subacquea & Iperbarica',
+        'tc1_p':'Attività didattica elettiva e materiali di docenza universitaria presso l’Università degli Studi dell’Insubria.',
+        'tc2_h4':'ADE Medicina Spaziale',
+        'tc2_p':'Docenza universitaria dedicata alla medicina spaziale e agli ambienti estremi, con approccio fisiologico e applicativo.',
+        // Dialogs
+        'dlg1_desc':'Per domande, proposte di collaborazione, richieste editoriali o informazioni generali sul progetto.',
+        'dlg2_desc':'Per docenze universitarie, corsi specialistici, congressi, seminari e collaborazioni strutturate con enti e istituzioni.',
+        'dlg3_desc':'La Rete di Boyle è selettiva e orientata a chi opera davvero negli ambienti estremi. Presentati: valuteremo il profilo e ti contatteremo.',
         // Footer
         'footer_copy':'© Gli Amici di Boyle · Medicina subacquea, iperbarica e ambienti estremi.',
       },
@@ -1522,6 +1542,17 @@
         'part2_h3':'Propose a collaboration',
         'part2_p':'Universities, scientific societies, courses, congresses, editorial initiatives and operational partners: a space open to qualified collaborations.',
         'part2_cta':'Let's talk',
+        // Teaching cards
+        'tc_download':'Download',
+        'tc_lez_k':'Lecture',
+        'tc1_h4':'ADE Underwater & Hyperbaric Medicine',
+        'tc1_p':'Elective teaching activity and university lecture materials at the University of Insubria.',
+        'tc2_h4':'ADE Space Medicine',
+        'tc2_p':'University lecture dedicated to space medicine and extreme environments, with a physiological and applied approach.',
+        // Dialogs
+        'dlg1_desc':'For questions, collaboration proposals, editorial requests or general information about the project.',
+        'dlg2_desc':'For university lectures, specialist courses, congresses, seminars and structured collaborations with institutions.',
+        'dlg3_desc':'The Boyle Network is selective and oriented towards those who truly operate in extreme environments. Apply: we will review your profile and contact you.',
         // Footer
         'footer_copy':'© Gli Amici di Boyle · Underwater, hyperbaric medicine and extreme environments.',
       }
@@ -1577,19 +1608,28 @@
 
     var currentLang = localStorage.getItem('boyle_lang') || 'it';
 
-    /* Toggle on click */
-    document.addEventListener('click', function(e) {
-      if (e.target.closest('#langToggle')) {
-        var nl = currentLang === 'it' ? 'en' : 'it';
-        localStorage.setItem('boyle_lang', nl);
-        location.reload();
+    /* Toggle on click — attached after DOM ready to avoid missing elements */
+    function attachToggle() {
+      var btn = document.getElementById('langToggle');
+      if (btn) {
+        btn.addEventListener('click', function() {
+          var nl = currentLang === 'it' ? 'en' : 'it';
+          localStorage.setItem('boyle_lang', nl);
+          location.reload();
+        });
       }
-    });
+    }
 
     /* Apply saved lang on load */
-    document.addEventListener('DOMContentLoaded', function() {
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', function() {
+        attachToggle();
+        if (currentLang === 'en') applyLang('en');
+      });
+    } else {
+      attachToggle();
       if (currentLang === 'en') applyLang('en');
-    });
+    }
   })();
   </script>
 </body>
