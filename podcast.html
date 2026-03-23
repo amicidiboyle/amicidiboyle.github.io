@@ -81,7 +81,7 @@
           </div>
           <div class="podStats">
             <div class="podStat"><div class="podStat__n">3</div><div class="podStat__l" data-i18n="pod_stat_stagioni">Stagioni</div></div>
-            <div class="podStat"><div class="podStat__n">26</div><div class="podStat__l" data-i18n="pod_stat_episodi">Episodi</div></div>
+            <div class="podStat"><div class="podStat__n">27+</div><div class="podStat__l" data-i18n="pod_stat_episodi">Episodi</div></div>
             <div class="podStat"><div class="podStat__n">∞</div><div class="podStat__l" data-i18n="pod_stat_curiosita">Curiosità</div></div>
           </div>
         </div>
@@ -110,12 +110,12 @@
       <div class="container">
         <div class="podSection__head reveal">
           <div>
-            <h2 class="podSection__h2">Tutti gli episodi</h2>
+            <h2 class="podSection__h2" data-i18n="pod_all_ep">Tutti gli episodi</h2>
             <p class="podSection__sub">Medicina ed ingegneria degli ambienti estremi, semplici e divulgativi.</p>
           </div>
           <label class="podSearch">
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="6.5" cy="6.5" r="4.5" stroke="currentColor" stroke-width="1.4"/><path d="M10 10l3 3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
-            <input id="episodeSearch" type="search" placeholder="Cerca episodio..." autocomplete="off" />
+            <input id="episodeSearch" type="search" data-i18n-placeholder="pod_search_ph" placeholder="Cerca episodio..." autocomplete="off" />
           </label>
         </div>
 
@@ -207,9 +207,9 @@
 
         <div class="podFooterCTA reveal">
           <div class="podFooterCTA__box">
-            <h3>Vuoi proporre un tema o una collaborazione?</h3>
-            <p>Idee serie, casi interessanti, progetti editoriali. Se ha valore, lo trattiamo bene.</p>
-            <a class="btn--primary" href="index.html#contatti">Contattaci</a>
+            <h3 data-i18n="pod_cta_h3">Vuoi proporre un tema o una collaborazione?</h3>
+            <p data-i18n="pod_cta_p">Idee serie, casi interessanti, progetti editoriali. Se ha valore, lo trattiamo bene.</p>
+            <a class="btn--primary" href="index.html#contatti" data-i18n="pod_cta_btn">Contattaci</a>
           </div>
         </div>
 
@@ -344,12 +344,21 @@
       'pod_s3_desc':'From the sea to space: helium, astronauts, pressure physiology and space emergencies.',
       'pod_yt_title':'Also available on YouTube',
       'pod_yt_desc':'All episodes of Sotto Pressione are also available on the Amici di Boyle YouTube channel. Scan the QR code or open the link directly.',
+      'pod_all_ep':'All episodes',
+      'pod_search_ph':'Search episode...',
+      'pod_cta_h3':'Want to propose a topic or a collaboration?',
+      'pod_cta_p':'Serious ideas, interesting cases, editorial projects. If it has value, we handle it well.',
+      'pod_cta_btn':'Contact us',
     };
 
     document.addEventListener('DOMContentLoaded', function() {
       document.querySelectorAll('[data-i18n]').forEach(function(el) {
         var key = el.getAttribute('data-i18n');
         if (T[key]) el.textContent = T[key];
+      });
+      document.querySelectorAll('[data-i18n-placeholder]').forEach(function(el) {
+        var key = el.getAttribute('data-i18n-placeholder');
+        if (T[key]) el.placeholder = T[key];
       });
       // Nav links
       var navMap = {'Home':'Home','Visione':'Vision','Ricerca':'Research','Rete':'Network','Podcast':'Podcast','Contatti':'Contact'};
