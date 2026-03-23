@@ -191,5 +191,18 @@
       "Emergenza",
       "Ambienti Estremi"
     ]
+  },
+  {
+    "name": "Claudio Camponovo",
+    "role": "Direttore Medico DAN Europe Suisse, Vice Presidente SUHMS, Presidente Circolo Medico Lugano.",
+    "img": "claudio-camponovo.jpg",
+    "city": "Lugano, CH",
+    "linkedin": "https://www.linkedin.com/in/claudio-camponovo-a0ba362a/",
+    "email": "c.camponovo@swissanesthesia.ch",
+    "tags": [
+      "Iperbarica",
+      "Diving",
+      "Safety"
+    ]
   }
 ]
