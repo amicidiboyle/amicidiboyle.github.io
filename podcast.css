@@ -312,4 +312,9 @@ a   { color: inherit; text-decoration: none; }
 #langCurrent { color: var(--pod-cyan, #a8eeff); font-weight: 800; }
 .lang-sep { opacity: .28; }
 #langOther { opacity: .52; }
-@media (max-width: 768px) { .lang-toggle { display: none; } }
+@media (max-width: 768px) { .lang-toggle { display: inline-flex !important; font-size: .7rem; padding: 3px 8px; } }
+
+@media (max-width: 768px) {
+  #mobile-quicknav-btn { animation: none !important; }
+  .btn-electric::before, .btn-electric::after { animation: none !important; }
+}
