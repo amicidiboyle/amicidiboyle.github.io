@@ -75,20 +75,20 @@
       <div class="container">
         <div class="hero-content reveal">
           <span class="hero-eyebrow" data-i18n="hero_kicker">Medicina subacquea · Iperbarica · Aerospaziale · Safety</span>
-          <h1 data-i18n-html="hero_h1">Medicina degli<br><span class="accent">ambienti estremi</span></h1>
+          <h1 id="hero-h1-el">Medicina degli<br><span class="accent">ambienti estremi</span></h1>
           <p class="hero-lead" data-i18n="hero_lead">Ricerca, formazione e rete professionale nella medicina degli ambienti estremi. Una rete multidisciplinare che unisce clinica, fisiologia, tecnologia e cultura della sicurezza.</p>
           <div class="hero-cta-row">
-            <a class="btn btn-primary hero-btn-main" href="#visione" data-i18n="hero_cta1">
+            <a class="btn btn-primary hero-btn-main" href="#visione">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
-              Scopri il progetto
+              <span data-i18n="hero_cta1">Scopri il progetto</span>
             </a>
-            <a class="btn btn-secondary hero-btn-rete" href="rete.html" data-i18n="hero_cta2">
+            <a class="btn btn-secondary hero-btn-rete" href="rete.html">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="5" r="3"/><circle cx="5" cy="19" r="3"/><circle cx="19" cy="19" r="3"/><path d="M12 8v3M7.2 17.3l3.3-3.8M16.8 17.3l-3.3-3.8"/></svg>
-              Scopri la rete
+              <span data-i18n="hero_cta2">Scopri la rete</span>
             </a>
-            <a class="btn btn-ghost hero-btn-podcast" href="podcast.html" data-i18n="hero_cta3">
+            <a class="btn btn-ghost hero-btn-podcast" href="podcast.html">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
-              Ascolta il podcast
+              <span data-i18n="hero_cta3">Ascolta il podcast</span>
             </a>
           </div>
           <div class="hero-stats">
@@ -576,12 +576,18 @@
           <h2 id="part-h2" data-i18n="part_h2">Collaborazioni e realtà affini</h2>
           <p data-i18n="part_sub">Realtà che condividono attenzione per formazione, trauma e ambienti estremi.</p>
         </div>
-        <div class="section-grid split-2">
+        <div class="section-grid split-3">
           <article class="glass-card feature-card partner-feature">
             <img class="partner-logo" src="assets/itecc_logo.png" alt="Logo Inside Trauma" loading="lazy" decoding="async" />
             <h3>Inside Trauma</h3>
             <p data-i18n="part1_p">Progetto dedicato al trauma care, con approccio pratico, formazione e contenuti di qualità.</p>
             <a class="btn btn-primary" href="https://www.insidetrauma.it/" target="_blank" rel="noopener" data-i18n="part1_cta">Visita il sito</a>
+          </article>
+          <article class="glass-card feature-card partner-feature">
+            <img class="partner-logo" src="assets/logo-simae.png" alt="Logo SIMAE" loading="lazy" decoding="async" />
+            <h3 data-i18n="part_simae_name">Società Italiana Medicina Ambienti Estremi</h3>
+            <p data-i18n="part_simae_p">Società scientifica italiana dedicata alla medicina degli ambienti estremi, subacquea, iperbarica e aerospaziale.</p>
+            <a class="btn btn-primary" href="https://www.simae.it/" target="_blank" rel="noopener" data-i18n="part_simae_cta">Visita il sito</a>
           </article>
           <article class="glass-card contact-card">
             <div class="energy-icon"></div>
@@ -1368,6 +1374,9 @@
         'part2_h3':'Proponi una collaborazione',
         'part2_p':'Università, società scientifiche, corsi, congressi, iniziative editoriali e partner operativi: uno spazio aperto a collaborazioni qualificate.',
         'part2_cta':'Parliamone',
+        'part_simae_name':'Società Italiana Medicina Ambienti Estremi',
+        'part_simae_p':'Società scientifica italiana dedicata alla medicina degli ambienti estremi, subacquea, iperbarica e aerospaziale.',
+        'part_simae_cta':'Visita il sito',
         // Teaching cards
         'tc_download':'Scarica',
         'tc_lez_k':'Lezione',
@@ -1575,6 +1584,15 @@
         var key = el.getAttribute('data-i18n-html');
         if (dict[key] !== undefined) el.innerHTML = dict[key];
       });
+      /* Special: hero h1 */
+      var h1el = document.getElementById('hero-h1-el');
+      if (h1el) {
+        if (lang === 'en') {
+          h1el.innerHTML = 'Medicine of<br><span class="accent">Extreme Environments</span>';
+        } else {
+          h1el.innerHTML = 'Medicina degli<br><span class="accent">ambienti estremi</span>';
+        }
+      }
 
       /* Apply nav links by text content matching */
       var navMap = {
