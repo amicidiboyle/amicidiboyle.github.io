@@ -111,7 +111,7 @@ a { color: inherit; text-decoration: none; }
 .hero__glow { color: var(--r-cyan2); text-shadow: 0 0 40px rgba(123,228,255,.4); }
 .hero__subtitle { font-size: 1.06rem; color: var(--r-muted); max-width: 58ch; line-height: 1.68; margin-bottom: 28px; }
 .hero__cta { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 16px; }
-.hero__stats { display: flex; gap: 0; background: rgba(5,18,46,.48); border: 1px solid rgba(123,228,255,.14); border-radius: 14px; overflow: visible; backdrop-filter: blur(14px); max-width: 320px; }
+.hero__stats { display: flex; gap: 0; background: rgba(5,18,46,.48); border: 1px solid rgba(123,228,255,.14); border-radius: 14px; overflow: visible; backdrop-filter: blur(14px); max-width: 100%; width: 100%; }
 .hero__stat { flex: 1; padding: 14px 16px; text-align: center; border-right: 1px solid rgba(123,228,255,.1); }
 .hero__stat:last-child { border-right: 0; }
 .hero__stat-n { display: block; font-size: 1.5rem; font-weight: 700; color: var(--r-cyan2); letter-spacing: -.04em; line-height: 1; margin-bottom: 3px; }
@@ -370,7 +370,9 @@ a { color: inherit; text-decoration: none; }
 }
 
 /* Header/hero/sezioni sopra il canvas */
-.header,  above */
+/* header z-index handled above */
+
+/* ──
 
 /* Card: molto più trasparente, effetto vetro profondo */
 .member-card {
@@ -626,9 +628,9 @@ a { color: inherit; text-decoration: none; }
 .members-section #synapseCanvas { display: block !important; }
 
 /* Header e sezioni sopra il canvas */
-.header, 
+/* header z-index handled above */
 
-/* ── CARD LINGOTTO TRASPARENTE ── */
+/* ── TRASPARENTE ── */
 /* Effetto: vetro spesso, bordo frastagliato luminoso,
    riflesso angolare come cristallo, profondità 3D */
 .member-card {
@@ -778,8 +780,9 @@ a { color: inherit; text-decoration: none; }
 /* Canvas: sotto tutto */
 #synapseCanvas { z-index: 0 !important; }
 /* Contenuto: sopra il canvas */
-.header, 
-/* Modal: sopra tutto, NON sovrascrivere position:fixed */
+/* header z-index handled above */
+
+/* ──: sopra tutto, NON sovrascrivere position:fixed */
 .modal { z-index: 9000 !important; position: fixed !important; }
 
 
@@ -1745,4 +1748,24 @@ a { color: inherit; text-decoration: none; }
     font-size: .65rem;
     padding: 3px 7px;
   }
+}
+
+@media (max-width: 768px) {
+  #mobile-quicknav-btn { animation: none !important; }
+  .contact-card--rich .btn-electric { animation: none !important; }
+  .btn-electric::before { animation: none !important; }
+  .btn-electric::after  { animation: none !important; }
+}
+
+@media (max-width: 768px) {
+  .hero__stats { 
+    max-width: 100% !important; 
+    width: 100% !important;
+    flex-wrap: nowrap !important;
+  }
+  .hero__stat {
+    padding: 10px 8px !important;
+  }
+  .hero__stat-n { font-size: 1.2rem !important; }
+  .hero__stat-l { font-size: .6rem !important; }
 }
