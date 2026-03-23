@@ -115,15 +115,15 @@ body::after {
 /* ── HEADER ── */
 .site-header {
   position: sticky; top: 0; z-index: 80;
-  background: linear-gradient(180deg, rgba(3,18,52,.92) 0%, rgba(2,12,36,.88) 100%);
+  background: rgba(4, 20, 52, 0.94);
   backdrop-filter: blur(22px);
   -webkit-backdrop-filter: blur(22px);
-  border-bottom: 1px solid rgba(60,160,255,.14);
-  box-shadow: 0 1px 0 rgba(30,120,255,.08), 0 4px 24px rgba(0,0,0,.18);
+  border-bottom: 1px solid rgba(80,170,255,.18);
+  box-shadow: 0 1px 0 rgba(40,130,255,.10), 0 4px 28px rgba(0,0,0,.22);
   transition: background .3s;
 }
 .site-header.scrolled {
-  background: linear-gradient(180deg, rgba(2,12,38,.97) 0%, rgba(1,8,26,.97) 100%);
+  background: rgba(3, 14, 38, 0.98);
 }
 
 .nav-wrap {
@@ -274,7 +274,7 @@ body::after {
   max-width: 62ch; margin: 0 auto 30px;
 }
 .hero-cta-row {
-  display: flex; flex-wrap: wrap; justify-content: center; gap: 12px;
+  display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 10px;
   margin-bottom: 48px;
 }
 .hero-stats {
@@ -399,6 +399,68 @@ body::after {
 }
 
 .btn-block { width: 100%; }
+
+/* ── Hero CTA buttons — premium variant ── */
+.hero-btn-main {
+  background: linear-gradient(135deg, #7be4ff 0%, #52a0ff 100%);
+  color: #021830;
+  font-weight: 700;
+  font-size: .96rem;
+  padding: 0 26px;
+  min-height: 52px;
+  box-shadow: 0 8px 28px rgba(100,200,255,.3), 0 2px 8px rgba(0,0,0,.18), inset 0 1px 0 rgba(255,255,255,.3);
+  letter-spacing: .01em;
+}
+.hero-btn-main:hover {
+  box-shadow: 0 14px 40px rgba(100,200,255,.45), 0 2px 8px rgba(0,0,0,.2), inset 0 1px 0 rgba(255,255,255,.3);
+  background: linear-gradient(135deg, #9aeeff 0%, #70b8ff 100%);
+}
+.hero-btn-main svg { color: #021830; flex-shrink: 0; }
+
+.hero-btn-rete {
+  background: rgba(8,26,60,.72);
+  border-color: rgba(123,228,255,.35);
+  color: #c8f0ff;
+  font-size: .96rem;
+  padding: 0 26px;
+  min-height: 52px;
+  backdrop-filter: blur(12px);
+  letter-spacing: .01em;
+}
+.hero-btn-rete svg { color: #7be4ff; flex-shrink: 0; }
+.hero-btn-rete:hover {
+  border-color: rgba(123,228,255,.65);
+  background: rgba(10,34,76,.82);
+  box-shadow: 0 8px 28px rgba(0,0,0,.22), 0 0 20px rgba(123,228,255,.12);
+}
+
+.hero-btn-podcast {
+  background: transparent;
+  border-color: rgba(237,247,255,.18);
+  color: rgba(237,247,255,.62);
+  font-size: .92rem;
+  padding: 0 22px;
+  min-height: 48px;
+  position: relative; overflow: hidden;
+  letter-spacing: .01em;
+}
+.hero-btn-podcast svg { color: #7be4ff; flex-shrink: 0; opacity: .8; }
+.hero-btn-podcast::before {
+  content: '';
+  position: absolute; top: 0; left: -100%;
+  width: 60%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.07), transparent);
+  transform: skewX(-18deg);
+  animation: ghostShimmer 3.6s ease-in-out infinite;
+  pointer-events: none;
+}
+.hero-btn-podcast:hover {
+  color: rgba(237,247,255,.9);
+  border-color: rgba(123,228,255,.36);
+  background: rgba(123,228,255,.06);
+  box-shadow: 0 0 16px rgba(123,228,255,.1);
+}
+.hero-btn-podcast:hover svg { opacity: 1; }
 
 /* Bottone elettrico — scan animato */
 .btn-electric {
