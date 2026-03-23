@@ -2050,7 +2050,11 @@ body:hover #cursor-bubble { opacity: 1; }
   .timeline-card::before, .timeline-card::after { animation: none !important; }
   .btn-rete-cta::before, .btn-rete-cta::after { animation: none !important; }
   .contact-card--rich .btn-electric { animation: none !important; }
-  /* #mobile-quicknav-btn: pulse rimosso, no override necessario */
+  /* Pulse completamente eliminato su mobile */
+  #mobile-quicknav-btn { animation: none !important; box-shadow: 0 8px 28px rgba(0,120,255,.4) !important; }
+  .contact-card--rich .btn-electric { animation: none !important; }
+  .btn-electric::before { animation: none !important; }
+  .btn-electric::after  { animation: none !important; }
   #dust-canvas { display: none; }
 }
 
@@ -2681,7 +2685,13 @@ html, body { overflow-x: hidden; }
 .lang-sep { opacity: .28; font-weight: 400; }
 #langOther { opacity: .52; }
 @media (max-width: 768px) {
-  .lang-toggle { display: none; }
+  .lang-toggle {
+    display: inline-flex !important;
+    font-size: .7rem;
+    padding: 3px 8px;
+    min-width: 0;
+    margin-left: 4px;
+  }
 }
 
 /* ── Amici di Boyle button (home) ── */
