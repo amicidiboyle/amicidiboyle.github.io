@@ -365,7 +365,7 @@
               <span data-i18n="rj_amici_b7">✓ Biblioteca di Boyle <em style="opacity:.6;font-size:.75rem;font-style:normal;">(work in progress)</em></span>
             </div>
             <button class="btn-amici" id="open-amici-modal" type="button">
-              <span>Diventa un Amico di Boyle</span>
+              <span class="btn-amici__inner">Diventa un Amico di Boyle</span>
             </button>
           </div>
 
@@ -1634,6 +1634,10 @@
     };
 
     var lang = localStorage.getItem('boyle_lang') || 'it';
+    /* Se non c'è preferenza salvata, imposta esplicitamente IT */
+    if (!localStorage.getItem('boyle_lang')) {
+      localStorage.setItem('boyle_lang', 'it');
+    }
     var dict = T[lang];
 
     function applyLang() {
