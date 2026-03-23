@@ -179,5 +179,17 @@
       "Medicina Militare",
       "Safety"
     ]
+  },
+  {
+    "name": "Giovanni Cappa",
+    "role": "Emergency Medicine Specialist, President of the Italian Society of Medicine in Extreme Environments (SIMAE), PhD candidate at CRIMEDIM.",
+    "img": "giovanni-cappa.jpg",
+    "city": "Pavia, IT",
+    "linkedin": "https://www.linkedin.com/in/giovanni-cappa-60a637a4/",
+    "email": "giovanni.cappa01@universitadipavia.it",
+    "tags": [
+      "Emergenza",
+      "Medicina Militare"
+    ]
   }
 ]
