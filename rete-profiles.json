@@ -1,7 +1,7 @@
 {
   "simona-damiano": {
     "name": "Simona Damiano",
-    "bio": "",
+    "bio": "Ciao! Mi chiamo Simona, sono una cardiologa esperta in ecocardiografia, membro della SSI eseguo ecocardiografie fetali e sono esperta nel forame ovale pervio",
     "linkedin": "",
     "researchgate": "",
     "scholar": "",
@@ -10,10 +10,10 @@
     "instagram": "",
     "website": "",
     "courses": "",
-    "speaker": false,
-    "podcast": false,
-    "research": false,
-    "updated": ""
+    "speaker": true,
+    "podcast": true,
+    "research": true,
+    "updated": "2026-03-23"
   },
   "andrea-murdock-alpini": {
     "name": "Andrea Murdock Alpini",
