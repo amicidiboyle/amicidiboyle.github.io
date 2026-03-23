@@ -2664,6 +2664,10 @@ html, body { overflow-x: hidden; }
   transition: background .2s, border-color .2s, color .2s;
   white-space: nowrap;
   line-height: 1;
+  position: relative;
+  z-index: 10;
+  pointer-events: auto;
+  flex-shrink: 0;
 }
 .lang-toggle:hover {
   background: rgba(123,228,255,.15);
