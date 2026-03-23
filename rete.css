@@ -514,8 +514,12 @@ a { color: inherit; text-decoration: none; }
 }
 
 /* ── 6. RIGA CITTÀ: animazione pulse continua ── */
-
+@keyframes cityLinePulse {
+  0%,100% { opacity: .6; }
   50%      { opacity: 1; box-shadow: 0 0 18px rgba(124,243,255,.5); }
+}
+.member-location__line {
+  animation: cityLinePulse 3s ease-in-out infinite !important;
 }
 .member-card:hover .member-location__line {
   animation: none !important;
@@ -1707,11 +1711,7 @@ a { color: inherit; text-decoration: none; }
   .next-event-grid { grid-template-columns: 1fr; max-width: 400px; }
   
   .next-event-publish-btn { width: 100%; }
-  .rete-benefits-col { grid-template-columns: 1fr; }
-  .rete-benefits-col .benefit-card { padding: 14px 12px; gap: 10px; }
-  .rete-benefits-col .benefit-card h3 { font-size: .78rem; }
-  .rete-benefits-col .benefit-card p { font-size: .72rem; line-height: 1.45; }
-  .rete-benefits-col .benefit-icon { width: 28px; height: 28px; }
+  .rete-benefits-col { grid-template-columns: repeat(2, minmax(0,1fr)); }
 }
 
 /* ── Modal mobile ── */
@@ -1733,12 +1733,4 @@ a { color: inherit; text-decoration: none; }
     font-size: .65rem;
     padding: 3px 7px;
   }
-}
-
-@media (max-width: 480px) {
-  .container { padding: 0 16px; }
-  .next-event-propose { margin: 0; }
-  .rete-benefits-col .benefit-card { padding: 10px 8px; }
-  .rete-benefits-col .benefit-card h3 { font-size: .76rem; }
-  .rete-benefits-col .benefit-card p { font-size: .7rem; }
 }
