@@ -1311,31 +1311,42 @@
     document.addEventListener('click', async e => {
       const btn = e.target.closest('.member-profile-btn');
       if (!btn || btn.classList.contains('icon-btn--locked')) return;
+      // Apri subito il modal con le info base
       document.getElementById('pm-name').textContent = btn.dataset.name;
       document.getElementById('pm-role').textContent = btn.dataset.role;
-      const profiles = await loadProfiles();
-      const p = profiles[btn.dataset.key] || {};
       const bioEl = document.getElementById('pm-bio');
-      bioEl.textContent = p.bio || 'Profilo non ancora compilato.';
-      bioEl.className = 'profile-modal__bio' + (p.bio ? '' : ' empty');
-      const linksEl = document.getElementById('pm-links');
-      linksEl.innerHTML = '';
-      [['LinkedIn',p.linkedin],['ResearchGate',p.researchgate],
-       ['Scholar',p.scholar],['ORCID',p.orcid],['X',p.twitter],
-       ['Instagram',p.instagram],['Sito',p.website],['Corsi',p.courses]
-      ].forEach(([l,u])=>{
-        if(!u) return;
-        const a=document.createElement('a');
-        a.className='profile-link'; a.href=u; a.target='_blank'; a.rel='noopener';
-        a.textContent=l; linksEl.appendChild(a);
-      });
-      const availEl=document.getElementById('pm-avail');
-      availEl.innerHTML='';
-      if(p.speaker) availEl.innerHTML+='<span class="avail-tag">📢 Relatore</span>';
-      if(p.podcast) availEl.innerHTML+='<span class="avail-tag">🎙 Podcast</span>';
-      if(p.research) availEl.innerHTML+='<span class="avail-tag">🔬 Ricerca</span>';
+      bioEl.textContent = 'Caricamento...';
+      bioEl.className = 'profile-modal__bio';
+      document.getElementById('pm-links').innerHTML = '';
+      document.getElementById('pm-avail').innerHTML = '';
       modal?.classList.add('is-open'); modal?.setAttribute('aria-hidden','false');
       document.body.style.overflow='hidden';
+      // Poi carica il profilo in background
+      try {
+        const profiles = await loadProfiles();
+        const p = profiles[btn.dataset.key] || {};
+        bioEl.textContent = p.bio || 'Profilo non ancora compilato.';
+        bioEl.className = 'profile-modal__bio' + (p.bio ? '' : ' empty');
+        const linksEl = document.getElementById('pm-links');
+        linksEl.innerHTML = '';
+        [['LinkedIn',p.linkedin],['ResearchGate',p.researchgate],
+         ['Scholar',p.scholar],['ORCID',p.orcid],['X',p.twitter],
+         ['Instagram',p.instagram],['Sito',p.website],['Corsi',p.courses]
+        ].forEach(([l,u])=>{
+          if(!u) return;
+          const a=document.createElement('a');
+          a.className='profile-link'; a.href=u; a.target='_blank'; a.rel='noopener';
+          a.textContent=l; linksEl.appendChild(a);
+        });
+        const availEl=document.getElementById('pm-avail');
+        availEl.innerHTML='';
+        if(p.speaker) availEl.innerHTML+='<span class="avail-tag">📢 Relatore</span>';
+        if(p.podcast) availEl.innerHTML+='<span class="avail-tag">🎙 Podcast</span>';
+        if(p.research) availEl.innerHTML+='<span class="avail-tag">🔬 Ricerca</span>';
+      } catch(err) {
+        bioEl.textContent = 'Profilo non ancora compilato.';
+        bioEl.className = 'profile-modal__bio empty';
+      }
     });
     closeB?.addEventListener('click', closeModal);
     modal?.addEventListener('click', e=>{ if(e.target===modal) closeModal(); });
@@ -1730,5 +1741,5 @@
     </div>
   </div>
 
-</body>>
+</body>
 </html>
