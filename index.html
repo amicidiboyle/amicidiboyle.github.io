@@ -54,7 +54,7 @@
         <a href="#partner">Partner</a>
         <a href="#contatti">Contatti</a>
       </nav>
-      <button class="lang-toggle" id="langToggle" aria-label="Cambia lingua / Switch language" title="Switch to English">
+      <button class="lang-toggle" id="langToggle" type="button" aria-label="Cambia lingua / Switch language" title="Switch to English">
         <span id="langCurrent">IT</span><span class="lang-sep"> · </span><span id="langOther">EN</span>
       </button>
     </div>
@@ -1624,29 +1624,37 @@
         : 'Gli Amici di Boyle · Research & Education';
     }
 
-    var currentLang = localStorage.getItem('boyle_lang') || 'it';
-
-    /* Toggle on click — attached after DOM ready to avoid missing elements */
-    function attachToggle() {
-      var btn = document.getElementById('langToggle');
-      if (btn) {
-        btn.addEventListener('click', function() {
-          var nl = currentLang === 'it' ? 'en' : 'it';
-          localStorage.setItem('boyle_lang', nl);
-          location.reload();
-        });
-      }
+    /* ── Language init & toggle ── */
+    function getLang() {
+      try { return localStorage.getItem('boyle_lang') || 'it'; } catch(e) { return 'it'; }
+    }
+    function setLang(l) {
+      try { localStorage.setItem('boyle_lang', l); } catch(e) {}
     }
 
-    /* Apply saved lang on load */
+    function attachToggle() {
+      var btn = document.getElementById('langToggle');
+      if (!btn) return;
+      btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var current = getLang();
+        var next = current === 'it' ? 'en' : 'it';
+        setLang(next);
+        location.reload();
+      });
+    }
+
+    var initLang = getLang();
+
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', function() {
         attachToggle();
-        if (currentLang === 'en') applyLang('en');
+        if (initLang === 'en') applyLang('en');
       });
     } else {
       attachToggle();
-      if (currentLang === 'en') applyLang('en');
+      if (initLang === 'en') applyLang('en');
     }
   })();
   </script>
