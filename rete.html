@@ -129,7 +129,7 @@
           </div>
         </div>
         <div class="hero__stats">
-          <div class="hero__stat"><span class="hero__stat-n" id="memberCount">16</span><span class="hero__stat-l" data-i18n="r_stat_membri">Membri attivi</span></div>
+          <div class="hero__stat"><span class="hero__stat-n" id="memberCount">17</span><span class="hero__stat-l" data-i18n="r_stat_membri">Membri attivi</span></div>
           <div class="hero__stat"><span class="hero__stat-n">8+</span><span class="hero__stat-l" data-i18n="r_stat_spec">Specialità</span></div>
           <div class="hero__stat"><span class="hero__stat-n">6</span><span class="hero__stat-l" data-i18n="r_stat_nazioni">Nazioni</span></div>
           <div class="hero__stat hero__stat--growing"><span class="hero__stat-n">↑</span><span class="hero__stat-l" data-i18n="r_stat_growing">In crescita</span></div>
@@ -343,7 +343,7 @@
               <span data-i18n="rj_rete_b4">✓ Prima fila su congressi ed editoriali</span>
               <span data-i18n="rj_rete_b5">✓ Newsletter riservata</span>
               <span data-i18n="rj_rete_b6">✓ Pubblica corsi ed eventi</span>
-              <span data-i18n="rj_rete_b7">✓ Biblioteca di Boyle <em style="opacity:.6;font-size:.75rem;font-style:normal;">(work in progress)</em></span>
+              <span data-i18n="rj_rete_b7">✓ Accesso alla Biblioteca di Boyle <em style="opacity:.6;font-size:.75rem;font-style:normal;">(work in progress)</em></span>
             </div>
             <button class="btn-electric" id="open-network-modal-2" type="button">
               <span class="btn-electric__inner">Candidati alla Rete</span>
@@ -362,7 +362,7 @@
               <span data-i18n="rj_amici_b4">✓ Pubblica eventi di ambienti estremi</span>
               <span data-i18n="rj_amici_b5">✓ Newsletter della community</span>
               <span data-i18n="rj_amici_b6">✓ Scrivi a info@amicidiboyle.it</span>
-              <span data-i18n="rj_amici_b7">✓ Biblioteca di Boyle <em style="opacity:.6;font-size:.75rem;font-style:normal;">(work in progress)</em></span>
+              <span data-i18n="rj_amici_b7">✓ Accesso alla Biblioteca di Boyle <em style="opacity:.6;font-size:.75rem;font-style:normal;">(work in progress)</em></span>
             </div>
             <button class="btn-amici" id="open-amici-modal" type="button">
               <span class="btn-amici__inner">Diventa un Amico di Boyle</span>
@@ -854,6 +854,8 @@
     'BOYLE-X5B1-SALETTI':    'giulio-saletti',
     'BOYLE-J2M8-SOLDINI':    'gabriele-soldini',
     'BOYLE-E6N3-DENARO':     'matteo-denaro',
+    'BOYLE-ENAR-CAPPA':      'giovanni-cappa',
+    'BOYLE-YHT9-CAMPONOVO':  'claudio-camponovo',
   };
   const VALID_CODES = {
     'simona-damiano':         'BOYLE-K7X2-DAMIANO',
@@ -871,6 +873,8 @@
     'giulio-saletti':         'BOYLE-X5B1-SALETTI',
     'gabriele-soldini':       'BOYLE-J2M8-SOLDINI',
     'matteo-denaro':          'BOYLE-E6N3-DENARO',
+    'giovanni-cappa':         'BOYLE-ENAR-CAPPA',
+    'claudio-camponovo':      'BOYLE-YHT9-CAMPONOVO',
   };
   const ALL_CODES = [...Object.keys(CODE_TO_KEY), 'BOYLE-FONDATORI'];
   const ACCESS_KEY = 'boyle_member_access';
@@ -1544,7 +1548,7 @@
         'rj_rete_b4':'✓ Prima fila su congressi ed editoriali',
         'rj_rete_b5':'✓ Newsletter riservata',
         'rj_rete_b6':'✓ Pubblica corsi ed eventi',
-        'rj_rete_b7':'✓ Biblioteca di Boyle',
+        'rj_rete_b7':'✓ Accesso alla Biblioteca di Boyle',
         // Join card benefits — Amici
         'rj_amici_b1':'✓ Codice personale di accesso',
         'rj_amici_b2':'✓ Contatti diretti dei membri',
@@ -1552,7 +1556,7 @@
         'rj_amici_b4':'✓ Pubblica eventi di ambienti estremi',
         'rj_amici_b5':'✓ Newsletter della community',
         'rj_amici_b6':'✓ Scrivi a info@amicidiboyle.it',
-        'rj_amici_b7':'✓ Biblioteca di Boyle',
+        'rj_amici_b7':'✓ Accesso alla Biblioteca di Boyle',
         // Proponi evento
         'r_propose_title':'Hai un evento da proporre?',
         'r_propose_desc':'Sei un membro della Rete o un Amico di Boyle? Proponi corsi, congressi o iniziative legate agli ambienti estremi. La pubblicazione è riservata alla community.',
@@ -1604,7 +1608,7 @@
         'rj_rete_b4':'✓ Front row at congresses and editorials',
         'rj_rete_b5':'✓ Members-only newsletter',
         'rj_rete_b6':'✓ Publish courses and events',
-        'rj_rete_b7':'✓ Boyle Library',
+        'rj_rete_b7':'✓ Access to the Boyle Library',
         // Join card benefits — Amici
         'rj_amici_b1':'✓ Personal access code',
         'rj_amici_b2':'✓ Direct contact with members',
@@ -1612,7 +1616,7 @@
         'rj_amici_b4':'✓ Publish extreme environment events',
         'rj_amici_b5':'✓ Community newsletter',
         'rj_amici_b6':'✓ Write to info@amicidiboyle.it',
-        'rj_amici_b7':'✓ Boyle Library',
+        'rj_amici_b7':'✓ Access to the Boyle Library',
         // Proponi evento
         'r_propose_title':'Have an event to propose?',
         'r_propose_desc':'Are you a Network member or an Amico di Boyle? Propose courses, congresses or initiatives related to extreme environments. Publishing is reserved for the community.',
