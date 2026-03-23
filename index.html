@@ -1134,6 +1134,7 @@
       <a href="#formazione">Formazione</a>
       <a href="#partner">Partner</a>
       <a href="#contatti">Contatti</a>
+      <button class="lang-toggle" id="langToggleMobile" type="button" style="width:100%;text-align:center;margin-top:6px;border-radius:8px;" aria-label="Cambia lingua">IT / EN</button>
     </div>
   </div>
   <script>
@@ -1175,6 +1176,20 @@
         btn.classList.remove('qn-open');
       }
     });
+
+    /* Bottone lingua nel menu mobile */
+    var langBtnMob = document.getElementById('langToggleMobile');
+    if (langBtnMob) {
+      langBtnMob.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var current;
+        try { current = localStorage.getItem('boyle_lang') || 'it'; } catch(e2) { current = 'it'; }
+        var next = current === 'it' ? 'en' : 'it';
+        try { localStorage.setItem('boyle_lang', next); } catch(e3) {}
+        location.reload();
+      });
+    }
   })();
   </script>
 
@@ -1641,7 +1656,7 @@
         var current = getLang();
         var next = current === 'it' ? 'en' : 'it';
         setLang(next);
-        location.reload();
+        applyLang(next);
       });
     }
 
