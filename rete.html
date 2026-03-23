@@ -675,7 +675,10 @@
       grid.innerHTML = members.map(renderCard).join('');
       if (countEl) countEl.textContent = members.length;
       initReveal();
-      
+      // Sblocca subito se già autenticato
+      if (isMemberUnlocked()) {
+        unlockAll(sessionStorage.getItem('boyle_member_code') || '');
+      }
     } catch(e) {
       // Fallback: se rete-members.json non è ancora sul server, usa dati inline
       console.warn('rete-members.json non trovato, uso dati inline:', e);
@@ -686,6 +689,10 @@
           grid.innerHTML = members.map(renderCard).join('');
           if (countEl) countEl.textContent = members.length;
           initReveal();
+          // Sblocca subito se già autenticato
+          if (isMemberUnlocked()) {
+            unlockAll(sessionStorage.getItem('boyle_member_code') || '');
+          }
         }
       } catch(e2) {
         grid.innerHTML = '<p style="color:rgba(237,247,255,.5);padding:20px;text-align:center;">Profili in caricamento. Assicurati che rete-members.json sia nel repository.</p>';
@@ -1153,14 +1160,12 @@
   const origLoad = loadMembers;
   async function loadMembersEnhanced() {
     await loadMembers();
+    // Piccolo delay per animazioni, unlock già gestito dentro loadMembers
     setTimeout(() => {
       initCardTilt();
       initCounters();
       initCardPulse();
       initEmailWall();
-      if (isMemberUnlocked()) {
-        unlockAll(sessionStorage.getItem('boyle_member_code') || '');
-      }
     }, 200);
   }
 
@@ -1310,7 +1315,8 @@
     }
     document.addEventListener('click', async e => {
       const btn = e.target.closest('.member-profile-btn');
-      if (!btn || btn.classList.contains('icon-btn--locked')) return;
+      if (!btn) return;
+      if (!isMemberUnlocked()) { window._openAccessModal?.(); return; }
       // Apri subito il modal con le info base
       document.getElementById('pm-name').textContent = btn.dataset.name;
       document.getElementById('pm-role').textContent = btn.dataset.role;
@@ -1394,8 +1400,11 @@
     document.addEventListener('click', e=>{
       const btn=e.target.closest('.member-edit-btn');
       if(!btn) return;
+      // Controlla se è il titolare della card (ha la matita attiva)
       if(btn.classList.contains('icon-btn--locked')) {
-        window._openAccessModal?.(); return;
+        if(!isMemberUnlocked()) { window._openAccessModal?.(); return; }
+        // Membro loggato ma non è la sua card — ignora
+        return;
       }
       openModal(btn.dataset.key, btn.dataset.name);
     });
