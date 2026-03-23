@@ -29,7 +29,7 @@
         <a href="rete.html">Rete</a>
         <a class="nav-active" href="podcast.html" aria-current="page">Podcast</a>
         <a class="nav-cta" href="index.html#contatti">Contatti</a>
-      <button class="lang-toggle" id="langToggle" onclick="(function(){var l=localStorage.getItem('boyle_lang')||'it';var nl=l==='it'?'en':'it';localStorage.setItem('boyle_lang',nl);location.reload();})()" aria-label="Switch language">
+      <button class="lang-toggle" id="langToggle" onclick="(function(){var l=localStorage.getItem('boyle_lang')||'it';var nl=l==='it'?'en':'it';localStorage.setItem('boyle_lang',nl);applyLang(next);})()" aria-label="Switch language">
         <span id="langCurrent">IT</span><span class="lang-sep"> · </span><span id="langOther">EN</span>
       </button>
       </nav>
@@ -43,6 +43,7 @@
         <a href="rete.html">Rete</a>
         <a href="podcast.html">Podcast</a>
         <a href="index.html#contatti">Contatti</a>
+        <button id="langToggleMobilePod" type="button" style="margin-top:8px;width:100%;text-align:center;border-radius:8px;background:rgba(123,228,255,.08);border:1px solid rgba(123,228,255,.18);color:#a8eeff;font-size:.78rem;font-weight:700;letter-spacing:.1em;padding:9px;cursor:pointer;" aria-label="Cambia lingua">IT / EN</button>
       </div>
     </div>
   </header>
@@ -122,7 +123,7 @@
         <div class="podQuickNav reveal" data-delay="80">
           <a class="podQuickNav__link podQuickNav__link--s1" href="#s1"><span class="qnDot"></span>Stagione 1 <span class="qnCount">10 ep.</span></a>
           <a class="podQuickNav__link podQuickNav__link--s2" href="#s2"><span class="qnDot"></span>Stagione 2 <span class="qnCount">11 ep.</span></a>
-          <a class="podQuickNav__link podQuickNav__link--s3" href="#s3"><span class="qnDot"></span>Stagione 3 <span class="qnCount">4 ep.</span></a>
+          <a class="podQuickNav__link podQuickNav__link--s3" href="#s3"><span class="qnDot"></span>Stagione 3 <span class="qnCount">6 ep.</span></a>
         </div>
 
         <div class="seasons" id="seasonsWrap">
@@ -312,6 +313,16 @@
       mBtn?.classList.remove('is-open');
     }
   });
+  
+      var langMobPod = document.getElementById('langToggleMobilePod');
+      if (langMobPod) {
+        langMobPod.addEventListener('click', function() {
+          var cur; try { cur = localStorage.getItem('boyle_lang') || 'it'; } catch(e) { cur = 'it'; }
+          var nxt = cur === 'it' ? 'en' : 'it';
+          try { localStorage.setItem('boyle_lang', nxt); } catch(e) {}
+          location.reload();
+        });
+      }
   </script>
 
   <!-- i18n: podcast.html -->
