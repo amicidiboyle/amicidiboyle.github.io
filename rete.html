@@ -1523,13 +1523,27 @@
   }
 
   /* ── INIT ── */
-  loadMembersEnhanced();
-  initSynapseCanvas();
-  initAccessBar();
-  initProfileModal();
-  initEditModal();
-  initPublishEvent();
-  initAmiciModal();
+  // Avvolto in DOMContentLoaded per garantire che i modal
+  // siano nel DOM prima di essere inizializzati
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function() {
+      loadMembersEnhanced();
+      initSynapseCanvas();
+      initAccessBar();
+      initProfileModal();
+      initEditModal();
+      initPublishEvent();
+      initAmiciModal();
+    });
+  } else {
+    loadMembersEnhanced();
+    initSynapseCanvas();
+    initAccessBar();
+    initProfileModal();
+    initEditModal();
+    initPublishEvent();
+    initAmiciModal();
+  }
   </script>
 <!-- i18n: rete.html -->
   <script>
