@@ -53,6 +53,12 @@
         <a href="rete.html">Rete</a>
         <a href="podcast.html">Podcast</a>
         <a href="index.html#contatti">Contatti</a>
+        <button id="langToggleMobileRete" type="button" 
+          style="margin-top:8px;width:100%;text-align:center;border-radius:8px;
+          background:rgba(123,228,255,.08);border:1px solid rgba(123,228,255,.18);
+          color:#a8eeff;font-size:.78rem;font-weight:700;letter-spacing:.1em;
+          padding:9px;cursor:pointer;" 
+          aria-label="Cambia lingua / Switch language">IT / EN</button>
       </div>
     </div>
   </header>
@@ -343,6 +349,7 @@
               <span>✓ Prima fila su congressi ed editoriali</span>
               <span>✓ Newsletter riservata</span>
               <span>✓ Pubblica corsi ed eventi</span>
+              <span>✓ Accesso alla Biblioteca di Boyle <em style="opacity:.6;font-size:.85em">- in progress</em></span>
             </div>
             <button class="btn-electric" id="open-network-modal-2" type="button">
               <span class="btn-electric__inner">Candidati alla Rete</span>
@@ -360,6 +367,7 @@
               <span>✓ Profili estesi della Rete</span>
               <span>✓ Pubblica eventi di ambienti estremi</span>
               <span>✓ Newsletter della community</span>
+              <span>✓ Accesso alla Biblioteca di Boyle <em style="opacity:.6;font-size:.85em">- in progress</em></span>
               <span>✓ Scrivi a info@amicidiboyle.it</span>
             </div>
             <button class="btn-amici" id="open-amici-modal" type="button">
@@ -1610,7 +1618,18 @@
 
     // Translate nav links by text content
     function translateNav() {
-      document.querySelectorAll('nav a, .nav--desktop a, .nav-mobile-panel a').forEach(function(a) {
+      // Bottone lingua mobile
+      var langMobRete = document.getElementById('langToggleMobileRete');
+      if (langMobRete) {
+        langMobRete.addEventListener('click', function() {
+          var cur; try { cur = localStorage.getItem('boyle_lang') || 'it'; } catch(e) { cur = 'it'; }
+          var nxt = cur === 'it' ? 'en' : 'it';
+          try { localStorage.setItem('boyle_lang', nxt); } catch(e) {}
+          location.reload();
+        });
+      }
+
+            document.querySelectorAll('nav a, .nav--desktop a, .nav-mobile-panel a').forEach(function(a) {
         var t = a.textContent.trim();
         if (T[t]) a.textContent = T[t];
       });
