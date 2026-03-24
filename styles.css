@@ -2845,3 +2845,15 @@ html, body { overflow-x: hidden; }
     animation: fadeInUp .4s ease both;
   }
 }
+
+/* ══════════════════════════════════════════
+   MOBILE: KILL BACKGROUND PULSE (HOME)
+   ══════════════════════════════════════════ */
+@media (max-width: 768px) {
+  .light-scattering { animation: none !important; }
+  .particles        { animation: none !important; }
+  .hero::before     { animation: none !important; }
+  .hero::after      { animation: none !important; }
+  .hero-eyebrow::before { animation: none !important; }
+  .timeline li:last-child::after { animation: none !important; }
+}
