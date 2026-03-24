@@ -53,12 +53,6 @@
         <a href="rete.html">Rete</a>
         <a href="podcast.html">Podcast</a>
         <a href="index.html#contatti">Contatti</a>
-        <button id="langToggleMobileRete" type="button" 
-          style="margin-top:8px;width:100%;text-align:center;border-radius:8px;
-          background:rgba(123,228,255,.08);border:1px solid rgba(123,228,255,.18);
-          color:#a8eeff;font-size:.78rem;font-weight:700;letter-spacing:.1em;
-          padding:9px;cursor:pointer;" 
-          aria-label="Cambia lingua / Switch language">IT / EN</button>
       </div>
     </div>
   </header>
@@ -1704,7 +1698,7 @@
 
     // Wire up mobile toggle
     function attachMobileToggle() {
-      var mob = document.getElementById('langToggleMobileRete');
+      var mob = document.
       if (!mob) return;
       mob.addEventListener('click', function() {
         var cur = localStorage.getItem('boyle_lang') || 'it';
