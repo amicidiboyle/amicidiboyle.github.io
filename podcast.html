@@ -316,9 +316,9 @@
       var langMobPod = document.
       if (langMobPod) {
         langMobPod.addEventListener('click', function() {
-          var cur; try { cur = localStorage.getItem('boyle_lang') || 'it'; } catch(e) { cur = 'it'; }
+          var cur; try { cur = sessionStorage.getItem('boyle_lang') || 'it'; } catch(e) { cur = 'it'; }
           var nxt = cur === 'it' ? 'en' : 'it';
-          try { localStorage.setItem('boyle_lang', nxt); } catch(e) {}
+          try { sessionStorage.setItem('boyle_lang', nxt); } catch(e) {}
           location.reload();
         });
       }
@@ -327,7 +327,7 @@
   <!-- i18n: podcast.html -->
   <script>
   (function(){
-    var lang = localStorage.getItem('boyle_lang') || 'it';
+    var lang = sessionStorage.getItem('boyle_lang') || 'it';
 
     var T = {
       it: {
@@ -410,7 +410,7 @@
       if (cur) cur.textContent = l === 'en' ? 'EN' : 'IT';
       if (oth) oth.textContent = l === 'en' ? 'IT' : 'EN';
       // Save
-      try { localStorage.setItem('boyle_lang', l); } catch(e) {}
+      try { sessionStorage.setItem('boyle_lang', l); } catch(e) {}
     }
 
     // Expose globally for mobile toggle
@@ -422,7 +422,7 @@
       if (!btn) return;
       btn.addEventListener('click', function(e) {
         e.preventDefault(); e.stopPropagation();
-        var cur; try { cur = localStorage.getItem('boyle_lang') || 'it'; } catch(e2) { cur = 'it'; }
+        var cur; try { cur = sessionStorage.getItem('boyle_lang') || 'it'; } catch(e2) { cur = 'it'; }
         applyLang(cur === 'it' ? 'en' : 'it');
       });
     }
@@ -432,7 +432,7 @@
       var mob = document.
       if (!mob) return;
       mob.addEventListener('click', function() {
-        var cur; try { cur = localStorage.getItem('boyle_lang') || 'it'; } catch(e) { cur = 'it'; }
+        var cur; try { cur = sessionStorage.getItem('boyle_lang') || 'it'; } catch(e) { cur = 'it'; }
         applyLang(cur === 'it' ? 'en' : 'it');
       });
     }
@@ -595,9 +595,9 @@ e html>
       var langMobPod = document.
       if (langMobPod) {
         langMobPod.addEventListener('click', function() {
-          var cur; try { cur = localStorage.getItem('boyle_lang') || 'it'; } catch(e) { cur = 'it'; }
+          var cur; try { cur = sessionStorage.getItem('boyle_lang') || 'it'; } catch(e) { cur = 'it'; }
           var nxt = cur === 'it' ? 'en' : 'it';
-          try { localStorage.setItem('boyle_lang', nxt); } catch(e) {}
+          try { sessionStorage.setItem('boyle_lang', nxt); } catch(e) {}
           location.reload();
         });
       }
@@ -606,7 +606,7 @@ e html>
   <!-- i18n: podcast.html -->
   <script>
   (function(){
-    var lang = localStorage.getItem('boyle_lang') || 'it';
+    var lang = sessionStorage.getItem('boyle_lang') || 'it';
     var T = {
       it: {
         'pod_meta':'Pressione · Immersione · Iperbarica · Spazio',
