@@ -1848,3 +1848,24 @@ a { color: inherit; text-decoration: none; }
     max-width: 100% !important;
   }
 }
+
+/* ══ MOBILE: event grid e layout ══ */
+@media (max-width: 768px) {
+  .next-event-grid {
+    grid-template-columns: 1fr !important;
+    gap: 20px !important;
+  }
+  .next-event-poster {
+    max-width: 280px;
+    margin: 0 auto;
+  }
+  .container {
+    max-width: 100% !important;
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+    box-sizing: border-box !important;
+  }
+  .hero {
+    overflow-x: hidden !important;
+  }
+}
