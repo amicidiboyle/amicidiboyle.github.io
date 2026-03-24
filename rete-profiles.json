@@ -10,9 +10,9 @@
     "instagram": "",
     "website": "",
     "courses": "",
-    "speaker": false,
-    "podcast": false,
-    "research": false,
+    "speaker": true,
+    "podcast": true,
+    "research": true,
     "updated": "2026-03-24"
   },
   "andrea-murdock-alpini": {
