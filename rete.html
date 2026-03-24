@@ -40,7 +40,7 @@
         <a href="podcast.html">Podcast</a>
         <a class="nav-cta" href="index.html#contatti">Contatti</a>
       </nav>
-      <button class="lang-toggle" id="langToggle" onclick="(function(){var l=localStorage.getItem('boyle_lang')||'it';var nl=l==='it'?'en':'it';localStorage.setItem('boyle_lang',nl);location.reload();})()" aria-label="Switch language">
+      <button class="lang-toggle" id="langToggle" onclick="(function(){var l=sessionStorage.getItem('boyle_lang')||'it';var nl=l==='it'?'en':'it';sessionStorage.setItem('boyle_lang',nl);location.reload();})()" aria-label="Switch language">
         <span id="langCurrent">IT</span><span class="lang-sep"> · </span><span id="langOther">EN</span>
       </button>
       <button class="nav-mobile-btn" id="navMobileBtn" aria-label="Apri menu" aria-expanded="false">
@@ -1566,7 +1566,7 @@
 <!-- i18n: rete.html -->
   <script>
   (function(){
-    var lang = localStorage.getItem('boyle_lang') || 'it';
+    var lang = sessionStorage.getItem('boyle_lang') || 'it';
 
     var T = {
       it: {
@@ -1679,7 +1679,7 @@
       var oth = document.getElementById('langOther');
       if (cur) cur.textContent = l === 'en' ? 'EN' : 'IT';
       if (oth) oth.textContent = l === 'en' ? 'IT' : 'EN';
-      localStorage.setItem('boyle_lang', l);
+      sessionStorage.setItem('boyle_lang', l);
     }
 
     // Expose globally
@@ -1691,7 +1691,7 @@
       if (!btn) return;
       btn.addEventListener('click', function(e) {
         e.preventDefault(); e.stopPropagation();
-        var cur = localStorage.getItem('boyle_lang') || 'it';
+        var cur = sessionStorage.getItem('boyle_lang') || 'it';
         applyLang(cur === 'it' ? 'en' : 'it');
       });
     }
@@ -1701,7 +1701,7 @@
       var mob = document.
       if (!mob) return;
       mob.addEventListener('click', function() {
-        var cur = localStorage.getItem('boyle_lang') || 'it';
+        var cur = sessionStorage.getItem('boyle_lang') || 'it';
         applyLang(cur === 'it' ? 'en' : 'it');
       });
     }
