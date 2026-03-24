@@ -1119,80 +1119,103 @@
   </div>
 
   <!-- Quick nav mobile: floating button -->
-  <div id="mobile-quicknav" aria-label="Navigazione rapida" style="display:none;">
-    <button id="mobile-quicknav-btn" aria-label="Navigazione rapida" aria-expanded="false">
-      <svg viewBox="0 0 22 22" fill="none" width="20" height="20"><path d="M4 6h14M4 11h14M4 16h14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+  <!-- ── QUICKNAV MOBILE HOME ── -->
+  <div id="boyle-qnav" style="
+    display:none;
+    position:fixed;
+    bottom:22px; right:16px;
+    z-index:99999;
+    font-family:inherit;
+  ">
+    <!-- Bottone -->
+    <button id="boyle-qnav-btn" aria-label="Navigazione rapida" style="
+      width:52px; height:52px; border-radius:50%;
+      background:linear-gradient(135deg,#0a7bff,#00c3ff);
+      border:none; cursor:pointer;
+      box-shadow:0 6px 24px rgba(0,120,255,.45);
+      display:flex; align-items:center; justify-content:center;
+      transition:transform .2s;
+      color:rgba(2,12,28,.95);
+    ">
+      <svg viewBox="0 0 22 22" fill="none" width="22" height="22">
+        <path d="M4 6h14M4 11h14M4 16h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
     </button>
-    <div id="mobile-quicknav-panel" role="menu" aria-hidden="true">
-      <a href="#home">↑ Inizio</a>
-      <a href="#visione">Visione</a>
-      <a href="#attivita">Aree</a>
-      <a href="#fondatori">Fondatori</a>
-      <a href="#rete-home">Rete</a>
-      <a href="#contenuti">Contenuti</a>
-      <a href="#ricerca">Ricerca</a>
-      <a href="#formazione">Formazione</a>
-      <a href="#partner">Partner</a>
-      <a href="#contatti">Contatti</a>
+    <!-- Pannello -->
+    <div id="boyle-qnav-panel" style="
+      display:none;
+      position:absolute; bottom:60px; right:0;
+      width:200px;
+      background:rgba(3,14,32,.97);
+      border:1px solid rgba(123,228,255,.22);
+      border-radius:18px;
+      padding:8px;
+      box-shadow:0 20px 50px rgba(0,0,0,.6);
+      backdrop-filter:blur(22px);
+    ">
+      <a href="#home" style="display:block;padding:10px 14px;color:#7dd3fc;font-size:.85rem;font-weight:700;text-decoration:none;border-radius:10px;border-bottom:1px solid rgba(123,228,255,.12);margin-bottom:4px;">↑ Inizio</a>
+      <a href="#visione" style="display:block;padding:9px 14px;color:rgba(220,240,255,.8);font-size:.82rem;font-weight:600;text-decoration:none;border-radius:10px;">Visione</a>
+      <a href="#attivita" style="display:block;padding:9px 14px;color:rgba(220,240,255,.8);font-size:.82rem;font-weight:600;text-decoration:none;border-radius:10px;">Aree</a>
+      <a href="#fondatori" style="display:block;padding:9px 14px;color:rgba(220,240,255,.8);font-size:.82rem;font-weight:600;text-decoration:none;border-radius:10px;">Fondatori</a>
+      <a href="#rete-home" style="display:block;padding:9px 14px;color:rgba(220,240,255,.8);font-size:.82rem;font-weight:600;text-decoration:none;border-radius:10px;">Rete</a>
+      <a href="#contenuti" style="display:block;padding:9px 14px;color:rgba(220,240,255,.8);font-size:.82rem;font-weight:600;text-decoration:none;border-radius:10px;">Contenuti</a>
+      <a href="#ricerca" style="display:block;padding:9px 14px;color:rgba(220,240,255,.8);font-size:.82rem;font-weight:600;text-decoration:none;border-radius:10px;">Ricerca</a>
+      <a href="#partner" style="display:block;padding:9px 14px;color:rgba(220,240,255,.8);font-size:.82rem;font-weight:600;text-decoration:none;border-radius:10px;">Partner</a>
+      <a href="#contatti" style="display:block;padding:9px 14px;color:rgba(220,240,255,.8);font-size:.82rem;font-weight:600;text-decoration:none;border-radius:10px;">Contatti</a>
     </div>
   </div>
+
   <script>
   (function(){
-    var isMob = window.innerWidth <= 768;
-    if (!isMob) return;
-    var wrap = document.getElementById('mobile-quicknav');
-    var btn  = document.getElementById('mobile-quicknav-btn');
-    var panel= document.getElementById('mobile-quicknav-panel');
-    if (!wrap || !btn || !panel) return;
-    wrap.style.display = 'block';
+    // Solo su mobile
+    if (window.innerWidth > 768) return;
 
-    /* Mostra solo dopo 300px di scroll */
+    var wrap  = document.getElementById('boyle-qnav');
+    var btn   = document.getElementById('boyle-qnav-btn');
+    var panel = document.getElementById('boyle-qnav-panel');
+    if (!wrap || !btn || !panel) return;
+
+    // Mostra il wrapper
+    wrap.style.display = 'block';
+    wrap.style.opacity = '0';
+    wrap.style.transition = 'opacity .3s';
+    wrap.style.pointerEvents = 'none';
+
+    // Appare dopo 200px di scroll
     window.addEventListener('scroll', function(){
-      wrap.classList.toggle('qn-visible', window.scrollY > 300);
+      if (window.scrollY > 200) {
+        wrap.style.opacity = '1';
+        wrap.style.pointerEvents = 'auto';
+      } else {
+        wrap.style.opacity = '0';
+        wrap.style.pointerEvents = 'none';
+        panel.style.display = 'none';
+      }
     }, {passive:true});
 
-    btn.addEventListener('click', function(){
-      var open = panel.getAttribute('aria-hidden') === 'false';
-      panel.setAttribute('aria-hidden', open ? 'true' : 'false');
-      btn.setAttribute('aria-expanded', !open);
-      btn.classList.toggle('qn-open', !open);
+    // Toggle pannello
+    btn.addEventListener('click', function(e){
+      e.stopPropagation();
+      var isOpen = panel.style.display === 'block';
+      panel.style.display = isOpen ? 'none' : 'block';
+      btn.style.transform = isOpen ? 'none' : 'rotate(90deg)';
     });
 
-    /* Chiudi dopo click su link */
+    // Chiudi su click link
     panel.querySelectorAll('a').forEach(function(a){
       a.addEventListener('click', function(){
-        panel.setAttribute('aria-hidden','true');
-        btn.setAttribute('aria-expanded','false');
-        btn.classList.remove('qn-open');
+        panel.style.display = 'none';
+        btn.style.transform = 'none';
       });
     });
 
-    /* Chiudi su click fuori */
+    // Chiudi cliccando fuori
     document.addEventListener('click', function(e){
       if (!wrap.contains(e.target)) {
-        panel.setAttribute('aria-hidden','true');
-        btn.setAttribute('aria-expanded','false');
-        btn.classList.remove('qn-open');
+        panel.style.display = 'none';
+        btn.style.transform = 'none';
       }
     });
-
-    /* Bottone lingua nel menu mobile */
-    var langBtnMob = document.
-    if (langBtnMob) {
-      langBtnMob.addEventListener('click', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        var cur; try { cur = sessionStorage.getItem('boyle_lang') || 'it'; } catch(ex) { cur = 'it'; }
-        var nxt = cur === 'it' ? 'en' : 'it';
-        try { sessionStorage.setItem('boyle_lang', nxt); } catch(ex) {}
-        // usa la funzione globale se disponibile, altrimenti reload
-        if (window.boyleApplyLang) {
-          window.boyleApplyLang(nxt);
-        } else {
-          location.reload();
-        }
-      });
-    }
   })();
   </script>
 
