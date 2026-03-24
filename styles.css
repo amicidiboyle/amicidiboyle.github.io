@@ -2050,11 +2050,17 @@ body:hover #cursor-bubble { opacity: 1; }
   .timeline-card::before, .timeline-card::after { animation: none !important; }
   .btn-rete-cta::before, .btn-rete-cta::after { animation: none !important; }
   .contact-card--rich .btn-electric { animation: none !important; }
-  /* Pulse completamente eliminato su mobile */
+  /* Pulse + heartbeat completamente eliminati su mobile */
   #mobile-quicknav-btn { animation: none !important; box-shadow: 0 8px 28px rgba(0,120,255,.4) !important; }
   .contact-card--rich .btn-electric { animation: none !important; }
   .btn-electric::before { animation: none !important; }
   .btn-electric::after  { animation: none !important; }
+  .hero-eyebrow::before { animation: none !important; }
+  .timeline li:last-child::after { animation: none !important; }
+  .hero-scroll svg { animation: none !important; }
+  .btn-rete-cta::before, .btn-rete-cta::after { animation: none !important; }
+  .btn-candidati-cta::after { animation: none !important; }
+  .btn-partner-cta::before { animation: none !important; }
   #dust-canvas { display: none; }
 }
 
@@ -2767,4 +2773,75 @@ html, body { overflow-x: hidden; }
     background: linear-gradient(90deg, transparent 10%, rgba(123,228,255,.2) 35%, rgba(77,255,180,.2) 65%, transparent 90%);
   }
   .btn-split__amici { border-left: none; }
+}
+
+/* ── HOME HEADER: sticky garantito su mobile ── */
+@media (max-width: 768px) {
+  .site-header {
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 300 !important;
+    width: 100% !important;
+  }
+  /* Rimuovi overflow nascosto dai parent che rompe sticky */
+  main, body, html {
+    overflow-x: clip !important;
+  }
+}
+
+/* ══════════════════════════════════════════════════════════
+   ENTRANCE ANIMATIONS — sezione-specifiche
+   ══════════════════════════════════════════════════════════ */
+
+/* Scale-in per founder cards */
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(.94) translateY(16px); }
+  to   { opacity: 1; transform: scale(1)   translateY(0); }
+}
+
+/* Slide-left/right alternati per partner cards */
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-32px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(32px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+/* Rise-up per stat counters */
+@keyframes riseUp {
+  from { opacity: 0; transform: translateY(24px) scale(.96); }
+  to   { opacity: 1; transform: translateY(0)    scale(1); }
+}
+
+/* Founder cards: scale-in */
+.founder-card.is-visible {
+  animation: scaleIn .55s cubic-bezier(.22,1,.36,1) both;
+}
+
+/* Partner cards: slide alternati */
+.partner-card:nth-child(odd).is-visible,
+.glass-card:nth-child(odd).is-visible {
+  animation: slideInLeft .5s cubic-bezier(.22,1,.36,1) both;
+}
+.partner-card:nth-child(even).is-visible,
+.glass-card:nth-child(even).is-visible {
+  animation: slideInRight .5s cubic-bezier(.22,1,.36,1) both;
+}
+
+/* Stats: rise-up */
+.stat-block.is-visible,
+.hero-stat.is-visible,
+.stat-item.is-visible {
+  animation: riseUp .5s cubic-bezier(.22,1,.36,1) both;
+}
+
+/* Disable fancy animations on mobile for performance */
+@media (max-width: 768px) {
+  .founder-card.is-visible,
+  .partner-card.is-visible,
+  .glass-card.is-visible {
+    animation: fadeInUp .4s ease both;
+  }
 }
