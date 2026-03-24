@@ -2016,18 +2016,6 @@ a { color: inherit; text-decoration: none; }
 /* ══ POST-IT: UNA PER RIGA SU MOBILE ══ */
 
 
-/* ══ LANG TOGGLE: sempre visibile su mobile, accanto al burger ══ */
-@media (max-width: 768px) {
-  .lang-toggle {
-    display: inline-flex !important;
-    order: 2;
-    font-size: .68rem !important;
-    padding: 4px 9px !important;
-    margin-right: 6px;
-    z-index: 300 !important;
-    position: relative !important;
-    flex-shrink: 0 !important;
-  }
   .nav-burger, .nav-mobile-btn {
     order: 3;
     flex-shrink: 0;
@@ -2048,5 +2036,19 @@ a { color: inherit; text-decoration: none; }
   .rete-benefits-col .benefit-card {
     width: 100% !important;
     max-width: 100% !important;
+  }
+}
+
+/* ══ LANG TOGGLE MOBILE: fisso in alto a destra sotto il burger ══ */
+@media (max-width: 768px) {
+  .lang-toggle {
+    position: fixed !important;
+    top: 14px !important;
+    right: 62px !important;
+    z-index: 9999 !important;
+    display: inline-flex !important;
+    font-size: .68rem !important;
+    padding: 5px 10px !important;
+    margin: 0 !important;
   }
 }
