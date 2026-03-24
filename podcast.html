@@ -329,37 +329,506 @@
   <script>
   (function(){
     var lang = localStorage.getItem('boyle_lang') || 'it';
-    if (lang === 'it') {
-      // update toggle buttons only
+
+    var T = {
+      it: {
+        'pod_meta':'Pressione · Immersione · Iperbarica · Spazio',
+        'pod_lead':'Contenuto originale solo di medicina iperbarica, ipobarismo, astronautica e fisiologia degli ambienti estremi. Un podcast per curiosi, scritto da curiosi.',
+        'pod_cta_ep':'▶ Vai agli episodi',
+        'pod_cta_spotify':'Apri Spotify',
+        'pod_stat_stagioni':'Stagioni',
+        'pod_stat_episodi':'Episodi',
+        'pod_stat_curiosita':'Curiosità',
+        'pod_latest_badge':'🚀 Ultimo episodio · Stagione 3',
+        'pod_listen_spotify':'Ascolta su Spotify →',
+        'pod_s1_title':'Stagione 1',
+        'pod_s1_desc':'I fondamenti del mondo subacqueo: leggi fisiche, idoneità, attrezzatura e barotraumi.',
+        'pod_s2_title':'Stagione 2',
+        'pod_s2_desc':'Ipobarismo, cinema, visione, ossigeno, azoto e storie che meritano di essere capite per bene.',
+        'pod_s3_title':'Stagione 3',
+        'pod_s3_desc':'Dal mare allo spazio: elio, astronauti, fisiologia della pressione ed emergenze spaziali.',
+        'pod_yt_title':'Disponibile anche su YouTube',
+        'pod_yt_desc':'Tutti gli episodi di Sotto Pressione sono disponibili anche sul canale YouTube degli Amici di Boyle. Scansiona il QR code o apri il link direttamente.',
+        'pod_all_ep':'Tutti gli episodi',
+        'pod_search_ph':'Cerca episodio...',
+        'pod_cta_h3':'Vuoi proporre un argomento o una collaborazione?',
+        'pod_cta_p':'Idee serie, casi interessanti, progetti editoriali. Se ha valore, lo trattiamo bene.',
+        'pod_cta_btn':'Contattaci',
+      },
+      en: {
+        'pod_meta':'Pressure · Immersion · Hyperbaric · Space',
+        'pod_lead':'Original content only on hyperbaric medicine, hypobarism, astronautics and extreme physiology. A podcast for curious people, written by curious people.',
+        'pod_cta_ep':'▶ Go to episodes',
+        'pod_cta_spotify':'Open Spotify',
+        'pod_stat_stagioni':'Seasons',
+        'pod_stat_episodi':'Episodes',
+        'pod_stat_curiosita':'Curiosity',
+        'pod_latest_badge':'🚀 Latest episode · Season 3',
+        'pod_listen_spotify':'Listen on Spotify →',
+        'pod_s1_title':'Season 1',
+        'pod_s1_desc':'The foundations of the underwater world: physical laws, fitness, equipment and barotrauma.',
+        'pod_s2_title':'Season 2',
+        'pod_s2_desc':'Hypobarism, cinema, vision, oxygen, nitrogen and stories that deserve to be properly understood.',
+        'pod_s3_title':'Season 3',
+        'pod_s3_desc':'From the sea to space: helium, astronauts, pressure physiology and space emergencies.',
+        'pod_yt_title':'Also available on YouTube',
+        'pod_yt_desc':'All episodes of Sotto Pressione are also available on the Amici di Boyle YouTube channel. Scan the QR code or open the link directly.',
+        'pod_all_ep':'All episodes',
+        'pod_search_ph':'Search episode...',
+        'pod_cta_h3':'Want to propose a topic or a collaboration?',
+        'pod_cta_p':'Serious ideas, interesting cases, editorial projects. If it has value, we handle it well.',
+        'pod_cta_btn':'Contact us',
+      }
+    };
+
+    function applyLang(l) {
+      var dict = T[l] || T['it'];
+      // Apply data-i18n text
+      document.querySelectorAll('[data-i18n]').forEach(function(el) {
+        var key = el.getAttribute('data-i18n');
+        if (dict[key] !== undefined) el.textContent = dict[key];
+      });
+      // Apply placeholders
+      document.querySelectorAll('[data-i18n-placeholder]').forEach(function(el) {
+        var key = el.getAttribute('data-i18n-placeholder');
+        if (dict[key] !== undefined) el.placeholder = dict[key];
+      });
+      // Nav links
+      if (l === 'en') {
+        var navMap = {'Home':'Home','Visione':'Vision','Ricerca':'Research','Rete':'Network','Podcast':'Podcast','Contatti':'Contact'};
+        document.querySelectorAll('nav a, .nav--desktop a, .nav-mobile-panel a').forEach(function(a) {
+          var t = a.textContent.trim();
+          if (navMap[t]) a.textContent = navMap[t];
+        });
+        document.title = 'Sotto Pressione · Podcast · Gli Amici di Boyle';
+        document.documentElement.lang = 'en';
+      } else {
+        document.documentElement.lang = 'it';
+      }
+      // Toggle button
       var cur = document.getElementById('langCurrent');
       var oth = document.getElementById('langOther');
-      if (cur) cur.textContent = 'IT';
-      if (oth) oth.textContent = 'EN';
-      return;
+      if (cur) cur.textContent = l === 'en' ? 'EN' : 'IT';
+      if (oth) oth.textContent = l === 'en' ? 'IT' : 'EN';
+      // Save
+      try { localStorage.setItem('boyle_lang', l); } catch(e) {}
     }
+
+    // Expose globally for mobile toggle
+    window.boyleApplyLang = applyLang;
+
+    // Wire up desktop toggle
+    function attachToggle() {
+      var btn = document.getElementById('langToggle');
+      if (!btn) return;
+      btn.addEventListener('click', function(e) {
+        e.preventDefault(); e.stopPropagation();
+        var cur; try { cur = localStorage.getItem('boyle_lang') || 'it'; } catch(e2) { cur = 'it'; }
+        applyLang(cur === 'it' ? 'en' : 'it');
+      });
+    }
+
+    // Wire up mobile toggle
+    function attachMobileToggle() {
+      var mob = document.getElementById('langToggleMobilePod');
+      if (!mob) return;
+      mob.addEventListener('click', function() {
+        var cur; try { cur = localStorage.getItem('boyle_lang') || 'it'; } catch(e) { cur = 'it'; }
+        applyLang(cur === 'it' ? 'en' : 'it');
+      });
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', function() {
+        attachToggle(); attachMobileToggle();
+        applyLang(lang);
+      });
+    } else {
+      attachToggle(); attachMobileToggle();
+      applyLang(lang);
+    }
+  })();
+  
+e html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sotto Pressione · Podcast · Gli Amici di Boyle</title>
+  <meta name="description" content="SOTTO PRESSIONE: il podcast di Luigi Tarsia su medicina iperbarica, ipobarismo, astronautica e fisiologia estrema. 3 stagioni, 25 episodi." />
+  <meta name="theme-color" content="#031427" />
+  <link rel="icon" href="assets/logo.png" type="image/png" />
+  <link rel="stylesheet" href="podcast.css" />
+</head>
+<body>
+  <a class="skip" href="#contenuto">Vai al contenuto</a>
+
+  <header class="header" role="banner">
+    <div class="container header__inner">
+      <a class="brand" href="index.html" aria-label="Gli Amici di Boyle Home">
+        <img src="assets/logo.png" alt="Logo Gli Amici di Boyle" width="56" height="56" />
+        <span class="brand-copy">
+          <strong>Gli Amici di Boyle</strong>
+          <em>Diving &amp; Hyperbaric Medicine · Research &amp; Education</em>
+          <em class="brand-sub">Human Performance &amp; Safety in Extreme Environments</em>
+        </span>
+      </a>
+      <nav class="nav--desktop">
+        <a href="index.html">Home</a>
+        <a href="index.html#visione">Visione</a>
+        <a href="index.html#ricerca">Ricerca</a>
+        <a href="rete.html">Rete</a>
+        <a class="nav-active" href="podcast.html" aria-current="page">Podcast</a>
+        <a class="nav-cta" href="index.html#contatti">Contatti</a>
+      <button class="lang-toggle" id="langToggle" onclick="(function(){var l=localStorage.getItem('boyle_lang')||'it';var nl=l==='it'?'en':'it';localStorage.setItem('boyle_lang',nl);applyLang(next);})()" aria-label="Switch language">
+        <span id="langCurrent">IT</span><span class="lang-sep"> · </span><span id="langOther">EN</span>
+      </button>
+      </nav>
+      <button class="nav-mobile-btn" id="navMobileBtn" aria-label="Apri menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="nav-mobile-panel" id="navMobilePanel" aria-hidden="true">
+        <a href="index.html">Home</a>
+        <a href="index.html#visione">Visione</a>
+        <a href="index.html#ricerca">Ricerca</a>
+        <a href="rete.html">Rete</a>
+        <a href="podcast.html">Podcast</a>
+        <a href="index.html#contatti">Contatti</a>
+        <button id="langToggleMobilePod" type="button" style="margin-top:8px;width:100%;text-align:center;border-radius:8px;background:rgba(123,228,255,.08);border:1px solid rgba(123,228,255,.18);color:#a8eeff;font-size:.78rem;font-weight:700;letter-spacing:.1em;padding:9px;cursor:pointer;" aria-label="Cambia lingua">IT / EN</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="contenuto">
+
+    <!-- HERO -->
+    <section class="podHero" id="top">
+      <div class="podBG" aria-hidden="true">
+        <span class="podOrb podOrb--a"></span>
+        <span class="podOrb podOrb--b"></span>
+        <span class="podOrb podOrb--c"></span>
+      </div>
+      <div class="container podHero__grid">
+        <div class="podHero__media reveal">
+          <div class="podCoverWrap">
+            <img class="podCover" src="assets/sotto-pressione-cover.jpg" alt="Cover podcast Sotto Pressione" loading="eager" width="320" height="320" />
+            <div class="podCover__ring" aria-hidden="true"></div>
+            <div class="podCover__ring podCover__ring--2" aria-hidden="true"></div>
+          </div>
+        </div>
+        <div class="podHero__copy reveal" data-delay="100">
+          <div class="podKicker">
+            <span class="podPill">🎙 Podcast</span>
+            <span class="podDot" aria-hidden="true"></span>
+            <span class="podMeta" data-i18n="pod_meta">Pressione · Immersione · Iperbarica · Spazio</span>
+          </div>
+          <h1 class="podTitle">Sotto Pressione<span class="podByline">di Luigi Tarsia</span></h1>
+          <p class="podLead" data-i18n="pod_lead">Solo contenuti originali di medicina iperbarica, ipobarismo, astronautica e fisiologia estrema. Un podcast per persone curiose, scritto da persone curiose.</p>
+          <div class="podCTA">
+            <a class="btn--primary btn--lg" href="#episodi" data-i18n="pod_cta_ep">▶ Vai agli episodi</a>
+            <a class="btn--spotify btn--lg" href="https://open.spotify.com/search/sotto%20pressione%20luigi%20tarsia" target="_blank" rel="noopener">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+              <span data-i18n="pod_cta_spotify">Apri Spotify</span>
+            </a>
+          </div>
+          <div class="podStats">
+            <div class="podStat"><div class="podStat__n">3</div><div class="podStat__l" data-i18n="pod_stat_stagioni">Stagioni</div></div>
+            <div class="podStat"><div class="podStat__n">27+</div><div class="podStat__l" data-i18n="pod_stat_episodi">Episodi</div></div>
+            <div class="podStat"><div class="podStat__n">∞</div><div class="podStat__l" data-i18n="pod_stat_curiosita">Curiosità</div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PLAYER ULTIMO EPISODIO -->
+    <section class="podPlayer">
+      <div class="container">
+        <div class="podPlayer__inner reveal">
+          <div class="podPlayer__copy">
+            <span class="podPlayer__badge" data-i18n="pod_latest_badge">🚀 Ultimo episodio · Stagione 3</span>
+            <h2 class="podPlayer__title">I Canarini di Haldane</h2>
+            <p class="podPlayer__desc">John Scott Haldane, i minatori e i canarini: la storia dell'uomo che capì come i gas si comportano nel sangue e rivoluzionò la decompressione.</p>
+            <a class="podPlayer__link" href="https://open.spotify.com/episode/4XCeKjGxMT9Diwfmnpw3qi" target="_blank" rel="noopener" data-i18n="pod_listen_spotify">Ascolta su Spotify →</a>
+          </div>
+          <div class="podEmbed">
+            <iframe src="https://open.spotify.com/embed/episode/4XCeKjGxMT9Diwfmnpw3qi?utm_source=generator&theme=0" width="100%" height="152" frameborder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" title="I Canarini di Haldane"></iframe>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- EPISODI -->
+    <section class="podSection" id="episodi">
+      <div class="container">
+        <div class="podSection__head reveal">
+          <div>
+            <h2 class="podSection__h2" data-i18n="pod_all_ep">Tutti gli episodi</h2>
+            <p class="podSection__sub">Medicina ed ingegneria degli ambienti estremi, semplici e divulgativi.</p>
+          </div>
+          <label class="podSearch">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="6.5" cy="6.5" r="4.5" stroke="currentColor" stroke-width="1.4"/><path d="M10 10l3 3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+            <input id="episodeSearch" type="search" data-i18n-placeholder="pod_search_ph" placeholder="Cerca episodio..." autocomplete="off" />
+          </label>
+        </div>
+
+        <div class="podQuickNav reveal" data-delay="80">
+          <a class="podQuickNav__link podQuickNav__link--s1" href="#s1"><span class="qnDot"></span>Stagione 1 <span class="qnCount">10 ep.</span></a>
+          <a class="podQuickNav__link podQuickNav__link--s2" href="#s2"><span class="qnDot"></span>Stagione 2 <span class="qnCount">11 ep.</span></a>
+          <a class="podQuickNav__link podQuickNav__link--s3" href="#s3"><span class="qnDot"></span>Stagione 3 <span class="qnCount">6 ep.</span></a>
+        </div>
+
+        <div class="seasons" id="seasonsWrap">
+
+          <div id="s1"></div>
+          <details class="season season--s1 reveal" open>
+            <summary class="season__summary">
+              <div class="season__left"><span class="season__tag">S1</span><div><span class="season__k" data-i18n="pod_s1_title">Stagione 1</span><span class="season__d" data-i18n="pod_s1_desc">Le basi del mondo sommerso: leggi fisiche, idoneità, attrezzatura e barotrauma.</span></div></div>
+              <div class="season__right"><span class="season__count">10 ep.</span><span class="season__chev"></span></div>
+            </summary>
+            <div class="season__body">
+              <article class="epCard" data-title="le leggi fisiche del mondo sommerso"><div class="epLeft"><span class="epBadge epBadge--s1">EP 1</span><div class="epInfo"><h3 class="epTitle">Le Leggi Fisiche del Mondo Sommerso</h3><p class="epDesc">Pressione, volume, temperatura: le tre leggi di Boyle, Charles e Dalton che governano ogni immersione, spiegate da chi le applica ogni giorno.</p></div></div><div class="epActions"><button class="epPlayBtn" data-id="6MSOUbc8hpJrsYD7b4rL71" aria-label="Ascolta EP 1"><svg viewBox="0 0 16 16" fill="currentColor" width="13" height="13"><path d="M3 3.5A1.5 1.5 0 0 1 5.121 2.19l7 4.5a1.5 1.5 0 0 1 0 2.62l-7 4.5A1.5 1.5 0 0 1 3 12.5v-9Z"/></svg>Ascolta</button><a class="epBtn" href="https://open.spotify.com/episode/6MSOUbc8hpJrsYD7b4rL71" target="_blank" rel="noopener">Spotify</a></div></article>
+              <article class="epCard" data-title="la subacquea ricreativa"><div class="epLeft"><span class="epBadge epBadge--s1">EP 2</span><div class="epInfo"><h3 class="epTitle">La Subacquea Ricreativa</h3><p class="epDesc">Quanti italiani si immergono ogni anno e quali rischi porta la passione per il blu. Il mondo della subacquea ricreativa dall'interno.</p></div></div><div class="epActions"><button class="epPlayBtn" data-id="0j65FzDaiWnGOLG1RJMsdf" aria-label="Ascolta EP 2"><svg viewBox="0 0 16 16" fill="currentColor" width="13" height="13"><path d="M3 3.5A1.5 1.5 0 0 1 5.121 2.19l7 4.5a1.5 1.5 0 0 1 0 2.62l-7 4.5A1.5 1.5 0 0 1 3 12.5v-9Z"/></svg>Ascolta</button><a class="epBtn" href="https://open.spotify.com/episode/0j65FzDaiWnGOLG1RJMsdf" target="_blank" rel="noopener">Spotify</a></div></article>
+              <article class="epCard" data-title="la visita di idoneità"><div class="epLeft"><span class="epBadge epBadge--s1">EP 3</span><div class="epInfo"><h3 class="epTitle">La Visita di Idoneità</h3><p class="epDesc">Cosa cerca davvero il medico durante la visita di idoneità subacquea. Cuore, polmoni, orecchie: tutto quello che si valuta prima di scendere.</p></div></div><div class="epActions"><button class="epPlayBtn" data-id="306ebmPOCAdVCPecp1iyiU" aria-label="Ascolta EP 3"><svg viewBox="0 0 16 16" fill="currentColor" width="13" height="13"><path d="M3 3.5A1.5 1.5 0 0 1 5.121 2.19l7 4.5a1.5 1.5 0 0 1 0 2.62l-7 4.5A1.5 1.5 0 0 1 3 12.5v-9Z"/></svg>Ascolta</button><a class="epBtn" href="https://open.spotify.com/episode/306ebmPOCAdVCPecp1iyiU" target="_blank" rel="noopener">Spotify</a></div></article>
+              <article class="epCard" data-title="l'attrezzatura subacquea"><div class="epLeft"><span class="epBadge epBadge--s1">EP 4</span><div class="epInfo"><h3 class="epTitle">L'attrezzatura Subacquea</h3><p class="epDesc">Dal GAV all'erogatore, dalla muta alla torcia. Come funziona ogni componente e perché la manutenzione è questione di sicurezza.</p></div></div><div class="epActions"><button class="epPlayBtn" data-id="2ZtxfohbgrYYyDf7R1XaJ6" aria-label="Ascolta EP 4"><svg viewBox="0 0 16 16" fill="currentColor" width="13" height="13"><path d="M3 3.5A1.5 1.5 0 0 1 5.121 2.19l7 4.5a1.5 1.5 0 0 1 0 2.62l-7 4.5A1.5 1.5 0 0 1 3 12.5v-9Z"/></svg>Ascolta</button><a class="epBtn" href="https://open.spotify.com/episode/2ZtxfohbgrYYyDf7R1XaJ6" target="_blank" rel="noopener">Spotify</a></div></article>
+              <article class="epCard" data-title="il computer subacqueo"><div class="epLeft"><span class="epBadge epBadge--s1">EP 5</span><div class="epInfo"><h3 class="epTitle">Il Computer Subacqueo</h3><p class="epDesc">Algoritmi, modelli compartimentali e limiti di decompressione. Il computer subacqueo è il confine tra sicurezza e malattia da decompressione.</p></div></div><div class="epActions"><button class="epPlayBtn" data-id="4vzJeIizgJl2rHu0lCIiL2" aria-label="Ascolta EP 5"><svg viewBox="0 0 16 16" fill="currentColor" width="13" height="13"><path d="M3 3.5A1.5 1.5 0 0 1 5.121 2.19l7 4.5a1.5 1.5 0 0 1 0 2.62l-7 4.5A1.5 1.5 0 0 1 3 12.5v-9Z"/></svg>Ascolta</button><a class="epBtn" href="https://open.spotify.com/episode/4vzJeIizgJl2rHu0lCIiL2" target="_blank" rel="noopener">Spotify</a></div></article>
+              <article class="epCard" data-title="il barotrauma"><div class="epLeft"><span class="epBadge epBadge--s1">EP 6</span><div class="epInfo"><h3 class="epTitle">Il Barotrauma</h3><p class="epDesc">Cosa succede ai tessuti quando la pressione cambia troppo in fretta. Orecchie, polmoni, seni paranasali: anatomia di un trauma fisico prevenibile.</p></div></div><div class="epActions"><button class="epPlayBtn" data-id="5FYXKNcnhuHqFdRg7LWeOO" aria-label="Ascolta EP 6"><svg viewBox="0 0 16 16" fill="currentColor" width="13" height="13"><path d="M3 3.5A1.5 1.5 0 0 1 5.121 2.19l7 4.5a1.5 1.5 0 0 1 0 2.62l-7 4.5A1.5 1.5 0 0 1 3 12.5v-9Z"/></svg>Ascolta</button><a class="epBtn" href="https://open.spotify.com/episode/5FYXKNcnhuHqFdRg7LWeOO" target="_blank" rel="noopener">Spotify</a></div></article>
+              <article class="epCard" data-title="la camera iperbarica"><div class="epLeft"><span class="epBadge epBadge--s1">EP 7</span><div class="epInfo"><h3 class="epTitle">La Camera Iperbarica</h3><p class="epDesc">Com'è fatta una camera iperbarica, chi ci lavora e come. Un tour tra monoposto, multiposto, protocolli e indicazioni terapeutiche.</p></div></div><div class="epActions"><button class="epPlayBtn" data-id="2k96mq4lTfMF4YIs6CWRAW" aria-label="Ascolta EP 7"><svg viewBox="0 0 16 16" fill="currentColor" width="13" height="13"><path d="M3 3.5A1.5 1.5 0 0 1 5.121 2.19l7 4.5a1.5 1.5 0 0 1 0 2.62l-7 4.5A1.5 1.5 0 0 1 3 12.5v-9Z"/></svg>Ascolta</button><a class="epBtn" href="https://open.spotify.com/episode/2k96mq4lTfMF4YIs6CWRAW" target="_blank" rel="noopener">Spotify</a></div></article>
+              <article class="epCard" data-title="il tecnico iperbarico"><div class="epLeft"><span class="epBadge epBadge--s1">EP 8</span><div class="epInfo"><h3 class="epTitle">Il Tecnico Iperbarico</h3><p class="epDesc">Una figura spesso invisibile ma fondamentale: chi gestisce l'impianto iperbarico e perché la sua formazione è cruciale quanto quella del medico.</p></div></div><div class="epActions"><button class="epPlayBtn" data-id="0XtJeKMDtqAU88aC9GRP6U" aria-label="Ascolta EP 8"><svg viewBox="0 0 16 16" fill="currentColor" width="13" height="13"><path d="M3 3.5A1.5 1.5 0 0 1 5.121 2.19l7 4.5a1.5 1.5 0 0 1 0 2.62l-7 4.5A1.5 1.5 0 0 1 3 12.5v-9Z"/></svg>Ascolta</button><a class="epBtn" href="https://open.spotify.com/episode/0XtJeKMDtqAU88aC9GRP6U" target="_blank" rel="noopener">Spotify</a></div></article>
+              <article class="epCard" data-title="volare dopo l'immersione"><div class="epLeft"><span class="epBadge epBadge--s1">EP 9</span><div class="epInfo"><h3 class="epTitle">Volare Dopo l'Immersione</h3><p class="epDesc">Perché non si può prendere un aereo subito dopo un'immersione. La fisica dell'azoto disciolto e le 18 ore di attesa che possono salvare la vita.</p></div></div><div class="epActions"><button class="epPlayBtn" data-id="7xGygD36INtZSoz3dhsSGI" aria-label="Ascolta EP 9"><svg viewBox="0 0 16 16" fill="currentColor" width="13" height="13"><path d="M3 3.5A1.5 1.5 0 0 1 5.121 2.19l7 4.5a1.5 1.5 0 0 1 0 2.62l-7 4.5A1.5 1.5 0 0 1 3 12.5v-9Z"/></svg>Ascolta</button><a class="epBtn" href="https://open.spotify.com/episode/7xGygD36INtZSoz3dhsSGI" target="_blank" rel="noopener">Spotify</a></div></article>
+              <article class="epCard" data-title="il trucco e la camera iperbarica"><div class="epLeft"><span class="epBadge epBadge--s1">EP 10</span><div class="epInfo"><h3 class="epTitle">Il Trucco e La Camera Iperbarica</h3><p class="epDesc">Cosmetici, smalti e lacche in ambiente iperpressurizzato. Cosa può prendere fuoco e perché certi prodotti sono vietati in camera iperbarica.</p></div></div><div class="epActions"><button class="epPlayBtn" data-id="0SVzq9RvNGlNF9OvAohswg" aria-label="Ascolta EP 10"><svg viewBox="0 0 16 16" fill="currentColor" width="13" height="13"><path d="M3 3.5A1.5 1.5 0 0 1 5.121 2.19l7 4.5a1.5 1.5 0 0 1 0 2.62l-7 4.5A1.5 1.5 0 0 1 3 12.5v-9Z"/></svg>Ascolta</button><a class="epBtn" href="https://open.spotify.com/episode/0SVzq9RvNGlNF9OvAohswg" target="_blank" rel="noopener">Spotify</a></div></article>
+            </div>
+          </details>
+
+          <div id="s2"></div>
+          <details class="season season--s2 reveal">
+            <summary class="season__summary">
+              <div class="season__left"><span class="season__tag">S2</span><div><span class="season__k" data-i18n="pod_s2_title">Stagione 2</span><span class="season__d" data-i18n="pod_s2_desc">Ipobarismo, cinema, visione, ossigeno, azoto e storie che meritano di essere capite bene.</span></div></div>
+              <div class="season__right"><span class="season__count">10 ep.</span><span class="season__chev"></span></div>
+            </summary>
+            <div class="season__body">
+              <article class="epCard" data-title="la camera ipobarica"><div class="epLeft"><span class="epBadge epBadge--s2">EP 1</span><div class="epInfo"><h3 class="epTitle">La Camera Ipobarica</h3><p class="epDesc">Il gemello meno conosciuto della camera iperbarica. Pressione ridotta, addestramento degli aviatori e simulazione di quota estrema.</p></div></div><div class="epActions"><button class="epPlayBtn" data-id="5Hjvc1BJkLDFVAKPItRf0l" aria-label="Ascolta S2 EP 1"><svg viewBox="0 0 16 16" fill="currentColor" width="13" height="13"><path d="M3 3.5A1.5 1.5 0 0 1 5.121 2.19l7 4.5a1.5 1.5 0 0 1 0 2.62l-7 4.5A1.5 1.5 0 0 1 3 12.5v-9Z"/></svg>Ascolta</button><a class="epBtn" href="https://open.spotify.com/episode/5Hjvc1BJkLDFVAKPItRf0l" target="_blank" rel="noopener">Spotify</a></div></article>
+              <article class="epCard" data-title="vuoto vs ipobarismo"><div class="epLeft"><span class="epBadge epBadge--s2">EP 2</span><div class="epInfo"><h3 class="epTitle">Vuoto vs Ipobarismo</h3><p class="epDesc">Pressione zero o pressione ridotta? Non è la stessa cosa. La distinzione fisica e cosa succede davvero al corpo umano esposto a questi ambienti.</p></div></div><div class="epActions"><button class="epPlayBtn" data-id="3fpHrUPF4520zXVCt5zz7u" aria-label="Ascolta S2 EP 2"><svg viewBox="0 0 16 16" fill="currentColor" width="13" height="13"><path d="M3 3.5A1.5 1.5 0 0 1 5.121 2.19l7 4.5a1.5 1.5 0 0 1 0 2.62l-7 4.5A1.5 1.5 0 0 1 3 12.5v-9Z"/></svg>Ascolta</button><a class="epBtn" href="https://open.spotify.com/episode/3fpHrUPF4520zXVCt5zz7u" target="_blank" rel="noopener">Spotify</a></div></article>
+              <article class="epCard" data-title="sotto pressione al cinema"><div class="epLeft"><span class="epBadge epBadge--s2">EP 3</span><div class="epInfo"><h3 class="epTitle">Sotto Pressione … Al Cinema!</h3><p class="epDesc">Da "The Abyss" a "Gravity": Hollywood e la medicina degli ambienti estremi. Cosa i film raccontano bene e cosa inventano di sana pianta.</p></div></div><div class="epActions"><button class="epPlayBtn" data-id="6SBnlvNRFZVJu5l5kQCNxr" aria-label="Ascolta S2 EP 3"><svg viewBox="0 0 16 16" fill="currentColor" width="13" height="13"><path d="M3 3.5A1.5 1.5 0 0 1 5.121 2.19l7 4.5a1.5 1.5 0 0 1 0 2.62l-7 4.5A1.5 1.5 0 0 1 3 12.5v-9Z"/></svg>Ascolta</button><a class="epBtn" href="https://open.spotify.com/episode/6SBnlvNRFZVJu5l5kQCNxr" target="_blank" rel="noopener">Spotify</a></div></article>
+              <article class="epCard" data-title="la visione sott'acqua"><div class="epLeft"><span class="epBadge epBadge--s2">EP 4</span><div class="epInfo"><h3 class="epTitle">La Visione Sott'Acqua</h3><p class="epDesc">Miopia indotta, riduzione del campo visivo, alterazione dei colori. L'occhio umano non è fatto per l'acqua e la maschera risolve solo metà del problema.</p></div></div><div class="epActions"><button class="epPlayBtn" data-id="3hCvyTtjgbLN5Dne5syJh5" aria-label="Ascolta S2 EP 4"><svg viewBox="0 0 16 16" fill="currentColor" width="13" height="13"><path d="M3 3.5A1.5 1.5 0 0 1 5.121 2.19l7 4.5a1.5 1.5 0 0 1 0 2.62l-7 4.5A1.5 1.5 0 0 1 3 12.5v-9Z"/></svg>Ascolta</button><a class="epBtn" href="https://open.spotify.com/episode/3hCvyTtjgbLN5Dne5syJh5" target="_blank" rel="noopener">Spotify</a></div></article>
+              <article class="epCard" data-title="la medicina iperbarica in svizzera"><div class="epLeft"><span class="epBadge epBadge--s2">EP 5</span><div class="epInfo"><h3 class="epTitle">La Medicina Iperbarica in Svizzera</h3><p class="epDesc">Un centro di eccellenza europeo dall'interno: come funziona la medicina iperbarica in un sistema sanitario diverso dal nostro.</p></div></div><div class="epActions"><button class="epPlayBtn" data-id="464BDK3uyywkXDNfN7Q79t" aria-label="Ascolta S2 EP 5"><svg viewBox="0 0 16 16" fill="currentColor" width="13" height="13"><path d="M3 3.5A1.5 1.5 0 0 1 5.121 2.19l7 4.5a1.5 1.5 0 0 1 0 2.62l-7 4.5A1.5 1.5 0 0 1 3 12.5v-9Z"/></svg>Ascolta</button><a class="epBtn" href="https://open.spotify.com/episode/464BDK3uyywkXDNfN7Q79t" target="_blank" rel="noopener">Spotify</a></div></article>
+              <article class="epCard" data-title="pinocchio"><div class="epLeft"><span class="epBadge epBadge--s2">EP 6</span><div class="epInfo"><h3 class="epTitle">Pinocchio</h3><p class="epDesc">Cosa significa mentire al medico prima di un'immersione. Le bugie sui farmaci e sulle patologie e le conseguenze reali che possono avere.</p></div></div><div class="epActions"><button class="epPlayBtn" data-id="0XiVtXf6vzHvtfJTo3RTkV" aria-label="Ascolta S2 EP 6"><svg viewBox="0 0 16 16" fill="currentColor" width="13" height="13"><path d="M3 3.5A1.5 1.5 0 0 1 5.121 2.19l7 4.5a1.5 1.5 0 0 1 0 2.62l-7 4.5A1.5 1.5 0 0 1 3 12.5v-9Z"/></svg>Ascolta</button><a class="epBtn" href="https://open.spotify.com/episode/0XiVtXf6vzHvtfJTo3RTkV" target="_blank" rel="noopener">Spotify</a></div></article>
+              <article class="epCard" data-title="apollo 1"><div class="epLeft"><span class="epBadge epBadge--s2">EP 7</span><div class="epInfo"><h3 class="epTitle">Apollo 1</h3><p class="epDesc">27 gennaio 1967: l'incendio che cambiò la medicina spaziale. Ossigeno puro, pressione di cabina e le decisioni di ingegneria che costarono tre vite.</p></div></div><div class="epActions"><button class="epPlayBtn" data-id="0URzOrvOKtVx2ZhPfRZAui" aria-label="Ascolta S2 EP 7"><svg viewBox="0 0 16 16" fill="currentColor" width="13" height="13"><path d="M3 3.5A1.5 1.5 0 0 1 5.121 2.19l7 4.5a1.5 1.5 0 0 1 0 2.62l-7 4.5A1.5 1.5 0 0 1 3 12.5v-9Z"/></svg>Ascolta</button><a class="epBtn" href="https://open.spotify.com/episode/0URzOrvOKtVx2ZhPfRZAui" target="_blank" rel="noopener">Spotify</a></div></article>
+              <article class="epCard" data-title="l'ossigeno"><div class="epLeft"><span class="epBadge epBadge--s2">EP 8</span><div class="epInfo"><h3 class="epTitle">L'Ossigeno</h3><p class="epDesc">Ossigeno terapeutico, tossicità da O₂, finestre di ossigeno. Il gas della vita può diventare veleno: tutto quello che il subacqueo deve sapere.</p></div></div><div class="epActions"><button class="epPlayBtn" data-id="232sqmX64kRaZZopeSZZbm" aria-label="Ascolta S2 EP 8"><svg viewBox="0 0 16 16" fill="currentColor" width="13" height="13"><path d="M3 3.5A1.5 1.5 0 0 1 5.121 2.19l7 4.5a1.5 1.5 0 0 1 0 2.62l-7 4.5A1.5 1.5 0 0 1 3 12.5v-9Z"/></svg>Ascolta</button><a class="epBtn" href="https://open.spotify.com/episode/232sqmX64kRaZZopeSZZbm" target="_blank" rel="noopener">Spotify</a></div></article>
+              <article class="epCard" data-title="27 giugno 1980 ustica"><div class="epLeft"><span class="epBadge epBadge--s2">EP 9</span><div class="epInfo"><h3 class="epTitle">27 Giugno 1980 — Ustica</h3><p class="epDesc">Il disastro aereo raccontato con la medicina aerospaziale: decompressione esplosiva, lesioni da blast e i limiti della sopravvivenza in quota.</p></div></div><div class="epActions"><button class="epPlayBtn" data-id="2BIrJ7YHzg19kBvTFniiqU" aria-label="Ascolta S2 EP 9"><svg viewBox="0 0 16 16" fill="currentColor" width="13" height="13"><path d="M3 3.5A1.5 1.5 0 0 1 5.121 2.19l7 4.5a1.5 1.5 0 0 1 0 2.62l-7 4.5A1.5 1.5 0 0 1 3 12.5v-9Z"/></svg>Ascolta</button><a class="epBtn" href="https://open.spotify.com/episode/2BIrJ7YHzg19kBvTFniiqU" target="_blank" rel="noopener">Spotify</a></div></article>
+              <article class="epCard" data-title="l'azoto"><div class="epLeft"><span class="epBadge epBadge--s2">EP 10</span><div class="epInfo"><h3 class="epTitle">L'Azoto</h3><p class="epDesc">Narcosi, malattia da decompressione, ebollizione tissutale. L'azoto è il protagonista silenzioso di ogni immersione: come si accumula e come ci tradisce.</p></div></div><div class="epActions"><button class="epPlayBtn" data-id="0WMWByHyt7Teu8CrMwFzvN" aria-label="Ascolta S2 EP 10"><svg viewBox="0 0 16 16" fill="currentColor" width="13" height="13"><path d="M3 3.5A1.5 1.5 0 0 1 5.121 2.19l7 4.5a1.5 1.5 0 0 1 0 2.62l-7 4.5A1.5 1.5 0 0 1 3 12.5v-9Z"/></svg>Ascolta</button><a class="epBtn" href="https://open.spotify.com/episode/0WMWByHyt7Teu8CrMwFzvN" target="_blank" rel="noopener">Spotify</a></div></article>
+            </div>
+          </details>
+
+          <div id="s3"></div>
+          <details class="season season--s3 reveal">
+            <summary class="season__summary">
+              <div class="season__left"><span class="season__tag">S3</span><div><span class="season__k" data-i18n="pod_s3_title">Stagione 3</span><span class="season__d" data-i18n="pod_s3_desc">Dal mare allo spazio: elio, astronauti, fisiologia della pressione ed emergenze spaziali.</span></div></div>
+              <div class="season__right"><span class="season__count">6 ep.</span><span class="season__chev"></span></div>
+            </summary>
+            <div class="season__body">
+              <article class="epCard" data-title="la leggerezza dell'elio"><div class="epLeft"><span class="epBadge epBadge--s3">EP 1</span><div class="epInfo"><h3 class="epTitle">La Leggerezza dell'Elio</h3><p class="epDesc">L'elio non è solo il gas dei palloncini: è protagonista delle immersioni profonde e della saturazione. Perché lo usiamo e cosa cambia rispetto all'azoto.</p></div></div><div class="epActions"><button class="epPlayBtn" data-id="5jno2XE2ZwBgfBzHaqm5mT" aria-label="Ascolta S3 EP 1"><svg viewBox="0 0 16 16" fill="currentColor" width="13" height="13"><path d="M3 3.5A1.5 1.5 0 0 1 5.121 2.19l7 4.5a1.5 1.5 0 0 1 0 2.62l-7 4.5A1.5 1.5 0 0 1 3 12.5v-9Z"/></svg>Ascolta</button><a class="epBtn" href="https://open.spotify.com/episode/5jno2XE2ZwBgfBzHaqm5mT" target="_blank" rel="noopener">Spotify</a></div></article>
+              <article class="epCard" data-title="l'addestramento degli astronauti in immersione"><div class="epLeft"><span class="epBadge epBadge--s3">EP 2</span><div class="epInfo"><h3 class="epTitle">L'addestramento degli Astronauti in Immersione</h3><p class="epDesc">La NASA allena gli astronauti nella più grande piscina del mondo. Come funziona la Neutral Buoyancy Laboratory e i limiti di questa simulazione.</p></div></div><div class="epActions"><button class="epPlayBtn" data-id="69I9teyK9cS3C77W7KeG5e" aria-label="Ascolta S3 EP 2"><svg viewBox="0 0 16 16" fill="currentColor" width="13" height="13"><path d="M3 3.5A1.5 1.5 0 0 1 5.121 2.19l7 4.5a1.5 1.5 0 0 1 0 2.62l-7 4.5A1.5 1.5 0 0 1 3 12.5v-9Z"/></svg>Ascolta</button><a class="epBtn" href="https://open.spotify.com/episode/69I9teyK9cS3C77W7KeG5e" target="_blank" rel="noopener">Spotify</a></div></article>
+              <article class="epCard" data-title="l'organo più sensibile alla pressione"><div class="epLeft"><span class="epBadge epBadge--s3">EP 3</span><div class="epInfo"><h3 class="epTitle">L'organo più Sensibile alla Pressione</h3><p class="epDesc">Non sono i polmoni, non è il cuore. L'organo più vulnerabile alle variazioni di pressione è uno che non ti aspetti. Fisiologia, patologia e prevenzione.</p></div></div><div class="epActions"><button class="epPlayBtn" data-id="2w3drALmfECWTv3UZguRWo" aria-label="Ascolta S3 EP 3"><svg viewBox="0 0 16 16" fill="currentColor" width="13" height="13"><path d="M3 3.5A1.5 1.5 0 0 1 5.121 2.19l7 4.5a1.5 1.5 0 0 1 0 2.62l-7 4.5A1.5 1.5 0 0 1 3 12.5v-9Z"/></svg>Ascolta</button><a class="epBtn" href="https://open.spotify.com/episode/2w3drALmfECWTv3UZguRWo" target="_blank" rel="noopener">Spotify</a></div></article>
+              <article class="epCard" data-title="emergenza nello spazio"><div class="epLeft"><span class="epBadge epBadge--s3">EP 4</span><div class="epInfo"><h3 class="epTitle">Emergenza nello Spazio</h3><p class="epDesc">Decompressione, gas tossici, fisiologia oltre l'atmosfera e procedure di soccorso. L'episodio finale della stagione e il più recente del podcast.</p></div></div><div class="epActions"><button class="epPlayBtn" data-id="4jmYMfuj6nMMCZXahbnrBG" aria-label="Ascolta S3 EP 4"><svg viewBox="0 0 16 16" fill="currentColor" width="13" height="13"><path d="M3 3.5A1.5 1.5 0 0 1 5.121 2.19l7 4.5a1.5 1.5 0 0 1 0 2.62l-7 4.5A1.5 1.5 0 0 1 3 12.5v-9Z"/></svg>Ascolta</button><a class="epBtn" href="https://open.spotify.com/episode/4jmYMfuj6nMMCZXahbnrBG" target="_blank" rel="noopener">Spotify</a></div></article>
+              <article class="epCard" data-title="il lessico della pressione"><div class="epLeft"><span class="epBadge epBadge--s3">EP 5</span><div class="epInfo"><h3 class="epTitle">Il Lessico della Pressione</h3><p class="epDesc">Bar, atmosfere, pascal, metri di colonna d'acqua: il linguaggio della pressione spiegato con precisione. Le unità di misura che ogni subacqueo e operatore iperbarico deve padroneggiare.</p></div></div><div class="epActions"><button class="epPlayBtn" data-id="2XRXQ92Xh5IDBkiQdcatN9" aria-label="Ascolta S3 EP 5"><svg viewBox="0 0 16 16" fill="currentColor" width="13" height="13"><path d="M3 3.5A1.5 1.5 0 0 1 5.121 2.19l7 4.5a1.5 1.5 0 0 1 0 2.62l-7 4.5A1.5 1.5 0 0 1 3 12.5v-9Z"/></svg>Ascolta</button><a class="epBtn" href="https://open.spotify.com/episode/2XRXQ92Xh5IDBkiQdcatN9" target="_blank" rel="noopener">Spotify</a></div></article>
+              <article class="epCard" data-title="i canarini di haldane"><div class="epLeft"><span class="epBadge epBadge--s3">EP 6</span><div class="epInfo"><h3 class="epTitle">I Canarini di Haldane ★</h3><p class="epDesc">John Scott Haldane, i minatori e i canarini: la storia dell'uomo che capì come i gas si comportano nel sangue e rivoluzionò la decompressione. L'episodio più recente della stagione.</p></div></div><div class="epActions"><button class="epPlayBtn" data-id="4XCeKjGxMT9Diwfmnpw3qi" aria-label="Ascolta S3 EP 6"><svg viewBox="0 0 16 16" fill="currentColor" width="13" height="13"><path d="M3 3.5A1.5 1.5 0 0 1 5.121 2.19l7 4.5a1.5 1.5 0 0 1 0 2.62l-7 4.5A1.5 1.5 0 0 1 3 12.5v-9Z"/></svg>Ascolta</button><a class="epBtn" href="https://open.spotify.com/episode/4XCeKjGxMT9Diwfmnpw3qi" target="_blank" rel="noopener">Spotify</a></div></article>
+            </div>
+          </details>
+
+        </div><!-- /seasons -->
+
+        <!-- QR CODE YOUTUBE -->
+        <div class="podYT reveal">
+          <div class="podYT__qr">
+            <img src="assets/podcast-qrcode.jpg" alt="QR code Sotto Pressione su YouTube" width="160" height="160" loading="lazy" />
+            <span class="podYT__scan">📱 Scansiona per YouTube</span>
+          </div>
+          <div class="podYT__copy">
+            <div class="podYT__badge">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+              Disponibile su YouTube
+            </div>
+            <h3 class="podYT__title" data-i18n="pod_yt_title">Ascoltaci anche su YouTube</h3>
+            <p class="podYT__desc" data-i18n="pod_yt_desc">Tutti gli episodi di Sotto Pressione sono disponibili anche sul canale YouTube degli Amici di Boyle. Scansiona il QR code o apri il link direttamente.</p>
+            <a class="podYT__btn" href="https://www.youtube.com/@amicidiboyle" target="_blank" rel="noopener">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+              Apri il canale YouTube
+            </a>
+          </div>
+        </div>
+
+        <div class="podFooterCTA reveal">
+          <div class="podFooterCTA__box">
+            <h3 data-i18n="pod_cta_h3">Vuoi proporre un tema o una collaborazione?</h3>
+            <p data-i18n="pod_cta_p">Idee serie, casi interessanti, progetti editoriali. Se ha valore, lo trattiamo bene.</p>
+            <a class="btn--primary" href="index.html#contatti" data-i18n="pod_cta_btn">Contattaci</a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Inline player flotante -->
+  <div id="podInlinePlayer" class="podInlinePlayer" hidden aria-live="polite">
+    <div class="podInlinePlayer__inner">
+      <span class="podInlinePlayer__label" id="podInlineLabel"></span>
+      <div id="podInlineEmbed"></div>
+      <button class="podInlinePlayer__close" id="podInlineClose" aria-label="Chiudi player">✕</button>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__brand">
+        <img src="assets/logo.png" alt="" width="30" height="30" aria-hidden="true" />
+        <span>© 2026 Gli Amici di Boyle</span>
+      </div>
+      <nav class="footer__links">
+        <a href="index.html">Home</a>
+        <a href="rete.html">Rete</a>
+        <a href="#top">↑ Su</a>
+        <a href="index.html#contatti">Contatti</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script>
+  /* Search */
+  const q = document.getElementById('episodeSearch');
+  const cards = Array.from(document.querySelectorAll('.epCard'));
+  q?.addEventListener('input', () => {
+    const term = q.value.trim().toLowerCase();
+    cards.forEach(c => {
+      c.style.display = (!term || c.dataset.title.includes(term) || c.innerText.toLowerCase().includes(term)) ? '' : 'none';
+    });
+  });
+
+  /* Scroll reveal */
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('is-visible'), +(e.target.dataset.delay||0));
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.07, rootMargin: '0px 0px -30px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+  /* Inline player: click su "Ascolta" apre embed sotto la card */
+  const player = document.getElementById('podInlinePlayer');
+  const playerEmbed = document.getElementById('podInlineEmbed');
+  const playerLabel = document.getElementById('podInlineLabel');
+  const playerClose = document.getElementById('podInlineClose');
+
+  document.querySelectorAll('.epPlayBtn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const id = btn.dataset.id;
+      const title = btn.closest('.epCard')?.querySelector('.epTitle')?.textContent?.trim() || '';
+      playerLabel.textContent = '▶  ' + title;
+      playerEmbed.innerHTML = `<iframe
+        src="https://open.spotify.com/embed/episode/${id}?utm_source=generator&theme=0"
+        width="100%" height="152" frameborder="0"
+        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+        title="${title.replace(/"/g,'')}" loading="lazy"></iframe>`;
+      player.hidden = false;
+      player.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      /* Evidenzia la card attiva */
+      cards.forEach(c => c.classList.remove('ep-active'));
+      btn.closest('.epCard')?.classList.add('ep-active');
+    });
+  });
+  playerClose?.addEventListener('click', () => {
+    player.hidden = true;
+    playerEmbed.innerHTML = '';
+    cards.forEach(c => c.classList.remove('ep-active'));
+  });
+
+  /* Mobile nav */
+  const mBtn = document.getElementById('navMobileBtn');
+  const mPanel = document.getElementById('navMobilePanel');
+  mBtn?.addEventListener('click', () => {
+    const open = mPanel.getAttribute('aria-hidden') === 'false';
+    mPanel.setAttribute('aria-hidden', String(open));
+    mBtn.setAttribute('aria-expanded', String(!open));
+    mBtn.classList.toggle('is-open', !open);
+  });
+  mPanel?.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    mPanel.setAttribute('aria-hidden','true');
+    mBtn?.classList.remove('is-open');
+  }));
+  document.addEventListener('click', e => {
+    if (!mBtn?.contains(e.target) && !mPanel?.contains(e.target)) {
+      mPanel?.setAttribute('aria-hidden','true');
+      mBtn?.classList.remove('is-open');
+    }
+  });
+  
+      var langMobPod = document.getElementById('langToggleMobilePod');
+      if (langMobPod) {
+        langMobPod.addEventListener('click', function() {
+          var cur; try { cur = localStorage.getItem('boyle_lang') || 'it'; } catch(e) { cur = 'it'; }
+          var nxt = cur === 'it' ? 'en' : 'it';
+          try { localStorage.setItem('boyle_lang', nxt); } catch(e) {}
+          location.reload();
+        });
+      }
+  </script>
+
+  <!-- i18n: podcast.html -->
+  <script>
+  (function(){
+    var lang = localStorage.getItem('boyle_lang') || 'it';
     var T = {
-      'pod_meta':'Pressure · Immersion · Hyperbaric · Space',
-      'pod_lead':'Original content only on hyperbaric medicine, hypobarism, astronautics and extreme physiology. A podcast for curious people, written by curious people.',
-      'pod_cta_ep':'▶ Go to episodes',
-      'pod_cta_spotify':'Open Spotify',
-      'pod_stat_stagioni':'Seasons',
-      'pod_stat_episodi':'Episodes',
-      'pod_stat_curiosita':'Curiosity',
-      'pod_latest_badge':'🚀 Latest episode · Season 3',
-      'pod_listen_spotify':'Listen on Spotify →',
-      'pod_s1_title':'Season 1',
-      'pod_s1_desc':'The foundations of the underwater world: physical laws, fitness, equipment and barotrauma.',
-      'pod_s2_title':'Season 2',
-      'pod_s2_desc':'Hypobarism, cinema, vision, oxygen, nitrogen and stories that deserve to be properly understood.',
-      'pod_s3_title':'Season 3',
-      'pod_s3_desc':'From the sea to space: helium, astronauts, pressure physiology and space emergencies.',
-      'pod_yt_title':'Also available on YouTube',
-      'pod_yt_desc':'All episodes of Sotto Pressione are also available on the Amici di Boyle YouTube channel. Scan the QR code or open the link directly.',
-      'pod_all_ep':'All episodes',
-      'pod_search_ph':'Search episode...',
-      'pod_cta_h3':'Want to propose a topic or a collaboration?',
-      'pod_cta_p':'Serious ideas, interesting cases, editorial projects. If it has value, we handle it well.',
-      'pod_cta_btn':'Contact us',
+      it: {
+        'pod_meta':'Pressione · Immersione · Iperbarica · Spazio',
+        'pod_lead':'Contenuto originale solo di medicina iperbarica, ipobarismo, astronautica e fisiologia degli ambienti estremi. Un podcast per curiosi, scritto da curiosi.',
+        'pod_cta_ep':'▶ Vai agli episodi',
+        'pod_cta_spotify':'Apri Spotify',
+        'pod_stat_stagioni':'Stagioni',
+        'pod_stat_episodi':'Episodi',
+        'pod_stat_curiosita':'Curiosità',
+        'pod_latest_badge':'🚀 Ultimo episodio · Stagione 3',
+        'pod_listen_spotify':'Ascolta su Spotify →',
+        'pod_s1_title':'Stagione 1',
+        'pod_s1_desc':'I fondamenti del mondo subacqueo: leggi fisiche, idoneità, attrezzatura e barotraumi.',
+        'pod_s2_title':'Stagione 2',
+        'pod_s2_desc':'Ipobarismo, cinema, visione, ossigeno, azoto e storie che meritano di essere capite per bene.',
+        'pod_s3_title':'Stagione 3',
+        'pod_s3_desc':'Dal mare allo spazio: elio, astronauti, fisiologia della pressione ed emergenze spaziali.',
+        'pod_yt_title':'Disponibile anche su YouTube',
+        'pod_yt_desc':'Tutti gli episodi di Sotto Pressione sono disponibili anche sul canale YouTube degli Amici di Boyle. Scansiona il QR code o apri il link direttamente.',
+        'pod_all_ep':'Tutti gli episodi',
+        'pod_search_ph':'Cerca episodio...',
+        'pod_cta_h3':'Vuoi proporre un argomento o una collaborazione?',
+        'pod_cta_p':'Idee serie, casi interessanti, progetti editoriali. Se ha valore, lo trattiamo bene.',
+        'pod_cta_btn':'Contattaci',
+      },
+      en: {
+        'pod_meta':'Pressure · Immersion · Hyperbaric · Space',
+        'pod_lead':'Original content only on hyperbaric medicine, hypobarism, astronautics and extreme physiology. A podcast for curious people, written by curious people.',
+        'pod_cta_ep':'▶ Go to episodes',
+        'pod_cta_spotify':'Open Spotify',
+        'pod_stat_stagioni':'Seasons',
+        'pod_stat_episodi':'Episodes',
+        'pod_stat_curiosita':'Curiosity',
+        'pod_latest_badge':'🚀 Latest episode · Season 3',
+        'pod_listen_spotify':'Listen on Spotify →',
+        'pod_s1_title':'Season 1',
+        'pod_s1_desc':'The foundations of the underwater world: physical laws, fitness, equipment and barotrauma.',
+        'pod_s2_title':'Season 2',
+        'pod_s2_desc':'Hypobarism, cinema, vision, oxygen, nitrogen and stories that deserve to be properly understood.',
+        'pod_s3_title':'Season 3',
+        'pod_s3_desc':'From the sea to space: helium, astronauts, pressure physiology and space emergencies.',
+        'pod_yt_title':'Also available on YouTube',
+        'pod_yt_desc':'All episodes of Sotto Pressione are also available on the Amici di Boyle YouTube channel. Scan the QR code or open the link directly.',
+        'pod_all_ep':'All episodes',
+        'pod_search_ph':'Search episode...',
+        'pod_cta_h3':'Want to propose a topic or a collaboration?',
+        'pod_cta_p':'Serious ideas, interesting cases, editorial projects. If it has value, we handle it well.',
+        'pod_cta_btn':'Contact us',
+      }
     };
 
     document.addEventListener('DOMContentLoaded', function() {
