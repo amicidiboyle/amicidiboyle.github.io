@@ -318,25 +318,3 @@ a   { color: inherit; text-decoration: none; }
   #mobile-quicknav-btn { animation: none !important; }
   .btn-electric::before, .btn-electric::after { animation: none !important; }
 }
-
-  .nav-burger, .nav-mobile-btn {
-    order: 3;
-    flex-shrink: 0;
-  }
-  .brand {
-    order: 1;
-  }
-}
-
-}
-
-/* ══ LANG TOGGLE MOBILE ══ */
-@media (max-width: 768px) {
-  .lang-toggle {
-    display: inline-flex !important;
-    font-size: .68rem !important;
-    padding: 4px 9px !important;
-    flex-shrink: 0 !important;
-    margin-left: auto !important;
-  }
-}
