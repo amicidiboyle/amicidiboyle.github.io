@@ -2039,16 +2039,15 @@ a { color: inherit; text-decoration: none; }
   }
 }
 
-/* ══ LANG TOGGLE MOBILE: fisso in alto a destra sotto il burger ══ */
+}
+
+/* ══ LANG TOGGLE MOBILE ══ */
 @media (max-width: 768px) {
   .lang-toggle {
-    position: fixed !important;
-    top: 14px !important;
-    right: 62px !important;
-    z-index: 9999 !important;
     display: inline-flex !important;
     font-size: .68rem !important;
-    padding: 5px 10px !important;
-    margin: 0 !important;
+    padding: 4px 9px !important;
+    flex-shrink: 0 !important;
+    margin-left: auto !important;
   }
 }
