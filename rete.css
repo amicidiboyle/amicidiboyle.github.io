@@ -925,7 +925,7 @@ a { color: inherit; text-decoration: none; }
 
 /* Responsive benefits */
 @media (max-width: 1024px) { .benefits-grid { grid-template-columns: repeat(2,1fr); } }
-@media (max-width: 768px)  { .benefits-grid { grid-template-columns: 1fr !important; gap: 12px; } }
+
 
 /* Mobile */
 @media (max-width: 768px) {
@@ -1840,4 +1840,47 @@ a { color: inherit; text-decoration: none; }
 .profile-link:hover {
   background: rgba(123,228,255,.16);
   border-color: rgba(123,228,255,.4);
+}
+
+/* ══════════════════════════════════════════
+   MOBILE: KILL ALL PULSE/SCALE ANIMATIONS
+   ══════════════════════════════════════════ */
+@media (max-width: 768px) {
+  /* Battito sfondo hero */
+  .hero::after  { animation: none !important; opacity: 0 !important; }
+  .hero::before { animation: none !important; }
+
+  /* Nodi SVG */
+  .connectome-nodes .node { animation: none !important; }
+  .traveler { animation: none !important; }
+
+  /* Tutti i ::before e ::after con animazione */
+  .btn-electric::before  { animation: none !important; }
+  .btn-electric::after   { animation: none !important; }
+  .btn-amici::before     { animation: none !important; }
+  .btn-rete-cta::before  { animation: none !important; }
+  .btn-rete-cta::after   { animation: none !important; }
+  .btn-candidati-cta::after { animation: none !important; }
+  .hero-access-bar::before  { animation: none !important; }
+
+  /* City line, event dot */
+  .city-line { animation: none !important; }
+  .rete-event-dot { animation: none !important; }
+
+  /* stat-n growing */
+  .hero__stat--growing .hero__stat-n { animation: none !important; }
+}
+/* ══════════════════════════════════════════
+   MOBILE: BENEFIT CARDS — UNA PER RIGA
+   ══════════════════════════════════════════ */
+@media (max-width: 1024px) { .benefits-grid { grid-template-columns: repeat(2,1fr); } }
+@media (max-width: 768px) {
+  .benefits-grid {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 14px !important;
+  }
+  .benefit-card {
+    width: 100% !important;
+  }
 }
