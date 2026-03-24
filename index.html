@@ -1183,11 +1183,15 @@
       langBtnMob.addEventListener('click', function(e) {
         e.preventDefault();
         e.stopPropagation();
-        var current;
-        try { current = localStorage.getItem('boyle_lang') || 'it'; } catch(e2) { current = 'it'; }
-        var next = current === 'it' ? 'en' : 'it';
-        try { localStorage.setItem('boyle_lang', next); } catch(e3) {}
-        location.reload();
+        var cur; try { cur = localStorage.getItem('boyle_lang') || 'it'; } catch(ex) { cur = 'it'; }
+        var nxt = cur === 'it' ? 'en' : 'it';
+        try { localStorage.setItem('boyle_lang', nxt); } catch(ex) {}
+        // usa la funzione globale se disponibile, altrimenti reload
+        if (window.boyleApplyLang) {
+          window.boyleApplyLang(nxt);
+        } else {
+          location.reload();
+        }
       });
     }
   })();
@@ -1403,6 +1407,10 @@
         'dlg1_desc':'Per domande, proposte di collaborazione, richieste editoriali o informazioni generali sul progetto.',
         'dlg2_desc':'Per docenze universitarie, corsi specialistici, congressi, seminari e collaborazioni strutturate con enti e istituzioni.',
         'dlg3_desc':'La Rete di Boyle è selettiva e orientata a chi opera davvero negli ambienti estremi. Presentati: valuteremo il profilo e ti contatteremo.',
+        // Partner SIMAE
+        'part_simae_name':'Società Italiana Medicina Ambienti Estremi',
+        'part_simae_p':'SIMAE è la prima società scientifica in Italia ad occuparsi della ricerca e della formazione in tutti gli ambienti impervi: dal soccorso in mare, alle patologie d\'alta quota fino alle spedizioni su tutti i continenti e nelle aree in cui ci si trova ad operare con scarse risorse.',
+        'part_simae_cta':'Visita il sito',
         // Footer
         'footer_copy':'© Gli Amici di Boyle · Medicina subacquea, iperbarica e ambienti estremi.',
       },
@@ -1560,7 +1568,8 @@
         // Partner
         'part_kicker':'Partners',
         'part_h2':'Collaborations and aligned organisations',
-        'part_sub':'Organisations sharing a focus on education, trauma and extreme environments.',
+        'part_sub':'Organisations sharing a focus on education,
+        'part_simae_name':'SIMAE','part_simae_p':'SIMAE — the first Italian scientific society focused on research and training across all extreme environments.','part_simae_cta':'Visit SIMAE', trauma and extreme environments.',
         'part1_p':'A project dedicated to trauma care, with a practical approach, training and quality content.',
         'part1_cta':'Visit the site',
         'part2_h3':'Propose a collaboration',
@@ -1577,6 +1586,10 @@
         'dlg1_desc':'For questions, collaboration proposals, editorial requests or general information about the project.',
         'dlg2_desc':'For university lectures, specialist courses, congresses, seminars and structured collaborations with institutions.',
         'dlg3_desc':'The Boyle Network is selective and oriented towards those who truly operate in extreme environments. Apply: we will review your profile and contact you.',
+        // Partner SIMAE
+        'part_simae_name':'Italian Society of Extreme Environment Medicine',
+        'part_simae_p':'SIMAE is Italy\'s first scientific society dedicated to research and training across challenging environments: sea rescue, high-altitude pathologies, expeditions on all continents and areas with limited resources.',
+        'part_simae_cta':'Visit website',
         // Footer
         'footer_copy':'© Gli Amici di Boyle · Underwater, hyperbaric medicine and extreme environments.',
       }
@@ -1646,6 +1659,10 @@
     function setLang(l) {
       try { localStorage.setItem('boyle_lang', l); } catch(e) {}
     }
+
+    // Espone applyLang globalmente per bottoni esterni (mobile menu)
+    window.boyleApplyLang = applyLang;
+    window.boyleGetLang = getLang;
 
     function attachToggle() {
       var btn = document.getElementById('langToggle');
