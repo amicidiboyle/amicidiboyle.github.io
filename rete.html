@@ -169,7 +169,7 @@
             </span>
           </button>
           <button class="btn-ghost" id="publishWallJoin" style="min-height:44px;font-size:.88rem;margin-top:8px">Candidati alla rete →</button>
-          <p class="email-wall__note">Problemi? Scrivi a <a href="mailto:info@amicidiboyle.it">info@amicidiboyle.it</a></p>
+          <p class="email-wall__note">Problemi? Scrivi a <a href="/cdn-cgi/l/email-protection#254c4b434a6544484c464c414c474a5c49400b4c51"><span class="__cf_email__" data-cfemail="95fcfbf3fad5f4f8fcf6fcf1fcf7faecf9f0bbfce1">[email&#160;protected]</span></a></p>
         </div>
       </div>
     </div>
@@ -362,7 +362,7 @@
               <span data-i18n="rj_amici_b4">✓ Pubblica eventi di ambienti estremi</span>
               <span data-i18n="rj_amici_b5">✓ Newsletter della community</span>
               <span>✓ Accesso alla Biblioteca di Boyle <em style="opacity:.6;font-size:.85em">- in progress</em></span>
-              <span data-i18n="rj_amici_b6">✓ Scrivi a info@amicidiboyle.it</span>
+              <span data-i18n="rj_amici_b6">✓ Scrivi a <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="0c65626a634c6d61656f6568656e63756069226578">[email&#160;protected]</a></span>
             </div>
             <button class="btn-amici" id="open-amici-modal" type="button">
               <span data-i18n="rj_amici_cta">Diventa un Amico di Boyle</span>
@@ -524,7 +524,7 @@
         </div>
         <div class="amici-benefit-item">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-          <span>Scrivi direttamente a info@amicidiboyle.it</span>
+          <span>Scrivi direttamente a <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="d5bcbbb3ba95b4b8bcb6bcb1bcb7baacb9b0fbbca1">[email&#160;protected]</a></span>
         </div>
         <div class="amici-benefit-item amici-benefit-item--note">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
@@ -589,7 +589,7 @@
   </div>
 
 
-  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
 
   <!-- ── MODAL PROFILO ── -->
   <div class="profile-modal" id="profileModal" aria-hidden="true">
@@ -900,6 +900,7 @@
     'BOYLE-E6N3-DENARO':     'matteo-denaro',
     'BOYLE-ENAR-CAPPA':      'giovanni-cappa',
     'BOYLE-YHT9-CAMPONOVO':  'claudio-camponovo',
+    'BOYLE-P4V2-MALVESTITI': 'davide-duilio-malvestiti',
   };
   const VALID_CODES = {
     'simona-damiano':         'BOYLE-K7X2-DAMIANO',
@@ -1768,23 +1769,4 @@
     });
 
     panel.querySelectorAll('a').forEach(function(a){
-      a.addEventListener('click', function(){
-        panel.style.display = 'none';
-        panel.setAttribute('aria-hidden','true');
-        btn.setAttribute('aria-expanded','false');
-        btn.style.transform = 'none';
-      });
-    });
-
-    document.addEventListener('click', function(e){
-      if (!wrap.contains(e.target)) {
-        panel.style.display = 'none';
-        panel.setAttribute('aria-hidden','true');
-        btn.style.transform = 'none';
-      }
-    });
-  })();
-  </script>
-
-</body>
-</html>
+      a.addEventList
