@@ -328,7 +328,7 @@ a { color: inherit; text-decoration: none; }
   .brand__text em { display: block; font-size: .58rem; white-space: normal; line-height: 1.3; }
   .nav--desktop { display: none; }
   .nav-mobile-btn { display: flex; }
-  .header { position: sticky; top: 0; z-index: 200; }
+  .header { position: sticky !important; top: 0 !important; z-index: 200 !important; width: 100% !important; }
   .hero { min-height: 420px; padding: 26px 18px 24px; }
   .hero__title { font-size: 2.6rem; }
   .hero__subtitle { font-size: .96rem; max-width: 100%; }
@@ -925,7 +925,7 @@ a { color: inherit; text-decoration: none; }
 
 /* Responsive benefits */
 @media (max-width: 1024px) { .benefits-grid { grid-template-columns: repeat(2,1fr); } }
-@media (max-width: 600px)  { .benefits-grid { grid-template-columns: 1fr; } }
+@media (max-width: 768px)  { .benefits-grid { grid-template-columns: 1fr !important; gap: 12px; } }
 
 /* Mobile */
 @media (max-width: 768px) {
@@ -1753,7 +1753,8 @@ a { color: inherit; text-decoration: none; }
 @media (max-width: 768px) {
   #mobile-quicknav-btn { animation: none !important; }
   .contact-card--rich .btn-electric { animation: none !important; }
-  .btn-electric::before { animation: none !important; }
+  /* Keep electricSweep on btn-electric::before for candidati btn */
+  /* Only kill if it breaks layout */
   .btn-electric::after  { animation: none !important; }
 }
 
@@ -1768,4 +1769,75 @@ a { color: inherit; text-decoration: none; }
   }
   .hero__stat-n { font-size: 1.2rem !important; }
   .hero__stat-l { font-size: .6rem !important; }
+}
+
+/* ── RETE HEADER: sticky uniforme con home ── */
+@media (max-width: 768px) {
+  .header {
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 300 !important;
+    width: 100% !important;
+  }
+}
+
+/* ══════════════════════════════════════════════════════════
+   PROFILE MODAL — improved styles
+   ══════════════════════════════════════════════════════════ */
+
+/* Header */
+.pm-header { margin-bottom: 16px; }
+
+/* Availability badges */
+.avail-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 5px 12px; border-radius: 999px;
+  font-size: .72rem; font-weight: 700; letter-spacing: .04em;
+  margin: 0 6px 8px 0;
+}
+.avail-badge--speaker {
+  background: rgba(123,228,255,.12);
+  border: 1px solid rgba(123,228,255,.3);
+  color: #7ce8ff;
+}
+.avail-badge--podcast {
+  background: rgba(196,176,255,.12);
+  border: 1px solid rgba(196,176,255,.3);
+  color: #c4b0ff;
+}
+.avail-badge--research {
+  background: rgba(77,255,214,.12);
+  border: 1px solid rgba(77,255,214,.3);
+  color: #4dffd6;
+}
+
+/* Tags strip */
+.pm-tags {
+  display: flex; flex-wrap: wrap; gap: 6px;
+  margin: 12px 0 16px;
+}
+.pm-tag {
+  display: inline-flex; align-items: center;
+  padding: 3px 10px; border-radius: 999px;
+  font-size: .62rem; font-weight: 700; letter-spacing: .08em;
+  background: rgba(123,228,255,.08);
+  border: 1px solid rgba(123,228,255,.18);
+  color: rgba(168,238,255,.7);
+  text-transform: uppercase;
+}
+
+/* Profile links: pill style */
+.profile-link {
+  display: inline-flex; align-items: center;
+  padding: 6px 14px; border-radius: 999px;
+  font-size: .75rem; font-weight: 600;
+  background: rgba(123,228,255,.08);
+  border: 1px solid rgba(123,228,255,.18);
+  color: #7ce8ff; text-decoration: none;
+  transition: background .18s, border-color .18s;
+  margin: 0 6px 6px 0;
+}
+.profile-link:hover {
+  background: rgba(123,228,255,.16);
+  border-color: rgba(123,228,255,.4);
 }
