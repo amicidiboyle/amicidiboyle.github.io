@@ -2684,15 +2684,7 @@ html, body { overflow-x: hidden; }
 }
 .lang-sep { opacity: .28; font-weight: 400; }
 #langOther { opacity: .52; }
-@media (max-width: 768px) {
-  .lang-toggle {
-    display: inline-flex !important;
-    font-size: .7rem;
-    padding: 3px 8px;
-    min-width: 0;
-    margin-left: 4px;
-  }
-}
+
 
 /* ── Amici di Boyle button (home) ── */
 .btn-amici-home {
@@ -2769,25 +2761,6 @@ html, body { overflow-x: hidden; }
   .btn-split__amici { border-left: none; }
 }
 
-/* ══ HEARTBEAT KILL MOBILE ══ */
-@media (max-width: 768px) {
-  #mobile-quicknav-btn { animation: none !important; }
-  .contact-card--rich .btn-electric { animation: none !important; }
-  .btn-electric::before { animation: none !important; }
-  .btn-electric::after  { animation: none !important; }
-  .hero-eyebrow::before { animation: none !important; }
-  .timeline li:last-child::after { animation: none !important; }
-  .hero::before { animation: none !important; }
-  .hero::after  { animation: none !important; opacity: 0 !important; }
-  .light-scattering { animation: none !important; }
-  .particles { animation: none !important; }
-  .site-header {
-    position: sticky !important;
-    top: 0 !important;
-    z-index: 300 !important;
-    width: 100% !important;
-  }
-}
 
 /* ══ ENTRANCE ANIMATIONS ══ */
 @keyframes scaleIn { from{opacity:0;transform:scale(.94) translateY(16px);} to{opacity:1;transform:scale(1) translateY(0);} }
@@ -2797,4 +2770,36 @@ html, body { overflow-x: hidden; }
 .founder-card.is-visible { animation: scaleIn .55s cubic-bezier(.22,1,.36,1) both; }
 @media (max-width: 768px) {
   .founder-card.is-visible { animation: fadeInUp .4s ease both; }
+}
+
+/* ══ KILL TUTTE LE ANIMAZIONI SU MOBILE ══ */
+@media (max-width: 768px) {
+  /* Battito sfondo */
+  .light-scattering   { animation: none !important; }
+  .particles          { animation: none !important; }
+  .hero::before       { animation: none !important; }
+  .hero::after        { animation: none !important; opacity: 0 !important; }
+  .hero-eyebrow::before { animation: none !important; }
+  .timeline li:last-child::after { animation: none !important; }
+  .hero-scroll svg    { animation: none !important; }
+  /* Bottoni */
+  .contact-card--rich .btn-electric { animation: none !important; }
+  .btn-rete-cta::before  { animation: none !important; }
+  .btn-rete-cta::after   { animation: none !important; }
+  .btn-candidati-cta::after { animation: none !important; }
+  .btn-partner-cta::before { animation: none !important; }
+  /* Timeline */
+  .timeline-card::before, .timeline-card::after { animation: none !important; }
+  /* Sticky header */
+  .site-header {
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 300 !important;
+    width: 100% !important;
+  }
+}
+
+/* ══ LANG TOGGLE: solo desktop ══ */
+@media (max-width: 768px) {
+  .lang-toggle { display: none !important; }
 }
