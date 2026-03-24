@@ -1211,11 +1211,7 @@ a { color: inherit; text-decoration: none; }
 @media (max-width: 900px) {
 
 }
-@media (max-width: 700px) {
 
-  .rete-benefits-col { grid-template-columns: 1fr; }
-  .rete-event-poster-card > img { aspect-ratio: 1.2; }
-}
 @media (max-width: 768px) {
   .lang-toggle { display: none; }
 }
@@ -1350,27 +1346,94 @@ a { color: inherit; text-decoration: none; }
 .avail-tag { padding:4px 10px; border-radius:6px; font-size:.76rem; font-weight:600; background:rgba(77,255,214,.08); border:1px solid rgba(77,255,214,.2); color:#4dffd6; }
 
 /* ── MODAL MATITA ── */
-.edit-modal { position:fixed; inset:0; z-index:9900; display:none; align-items:center; justify-content:center; padding:20px; background:rgba(1,6,16,.85); backdrop-filter:blur(10px); }
+.edit-modal {
+  position:fixed; inset:0; z-index:9900; display:none;
+  align-items:center; justify-content:center; padding:20px;
+  background:rgba(1,14,32,.78);
+  backdrop-filter:blur(18px) saturate(1.4);
+}
 .edit-modal.is-open { display:flex; }
-.edit-modal__dialog { width:min(580px,100%); max-height:90vh; overflow-y:auto; border-radius:24px; background:linear-gradient(160deg,rgba(4,16,38,.99),rgba(2,10,28,.99)); border:1px solid rgba(196,176,255,.2); box-shadow:0 34px 90px rgba(0,0,0,.6); padding:28px; position:relative; }
-.edit-modal__close { position:absolute; top:14px; right:14px; width:38px; height:38px; border-radius:9px; background:rgba(255,255,255,.06); border:none; color:#edf7ff; font-size:1rem; cursor:pointer; display:flex; align-items:center; justify-content:center; }
-.edit-modal__title { font-size:1.1rem; font-weight:800; color:#edf7ff; margin:0 0 4px; }
-.edit-modal__sub { font-size:.78rem; color:rgba(168,238,255,.5); margin:0 0 20px; }
-.edit-section-label { font-size:.65rem; font-weight:700; letter-spacing:.12em; color:rgba(168,238,255,.5); text-transform:uppercase; margin:16px 0 8px; }
-.edit-field { margin-bottom:10px; }
-.edit-field label { display:block; font-size:.72rem; color:rgba(168,238,255,.6); margin-bottom:4px; }
-.edit-field input, .edit-field textarea { width:100%; padding:9px 12px; border-radius:10px; background:rgba(123,228,255,.06); border:1px solid rgba(123,228,255,.18); color:#edf7ff; font-size:.82rem; outline:none; transition:border-color .2s; box-sizing:border-box; font-family:inherit; }
-.edit-field textarea { resize:vertical; min-height:80px; line-height:1.6; }
-.edit-field input:focus, .edit-field textarea:focus { border-color:rgba(123,228,255,.45); }
-.edit-field input::placeholder, .edit-field textarea::placeholder { color:rgba(168,238,255,.25); }
-.edit-checkboxes { display:flex; flex-direction:column; gap:8px; margin-bottom:16px; }
-.edit-checkbox { display:flex; align-items:center; gap:10px; font-size:.82rem; color:rgba(237,247,255,.75); cursor:pointer; }
-.edit-checkbox input[type=checkbox] { accent-color:#a8eeff; width:16px; height:16px; }
-.edit-submit { width:100%; padding:12px; border-radius:12px; background:linear-gradient(135deg,rgba(125,232,255,.2),rgba(82,158,255,.2)); border:1px solid rgba(123,228,255,.3); color:#a8eeff; font-size:.88rem; font-weight:700; cursor:pointer; transition:background .2s; margin-top:8px; }
-.edit-submit:hover { background:linear-gradient(135deg,rgba(125,232,255,.3),rgba(82,158,255,.3)); }
-.edit-status { text-align:center; font-size:.8rem; margin-top:10px; min-height:20px; }
+
+.edit-modal__dialog {
+  width:min(580px,100%); max-height:90vh; overflow-y:auto;
+  border-radius:24px;
+  background: linear-gradient(160deg, rgba(4,42,84,.97) 0%, rgba(3,28,62,.97) 55%, rgba(2,18,44,.98) 100%);
+  border:1px solid rgba(100,210,255,.28);
+  box-shadow: 0 0 0 1px rgba(100,210,255,.08), 0 34px 90px rgba(0,0,0,.55), inset 0 1px 0 rgba(124,243,255,.12);
+  padding:32px;
+  position:relative;
+}
+.edit-modal__dialog::before {
+  content:''; position:absolute; top:-60px; left:50%; transform:translateX(-50%);
+  width:340px; height:180px;
+  background:radial-gradient(ellipse, rgba(80,180,255,.13) 0%, transparent 70%);
+  pointer-events:none; z-index:0;
+}
+.edit-modal__close {
+  position:absolute; top:14px; right:14px;
+  width:38px; height:38px; border-radius:10px;
+  background:rgba(100,200,255,.1); border:1px solid rgba(100,210,255,.2);
+  color:#a8eeff; font-size:1rem; cursor:pointer;
+  display:flex; align-items:center; justify-content:center;
+  transition:background .18s; z-index:1;
+}
+.edit-modal__close:hover { background:rgba(100,200,255,.2); }
+.edit-modal__title { font-size:1.15rem; font-weight:800; color:#e8f7ff; margin:0 0 4px; position:relative; z-index:1; }
+.edit-modal__sub { font-size:.78rem; color:rgba(124,220,255,.6); margin:0 0 24px; position:relative; z-index:1; }
+.edit-section-label {
+  font-size:.62rem; font-weight:800; letter-spacing:.14em; text-transform:uppercase;
+  color:#7dd3fc; margin:22px 0 10px; padding-bottom:6px;
+  border-bottom:1px solid rgba(100,210,255,.18); position:relative; z-index:1;
+}
+.edit-field { margin-bottom:12px; position:relative; z-index:1; }
+.edit-field label { display:block; font-size:.72rem; font-weight:600; color:rgba(160,230,255,.75); margin-bottom:5px; }
+.edit-field input, .edit-field textarea {
+  width:100%; padding:10px 14px; border-radius:10px;
+  background:rgba(6,38,78,.6); border:1px solid rgba(100,200,255,.22);
+  color:#ddf4ff; font-size:.83rem; outline:none;
+  transition:border-color .2s, background .2s, box-shadow .2s;
+  box-sizing:border-box; font-family:inherit;
+}
+.edit-field textarea { resize:vertical; min-height:90px; line-height:1.65; }
+.edit-field input:focus, .edit-field textarea:focus {
+  border-color:rgba(100,220,255,.55); background:rgba(6,42,88,.75);
+  box-shadow:0 0 0 3px rgba(100,210,255,.08);
+}
+.edit-field input::placeholder, .edit-field textarea::placeholder { color:rgba(140,210,255,.3); }
+.edit-checkboxes { display:flex; flex-direction:column; gap:10px; margin-bottom:20px; position:relative; z-index:1; }
+.edit-checkbox {
+  display:flex; align-items:center; gap:12px; font-size:.83rem;
+  color:rgba(220,245,255,.85); cursor:pointer; padding:10px 14px;
+  border-radius:10px; background:rgba(6,38,78,.4); border:1px solid rgba(100,200,255,.14);
+  transition:background .18s, border-color .18s;
+}
+.edit-checkbox:hover { background:rgba(6,50,100,.5); border-color:rgba(100,210,255,.28); }
+.edit-checkbox input[type=checkbox] { accent-color:#4dd9f5; width:17px; height:17px; flex-shrink:0; }
+.edit-submit {
+  width:100%; padding:13px; border-radius:12px;
+  background:linear-gradient(135deg, rgba(0,160,220,.75) 0%, rgba(0,120,200,.8) 50%, rgba(0,90,180,.75) 100%);
+  border:1px solid rgba(100,220,255,.4); color:#e8f8ff;
+  font-size:.9rem; font-weight:700; cursor:pointer;
+  transition:filter .2s, transform .15s, box-shadow .2s;
+  margin-top:10px; position:relative; z-index:1;
+  box-shadow:0 6px 24px rgba(0,120,220,.3);
+}
+.edit-submit:hover { filter:brightness(1.12); transform:translateY(-1px); box-shadow:0 10px 32px rgba(0,140,255,.4); }
+.edit-submit:active { transform:translateY(0); }
+.edit-status { text-align:center; font-size:.8rem; margin-top:10px; min-height:20px; position:relative; z-index:1; }
 .edit-status.ok  { color:#4dffd6; }
-.edit-status.err { color:#ff7070; }
+.edit-status.err { color:#ff8080; }
+
+/* Profile modal improved */
+.pm-header { margin-bottom:16px; }
+.avail-badge { display:inline-flex; align-items:center; gap:6px; padding:5px 12px; border-radius:999px; font-size:.72rem; font-weight:700; letter-spacing:.04em; margin:0 6px 8px 0; }
+.avail-badge--speaker { background:rgba(123,228,255,.12); border:1px solid rgba(123,228,255,.3); color:#7ce8ff; }
+.avail-badge--podcast { background:rgba(196,176,255,.12); border:1px solid rgba(196,176,255,.3); color:#c4b0ff; }
+.avail-badge--research { background:rgba(77,255,214,.12); border:1px solid rgba(77,255,214,.3); color:#4dffd6; }
+.pm-tags { display:flex; flex-wrap:wrap; gap:6px; margin:12px 0 16px; }
+.pm-tag { display:inline-flex; align-items:center; padding:3px 10px; border-radius:999px; font-size:.62rem; font-weight:700; letter-spacing:.08em; background:rgba(123,228,255,.08); border:1px solid rgba(123,228,255,.18); color:rgba(168,238,255,.7); text-transform:uppercase; }
+.profile-link { display:inline-flex; align-items:center; padding:6px 14px; border-radius:999px; font-size:.75rem; font-weight:600; background:rgba(123,228,255,.08); border:1px solid rgba(123,228,255,.18); color:#7ce8ff; text-decoration:none; transition:background .18s; margin:0 6px 6px 0; }
+.profile-link:hover { background:rgba(123,228,255,.16); border-color:rgba(123,228,255,.4); }
 
 /* ── MOBILE FIXES ── */
 @media (max-width: 768px) {
@@ -1722,12 +1785,7 @@ a { color: inherit; text-decoration: none; }
   min-width: 180px;
 }
 
-@media (max-width: 768px) {
-  .next-event-grid { grid-template-columns: 1fr; max-width: 400px; }
-  
-  .next-event-publish-btn { width: 100%; }
-  .rete-benefits-col { grid-template-columns: repeat(2, minmax(0,1fr)); }
-}
+
 
 /* ── Modal mobile ── */
 @media (max-width: 768px) {
@@ -1750,12 +1808,7 @@ a { color: inherit; text-decoration: none; }
   }
 }
 
-@media (max-width: 768px) {
-  #mobile-quicknav-btn { animation: none !important; }
-  .contact-card--rich .btn-electric { animation: none !important; }
-  .btn-electric::before { animation: none !important; }
-  .btn-electric::after  { animation: none !important; }
-}
+/* btn-electric mantiene electricSweep su mobile */
 
 @media (max-width: 768px) {
   .hero__stats { 
@@ -1768,4 +1821,30 @@ a { color: inherit; text-decoration: none; }
   }
   .hero__stat-n { font-size: 1.2rem !important; }
   .hero__stat-l { font-size: .6rem !important; }
+}
+
+/* ══ KILL ANIMAZIONI MOBILE ══ */
+@media (max-width: 768px) {
+  .hero::after        { animation: none !important; opacity: 0 !important; }
+  .hero::before       { animation: none !important; }
+  .connectome-nodes .node { animation: none !important; }
+  .traveler           { animation: none !important; }
+  .city-line          { animation: none !important; }
+  .rete-event-dot     { animation: none !important; }
+  /* btn-electric::before e btn-amici::before MANTENGONO l'elettricità */
+  .hero-access-bar::before { animation: none !important; }
+}
+
+/* ══ BENEFIT CARDS: UNA PER RIGA SU MOBILE — DEFINITIVO ══ */
+@media (max-width: 768px) {
+  .rete-benefits-col {
+    display: flex !important;
+    flex-direction: column !important;
+    grid-template-columns: unset !important;
+    gap: 12px !important;
+  }
+  .rete-benefits-col .benefit-card {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
 }
