@@ -286,7 +286,7 @@
 
     <!-- VANTAGGI DELLA RETE -->
     <!-- ── PERCHÉ ENTRARE + EVENTO ── -->
-    <section class="section rete-why-section">
+    <section class="section rete-why-section" id="rete-why">
       <div class="container">
 
         <div class="rete-why-header reveal">
@@ -601,11 +601,14 @@
   <div class="profile-modal" id="profileModal" aria-hidden="true">
     <div class="profile-modal__dialog">
       <button class="profile-modal__close" id="profileModalClose">✕</button>
-      <p class="profile-modal__name" id="pm-name"></p>
-      <p class="profile-modal__role" id="pm-role"></p>
-      <p class="profile-modal__bio" id="pm-bio"></p>
-      <div class="profile-modal__links" id="pm-links"></div>
+      <div class="pm-header">
+        <p class="profile-modal__name" id="pm-name"></p>
+        <p class="profile-modal__role" id="pm-role"></p>
+      </div>
       <div class="profile-modal__avail" id="pm-avail"></div>
+      <p class="profile-modal__bio" id="pm-bio"></p>
+      <div class="pm-tags" id="pm-tags"></div>
+      <div class="profile-modal__links" id="pm-links"></div>
     </div>
   </div>
   <!-- ── MODAL MATITA ── -->
@@ -1378,9 +1381,17 @@
       });
       const availEl=document.getElementById('pm-avail');
       availEl.innerHTML='';
-      if(p.speaker) availEl.innerHTML+='<span class="avail-tag">📢 Relatore</span>';
-      if(p.podcast) availEl.innerHTML+='<span class="avail-tag">🎙 Podcast</span>';
-      if(p.research) availEl.innerHTML+='<span class="avail-tag">🔬 Ricerca</span>';
+      if(p.speaker) availEl.innerHTML+='<span class="avail-badge avail-badge--speaker">📢 Disponibile come relatore</span>';
+      if(p.podcast) availEl.innerHTML+='<span class="avail-badge avail-badge--podcast">🎙 Disponibile per il podcast</span>';
+      if(p.research) availEl.innerHTML+='<span class="avail-badge avail-badge--research">🔬 Aperto a collaborazioni</span>';
+      // Tags from member card
+      const tagsEl=document.getElementById('pm-tags');
+      if(tagsEl){
+        const memberCard=document.querySelector('[data-key="'+btn.dataset.key+'"]');
+        const tagEls=memberCard?memberCard.querySelectorAll('.member-tag'):[];
+        tagsEl.innerHTML='';
+        tagEls.forEach(function(t){ tagsEl.innerHTML+='<span class="pm-tag">'+t.textContent+'</span>'; });
+      }
       modal?.classList.add('is-open'); modal?.setAttribute('aria-hidden','false');
       document.body.style.overflow='hidden';
     });
@@ -1710,6 +1721,74 @@
       attachToggle(); attachMobileToggle();
       if (lang === 'en') applyLang('en');
     }
+  })();
+  </script>
+
+
+  <!-- ── MOBILE QUICKNAV RETE ── -->
+  <div id="rete-mobile-qn" style="display:none; position:fixed; bottom:20px; right:16px; z-index:8000;">
+    <button id="rete-qn-btn" aria-label="Navigazione rapida" aria-expanded="false"
+      style="width:48px;height:48px;border-radius:50%;
+        background:linear-gradient(135deg,rgba(16,130,255,.97),rgba(0,195,255,.92));
+        border:1px solid rgba(100,220,255,.5);color:rgba(2,12,28,.96);
+        display:flex;align-items:center;justify-content:center;cursor:pointer;
+        box-shadow:0 8px 28px rgba(0,120,255,.4);transition:transform .2s;">
+      <svg viewBox="0 0 22 22" fill="none" width="20" height="20">
+        <path d="M4 6h14M4 11h14M4 16h14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+      </svg>
+    </button>
+    <div id="rete-qn-panel" role="menu" aria-hidden="true"
+      style="display:none;position:absolute;bottom:calc(100% + 10px);right:0;
+        width:200px;background:rgba(3,14,32,.97);border:1px solid rgba(123,228,255,.22);
+        border-radius:18px;padding:8px;box-shadow:0 20px 50px rgba(0,0,0,.55);">
+      <a href="#top" style="display:block;padding:10px 14px;color:#a8eeff;font-size:.82rem;font-weight:600;text-decoration:none;border-radius:10px;border-bottom:1px solid rgba(123,228,255,.1);padding-bottom:12px;margin-bottom:2px;">↑ Inizio</a>
+      <a href="#members" style="display:block;padding:10px 14px;color:rgba(168,238,255,.7);font-size:.82rem;font-weight:500;text-decoration:none;border-radius:10px;">👥 Membri</a>
+      <a href="#rete-why" style="display:block;padding:10px 14px;color:rgba(168,238,255,.7);font-size:.82rem;font-weight:500;text-decoration:none;border-radius:10px;">✦ Perché entrare</a>
+      <a href="#amici" style="display:block;padding:10px 14px;color:rgba(168,238,255,.7);font-size:.82rem;font-weight:500;text-decoration:none;border-radius:10px;">🔵 Candidati</a>
+      <a href="#prossimo-evento" style="display:block;padding:10px 14px;color:rgba(168,238,255,.7);font-size:.82rem;font-weight:500;text-decoration:none;border-radius:10px;">🗓 Evento</a>
+    </div>
+  </div>
+  <script>
+  (function(){
+    if (window.innerWidth > 768) return;
+    var wrap  = document.getElementById('rete-mobile-qn');
+    var btn   = document.getElementById('rete-qn-btn');
+    var panel = document.getElementById('rete-qn-panel');
+    if (!wrap || !btn || !panel) return;
+    wrap.style.display = 'block';
+
+    window.addEventListener('scroll', function(){
+      wrap.style.opacity = window.scrollY > 200 ? '1' : '0';
+      wrap.style.pointerEvents = window.scrollY > 200 ? 'auto' : 'none';
+    }, {passive:true});
+    wrap.style.opacity = '0';
+    wrap.style.transition = 'opacity .3s';
+    wrap.style.pointerEvents = 'none';
+
+    btn.addEventListener('click', function(){
+      var open = panel.getAttribute('aria-hidden') === 'false';
+      panel.style.display = open ? 'none' : 'block';
+      panel.setAttribute('aria-hidden', open ? 'true' : 'false');
+      btn.setAttribute('aria-expanded', !open);
+      btn.style.transform = open ? 'none' : 'rotate(90deg)';
+    });
+
+    panel.querySelectorAll('a').forEach(function(a){
+      a.addEventListener('click', function(){
+        panel.style.display = 'none';
+        panel.setAttribute('aria-hidden','true');
+        btn.setAttribute('aria-expanded','false');
+        btn.style.transform = 'none';
+      });
+    });
+
+    document.addEventListener('click', function(e){
+      if (!wrap.contains(e.target)) {
+        panel.style.display = 'none';
+        panel.setAttribute('aria-hidden','true');
+        btn.style.transform = 'none';
+      }
+    });
   })();
   </script>
 
