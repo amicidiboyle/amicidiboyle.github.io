@@ -2166,9 +2166,9 @@ html, body { overflow-x: hidden; }
 .activity-card { overflow: visible !important; }
 .activity-card::before { overflow: hidden; border-radius: inherit; }
 
-/* ── MOBILE: overflow clip solo sull'asse X ─────────────────*/
+/* ── MOBILE: overflow solo su body, non su main (romperebbe position:fixed) ── */
 @media (max-width: 768px) {
-  main, .section, .hero { overflow-x: clip !important; }
+  body { overflow-x: hidden !important; }
 }
 
 
