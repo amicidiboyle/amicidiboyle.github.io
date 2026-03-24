@@ -318,3 +318,24 @@ a   { color: inherit; text-decoration: none; }
   #mobile-quicknav-btn { animation: none !important; }
   .btn-electric::before, .btn-electric::after { animation: none !important; }
 }
+
+/* ══ LANG TOGGLE: sempre visibile su mobile, accanto al burger ══ */
+@media (max-width: 768px) {
+  .lang-toggle {
+    display: inline-flex !important;
+    order: 2;
+    font-size: .68rem !important;
+    padding: 4px 9px !important;
+    margin-right: 6px;
+    z-index: 300 !important;
+    position: relative !important;
+    flex-shrink: 0 !important;
+  }
+  .nav-burger, .nav-mobile-btn {
+    order: 3;
+    flex-shrink: 0;
+  }
+  .brand {
+    order: 1;
+  }
+}
