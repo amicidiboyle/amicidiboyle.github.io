@@ -169,7 +169,7 @@
             </span>
           </button>
           <button class="btn-ghost" id="publishWallJoin" style="min-height:44px;font-size:.88rem;margin-top:8px">Candidati alla rete →</button>
-          <p class="email-wall__note">Problemi? Scrivi a <a href="/cdn-cgi/l/email-protection#254c4b434a6544484c464c414c474a5c49400b4c51"><span class="__cf_email__" data-cfemail="95fcfbf3fad5f4f8fcf6fcf1fcf7faecf9f0bbfce1">[email&#160;protected]</span></a></p>
+          <p class="email-wall__note">Problemi? Scrivi a <a href="/cdn-cgi/l/email-protection#bad3d4dcd5fadbd7d3d9d3ded3d8d5c3d6df94d3ce"><span class="__cf_email__" data-cfemail="f39a9d959cb3929e9a909a979a919c8a9f96dd9a87">[email&#160;protected]</span></a></p>
         </div>
       </div>
     </div>
@@ -362,7 +362,7 @@
               <span data-i18n="rj_amici_b4">✓ Pubblica eventi di ambienti estremi</span>
               <span data-i18n="rj_amici_b5">✓ Newsletter della community</span>
               <span>✓ Accesso alla Biblioteca di Boyle <em style="opacity:.6;font-size:.85em">- in progress</em></span>
-              <span data-i18n="rj_amici_b6">✓ Scrivi a <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="0c65626a634c6d61656f6568656e63756069226578">[email&#160;protected]</a></span>
+              <span data-i18n="rj_amici_b6">✓ Scrivi a <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="f79e999198b7969a9e949e939e95988e9b92d99e83">[email&#160;protected]</a></span>
             </div>
             <button class="btn-amici" id="open-amici-modal" type="button">
               <span data-i18n="rj_amici_cta">Diventa un Amico di Boyle</span>
@@ -524,7 +524,7 @@
         </div>
         <div class="amici-benefit-item">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-          <span>Scrivi direttamente a <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="d5bcbbb3ba95b4b8bcb6bcb1bcb7baacb9b0fbbca1">[email&#160;protected]</a></span>
+          <span>Scrivi direttamente a <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="dab3b4bcb59abbb7b3b9b3beb3b8b5a3b6bff4b3ae">[email&#160;protected]</a></span>
         </div>
         <div class="amici-benefit-item amici-benefit-item--note">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
@@ -1751,14 +1751,27 @@
     var panel = document.getElementById('rete-qn-panel');
     if (!wrap || !btn || !panel) return;
     wrap.style.display = 'block';
-
-    window.addEventListener('scroll', function(){
-      wrap.style.opacity = window.scrollY > 200 ? '1' : '0';
-      wrap.style.pointerEvents = window.scrollY > 200 ? 'auto' : 'none';
-    }, {passive:true});
     wrap.style.opacity = '0';
     wrap.style.transition = 'opacity .3s';
     wrap.style.pointerEvents = 'none';
+
+    function checkScroll(){
+      var y = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+      if (y > 150) {
+        wrap.style.opacity = '1';
+        wrap.style.pointerEvents = 'auto';
+      } else {
+        wrap.style.opacity = '0';
+        wrap.style.pointerEvents = 'none';
+        panel.style.display = 'none';
+        panel.setAttribute('aria-hidden','true');
+        btn.setAttribute('aria-expanded','false');
+        btn.style.transform = 'none';
+      }
+    }
+    window.addEventListener('scroll', checkScroll, {passive:true});
+    document.addEventListener('scroll', checkScroll, {passive:true});
+    setTimeout(checkScroll, 300);
 
     btn.addEventListener('click', function(){
       var open = panel.getAttribute('aria-hidden') === 'false';
