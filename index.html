@@ -1182,9 +1182,9 @@
       langBtnMob.addEventListener('click', function(e) {
         e.preventDefault();
         e.stopPropagation();
-        var cur; try { cur = localStorage.getItem('boyle_lang') || 'it'; } catch(ex) { cur = 'it'; }
+        var cur; try { cur = sessionStorage.getItem('boyle_lang') || 'it'; } catch(ex) { cur = 'it'; }
         var nxt = cur === 'it' ? 'en' : 'it';
-        try { localStorage.setItem('boyle_lang', nxt); } catch(ex) {}
+        try { sessionStorage.setItem('boyle_lang', nxt); } catch(ex) {}
         // usa la funzione globale se disponibile, altrimenti reload
         if (window.boyleApplyLang) {
           window.boyleApplyLang(nxt);
@@ -1597,7 +1597,7 @@
     /* ── Apply translations ── */
     function applyLang(lang) {
       currentLang = lang;
-      localStorage.setItem('boyle_lang', lang);
+      sessionStorage.setItem('boyle_lang', lang);
       var dict = T[lang];
 
       /* Apply data-i18n attributes — plain text */
@@ -1653,10 +1653,10 @@
 
     /* ── Language init & toggle ── */
     function getLang() {
-      try { return localStorage.getItem('boyle_lang') || 'it'; } catch(e) { return 'it'; }
+      try { return sessionStorage.getItem('boyle_lang') || 'it'; } catch(e) { return 'it'; }
     }
     function setLang(l) {
-      try { localStorage.setItem('boyle_lang', l); } catch(e) {}
+      try { sessionStorage.setItem('boyle_lang', l); } catch(e) {}
     }
 
     // Espone applyLang globalmente per bottoni esterni (mobile menu)
