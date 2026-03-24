@@ -10,10 +10,10 @@
     "instagram": "",
     "website": "",
     "courses": "",
-    "speaker": true,
-    "podcast": true,
-    "research": true,
-    "updated": "2026-03-24"
+    "speaker": false,
+    "podcast": false,
+    "research": false,
+    "updated": ""
   },
   "andrea-murdock-alpini": {
     "name": "Andrea Murdock Alpini",
@@ -268,5 +268,18 @@
     "podcast": false,
     "research": false,
     "updated": ""
+  },
+  "davide-duilio-malvestiti": {
+    "bio": "",
+    "linkedin": "",
+    "researchgate": "",
+    "scholar": "",
+    "orcid": "",
+    "twitter": "",
+    "instagram": "",
+    "website": "",
+    "speaker": false,
+    "podcast": false,
+    "research": true
   }
 }
