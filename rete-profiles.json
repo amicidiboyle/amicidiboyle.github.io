@@ -10,10 +10,10 @@
     "instagram": "",
     "website": "",
     "courses": "",
-    "speaker": false,
-    "podcast": false,
-    "research": false,
-    "updated": ""
+    "speaker": true,
+    "podcast": true,
+    "research": true,
+    "updated": "2026-03-24"
   },
   "andrea-murdock-alpini": {
     "name": "Andrea Murdock Alpini",
