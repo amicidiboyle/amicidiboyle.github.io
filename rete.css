@@ -1211,11 +1211,7 @@ a { color: inherit; text-decoration: none; }
 @media (max-width: 900px) {
 
 }
-@media (max-width: 700px) {
 
-  .rete-benefits-col { grid-template-columns: 1fr; }
-  .rete-event-poster-card > img { aspect-ratio: 1.2; }
-}
 @media (max-width: 768px) {
   .lang-toggle { display: none; }
 }
@@ -1373,8 +1369,7 @@ a { color: inherit; text-decoration: none; }
     inset 0 1px 0 rgba(124,243,255,.12);
   padding:32px;
   position:relative;
-  /* Luce radiale in alto come l'header */
-  overflow:hidden;
+  /* overflow-y:auto per lo scroll, clip-path per contenere ::before */
 }
 .edit-modal__dialog::before {
   content:'';
@@ -1862,12 +1857,7 @@ a { color: inherit; text-decoration: none; }
   min-width: 180px;
 }
 
-@media (max-width: 768px) {
-  .next-event-grid { grid-template-columns: 1fr; max-width: 400px; }
-  
-  .next-event-publish-btn { width: 100%; }
-  .rete-benefits-col { grid-template-columns: repeat(2, minmax(0,1fr)); }
-}
+
 
 /* ── Modal mobile ── */
 @media (max-width: 768px) {
@@ -1994,14 +1984,12 @@ a { color: inherit; text-decoration: none; }
   .connectome-nodes .node { animation: none !important; }
   .traveler { animation: none !important; }
 
-  /* Tutti i ::before e ::after con animazione */
-  .btn-electric::before  { animation: none !important; }
-  .btn-electric::after   { animation: none !important; }
-  .btn-amici::before     { animation: none !important; }
+  /* Solo decorativi, NON i bottoni principali */
   .btn-rete-cta::before  { animation: none !important; }
   .btn-rete-cta::after   { animation: none !important; }
   .btn-candidati-cta::after { animation: none !important; }
   .hero-access-bar::before  { animation: none !important; }
+  /* btn-electric e btn-amici mantengono l'elettricità */
 
   /* City line, event dot */
   .city-line { animation: none !important; }
@@ -2022,5 +2010,43 @@ a { color: inherit; text-decoration: none; }
   }
   .benefit-card {
     width: 100% !important;
+  }
+}
+
+/* ══ POST-IT: UNA PER RIGA SU MOBILE ══ */
+
+
+/* ══ LANG TOGGLE: sempre visibile su mobile, accanto al burger ══ */
+@media (max-width: 768px) {
+  .lang-toggle {
+    display: inline-flex !important;
+    order: 2;
+    font-size: .68rem !important;
+    padding: 4px 9px !important;
+    margin-right: 6px;
+    z-index: 300 !important;
+    position: relative !important;
+    flex-shrink: 0 !important;
+  }
+  .nav-burger, .nav-mobile-btn {
+    order: 3;
+    flex-shrink: 0;
+  }
+  .brand {
+    order: 1;
+  }
+}
+
+/* ══ POST-IT: UNA PER RIGA SU MOBILE — DEFINITIVO ══ */
+@media (max-width: 768px) {
+  .rete-benefits-col {
+    display: flex !important;
+    flex-direction: column !important;
+    grid-template-columns: unset !important;
+    gap: 12px !important;
+  }
+  .rete-benefits-col .benefit-card {
+    width: 100% !important;
+    max-width: 100% !important;
   }
 }
