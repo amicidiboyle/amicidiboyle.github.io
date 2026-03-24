@@ -1331,15 +1331,55 @@ a { color: inherit; text-decoration: none; }
 .hero-access-status.err { color: #ff7070; }
 
 /* ── MODAL PROFILO ── */
-.profile-modal { position:fixed; inset:0; z-index:9800; display:none; align-items:center; justify-content:center; padding:20px; background:rgba(1,6,16,.82); backdrop-filter:blur(10px); }
+.profile-modal {
+  position:fixed; inset:0; z-index:9800; display:none;
+  align-items:center; justify-content:center; padding:20px;
+  background:rgba(1,14,32,.78);
+  backdrop-filter:blur(18px) saturate(1.4);
+}
 .profile-modal.is-open { display:flex; }
-.profile-modal__dialog { width:min(540px,100%); max-height:88vh; overflow-y:auto; border-radius:24px; background:linear-gradient(160deg,rgba(4,16,38,.98),rgba(2,10,28,.99)); border:1px solid rgba(124,243,255,.18); box-shadow:0 34px 90px rgba(0,0,0,.52); padding:28px; position:relative; }
-.profile-modal__close { position:absolute; top:14px; right:14px; width:38px; height:38px; border-radius:9px; background:rgba(255,255,255,.06); border:none; color:#edf7ff; font-size:1rem; cursor:pointer; display:flex; align-items:center; justify-content:center; }
-.profile-modal__name { font-size:1.2rem; font-weight:800; color:#edf7ff; margin:0 0 4px; }
-.profile-modal__role { font-size:.82rem; color:rgba(168,238,255,.6); margin:0 0 16px; }
-.profile-modal__bio { font-size:.88rem; line-height:1.7; color:rgba(237,247,255,.8); margin:0 0 20px; padding-bottom:16px; border-bottom:1px solid rgba(123,228,255,.1); }
-.profile-modal__bio.empty { color:rgba(168,238,255,.3); font-style:italic; }
-.profile-modal__links { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:16px; }
+
+.profile-modal__dialog {
+  width:min(540px,100%); max-height:88vh; overflow-y:auto;
+  border-radius:24px;
+  background: linear-gradient(160deg, rgba(4,42,84,.97) 0%, rgba(3,28,62,.97) 55%, rgba(2,18,44,.98) 100%);
+  border:1px solid rgba(100,210,255,.28);
+  box-shadow: 0 0 0 1px rgba(100,210,255,.08), 0 34px 90px rgba(0,0,0,.55), inset 0 1px 0 rgba(124,243,255,.12);
+  padding:32px;
+  position:relative;
+}
+.profile-modal__dialog::before {
+  content:''; position:absolute; top:-60px; left:50%; transform:translateX(-50%);
+  width:320px; height:160px;
+  background:radial-gradient(ellipse, rgba(80,180,255,.15) 0%, transparent 70%);
+  pointer-events:none; z-index:0;
+}
+.profile-modal__close {
+  position:absolute; top:14px; right:14px;
+  width:38px; height:38px; border-radius:10px;
+  background:rgba(100,200,255,.1); border:1px solid rgba(100,210,255,.2);
+  color:#a8eeff; font-size:1rem; cursor:pointer;
+  display:flex; align-items:center; justify-content:center;
+  transition:background .18s; z-index:1;
+}
+.profile-modal__close:hover { background:rgba(100,200,255,.2); }
+
+.profile-modal__name {
+  font-size:1.25rem; font-weight:800; color:#e8f7ff;
+  margin:0 0 4px; position:relative; z-index:1;
+}
+.profile-modal__role {
+  font-size:.82rem; color:rgba(124,220,255,.65);
+  margin:0 0 16px; position:relative; z-index:1;
+}
+.profile-modal__bio {
+  font-size:.88rem; line-height:1.75; color:rgba(220,245,255,.82);
+  margin:0 0 20px; padding-bottom:16px;
+  border-bottom:1px solid rgba(100,210,255,.15);
+  position:relative; z-index:1;
+}
+.profile-modal__bio.empty { color:rgba(140,200,255,.35); font-style:italic; }
+.profile-modal__links { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:16px; position:relative; z-index:1; }
 .profile-link { display:inline-flex; align-items:center; padding:5px 12px; border-radius:8px; font-size:.76rem; background:rgba(123,228,255,.08); border:1px solid rgba(123,228,255,.18); color:#a8eeff; text-decoration:none; transition:background .18s; }
 .profile-link:hover { background:rgba(123,228,255,.16); }
 .profile-modal__avail { display:flex; gap:10px; flex-wrap:wrap; }
@@ -1867,5 +1907,39 @@ a { color: inherit; text-decoration: none; }
   }
   .hero {
     overflow-x: hidden !important;
+  }
+}
+
+/* ══ HERO RETE: centrata su desktop ══ */
+@media (min-width: 769px) {
+  .hero .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .hero__content {
+    text-align: center !important;
+    max-width: 780px !important;
+    margin: 0 auto !important;
+  }
+  .hero__eyebrow {
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+  .hero__subtitle {
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+  .hero__cta {
+    justify-content: center !important;
+  }
+  .hero__stats {
+    max-width: 560px !important;
+    margin: 0 auto !important;
+  }
+  /* Barra accesso: centrata */
+  .hero-access-bar {
+    max-width: 480px !important;
+    margin: 0 auto !important;
   }
 }
