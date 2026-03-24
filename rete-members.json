@@ -204,5 +204,18 @@
       "Diving",
       "Safety"
     ]
+  },
+  {
+    "name": "Davide Duilio Malvestiti",
+    "role": "Honor student di Medicina e Chirurgia, Scuola Superiore Sant'Anna. Focus: Fisiologia degli ambienti estremi, Medicina spaziale, Medicina subacquea.",
+    "img": "davide-duilio-malvestiti.jpg",
+    "city": "Pisa",
+    "linkedin": "",
+    "email": "davide.malvestiti05@gmail.com",
+    "tags": [
+      "Medicina Spaziale",
+      "Fisiologia",
+      "Diving"
+    ]
   }
 ]
