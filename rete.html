@@ -33,12 +33,12 @@
         </span>
       </a>
       <nav class="nav--desktop">
-        <a href="index.html">Home</a>
-        <a href="index.html#visione">Visione</a>
-        <a href="index.html#ricerca">Ricerca</a>
+        <a href="index.html" data-i18n="r_nav_home">Home</a>
+        <a href="index.html#visione" data-i18n="r_nav_vis">Visione</a>
+        <a href="index.html#ricerca" data-i18n="r_nav_ric">Ricerca</a>
         <a class="nav-active" href="rete.html" aria-current="page">Rete</a>
-        <a href="podcast.html">Podcast</a>
-        <a class="nav-cta" href="index.html#contatti">Contatti</a>
+        <a href="podcast.html" data-i18n="r_nav_pod">Podcast</a>
+        <a class="nav-cta" href="index.html#contatti" data-i18n="r_nav_cont">Contatti</a>
       </nav>
       <button class="lang-toggle" id="langToggle" onclick="(function(){var l=localStorage.getItem('boyle_lang')||'it';var nl=l==='it'?'en':'it';localStorage.setItem('boyle_lang',nl);location.reload();})()" aria-label="Switch language">
         <span id="langCurrent">IT</span><span class="lang-sep"> · </span><span id="langOther">EN</span>
@@ -112,18 +112,18 @@
         </svg>
       </div>
       <div class="hero__content">
-        <div class="hero__eyebrow">Network scientifico · Ambienti estremi</div>
-        <h1 class="hero__title"><span class="hero__glow">Rete</span> di Boyle</h1>
-        <p class="hero__subtitle">Un ecosistema multidisciplinare di professionisti, ricercatori e innovatori dedicati alla medicina subacquea, iperbarica, aerospaziale e alla fisiologia degli ambienti estremi.</p>
+        <div class="hero__eyebrow" data-i18n="r_hero_eyebrow">Network scientifico · Ambienti estremi</div>
+        <h1 class="hero__title" data-i18n="r_hero_title"><span class="hero__glow">Rete</span> di Boyle</h1>
+        <p class="hero__subtitle" data-i18n="r_hero_sub">Un ecosistema multidisciplinare di professionisti, ricercatori e innovatori dedicati alla medicina subacquea, iperbarica, aerospaziale e alla fisiologia degli ambienti estremi.</p>
         <div class="hero__cta">
           <button class="btn-electric" id="open-network-modal" type="button">
             <span class="btn-electric__inner">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg data-i18n="r_hero_cta1">
               Candidati alla rete
             </span>
           </button>
           <a class="btn-ghost" href="#members">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="8" cy="5" r="3"/><path d="M2 14c0-3.3 2.7-6 6-6s6 2.7 6 6"/></svg>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="8" cy="5" r="3"/><path d="M2 14c0-3.3 2.7-6 6-6s6 2.7 6 6"/></svg data-i18n="r_hero_cta2">
             Esplora i profili
           </a>
           <div class="hero-access-bar" id="accessBar">
@@ -135,10 +135,10 @@
           </div>
         </div>
         <div class="hero__stats">
-          <div class="hero__stat"><span class="hero__stat-n" id="memberCount">17</span><span class="hero__stat-l">Membri attivi</span></div>
-          <div class="hero__stat"><span class="hero__stat-n">8+</span><span class="hero__stat-l">Specialità</span></div>
-          <div class="hero__stat"><span class="hero__stat-n">6</span><span class="hero__stat-l">Nazioni</span></div>
-          <div class="hero__stat hero__stat--growing"><span class="hero__stat-n">↑</span><span class="hero__stat-l">In crescita</span></div>
+          <div class="hero__stat"><span class="hero__stat-n" id="memberCount">17</span><span class="hero__stat-l" data-i18n="r_stat_membri">Membri attivi</span></div>
+          <div class="hero__stat"><span class="hero__stat-n">8+</span><span class="hero__stat-l" data-i18n="r_stat_spec">Specialità</span></div>
+          <div class="hero__stat"><span class="hero__stat-n">6</span><span class="hero__stat-l" data-i18n="r_stat_naz">Nazioni</span></div>
+          <div class="hero__stat hero__stat--growing"><span class="hero__stat-n">↑</span><span class="hero__stat-l" data-i18n="r_stat_grow">In crescita</span></div>
         </div>
       </div>
     </section>
@@ -147,7 +147,7 @@
     <section class="members-section" id="members">
       <div class="container">
         <div class="members-header">
-          <h2 class="members-title">I Membri della Rete</h2>
+          <h2 class="members-title" data-i18n="r_members_title">I Membri della Rete</h2>
           <p class="members-sub">Professionisti selezionati per competenza, curiosità e impatto operativo.</p>
         </div>
 
@@ -290,9 +290,9 @@
       <div class="container">
 
         <div class="rete-why-header reveal">
-          <p class="section-kicker">Perché entrare</p>
-          <h2>Cosa significa far parte della Rete di Boyle</h2>
-          <p class="section-subheading">La rete non è una directory. È un ecosistema attivo dove ogni membro contribuisce e riceve valore concreto.</p>
+          <p class="section-kicker" data-i18n="r_why_kicker">Perché entrare</p>
+          <h2 data-i18n="r_why_title">Cosa significa far parte della Rete di Boyle</h2>
+          <p class="section-subheading" data-i18n="r_why_sub">La rete non è una directory. È un ecosistema attivo dove ogni membro contribuisce e riceve valore concreto.</p>
         </div>
 
         <div class="rete-why-grid">
@@ -301,27 +301,27 @@
           <div class="rete-benefits-col">
             <div class="benefit-card reveal">
               <div class="benefit-icon benefit-icon--cyan"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
-              <div><h3>Contatti diretti</h3><p>Email personali di tutti i membri, visibili solo a chi è dentro la rete.</p></div>
+              <div><h3 data-i18n="r_b1_title">Contatti diretti</h3><p data-i18n="r_b1_p">Email personali di tutti i membri, visibili solo a chi è dentro la rete.</p></div>
             </div>
             <div class="benefit-card reveal" data-delay="60">
               <div class="benefit-icon benefit-icon--green"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div>
-              <div><h3>Visibilità sul portale</h3><p>La tua card è pubblica. CV, pubblicazioni, link professionali — sempre aggiornati.</p></div>
+              <div><h3 data-i18n="r_b2_title">Visibilità sul portale</h3><p data-i18n="r_b2_p">La tua card è pubblica. CV, pubblicazioni, link professionali — sempre aggiornati.</p></div>
             </div>
             <div class="benefit-card reveal" data-delay="120">
               <div class="benefit-icon benefit-icon--purple"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></div>
-              <div><h3>Newsletter</h3><p>Proponi articoli, casi clinici, contributi. Arrivi direttamente a tutta la community.</p></div>
+              <div><h3 data-i18n="r_b3_title">Newsletter</h3><p data-i18n="r_b3_p">Proponi articoli, casi clinici, contributi. Arrivi direttamente a tutta la community.</p></div>
             </div>
             <div class="benefit-card reveal" data-delay="60">
               <div class="benefit-icon benefit-icon--orange"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M22 10v6M2 10l10-8 10 8M4 20v-6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v6"/></svg></div>
-              <div><h3>Pubblica i tuoi corsi</h3><p>Hai un evento formativo? La sezione formazione è aperta ai membri del portale.</p></div>
+              <div><h3 data-i18n="r_b4_title">Pubblica i tuoi corsi</h3><p data-i18n="r_b4_p">Hai un evento formativo? La sezione formazione è aperta ai membri del portale.</p></div>
             </div>
             <div class="benefit-card reveal" data-delay="120">
               <div class="benefit-icon benefit-icon--cyan"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2v-4M9 21H5a2 2 0 0 1-2-2v-4m0 0h18"/></svg></div>
-              <div><h3>Ricerca scientifica</h3><p>Studi, protocolli, pubblicazioni. I membri vengono invitati alle iniziative di ricerca.</p></div>
+              <div><h3 data-i18n="r_b5_title">Ricerca scientifica</h3><p data-i18n="r_b5_p">Studi, protocolli, pubblicazioni. I membri vengono invitati alle iniziative di ricerca.</p></div>
             </div>
             <div class="benefit-card reveal" data-delay="180">
               <div class="benefit-icon benefit-icon--green"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg></div>
-              <div><h3>Prima fila</h3><p>Congressi, workshop, editoriali. I membri vengono coinvolti per primi, prima del pubblico.</p></div>
+              <div><h3 data-i18n="r_b6_title">Prima fila</h3><p data-i18n="r_b6_p">Congressi, workshop, editoriali. I membri vengono coinvolti per primi, prima del pubblico.</p></div>
             </div>
           </div>
 
@@ -339,39 +339,39 @@
 
           <!-- Rete di Boyle -->
           <div class="join-card join-card--rete">
-            <div class="join-card__badge">Rete di Boyle</div>
-            <h2 class="join-card__title">Sei un professionista degli ambienti estremi?</h2>
-            <p class="join-card__text">La Rete di Boyle è riservata a medici, ricercatori, ingegneri e operatori militari con un curriculum validato in medicina subacquea, iperbarica, aerospaziale, safety, medicina militare o fisiologia degli ambienti estremi. L'accesso è selettivo e valutato caso per caso.</p>
+            <div class="join-card__badge" data-i18n="rj_rete_badge">Rete di Boyle</div>
+            <h2 class="join-card__title" data-i18n="rj_rete_title">Sei un professionista degli ambienti estremi?</h2>
+            <p class="join-card__text" data-i18n="rj_rete_p">La Rete di Boyle è riservata a medici, ricercatori, ingegneri e operatori militari con un curriculum validato in medicina subacquea, iperbarica, aerospaziale, safety, medicina militare o fisiologia degli ambienti estremi. L'accesso è selettivo e valutato caso per caso.</p>
             <div class="join-card__benefits">
-              <span>✓ Card pubblica nella griglia</span>
-              <span>✓ Contatti diretti dei membri</span>
-              <span>✓ Collaborazioni scientifiche</span>
-              <span>✓ Prima fila su congressi ed editoriali</span>
-              <span>✓ Newsletter riservata</span>
-              <span>✓ Pubblica corsi ed eventi</span>
+              <span data-i18n="rj_rete_b1">✓ Card pubblica nella griglia</span>
+              <span data-i18n="rj_rete_b2">✓ Contatti diretti dei membri</span>
+              <span data-i18n="rj_rete_b3">✓ Collaborazioni scientifiche</span>
+              <span data-i18n="rj_rete_b4">✓ Prima fila su congressi ed editoriali</span>
+              <span data-i18n="rj_rete_b5">✓ Newsletter riservata</span>
+              <span data-i18n="rj_rete_b6">✓ Pubblica corsi ed eventi</span>
               <span>✓ Accesso alla Biblioteca di Boyle <em style="opacity:.6;font-size:.85em">- in progress</em></span>
             </div>
             <button class="btn-electric" id="open-network-modal-2" type="button">
-              <span class="btn-electric__inner">Candidati alla Rete</span>
+              <span class="btn-electric__inner" data-i18n="rj_rete_cta">Candidati alla Rete</span>
             </button>
           </div>
 
           <!-- Amici di Boyle -->
           <div class="join-card join-card--amici">
-            <div class="join-card__badge join-card__badge--amici">Amici di Boyle</div>
-            <h2 class="join-card__title">Entra nella community e aiutaci a crescere con le tue idee.</h2>
-            <p class="join-card__text">Sei uno studente, un appassionato, un operatore o semplicemente qualcuno che condivide la nostra visione? Gli Amici di Boyle sono la porta d'ingresso alla community. Nessun curriculum richiesto, solo curiosità e voglia di contribuire.</p>
+            <div class="join-card__badge join-card__badge--amici" data-i18n="rj_amici_badge">Amici di Boyle</div>
+            <h2 class="join-card__title" data-i18n="rj_amici_title">Entra nella community e aiutaci a crescere con le tue idee.</h2>
+            <p class="join-card__text" data-i18n="rj_amici_p">Sei uno studente, un appassionato, un operatore o semplicemente qualcuno che condivide la nostra visione? Gli Amici di Boyle sono la porta d'ingresso alla community. Nessun curriculum richiesto, solo curiosità e voglia di contribuire.</p>
             <div class="join-card__benefits">
-              <span>✓ Codice personale di accesso</span>
+              <span data-i18n="rj_amici_b1">✓ Codice personale di accesso</span>
               <span>✓ Contatti diretti dei membri</span>
-              <span>✓ Profili estesi della Rete</span>
-              <span>✓ Pubblica eventi di ambienti estremi</span>
-              <span>✓ Newsletter della community</span>
+              <span data-i18n="rj_amici_b3">✓ Profili estesi della Rete</span>
+              <span data-i18n="rj_amici_b4">✓ Pubblica eventi di ambienti estremi</span>
+              <span data-i18n="rj_amici_b5">✓ Newsletter della community</span>
               <span>✓ Accesso alla Biblioteca di Boyle <em style="opacity:.6;font-size:.85em">- in progress</em></span>
-              <span>✓ Scrivi a info@amicidiboyle.it</span>
+              <span data-i18n="rj_amici_b6">✓ Scrivi a info@amicidiboyle.it</span>
             </div>
             <button class="btn-amici" id="open-amici-modal" type="button">
-              <span>Diventa un Amico di Boyle</span>
+              <span data-i18n="rj_amici_cta">Diventa un Amico di Boyle</span>
             </button>
           </div>
 
@@ -384,7 +384,7 @@
     <div class="container">
       <div class="section-heading reveal" style="margin-bottom:32px">
         <p class="section-kicker">
-          <span class="rete-event-dot"></span>
+          <span class="rete-event-dot"></span data-i18n="r_ev_kicker">
           Prossimo evento
         </p>
       </div>
@@ -395,17 +395,17 @@
           <img src="assets/corsi/thedayafter.png"
                alt="Locandina The Day After"
                loading="lazy"
-               onerror="this.style.display='none'" />
+               onerror="this.style.display='none'" / data-i18n="r_ev_title">
         </div>
         <div class="next-event-info-col">
-          <p class="section-kicker" style="margin-bottom:8px">Partner · ITCC</p>
-          <h2 class="next-event-title">The Day After</h2>
-          <p class="next-event-desc">Gestione del trauma maggiore oltre la fase acuta. In piena coerenza con la visione degli Amici di Boyle.</p>
+          <p class="section-kicker" style="margin-bottom:8px" data-i18n="r_ev_partner">Partner · ITCC</p>
+          <h2 class="next-event-title" data-i18n="r_ev_title">The Day After</h2>
+          <p class="next-event-desc" data-i18n="r_ev_p">Gestione del trauma maggiore oltre la fase acuta. In piena coerenza con la visione degli Amici di Boyle.</p>
           <div class="event-meta">
-            <span>6 Maggio 2026</span>
+            <span data-i18n="r_ev_badge">6 Maggio 2026</span>
             <span>Corso partner</span>
           </div>
-          <a class="btn btn-ghost" href="assets/corsi/the_day_after_brochure.pdf" target="_blank" rel="noopener" style="margin-top:20px;display:inline-flex">Scarica il programma</a>
+          <a class="btn btn-ghost" href="assets/corsi/the_day_after_brochure.pdf" target="_blank" rel="noopener" style="margin-top:20px;display:inline-flex" data-i18n="r_ev_cta">Scarica il programma</a>
         </div>
       </div>
 
@@ -413,8 +413,8 @@
       <div class="next-event-propose reveal">
         <div class="next-event-propose__inner">
           <div class="next-event-propose__text">
-            <p class="next-event-propose__title">Hai un evento da proporre?</p>
-            <p class="next-event-propose__desc">Sei un membro della Rete o un Amico di Boyle? Proponi corsi, congressi o iniziative legate agli ambienti estremi. La pubblicazione è riservata alla community.</p>
+            <p class="next-event-propose__title" data-i18n="r_ev_propose">Hai un evento da proporre?</p>
+            <p class="next-event-propose__desc" data-i18n="r_ev_propose_p">Sei un membro della Rete o un Amico di Boyle? Proponi corsi, congressi o iniziative legate agli ambienti estremi. La pubblicazione è riservata alla community.</p>
           </div>
           <button class="rete-event-publish-btn btn-secondary next-event-publish-btn" id="publishEventBtn2" type="button">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
@@ -1562,106 +1562,154 @@
   <script>
   (function(){
     var lang = localStorage.getItem('boyle_lang') || 'it';
-    if (lang !== 'en') return; // nothing to do for Italian
 
     var T = {
-      // Nav
-      'Visione':'Vision','Ricerca':'Research','Rete':'Network',
-      'Podcast':'Podcast','Contatti':'Contact','Home':'Home',
-      // Hero
-      'Network scientifico · Ambienti estremi':'Scientific Network · Extreme Environments',
-      'Rete di Boyle':'Boyle Network',
-      'Un ecosistema multidisciplinare di professionisti, ricercatori e innovatori dedicati alla medicina subacquea, iperbarica, aerospaziale e alla fisiologia degli ambienti estremi.':
-        'A multidisciplinary ecosystem of professionals, researchers and innovators dedicated to underwater, hyperbaric, aerospace medicine and the physiology of extreme environments.',
-      'Candidati alla rete':'Apply to the network',
-      'Esplora i profili':'Explore profiles',
-      'Membri attivi':'Active members',
-      'Specialità':'Specialties',
-      'Nazioni':'Nations',
-      'In crescita':'Growing',
-      // Members section
-      'I Membri della Rete':'Network Members',
-      'Professionisti selezionati per competenza, curiosità e impatto operativo.':
-        'Professionals selected for expertise, curiosity and operational impact.',
-      // Benefits
-      'Perché entrare':'Why join',
-      'Cosa significa far parte della Rete di Boyle':'What it means to be part of the Boyle Network',
-      'La rete non è una directory. È un ecosistema attivo dove ogni membro contribuisce e riceve valore concreto.':
-        'The network is not a directory. It is an active ecosystem where every member contributes and receives concrete value.',
-      'Accesso ai contatti diretti':'Direct contact access',
-      'Visibilità sul portale':'Portal visibility',
-      'Contribuisci alla newsletter':'Contribute to the newsletter',
-      'Pubblica i tuoi corsi':'Publish your courses',
-      'Collaborazioni scientifiche':'Scientific collaborations',
-      'Prima fila sulle iniziative':'Front row on initiatives',
-      // CTA
-      'Vuoi entrare nella Rete di Boyle?':'Want to join the Boyle Network?',
-      'La rete è aperta a professionisti, ricercatori e collaboratori con competenze in medicina subacquea, iperbarica, ambienti estremi, fisiologia umana, sicurezza e innovazione.':
-        'The network is open to professionals, researchers and collaborators with expertise in underwater, hyperbaric medicine, extreme environments, human physiology, safety and innovation.',
-      'Candidati ora':'Apply now',
-      // Modal
-      'Connettiamo menti brillanti':'Connecting brilliant minds',
-      'Invia candidatura':'Submit application',
-      // Footer
-      '© 2026 Gli Amici di Boyle':'© 2026 Gli Amici di Boyle',
+      it: {
+        // Nav
+        'r_nav_home':'Home','r_nav_vis':'Visione','r_nav_ric':'Ricerca',
+        'r_nav_rete':'Rete','r_nav_pod':'Podcast','r_nav_cont':'Contatti',
+        // Hero
+        'r_hero_eyebrow':'Network scientifico · Ambienti estremi',
+        'r_hero_title':'Rete di Boyle',
+        'r_hero_sub':'Un ecosistema multidisciplinare di professionisti, ricercatori e innovatori dedicati alla medicina subacquea, iperbarica, aerospaziale e alla fisiologia degli ambienti estremi.',
+        'r_hero_cta1':'Candidati alla rete','r_hero_cta2':'Esplora i profili',
+        'r_stat_membri':'Membri attivi','r_stat_spec':'Specialità',
+        'r_stat_naz':'Nazioni','r_stat_grow':'In crescita',
+        // Members
+        'r_members_title':'I Membri della Rete',
+        'r_members_sub':'Professionisti selezionati per Competenza, Attività ed Impatto Operativo',
+        // Benefits
+        'r_why_kicker':'Perché entrare',
+        'r_why_title':'Cosa significa far parte della Rete di Boyle',
+        'r_why_sub':'La rete non è una directory. È un ecosistema attivo dove ogni membro contribuisce e riceve valore concreto.',
+        'r_b1_title':'Contatti diretti','r_b1_p':'Email personali di tutti i membri, visibili solo a chi è dentro la rete.',
+        'r_b2_title':'Visibilità sul portale','r_b2_p':'La tua card è pubblica. CV, pubblicazioni, link professionali — sempre aggiornati.',
+        'r_b3_title':'Newsletter','r_b3_p':'Proponi articoli, casi clinici, contributi. Arrivi direttamente a tutta la community.',
+        'r_b4_title':'Pubblica i tuoi corsi','r_b4_p':'Hai un evento formativo? La sezione formazione è aperta ai membri del portale.',
+        'r_b5_title':'Ricerca scientifica','r_b5_p':'Studi, protocolli, pubblicazioni. I membri vengono invitati alle iniziative di ricerca.',
+        'r_b6_title':'Prima fila','r_b6_p':'Congressi, workshop, editoriali. I membri vengono coinvolti per primi, prima del pubblico.',
+        // Join cards
+        'rj_rete_badge':'Rete di Boyle',
+        'rj_rete_title':'Sei un professionista degli ambienti estremi?',
+        'rj_rete_p':'La Rete di Boyle è riservata a medici, ricercatori, ingegneri e operatori militari con un curriculum validato in medicina subacquea, iperbarica, aerospaziale, safety, medicina militare o fisiologia degli ambienti estremi. L'accesso è selettivo e valutato caso per caso.',
+        'rj_rete_b1':'✓ Card pubblica nella griglia','rj_rete_b2':'✓ Contatti diretti dei membri',
+        'rj_rete_b3':'✓ Collaborazioni scientifiche','rj_rete_b4':'✓ Prima fila su congressi ed editoriali',
+        'rj_rete_b5':'✓ Newsletter riservata','rj_rete_b6':'✓ Pubblica corsi ed eventi',
+        'rj_rete_cta':'Candidati alla Rete',
+        'rj_amici_badge':'Amici di Boyle',
+        'rj_amici_title':'Entra nella community e aiutaci a crescere con le tue idee.',
+        'rj_amici_p':'Sei uno studente, un appassionato, un operatore o semplicemente qualcuno che condivide la nostra visione? Gli Amici di Boyle sono la porta d'ingresso alla community. Nessun curriculum richiesto, solo curiosità e voglia di contribuire.',
+        'rj_amici_b1':'✓ Codice personale di accesso','rj_amici_b2':'✓ Contatti diretti dei membri',
+        'rj_amici_b3':'✓ Profili estesi della Rete','rj_amici_b4':'✓ Pubblica eventi di ambienti estremi',
+        'rj_amici_b5':'✓ Newsletter della community','rj_amici_b6':'✓ Scrivi a info@amicidiboyle.it',
+        'rj_amici_cta':'Diventa un Amico di Boyle',
+        // Event
+        'r_ev_kicker':'Prossimo evento',
+        'r_ev_badge':'6 Maggio 2026 · Corso partner',
+        'r_ev_title':'The Day After',
+        'r_ev_partner':'Partner · ITCC',
+        'r_ev_p':'Gestione del trauma maggiore oltre la fase acuta. Rigore clinico, taglio operativo.',
+        'r_ev_cta':'Scarica il programma',
+        'r_ev_propose':'Hai un evento da proporre?',
+        'r_ev_propose_p':'Sei un membro della Rete o un Amico di Boyle? Proponi corsi, congressi o iniziative formative sulla piattaforma.',
+        'r_ev_propose_cta':'Proponi evento',
+        // Footer
+        'r_foot_rights':'Tutti i diritti riservati.',
+      },
+      en: {
+        'r_nav_home':'Home','r_nav_vis':'Vision','r_nav_ric':'Research',
+        'r_nav_rete':'Network','r_nav_pod':'Podcast','r_nav_cont':'Contact',
+        'r_hero_eyebrow':'Scientific Network · Extreme Environments',
+        'r_hero_title':'Boyle Network',
+        'r_hero_sub':'A multidisciplinary ecosystem of professionals, researchers and innovators dedicated to underwater, hyperbaric, aerospace medicine and the physiology of extreme environments.',
+        'r_hero_cta1':'Apply to the network','r_hero_cta2':'Explore profiles',
+        'r_stat_membri':'Active members','r_stat_spec':'Specialties',
+        'r_stat_naz':'Nations','r_stat_grow':'Growing',
+        'r_members_title':'Network Members',
+        'r_members_sub':'Professionals selected for Competence, Activity and Operational Impact',
+        'r_why_kicker':'Why join',
+        'r_why_title':'What it means to be part of the Boyle Network',
+        'r_why_sub':'The network is not a directory. It is an active ecosystem where every member contributes and receives concrete value.',
+        'r_b1_title':'Direct contacts','r_b1_p':'Personal emails of all members, visible only to those inside the network.',
+        'r_b2_title':'Portal visibility','r_b2_p':'Your card is public. CV, publications, professional links — always up to date.',
+        'r_b3_title':'Newsletter','r_b3_p':'Propose articles, clinical cases, contributions. Reach the entire community directly.',
+        'r_b4_title':'Publish your courses','r_b4_p':'Have a training event? The training section is open to portal members.',
+        'r_b5_title':'Scientific research','r_b5_p':'Studies, protocols, publications. Members are invited to research initiatives.',
+        'r_b6_title':'Front row','r_b6_p':'Conferences, workshops, editorials. Members are involved first, before the public.',
+        'rj_rete_badge':'Boyle Network',
+        'rj_rete_title':'Are you a professional in extreme environments?',
+        'rj_rete_p':'The Boyle Network is reserved for doctors, researchers, engineers and military operators with a validated background in underwater, hyperbaric, aerospace medicine, safety, military medicine or extreme environment physiology. Access is selective and evaluated case by case.',
+        'rj_rete_b1':'✓ Public card in the grid','rj_rete_b2':'✓ Direct member contacts',
+        'rj_rete_b3':'✓ Scientific collaborations','rj_rete_b4':'✓ Front row at conferences and editorials',
+        'rj_rete_b5':'✓ Reserved newsletter','rj_rete_b6':'✓ Publish courses and events',
+        'rj_rete_cta':'Apply to the Network',
+        'rj_amici_badge':'Friends of Boyle',
+        'rj_amici_title':'Join the community and help us grow with your ideas.',
+        'rj_amici_p':'Are you a student, enthusiast, operator or simply someone who shares our vision? The Friends of Boyle are the gateway to the community. No CV required, just curiosity and the desire to contribute.',
+        'rj_amici_b1':'✓ Personal access code','rj_amici_b2':'✓ Direct member contacts',
+        'rj_amici_b3':'✓ Extended Network profiles','rj_amici_b4':'✓ Publish extreme environment events',
+        'rj_amici_b5':'✓ Community newsletter','rj_amici_b6':'✓ Write to info@amicidiboyle.it',
+        'rj_amici_cta':'Become a Friend of Boyle',
+        'r_ev_kicker':'Next event',
+        'r_ev_badge':'6 May 2026 · Partner course',
+        'r_ev_title':'The Day After',
+        'r_ev_partner':'Partner · ITCC',
+        'r_ev_p':'Management of major trauma beyond the acute phase. Clinical rigour, operational approach.',
+        'r_ev_cta':'Download the programme',
+        'r_ev_propose':'Have an event to propose?',
+        'r_ev_propose_p':'Are you a member of the Network or a Friend of Boyle? Propose courses, conferences or training initiatives on the platform.',
+        'r_ev_propose_cta':'Propose event',
+        'r_foot_rights':'All rights reserved.',
+      }
     };
 
-    // Translate text nodes
-    function walkAndTranslate(node) {
-      if (node.nodeType === 3) { // text node
-        var trimmed = node.textContent.trim();
-        if (T[trimmed]) node.textContent = node.textContent.replace(trimmed, T[trimmed]);
-      } else if (node.nodeType === 1 && !['SCRIPT','STYLE'].includes(node.tagName)) {
-        node.childNodes.forEach(walkAndTranslate);
-      }
+    function applyLang(l) {
+      var dict = T[l] || T['it'];
+      document.querySelectorAll('[data-i18n]').forEach(function(el) {
+        var k = el.getAttribute('data-i18n');
+        if (dict[k] !== undefined) el.textContent = dict[k];
+      });
+      // Update toggle button text
+      var cur = document.getElementById('langCurrent');
+      var oth = document.getElementById('langOther');
+      if (cur) cur.textContent = l === 'en' ? 'EN' : 'IT';
+      if (oth) oth.textContent = l === 'en' ? 'IT' : 'EN';
+      localStorage.setItem('boyle_lang', l);
     }
 
-    // Translate nav links by text content
-    function translateNav() {
-      // Bottone lingua mobile
-      var langMobRete = document.getElementById('langToggleMobileRete');
-      if (langMobRete) {
-        langMobRete.addEventListener('click', function() {
-          var cur; try { cur = localStorage.getItem('boyle_lang') || 'it'; } catch(e) { cur = 'it'; }
-          var nxt = cur === 'it' ? 'en' : 'it';
-          try { localStorage.setItem('boyle_lang', nxt); } catch(e) {}
-          location.reload();
-        });
-      }
+    // Expose globally
+    window.boyleApplyLang = applyLang;
 
-            document.querySelectorAll('nav a, .nav--desktop a, .nav-mobile-panel a').forEach(function(a) {
-        var t = a.textContent.trim();
-        if (T[t]) a.textContent = T[t];
+    // Wire up desktop toggle
+    function attachToggle() {
+      var btn = document.getElementById('langToggle');
+      if (!btn) return;
+      btn.addEventListener('click', function(e) {
+        e.preventDefault(); e.stopPropagation();
+        var cur = localStorage.getItem('boyle_lang') || 'it';
+        applyLang(cur === 'it' ? 'en' : 'it');
       });
     }
 
-    // Translate specific elements by selector
-    var MAP = [
-      ['.hero__eyebrow',  'Network scientifico · Ambienti estremi'],
-      ['.hero__title',    'Rete di Boyle'],
-      ['.hero__subtitle', 'Un ecosistema multidisciplinare di professionisti, ricercatori e innovatori dedicati alla medicina subacquea, iperbarica, aerospaziale e alla fisiologia degli ambienti estremi.'],
-      ['.members-section .section-heading h2', 'I Membri della Rete'],
-      ['.members-section .section-subheading',  'Professionisti selezionati per competenza, curiosità e impatto operativo.'],
-      ['.benefits-section .section-heading h2', 'Cosa significa far parte della Rete di Boyle'],
-      ['.cta-section h2', 'Vuoi entrare nella Rete di Boyle?'],
-      ['.hero__cta .btn-electric span', 'Candidati alla rete'],
-    ];
-
-    document.addEventListener('DOMContentLoaded', function() {
-      MAP.forEach(function(pair) {
-        var el = document.querySelector(pair[0]);
-        if (el && T[pair[1]]) el.textContent = T[pair[1]];
+    // Wire up mobile toggle
+    function attachMobileToggle() {
+      var mob = document.getElementById('langToggleMobileRete');
+      if (!mob) return;
+      mob.addEventListener('click', function() {
+        var cur = localStorage.getItem('boyle_lang') || 'it';
+        applyLang(cur === 'it' ? 'en' : 'it');
       });
-      translateNav();
-      document.documentElement.lang = 'en';
-      document.title = 'Boyle Network · Gli Amici di Boyle';
-    });
+    }
 
-    // Update toggle button display
-    var cur = document.getElementById('langCurrent');
-    var oth = document.getElementById('langOther');
-    if (cur) cur.textContent = 'EN';
-    if (oth) oth.textContent = 'IT';
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', function() {
+        attachToggle(); attachMobileToggle();
+        if (lang === 'en') applyLang('en');
+      });
+    } else {
+      attachToggle(); attachMobileToggle();
+      if (lang === 'en') applyLang('en');
+    }
   })();
   </script>
 
