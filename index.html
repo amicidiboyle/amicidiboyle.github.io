@@ -285,8 +285,8 @@
         <div class="reveal reveal-left">
           <p class="section-kicker" data-i18n="rete_kicker">La Rete di Boyle</p>
           <h2 id="rete-h2" data-i18n="rete_h2">Connettiamo Menti Brillanti</h2>
-          <p class="section-lead" data-i18n="rete_lead">La <strong>Rete di Boyle</strong> unisce medici, ricercatori, ingegneri e operatori militari che lavorano dove l'aria finisce, la pressione sale e i margini di errore scompaiono. Professionisti selezionati, non collezionati.</p>
-             <p data-i18n="rete_amici_p">Gli <strong>Amici di Boyle</strong> sono il futuro della medicina degli ambienti estremi: una comunità di studenti, operatori e appassionati, orientati all'eccellenza, pronti a imparare, contribuire e crescere insieme.</p>
+          <p class="section-lead" data-i18n-html="rete_lead">La <strong>Rete di Boyle</strong> unisce medici, ricercatori, ingegneri e operatori militari che lavorano dove l'aria finisce, la pressione sale e i margini di errore scompaiono. Professionisti selezionati, non collezionati.</p>
+             <p data-i18n-html="rete_amici_p">Gli <strong>Amici di Boyle</strong> sono il futuro della medicina degli ambienti estremi: una comunità di studenti, operatori e appassionati, orientati all'eccellenza, pronti a imparare, contribuire e crescere insieme.</p>
           <div class="cta-row">
             <a class="btn-split-community" href="rete.html">
               <span class="btn-split__rete">
@@ -1590,6 +1590,10 @@
       document.querySelectorAll('[data-i18n]').forEach(function(el) {
         var key = el.getAttribute('data-i18n');
         if (dict[key] !== undefined) el.textContent = dict[key];
+      });
+      document.querySelectorAll('[data-i18n-html]').forEach(function(el) {
+        var key = el.getAttribute('data-i18n-html');
+        if (dict[key] !== undefined) el.innerHTML = dict[key];
       });
 
       /* Apply data-i18n-html attributes — HTML content (for bold/tags) */
