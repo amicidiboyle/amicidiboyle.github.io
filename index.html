@@ -1176,23 +1176,7 @@
       }
     });
 
-    /* Bottone lingua nel menu mobile */
-    var langBtnMob = document.
-    if (langBtnMob) {
-      langBtnMob.addEventListener('click', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        var cur; try { cur = sessionStorage.getItem('boyle_lang') || 'it'; } catch(ex) { cur = 'it'; }
-        var nxt = cur === 'it' ? 'en' : 'it';
-        try { sessionStorage.setItem('boyle_lang', nxt); } catch(ex) {}
-        // usa la funzione globale se disponibile, altrimenti reload
-        if (window.boyleApplyLang) {
-          window.boyleApplyLang(nxt);
-        } else {
-          location.reload();
-        }
-      });
-    }
+    /* Bottone lingua mobile: gestito dal pulsante desktop */
   })();
   </script>
 
@@ -1567,13 +1551,15 @@
         // Partner
         'part_kicker':'Partners',
         'part_h2':'Collaborations and aligned organisations',
-        'part_sub':'Organisations sharing a focus on education,
-        'part_simae_name':'SIMAE','part_simae_p':'SIMAE — the first Italian scientific society focused on research and training across all extreme environments.','part_simae_cta':'Visit SIMAE', trauma and extreme environments.',
+        'part_sub':'Organisations sharing a focus on education, trauma and extreme environments.',
+        'part_simae_name':'SIMAE',
+        'part_simae_p':"SIMAE — Italy's first scientific society dedicated to research and training across extreme environments.",
+        'part_simae_cta':'Visit SIMAE',
         'part1_p':'A project dedicated to trauma care, with a practical approach, training and quality content.',
         'part1_cta':'Visit the site',
         'part2_h3':'Propose a collaboration',
         'part2_p':'Universities, scientific societies, courses, congresses, editorial initiatives and operational partners: a space open to qualified collaborations.',
-        'part2_cta':'Let's talk',
+        'part2_cta':"Let's talk",
         // Teaching cards
         'tc_download':'Download',
         'tc_lez_k':'Lecture',
@@ -1692,22 +1678,19 @@
   </script>
 
   <script>
-  /* ── Counter animato hero stats home ── */
   (function(){
-    function animateCounter(el, target, duration) {
+    function animateCounter(el, target, duration, noFormat) {
       var suffix = el.textContent.replace(/[0-9.,]/g, '');
       var start = performance.now();
       function step(now) {
         var p = Math.min((now - start) / duration, 1);
         var ease = 1 - Math.pow(1 - p, 3);
         var val = Math.round(target * ease);
-        // Formatta con punto per migliaia se > 999
-        el.textContent = val >= 1000 ? val.toLocaleString('it-IT') + suffix : val + suffix;
+        el.textContent = (!noFormat && val >= 1000) ? val.toLocaleString('it-IT') + suffix : val + suffix;
         if (p < 1) requestAnimationFrame(step);
       }
       requestAnimationFrame(step);
     }
-
     function initHomeCounters() {
       var stats = document.querySelectorAll('.stat-num');
       var obs = new IntersectionObserver(function(entries) {
@@ -1715,13 +1698,15 @@
           if (!e.isIntersecting) return;
           var el = e.target;
           var raw = el.textContent.replace(/[^0-9]/g, '');
-          if (raw) animateCounter(el, parseInt(raw), 1400);
+          var num = parseInt(raw);
+          // Non formattare anni (es. 2023) con separatore migliaia
+          var isYear = num >= 1900 && num <= 2100 && el.textContent.indexOf('.') < 0 && el.textContent.indexOf('+') < 0;
+          if (raw) animateCounter(el, num, 1400, isYear);
           obs.unobserve(el);
         });
       }, { threshold: 0.8 });
       stats.forEach(function(el) { obs.observe(el); });
     }
-
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', initHomeCounters);
     } else {
