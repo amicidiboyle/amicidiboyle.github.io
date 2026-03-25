@@ -40,7 +40,7 @@
         <a href="podcast.html">Podcast</a>
         <a class="nav-cta" href="index.html#contatti">Contatti</a>
       </nav>
-      <button class="lang-toggle" id="langToggle" onclick="(function(){var l=sessionStorage.getItem('boyle_lang')||'it';var nl=l==='it'?'en':'it';sessionStorage.setItem('boyle_lang',nl);location.reload();})()" aria-label="Switch language">
+      <button class="lang-toggle" id="langToggle" type="button" aria-label="Cambia lingua / Switch language">
         <span id="langCurrent">IT</span><span class="lang-sep"> · </span><span id="langOther">EN</span>
       </button>
       <button class="nav-mobile-btn" id="navMobileBtn" aria-label="Apri menu" aria-expanded="false">
@@ -112,13 +112,13 @@
         <div class="hero__cta">
           <button class="btn-electric" id="open-network-modal" type="button">
             <span class="btn-electric__inner">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg data-i18n="r_hero_cta1">
-              Candidati alla rete
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+              <span data-i18n="r_hero_cta1">Candidati alla rete</span>
             </span>
           </button>
           <a class="btn-ghost" href="#members">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="8" cy="5" r="3"/><path d="M2 14c0-3.3 2.7-6 6-6s6 2.7 6 6"/></svg data-i18n="r_hero_cta2">
-            Esplora i profili
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="8" cy="5" r="3"/><path d="M2 14c0-3.3 2.7-6 6-6s6 2.7 6 6"/></svg>
+            <span data-i18n="r_hero_cta2">Esplora i profili</span>
           </a>
           <div class="hero-access-bar" id="accessBar">
             <input class="hero-access-input" id="barCodeInput"
@@ -169,7 +169,7 @@
             </span>
           </button>
           <button class="btn-ghost" id="publishWallJoin" style="min-height:44px;font-size:.88rem;margin-top:8px">Candidati alla rete →</button>
-          <p class="email-wall__note">Problemi? Scrivi a <a href="/cdn-cgi/l/email-protection#771e19111837161a1e141e131e15180e1b12591e03"><span class="__cf_email__" data-cfemail="c1a8afa7ae81a0aca8a2a8a5a8a3aeb8ada4efa8b5">[email&#160;protected]</span></a></p>
+          <p class="email-wall__note">Problemi? Scrivi a <a href="/cdn-cgi/l/email-protection#8de4e3ebe2cdece0e4eee4e9e4efe2f4e1e8a3e4f9"><span class="__cf_email__" data-cfemail="375e59515877565a5e545e535e55584e5b52195e43">[email&#160;protected]</span></a></p>
         </div>
       </div>
     </div>
@@ -362,7 +362,7 @@
               <span data-i18n="rj_amici_b4">✓ Pubblica eventi di ambienti estremi</span>
               <span data-i18n="rj_amici_b5">✓ Newsletter della community</span>
               <span>✓ Accesso alla Biblioteca di Boyle <em style="opacity:.6;font-size:.85em">- in progress</em></span>
-              <span data-i18n="rj_amici_b6">✓ Scrivi a <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="a8c1c6cec7e8c9c5c1cbc1ccc1cac7d1c4cd86c1dc">[email&#160;protected]</a></span>
+              <span data-i18n="rj_amici_b6">✓ Scrivi a <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="cea7a0a8a18eafa3a7ada7aaa7aca1b7a2abe0a7ba">[email&#160;protected]</a></span>
             </div>
             <button class="btn-amici" id="open-amici-modal" type="button">
               <span data-i18n="rj_amici_cta">Diventa un Amico di Boyle</span>
@@ -378,8 +378,7 @@
     <div class="container">
       <div class="section-heading reveal" style="margin-bottom:32px">
         <p class="section-kicker">
-          <span class="rete-event-dot"></span data-i18n="r_ev_kicker">
-          Prossimo evento
+          <span class="rete-event-dot"></span><span data-i18n="r_ev_kicker">Prossimo evento</span>
         </p>
       </div>
 
@@ -389,7 +388,7 @@
           <img src="assets/corsi/thedayafter.png"
                alt="Locandina The Day After"
                loading="lazy"
-               onerror="this.style.display='none'" / data-i18n="r_ev_title">
+               onerror="this.style.display='none'" />
         </div>
         <div class="next-event-info-col">
           <p class="section-kicker" style="margin-bottom:8px" data-i18n="r_ev_partner">Partner · ITCC</p>
@@ -524,7 +523,7 @@
         </div>
         <div class="amici-benefit-item">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-          <span>Scrivi direttamente a <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="771e19111837161a1e141e131e15180e1b12591e03">[email&#160;protected]</a></span>
+          <span>Scrivi direttamente a <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="6c05020a032c0d01050f0508050e03150009420518">[email&#160;protected]</a></span>
         </div>
         <div class="amici-benefit-item amici-benefit-item--note">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
