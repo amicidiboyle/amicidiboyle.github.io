@@ -52,7 +52,7 @@
         <a href="rete.html">Rete</a>
         <a href="podcast.html">Podcast</a>
         <a href="#partner">Partner</a>
-        <a href="rete.html#prossimo-evento">Eventi</a>
+        <a href="#eventi">Eventi</a>
         <a href="#contatti">Contatti</a>
       </nav>
       <button class="lang-toggle" id="langToggle" type="button" aria-label="Cambia lingua / Switch language" title="Switch to English">
@@ -286,8 +286,8 @@
         <div class="reveal reveal-left">
           <p class="section-kicker" data-i18n="rete_kicker">La Rete di Boyle</p>
           <h2 id="rete-h2" data-i18n="rete_h2">Connettiamo Menti Brillanti</h2>
-          <p class="section-lead" data-i18n="rete_lead">La <strong>Rete di Boyle</strong> unisce medici, ricercatori, ingegneri e operatori militari che lavorano dove l'aria finisce, la pressione sale e i margini di errore scompaiono. Professionisti selezionati, non collezionati.</p>
-             <p data-i18n="rete_amici_p">Gli <strong>Amici di Boyle</strong> sono il futuro della medicina degli ambienti estremi: una comunità di studenti, operatori e appassionati, orientati all'eccellenza, pronti a imparare, contribuire e crescere insieme.</p>
+          <p class="section-lead" data-i18n-html="rete_lead">La <strong>Rete di Boyle</strong> unisce medici, ricercatori, ingegneri e operatori militari che lavorano dove l'aria finisce, la pressione sale e i margini di errore scompaiono. Professionisti selezionati, non collezionati.</p>
+             <p data-i18n-html="rete_amici_p">Gli <strong>Amici di Boyle</strong> sono il futuro della medicina degli ambienti estremi: una comunità di studenti, operatori e appassionati, orientati all'eccellenza, pronti a imparare, contribuire e crescere insieme.</p>
           <div class="cta-row">
             <a class="btn-split-community" href="rete.html">
               <span class="btn-split__rete">
@@ -382,7 +382,7 @@
     <section class="section" id="eventi">
       <div class="container event-grid">
         <div class="reveal reveal-left">
-          <p class="section-kicker" data-i18n="ev_kicker">Prossimo evento</p>
+          <p class="section-kicker" data-i18n="ev_kicker">Prossimi eventi</p>
           <h2 data-i18n="ev_h2">The Day After</h2>
           <p class="section-lead" data-i18n="ev_lead">Un corso del partner ITCC dedicato alla gestione del trauma maggiore oltre la fase acuta, in piena coerenza con una visione moderna della medicina degli ambienti estremi.</p>
           <p data-i18n="ev_p2">Entrare nella Rete di Boyle significa anche poter dare visibilità a eventi e iniziative di qualità, quando condividono rigore, utilità e valore formativo.</p>
@@ -1134,7 +1134,7 @@
       <a href="#ricerca">Ricerca</a>
       <a href="#formazione">Formazione</a>
       <a href="#partner">Partner</a>
-      <a href="rete.html#prossimo-evento">Eventi</a>
+      <a href="#eventi">Eventi</a>
       <a href="#contatti">Contatti</a>
     </div>
   </div>
@@ -1178,9 +1178,7 @@
       }
     });
 
-    /* Bottone lingua nel menu mobile */
-    var langBtnMob = document.
-    if (langBtnMob) {
+    /* Bottone lingua mobile: gestito dal pulsante desktop */
       langBtnMob.addEventListener('click', function(e) {
         e.preventDefault();
         e.stopPropagation();
@@ -1315,8 +1313,8 @@
         // Rete home
         'rete_kicker':'La Rete di Boyle',
         'rete_h2':'Connettiamo Menti Brillanti',
-        'rete_lead':'La <strong>Rete di Boyle</strong> unisce medici, ricercatori, ingegneri e operatori militari che lavorano dove l’aria finisce, la pressione sale e i margini di errore scompaiono. Professionisti selezionati, non collezionati.',
-        'rete_amici_p':'Gli <strong>Amici di Boyle</strong> sono il futuro della medicina degli ambienti estremi: una comunità di studenti, operatori e appassionati, orientati all’eccellenza, pronti a imparare, contribuire e crescere insieme.',
+        'rete_lead':"La <strong>Rete di Boyle</strong> unisce medici, ricercatori, ingegneri e operatori militari che lavorano dove l’aria finisce, la pressione sale e i margini di errore scompaiono. Professionisti selezionati, non collezionati.",
+        'rete_amici_p':"Gli <strong>Amici di Boyle</strong> sono il futuro della medicina degli ambienti estremi: una comunità di studenti, operatori e appassionati, orientati all’eccellenza, pronti a imparare, contribuire e crescere insieme.",
         'split_rete':'Scopri la Rete','split_amici':'Amici di Boyle',
         'chip_esplora_t':'Esplora','chip_esplora_p':'Profili, competenze e connessioni tra clinica, ricerca e ambienti estremi.',
         'chip_partecipa_t':'Partecipa','chip_partecipa_p':'Eventi, idee, attività formative e contributi costruiti insieme alla rete.',
@@ -1569,13 +1567,15 @@
         // Partner
         'part_kicker':'Partners',
         'part_h2':'Collaborations and aligned organisations',
-        'part_sub':'Organisations sharing a focus on education,
-        'part_simae_name':'SIMAE','part_simae_p':'SIMAE — the first Italian scientific society focused on research and training across all extreme environments.','part_simae_cta':'Visit SIMAE', trauma and extreme environments.',
+        'part_sub':'Organisations sharing a focus on education, trauma and extreme environments.',
+        'part_simae_name':'SIMAE',
+        'part_simae_p':"SIMAE — Italy's first scientific society dedicated to research and training across extreme environments.",
+        'part_simae_cta':'Visit SIMAE',
         'part1_p':'A project dedicated to trauma care, with a practical approach, training and quality content.',
         'part1_cta':'Visit the site',
         'part2_h3':'Propose a collaboration',
         'part2_p':'Universities, scientific societies, courses, congresses, editorial initiatives and operational partners: a space open to qualified collaborations.',
-        'part2_cta':'Let's talk',
+        'part2_cta':"Let's talk",
         // Teaching cards
         'tc_download':'Download',
         'tc_lez_k':'Lecture',
