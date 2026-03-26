@@ -38,10 +38,9 @@
         <a href="index.html#ricerca">Ricerca</a>
         <a class="nav-active" href="rete.html" aria-current="page">Rete</a>
         <a href="podcast.html">Podcast</a>
-        <a href="#prossimo-evento">Eventi</a>
         <a class="nav-cta" href="index.html#contatti">Contatti</a>
       </nav>
-      <button class="lang-toggle" id="langToggle" type="button" aria-label="Cambia lingua / Switch language">
+      <button class="lang-toggle" id="langToggle" type="button" aria-label="Switch language">
         <span id="langCurrent">IT</span><span class="lang-sep"> · </span><span id="langOther">EN</span>
       </button>
       <button class="nav-mobile-btn" id="navMobileBtn" aria-label="Apri menu" aria-expanded="false">
@@ -53,7 +52,6 @@
         <a href="index.html#ricerca">Ricerca</a>
         <a href="rete.html">Rete</a>
         <a href="podcast.html">Podcast</a>
-        <a href="#prossimo-evento">Eventi</a>
         <a href="index.html#contatti">Contatti</a>
       </div>
     </div>
@@ -114,27 +112,24 @@
         <div class="hero__cta">
           <button class="btn-electric" id="open-network-modal" type="button">
             <span class="btn-electric__inner">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-              <span data-i18n="r_hero_cta1">Candidati alla rete</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg data-i18n="r_hero_cta1">
+              Candidati alla rete
             </span>
           </button>
-          <button class="btn-amici" id="open-amici-modal-hero" type="button">
-            <span data-i18n="rj_amici_cta">Diventa un Amico di Boyle</span>
-          </button>
-          <a class="btn-eventi" href="#prossimo-evento">
-            <span data-i18n="r_events_link">Gli eventi della Rete</span>
+          <a class="btn-ghost" href="#members">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="8" cy="5" r="3"/><path d="M2 14c0-3.3 2.7-6 6-6s6 2.7 6 6"/></svg data-i18n="r_hero_cta2">
+            Esplora i profili
           </a>
-
-          <div class="hero-access-bar" id="accessBar" style="justify-content:center;margin:0 auto;">
+          <div class="hero-access-bar" id="accessBar">
             <input class="hero-access-input" id="barCodeInput"
-                   type="text" data-i18n-placeholder="r_code_ph" placeholder="🔑 Codice membro"
+                   type="text" placeholder="🔑 Codice membro"
                    autocomplete="off" spellcheck="false" maxlength="30" />
-            <button class="hero-access-btn" id="barCodeBtn" data-i18n="r_access_btn">Accedi</button>
+            <button class="hero-access-btn" id="barCodeBtn">Accedi</button>
             <span class="hero-access-status" id="barStatus"></span>
           </div>
         </div>
         <div class="hero__stats">
-          <div class="hero__stat"><span class="hero__stat-n" id="memberCount">19</span><span class="hero__stat-l" data-i18n="r_stat_membri">Membri attivi</span></div>
+          <div class="hero__stat"><span class="hero__stat-n" id="memberCount">17</span><span class="hero__stat-l" data-i18n="r_stat_membri">Membri attivi</span></div>
           <div class="hero__stat"><span class="hero__stat-n">8+</span><span class="hero__stat-l" data-i18n="r_stat_spec">Specialità</span></div>
           <div class="hero__stat"><span class="hero__stat-n">6</span><span class="hero__stat-l" data-i18n="r_stat_naz">Nazioni</span></div>
           <div class="hero__stat hero__stat--growing"><span class="hero__stat-n">↑</span><span class="hero__stat-l" data-i18n="r_stat_grow">In crescita</span></div>
@@ -147,7 +142,7 @@
       <div class="container">
         <div class="members-header">
           <h2 class="members-title" data-i18n="r_members_title">I Membri della Rete</h2>
-          <p class="members-sub" data-i18n="r_members_sub">Professionisti selezionati per competenza, curiosità e impatto operativo.</p>
+          <p class="members-sub">Professionisti selezionati per competenza, curiosità e impatto operativo.</p>
         </div>
 
         <!-- Le card vengono iniettate da JS -->
@@ -174,7 +169,7 @@
             </span>
           </button>
           <button class="btn-ghost" id="publishWallJoin" style="min-height:44px;font-size:.88rem;margin-top:8px">Candidati alla rete →</button>
-          <p class="email-wall__note">Problemi? Scrivi a <a href="/cdn-cgi/l/email-protection#0a63646c654a6b676369636e63686573666f24637e"><span class="__cf_email__" data-cfemail="e1888f878ea1808c8882888588838e988d84cf8895">[email&#160;protected]</span></a></p>
+          <p class="email-wall__note">Problemi? Scrivi a <a href="/cdn-cgi/l/email-protection#771e19111837161a1e141e131e15180e1b12591e03"><span class="__cf_email__" data-cfemail="c1a8afa7ae81a0aca8a2a8a5a8a3aeb8ada4efa8b5">[email&#160;protected]</span></a></p>
         </div>
       </div>
     </div>
@@ -367,7 +362,7 @@
               <span data-i18n="rj_amici_b4">✓ Pubblica eventi di ambienti estremi</span>
               <span data-i18n="rj_amici_b5">✓ Newsletter della community</span>
               <span>✓ Accesso alla Biblioteca di Boyle <em style="opacity:.6;font-size:.85em">- in progress</em></span>
-              <span data-i18n="rj_amici_b6">✓ Scrivi a <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="ea83848c85aa8b878389838e83888593868fc4839e">[email&#160;protected]</a></span>
+              <span data-i18n="rj_amici_b6">✓ Scrivi a <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="a8c1c6cec7e8c9c5c1cbc1ccc1cac7d1c4cd86c1dc">[email&#160;protected]</a></span>
             </div>
             <button class="btn-amici" id="open-amici-modal" type="button">
               <span data-i18n="rj_amici_cta">Diventa un Amico di Boyle</span>
@@ -383,7 +378,8 @@
     <div class="container">
       <div class="section-heading reveal" style="margin-bottom:32px">
         <p class="section-kicker">
-          <span class="rete-event-dot"></span><span data-i18n="r_ev_kicker">Prossimi eventi</span>
+          <span class="rete-event-dot"></span data-i18n="r_ev_kicker">
+          Prossimo evento
         </p>
       </div>
 
@@ -393,7 +389,7 @@
           <img src="assets/corsi/thedayafter.png"
                alt="Locandina The Day After"
                loading="lazy"
-               onerror="this.style.display='none'" />
+               onerror="this.style.display='none'" / data-i18n="r_ev_title">
         </div>
         <div class="next-event-info-col">
           <p class="section-kicker" style="margin-bottom:8px" data-i18n="r_ev_partner">Partner · ITCC</p>
@@ -404,30 +400,6 @@
             <span>Corso partner</span>
           </div>
           <a class="btn btn-ghost" href="assets/corsi/the_day_after_brochure.pdf" target="_blank" rel="noopener" style="margin-top:20px;display:inline-flex" data-i18n="r_ev_cta">Scarica il programma</a>
-        </div>
-      </div>
-
-
-      <!-- Secondo evento: Corso Psicologia Subacquea -->
-      <div class="next-event-grid reveal" style="margin-top:40px;">
-        <div class="next-event-poster">
-          <img src="assets/corsi/corso-psicologia-subacquea.jpg"
-               alt="Corso di Psicologia Subacquea"
-               loading="lazy"
-               onerror="this.style.display='none'" />
-        </div>
-        <div class="next-event-info-col">
-          <p class="section-kicker" style="margin-bottom:8px">Membro Rete · Lidia Porri</p>
-          <h2 class="next-event-title">Corso di Psicologia Subacquea</h2>
-          <p class="next-event-desc">Corso Teorico-Pratico dedicato alla dimensione psicologica dell'immersione. Gestione di stress, ansia, panico e PTSD in ambiente subacqueo e iperbarico. Rivolto a psicologi, medici, istruttori e subacquei.</p>
-          <div class="event-meta">
-            <span>30–31 Maggio 2026</span>
-            <span>Isola d'Elba · In presenza</span>
-          </div>
-          <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:20px;">
-            <a class="btn btn-ghost" href="assets/corsi/programma-corso-psicologia.pdf" target="_blank" rel="noopener" style="display:inline-flex">Scarica il programma</a>
-            <a class="btn btn-ghost" href="https://www.psicologiasubacquea.it" target="_blank" rel="noopener" style="display:inline-flex">psicologiasubacquea.it</a>
-          </div>
         </div>
       </div>
 
@@ -552,7 +524,7 @@
         </div>
         <div class="amici-benefit-item">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-          <span>Scrivi direttamente a <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="b7ded9d1d8f7d6daded4ded3ded5d8cedbd299dec3">[email&#160;protected]</a></span>
+          <span>Scrivi direttamente a <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="771e19111837161a1e141e131e15180e1b12591e03">[email&#160;protected]</a></span>
         </div>
         <div class="amici-benefit-item amici-benefit-item--note">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
@@ -928,8 +900,7 @@
     'BOYLE-E6N3-DENARO':     'matteo-denaro',
     'BOYLE-ENAR-CAPPA':      'giovanni-cappa',
     'BOYLE-YHT9-CAMPONOVO':  'claudio-camponovo',
-    'BOYLE-X7N3-MAK':        'ho-man-mak',
-    'BOYLE-L9P5-PORRI':      'lidia-porri',
+    'BOYLE-P4V2-MALVESTITI': 'davide-duilio-malvestiti',
   };
   const VALID_CODES = {
     'simona-damiano':         'BOYLE-K7X2-DAMIANO',
@@ -1535,7 +1506,6 @@
     }
 
     openBtn?.addEventListener('click', openAmici);
-    document.getElementById('open-amici-modal-hero')?.addEventListener('click', openAmici);
     closeBtn?.addEventListener('click', closeAmici);
     modal?.addEventListener('click', e => { if (e.target === modal) closeAmici(); });
     document.addEventListener('keydown', e => { if (e.key === 'Escape') closeAmici(); });
@@ -1634,17 +1604,13 @@
         'rj_rete_cta':'Candidati alla Rete',
         'rj_amici_badge':'Amici di Boyle',
         'rj_amici_title':'Entra nella community e aiutaci a crescere con le tue idee.',
-        'rj_amici_p':'Sei uno studente, un appassionato, un operatore o semplicemente qualcuno che condivide la nostra visione? Gli Amici di Boyle sono la porta d'ingresso alla community. Nessun curriculum richiesto, solo curiosità e voglia di contribuire.",
+        'rj_amici_p':"Sei uno studente, un appassionato, un operatore o semplicemente qualcuno che condivide la nostra visione? Gli Amici di Boyle sono la porta d'ingresso alla community. Nessun curriculum richiesto, solo curiosità e voglia di contribuire.",
         'rj_amici_b1':'✓ Codice personale di accesso','rj_amici_b2':'✓ Contatti diretti dei membri',
         'rj_amici_b3':'✓ Profili estesi della Rete','rj_amici_b4':'✓ Pubblica eventi di ambienti estremi',
         'rj_amici_b5':'✓ Newsletter della community','rj_amici_b6':'✓ Scrivi a info@amicidiboyle.it',
         'rj_amici_cta':'Diventa un Amico di Boyle',
-        'r_events_link':'Gli eventi della Rete',
-        'r_code_ph':'🔑 Codice membro',
-        'r_access_btn':'Accedi',
-        'r_members_sub':'Professionisti selezionati per competenza, curiosità e impatto operativo.',
         // Event
-        'r_ev_kicker':'Prossimi eventi',
+        'r_ev_kicker':'Prossimo evento',
         'r_ev_badge':'6 Maggio 2026 · Corso partner',
         'r_ev_title':'The Day After',
         'r_ev_partner':'Partner · ITCC',
@@ -1690,11 +1656,7 @@
         'rj_amici_b3':'✓ Extended Network profiles','rj_amici_b4':'✓ Publish extreme environment events',
         'rj_amici_b5':'✓ Community newsletter','rj_amici_b6':'✓ Write to info@amicidiboyle.it',
         'rj_amici_cta':'Become a Friend of Boyle',
-        'r_events_link':'Network events',
-        'r_code_ph':'🔑 Member code',
-        'r_access_btn':'Access',
-        'r_members_sub':'Professionals selected for competence, curiosity and operational impact.',
-        'r_ev_kicker':'Upcoming events',
+        'r_ev_kicker':'Next event',
         'r_ev_badge':'6 May 2026 · Partner course',
         'r_ev_title':'The Day After',
         'r_ev_partner':'Partner · ITCC',
@@ -1712,10 +1674,6 @@
       document.querySelectorAll('[data-i18n]').forEach(function(el) {
         var k = el.getAttribute('data-i18n');
         if (dict[k] !== undefined) el.textContent = dict[k];
-      });
-      document.querySelectorAll('[data-i18n-placeholder]').forEach(function(el) {
-        var k = el.getAttribute('data-i18n-placeholder');
-        if (dict[k] !== undefined) el.placeholder = dict[k];
       });
       // Update toggle button text
       var cur = document.getElementById('langCurrent');
@@ -1735,8 +1693,7 @@
       btn.addEventListener('click', function(e) {
         e.preventDefault(); e.stopPropagation();
         var cur = sessionStorage.getItem('boyle_lang') || 'it';
-        sessionStorage.setItem('boyle_lang', cur === 'it' ? 'en' : 'it');
-        location.reload();
+        applyLang(cur === 'it' ? 'en' : 'it');
       });
     }
 
@@ -1746,18 +1703,17 @@
       if (!mob) return;
       mob.addEventListener('click', function() {
         var cur = sessionStorage.getItem('boyle_lang') || 'it';
-        sessionStorage.setItem('boyle_lang', cur === 'it' ? 'en' : 'it');
-        location.reload();
+        applyLang(cur === 'it' ? 'en' : 'it');
       });
     }
 
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', function() {
-        attachToggle(); attachMobileToggle();
+        attachToggle();
         if (lang === 'en') applyLang('en');
       });
     } else {
-      attachToggle(); attachMobileToggle();
+      attachToggle();
       if (lang === 'en') applyLang('en');
     }
   })();
