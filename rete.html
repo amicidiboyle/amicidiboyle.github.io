@@ -41,7 +41,7 @@
         <a href="#prossimo-evento">Eventi</a>
         <a class="nav-cta" href="index.html#contatti">Contatti</a>
       </nav>
-      <button class="lang-toggle" id="langToggle" onclick="(function(){var l=sessionStorage.getItem('boyle_lang')||'it';var nl=l==='it'?'en':'it';sessionStorage.setItem('boyle_lang',nl);location.reload();})()" aria-label="Switch language">
+      <button class="lang-toggle" id="langToggle" type="button" aria-label="Cambia lingua / Switch language">
         <span id="langCurrent">IT</span><span class="lang-sep"> · </span><span id="langOther">EN</span>
       </button>
       <button class="nav-mobile-btn" id="navMobileBtn" aria-label="Apri menu" aria-expanded="false">
@@ -383,8 +383,7 @@
     <div class="container">
       <div class="section-heading reveal" style="margin-bottom:32px">
         <p class="section-kicker">
-          <span class="rete-event-dot"></span data-i18n="r_ev_kicker">
-          Prossimo evento
+          <span class="rete-event-dot"></span><span data-i18n="r_ev_kicker">Prossimi eventi</span>
         </p>
       </div>
 
@@ -394,7 +393,7 @@
           <img src="assets/corsi/thedayafter.png"
                alt="Locandina The Day After"
                loading="lazy"
-               onerror="this.style.display='none'" / data-i18n="r_ev_title">
+               onerror="this.style.display='none'" />
         </div>
         <div class="next-event-info-col">
           <p class="section-kicker" style="margin-bottom:8px" data-i18n="r_ev_partner">Partner · ITCC</p>
@@ -405,6 +404,30 @@
             <span>Corso partner</span>
           </div>
           <a class="btn btn-ghost" href="assets/corsi/the_day_after_brochure.pdf" target="_blank" rel="noopener" style="margin-top:20px;display:inline-flex" data-i18n="r_ev_cta">Scarica il programma</a>
+        </div>
+      </div>
+
+
+      <!-- Secondo evento: Corso Psicologia Subacquea -->
+      <div class="next-event-grid reveal" style="margin-top:40px;">
+        <div class="next-event-poster">
+          <img src="assets/corsi/corso-psicologia-subacquea.jpg"
+               alt="Corso di Psicologia Subacquea"
+               loading="lazy"
+               onerror="this.style.display='none'" />
+        </div>
+        <div class="next-event-info-col">
+          <p class="section-kicker" style="margin-bottom:8px">Membro Rete · Lidia Porri</p>
+          <h2 class="next-event-title">Corso di Psicologia Subacquea</h2>
+          <p class="next-event-desc">Corso Teorico-Pratico dedicato alla dimensione psicologica dell'immersione. Gestione di stress, ansia, panico e PTSD in ambiente subacqueo e iperbarico. Rivolto a psicologi, medici, istruttori e subacquei.</p>
+          <div class="event-meta">
+            <span>30–31 Maggio 2026</span>
+            <span>Isola d'Elba · In presenza</span>
+          </div>
+          <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:20px;">
+            <a class="btn btn-ghost" href="assets/corsi/programma-corso-psicologia.pdf" target="_blank" rel="noopener" style="display:inline-flex">Scarica il programma</a>
+            <a class="btn btn-ghost" href="https://www.psicologiasubacquea.it" target="_blank" rel="noopener" style="display:inline-flex">psicologiasubacquea.it</a>
+          </div>
         </div>
       </div>
 
@@ -1604,14 +1627,14 @@
         // Join cards
         'rj_rete_badge':'Rete di Boyle',
         'rj_rete_title':'Sei un professionista degli ambienti estremi?',
-        'rj_rete_p':'La Rete di Boyle è riservata a medici, ricercatori, ingegneri e operatori militari con un curriculum validato in medicina subacquea, iperbarica, aerospaziale, safety, medicina militare o fisiologia degli ambienti estremi. L'accesso è selettivo e valutato caso per caso.',
+        'rj_rete_p':"La Rete di Boyle è riservata a medici, ricercatori, ingegneri e operatori militari con un curriculum validato in medicina subacquea, iperbarica, aerospaziale, safety, medicina militare o fisiologia degli ambienti estremi. L'accesso è selettivo e valutato caso per caso.",
         'rj_rete_b1':'✓ Card pubblica nella griglia','rj_rete_b2':'✓ Contatti diretti dei membri',
         'rj_rete_b3':'✓ Collaborazioni scientifiche','rj_rete_b4':'✓ Prima fila su congressi ed editoriali',
         'rj_rete_b5':'✓ Newsletter riservata','rj_rete_b6':'✓ Pubblica corsi ed eventi',
         'rj_rete_cta':'Candidati alla Rete',
         'rj_amici_badge':'Amici di Boyle',
         'rj_amici_title':'Entra nella community e aiutaci a crescere con le tue idee.',
-        'rj_amici_p':'Sei uno studente, un appassionato, un operatore o semplicemente qualcuno che condivide la nostra visione? Gli Amici di Boyle sono la porta d'ingresso alla community. Nessun curriculum richiesto, solo curiosità e voglia di contribuire.',
+        'rj_amici_p':'Sei uno studente, un appassionato, un operatore o semplicemente qualcuno che condivide la nostra visione? Gli Amici di Boyle sono la porta d'ingresso alla community. Nessun curriculum richiesto, solo curiosità e voglia di contribuire.",
         'rj_amici_b1':'✓ Codice personale di accesso','rj_amici_b2':'✓ Contatti diretti dei membri',
         'rj_amici_b3':'✓ Profili estesi della Rete','rj_amici_b4':'✓ Pubblica eventi di ambienti estremi',
         'rj_amici_b5':'✓ Newsletter della community','rj_amici_b6':'✓ Scrivi a info@amicidiboyle.it',
@@ -1706,7 +1729,7 @@
 
     // Wire up mobile toggle
     function attachMobileToggle() {
-      var mob = document.
+      var mob = document.getElementById('langToggleMobileRete');
       if (!mob) return;
       mob.addEventListener('click', function() {
         var cur = sessionStorage.getItem('boyle_lang') || 'it';
