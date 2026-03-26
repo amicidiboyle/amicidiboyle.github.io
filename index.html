@@ -1178,18 +1178,8 @@
       }
     });
 
-    /* Bottone lingua mobile: gestito dal pulsante desktop */
-        var cur; try { cur = sessionStorage.getItem('boyle_lang') || 'it'; } catch(ex) { cur = 'it'; }
-        var nxt = cur === 'it' ? 'en' : 'it';
-        try { sessionStorage.setItem('boyle_lang', nxt); } catch(ex) {}
-        // usa la funzione globale se disponibile, altrimenti reload
-        if (window.boyleApplyLang) {
-          window.boyleApplyLang(nxt);
-        } else {
-          location.reload();
-        }
-      });
-    }
+    /* Bottone lingua mobile: non presente nel quick nav attuale.
+       Nessuna azione aggiuntiva richiesta qui. */
   })();
   </script>
 
