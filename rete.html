@@ -40,7 +40,7 @@
         <a href="podcast.html">Podcast</a>
         <a class="nav-cta" href="index.html#contatti">Contatti</a>
       </nav>
-      <button class="lang-toggle" id="langToggle" type="button" aria-label="Switch language">
+      <button class="lang-toggle" id="langToggle"  aria-label="Switch language">
         <span id="langCurrent">IT</span><span class="lang-sep"> · </span><span id="langOther">EN</span>
       </button>
       <button class="nav-mobile-btn" id="navMobileBtn" aria-label="Apri menu" aria-expanded="false">
@@ -1691,17 +1691,15 @@
       var btn = document.getElementById('langToggle');
       if (!btn) return;
       btn.addEventListener('click', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
+        e.preventDefault(); e.stopPropagation();
         var cur = sessionStorage.getItem('boyle_lang') || 'it';
-        var nxt = cur === 'it' ? 'en' : 'it';
-        sessionStorage.setItem('boyle_lang', nxt);
-        location.reload();
+        applyLang(cur === 'it' ? 'en' : 'it');
       });
     }
 
-    // Mobile language toggle not used at the moment
-    function attachMobileToggle() { return; }
+    // Wire up mobile toggle
+    );
+    }
 
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', function() {
