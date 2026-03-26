@@ -40,7 +40,7 @@
         <a href="podcast.html">Podcast</a>
         <a class="nav-cta" href="index.html#contatti">Contatti</a>
       </nav>
-      <button class="lang-toggle" id="langToggle" type="button" aria-label="Cambia lingua / Switch language">
+      <button class="lang-toggle" id="langToggle" onclick="(function(){var l=sessionStorage.getItem('boyle_lang')||'it';var nl=l==='it'?'en':'it';sessionStorage.setItem('boyle_lang',nl);location.reload();})()" aria-label="Switch language">
         <span id="langCurrent">IT</span><span class="lang-sep"> · </span><span id="langOther">EN</span>
       </button>
       <button class="nav-mobile-btn" id="navMobileBtn" aria-label="Apri menu" aria-expanded="false">
@@ -116,9 +116,12 @@
               <span data-i18n="r_hero_cta1">Candidati alla rete</span>
             </span>
           </button>
+          <button class="btn-amici" id="open-amici-modal-hero" type="button">
+            <span data-i18n="rj_amici_cta">Diventa un Amico di Boyle</span>
+          </button>
           <a class="btn-ghost" href="#members">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="8" cy="5" r="3"/><path d="M2 14c0-3.3 2.7-6 6-6s6 2.7 6 6"/></svg>
-            <span data-i18n="r_hero_cta2">Esplora i profili</span>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="8" cy="5" r="3"/><path d="M2 14c0-3.3 2.7-6 6-6s6 2.7 6 6"/></svg data-i18n="r_hero_cta2">
+            Esplora i profili
           </a>
           <div class="hero-access-bar" id="accessBar">
             <input class="hero-access-input" id="barCodeInput"
@@ -129,7 +132,7 @@
           </div>
         </div>
         <div class="hero__stats">
-          <div class="hero__stat"><span class="hero__stat-n" id="memberCount">17</span><span class="hero__stat-l" data-i18n="r_stat_membri">Membri attivi</span></div>
+          <div class="hero__stat"><span class="hero__stat-n" id="memberCount">18</span><span class="hero__stat-l" data-i18n="r_stat_membri">Membri attivi</span></div>
           <div class="hero__stat"><span class="hero__stat-n">8+</span><span class="hero__stat-l" data-i18n="r_stat_spec">Specialità</span></div>
           <div class="hero__stat"><span class="hero__stat-n">6</span><span class="hero__stat-l" data-i18n="r_stat_naz">Nazioni</span></div>
           <div class="hero__stat hero__stat--growing"><span class="hero__stat-n">↑</span><span class="hero__stat-l" data-i18n="r_stat_grow">In crescita</span></div>
@@ -169,7 +172,7 @@
             </span>
           </button>
           <button class="btn-ghost" id="publishWallJoin" style="min-height:44px;font-size:.88rem;margin-top:8px">Candidati alla rete →</button>
-          <p class="email-wall__note">Problemi? Scrivi a <a href="/cdn-cgi/l/email-protection#8de4e3ebe2cdece0e4eee4e9e4efe2f4e1e8a3e4f9"><span class="__cf_email__" data-cfemail="375e59515877565a5e545e535e55584e5b52195e43">[email&#160;protected]</span></a></p>
+          <p class="email-wall__note">Problemi? Scrivi a <a href="/cdn-cgi/l/email-protection#dcb5b2bab39cbdb1b5bfb5b8b5beb3a5b0b9f2b5a8"><span class="__cf_email__" data-cfemail="8ce5e2eae3ccede1e5efe5e8e5eee3f5e0e9a2e5f8">[email&#160;protected]</span></a></p>
         </div>
       </div>
     </div>
@@ -362,7 +365,7 @@
               <span data-i18n="rj_amici_b4">✓ Pubblica eventi di ambienti estremi</span>
               <span data-i18n="rj_amici_b5">✓ Newsletter della community</span>
               <span>✓ Accesso alla Biblioteca di Boyle <em style="opacity:.6;font-size:.85em">- in progress</em></span>
-              <span data-i18n="rj_amici_b6">✓ Scrivi a <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="cea7a0a8a18eafa3a7ada7aaa7aca1b7a2abe0a7ba">[email&#160;protected]</a></span>
+              <span data-i18n="rj_amici_b6">✓ Scrivi a <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="5b32353d341b3a363238323f32393422373e75322f">[email&#160;protected]</a></span>
             </div>
             <button class="btn-amici" id="open-amici-modal" type="button">
               <span data-i18n="rj_amici_cta">Diventa un Amico di Boyle</span>
@@ -378,7 +381,8 @@
     <div class="container">
       <div class="section-heading reveal" style="margin-bottom:32px">
         <p class="section-kicker">
-          <span class="rete-event-dot"></span><span data-i18n="r_ev_kicker">Prossimo evento</span>
+          <span class="rete-event-dot"></span data-i18n="r_ev_kicker">
+          Prossimo evento
         </p>
       </div>
 
@@ -388,7 +392,7 @@
           <img src="assets/corsi/thedayafter.png"
                alt="Locandina The Day After"
                loading="lazy"
-               onerror="this.style.display='none'" />
+               onerror="this.style.display='none'" / data-i18n="r_ev_title">
         </div>
         <div class="next-event-info-col">
           <p class="section-kicker" style="margin-bottom:8px" data-i18n="r_ev_partner">Partner · ITCC</p>
@@ -523,7 +527,7 @@
         </div>
         <div class="amici-benefit-item">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-          <span>Scrivi direttamente a <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="6c05020a032c0d01050f0508050e03150009420518">[email&#160;protected]</a></span>
+          <span>Scrivi direttamente a <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="f39a9d959cb3929e9a909a979a919c8a9f96dd9a87">[email&#160;protected]</a></span>
         </div>
         <div class="amici-benefit-item amici-benefit-item--note">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
@@ -900,6 +904,7 @@
     'BOYLE-ENAR-CAPPA':      'giovanni-cappa',
     'BOYLE-YHT9-CAMPONOVO':  'claudio-camponovo',
     'BOYLE-P4V2-MALVESTITI': 'davide-duilio-malvestiti',
+    'BOYLE-X7N3-MAK':        'ho-man-mak',
   };
   const VALID_CODES = {
     'simona-damiano':         'BOYLE-K7X2-DAMIANO',
@@ -1505,6 +1510,7 @@
     }
 
     openBtn?.addEventListener('click', openAmici);
+    document.getElementById('open-amici-modal-hero')?.addEventListener('click', openAmici);
     closeBtn?.addEventListener('click', closeAmici);
     modal?.addEventListener('click', e => { if (e.target === modal) closeAmici(); });
     document.addEventListener('keydown', e => { if (e.key === 'Escape') closeAmici(); });
@@ -1596,14 +1602,14 @@
         // Join cards
         'rj_rete_badge':'Rete di Boyle',
         'rj_rete_title':'Sei un professionista degli ambienti estremi?',
-        'rj_rete_p':"La Rete di Boyle è riservata a medici, ricercatori, ingegneri e operatori militari con un curriculum validato in medicina subacquea, iperbarica, aerospaziale, safety, medicina militare o fisiologia degli ambienti estremi. L'accesso è selettivo e valutato caso per caso.",
+        'rj_rete_p':'La Rete di Boyle è riservata a medici, ricercatori, ingegneri e operatori militari con un curriculum validato in medicina subacquea, iperbarica, aerospaziale, safety, medicina militare o fisiologia degli ambienti estremi. L'accesso è selettivo e valutato caso per caso.',
         'rj_rete_b1':'✓ Card pubblica nella griglia','rj_rete_b2':'✓ Contatti diretti dei membri',
         'rj_rete_b3':'✓ Collaborazioni scientifiche','rj_rete_b4':'✓ Prima fila su congressi ed editoriali',
         'rj_rete_b5':'✓ Newsletter riservata','rj_rete_b6':'✓ Pubblica corsi ed eventi',
         'rj_rete_cta':'Candidati alla Rete',
         'rj_amici_badge':'Amici di Boyle',
         'rj_amici_title':'Entra nella community e aiutaci a crescere con le tue idee.',
-        'rj_amici_p':"Sei uno studente, un appassionato, un operatore o semplicemente qualcuno che condivide la nostra visione? Gli Amici di Boyle sono la porta d'ingresso alla community. Nessun curriculum richiesto, solo curiosità e voglia di contribuire.",
+        'rj_amici_p':'Sei uno studente, un appassionato, un operatore o semplicemente qualcuno che condivide la nostra visione? Gli Amici di Boyle sono la porta d'ingresso alla community. Nessun curriculum richiesto, solo curiosità e voglia di contribuire.',
         'rj_amici_b1':'✓ Codice personale di accesso','rj_amici_b2':'✓ Contatti diretti dei membri',
         'rj_amici_b3':'✓ Profili estesi della Rete','rj_amici_b4':'✓ Pubblica eventi di ambienti estremi',
         'rj_amici_b5':'✓ Newsletter della community','rj_amici_b6':'✓ Scrivi a info@amicidiboyle.it',
@@ -1698,7 +1704,7 @@
 
     // Wire up mobile toggle
     function attachMobileToggle() {
-      var mob = document.getElementById('langToggleMobileRete');
+      var mob = document.
       if (!mob) return;
       mob.addEventListener('click', function() {
         var cur = sessionStorage.getItem('boyle_lang') || 'it';
