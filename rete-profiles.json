@@ -269,9 +269,9 @@
     "research": false,
     "updated": ""
   },
-  "ho-man-mak": {
-    "bio": "Love to connect with international hyperbaric professionals. Would like to set up Hong Kong standard of hyperbaric training and operation based on international guidelines and standards.",
-    "linkedin": "https://www.linkedin.com/in/ho-man-mak-92814a141",
+  "lidia-porri": {
+    "bio": "Psicologa psicoterapeuta esperta in Psicologia Subacquea e Divemaster PADI. Docente di un Corso di formazione Teorico-Pratico di Psicologia Subacquea.",
+    "linkedin": "https://www.linkedin.com/in/lidia-porri-5846b9204",
     "researchgate": "",
     "scholar": "",
     "orcid": "",
@@ -279,9 +279,9 @@
     "instagram": "",
     "website": "",
     "courses": "",
-    "speaker": false,
+    "speaker": true,
     "podcast": false,
-    "research": true,
+    "research": false,
     "updated": ""
   }
 }
