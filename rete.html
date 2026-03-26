@@ -122,14 +122,14 @@
             <span data-i18n="rj_amici_cta">Diventa un Amico di Boyle</span>
           </button>
           <a class="btn-eventi" href="#prossimo-evento">
-            <span>Gli eventi della Rete</span>
+            <span data-i18n="r_events_link">Gli eventi della Rete</span>
           </a>
 
           <div class="hero-access-bar" id="accessBar" style="justify-content:center;margin:0 auto;">
             <input class="hero-access-input" id="barCodeInput"
-                   type="text" placeholder="🔑 Codice membro"
+                   type="text" data-i18n-placeholder="r_code_ph" placeholder="🔑 Codice membro"
                    autocomplete="off" spellcheck="false" maxlength="30" />
-            <button class="hero-access-btn" id="barCodeBtn">Accedi</button>
+            <button class="hero-access-btn" id="barCodeBtn" data-i18n="r_access_btn">Accedi</button>
             <span class="hero-access-status" id="barStatus"></span>
           </div>
         </div>
@@ -147,7 +147,7 @@
       <div class="container">
         <div class="members-header">
           <h2 class="members-title" data-i18n="r_members_title">I Membri della Rete</h2>
-          <p class="members-sub">Professionisti selezionati per competenza, curiosità e impatto operativo.</p>
+          <p class="members-sub" data-i18n="r_members_sub">Professionisti selezionati per competenza, curiosità e impatto operativo.</p>
         </div>
 
         <!-- Le card vengono iniettate da JS -->
@@ -1639,6 +1639,10 @@
         'rj_amici_b3':'✓ Profili estesi della Rete','rj_amici_b4':'✓ Pubblica eventi di ambienti estremi',
         'rj_amici_b5':'✓ Newsletter della community','rj_amici_b6':'✓ Scrivi a info@amicidiboyle.it',
         'rj_amici_cta':'Diventa un Amico di Boyle',
+        'r_events_link':'Gli eventi della Rete',
+        'r_code_ph':'🔑 Codice membro',
+        'r_access_btn':'Accedi',
+        'r_members_sub':'Professionisti selezionati per competenza, curiosità e impatto operativo.',
         // Event
         'r_ev_kicker':'Prossimi eventi',
         'r_ev_badge':'6 Maggio 2026 · Corso partner',
@@ -1686,6 +1690,10 @@
         'rj_amici_b3':'✓ Extended Network profiles','rj_amici_b4':'✓ Publish extreme environment events',
         'rj_amici_b5':'✓ Community newsletter','rj_amici_b6':'✓ Write to info@amicidiboyle.it',
         'rj_amici_cta':'Become a Friend of Boyle',
+        'r_events_link':'Network events',
+        'r_code_ph':'🔑 Member code',
+        'r_access_btn':'Access',
+        'r_members_sub':'Professionals selected for competence, curiosity and operational impact.',
         'r_ev_kicker':'Upcoming events',
         'r_ev_badge':'6 May 2026 · Partner course',
         'r_ev_title':'The Day After',
@@ -1705,6 +1713,10 @@
         var k = el.getAttribute('data-i18n');
         if (dict[k] !== undefined) el.textContent = dict[k];
       });
+      document.querySelectorAll('[data-i18n-placeholder]').forEach(function(el) {
+        var k = el.getAttribute('data-i18n-placeholder');
+        if (dict[k] !== undefined) el.placeholder = dict[k];
+      });
       // Update toggle button text
       var cur = document.getElementById('langCurrent');
       var oth = document.getElementById('langOther');
@@ -1723,7 +1735,8 @@
       btn.addEventListener('click', function(e) {
         e.preventDefault(); e.stopPropagation();
         var cur = sessionStorage.getItem('boyle_lang') || 'it';
-        applyLang(cur === 'it' ? 'en' : 'it');
+        sessionStorage.setItem('boyle_lang', cur === 'it' ? 'en' : 'it');
+        location.reload();
       });
     }
 
@@ -1733,7 +1746,8 @@
       if (!mob) return;
       mob.addEventListener('click', function() {
         var cur = sessionStorage.getItem('boyle_lang') || 'it';
-        applyLang(cur === 'it' ? 'en' : 'it');
+        sessionStorage.setItem('boyle_lang', cur === 'it' ? 'en' : 'it');
+        location.reload();
       });
     }
 
