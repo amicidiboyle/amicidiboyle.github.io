@@ -329,14 +329,6 @@
   <script>
   (function(){
     var lang = sessionStorage.getItem('boyle_lang') || 'it';
-    if (lang === 'it') {
-      // update toggle buttons only
-      var cur = document.getElementById('langCurrent');
-      var oth = document.getElementById('langOther');
-      if (cur) cur.textContent = 'IT';
-      if (oth) oth.textContent = 'EN';
-      return;
-    }
     var T = {
       'pod_meta':'Pressure · Immersion · Hyperbaric · Space',
       'pod_lead':'Original content only on hyperbaric medicine, hypobarism, astronautics and extreme physiology. A podcast for curious people, written by curious people.',
@@ -361,8 +353,15 @@
       'pod_cta_p':'Serious ideas, interesting cases, editorial projects. If it has value, we handle it well.',
       'pod_cta_btn':'Contact us',
     };
-
-    document.addEventListener('DOMContentLoaded', function() {
+    function applyPodcastLang(l) {
+      var cur = document.getElementById('langCurrent');
+      var oth = document.getElementById('langOther');
+      if (cur) cur.textContent = l === 'en' ? 'EN' : 'IT';
+      if (oth) oth.textContent = l === 'en' ? 'IT' : 'EN';
+      if (l !== 'en') {
+        document.documentElement.lang = 'it';
+        return;
+      }
       document.querySelectorAll('[data-i18n]').forEach(function(el) {
         var key = el.getAttribute('data-i18n');
         if (T[key]) el.textContent = T[key];
@@ -371,36 +370,38 @@
         var key = el.getAttribute('data-i18n-placeholder');
         if (T[key]) el.placeholder = T[key];
       });
-      // Nav links
       var navMap = {'Home':'Home','Visione':'Vision','Ricerca':'Research','Rete':'Network','Podcast':'Podcast','Contatti':'Contact'};
       document.querySelectorAll('nav a, .nav--desktop a, .nav-mobile-panel a').forEach(function(a) {
         var t = a.textContent.trim();
         if (navMap[t]) a.textContent = navMap[t];
       });
-      // Page title
       document.title = 'Sotto Pressione · Podcast · Gli Amici di Boyle';
       document.documentElement.lang = 'en';
-      // Toggle button
-      var cur = document.getElementById('langCurrent');
-      var oth = document.getElementById('langOther');
-      if (cur) cur.textContent = 'EN';
-      if (oth) oth.textContent = 'IT';
-    });
-    // Wire desktop toggle
+    }
+
     function attachToggle() {
       var btn = document.getElementById('langToggle');
       if (!btn) return;
       btn.addEventListener('click', function(e) {
-        e.preventDefault(); e.stopPropagation();
+        e.preventDefault();
+        e.stopPropagation();
         var cur; try { cur = sessionStorage.getItem('boyle_lang') || 'it'; } catch(ex) { cur = 'it'; }
         var nxt = cur === 'it' ? 'en' : 'it';
         try { sessionStorage.setItem('boyle_lang', nxt); } catch(ex) {}
-        applyLang(nxt);
+        location.reload();
       });
     }
+
+    function initPodcastLang() {
+      attachToggle();
+      applyPodcastLang(lang);
+    }
+
     if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', attachToggle);
-    } else { attachToggle(); }
+      document.addEventListener('DOMContentLoaded', initPodcastLang);
+    } else {
+      initPodcastLang();
+    }
   })();
   </script>
 </body>
