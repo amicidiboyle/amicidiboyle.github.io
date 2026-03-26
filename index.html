@@ -52,6 +52,7 @@
         <a href="rete.html">Rete</a>
         <a href="podcast.html">Podcast</a>
         <a href="#partner">Partner</a>
+        <a href="rete.html#prossimo-evento">Eventi</a>
         <a href="#contatti">Contatti</a>
       </nav>
       <button class="lang-toggle" id="langToggle" type="button" aria-label="Cambia lingua / Switch language" title="Switch to English">
@@ -93,20 +94,20 @@
           </div>
           <div class="hero-stats">
             <div class="hero-stat">
-              <strong class="stat-num">5</strong>
+              <strong>5</strong>
               <span data-i18n="stat_fondatori">Fondatori</span>
             </div>
             <div class="hero-stat">
-              <strong class="stat-num">27+</strong>
+              <strong>27+</strong>
               <span data-i18n="stat_episodi">Episodi podcast</span>
             </div>
             <div class="hero-stat">
-              <strong class="stat-num">2023</strong>
+              <strong>2023</strong>
               <span data-i18n="stat_anno">Anno di fondazione</span>
             </div>
             <div class="hero-stat-divider" aria-hidden="true"></div>
             <div class="hero-stat">
-              <strong class="stat-num">10.000+</strong>
+              <strong>10.000+</strong>
               <span data-i18n="stat_views">Visualizzazioni</span>
             </div>
             <div class="hero-stat hero-stat--infinity">
@@ -285,8 +286,8 @@
         <div class="reveal reveal-left">
           <p class="section-kicker" data-i18n="rete_kicker">La Rete di Boyle</p>
           <h2 id="rete-h2" data-i18n="rete_h2">Connettiamo Menti Brillanti</h2>
-          <p class="section-lead" data-i18n-html="rete_lead">La <strong>Rete di Boyle</strong> unisce medici, ricercatori, ingegneri e operatori militari che lavorano dove l'aria finisce, la pressione sale e i margini di errore scompaiono. Professionisti selezionati, non collezionati.</p>
-             <p data-i18n-html="rete_amici_p">Gli <strong>Amici di Boyle</strong> sono il futuro della medicina degli ambienti estremi: una comunità di studenti, operatori e appassionati, orientati all'eccellenza, pronti a imparare, contribuire e crescere insieme.</p>
+          <p class="section-lead" data-i18n="rete_lead">La <strong>Rete di Boyle</strong> unisce medici, ricercatori, ingegneri e operatori militari che lavorano dove l'aria finisce, la pressione sale e i margini di errore scompaiono. Professionisti selezionati, non collezionati.</p>
+             <p data-i18n="rete_amici_p">Gli <strong>Amici di Boyle</strong> sono il futuro della medicina degli ambienti estremi: una comunità di studenti, operatori e appassionati, orientati all'eccellenza, pronti a imparare, contribuire e crescere insieme.</p>
           <div class="cta-row">
             <a class="btn-split-community" href="rete.html">
               <span class="btn-split__rete">
@@ -1133,6 +1134,7 @@
       <a href="#ricerca">Ricerca</a>
       <a href="#formazione">Formazione</a>
       <a href="#partner">Partner</a>
+      <a href="rete.html#prossimo-evento">Eventi</a>
       <a href="#contatti">Contatti</a>
     </div>
   </div>
@@ -1176,7 +1178,23 @@
       }
     });
 
-    /* Bottone lingua mobile: gestito dal pulsante desktop */
+    /* Bottone lingua nel menu mobile */
+    var langBtnMob = document.
+    if (langBtnMob) {
+      langBtnMob.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var cur; try { cur = sessionStorage.getItem('boyle_lang') || 'it'; } catch(ex) { cur = 'it'; }
+        var nxt = cur === 'it' ? 'en' : 'it';
+        try { sessionStorage.setItem('boyle_lang', nxt); } catch(ex) {}
+        // usa la funzione globale se disponibile, altrimenti reload
+        if (window.boyleApplyLang) {
+          window.boyleApplyLang(nxt);
+        } else {
+          location.reload();
+        }
+      });
+    }
   })();
   </script>
 
@@ -1297,8 +1315,8 @@
         // Rete home
         'rete_kicker':'La Rete di Boyle',
         'rete_h2':'Connettiamo Menti Brillanti',
-        'rete_lead':"La <strong>Rete di Boyle</strong> unisce medici, ricercatori, ingegneri e operatori militari che lavorano dove l’aria finisce, la pressione sale e i margini di errore scompaiono. Professionisti selezionati, non collezionati.",
-        'rete_amici_p':"Gli <strong>Amici di Boyle</strong> sono il futuro della medicina degli ambienti estremi: una comunità di studenti, operatori e appassionati, orientati all’eccellenza, pronti a imparare, contribuire e crescere insieme.",
+        'rete_lead':'La <strong>Rete di Boyle</strong> unisce medici, ricercatori, ingegneri e operatori militari che lavorano dove l’aria finisce, la pressione sale e i margini di errore scompaiono. Professionisti selezionati, non collezionati.',
+        'rete_amici_p':'Gli <strong>Amici di Boyle</strong> sono il futuro della medicina degli ambienti estremi: una comunità di studenti, operatori e appassionati, orientati all’eccellenza, pronti a imparare, contribuire e crescere insieme.',
         'split_rete':'Scopri la Rete','split_amici':'Amici di Boyle',
         'chip_esplora_t':'Esplora','chip_esplora_p':'Profili, competenze e connessioni tra clinica, ricerca e ambienti estremi.',
         'chip_partecipa_t':'Partecipa','chip_partecipa_p':'Eventi, idee, attività formative e contributi costruiti insieme alla rete.',
@@ -1551,15 +1569,13 @@
         // Partner
         'part_kicker':'Partners',
         'part_h2':'Collaborations and aligned organisations',
-        'part_sub':'Organisations sharing a focus on education, trauma and extreme environments.',
-        'part_simae_name':'SIMAE',
-        'part_simae_p':"SIMAE — Italy's first scientific society dedicated to research and training across extreme environments.",
-        'part_simae_cta':'Visit SIMAE',
+        'part_sub':'Organisations sharing a focus on education,
+        'part_simae_name':'SIMAE','part_simae_p':'SIMAE — the first Italian scientific society focused on research and training across all extreme environments.','part_simae_cta':'Visit SIMAE', trauma and extreme environments.',
         'part1_p':'A project dedicated to trauma care, with a practical approach, training and quality content.',
         'part1_cta':'Visit the site',
         'part2_h3':'Propose a collaboration',
         'part2_p':'Universities, scientific societies, courses, congresses, editorial initiatives and operational partners: a space open to qualified collaborations.',
-        'part2_cta':"Let's talk",
+        'part2_cta':'Let's talk',
         // Teaching cards
         'tc_download':'Download',
         'tc_lez_k':'Lecture',
@@ -1590,10 +1606,6 @@
       document.querySelectorAll('[data-i18n]').forEach(function(el) {
         var key = el.getAttribute('data-i18n');
         if (dict[key] !== undefined) el.textContent = dict[key];
-      });
-      document.querySelectorAll('[data-i18n-html]').forEach(function(el) {
-        var key = el.getAttribute('data-i18n-html');
-        if (dict[key] !== undefined) el.innerHTML = dict[key];
       });
 
       /* Apply data-i18n-html attributes — HTML content (for bold/tags) */
@@ -1677,44 +1689,6 @@
     } else {
       attachToggle();
       if (initLang === 'en') applyLang('en');
-    }
-  })();
-  </script>
-
-  <script>
-  (function(){
-    function animateCounter(el, target, duration, noFormat) {
-      var suffix = el.textContent.replace(/[0-9.,]/g, '');
-      var start = performance.now();
-      function step(now) {
-        var p = Math.min((now - start) / duration, 1);
-        var ease = 1 - Math.pow(1 - p, 3);
-        var val = Math.round(target * ease);
-        el.textContent = (!noFormat && val >= 1000) ? val.toLocaleString('it-IT') + suffix : val + suffix;
-        if (p < 1) requestAnimationFrame(step);
-      }
-      requestAnimationFrame(step);
-    }
-    function initHomeCounters() {
-      var stats = document.querySelectorAll('.stat-num');
-      var obs = new IntersectionObserver(function(entries) {
-        entries.forEach(function(e) {
-          if (!e.isIntersecting) return;
-          var el = e.target;
-          var raw = el.textContent.replace(/[^0-9]/g, '');
-          var num = parseInt(raw);
-          // Non formattare anni (es. 2023) con separatore migliaia
-          var isYear = num >= 1900 && num <= 2100 && el.textContent.indexOf('.') < 0 && el.textContent.indexOf('+') < 0;
-          if (raw) animateCounter(el, num, 1400, isYear);
-          obs.unobserve(el);
-        });
-      }, { threshold: 0.8 });
-      stats.forEach(function(el) { obs.observe(el); });
-    }
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', initHomeCounters);
-    } else {
-      initHomeCounters();
     }
   })();
   </script>
