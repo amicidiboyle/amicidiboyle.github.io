@@ -28,8 +28,9 @@
         <a href="index.html#ricerca">Ricerca</a>
         <a href="rete.html">Rete</a>
         <a class="nav-active" href="podcast.html" aria-current="page">Podcast</a>
+        <a href="rete.html#prossimo-evento">Eventi</a>
         <a class="nav-cta" href="index.html#contatti">Contatti</a>
-      <button class="lang-toggle" id="langToggle" type="button" aria-label="Cambia lingua / Switch language">
+      <button class="lang-toggle" id="langToggle" onclick="(function(){var l=sessionStorage.getItem('boyle_lang')||'it';var nl=l==='it'?'en':'it';sessionStorage.setItem('boyle_lang',nl);applyLang(next);})()" aria-label="Switch language">
         <span id="langCurrent">IT</span><span class="lang-sep"> · </span><span id="langOther">EN</span>
       </button>
       </nav>
@@ -42,6 +43,7 @@
         <a href="index.html#ricerca">Ricerca</a>
         <a href="rete.html">Rete</a>
         <a href="podcast.html">Podcast</a>
+        <a href="rete.html#prossimo-evento">Eventi</a>
         <a href="index.html#contatti">Contatti</a>
         <button id="langToggleMobilePod" type="button" style="margin-top:8px;width:100%;text-align:center;border-radius:8px;background:rgba(123,228,255,.08);border:1px solid rgba(123,228,255,.18);color:#a8eeff;font-size:.78rem;font-weight:700;letter-spacing:.1em;padding:9px;cursor:pointer;" aria-label="Cambia lingua">IT / EN</button>
       </div>
@@ -386,24 +388,6 @@
       if (cur) cur.textContent = 'EN';
       if (oth) oth.textContent = 'IT';
     });
-    // Wire desktop toggle
-    function attachToggle() {
-      var btn = document.getElementById('langToggle');
-      if (!btn) return;
-      btn.addEventListener('click', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        var cur;
-        try { cur = sessionStorage.getItem('boyle_lang') || 'it'; } catch(ex) { cur = 'it'; }
-        var nxt = cur === 'it' ? 'en' : 'it';
-        applyLang(nxt);
-      });
-    }
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', attachToggle);
-    } else {
-      attachToggle();
-    }
   })();
   </script>
 </body>
