@@ -372,7 +372,6 @@ a { color: inherit; text-decoration: none; }
 /* Header/hero/sezioni sopra il canvas */
 /* header z-index handled above */
 
-/* ──
 
 /* Card: molto più trasparente, effetto vetro profondo */
 .member-card {
@@ -819,8 +818,6 @@ a { color: inherit; text-decoration: none; }
 .hero__stat--growing .hero__stat-n {
   color: #4dffd6 !important;
 }
-  50%      { transform: scale(1.15); text-shadow: 0 0 16px #4dffd6; }
-}
 
 /* ── EMAIL LOCK BUTTON ── */
 .member-email-btn {
@@ -1104,7 +1101,7 @@ a { color: inherit; text-decoration: none; }
 }
 
   50%    { opacity:.35; transform:scale(1.6); }
-}
+
 
 /* Card poster verticale */
 .rete-event-poster-card {
