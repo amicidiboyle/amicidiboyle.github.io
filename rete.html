@@ -38,7 +38,7 @@
         <a href="index.html#ricerca" data-i18n="r_nav_ric">Ricerca</a>
         <a class="nav-active" href="rete.html" aria-current="page">Rete</a>
         <a href="podcast.html" data-i18n="r_nav_pod">Podcast</a>
-        <a href="#prossimo-evento">Eventi</a>
+        <a href="#prossimo-evento" data-i18n="r_events_link">Eventi</a>
         <a class="nav-cta" href="index.html#contatti" data-i18n="r_nav_cont">Contatti</a>
       </nav>
       <button class="lang-toggle" id="langToggle" type="button" aria-label="Cambia lingua / Switch language">
@@ -53,7 +53,7 @@
         <a href="index.html#ricerca" data-i18n="r_nav_ric">Ricerca</a>
         <a href="rete.html" data-i18n="r_nav_rete">Rete</a>
         <a href="podcast.html" data-i18n="r_nav_pod">Podcast</a>
-        <a href="#prossimo-evento">Eventi</a>
+        <a href="#prossimo-evento" data-i18n="r_events_link">Eventi</a>
         <a href="index.html#contatti" data-i18n="r_nav_cont">Contatti</a>
       </div>
     </div>
@@ -148,6 +148,7 @@
         <div class="members-header">
           <h2 class="members-title" data-i18n="r_members_title">I Membri della Rete</h2>
           <p class="members-sub" data-i18n="r_members_sub">Professionisti selezionati per competenza, curiosità e impatto operativo.</p>
+        <div class="profile-legend"><span class="pleg pleg--base"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>&nbsp;Base</span><span class="pleg pleg--partial"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>&nbsp;In aggiornamento</span><span class="pleg pleg--complete"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>&nbsp;Profilo attivo</span></div>
         </div>
 
         <!-- Le card vengono iniettate da JS -->
@@ -834,8 +835,7 @@
       ? `<button class="icon-btn member-email-btn" data-email="${m.email}" aria-label="Contatta ${m.name}" title="Visibile ai membri della Rete">${LOCK_ICON}</button>`
       : '';
     const key = m.name.toLowerCase().replace(/\s+/g, '-');
-    const profileColorClass = isComplete ? ' icon-btn--profile-complete' : hasContent ? ' icon-btn--profile-partial' : '';
-    const profileBtn = `<button class="icon-btn member-profile-btn icon-btn--locked${profileColorClass}" data-key="${key}" data-name="${m.name}" data-role="${m.role||''}" data-tip="Pagina personale">${PROFILE_ICON}</button>`;
+    const profileBtn = `<button class="icon-btn member-profile-btn icon-btn--locked" data-key="${key}" data-name="${m.name}" data-role="${m.role||''}" data-tip="Pagina personale">${PROFILE_ICON}</button>`;
     const editBtn = `<button class="icon-btn icon-btn--pencil member-edit-btn icon-btn--locked" data-key="${key}" data-name="${m.name}" data-role="${m.role||''}" data-tip="Modifica profilo">${PENCIL_ICON}</button>`;
 
     return `
@@ -871,6 +871,11 @@
       // Inizializza filtro
       initMembersFilter(members);
       initReveal();
+      // Colora icone profilo dopo caricamento profili
+      loadProfiles().then(function(profiles) {
+        window._profiles = profiles;
+        colorProfileIcons(profiles);
+      }).catch(function(){});
       
     } catch(e) {
       // Fallback: se rete-members.json non è ancora sul server, usa dati inline
@@ -1898,6 +1903,10 @@
         var k = el.getAttribute('data-i18n');
         if (dict[k] !== undefined) el.textContent = dict[k];
       });
+      document.querySelectorAll('[data-i18n-html]').forEach(function(el) {
+        var k = el.getAttribute('data-i18n-html');
+        if (dict[k] !== undefined) el.innerHTML = dict[k];
+      });
       document.querySelectorAll('[data-i18n-placeholder]').forEach(function(el) {
         var k = el.getAttribute('data-i18n-placeholder');
         if (dict[k] !== undefined) el.placeholder = dict[k];
@@ -1917,17 +1926,13 @@
     function attachToggle() {
       var btn = document.getElementById('langToggle');
       if (!btn) return;
-      // Rimuovi listener precedenti clonando il nodo
-      var fresh = btn.cloneNode(true);
-      btn.parentNode.replaceChild(fresh, btn);
-      fresh.addEventListener('click', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
+      btn.addEventListener('click', function(e) {
+        e.preventDefault(); e.stopPropagation();
         var current = sessionStorage.getItem('boyle_lang') || 'it';
         var next = current === 'it' ? 'en' : 'it';
         sessionStorage.setItem('boyle_lang', next);
         applyLang(next);
-      }, true);
+      });
     }
 
     // Wire up mobile toggle
@@ -2041,6 +2046,30 @@
       });
     });
   })();
+  </script>
+
+
+  <!-- Colorazione icone profilo - script autonomo -->
+  <script>
+  function colorProfileIcons(profiles) {
+    if (!profiles) return;
+    document.querySelectorAll('.member-card').forEach(function(card) {
+      var key = card.getAttribute('data-key');
+      if (!key) return;
+      var p = profiles[key] || {};
+      var hasAny = (p.bio && p.bio.trim().length > 5) ||
+        p.linkedin || p.researchgate || p.scholar || p.orcid || p.website;
+      var isComplete = (p.bio && p.bio.trim().length > 10) &&
+        (p.linkedin || p.researchgate || p.scholar || p.orcid || p.website);
+      var btn = card.querySelector('.member-profile-btn');
+      if (!btn) return;
+      if (isComplete) {
+        btn.classList.add('profile-icon-complete');
+      } else if (hasAny) {
+        btn.classList.add('profile-icon-partial');
+      }
+    });
+  }
   </script>
 
 </body>
