@@ -10,10 +10,10 @@
     "instagram": "",
     "website": "",
     "courses": "",
-    "speaker": true,
-    "podcast": true,
-    "research": true,
-    "updated": "2026-03-27"
+    "speaker": false,
+    "podcast": false,
+    "research": false,
+    "updated": ""
   },
   "andrea-murdock-alpini": {
     "name": "Andrea Murdock Alpini",
@@ -269,8 +269,22 @@
     "research": false,
     "updated": ""
   },
+  "ho-man-mak": {
+    "bio": "Love to connect with international hyperbaric professionals. Would like to set up Hong Kong standard of hyperbaric training and operation based on international guidelines and standards.",
+    "linkedin": "https://www.linkedin.com/in/ho-man-mak-92814a141",
+    "researchgate": "",
+    "scholar": "",
+    "orcid": "",
+    "twitter": "",
+    "instagram": "",
+    "website": "",
+    "courses": "",
+    "speaker": false,
+    "podcast": false,
+    "research": true,
+    "updated": ""
+  },
   "lidia-porri": {
-    "name": "lidia-porri",
     "bio": "Psicologa psicoterapeuta esperta in Psicologia Subacquea e Divemaster PADI. Docente di un Corso di formazione Teorico-Pratico di Psicologia Subacquea.",
     "linkedin": "https://www.linkedin.com/in/lidia-porri-5846b9204",
     "researchgate": "",
@@ -278,11 +292,26 @@
     "orcid": "",
     "twitter": "",
     "instagram": "",
-    "website": "https:// www.psicologiasubacquea.it",
+    "website": "",
     "courses": "",
     "speaker": true,
-    "podcast": true,
+    "podcast": false,
+    "research": false,
+    "updated": ""
+  },
+  "adriana-almeida": {
+    "bio": "Physician with over 30 years of clinical experience. Background in aerospace medicine, analogue astronaut missions and medical education. Motivated to contribute to a global network of extreme medicine professionals.",
+    "linkedin": "https://www.linkedin.com/in/adriana-ávila-almeida-843780213/",
+    "researchgate": "",
+    "scholar": "",
+    "orcid": "",
+    "twitter": "",
+    "instagram": "",
+    "website": "",
+    "courses": "",
+    "speaker": true,
+    "podcast": false,
     "research": true,
-    "updated": "2026-03-27"
+    "updated": ""
   }
 }
