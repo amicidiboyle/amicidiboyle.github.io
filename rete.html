@@ -813,11 +813,19 @@
   function renderCard(m) {
     // Determina se profilo è attivo (bio + almeno 1 link nel profile)
     const prof = window._profiles ? window._profiles[m.name.toLowerCase().replace(/\s+/g,'-')] : null;
-    const isActive = prof && prof.bio && prof.bio.trim().length > 10 &&
+    // Profilo visibile se ha BIO oppure almeno 1 link
+    const hasContent = prof && (
+      (prof.bio && prof.bio.trim().length > 5) ||
+      prof.linkedin || prof.researchgate || prof.scholar ||
+      prof.orcid || prof.website || prof.courses
+    );
+    const isComplete = prof && prof.bio && prof.bio.trim().length > 10 &&
       (prof.linkedin || prof.researchgate || prof.scholar || prof.orcid || prof.website);
-    const activeBadge = isActive
-      ? `<span class="profile-active-badge" title="Profilo aggiornato">● Profilo attivo</span>`
-      : '';
+    const activeBadge = isComplete
+      ? `<span class="profile-active-badge profile-active-badge--full" title="Profilo completo">● Profilo attivo</span>`
+      : hasContent
+        ? `<span class="profile-active-badge profile-active-badge--partial" title="Profilo parziale">◐ Profilo in aggiornamento</span>`
+        : '';
     const li = m.linkedin && m.linkedin !== 'https://www.linkedin.com/'
       ? `<a class="icon-btn" href="${m.linkedin}" aria-label="LinkedIn di ${m.name}" target="_blank" rel="noopener">${LI_ICON}</a>`
       : '';
@@ -1529,8 +1537,8 @@
         bioEl.textContent = p.bio;
         if (bioWrap) bioWrap.style.display = '';
       } else {
-        bioEl.textContent = 'Il profilo non è ancora stato compilato.';
-        bioEl.style.opacity = '.45';
+        bioEl.textContent = 'Il profilo non è ancora stato compilato. Accedi con il tuo codice e clicca la matita per aggiornarlo.';
+        bioEl.style.opacity = '.4'; bioEl.style.fontStyle = 'italic';
       }
       // Links con pill style
       const linksEl = document.getElementById('pm-links');
@@ -1936,32 +1944,38 @@
       if (lang === 'en') applyLang('en');
     }
   })();
-
-  <script>
-  function initMembersFilter(allMembers) {
-    const btns = document.querySelectorAll('.filter-btn');
-    const grid = document.getElementById('members-grid') || document.querySelector('.members__grid');
-    if (!btns.length || !grid) return;
-    btns.forEach(function(btn) {
-      btn.addEventListener('click', function() {
-        btns.forEach(function(b) { b.classList.remove('filter-btn--active'); });
-        btn.classList.add('filter-btn--active');
-        const filter = btn.dataset.filter;
-        const cards = grid.querySelectorAll('.member-card');
-        cards.forEach(function(card) {
-          if (filter === 'all') {
-            card.style.display = '';
-          } else {
-            const badge = card.querySelector('.profile-active-badge');
-            card.style.display = badge ? '' : 'none';
-          }
-        });
-      });
-    });
-  }
   </script>
 
-  <!-- ── MOBILE QUICKNAV RETE ── -->
+  <!-- ── FILTRO MEMBRI (script separato, fuori dall'IIFE) ── -->
+  <script>
+  (function() {
+    function initMembersFilter(allMembers) {
+      var btns = document.querySelectorAll('.filter-btn');
+      var grid = document.getElementById('members-grid') || document.querySelector('.members__grid');
+      if (!btns.length || !grid) return;
+      btns.forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          btns.forEach(function(b) { b.classList.remove('filter-btn--active'); });
+          btn.classList.add('filter-btn--active');
+          var filter = btn.dataset.filter;
+          var cards = grid.querySelectorAll('.member-card');
+          cards.forEach(function(card) {
+            if (filter === 'all') {
+              card.style.display = '';
+            } else {
+              var badge = card.querySelector('.profile-active-badge');
+              card.style.display = badge ? '' : 'none';
+            }
+          });
+        });
+      });
+    }
+    // Esponi globalmente per essere chiamata da renderAndDisplay
+    window.initMembersFilter = initMembersFilter;
+  })();
+  </script>
+
+  <!-- ── QUICKNAV MOBILE RETE ── -->
   <div id="rete-mobile-qn" style="display:none; position:fixed; bottom:20px; right:16px; z-index:8000;">
     <button id="rete-qn-btn" aria-label="Navigazione rapida" aria-expanded="false"
       style="width:48px;height:48px;border-radius:50%;
@@ -1970,20 +1984,21 @@
         display:flex;align-items:center;justify-content:center;cursor:pointer;
         box-shadow:0 8px 28px rgba(0,120,255,.4);transition:transform .2s;">
       <svg viewBox="0 0 22 22" fill="none" width="20" height="20">
-        <path d="M4 6h14M4 11h14M4 16h14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+        <circle cx="11" cy="11" r="9" stroke="currentColor" stroke-width="1.6"/>
+        <path d="M11 7v8M7 11l4-4 4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
       </svg>
     </button>
-    <div id="rete-qn-panel" role="menu" aria-hidden="true"
-      style="display:none;position:absolute;bottom:calc(100% + 10px);right:0;
-        width:200px;background:rgba(3,14,32,.97);border:1px solid rgba(123,228,255,.22);
-        border-radius:18px;padding:8px;box-shadow:0 20px 50px rgba(0,0,0,.55);">
-      <a href="#top" style="display:block;padding:10px 14px;color:#a8eeff;font-size:.82rem;font-weight:600;text-decoration:none;border-radius:10px;border-bottom:1px solid rgba(123,228,255,.1);padding-bottom:12px;margin-bottom:2px;">↑ Inizio</a>
+    <div id="rete-qn-panel" aria-hidden="true"
+      style="display:none; position:absolute; bottom:56px; right:0;
+        background:rgba(3,14,32,.97); border:1px solid rgba(100,220,255,.22);
+        border-radius:14px; padding:8px; min-width:160px;
+        box-shadow:0 12px 40px rgba(0,0,0,.5);">
+      <a href="#top" style="display:block;padding:10px 14px;color:rgba(168,238,255,.85);font-size:.82rem;font-weight:600;text-decoration:none;border-radius:10px;">↑ Inizio</a>
       <a href="#members" style="display:block;padding:10px 14px;color:rgba(168,238,255,.7);font-size:.82rem;font-weight:500;text-decoration:none;border-radius:10px;">👥 Membri</a>
-      <a href="#rete-why" style="display:block;padding:10px 14px;color:rgba(168,238,255,.7);font-size:.82rem;font-weight:500;text-decoration:none;border-radius:10px;">✦ Perché entrare</a>
-      <a href="#amici" style="display:block;padding:10px 14px;color:rgba(168,238,255,.7);font-size:.82rem;font-weight:500;text-decoration:none;border-radius:10px;">🔵 Candidati</a>
       <a href="#prossimo-evento" style="display:block;padding:10px 14px;color:rgba(168,238,255,.7);font-size:.82rem;font-weight:500;text-decoration:none;border-radius:10px;">🗓 Evento</a>
     </div>
   </div>
+
   <script>
   (function(){
     if (window.innerWidth > 768) return;
@@ -1992,14 +2007,14 @@
     var panel = document.getElementById('rete-qn-panel');
     if (!wrap || !btn || !panel) return;
     wrap.style.display = 'block';
+    wrap.style.opacity = '0';
+    wrap.style.transition = 'opacity .3s';
+    wrap.style.pointerEvents = 'none';
 
     window.addEventListener('scroll', function(){
       wrap.style.opacity = window.scrollY > 100 ? '1' : '0';
       wrap.style.pointerEvents = window.scrollY > 100 ? 'auto' : 'none';
     }, {passive:true});
-    wrap.style.opacity = '0';
-    wrap.style.transition = 'opacity .3s';
-    wrap.style.pointerEvents = 'none';
 
     btn.addEventListener('click', function(){
       var open = panel.getAttribute('aria-hidden') === 'false';
@@ -2010,4 +2025,15 @@
     });
 
     panel.querySelectorAll('a').forEach(function(a){
-      a.addEventList
+      a.addEventListener('click', function(){
+        panel.style.display = 'none';
+        panel.setAttribute('aria-hidden','true');
+        btn.setAttribute('aria-expanded','false');
+        btn.style.transform = 'none';
+      });
+    });
+  })();
+  </script>
+
+</body>
+</html>
