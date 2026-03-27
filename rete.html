@@ -149,15 +149,9 @@
           <h2 class="members-title" data-i18n="r_members_title">I Membri della Rete</h2>
           <p class="members-sub" data-i18n="r_members_sub">Professionisti selezionati per competenza, curiosità e impatto operativo.</p>
         <div class="profile-legend">
-          <span class="profile-legend__item profile-legend__item--base">
-            <span class="profile-legend__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>Base
-          </span>
-          <span class="profile-legend__item profile-legend__item--partial">
-            <span class="profile-legend__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>In aggiornamento
-          </span>
-          <span class="profile-legend__item profile-legend__item--complete">
-            <span class="profile-legend__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>Profilo attivo
-          </span>
+          <span class="profile-legend__item profile-legend__item--base"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> Base</span>
+          <span class="profile-legend__item profile-legend__item--partial"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> In aggiornamento</span>
+          <span class="profile-legend__item profile-legend__item--complete"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> Profilo attivo</span>
         </div>
         </div>
 
@@ -845,17 +839,7 @@
       ? `<button class="icon-btn member-email-btn" data-email="${m.email}" aria-label="Contatta ${m.name}" title="Visibile ai membri della Rete">${LOCK_ICON}</button>`
       : '';
     const key = m.name.toLowerCase().replace(/\s+/g, '-');
-    const profData = window._profiles ? window._profiles[key] : null;
-    const hasAny = profData && (
-      (profData.bio && profData.bio.trim().length > 5) ||
-      profData.linkedin || profData.researchgate ||
-      profData.scholar || profData.orcid || profData.website
-    );
-    const isComplete = profData && profData.bio && profData.bio.trim().length > 10 &&
-      (profData.linkedin || profData.researchgate || profData.scholar || profData.orcid || profData.website);
-    const profileColorClass = isComplete ? ' icon-btn--profile-complete'
-      : hasAny ? ' icon-btn--profile-partial' : '';
-    const profileBtn = `<button class="icon-btn member-profile-btn icon-btn--locked${profileColorClass}" data-key="${key}" data-name="${m.name}" data-role="${m.role||''}" data-tip="Pagina personale">${PROFILE_ICON}</button>`;
+    const profileBtn = `<button class="icon-btn member-profile-btn icon-btn--locked" data-key="${key}" data-name="${m.name}" data-role="${m.role||''}" data-tip="Pagina personale">${PROFILE_ICON}</button>`;
     const editBtn = `<button class="icon-btn icon-btn--pencil member-edit-btn icon-btn--locked" data-key="${key}" data-name="${m.name}" data-role="${m.role||''}" data-tip="Modifica profilo">${PENCIL_ICON}</button>`;
 
     return `
@@ -1965,22 +1949,6 @@
       attachToggle(); attachMobileToggle();
       if (lang === 'en') applyLang('en');
     }
-    // Listener di sicurezza con useCapture
-    (function() {
-      function wire() {
-        var b = document.getElementById('langToggle');
-        if (!b || b._wired) return;
-        b._wired = true;
-        b.addEventListener('click', function(e) {
-          e.preventDefault(); e.stopPropagation();
-          var cur; try { cur = sessionStorage.getItem('boyle_lang')||'it'; } catch(x){ cur='it'; }
-          try { sessionStorage.setItem('boyle_lang', cur==='it'?'en':'it'); } catch(x){}
-          location.reload();
-        }, true);
-      }
-      if (document.readyState==='loading') document.addEventListener('DOMContentLoaded', wire);
-      else wire();
-    })();
   })();
   </script>
 
@@ -2070,6 +2038,24 @@
         btn.style.transform = 'none';
       });
     });
+  })();
+  </script>
+
+  <!-- Fix IT/EN useCapture -->
+  <script>
+  (function(){
+    function wire(){
+      var b=document.getElementById('langToggle');
+      if(!b||b._w)return; b._w=true;
+      b.addEventListener('click',function(e){
+        e.preventDefault();e.stopPropagation();
+        var c;try{c=sessionStorage.getItem('boyle_lang')||'it';}catch(x){c='it';}
+        try{sessionStorage.setItem('boyle_lang',c==='it'?'en':'it');}catch(x){}
+        location.reload();
+      },true);
+    }
+    if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',wire);
+    else wire();
   })();
   </script>
 
