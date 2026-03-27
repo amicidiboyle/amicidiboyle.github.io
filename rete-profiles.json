@@ -270,6 +270,7 @@
     "updated": ""
   },
   "lidia-porri": {
+    "name": "lidia-porri",
     "bio": "Psicologa psicoterapeuta esperta in Psicologia Subacquea e Divemaster PADI. Docente di un Corso di formazione Teorico-Pratico di Psicologia Subacquea.",
     "linkedin": "https://www.linkedin.com/in/lidia-porri-5846b9204",
     "researchgate": "",
@@ -277,11 +278,11 @@
     "orcid": "",
     "twitter": "",
     "instagram": "",
-    "website": "",
+    "website": "https:// www.psicologiasubacquea.it",
     "courses": "",
     "speaker": true,
-    "podcast": false,
-    "research": false,
-    "updated": ""
+    "podcast": true,
+    "research": true,
+    "updated": "2026-03-27"
   }
 }
