@@ -2726,126 +2726,82 @@ a { color: inherit; text-decoration: none; }
 .profile-icon-partial  { color:rgba(220,110,30,.9)!important;border-color:rgba(220,110,30,.3)!important; }
 .profile-icon-complete { color:rgba(0,210,140,.95)!important;border-color:rgba(0,210,140,.3)!important;box-shadow:0 0 12px rgba(0,210,140,.2)!important; }
 
-/* ════════════════════════════════════════════════════════
-   PROFILE MODAL — PIÙ LUMINOSO, EFFETTO VETRO
-   ════════════════════════════════════════════════════════ */
+/* ════ FILTRO SKILL ════ */
+.skill-filter-wrap { margin: 20px 0 24px; }
 
-.profile-modal__dialog {
-  background: linear-gradient(160deg,
-    rgba(8, 28, 70, 0.96) 0%,
-    rgba(5, 18, 52, 0.97) 50%,
-    rgba(6, 22, 58, 0.96) 100%) !important;
-  border: 1px solid rgba(100, 200, 255, 0.25) !important;
-  border-top: 1px solid rgba(140, 220, 255, 0.45) !important;
-  box-shadow:
-    0 0 0 1px rgba(100, 200, 255, 0.08),
-    0 32px 80px rgba(0, 0, 0, 0.5),
-    0 0 80px rgba(0, 100, 255, 0.08),
-    inset 0 1px 0 rgba(140, 220, 255, 0.2) !important;
+.skill-filter-toggle {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 9px 20px; border-radius: 999px;
+  background: linear-gradient(135deg, rgba(0,80,200,.18), rgba(0,150,255,.12));
+  border: 1px solid rgba(100,200,255,.3);
+  color: rgba(160,220,255,.85);
+  font-size: .78rem; font-weight: 700; letter-spacing: .06em;
+  cursor: pointer; transition: all .2s;
 }
-
-.profile-hero {
-  background: linear-gradient(135deg,
-    rgba(0, 80, 200, 0.18) 0%,
-    rgba(0, 60, 160, 0.1) 100%) !important;
-  border-bottom: 1px solid rgba(100, 200, 255, 0.15) !important;
+.skill-filter-toggle:hover {
+  background: linear-gradient(135deg, rgba(0,80,200,.28), rgba(0,150,255,.22));
+  border-color: rgba(100,200,255,.55); color: #a8e0ff;
+  box-shadow: 0 4px 18px rgba(0,100,255,.15);
+  transform: translateY(-1px);
 }
-
-.profile-hero__name { color: #f0f8ff !important; }
-.profile-hero__role { color: rgba(170, 210, 245, 0.8) !important; }
-.profile-hero__kicker { color: rgba(120, 200, 255, 0.65) !important; }
-
-.profile-bio-box {
-  background: rgba(0, 40, 100, 0.3) !important;
-  border: 1px solid rgba(100, 200, 255, 0.18) !important;
-  border-left: 3px solid rgba(100, 200, 255, 0.5) !important;
+/* Bloccato: visibile in trasparenza, cursore pointer (è cliccabile → apre modal) */
+.skill-filter-toggle--locked {
+  opacity: .38;
+  filter: grayscale(.25);
 }
-.profile-bio-box p { color: rgba(210, 235, 255, 0.88) !important; }
-
-.profile-section-label { color: rgba(100, 190, 255, 0.6) !important; }
-
-.profile-link-pill {
-  background: rgba(0, 50, 120, 0.4) !important;
-  border: 1px solid rgba(100, 200, 255, 0.25) !important;
-  color: rgba(180, 220, 255, 0.85) !important;
+.skill-filter-toggle--locked:hover {
+  opacity: .55;
+  transform: none;
+  box-shadow: none;
 }
-.profile-link-pill:hover {
-  background: rgba(0, 80, 180, 0.5) !important;
-  border-color: rgba(100, 200, 255, 0.5) !important;
-  color: #a8e0ff !important;
-}
+.skill-filter-toggle__arrow { font-size:.65rem; opacity:.6; margin-left:2px; }
 
-/* ════════════════════════════════════════════════════════
-   FILTRO SKILL — TAG CLICCABILI
-   ════════════════════════════════════════════════════════ */
-
-.skill-filter-wrap {
-  margin-top: 18px;
-  margin-bottom: 28px;
+/* Pannello */
+.skill-filter-panel {
+  overflow: hidden; max-height: 0; opacity: 0; margin-top: 0;
+  transition: max-height .35s cubic-bezier(.4,0,.2,1), opacity .25s, margin .25s;
 }
+.skill-filter-panel--open { max-height:320px; opacity:1; margin-top:12px; }
 
 .skill-filter-inner {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  align-items: center;
+  display: flex; flex-wrap: wrap; gap: 8px;
+  padding: 16px 18px;
+  background: rgba(2,12,36,.75);
+  border: 1px solid rgba(100,200,255,.14);
+  border-radius: 16px;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 8px 32px rgba(0,0,0,.3), inset 0 1px 0 rgba(100,200,255,.08);
 }
-
-.skill-filter-btn {
-  display: inline-flex;
-  align-items: center;
-  padding: 6px 14px;
-  border-radius: 999px;
-  font-size: .72rem;
-  font-weight: 700;
-  letter-spacing: .05em;
-  cursor: pointer;
-  border: 1px solid rgba(100, 200, 255, 0.2);
-  background: rgba(4, 18, 48, 0.6);
-  color: rgba(160, 210, 240, 0.6);
-  transition: all .18s ease;
-  white-space: nowrap;
+.skill-tag-btn {
+  display: inline-flex; align-items: center;
+  padding: 6px 14px; border-radius: 999px;
+  font-size: .72rem; font-weight: 700; letter-spacing: .04em;
+  cursor: pointer; white-space: nowrap;
+  border: 1px solid rgba(100,200,255,.2);
+  background: rgba(4,18,48,.6); color: rgba(160,210,240,.65);
+  transition: all .18s;
 }
-
-.skill-filter-btn:hover {
-  background: rgba(0, 80, 180, 0.3);
-  border-color: rgba(100, 200, 255, 0.45);
-  color: rgba(200, 235, 255, 0.95);
-  transform: translateY(-1px);
-  box-shadow: 0 4px 14px rgba(0, 100, 255, 0.12);
+.skill-tag-btn:hover { transform: translateY(-1px); }
+.skill-tag-btn:not(.skill-tag-btn--all) {
+  border-color: color-mix(in srgb, var(--tc,#7be4ff) 30%, transparent);
+  color: color-mix(in srgb, var(--tc,#7be4ff) 65%, rgba(200,230,255,.6));
 }
-
-/* Bottone tag specifico — usa il colore del tag */
-.skill-filter-btn:not(.skill-filter-btn--all) {
-  border-color: color-mix(in srgb, var(--tag-c, #7be4ff) 35%, transparent);
-  color: color-mix(in srgb, var(--tag-c, #7be4ff) 70%, rgba(200,230,255,.6));
+.skill-tag-btn:not(.skill-tag-btn--all):hover {
+  background: color-mix(in srgb, var(--tc,#7be4ff) 12%, transparent);
+  border-color: color-mix(in srgb, var(--tc,#7be4ff) 55%, transparent);
+  color: var(--tc,#7be4ff);
 }
-.skill-filter-btn:not(.skill-filter-btn--all):hover {
-  background: color-mix(in srgb, var(--tag-c, #7be4ff) 12%, transparent);
-  border-color: color-mix(in srgb, var(--tag-c, #7be4ff) 60%, transparent);
-  color: var(--tag-c, #7be4ff);
-  box-shadow: 0 4px 14px color-mix(in srgb, var(--tag-c, #7be4ff) 18%, transparent);
+.skill-tag-btn--all.skill-tag-btn--active {
+  background: rgba(0,100,255,.2); border-color: rgba(100,200,255,.5);
+  color: #7dd3fc; box-shadow: 0 0 14px rgba(0,100,255,.1);
 }
-
-/* Stato attivo */
-.skill-filter-btn--all.skill-filter-btn--active {
-  background: rgba(0, 100, 255, 0.2);
-  border-color: rgba(100, 200, 255, 0.5);
-  color: #7dd3fc;
-  box-shadow: 0 0 16px rgba(0, 100, 255, 0.12);
+.skill-tag-btn--active:not(.skill-tag-btn--all) {
+  background: color-mix(in srgb, var(--tc,#7be4ff) 16%, rgba(4,18,48,.8));
+  border-color: color-mix(in srgb, var(--tc,#7be4ff) 65%, transparent);
+  color: var(--tc,#7be4ff);
+  box-shadow: 0 0 16px color-mix(in srgb, var(--tc,#7be4ff) 20%, transparent);
 }
-
-.skill-filter-btn--active:not(.skill-filter-btn--all) {
-  background: color-mix(in srgb, var(--tag-c, #7be4ff) 18%, rgba(4,18,48,.8));
-  border-color: color-mix(in srgb, var(--tag-c, #7be4ff) 70%, transparent);
-  color: var(--tag-c, #7be4ff);
-  box-shadow: 0 0 18px color-mix(in srgb, var(--tag-c, #7be4ff) 22%, transparent);
-}
-
-/* Card nascosta dal filtro */
-.member-card[style*="display: none"] { display: none !important; }
-
-@media (max-width: 768px) {
-  .skill-filter-inner { gap: 6px; }
-  .skill-filter-btn { font-size: .68rem; padding: 5px 11px; }
+@media(max-width:768px){
+  .skill-filter-inner{gap:6px;padding:12px 14px;}
+  .skill-tag-btn{font-size:.68rem;padding:5px 11px;}
 }
