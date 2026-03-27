@@ -148,7 +148,7 @@
         <div class="members-header">
           <h2 class="members-title" data-i18n="r_members_title">I Membri della Rete</h2>
           <p class="members-sub" data-i18n="r_members_sub">Professionisti selezionati per competenza, curiosità e impatto operativo.</p>
-        <div class="profile-legend"><span class="pleg pleg--base"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>&nbsp;Base</span><span class="pleg pleg--partial"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>&nbsp;In aggiornamento</span><span class="pleg pleg--complete"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>&nbsp;Profilo attivo</span></div>
+        <div class="profile-legend"><span class="pleg pleg--base"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>&nbsp;Base</span><span class="pleg pleg--partial"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>&nbsp;Parzialmente completo</span><span class="pleg pleg--complete"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>&nbsp;Completo</span></div>
         </div>
 
         <!-- Le card vengono iniettate da JS -->
@@ -871,12 +871,8 @@
       // Inizializza filtro
       initMembersFilter(members);
       initReveal();
-      // Colora icone profilo dopo caricamento profili
-      loadProfiles().then(function(profiles) {
-        window._profiles = profiles;
-        colorProfileIcons(profiles);
-      }).catch(function(){});
-      
+      // Colora icone profilo
+      loadProfiles().then(function(profiles){ window._profiles=profiles; colorProfileIcons(profiles); }).catch(function(){});
     } catch(e) {
       // Fallback: se rete-members.json non è ancora sul server, usa dati inline
       console.warn('rete-members.json non trovato, uso dati inline:', e);
@@ -2049,7 +2045,6 @@
   </script>
 
 
-  <!-- Colorazione icone profilo - script autonomo -->
   <script>
   function colorProfileIcons(profiles) {
     if (!profiles) return;
@@ -2057,20 +2052,18 @@
       var key = card.getAttribute('data-key');
       if (!key) return;
       var p = profiles[key] || {};
-      var hasAny = (p.bio && p.bio.trim().length > 5) ||
-        p.linkedin || p.researchgate || p.scholar || p.orcid || p.website;
-      var isComplete = (p.bio && p.bio.trim().length > 10) &&
-        (p.linkedin || p.researchgate || p.scholar || p.orcid || p.website);
+      var hasBio = p.bio && p.bio.trim().length > 10;
+      var hasLink = !!(p.linkedin || p.researchgate || p.scholar || p.orcid || p.website);
       var btn = card.querySelector('.member-profile-btn');
       if (!btn) return;
-      if (isComplete) {
+      btn.classList.remove('profile-icon-partial','profile-icon-complete');
+      if (hasBio && hasLink) {
         btn.classList.add('profile-icon-complete');
-      } else if (hasAny) {
+      } else if (hasBio) {
         btn.classList.add('profile-icon-partial');
       }
     });
   }
   </script>
-
 </body>
 </html>
