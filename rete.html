@@ -871,8 +871,7 @@
       // Inizializza filtro
       initMembersFilter(members);
       initReveal();
-      // Colora icone profilo
-      loadProfiles().then(function(profiles){ window._profiles=profiles; colorProfileIcons(profiles); }).catch(function(){});
+      
     } catch(e) {
       // Fallback: se rete-members.json non è ancora sul server, usa dati inline
       console.warn('rete-members.json non trovato, uso dati inline:', e);
@@ -1496,7 +1495,7 @@
     if (profilesCache) return profilesCache;
     try {
       const r = await fetch(PROFILES_URL+'?v='+Date.now());
-      if (r.ok) { profilesCache = await r.json(); window._profiles = profilesCache; return profilesCache; }
+      if (r.ok) { profilesCache = await r.json(); window._profiles = profilesCache; if(typeof colorProfileIcons==='function') colorProfileIcons(profilesCache); return profilesCache; }
     } catch(e) {}
     return {};
   }
@@ -1692,6 +1691,8 @@
         });
         if(!putRes.ok) throw new Error('Errore scrittura');
         profilesCache=current;
+        window._profiles=current;
+        if(typeof colorProfileIcons==='function') colorProfileIcons(current);
         if(status){ status.textContent='✓ Profilo salvato!'; status.className='edit-status ok'; }
         setTimeout(closeModal,2000);
       } catch(err) {
@@ -2045,6 +2046,7 @@
   </script>
 
 
+  <!-- colorProfileIcons: aggiorna colori icone senza toccare le card -->
   <script>
   function colorProfileIcons(profiles) {
     if (!profiles) return;
