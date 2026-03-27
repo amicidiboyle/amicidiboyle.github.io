@@ -10,10 +10,10 @@
     "instagram": "",
     "website": "",
     "courses": "",
-    "speaker": false,
-    "podcast": false,
-    "research": false,
-    "updated": ""
+    "speaker": true,
+    "podcast": true,
+    "research": true,
+    "updated": "2026-03-27"
   },
   "andrea-murdock-alpini": {
     "name": "Andrea Murdock Alpini",
@@ -301,7 +301,7 @@
   },
   "adriana-almeida": {
     "bio": "Physician with over 30 years of clinical experience. Background in aerospace medicine, analogue astronaut missions and medical education. Motivated to contribute to a global network of extreme medicine professionals.",
-    "linkedin": "https://www.linkedin.com/in/adriana-ávila-almeida-843780213/",
+    "linkedin": "https://www.linkedin.com/in/adriana-Ã¡vila-almeida-843780213/",
     "researchgate": "",
     "scholar": "",
     "orcid": "",
