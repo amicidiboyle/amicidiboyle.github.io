@@ -122,14 +122,14 @@
             <span data-i18n="rj_amici_cta">Diventa un Amico di Boyle</span>
           </button>
           <a class="btn-eventi" href="#prossimo-evento">
-            <span data-i18n="r_events_link">Gli eventi della Rete</span>
+            <span>Gli eventi della Rete</span>
           </a>
 
           <div class="hero-access-bar" id="accessBar" style="justify-content:center;margin:0 auto;">
             <input class="hero-access-input" id="barCodeInput"
-                   type="text" data-i18n-placeholder="r_code_ph" placeholder="🔑 Codice membro"
+                   type="text" placeholder="🔑 Codice membro"
                    autocomplete="off" spellcheck="false" maxlength="30" />
-            <button class="hero-access-btn" id="barCodeBtn" data-i18n="r_access_btn">Accedi</button>
+            <button class="hero-access-btn" id="barCodeBtn">Accedi</button>
             <span class="hero-access-status" id="barStatus"></span>
           </div>
         </div>
@@ -147,7 +147,7 @@
       <div class="container">
         <div class="members-header">
           <h2 class="members-title" data-i18n="r_members_title">I Membri della Rete</h2>
-          <p class="members-sub" data-i18n="r_members_sub">Professionisti selezionati per competenza, curiosità e impatto operativo.</p>
+          <p class="members-sub">Professionisti selezionati per competenza, curiosità e impatto operativo.</p>
         </div>
 
         <!-- Le card vengono iniettate da JS -->
@@ -624,8 +624,11 @@
     <div class="profile-modal__dialog">
       <button class="profile-modal__close" id="profileModalClose">✕</button>
       <div class="pm-header">
+        <div class="pm-orb" aria-hidden="true"></div>
+        <p class="profile-modal__eyebrow">Profilo personale</p>
         <p class="profile-modal__name" id="pm-name"></p>
         <p class="profile-modal__role" id="pm-role"></p>
+        <div class="pm-statusline" id="pm-statusline"></div>
       </div>
       <div class="profile-modal__avail" id="pm-avail"></div>
       <p class="profile-modal__bio" id="pm-bio"></p>
@@ -637,8 +640,13 @@
   <div class="edit-modal" id="editModal" aria-hidden="true">
     <div class="edit-modal__dialog">
       <button class="edit-modal__close" id="editModalClose">✕</button>
-      <p class="edit-modal__title">Personalizza la tua card</p>
-      <p class="edit-modal__sub" id="editModalSub"></p>
+      <div class="edit-modal__hero">
+        <div class="edit-modal__orb" aria-hidden="true"></div>
+        <p class="edit-modal__eyebrow">Pagina personale</p>
+        <p class="edit-modal__title">Personalizza la tua card</p>
+        <p class="edit-modal__sub" id="editModalSub"></p>
+        <p class="edit-modal__hint">Aggiungi una bio breve, i tuoi link professionali e le disponibilità che vuoi rendere visibili alla rete.</p>
+      </div>
       <div class="edit-section-label">Presentazione</div>
       <div class="edit-field"><label>Bio (max 300 caratteri)</label><textarea id="ef-bio" maxlength="300" placeholder="Sono un medico specializzato in..."></textarea></div>
       <div class="edit-section-label">Link professionali</div>
@@ -1232,6 +1240,7 @@
       initCounters();
       initCardPulse();
       initEmailWall();
+      markCompletedProfiles();
       if (isMemberUnlocked()) {
         unlockAll(sessionStorage.getItem('boyle_member_code') || '');
       }
@@ -1375,7 +1384,32 @@
     return {};
   }
 
-  function initProfileModal() {
+  
+  function profileHasContent(p) {
+    if (!p) return false;
+    const hasText = !!(p.bio && p.bio.trim());
+    const hasLinks = !!([p.linkedin,p.researchgate,p.scholar,p.orcid,p.twitter,p.instagram,p.website,p.courses]
+      .find(v => v && String(v).trim()));
+    const hasFlags = !!(p.speaker || p.podcast || p.research);
+    const hasUpdated = !!(p.updated && String(p.updated).trim());
+    return hasText || hasLinks || hasFlags || hasUpdated;
+  }
+
+  async function markCompletedProfiles() {
+    const profiles = await loadProfiles();
+    document.querySelectorAll('.member-profile-btn').forEach(btn => {
+      const p = profiles[btn.dataset.key] || {};
+      if (profileHasContent(p)) {
+        btn.classList.add('icon-btn--profile-complete');
+        btn.setAttribute('data-tip', 'Pagina personale compilata');
+        btn.setAttribute('title', 'Profilo attivo');
+      } else {
+        btn.classList.remove('icon-btn--profile-complete');
+      }
+    });
+  }
+
+function initProfileModal() {
     const modal = document.getElementById('profileModal');
     const closeB = document.getElementById('profileModalClose');
     function closeModal() {
@@ -1389,8 +1423,14 @@
       document.getElementById('pm-role').textContent = btn.dataset.role;
       const profiles = await loadProfiles();
       const p = profiles[btn.dataset.key] || {};
+      const statusEl = document.getElementById('pm-statusline');
+      if (statusEl) {
+        statusEl.innerHTML = profileHasContent(p)
+          ? '<span class="pm-status pm-status--complete">● Profilo attivo</span>'
+          : '<span class="pm-status pm-status--basic">● Profilo base</span>';
+      }
       const bioEl = document.getElementById('pm-bio');
-      bioEl.textContent = p.bio || 'Profilo non ancora compilato.';
+      bioEl.textContent = p.bio || 'Profilo non ancora compilato. Il membro ha scelto di rendere visibili solo le informazioni essenziali.';
       bioEl.className = 'profile-modal__bio' + (p.bio ? '' : ' empty');
       const linksEl = document.getElementById('pm-links');
       linksEl.innerHTML = '';
@@ -1506,6 +1546,7 @@
         });
         if(!putRes.ok) throw new Error('Errore scrittura');
         profilesCache=current;
+        markCompletedProfiles();
         if(status){ status.textContent='✓ Profilo salvato!'; status.className='edit-status ok'; }
         setTimeout(closeModal,2000);
       } catch(err) {
@@ -1639,10 +1680,6 @@
         'rj_amici_b3':'✓ Profili estesi della Rete','rj_amici_b4':'✓ Pubblica eventi di ambienti estremi',
         'rj_amici_b5':'✓ Newsletter della community','rj_amici_b6':'✓ Scrivi a info@amicidiboyle.it',
         'rj_amici_cta':'Diventa un Amico di Boyle',
-        'r_events_link':'Gli eventi della Rete',
-        'r_code_ph':'🔑 Codice membro',
-        'r_access_btn':'Accedi',
-        'r_members_sub':'Professionisti selezionati per competenza, curiosità e impatto operativo.',
         // Event
         'r_ev_kicker':'Prossimi eventi',
         'r_ev_badge':'6 Maggio 2026 · Corso partner',
@@ -1690,10 +1727,6 @@
         'rj_amici_b3':'✓ Extended Network profiles','rj_amici_b4':'✓ Publish extreme environment events',
         'rj_amici_b5':'✓ Community newsletter','rj_amici_b6':'✓ Write to info@amicidiboyle.it',
         'rj_amici_cta':'Become a Friend of Boyle',
-        'r_events_link':'Network events',
-        'r_code_ph':'🔑 Member code',
-        'r_access_btn':'Access',
-        'r_members_sub':'Professionals selected for competence, curiosity and operational impact.',
         'r_ev_kicker':'Upcoming events',
         'r_ev_badge':'6 May 2026 · Partner course',
         'r_ev_title':'The Day After',
@@ -1711,18 +1744,24 @@
       var dict = T[l] || T['it'];
       document.querySelectorAll('[data-i18n]').forEach(function(el) {
         var k = el.getAttribute('data-i18n');
-        if (dict[k] !== undefined) el.textContent = dict[k];
+        if (dict[k] === undefined) return;
+        if (k === 'r_hero_title') {
+          el.innerHTML = l === 'en'
+            ? '<span class="hero__glow">Boyle</span> Network'
+            : '<span class="hero__glow">Rete</span> di Boyle';
+        } else {
+          el.textContent = dict[k];
+        }
       });
-      document.querySelectorAll('[data-i18n-placeholder]').forEach(function(el) {
+      document.querySelectorAll('[data-i18n-placeholder]').forEach(function(el){
         var k = el.getAttribute('data-i18n-placeholder');
-        if (dict[k] !== undefined) el.placeholder = dict[k];
+        if (dict[k] !== undefined) el.setAttribute('placeholder', dict[k]);
       });
-      // Update toggle button text
       var cur = document.getElementById('langCurrent');
       var oth = document.getElementById('langOther');
       if (cur) cur.textContent = l === 'en' ? 'EN' : 'IT';
       if (oth) oth.textContent = l === 'en' ? 'IT' : 'EN';
-      sessionStorage.setItem('boyle_lang', l);
+      try { sessionStorage.setItem('boyle_lang', l); } catch(e) {}
     }
 
     // Expose globally
@@ -1735,8 +1774,7 @@
       btn.addEventListener('click', function(e) {
         e.preventDefault(); e.stopPropagation();
         var cur = sessionStorage.getItem('boyle_lang') || 'it';
-        sessionStorage.setItem('boyle_lang', cur === 'it' ? 'en' : 'it');
-        location.reload();
+        applyLang(cur === 'it' ? 'en' : 'it');
       });
     }
 
@@ -1746,8 +1784,7 @@
       if (!mob) return;
       mob.addEventListener('click', function() {
         var cur = sessionStorage.getItem('boyle_lang') || 'it';
-        sessionStorage.setItem('boyle_lang', cur === 'it' ? 'en' : 'it');
-        location.reload();
+        applyLang(cur === 'it' ? 'en' : 'it');
       });
     }
 
@@ -1764,53 +1801,82 @@
   </script>
 
 
+  
   <!-- ── MOBILE QUICKNAV RETE ── -->
-  <div id="rete-mobile-qn" style="display:none; position:fixed; bottom:20px; right:16px; z-index:8000;">
-    <button id="rete-qn-btn" aria-label="Navigazione rapida" aria-expanded="false"
-      style="width:48px;height:48px;border-radius:50%;
-        background:linear-gradient(135deg,rgba(16,130,255,.97),rgba(0,195,255,.92));
-        border:1px solid rgba(100,220,255,.5);color:rgba(2,12,28,.96);
-        display:flex;align-items:center;justify-content:center;cursor:pointer;
-        box-shadow:0 8px 28px rgba(0,120,255,.4);transition:transform .2s;">
-      <svg viewBox="0 0 22 22" fill="none" width="20" height="20">
+  <div id="rete-mobile-qn" class="rete-mobile-qn" aria-hidden="false">
+    <button id="rete-qn-btn" class="rete-mobile-qn__btn" aria-label="Navigazione rapida" aria-expanded="false">
+      <svg viewBox="0 0 22 22" fill="none" width="20" height="20" aria-hidden="true">
         <path d="M4 6h14M4 11h14M4 16h14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
       </svg>
     </button>
-    <div id="rete-qn-panel" role="menu" aria-hidden="true"
-      style="display:none;position:absolute;bottom:calc(100% + 10px);right:0;
-        width:200px;background:rgba(3,14,32,.97);border:1px solid rgba(123,228,255,.22);
-        border-radius:18px;padding:8px;box-shadow:0 20px 50px rgba(0,0,0,.55);">
-      <a href="#top" style="display:block;padding:10px 14px;color:#a8eeff;font-size:.82rem;font-weight:600;text-decoration:none;border-radius:10px;border-bottom:1px solid rgba(123,228,255,.1);padding-bottom:12px;margin-bottom:2px;">↑ Inizio</a>
-      <a href="#members" style="display:block;padding:10px 14px;color:rgba(168,238,255,.7);font-size:.82rem;font-weight:500;text-decoration:none;border-radius:10px;">👥 Membri</a>
-      <a href="#rete-why" style="display:block;padding:10px 14px;color:rgba(168,238,255,.7);font-size:.82rem;font-weight:500;text-decoration:none;border-radius:10px;">✦ Perché entrare</a>
-      <a href="#amici" style="display:block;padding:10px 14px;color:rgba(168,238,255,.7);font-size:.82rem;font-weight:500;text-decoration:none;border-radius:10px;">🔵 Candidati</a>
-      <a href="#prossimo-evento" style="display:block;padding:10px 14px;color:rgba(168,238,255,.7);font-size:.82rem;font-weight:500;text-decoration:none;border-radius:10px;">🗓 Evento</a>
+    <div id="rete-qn-panel" class="rete-mobile-qn__panel" role="menu" aria-hidden="true">
+      <a href="#top">↑ Inizio</a>
+      <a href="#members">👥 Membri</a>
+      <a href="#rete-why">✦ Perché entrare</a>
+      <a href="#amici">🔵 Candidati</a>
+      <a href="#prossimo-evento">🗓 Eventi</a>
     </div>
   </div>
   <script>
   (function(){
-    if (window.innerWidth > 768) return;
-    var wrap  = document.getElementById('rete-mobile-qn');
-    var btn   = document.getElementById('rete-qn-btn');
-    var panel = document.getElementById('rete-qn-panel');
-    if (!wrap || !btn || !panel) return;
-    wrap.style.display = 'block';
+    function initReteMobileQuickNav(){
+      var isMobile = window.matchMedia('(max-width: 768px)').matches;
+      var wrap  = document.getElementById('rete-mobile-qn');
+      var btn   = document.getElementById('rete-qn-btn');
+      var panel = document.getElementById('rete-qn-panel');
+      if (!wrap || !btn || !panel) return;
 
-    window.addEventListener('scroll', function(){
-      wrap.style.opacity = window.scrollY > 200 ? '1' : '0';
-      wrap.style.pointerEvents = window.scrollY > 200 ? 'auto' : 'none';
-    }, {passive:true});
-    wrap.style.opacity = '0';
-    wrap.style.transition = 'opacity .3s';
-    wrap.style.pointerEvents = 'none';
+      if (!isMobile) {
+        wrap.style.display = 'none';
+        return;
+      }
 
-    btn.addEventListener('click', function(){
-      var open = panel.getAttribute('aria-hidden') === 'false';
-      panel.style.display = open ? 'none' : 'block';
-      panel.setAttribute('aria-hidden', open ? 'true' : 'false');
-      btn.setAttribute('aria-expanded', !open);
-      btn.style.transform = open ? 'none' : 'rotate(90deg)';
-    });
+      wrap.style.display = 'block';
+      wrap.style.opacity = '0';
+      wrap.style.pointerEvents = 'none';
 
-    panel.querySelectorAll('a').forEach(function(a){
-      a.addEventList
+      function syncVisibility(){
+        var show = window.scrollY > 120;
+        wrap.style.opacity = show ? '1' : '0';
+        wrap.style.pointerEvents = show ? 'auto' : 'none';
+      }
+
+      syncVisibility();
+      window.addEventListener('scroll', syncVisibility, {passive:true});
+
+      btn.addEventListener('click', function(){
+        var open = panel.getAttribute('aria-hidden') === 'false';
+        panel.style.display = open ? 'none' : 'block';
+        panel.setAttribute('aria-hidden', open ? 'true' : 'false');
+        btn.setAttribute('aria-expanded', open ? 'false' : 'true');
+        btn.style.transform = open ? 'none' : 'rotate(90deg)';
+      });
+
+      panel.querySelectorAll('a').forEach(function(a){
+        a.addEventListener('click', function(){
+          panel.style.display = 'none';
+          panel.setAttribute('aria-hidden','true');
+          btn.setAttribute('aria-expanded','false');
+          btn.style.transform = 'none';
+        });
+      });
+
+      document.addEventListener('click', function(e){
+        if (!wrap.contains(e.target)) {
+          panel.style.display = 'none';
+          panel.setAttribute('aria-hidden','true');
+          btn.setAttribute('aria-expanded','false');
+          btn.style.transform = 'none';
+        }
+      });
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initReteMobileQuickNav);
+    } else {
+      initReteMobileQuickNav();
+    }
+  })();
+  </script>
+</body>
+</html>
