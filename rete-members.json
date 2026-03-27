@@ -206,6 +206,19 @@
     ]
   },
   {
+    "name": "Ho Man Mak",
+    "role": "ACHRN, CHT, ECHRN, ECHCO, HC-S. Pamela Youde Nethersole Eastern Hospital, Hong Kong. Focus: Hyperbaric Nursing, Hyperbaric Safety, Emergency Nursing.",
+    "img": "ho-man-mak.jpg",
+    "city": "Hong Kong",
+    "linkedin": "https://www.linkedin.com/in/ho-man-mak-92814a141",
+    "email": "hofmann613@gmail.com",
+    "tags": [
+      "Iperbarica",
+      "Nursing",
+      "Safety"
+    ]
+  },
+  {
     "name": "Lidia Porri",
     "role": "Psicologa Psicoterapeuta, Divemaster PADI. Spazio di Mediazione e Terapia Familiare, Milano. Focus: Psicologia Subacquea.",
     "img": "lidia-porri.jpg",
@@ -218,16 +231,15 @@
     ]
   },
   {
-    "name": "Ho Man Mak",
-    "role": "ACHRN, CHT, ECHRN, ECHCO, HC-S. Pamela Youde Nethersole Eastern Hospital, Hong Kong. Focus: Hyperbaric Nursing, Hyperbaric Safety, Emergency Nursing.",
-    "img": "ho-man-mak.jpg",
-    "city": "Hong Kong",
-    "linkedin": "https://www.linkedin.com/in/ho-man-mak-92814a141",
-    "email": "hofmann613@gmail.com",
+    "name": "Adriana Almeida",
+    "role": "Medico. UNESP - Universidade Estadual Paulista. Focus: Aerospace Medicine Education.",
+    "img": "adriana-almeida.jpg",
+    "city": "São José dos Campos, BR",
+    "linkedin": "https://www.linkedin.com/in/adriana-ávila-almeida-843780213/",
+    "email": "adrianaavilaalmeida@yahoo.com.br",
     "tags": [
-      "Iperbarica",
-      "Nursing",
-      "Safety"
+      "Aerospaziale",
+      "Educazione"
     ]
   }
 ]
