@@ -153,11 +153,11 @@
         </div>
 
         <!-- Filtro per specialità -->
-        <div class="skill-filter-wrap" id="skillFilterWrap">
-          <button class="skill-filter-toggle skill-filter-toggle--locked" id="skillFilterToggle" type="button">
+        <div class="skill-filter-wrap">
+          <button class="skill-filter-toggle" id="skillFilterToggle" type="button">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M7 12h10M11 18h2"/></svg>
             Filtra per specialità
-            <span class="skill-filter-toggle__arrow" id="skillFilterArrow">▾</span>
+            <span id="skillFilterArrow">▾</span>
           </button>
           <div class="skill-filter-panel" id="skillFilterPanel" aria-hidden="true">
             <div class="skill-filter-inner" id="skillFilterInner"></div>
@@ -896,7 +896,9 @@
     var panel  = document.getElementById('skillFilterPanel');
     var inner  = document.getElementById('skillFilterInner');
     var arrow  = document.getElementById('skillFilterArrow');
-    if (!inner || !toggle || !panel) return;
+    if (!toggle || !panel || !inner) return;
+
+    // Costruisci tag unici con conteggi
     var allTags = [];
     members.forEach(function(m) {
       if (m.tags) m.tags.forEach(function(t) {
@@ -906,49 +908,46 @@
     allTags.sort();
     inner.innerHTML = '<button class="skill-tag-btn skill-tag-btn--all skill-tag-btn--active" data-tag="">Tutti (' + members.length + ')</button>';
     allTags.forEach(function(tag) {
-      var color = TAG_COLORS[tag] || '#7be4ff';
+      var color = (typeof TAG_COLORS !== 'undefined' && TAG_COLORS[tag]) || '#7be4ff';
       var count = members.filter(function(m){ return m.tags && m.tags.indexOf(tag) >= 0; }).length;
       var btn = document.createElement('button');
       btn.className = 'skill-tag-btn';
-      btn.setAttribute('data-tag', tag);
+      btn.dataset.tag = tag;
       btn.style.setProperty('--tc', color);
       btn.textContent = tag + ' (' + count + ')';
       inner.appendChild(btn);
     });
+
+    // Apri/chiudi pannello
     var open = false;
     toggle.addEventListener('click', function() {
-      if (toggle.classList.contains('skill-filter-toggle--locked')) {
-        if (typeof openAccessModal === 'function') openAccessModal();
-        return;
-      }
       open = !open;
-      panel.setAttribute('aria-hidden', String(!open));
       panel.classList.toggle('skill-filter-panel--open', open);
-      if (arrow) arrow.textContent = open ? '▴' : '▾';
+      arrow.textContent = open ? '▴' : '▾';
     });
+
+    // Filtra card
     var activeTag = '';
     inner.addEventListener('click', function(e) {
       var btn = e.target.closest('.skill-tag-btn');
       if (!btn) return;
-      var tag = btn.getAttribute('data-tag');
+      var tag = btn.dataset.tag;
       activeTag = (activeTag === tag && tag !== '') ? '' : tag;
       inner.querySelectorAll('.skill-tag-btn').forEach(function(b) {
         b.classList.toggle('skill-tag-btn--active',
-          activeTag === '' ? b.getAttribute('data-tag') === '' : b.getAttribute('data-tag') === activeTag);
+          activeTag === '' ? b.dataset.tag === '' : b.dataset.tag === activeTag);
       });
-      var grid = document.getElementById('membersGrid');
-      if (!grid) return;
-      grid.querySelectorAll('.member-card').forEach(function(card) {
-        if (activeTag === '') { card.style.display = ''; return; }
-        var tags = Array.from(card.querySelectorAll('.member-tag'))
-          .map(function(t){ return t.textContent.trim(); });
-        card.style.display = tags.indexOf(activeTag) >= 0 ? '' : 'none';
+      document.querySelectorAll('#membersGrid .member-card').forEach(function(card) {
+        if (!activeTag) { card.style.display = ''; return; }
+        var cardTags = Array.from(card.querySelectorAll('.member-tag'))
+          .map(function(el){ return el.textContent.trim(); });
+        card.style.display = cardTags.indexOf(activeTag) >= 0 ? '' : 'none';
       });
-      if (activeTag !== '') {
+      // Chiudi dopo selezione
+      if (activeTag) {
         open = false;
-        panel.setAttribute('aria-hidden', 'true');
         panel.classList.remove('skill-filter-panel--open');
-        if (arrow) arrow.textContent = '▾';
+        arrow.textContent = '▾';
       }
     });
   }
@@ -1217,9 +1216,6 @@
         }
       }
     }
-    // Sblocca filtro skill
-    const filterBtn = document.getElementById('skillFilterToggle');
-    if (filterBtn) filterBtn.classList.remove('skill-filter-toggle--locked');
 
     // Aggiorna barra accesso
     const bs = document.getElementById('barStatus');
@@ -2061,7 +2057,34 @@
   })();
   </script>
 
-
+  <!-- ── FILTRO MEMBRI (script separato, fuori dall'IIFE) ── -->
+  <script>
+  (function() {
+    function initMembersFilter(allMembers) {
+      var btns = document.querySelectorAll('.filter-btn');
+      var grid = document.getElementById('members-grid') || document.querySelector('.members__grid');
+      if (!btns.length || !grid) return;
+      btns.forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          btns.forEach(function(b) { b.classList.remove('filter-btn--active'); });
+          btn.classList.add('filter-btn--active');
+          var filter = btn.dataset.filter;
+          var cards = grid.querySelectorAll('.member-card');
+          cards.forEach(function(card) {
+            if (filter === 'all') {
+              card.style.display = '';
+            } else {
+              var badge = card.querySelector('.profile-active-badge');
+              card.style.display = badge ? '' : 'none';
+            }
+          });
+        });
+      });
+    }
+    // Esponi globalmente per essere chiamata da renderAndDisplay
+    window.initMembersFilter = initMembersFilter;
+  })();
+  </script>
 
   <!-- ── QUICKNAV MOBILE RETE ── -->
   <div id="rete-mobile-qn" style="display:none; position:fixed; bottom:20px; right:16px; z-index:8000;">
