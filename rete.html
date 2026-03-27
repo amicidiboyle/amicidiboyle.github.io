@@ -38,7 +38,7 @@
         <a href="index.html#ricerca" data-i18n="r_nav_ric">Ricerca</a>
         <a class="nav-active" href="rete.html" aria-current="page">Rete</a>
         <a href="podcast.html" data-i18n="r_nav_pod">Podcast</a>
-        <a href="#prossimo-evento" data-i18n="r_events_link">Eventi</a>
+        <a href="#prossimo-evento">Eventi</a>
         <a class="nav-cta" href="index.html#contatti" data-i18n="r_nav_cont">Contatti</a>
       </nav>
       <button class="lang-toggle" id="langToggle" type="button" aria-label="Cambia lingua / Switch language">
@@ -53,7 +53,7 @@
         <a href="index.html#ricerca" data-i18n="r_nav_ric">Ricerca</a>
         <a href="rete.html" data-i18n="r_nav_rete">Rete</a>
         <a href="podcast.html" data-i18n="r_nav_pod">Podcast</a>
-        <a href="#prossimo-evento" data-i18n="r_events_link">Eventi</a>
+        <a href="#prossimo-evento">Eventi</a>
         <a href="index.html#contatti" data-i18n="r_nav_cont">Contatti</a>
       </div>
     </div>
@@ -834,7 +834,8 @@
       ? `<button class="icon-btn member-email-btn" data-email="${m.email}" aria-label="Contatta ${m.name}" title="Visibile ai membri della Rete">${LOCK_ICON}</button>`
       : '';
     const key = m.name.toLowerCase().replace(/\s+/g, '-');
-    const profileBtn = `<button class="icon-btn member-profile-btn icon-btn--locked" data-key="${key}" data-name="${m.name}" data-role="${m.role||''}" data-tip="Pagina personale">${PROFILE_ICON}</button>`;
+    const profileColorClass = isComplete ? ' icon-btn--profile-complete' : hasContent ? ' icon-btn--profile-partial' : '';
+    const profileBtn = `<button class="icon-btn member-profile-btn icon-btn--locked${profileColorClass}" data-key="${key}" data-name="${m.name}" data-role="${m.role||''}" data-tip="Pagina personale">${PROFILE_ICON}</button>`;
     const editBtn = `<button class="icon-btn icon-btn--pencil member-edit-btn icon-btn--locked" data-key="${key}" data-name="${m.name}" data-role="${m.role||''}" data-tip="Modifica profilo">${PENCIL_ICON}</button>`;
 
     return `
@@ -1897,10 +1898,6 @@
         var k = el.getAttribute('data-i18n');
         if (dict[k] !== undefined) el.textContent = dict[k];
       });
-      document.querySelectorAll('[data-i18n-html]').forEach(function(el) {
-        var k = el.getAttribute('data-i18n-html');
-        if (dict[k] !== undefined) el.innerHTML = dict[k];
-      });
       document.querySelectorAll('[data-i18n-placeholder]').forEach(function(el) {
         var k = el.getAttribute('data-i18n-placeholder');
         if (dict[k] !== undefined) el.placeholder = dict[k];
@@ -1920,13 +1917,17 @@
     function attachToggle() {
       var btn = document.getElementById('langToggle');
       if (!btn) return;
-      btn.addEventListener('click', function(e) {
-        e.preventDefault(); e.stopPropagation();
+      // Rimuovi listener precedenti clonando il nodo
+      var fresh = btn.cloneNode(true);
+      btn.parentNode.replaceChild(fresh, btn);
+      fresh.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
         var current = sessionStorage.getItem('boyle_lang') || 'it';
         var next = current === 'it' ? 'en' : 'it';
         sessionStorage.setItem('boyle_lang', next);
         applyLang(next);
-      });
+      }, true);
     }
 
     // Wire up mobile toggle
