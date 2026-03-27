@@ -38,7 +38,7 @@
         <a href="index.html#ricerca" data-i18n="r_nav_ric">Ricerca</a>
         <a class="nav-active" href="rete.html" aria-current="page">Rete</a>
         <a href="podcast.html" data-i18n="r_nav_pod">Podcast</a>
-        <a href="#prossimo-evento">Eventi</a>
+        <a href="#prossimo-evento" data-i18n="r_events_link">Eventi</a>
         <a class="nav-cta" href="index.html#contatti" data-i18n="r_nav_cont">Contatti</a>
       </nav>
       <button class="lang-toggle" id="langToggle" type="button" aria-label="Cambia lingua / Switch language">
@@ -53,7 +53,7 @@
         <a href="index.html#ricerca" data-i18n="r_nav_ric">Ricerca</a>
         <a href="rete.html" data-i18n="r_nav_rete">Rete</a>
         <a href="podcast.html" data-i18n="r_nav_pod">Podcast</a>
-        <a href="#prossimo-evento">Eventi</a>
+        <a href="#prossimo-evento" data-i18n="r_events_link">Eventi</a>
         <a href="index.html#contatti" data-i18n="r_nav_cont">Contatti</a>
       </div>
     </div>
@@ -1896,6 +1896,10 @@
       document.querySelectorAll('[data-i18n]').forEach(function(el) {
         var k = el.getAttribute('data-i18n');
         if (dict[k] !== undefined) el.textContent = dict[k];
+      });
+      document.querySelectorAll('[data-i18n-html]').forEach(function(el) {
+        var k = el.getAttribute('data-i18n-html');
+        if (dict[k] !== undefined) el.innerHTML = dict[k];
       });
       document.querySelectorAll('[data-i18n-placeholder]').forEach(function(el) {
         var k = el.getAttribute('data-i18n-placeholder');
