@@ -622,42 +622,147 @@
   <!-- ── MODAL PROFILO ── -->
   <div class="profile-modal" id="profileModal" aria-hidden="true">
     <div class="profile-modal__dialog">
-      <button class="profile-modal__close" id="profileModalClose">✕</button>
-      <div class="pm-header">
-        <p class="profile-modal__name" id="pm-name"></p>
-        <p class="profile-modal__role" id="pm-role"></p>
+
+      <!-- Hero profilo -->
+      <div class="profile-hero">
+        <img class="profile-hero__photo" id="pm-photo" src="" alt="" />
+        <div class="profile-hero__info">
+          <div class="profile-hero__kicker">Membro della Rete di Boyle</div>
+          <h2 class="profile-hero__name" id="pm-name"></h2>
+          <p class="profile-hero__role" id="pm-role"></p>
+          <div class="profile-hero__location" id="pm-location"></div>
+          <div class="profile-tags" id="pm-tags" style="margin-top:10px;"></div>
+        </div>
+        <button class="profile-modal__close" id="profileModalClose" aria-label="Chiudi">✕</button>
       </div>
-      <div class="profile-modal__avail" id="pm-avail"></div>
-      <p class="profile-modal__bio" id="pm-bio"></p>
-      <div class="pm-tags" id="pm-tags"></div>
-      <div class="profile-modal__links" id="pm-links"></div>
+
+      <!-- Body profilo -->
+      <div class="profile-body">
+        <div id="pm-bio-wrap">
+          <div class="profile-section-label">Presentazione</div>
+          <div class="profile-bio-box"><p id="pm-bio"></p></div>
+        </div>
+        <div id="pm-avail-wrap">
+          <div class="profile-section-label">Disponibilità</div>
+          <div class="profile-availability" id="pm-avail"></div>
+        </div>
+        <div id="pm-links-wrap">
+          <div class="profile-section-label">Link professionali</div>
+          <div class="profile-links" id="pm-links"></div>
+        </div>
+      </div>
+
     </div>
   </div>
   <!-- ── MODAL MATITA ── -->
   <div class="edit-modal" id="editModal" aria-hidden="true">
     <div class="edit-modal__dialog">
-      <button class="edit-modal__close" id="editModalClose">✕</button>
-      <p class="edit-modal__title">Personalizza la tua card</p>
-      <p class="edit-modal__sub" id="editModalSub"></p>
-      <div class="edit-section-label">Presentazione</div>
-      <div class="edit-field"><label>Bio (max 300 caratteri)</label><textarea id="ef-bio" maxlength="300" placeholder="Sono un medico specializzato in..."></textarea></div>
-      <div class="edit-section-label">Link professionali</div>
-      <div class="edit-field"><label>LinkedIn</label><input type="url" id="ef-linkedin" /></div>
-      <div class="edit-field"><label>ResearchGate</label><input type="url" id="ef-researchgate" /></div>
-      <div class="edit-field"><label>Google Scholar</label><input type="url" id="ef-scholar" /></div>
-      <div class="edit-field"><label>ORCID</label><input type="url" id="ef-orcid" /></div>
-      <div class="edit-field"><label>X / Twitter</label><input type="url" id="ef-twitter" /></div>
-      <div class="edit-field"><label>Instagram</label><input type="url" id="ef-instagram" /></div>
-      <div class="edit-field"><label>Sito personale</label><input type="url" id="ef-website" /></div>
-      <div class="edit-field"><label>Link corsi / pubblicazioni</label><input type="url" id="ef-courses" /></div>
-      <div class="edit-section-label">Disponibilità</div>
-      <div class="edit-checkboxes">
-        <label class="edit-checkbox"><input type="checkbox" id="ef-speaker" /> Disponibile come relatore</label>
-        <label class="edit-checkbox"><input type="checkbox" id="ef-podcast" /> Disponibile per il podcast</label>
-        <label class="edit-checkbox"><input type="checkbox" id="ef-research" /> Disponibile per ricerca</label>
+
+      <!-- Header identità -->
+      <div class="edit-modal__header">
+        <div class="edit-modal__avatar" id="editModalAvatar"></div>
+        <div class="edit-modal__identity">
+          <p class="edit-modal__name" id="editModalName"></p>
+          <p class="edit-modal__role-label" id="editModalSub"></p>
+          <span class="edit-modal__status" id="editModalStatus"></span>
+        </div>
+        <button class="edit-modal__close" id="editModalClose" aria-label="Chiudi">✕</button>
       </div>
-      <button class="edit-submit" id="editSubmit">Salva il profilo</button>
-      <div class="edit-status" id="editStatus"></div>
+
+      <!-- Blocco A: Identità pubblica -->
+      <div class="edit-section-block">
+        <div class="edit-section-label">
+          <span class="edit-section-icon">✦</span> Bio pubblica
+        </div>
+        <div class="edit-field">
+          <label>Presentazione breve <span class="edit-field__hint">max 300 caratteri</span></label>
+          <textarea id="ef-bio" maxlength="300" placeholder="Racconta chi sei e cosa fai in questo campo..."></textarea>
+          <span class="edit-char-count" id="bioCount">0 / 300</span>
+        </div>
+      </div>
+
+      <!-- Blocco B: Link professionali -->
+      <div class="edit-section-block">
+        <div class="edit-section-label">
+          <span class="edit-section-icon">⬡</span> Link professionali
+        </div>
+        <div class="edit-fields-grid">
+          <div class="edit-field">
+            <label>LinkedIn</label>
+            <div class="edit-field__input-wrap">
+              <span class="edit-field__prefix">in</span>
+              <input type="url" id="ef-linkedin" placeholder="linkedin.com/in/..." />
+            </div>
+          </div>
+          <div class="edit-field">
+            <label>ResearchGate</label>
+            <div class="edit-field__input-wrap">
+              <span class="edit-field__prefix">RG</span>
+              <input type="url" id="ef-researchgate" placeholder="researchgate.net/profile/..." />
+            </div>
+          </div>
+          <div class="edit-field">
+            <label>Google Scholar</label>
+            <div class="edit-field__input-wrap">
+              <span class="edit-field__prefix">GS</span>
+              <input type="url" id="ef-scholar" placeholder="scholar.google.com/..." />
+            </div>
+          </div>
+          <div class="edit-field">
+            <label>ORCID</label>
+            <div class="edit-field__input-wrap">
+              <span class="edit-field__prefix">ID</span>
+              <input type="url" id="ef-orcid" placeholder="orcid.org/0000-..." />
+            </div>
+          </div>
+          <div class="edit-field">
+            <label>Sito personale</label>
+            <div class="edit-field__input-wrap">
+              <span class="edit-field__prefix">↗</span>
+              <input type="url" id="ef-website" placeholder="https://..." />
+            </div>
+          </div>
+          <div class="edit-field">
+            <label>Corsi / Pubblicazioni</label>
+            <div class="edit-field__input-wrap">
+              <span class="edit-field__prefix">↗</span>
+              <input type="url" id="ef-courses" placeholder="https://..." />
+            </div>
+          </div>
+          <div class="edit-field">
+            <label>X / Twitter</label>
+            <div class="edit-field__input-wrap">
+              <span class="edit-field__prefix">𝕏</span>
+              <input type="url" id="ef-twitter" placeholder="x.com/..." />
+            </div>
+          </div>
+          <div class="edit-field">
+            <label>Instagram</label>
+            <div class="edit-field__input-wrap">
+              <span class="edit-field__prefix">◎</span>
+              <input type="url" id="ef-instagram" placeholder="instagram.com/..." />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Blocco C: Disponibilità -->
+      <div class="edit-section-block">
+        <div class="edit-section-label">
+          <span class="edit-section-icon">◈</span> Disponibilità
+        </div>
+        <div class="edit-checkboxes">
+          <label class="edit-checkbox"><input type="checkbox" id="ef-speaker" /><span>Relatore a corsi e congressi</span></label>
+          <label class="edit-checkbox"><input type="checkbox" id="ef-podcast" /><span>Ospite del podcast Sotto Pressione</span></label>
+          <label class="edit-checkbox"><input type="checkbox" id="ef-research" /><span>Collaborazioni di ricerca</span></label>
+        </div>
+      </div>
+
+      <div class="edit-modal__footer">
+        <button class="edit-submit" id="editSubmit">Salva il profilo</button>
+        <div class="edit-status" id="editStatus"></div>
+      </div>
+
     </div>
   </div>
 
@@ -706,6 +811,13 @@
   }
 
   function renderCard(m) {
+    // Determina se profilo è attivo (bio + almeno 1 link nel profile)
+    const prof = window._profiles ? window._profiles[m.name.toLowerCase().replace(/\s+/g,'-')] : null;
+    const isActive = prof && prof.bio && prof.bio.trim().length > 10 &&
+      (prof.linkedin || prof.researchgate || prof.scholar || prof.orcid || prof.website);
+    const activeBadge = isActive
+      ? `<span class="profile-active-badge" title="Profilo aggiornato">● Profilo attivo</span>`
+      : '';
     const li = m.linkedin && m.linkedin !== 'https://www.linkedin.com/'
       ? `<a class="icon-btn" href="${m.linkedin}" aria-label="LinkedIn di ${m.name}" target="_blank" rel="noopener">${LI_ICON}</a>`
       : '';
@@ -715,7 +827,7 @@
       : '';
     const key = m.name.toLowerCase().replace(/\s+/g, '-');
     const profileBtn = `<button class="icon-btn member-profile-btn icon-btn--locked" data-key="${key}" data-name="${m.name}" data-role="${m.role||''}" data-tip="Pagina personale">${PROFILE_ICON}</button>`;
-    const editBtn = `<button class="icon-btn icon-btn--pencil member-edit-btn icon-btn--locked" data-key="${key}" data-name="${m.name}" data-tip="Modifica profilo">${PENCIL_ICON}</button>`;
+    const editBtn = `<button class="icon-btn icon-btn--pencil member-edit-btn icon-btn--locked" data-key="${key}" data-name="${m.name}" data-role="${m.role||''}" data-tip="Modifica profilo">${PENCIL_ICON}</button>`;
 
     return `
       <article class="member-card reveal" role="listitem" data-key="${key}">
@@ -723,6 +835,7 @@
           <img class="member-photo" src="assets/rete/${m.img}" alt="${m.name}" loading="lazy" onerror="this.style.background='rgba(5,18,46,.8)';this.style.opacity='.4'" />
         </div>
         <h2 class="member-name">${m.name}</h2>
+        ${activeBadge}
         ${renderTags(m.tags)}
         <p class="member-role">${m.role}</p>
         <div class="member-location">
@@ -746,6 +859,8 @@
       const members = await res.json();
       grid.innerHTML = members.map(renderCard).join('');
       if (countEl) countEl.textContent = members.length;
+      // Inizializza filtro
+      initMembersFilter(members);
       initReveal();
       
     } catch(e) {
@@ -1370,7 +1485,7 @@
     if (profilesCache) return profilesCache;
     try {
       const r = await fetch(PROFILES_URL+'?v='+Date.now());
-      if (r.ok) { profilesCache = await r.json(); return profilesCache; }
+      if (r.ok) { profilesCache = await r.json(); window._profiles = profilesCache; return profilesCache; }
     } catch(e) {}
     return {};
   }
@@ -1387,22 +1502,55 @@
       if (!btn || btn.classList.contains('icon-btn--locked')) return;
       document.getElementById('pm-name').textContent = btn.dataset.name;
       document.getElementById('pm-role').textContent = btn.dataset.role;
+      // Foto
+      const photoEl = document.getElementById('pm-photo');
+      const memberKey = btn.dataset.key;
+      if (photoEl) {
+        // Trova img dalla card
+        const card = document.querySelector('[data-key="'+memberKey+'"]');
+        const cardImg = card ? card.querySelector('.member-photo') : null;
+        photoEl.src = cardImg ? cardImg.src : '';
+        photoEl.alt = btn.dataset.name;
+        photoEl.onerror = function() { this.style.display='none'; };
+      }
+      // Location
+      const locEl = document.getElementById('pm-location');
+      if (locEl) {
+        const card2 = document.querySelector('[data-key="'+memberKey+'"]');
+        const cityEl = card2 ? card2.querySelector('.member-location__city') : null;
+        locEl.textContent = cityEl ? cityEl.textContent.trim() : '';
+      }
       const profiles = await loadProfiles();
-      const p = profiles[btn.dataset.key] || {};
+      const p = profiles[memberKey] || {};
+      // Bio
       const bioEl = document.getElementById('pm-bio');
-      bioEl.textContent = p.bio || 'Profilo non ancora compilato.';
-      bioEl.className = 'profile-modal__bio' + (p.bio ? '' : ' empty');
+      const bioWrap = document.getElementById('pm-bio-wrap');
+      if (p.bio) {
+        bioEl.textContent = p.bio;
+        if (bioWrap) bioWrap.style.display = '';
+      } else {
+        bioEl.textContent = 'Il profilo non è ancora stato compilato.';
+        bioEl.style.opacity = '.45';
+      }
+      // Links con pill style
       const linksEl = document.getElementById('pm-links');
+      const linksWrap = document.getElementById('pm-links-wrap');
       linksEl.innerHTML = '';
+      const linkIcons = {
+        'LinkedIn':'in','ResearchGate':'RG','Scholar':'GS',
+        'ORCID':'ID','X':'𝕏','Instagram':'◎','Sito':'↗','Corsi':'↗'
+      };
       [['LinkedIn',p.linkedin],['ResearchGate',p.researchgate],
        ['Scholar',p.scholar],['ORCID',p.orcid],['X',p.twitter],
        ['Instagram',p.instagram],['Sito',p.website],['Corsi',p.courses]
       ].forEach(([l,u])=>{
         if(!u) return;
         const a=document.createElement('a');
-        a.className='profile-link'; a.href=u; a.target='_blank'; a.rel='noopener';
-        a.textContent=l; linksEl.appendChild(a);
+        a.className='profile-link-pill'; a.href=u; a.target='_blank'; a.rel='noopener';
+        a.innerHTML='<span class="profile-link-pill__icon">'+( linkIcons[l]||'↗')+'</span>'+l;
+        linksEl.appendChild(a);
       });
+      if (linksWrap) linksWrap.style.display = linksEl.children.length ? '' : 'none';
       const availEl=document.getElementById('pm-avail');
       availEl.innerHTML='';
       if(p.speaker) availEl.innerHTML+='<span class="avail-badge avail-badge--speaker">📢 Disponibile come relatore</span>';
@@ -1440,15 +1588,42 @@
       modal?.classList.remove('is-open'); modal?.setAttribute('aria-hidden','true');
       document.body.style.overflow='';
     }
-    function openModal(key, name) {
+    function openModal(key, name, role) {
       currentKey = key;
-      document.getElementById('editModalSub').textContent = 'Modifica il profilo — '+name;
+      // Header identità
+      const nameEl = document.getElementById('editModalName');
+      const subEl  = document.getElementById('editModalSub');
+      const avatarEl = document.getElementById('editModalAvatar');
+      const statusEl = document.getElementById('editModalStatus');
+      if (nameEl) nameEl.textContent = name || '';
+      if (subEl)  subEl.textContent  = role || '';
+      if (avatarEl) {
+        const initials = (name||'?').split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);
+        avatarEl.textContent = initials;
+      }
       modal?.classList.add('is-open'); modal?.setAttribute('aria-hidden','false');
       document.body.style.overflow='hidden';
       if(status) status.textContent='';
+      // Char counter bio
+      const bioEl2 = document.getElementById('ef-bio');
+      const bioCount = document.getElementById('bioCount');
+      if (bioEl2 && bioCount) {
+        bioEl2.addEventListener('input', function() {
+          bioCount.textContent = bioEl2.value.length + ' / 300';
+        });
+      }
       loadProfiles().then(profiles=>{
         const p=profiles[key]||{};
-        document.getElementById('ef-bio').value=p.bio||'';
+        const bioVal = p.bio||'';
+        document.getElementById('ef-bio').value = bioVal;
+        if (bioCount) bioCount.textContent = bioVal.length + ' / 300';
+        // Status profilo
+        if (statusEl) {
+          const isActive = bioVal.trim().length > 10 &&
+            (p.linkedin||p.researchgate||p.scholar||p.orcid||p.website);
+          statusEl.textContent = isActive ? '● Profilo attivo' : '○ Profilo base';
+          statusEl.className = 'edit-modal__status ' + (isActive ? 'edit-modal__status--active' : '');
+        }
         document.getElementById('ef-linkedin').value=p.linkedin||'';
         document.getElementById('ef-researchgate').value=p.researchgate||'';
         document.getElementById('ef-scholar').value=p.scholar||'';
@@ -1468,7 +1643,7 @@
       if(btn.classList.contains('icon-btn--locked')) {
         window._openAccessModal?.(); return;
       }
-      openModal(btn.dataset.key, btn.dataset.name);
+      openModal(btn.dataset.key, btn.dataset.name, btn.dataset.role);
     });
     closeB?.addEventListener('click', closeModal);
     modal?.addEventListener('click', e=>{ if(e.target===modal) closeModal(); });
@@ -1761,8 +1936,30 @@
       if (lang === 'en') applyLang('en');
     }
   })();
-  </script>
 
+  <script>
+  function initMembersFilter(allMembers) {
+    const btns = document.querySelectorAll('.filter-btn');
+    const grid = document.getElementById('members-grid') || document.querySelector('.members__grid');
+    if (!btns.length || !grid) return;
+    btns.forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        btns.forEach(function(b) { b.classList.remove('filter-btn--active'); });
+        btn.classList.add('filter-btn--active');
+        const filter = btn.dataset.filter;
+        const cards = grid.querySelectorAll('.member-card');
+        cards.forEach(function(card) {
+          if (filter === 'all') {
+            card.style.display = '';
+          } else {
+            const badge = card.querySelector('.profile-active-badge');
+            card.style.display = badge ? '' : 'none';
+          }
+        });
+      });
+    });
+  }
+  </script>
 
   <!-- ── MOBILE QUICKNAV RETE ── -->
   <div id="rete-mobile-qn" style="display:none; position:fixed; bottom:20px; right:16px; z-index:8000;">
@@ -1797,8 +1994,8 @@
     wrap.style.display = 'block';
 
     window.addEventListener('scroll', function(){
-      wrap.style.opacity = window.scrollY > 200 ? '1' : '0';
-      wrap.style.pointerEvents = window.scrollY > 200 ? 'auto' : 'none';
+      wrap.style.opacity = window.scrollY > 100 ? '1' : '0';
+      wrap.style.pointerEvents = window.scrollY > 100 ? 'auto' : 'none';
     }, {passive:true});
     wrap.style.opacity = '0';
     wrap.style.transition = 'opacity .3s';
