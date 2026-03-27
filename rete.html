@@ -41,7 +41,7 @@
         <a href="#prossimo-evento">Eventi</a>
         <a class="nav-cta" href="index.html#contatti">Contatti</a>
       </nav>
-      <button class="lang-toggle" id="langToggle" type="button" aria-label="Cambia lingua / Switch language">
+      <button class="lang-toggle" id="langToggle" type="button" aria-label="Cambia lingua / Switch language" style="position:relative;z-index:10000;pointer-events:auto;">
         <span id="langCurrent">IT</span><span class="lang-sep"> · </span><span id="langOther">EN</span>
       </button>
       <button class="nav-mobile-btn" id="navMobileBtn" aria-label="Apri menu" aria-expanded="false">
@@ -148,6 +148,17 @@
         <div class="members-header">
           <h2 class="members-title" data-i18n="r_members_title">I Membri della Rete</h2>
           <p class="members-sub" data-i18n="r_members_sub">Professionisti selezionati per competenza, curiosità e impatto operativo.</p>
+        <div class="profile-legend">
+          <span class="profile-legend__item">
+            <span class="profile-legend__dot profile-legend__dot--empty"></span>Base
+          </span>
+          <span class="profile-legend__item">
+            <span class="profile-legend__dot profile-legend__dot--partial"></span>In aggiornamento
+          </span>
+          <span class="profile-legend__item">
+            <span class="profile-legend__dot profile-legend__dot--complete"></span>Profilo attivo
+          </span>
+        </div>
         </div>
 
         <!-- Le card vengono iniettate da JS -->
@@ -834,7 +845,20 @@
       ? `<button class="icon-btn member-email-btn" data-email="${m.email}" aria-label="Contatta ${m.name}" title="Visibile ai membri della Rete">${LOCK_ICON}</button>`
       : '';
     const key = m.name.toLowerCase().replace(/\s+/g, '-');
-    const profileBtn = `<button class="icon-btn member-profile-btn icon-btn--locked" data-key="${key}" data-name="${m.name}" data-role="${m.role||''}" data-tip="Pagina personale">${PROFILE_ICON}</button>`;
+    // Colore icona in base allo stato profilo
+    const profData = window._profiles ? window._profiles[key] : null;
+    const hasAny = profData && (
+      (profData.bio && profData.bio.trim().length > 5) ||
+      profData.linkedin || profData.researchgate ||
+      profData.scholar || profData.orcid || profData.website
+    );
+    const isComplete = profData && profData.bio && profData.bio.trim().length > 10 &&
+      (profData.linkedin || profData.researchgate || profData.scholar ||
+       profData.orcid || profData.website);
+    const profileColorClass = isComplete
+      ? ' icon-btn--profile-complete'
+      : hasAny ? ' icon-btn--profile-partial' : '';
+    const profileBtn = `<button class="icon-btn member-profile-btn icon-btn--locked${profileColorClass}" data-key="${key}" data-name="${m.name}" data-role="${m.role||''}" data-tip="Pagina personale">${PROFILE_ICON}</button>`;
     const editBtn = `<button class="icon-btn icon-btn--pencil member-edit-btn icon-btn--locked" data-key="${key}" data-name="${m.name}" data-role="${m.role||''}" data-tip="Modifica profilo">${PENCIL_ICON}</button>`;
 
     return `
@@ -1934,6 +1958,23 @@
       });
     }
 
+    // Fallback diretto sul bottone
+    (function() {
+      function tryWire() {
+        var b = document.getElementById('langToggle');
+        if (!b || b._wired) return;
+        b._wired = true;
+        b.addEventListener('click', function(e) {
+          e.preventDefault(); e.stopPropagation();
+          var cur; try { cur = sessionStorage.getItem('boyle_lang')||'it'; } catch(x){ cur='it'; }
+          try { sessionStorage.setItem('boyle_lang', cur==='it'?'en':'it'); } catch(x){}
+          location.reload();
+        }, true); // useCapture=true per bypassare qualsiasi blocco
+      }
+      if (document.readyState==='loading') document.addEventListener('DOMContentLoaded', tryWire);
+      else tryWire();
+    })();
+
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', function() {
         attachToggle(); attachMobileToggle();
@@ -1995,7 +2036,7 @@
         box-shadow:0 12px 40px rgba(0,0,0,.5);">
       <a href="#top" style="display:block;padding:10px 14px;color:rgba(168,238,255,.85);font-size:.82rem;font-weight:600;text-decoration:none;border-radius:10px;">↑ Inizio</a>
       <a href="#members" style="display:block;padding:10px 14px;color:rgba(168,238,255,.7);font-size:.82rem;font-weight:500;text-decoration:none;border-radius:10px;">👥 Membri</a>
-      <a href="#prossimo-evento" style="display:block;padding:10px 14px;color:rgba(168,238,255,.7);font-size:.82rem;font-weight:500;text-decoration:none;border-radius:10px;">🗓 Evento</a>
+      <a href="#prossimo-evento" style="display:block;padding:10px 14px;color:rgba(168,238,255,.7);font-size:.82rem;font-weight:500;text-decoration:none;border-radius:10px;">🗓 Eventi</a>
     </div>
   </div>
 
