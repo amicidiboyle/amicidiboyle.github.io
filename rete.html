@@ -33,13 +33,13 @@
         </span>
       </a>
       <nav class="nav--desktop">
-        <a href="index.html">Home</a>
-        <a href="index.html#visione">Visione</a>
-        <a href="index.html#ricerca">Ricerca</a>
+        <a href="index.html" data-i18n="r_nav_home">Home</a>
+        <a href="index.html#visione" data-i18n="r_nav_vis">Visione</a>
+        <a href="index.html#ricerca" data-i18n="r_nav_ric">Ricerca</a>
         <a class="nav-active" href="rete.html" aria-current="page">Rete</a>
-        <a href="podcast.html">Podcast</a>
+        <a href="podcast.html" data-i18n="r_nav_pod">Podcast</a>
         <a href="#prossimo-evento">Eventi</a>
-        <a class="nav-cta" href="index.html#contatti">Contatti</a>
+        <a class="nav-cta" href="index.html#contatti" data-i18n="r_nav_cont">Contatti</a>
       </nav>
       <button class="lang-toggle" id="langToggle" type="button" aria-label="Cambia lingua / Switch language">
         <span id="langCurrent">IT</span><span class="lang-sep"> · </span><span id="langOther">EN</span>
@@ -48,13 +48,13 @@
         <span></span><span></span><span></span>
       </button>
       <div class="nav-mobile-panel" id="navMobilePanel" aria-hidden="true">
-        <a href="index.html">Home</a>
-        <a href="index.html#visione">Visione</a>
-        <a href="index.html#ricerca">Ricerca</a>
-        <a href="rete.html">Rete</a>
-        <a href="podcast.html">Podcast</a>
+        <a href="index.html" data-i18n="r_nav_home">Home</a>
+        <a href="index.html#visione" data-i18n="r_nav_vis">Visione</a>
+        <a href="index.html#ricerca" data-i18n="r_nav_ric">Ricerca</a>
+        <a href="rete.html" data-i18n="r_nav_rete">Rete</a>
+        <a href="podcast.html" data-i18n="r_nav_pod">Podcast</a>
         <a href="#prossimo-evento">Eventi</a>
-        <a href="index.html#contatti">Contatti</a>
+        <a href="index.html#contatti" data-i18n="r_nav_cont">Contatti</a>
       </div>
     </div>
   </header>
@@ -127,7 +127,7 @@
 
           <div class="hero-access-bar" id="accessBar" style="justify-content:center;margin:0 auto;">
             <input class="hero-access-input" id="barCodeInput"
-                   type="text" data-i18n-placeholder="r_code_ph" placeholder="🔑 Codice membro"
+                   type="text" data-i18n-placeholder="r_code_ph" placeholder="🔑 Codice membro" data-i18n-placeholder="r_code_ph"
                    autocomplete="off" spellcheck="false" maxlength="30" />
             <button class="hero-access-btn" id="barCodeBtn" data-i18n="r_access_btn">Accedi</button>
             <span class="hero-access-status" id="barStatus"></span>
@@ -514,10 +514,10 @@
         <span>© 2026 Gli Amici di Boyle</span>
       </div>
       <nav class="footer__links">
-        <a href="index.html">Home</a>
-        <a href="podcast.html">Podcast</a>
+        <a href="index.html" data-i18n="r_nav_home">Home</a>
+        <a href="podcast.html" data-i18n="r_nav_pod">Podcast</a>
         <a href="#top">↑ Su</a>
-        <a href="index.html#contatti">Contatti</a>
+        <a href="index.html#contatti" data-i18n="r_nav_cont">Contatti</a>
       </nav>
     </div>
   </footer>
@@ -1781,7 +1781,7 @@
 <!-- i18n: rete.html -->
   <script>
   (function(){
-    var lang = localStorage.getItem('boyle_lang') || 'it';
+    var lang = sessionStorage.getItem('boyle_lang') || 'it';
 
     var T = {
       it: {
@@ -1906,7 +1906,7 @@
       var oth = document.getElementById('langOther');
       if (cur) cur.textContent = l === 'en' ? 'EN' : 'IT';
       if (oth) oth.textContent = l === 'en' ? 'IT' : 'EN';
-      localStorage.setItem('boyle_lang', l);
+      sessionStorage.setItem('boyle_lang', l);
     }
 
     // Expose globally
@@ -1918,9 +1918,10 @@
       if (!btn) return;
       btn.addEventListener('click', function(e) {
         e.preventDefault(); e.stopPropagation();
-        var cur = localStorage.getItem('boyle_lang') || 'it';
-        localStorage.setItem('boyle_lang', cur === 'it' ? 'en' : 'it');
-        location.reload();
+        var current = sessionStorage.getItem('boyle_lang') || 'it';
+        var next = current === 'it' ? 'en' : 'it';
+        sessionStorage.setItem('boyle_lang', next);
+        applyLang(next);
       });
     }
 
@@ -1929,9 +1930,10 @@
       var mob = document.getElementById('langToggleMobileRete');
       if (!mob) return;
       mob.addEventListener('click', function() {
-        var cur = localStorage.getItem('boyle_lang') || 'it';
-        localStorage.setItem('boyle_lang', cur === 'it' ? 'en' : 'it');
-        location.reload();
+        var cur = sessionStorage.getItem('boyle_lang') || 'it';
+        var nxt = cur === 'it' ? 'en' : 'it';
+        sessionStorage.setItem('boyle_lang', nxt);
+        applyLang(nxt);
       });
     }
 
