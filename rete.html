@@ -1781,7 +1781,7 @@
 <!-- i18n: rete.html -->
   <script>
   (function(){
-    var lang = sessionStorage.getItem('boyle_lang') || 'it';
+    var lang = localStorage.getItem('boyle_lang') || 'it';
 
     var T = {
       it: {
@@ -1906,7 +1906,7 @@
       var oth = document.getElementById('langOther');
       if (cur) cur.textContent = l === 'en' ? 'EN' : 'IT';
       if (oth) oth.textContent = l === 'en' ? 'IT' : 'EN';
-      sessionStorage.setItem('boyle_lang', l);
+      localStorage.setItem('boyle_lang', l);
     }
 
     // Expose globally
@@ -1918,8 +1918,8 @@
       if (!btn) return;
       btn.addEventListener('click', function(e) {
         e.preventDefault(); e.stopPropagation();
-        var cur = sessionStorage.getItem('boyle_lang') || 'it';
-        sessionStorage.setItem('boyle_lang', cur === 'it' ? 'en' : 'it');
+        var cur = localStorage.getItem('boyle_lang') || 'it';
+        localStorage.setItem('boyle_lang', cur === 'it' ? 'en' : 'it');
         location.reload();
       });
     }
@@ -1929,8 +1929,8 @@
       var mob = document.getElementById('langToggleMobileRete');
       if (!mob) return;
       mob.addEventListener('click', function() {
-        var cur = sessionStorage.getItem('boyle_lang') || 'it';
-        sessionStorage.setItem('boyle_lang', cur === 'it' ? 'en' : 'it');
+        var cur = localStorage.getItem('boyle_lang') || 'it';
+        localStorage.setItem('boyle_lang', cur === 'it' ? 'en' : 'it');
         location.reload();
       });
     }
