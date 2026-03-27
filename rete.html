@@ -41,7 +41,7 @@
         <a href="#prossimo-evento">Eventi</a>
         <a class="nav-cta" href="index.html#contatti">Contatti</a>
       </nav>
-      <button class="lang-toggle" id="langToggle" type="button" aria-label="Cambia lingua / Switch language" style="position:relative;z-index:10000;pointer-events:auto!important;">
+      <button class="lang-toggle" id="langToggle" type="button" aria-label="Cambia lingua / Switch language">
         <span id="langCurrent">IT</span><span class="lang-sep"> · </span><span id="langOther">EN</span>
       </button>
       <button class="nav-mobile-btn" id="navMobileBtn" aria-label="Apri menu" aria-expanded="false">
@@ -148,11 +148,6 @@
         <div class="members-header">
           <h2 class="members-title" data-i18n="r_members_title">I Membri della Rete</h2>
           <p class="members-sub" data-i18n="r_members_sub">Professionisti selezionati per competenza, curiosità e impatto operativo.</p>
-        <div class="profile-legend">
-          <span class="profile-legend__item profile-legend__item--base"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> Base</span>
-          <span class="profile-legend__item profile-legend__item--partial"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> In aggiornamento</span>
-          <span class="profile-legend__item profile-legend__item--complete"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> Profilo attivo</span>
-        </div>
         </div>
 
         <!-- Le card vengono iniettate da JS -->
@@ -2038,24 +2033,6 @@
         btn.style.transform = 'none';
       });
     });
-  })();
-  </script>
-
-  <!-- Fix IT/EN useCapture -->
-  <script>
-  (function(){
-    function wire(){
-      var b=document.getElementById('langToggle');
-      if(!b||b._w)return; b._w=true;
-      b.addEventListener('click',function(e){
-        e.preventDefault();e.stopPropagation();
-        var c;try{c=sessionStorage.getItem('boyle_lang')||'it';}catch(x){c='it';}
-        try{sessionStorage.setItem('boyle_lang',c==='it'?'en':'it');}catch(x){}
-        location.reload();
-      },true);
-    }
-    if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',wire);
-    else wire();
   })();
   </script>
 
