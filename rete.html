@@ -149,12 +149,12 @@
           <h2 class="members-title" data-i18n="r_members_title">I Membri della Rete</h2>
           <p class="members-sub" data-i18n="r_members_sub">Professionisti selezionati per competenza, curiosità e impatto operativo.</p>
         <div class="profile-legend"><span class="pleg pleg--base"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>&nbsp;Base</span><span class="pleg pleg--partial"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>&nbsp;Parzialmente completo</span><span class="pleg pleg--complete"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>&nbsp;Completo</span></div>
-        <div class="profile-legend"><span class="pleg pleg--base"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>&nbsp;Base</span><span class="pleg pleg--partial"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>&nbsp;Parzialmente completo</span><span class="pleg pleg--complete"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>&nbsp;Completo</span></div>
+        
         </div>
 
         <!-- Filtro per specialità -->
         <div class="skill-filter-wrap" id="skillFilterWrap">
-          <button class="skill-filter-toggle skill-filter-toggle--locked" id="skillFilterToggle" type="button" title="Inserisci il tuo codice per filtrare">
+          <button class="skill-filter-toggle skill-filter-toggle--locked" id="skillFilterToggle" type="button">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M7 12h10M11 18h2"/></svg>
             Filtra per specialità
             <span class="skill-filter-toggle__arrow" id="skillFilterArrow">▾</span>
@@ -897,8 +897,6 @@
     var inner  = document.getElementById('skillFilterInner');
     var arrow  = document.getElementById('skillFilterArrow');
     if (!inner || !toggle || !panel) return;
-
-    // Tag unici con conteggi
     var allTags = [];
     members.forEach(function(m) {
       if (m.tags) m.tags.forEach(function(t) {
@@ -906,7 +904,6 @@
       });
     });
     allTags.sort();
-
     inner.innerHTML = '<button class="skill-tag-btn skill-tag-btn--all skill-tag-btn--active" data-tag="">Tutti (' + members.length + ')</button>';
     allTags.forEach(function(tag) {
       var color = TAG_COLORS[tag] || '#7be4ff';
@@ -918,11 +915,8 @@
       btn.textContent = tag + ' (' + count + ')';
       inner.appendChild(btn);
     });
-
-    // Click sul toggle
     var open = false;
     toggle.addEventListener('click', function() {
-      // Se bloccato → apri modal accesso
       if (toggle.classList.contains('skill-filter-toggle--locked')) {
         if (typeof openAccessModal === 'function') openAccessModal();
         return;
@@ -932,8 +926,6 @@
       panel.classList.toggle('skill-filter-panel--open', open);
       if (arrow) arrow.textContent = open ? '▴' : '▾';
     });
-
-    // Filtro al click tag
     var activeTag = '';
     inner.addEventListener('click', function(e) {
       var btn = e.target.closest('.skill-tag-btn');
@@ -1225,7 +1217,6 @@
         }
       }
     }
-
     // Sblocca filtro skill
     const filterBtn = document.getElementById('skillFilterToggle');
     if (filterBtn) filterBtn.classList.remove('skill-filter-toggle--locked');
@@ -2070,34 +2061,7 @@
   })();
   </script>
 
-  <!-- ── FILTRO MEMBRI (script separato, fuori dall'IIFE) ── -->
-  <script>
-  (function() {
-    function initMembersFilter(allMembers) {
-      var btns = document.querySelectorAll('.filter-btn');
-      var grid = document.getElementById('members-grid') || document.querySelector('.members__grid');
-      if (!btns.length || !grid) return;
-      btns.forEach(function(btn) {
-        btn.addEventListener('click', function() {
-          btns.forEach(function(b) { b.classList.remove('filter-btn--active'); });
-          btn.classList.add('filter-btn--active');
-          var filter = btn.dataset.filter;
-          var cards = grid.querySelectorAll('.member-card');
-          cards.forEach(function(card) {
-            if (filter === 'all') {
-              card.style.display = '';
-            } else {
-              var badge = card.querySelector('.profile-active-badge');
-              card.style.display = badge ? '' : 'none';
-            }
-          });
-        });
-      });
-    }
-    // Esponi globalmente per essere chiamata da renderAndDisplay
-    window.initMembersFilter = initMembersFilter;
-  })();
-  </script>
+
 
   <!-- ── QUICKNAV MOBILE RETE ── -->
   <div id="rete-mobile-qn" style="display:none; position:fixed; bottom:20px; right:16px; z-index:8000;">
