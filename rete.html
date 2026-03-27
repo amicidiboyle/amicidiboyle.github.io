@@ -149,8 +149,15 @@
           <h2 class="members-title" data-i18n="r_members_title">I Membri della Rete</h2>
           <p class="members-sub" data-i18n="r_members_sub">Professionisti selezionati per competenza, curiosità e impatto operativo.</p>
         <div class="profile-legend"><span class="pleg pleg--base"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>&nbsp;Base</span><span class="pleg pleg--partial"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>&nbsp;Parzialmente completo</span><span class="pleg pleg--complete"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>&nbsp;Completo</span></div>
+        <div class="profile-legend"><span class="pleg pleg--base"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>&nbsp;Base</span><span class="pleg pleg--partial"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>&nbsp;Parzialmente completo</span><span class="pleg pleg--complete"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>&nbsp;Completo</span></div>
+        </div>
 
         <!-- Le card vengono iniettate da JS -->
+        <div id="skillFilterWrap" class="skill-filter-wrap">
+          <div class="skill-filter-inner" id="skillFilterInner">
+            <button class="skill-filter-btn skill-filter-btn--all skill-filter-btn--active" data-tag="">Tutti</button>
+          </div>
+        </div>
         <div class="members-grid" id="membersGrid" role="list"></div>
       </div>
     </section>
@@ -798,6 +805,10 @@
     'Mass Gathering':   '#ffb347',
     'Esplorazione':     '#00d4ff',
     'Medicina Militare':'#c0c0ff',
+    'Nursing':           '#80ffd4',
+    'Aerospaziale':      '#a8eeff',
+    'Educazione':        '#c4b0ff',
+    'Psicologia':        '#f8a5c2',
   };
 
   function renderTags(tags) {
@@ -858,7 +869,58 @@
       </article>`;
   }
 
-    function colorProfileIcons(profiles) {
+    function initSkillFilter(members) {
+    var wrap = document.getElementById('skillFilterInner');
+    if (!wrap) return;
+    // Raccoglie tutti i tag unici dai membri
+    var allTags = [];
+    members.forEach(function(m) {
+      if (m.tags) m.tags.forEach(function(t) {
+        if (allTags.indexOf(t) < 0) allTags.push(t);
+      });
+    });
+    allTags.sort();
+    // Svuota e ricrea i bottoni (mantieni "Tutti")
+    wrap.innerHTML = '<button class="skill-filter-btn skill-filter-btn--all skill-filter-btn--active" data-tag="">Tutti</button>';
+    allTags.forEach(function(tag) {
+      var color = TAG_COLORS[tag] || '#7be4ff';
+      var btn = document.createElement('button');
+      btn.className = 'skill-filter-btn';
+      btn.setAttribute('data-tag', tag);
+      btn.style.setProperty('--tag-c', color);
+      btn.textContent = tag;
+      wrap.appendChild(btn);
+    });
+    // Listener filtro
+    wrap.addEventListener('click', function(e) {
+      var btn = e.target.closest('.skill-filter-btn');
+      if (!btn) return;
+      var tag = btn.getAttribute('data-tag');
+      // Toggle: se già attivo → reset a "Tutti"
+      if (btn.classList.contains('skill-filter-btn--active') && tag !== '') {
+        tag = '';
+      }
+      // Aggiorna stato bottoni
+      wrap.querySelectorAll('.skill-filter-btn').forEach(function(b) {
+        b.classList.toggle('skill-filter-btn--active',
+          tag === '' ? b.getAttribute('data-tag') === '' : b.getAttribute('data-tag') === tag);
+      });
+      // Mostra/nascondi card
+      var grid = document.getElementById('membersGrid');
+      if (!grid) return;
+      grid.querySelectorAll('.member-card').forEach(function(card) {
+        if (tag === '') {
+          card.style.display = '';
+        } else {
+          var cardTags = Array.from(card.querySelectorAll('.member-tag'))
+            .map(function(t) { return t.textContent.trim(); });
+          card.style.display = cardTags.indexOf(tag) >= 0 ? '' : 'none';
+        }
+      });
+    });
+  }
+
+  function colorProfileIcons(profiles) {
     if (!profiles) return;
     document.querySelectorAll('.member-card').forEach(function(card) {
       var key = card.getAttribute('data-key');
@@ -886,7 +948,8 @@
       const members = await res.json();
       grid.innerHTML = members.map(renderCard).join('');
       if (countEl) countEl.textContent = members.length;
-      // Inizializza filtro
+      // Inizializza filtro skill
+      initSkillFilter(members);
       initMembersFilter(members);
       initReveal();
       // Colora icone profilo — usa cache se disponibile, altrimenti fetch
