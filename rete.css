@@ -372,6 +372,7 @@ a { color: inherit; text-decoration: none; }
 /* Header/hero/sezioni sopra il canvas */
 /* header z-index handled above */
 
+/* ──
 
 /* Card: molto più trasparente, effetto vetro profondo */
 .member-card {
@@ -818,6 +819,8 @@ a { color: inherit; text-decoration: none; }
 .hero__stat--growing .hero__stat-n {
   color: #4dffd6 !important;
 }
+  50%      { transform: scale(1.15); text-shadow: 0 0 16px #4dffd6; }
+
 
 /* ── EMAIL LOCK BUTTON ── */
 .member-email-btn {
@@ -2408,4 +2411,15 @@ a { color: inherit; text-decoration: none; }
   background: rgba(0,255,180,0.08);
   border-color: rgba(0,255,180,0.22);
   color: #4dffd6;
+}
+
+/* ── Icona profilo: stati colore ── */
+.icon-btn--profile-partial {
+  color: rgba(220,110,30,.85) !important;
+  border-color: rgba(220,110,30,.3) !important;
+}
+.icon-btn--profile-complete {
+  color: rgba(0,210,140,.9) !important;
+  border-color: rgba(0,210,140,.3) !important;
+  box-shadow: 0 0 12px rgba(0,210,140,.18) !important;
 }
