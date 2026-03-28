@@ -55,6 +55,9 @@
         <a href="podcast.html" data-i18n="r_nav_pod">Podcast</a>
         <a href="#prossimo-evento" data-i18n="r_events_link">Eventi</a>
         <a href="index.html#contatti" data-i18n="r_nav_cont">Contatti</a>
+        <button class="lang-toggle lang-toggle--mobile" id="langToggleMobileRete" type="button" aria-label="Cambia lingua / Switch language">
+          <span id="langCurrentMobile">IT</span><span class="lang-sep"> · </span><span id="langOtherMobile">EN</span>
+        </button>
       </div>
     </div>
   </header>
@@ -411,11 +414,11 @@
         </div>
         <div class="next-event-info-col">
           <p class="section-kicker" style="margin-bottom:8px" data-i18n="r_ev_partner">Partner · ITCC</p>
-          <h2 class="next-event-title" data-i18n="r_ev_title">The Day After</h2>
+          <h2 class="next-event-title" data-i18n="r_ev_title" data-i18n="r_ev_title">The Day After</h2>
           <p class="next-event-desc" data-i18n="r_ev_p">Gestione del trauma maggiore oltre la fase acuta. In piena coerenza con la visione degli Amici di Boyle.</p>
           <div class="event-meta">
             <span data-i18n="r_ev_badge">6 Maggio 2026</span>
-            <span>Corso partner</span>
+            <span data-i18n="r_ev_badge_it">Corso partner</span>
           </div>
           <a class="btn btn-ghost" href="assets/corsi/the_day_after_brochure.pdf" target="_blank" rel="noopener" style="margin-top:20px;display:inline-flex" data-i18n="r_ev_cta">Scarica il programma</a>
         </div>
@@ -432,11 +435,11 @@
         </div>
         <div class="next-event-info-col">
           <p class="section-kicker" style="margin-bottom:8px">Membro Rete · Lidia Porri</p>
-          <h2 class="next-event-title">Corso di Psicologia Subacquea</h2>
+          <h2 class="next-event-title" data-i18n="r_ev2_title">Corso di Psicologia Subacquea</h2>
           <p class="next-event-desc">Corso Teorico-Pratico dedicato alla dimensione psicologica dell'immersione. Gestione di stress, ansia, panico e PTSD in ambiente subacqueo e iperbarico. Rivolto a psicologi, medici, istruttori e subacquei.</p>
           <div class="event-meta">
-            <span>30–31 Maggio 2026</span>
-            <span>Isola d'Elba · In presenza</span>
+            <span data-i18n="r_ev2_date">30–31 Maggio 2026</span>
+            <span data-i18n="r_ev2_loc">Isola d'Elba · In presenza</span>
           </div>
           <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:20px;">
             <a class="btn btn-ghost" href="assets/corsi/programma-corso-psicologia.pdf" target="_blank" rel="noopener" style="display:inline-flex">Scarica il programma</a>
@@ -525,12 +528,12 @@
     <div class="container footer__inner">
       <div class="footer__brand">
         <img src="assets/logo.png" alt="" width="30" height="30" aria-hidden="true" />
-        <span>© 2026 Gli Amici di Boyle</span>
+        <span data-i18n="r_foot_copy">© 2026 Gli Amici di Boyle</span>
       </div>
       <nav class="footer__links">
         <a href="index.html" data-i18n="r_nav_home">Home</a>
         <a href="podcast.html" data-i18n="r_nav_pod">Podcast</a>
-        <a href="#top">↑ Su</a>
+        <a href="#top" data-i18n="r_foot_top">↑ Su</a>
         <a href="index.html#contatti" data-i18n="r_nav_cont">Contatti</a>
       </nav>
     </div>
@@ -542,27 +545,27 @@
       <button class="modal__close" id="close-amici-modal" aria-label="Chiudi">✕</button>
       <div class="modal__head">
         <span class="modal__kicker modal__kicker--amici">Amici di Boyle</span>
-        <h2 class="modal__title">Entra nella community</h2>
-        <p class="modal__desc">Diventa un Amico di Boyle: se sei appassionato di medicina degli ambienti estremi e della diffusione della cultura scientifica, questa è la tua community.</p>
+        <h2 class="modal__title" data-i18n="r_amici_modal_title">Entra nella community</h2>
+        <p class="modal__desc" data-i18n="r_amici_modal_desc">Diventa un Amico di Boyle: se sei appassionato di medicina degli ambienti estremi e della diffusione della cultura scientifica, questa è la tua community.</p>
       </div>
 
       <!-- Vantaggi nel form -->
       <div class="amici-benefits-inline">
         <div class="amici-benefit-item">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.43 2 2 0 0 1 3.6 1.27h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8a16 16 0 0 0 6.08 6.08l.95-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16a2 2 0 0 1 .19.92z"/></svg>
-          <span>Contatti diretti dei membri della Rete</span>
+          <span data-i18n="r_amici_b1">Contatti diretti dei membri della Rete</span>
         </div>
         <div class="amici-benefit-item">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-          <span>Profili estesi di tutti i membri</span>
+          <span data-i18n="r_amici_b2">Profili estesi di tutti i membri</span>
         </div>
         <div class="amici-benefit-item">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
-          <span>Pubblica eventi di ambienti estremi</span>
+          <span data-i18n="r_amici_b3">Pubblica eventi di ambienti estremi</span>
         </div>
         <div class="amici-benefit-item">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-          <span>Newsletter della community</span>
+          <span data-i18n="r_amici_b4">Newsletter della community</span>
         </div>
         <div class="amici-benefit-item">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
@@ -570,7 +573,7 @@
         </div>
         <div class="amici-benefit-item amici-benefit-item--note">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
-          <span>I più attivi potranno essere invitati a entrare nella Rete</span>
+          <span data-i18n="r_amici_b5">I più attivi potranno essere invitati a entrare nella Rete</span>
         </div>
       </div>
 
@@ -1992,6 +1995,19 @@
         'r_ev_propose_p':'Are you a member of the Network or a Friend of Boyle? Propose courses, conferences or training initiatives on the platform.',
         'r_ev_propose_cta':'Propose event',
         'r_foot_rights':'All rights reserved.',
+        'r_ev_badge_it':'Partner course',
+        'r_ev2_title':'Underwater Psychology Course',
+        'r_ev2_date':'30–31 May 2026',
+        'r_ev2_loc':'Elba Island · In person',
+        'r_amici_b1':'Direct contacts of all Network members',
+        'r_amici_b2':'Extended profiles of all members',
+        'r_amici_b3':'Publish extreme environment events',
+        'r_amici_b4':'Community newsletter',
+        'r_amici_b5':'The most active may be invited to join the Network',
+        'r_amici_modal_title':'Join the community',
+        'r_amici_modal_desc':'Become a Friend of Boyle: if you are passionate about extreme environment medicine and scientific culture, this is your community.',
+        'r_foot_copy':'© 2026 Gli Amici di Boyle',
+        'r_foot_top':'↑ Top',
       }
     };
 
@@ -2014,6 +2030,11 @@
       var oth = document.getElementById('langOther');
       if (cur) cur.textContent = l === 'en' ? 'EN' : 'IT';
       if (oth) oth.textContent = l === 'en' ? 'IT' : 'EN';
+      // Aggiorna anche bottone mobile
+      var curM = document.getElementById('langCurrentMobile');
+      var othM = document.getElementById('langOtherMobile');
+      if (curM) curM.textContent = l === 'en' ? 'EN' : 'IT';
+      if (othM) othM.textContent = l === 'en' ? 'IT' : 'EN';
       sessionStorage.setItem('boyle_lang', l);
     }
 
@@ -2037,7 +2058,10 @@
     function attachMobileToggle() {
       var mob = document.getElementById('langToggleMobileRete');
       if (!mob) return;
-      mob.addEventListener('click', function() {
+      // Clona per rimuovere listener duplicati
+      var fresh = mob.cloneNode(true);
+      mob.parentNode.replaceChild(fresh, mob);
+      fresh.addEventListener('click', function() {
         var cur = sessionStorage.getItem('boyle_lang') || 'it';
         var nxt = cur === 'it' ? 'en' : 'it';
         sessionStorage.setItem('boyle_lang', nxt);
