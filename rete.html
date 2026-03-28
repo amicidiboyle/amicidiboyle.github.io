@@ -2043,22 +2043,21 @@
 
     // Wire up desktop toggle
     function attachToggle() {
-      document.addEventListener('click', function(e) {
-        var btn = e.target.closest('#langToggle');
-        if (!btn) return;
+      var btn = document.getElementById('langToggle');
+      if (!btn) return;
+      btn.addEventListener('click', function(e) {
         e.preventDefault(); e.stopPropagation();
         var current = sessionStorage.getItem('boyle_lang') || 'it';
         var next = current === 'it' ? 'en' : 'it';
         sessionStorage.setItem('boyle_lang', next);
         applyLang(next);
-      }, true);
+      });
     }
 
     // Wire up mobile toggle
     function attachMobileToggle() {
       document.addEventListener('click', function(e) {
-        var btn = e.target.closest('#langToggleMobileRete');
-        if (!btn) return;
+        if (!e.target.closest('#langToggleMobileRete')) return;
         e.preventDefault(); e.stopPropagation();
         var cur = sessionStorage.getItem('boyle_lang') || 'it';
         var nxt = cur === 'it' ? 'en' : 'it';
