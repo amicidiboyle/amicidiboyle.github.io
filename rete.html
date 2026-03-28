@@ -2056,17 +2056,15 @@
 
     // Wire up mobile toggle
     function attachMobileToggle() {
-      // Event delegation: intercetta il click ovunque nel documento
       document.addEventListener('click', function(e) {
         var btn = e.target.closest('#langToggleMobileRete');
         if (!btn) return;
-        e.preventDefault();
-        e.stopPropagation();
+        e.preventDefault(); e.stopPropagation();
         var cur = sessionStorage.getItem('boyle_lang') || 'it';
         var nxt = cur === 'it' ? 'en' : 'it';
         sessionStorage.setItem('boyle_lang', nxt);
         applyLang(nxt);
-      }, true); // useCapture: intercetta prima di tutto
+      }, true);
     }
 
     if (document.readyState === 'loading') {
