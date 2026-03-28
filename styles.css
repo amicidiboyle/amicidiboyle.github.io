@@ -2803,3 +2803,30 @@ html, body { overflow-x: hidden; }
 @media (max-width: 768px) {
   .lang-toggle { display: none !important; }
 }
+
+/* Bottone lingua mobile — nascosto su desktop */
+#langToggleMobileHome {
+  display: none;
+}
+@media (max-width: 900px) {
+  #langToggleMobileHome {
+    display: flex;
+    width: 100%;
+    margin-top: 8px;
+    padding: 10px 16px;
+    border-radius: 10px;
+    background: rgba(0,80,180,.12);
+    border: 1px solid rgba(100,200,255,.2);
+    color: rgba(160,220,255,.8);
+    font-size: .8rem;
+    font-weight: 700;
+    letter-spacing: .1em;
+    cursor: pointer;
+    justify-content: center;
+    transition: background .2s;
+  }
+  #langToggleMobileHome:hover {
+    background: rgba(0,100,220,.22);
+    color: #a8e0ff;
+  }
+}
