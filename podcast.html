@@ -43,7 +43,7 @@
         <a href="rete.html">Rete</a>
         <a href="podcast.html">Podcast</a>
         <a href="index.html#contatti">Contatti</a>
-        <button id="langToggleMobilePod" type="button" style="margin-top:8px;width:100%;text-align:center;border-radius:8px;background:rgba(123,228,255,.08);border:1px solid rgba(123,228,255,.18);color:#a8eeff;font-size:.78rem;font-weight:700;letter-spacing:.1em;padding:9px;cursor:pointer;" aria-label="Cambia lingua">IT / EN</button>
+        <button id="langToggleMobilePod" type="button" class="lang-toggle lang-toggle--mobile" aria-label="Cambia lingua / Switch language"><span id="langCurrentMobilePod">IT</span><span class="lang-sep"> · </span><span id="langOtherMobilePod">EN</span></button>
       </div>
     </div>
   </header>
@@ -329,6 +329,14 @@
   <script>
   (function(){
     var lang = sessionStorage.getItem('boyle_lang') || 'it';
+    if (lang === 'it') {
+      // update toggle buttons only
+      var cur = document.getElementById('langCurrent');
+      var oth = document.getElementById('langOther');
+      if (cur) cur.textContent = 'IT';
+      if (oth) oth.textContent = 'EN';
+      return;
+    }
     var T = {
       'pod_meta':'Pressure · Immersion · Hyperbaric · Space',
       'pod_lead':'Original content only on hyperbaric medicine, hypobarism, astronautics and extreme physiology. A podcast for curious people, written by curious people.',
@@ -353,15 +361,8 @@
       'pod_cta_p':'Serious ideas, interesting cases, editorial projects. If it has value, we handle it well.',
       'pod_cta_btn':'Contact us',
     };
-    function applyPodcastLang(l) {
-      var cur = document.getElementById('langCurrent');
-      var oth = document.getElementById('langOther');
-      if (cur) cur.textContent = l === 'en' ? 'EN' : 'IT';
-      if (oth) oth.textContent = l === 'en' ? 'IT' : 'EN';
-      if (l !== 'en') {
-        document.documentElement.lang = 'it';
-        return;
-      }
+
+    document.addEventListener('DOMContentLoaded', function() {
       document.querySelectorAll('[data-i18n]').forEach(function(el) {
         var key = el.getAttribute('data-i18n');
         if (T[key]) el.textContent = T[key];
@@ -370,38 +371,38 @@
         var key = el.getAttribute('data-i18n-placeholder');
         if (T[key]) el.placeholder = T[key];
       });
+      // Nav links
       var navMap = {'Home':'Home','Visione':'Vision','Ricerca':'Research','Rete':'Network','Podcast':'Podcast','Contatti':'Contact'};
       document.querySelectorAll('nav a, .nav--desktop a, .nav-mobile-panel a').forEach(function(a) {
         var t = a.textContent.trim();
         if (navMap[t]) a.textContent = navMap[t];
       });
+      // Page title
       document.title = 'Sotto Pressione · Podcast · Gli Amici di Boyle';
       document.documentElement.lang = 'en';
-    }
-
+      // Toggle buttons (desktop + mobile)
+      var cur = document.getElementById('langCurrent');
+      var oth = document.getElementById('langOther');
+      if (cur) cur.textContent = 'EN';
+      if (oth) oth.textContent = 'IT';
+      var mobBtn = document.getElementById('langToggleMobilePod');
+      if (mobBtn) mobBtn.textContent = 'EN · IT';
+    });
+    // Wire desktop toggle
     function attachToggle() {
       var btn = document.getElementById('langToggle');
       if (!btn) return;
       btn.addEventListener('click', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
+        e.preventDefault(); e.stopPropagation();
         var cur; try { cur = sessionStorage.getItem('boyle_lang') || 'it'; } catch(ex) { cur = 'it'; }
         var nxt = cur === 'it' ? 'en' : 'it';
         try { sessionStorage.setItem('boyle_lang', nxt); } catch(ex) {}
-        location.reload();
+        applyLang(nxt);
       });
     }
-
-    function initPodcastLang() {
-      attachToggle();
-      applyPodcastLang(lang);
-    }
-
     if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', initPodcastLang);
-    } else {
-      initPodcastLang();
-    }
+      document.addEventListener('DOMContentLoaded', attachToggle);
+    } else { attachToggle(); }
   })();
   </script>
 </body>
