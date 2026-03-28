@@ -2927,24 +2927,3 @@ a { color: inherit; text-decoration: none; }
   transform: translateY(-1px) !important;
 }
 .edit-status { color: #4dffd6 !important; font-size: .76rem !important; }
-
-/* ════ BOTTONE IT/EN NEL MENU MOBILE ════ */
-.lang-toggle--mobile {
-  display: flex;
-  width: calc(100% - 0px);
-  margin-top: 8px;
-  padding: 10px 16px;
-  border-radius: 10px;
-  background: rgba(0,80,180,.12);
-  border: 1px solid rgba(100,200,255,.2);
-  color: rgba(160,220,255,.8);
-  font-size: .8rem; font-weight: 700; letter-spacing: .1em;
-  cursor: pointer;
-  justify-content: center;
-  transition: background .2s, border-color .2s;
-}
-.lang-toggle--mobile:hover {
-  background: rgba(0,100,220,.22);
-  border-color: rgba(100,200,255,.4);
-  color: #a8e0ff;
-}
