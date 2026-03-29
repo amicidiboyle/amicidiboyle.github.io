@@ -2930,46 +2930,73 @@ a { color: inherit; text-decoration: none; }
 
 .hero-cta-label { align-self: flex-start !important; padding-left: 4px !important; }
 
-/* ════ HERO CTA — etichette + popover ════ */
-.hero-cta-group { display:flex; flex-direction:column; gap:6px; }
-.hero-cta-label {
-  font-size:.72rem; font-weight:700; letter-spacing:.08em;
-  color:rgba(160,220,255,.65); text-transform:uppercase;
-  align-self:flex-start; padding-left:4px;
-}
-.hero-cta-row { display:flex; align-items:center; gap:8px; position:relative; }
+/* ════ FIX MOBILE CTA ════ */
 
-.hero-info-wrap { position:relative; }
-.hero-info-btn {
-  width:26px; height:26px; border-radius:50%;
-  background:rgba(80,180,255,.1); border:1px solid rgba(80,180,255,.25);
-  color:rgba(120,200,255,.7); font-size:.8rem; cursor:pointer;
-  display:flex; align-items:center; justify-content:center;
-  flex-shrink:0; transition:background .18s,color .18s;
+/* Stessa altezza e larghezza per entrambi i bottoni */
+@media (max-width: 768px) {
+  .hero-cta-group { width: 100%; }
+  .hero-cta-row { width: 100%; }
+  .btn-electric { width: 100%; min-height: 50px; justify-content: center; }
+  .btn-amici { width: 100%; min-height: 50px; padding: 0 24px; }
 }
-.hero-info-btn:hover { background:rgba(80,180,255,.22); color:#a8dfff; }
 
+/* Elettricità anche su btn-amici */
+.btn-amici::after {
+  content: "";
+  position: absolute; inset: -30% auto -30% -18%; width: 28%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.12), transparent);
+  transform: skewX(-18deg);
+  animation: shimmerAmici 3.2s ease-in-out infinite;
+}
+@keyframes shimmerAmici {
+  0%   { left: -18%; opacity: 0; }
+  20%  { opacity: 1; }
+  60%  { left: 110%; opacity: .6; }
+  100% { left: 110%; opacity: 0; }
+}
+
+/* Popover — aperto verso sinistra su mobile per non uscire dallo schermo */
 .hero-popover {
-  display:none; position:absolute; bottom:calc(100% + 10px); left:0;
-  width:280px; background:rgba(3,16,44,.97);
-  border:1px solid rgba(80,180,255,.25);
-  border-top:2px solid rgba(100,200,255,.5);
-  border-radius:14px; padding:16px 18px;
-  box-shadow:0 16px 48px rgba(0,0,0,.5);
-  z-index:500;
+  display: none; position: absolute;
+  bottom: calc(100% + 10px);
+  left: auto; right: 0;
+  width: 280px;
+  background: rgba(3,16,44,.97);
+  border: 1px solid rgba(80,180,255,.25);
+  border-top: 2px solid rgba(100,200,255,.5);
+  border-radius: 14px; padding: 16px 18px;
+  box-shadow: 0 16px 48px rgba(0,0,0,.5);
+  z-index: 9999;
 }
-.hero-popover--open { display:block; animation:popIn .18s ease; }
-@keyframes popIn { from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:translateY(0)} }
+.hero-popover--open { display: block; animation: popIn .18s ease; }
+@keyframes popIn {
+  from { opacity:0; transform:translateY(6px); }
+  to   { opacity:1; transform:translateY(0); }
+}
 .hero-popover__title {
-  font-size:.75rem; font-weight:800; letter-spacing:.12em;
-  text-transform:uppercase; color:#7dd3fc; margin-bottom:6px;
+  font-size: .75rem; font-weight: 800; letter-spacing: .12em;
+  text-transform: uppercase; color: #7dd3fc; margin-bottom: 6px;
 }
 .hero-popover__desc {
-  font-size:.75rem; color:rgba(180,215,248,.65); line-height:1.55; margin-bottom:10px;
+  font-size: .75rem; color: rgba(180,215,248,.65);
+  line-height: 1.55; margin-bottom: 10px;
 }
-.hero-popover__list { list-style:none; display:flex; flex-direction:column; gap:4px; }
-.hero-popover__list li { font-size:.72rem; color:rgba(160,210,245,.75); line-height:1.4; }
-@media(max-width:480px) {
-  .hero-popover { width:220px; }
-  .hero-cta-label { font-size:.68rem; }
+.hero-popover__list { list-style: none; display: flex; flex-direction: column; gap: 4px; }
+.hero-popover__list li { font-size: .72rem; color: rgba(160,210,245,.75); line-height: 1.4; }
+
+@media (max-width: 600px) {
+  .hero-popover {
+    width: calc(100vw - 40px);
+    right: auto;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .hero-popover--open {
+    transform: translateX(-50%);
+    animation: popInMobile .18s ease;
+  }
+  @keyframes popInMobile {
+    from { opacity:0; transform:translateX(-50%) translateY(6px); }
+    to   { opacity:1; transform:translateX(-50%) translateY(0); }
+  }
 }
