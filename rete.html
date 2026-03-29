@@ -112,15 +112,56 @@
         <h1 class="hero__title" data-i18n="r_hero_title"><span class="hero__glow">Rete</span> di Boyle</h1>
         <p class="hero__subtitle" data-i18n="r_hero_sub">Un ecosistema multidisciplinare di professionisti, ricercatori e innovatori dedicati alla medicina subacquea, iperbarica, aerospaziale e alla fisiologia degli ambienti estremi.</p>
         <div class="hero__cta">
-          <button class="btn-electric" id="open-network-modal" type="button">
-            <span class="btn-electric__inner">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-              <span data-i18n="r_hero_cta1">Sei un professionista? → Candidati alla Rete</span>
-            </span>
-          </button>
-          <button class="btn-amici" id="open-amici-modal-hero" type="button">
-            <span data-i18n="rj_amici_cta">Curioso o appassionato? → Diventa Amico di Boyle</span>
-          </button>
+          <!-- CTA Rete -->
+          <div class="hero-cta-group">
+            <span class="hero-cta-label" data-i18n="r_hero_cta_label1">Sei un professionista?</span>
+            <div class="hero-cta-row">
+              <button class="btn-electric" id="open-network-modal" type="button">
+                <span class="btn-electric__inner">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                  <span data-i18n="r_hero_cta1">Candidati alla Rete</span>
+                </span>
+              </button>
+              <div class="hero-info-wrap">
+                <button class="hero-info-btn" id="infoRete" aria-label="Scopri la Rete di Boyle" type="button">ⓘ</button>
+                <div class="hero-popover" id="popoverRete" aria-hidden="true">
+                  <p class="hero-popover__title" data-i18n="rj_rete_badge">Rete di Boyle</p>
+                  <p class="hero-popover__desc" data-i18n="rj_rete_p">Riservata a medici, ricercatori, ingegneri e operatori militari con curriculum validato. Accesso selettivo.</p>
+                  <ul class="hero-popover__list">
+                    <li data-i18n="rj_rete_b1">✓ Card pubblica nella griglia</li>
+                    <li data-i18n="rj_rete_b2">✓ Contatti diretti dei membri</li>
+                    <li data-i18n="rj_rete_b3">✓ Collaborazioni scientifiche</li>
+                    <li data-i18n="rj_rete_b4">✓ Prima fila su congressi ed editoriali</li>
+                    <li data-i18n="rj_rete_b5">✓ Newsletter riservata</li>
+                    <li data-i18n="rj_rete_b6">✓ Pubblica corsi ed eventi</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- CTA Amici -->
+          <div class="hero-cta-group">
+            <span class="hero-cta-label" data-i18n="r_hero_cta_label2">Curioso o appassionato?</span>
+            <div class="hero-cta-row">
+              <button class="btn-amici" id="open-amici-modal-hero" type="button">
+                <span data-i18n="rj_amici_cta">Diventa Amico di Boyle</span>
+              </button>
+              <div class="hero-info-wrap">
+                <button class="hero-info-btn" id="infoAmici" aria-label="Scopri gli Amici di Boyle" type="button">ⓘ</button>
+                <div class="hero-popover" id="popoverAmici" aria-hidden="true">
+                  <p class="hero-popover__title" data-i18n="rj_amici_badge">Amici di Boyle</p>
+                  <p class="hero-popover__desc" data-i18n="rj_amici_p">Nessun curriculum richiesto. Solo curiosità e voglia di contribuire. La porta d'ingresso alla community.</p>
+                  <ul class="hero-popover__list">
+                    <li data-i18n="rj_amici_b1">✓ Codice personale di accesso</li>
+                    <li data-i18n="rj_amici_b2">✓ Contatti diretti dei membri</li>
+                    <li data-i18n="rj_amici_b3">✓ Profili estesi della Rete</li>
+                    <li data-i18n="rj_amici_b4">✓ Pubblica eventi di ambienti estremi</li>
+                    <li data-i18n="rj_amici_b5">✓ Newsletter della community</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
           <a class="btn-eventi" href="#prossimo-evento">
             <span data-i18n="r_events_link">Gli eventi della Rete</span>
           </a>
@@ -813,6 +854,13 @@
     'Mass Gathering':   '#ffb347',
     'Esplorazione':     '#00d4ff',
     'Medicina Militare':'#c0c0ff',
+    'Nursing':           '#80ffd4',
+    'Aerospaziale':      '#a8eeff',
+    'Educazione':        '#c4b0ff',
+    'Psicologia':        '#f8a5c2',
+    'Endocrinologia':    '#b8a0ff',
+    'Medicina Interna':  '#ffb347',
+    'Ambienti Estremi':  '#ffd166',
   };
 
   function renderTags(tags) {
@@ -1899,7 +1947,7 @@
         'r_hero_eyebrow':'Network scientifico · Ambienti estremi',
         'r_hero_title':'Rete di Boyle',
         'r_hero_sub':'Un ecosistema multidisciplinare di professionisti, ricercatori e innovatori dedicati alla medicina subacquea, iperbarica, aerospaziale e alla fisiologia degli ambienti estremi.',
-        'r_hero_cta1':'Sei un professionista? → Candidati alla Rete','r_hero_cta2':'Esplora i profili',
+        'r_hero_cta1':'Candidati alla Rete','r_hero_cta_label1':'Sei un professionista?','r_hero_cta_label2':'Curioso o appassionato?','r_hero_cta2':'Esplora i profili',
         'r_stat_membri':'Membri attivi','r_stat_amici':'Amici di Boyle','r_stat_spec':'Specialità',
         'r_stat_naz':'Nazioni','r_stat_grow':'In crescita',
         // Members
@@ -1929,7 +1977,7 @@
         'rj_amici_b1':'✓ Codice personale di accesso','rj_amici_b2':'✓ Contatti diretti dei membri',
         'rj_amici_b3':'✓ Profili estesi della Rete','rj_amici_b4':'✓ Pubblica eventi di ambienti estremi',
         'rj_amici_b5':'✓ Newsletter della community','rj_amici_b6':'✓ Scrivi a info@amicidiboyle.it',
-        'rj_amici_cta':'Curioso o appassionato? → Diventa Amico di Boyle',
+        'rj_amici_cta':'Diventa Amico di Boyle',
         'r_events_link':'Gli eventi della Rete',
         'r_code_ph':'🔑 Codice membro',
         'r_access_btn':'Accedi',
@@ -1953,7 +2001,7 @@
         'r_hero_eyebrow':'Scientific Network · Extreme Environments',
         'r_hero_title':'Boyle Network',
         'r_hero_sub':'A multidisciplinary ecosystem of professionals, researchers and innovators dedicated to underwater, hyperbaric, aerospace medicine and the physiology of extreme environments.',
-        'r_hero_cta1':'Apply to the network','r_hero_cta2':'Explore profiles',
+        'r_hero_cta1':'Apply to the Network','r_hero_cta_label1':'Are you a professional?','r_hero_cta_label2':'Curious or passionate?','r_hero_cta2':'Explore profiles',
         'r_stat_membri':'Active members','r_stat_amici':'Friends of Boyle','r_stat_spec':'Specialties',
         'r_stat_naz':'Nations','r_stat_grow':'Growing',
         'r_members_title':'Network Members',
@@ -1980,7 +2028,7 @@
         'rj_amici_b1':'✓ Personal access code','rj_amici_b2':'✓ Direct member contacts',
         'rj_amici_b3':'✓ Extended Network profiles','rj_amici_b4':'✓ Publish extreme environment events',
         'rj_amici_b5':'✓ Community newsletter','rj_amici_b6':'✓ Write to info@amicidiboyle.it',
-        'rj_amici_cta':'Curious or passionate? → Become a Friend of Boyle',
+        'rj_amici_cta':'Become a Friend of Boyle',
         'r_events_link':'Network events',
         'r_code_ph':'🔑 Member code',
         'r_access_btn':'Access',
@@ -2150,5 +2198,43 @@
   </script>
 
 
+
+  <script>
+  (function() {
+    function initPopovers() {
+      var pairs = [
+        ['infoRete', 'popoverRete'],
+        ['infoAmici', 'popoverAmici']
+      ];
+      pairs.forEach(function(pair) {
+        var btn = document.getElementById(pair[0]);
+        var pop = document.getElementById(pair[1]);
+        if (!btn || !pop) return;
+        btn.addEventListener('click', function(e) {
+          e.stopPropagation();
+          var open = pop.getAttribute('aria-hidden') === 'false';
+          // Chiudi tutti
+          document.querySelectorAll('.hero-popover').forEach(function(p) {
+            p.setAttribute('aria-hidden', 'true');
+            p.classList.remove('hero-popover--open');
+          });
+          if (!open) {
+            pop.setAttribute('aria-hidden', 'false');
+            pop.classList.add('hero-popover--open');
+          }
+        });
+      });
+      document.addEventListener('click', function() {
+        document.querySelectorAll('.hero-popover').forEach(function(p) {
+          p.setAttribute('aria-hidden', 'true');
+          p.classList.remove('hero-popover--open');
+        });
+      });
+    }
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initPopovers);
+    } else { initPopovers(); }
+  })();
+  </script>
 </body>
 </html>
