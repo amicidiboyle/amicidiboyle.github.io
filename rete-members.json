@@ -241,5 +241,30 @@
       "Aerospaziale",
       "Educazione"
     ]
+  },
+  {
+    "name": "Antonello Sanna",
+    "role": "Tecnico Iperbarico di Area Clinica. Responsabile Tecnico e delle Manutenzioni, RLS e Preposto alla Sicurezza. Centro Iperbarico Sassarese. Focus: Medicina Subacquea ed Iperbarica.",
+    "img": "antonello-sanna.jpg",
+    "city": "Sassari, IT",
+    "linkedin": "https://www.linkedin.com/in/antonello-sanna-948368241",
+    "email": "antonellosanna@centroiperbarico.it",
+    "tags": [
+      "Iperbarica",
+      "Safety"
+    ]
+  },
+  {
+    "name": "Luigi Liparulo",
+    "role": "Medico Chirurgo, Specialista in Endocrinologia. Responsabile Struttura Semplice Endocrinologia, Ospedale Valduce, Como. Dive Expert. Focus: Diabete e Subacquea.",
+    "img": "luigi-liparulo.jpg",
+    "city": "Como, IT",
+    "linkedin": "https://www.linkedin.com/in/luigi-liparulo-942b3359/",
+    "email": "liparulo.luigi@gmail.com",
+    "tags": [
+      "Diving",
+      "Medicina Interna",
+      "Endocrinologia"
+    ]
   }
 ]
