@@ -163,9 +163,12 @@
             </div>
           </div>
           <!-- Eventi -->
-          <a class="btn-eventi" href="#prossimo-evento">
+          <div class="hero-cta-group">
+            <span class="hero-cta-label" data-i18n="r_hero_cta_label3">Cosa c’è di nuovo?</span>
+            <a class="btn-eventi" href="#prossimo-evento">
             <span data-i18n="r_events_link">Gli eventi della Rete</span>
           </a>
+          </div>
 
           <div class="hero-access-bar" id="accessBar" style="justify-content:center;margin:0 auto;">
             <input class="hero-access-input" id="barCodeInput"
@@ -903,7 +906,7 @@
     const editBtn = `<button class="icon-btn icon-btn--pencil member-edit-btn icon-btn--locked" data-key="${key}" data-name="${m.name}" data-role="${m.role||''}" data-tip="Modifica profilo">${PENCIL_ICON}</button>`;
 
     return `
-      <article class="member-card reveal" role="listitem" data-key="${key}">
+      <article class="member-card reveal${isComplete ? ' member-card--complete' : hasContent ? ' member-card--partial' : ''}" role="listitem" data-key="${key}">
         <div class="member-photo-wrap">
           <img class="member-photo" src="assets/rete/${m.img}" alt="${m.name}" loading="lazy" onerror="this.style.background='rgba(5,18,46,.8)';this.style.opacity='.4'" />
         </div>
@@ -1052,7 +1055,7 @@
           obs.unobserve(e.target);
         }
       });
-    }, { threshold: 0.08 });
+    }, { threshold: 0.04, rootMargin: '0px 0px -20px 0px' });
     document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
   }
 
@@ -1950,7 +1953,7 @@
         'r_hero_eyebrow':'Network scientifico · Ambienti estremi',
         'r_hero_title':'Rete di Boyle',
         'r_hero_sub':'Un ecosistema multidisciplinare di professionisti, ricercatori e innovatori dedicati alla medicina subacquea, iperbarica, aerospaziale e alla fisiologia degli ambienti estremi.',
-        'r_hero_cta1':'Candidati alla Rete','r_hero_cta_label1':'Sei un professionista?','r_hero_cta_label2':'Curioso o appassionato?','r_hero_cta2':'Esplora i profili',
+        'r_hero_cta1':'Candidati alla Rete','r_hero_cta_label1':'Sei un professionista?','r_hero_cta_label2':'Curioso o appassionato?','r_hero_cta_label3':'Cosa c’è di nuovo?','r_hero_cta2':'Esplora i profili',
         'r_stat_membri':'Membri attivi','r_stat_amici':'Amici di Boyle','r_stat_spec':'Specialità',
         'r_stat_naz':'Nazioni','r_stat_grow':'In crescita',
         // Members
@@ -2004,7 +2007,7 @@
         'r_hero_eyebrow':'Scientific Network · Extreme Environments',
         'r_hero_title':'Boyle Network',
         'r_hero_sub':'A multidisciplinary ecosystem of professionals, researchers and innovators dedicated to underwater, hyperbaric, aerospace medicine and the physiology of extreme environments.',
-        'r_hero_cta1':'Apply to the Network','r_hero_cta_label1':'Are you a professional?','r_hero_cta_label2':'Curious or passionate?','r_hero_cta2':'Explore profiles',
+        'r_hero_cta1':'Apply to the Network','r_hero_cta_label1':'Are you a professional?','r_hero_cta_label2':'Curious or passionate?','r_hero_cta_label3':'What’s new?','r_hero_cta2':'Explore profiles',
         'r_stat_membri':'Active members','r_stat_amici':'Friends of Boyle','r_stat_spec':'Specialties',
         'r_stat_naz':'Nations','r_stat_grow':'Growing',
         'r_members_title':'Network Members',
