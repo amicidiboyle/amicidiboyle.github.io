@@ -871,7 +871,7 @@
     if (!profile || !profile.bio) return '';
     const clean = profile.bio.replace(/\s+/g, ' ').trim();
     if (clean.length < 18) return '';
-    const snippet = clean.length > 110 ? clean.slice(0, 107).trimEnd() + '...' : clean + '...';
+    const snippet = clean.length > 80 ? clean.slice(0, 77).trimEnd() + '…' : clean;
     return `<p class="member-bio-snippet">“${snippet}”</p>`;
   }
 
