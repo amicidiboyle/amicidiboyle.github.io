@@ -3096,17 +3096,17 @@ a { color: inherit; text-decoration: none; }
   position: absolute;
   left: 22px;
   right: 22px;
-  bottom: 92px;
+  bottom: 96px;
   margin: 0;
-  font-size: .76rem;
-  line-height: 1.42;
+  font-size: .74rem;
+  font-style: italic;
   color: rgba(237,247,255,.68);
   text-align: center;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  min-height: calc(.76rem * 1.42 * 2);
+  min-height: calc(.74rem * 1.42 * 2);
 }
 
 .member-card .member-location {
@@ -3125,7 +3125,7 @@ a { color: inherit; text-decoration: none; }
   .member-bio-snippet {
     left: 18px;
     right: 18px;
-    bottom: 88px;
+    bottom: 92px;
     font-size: .74rem;
     line-height: 1.4;
   }
