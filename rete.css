@@ -2754,7 +2754,7 @@ a { color: inherit; text-decoration: none; }
   overflow: hidden; max-height: 0; opacity: 0; margin-top: 0;
   transition: max-height .38s cubic-bezier(.4,0,.2,1), opacity .28s, margin .28s;
 }
-.skill-filter-panel--open { max-height: 340px; opacity: 1; margin-top: 14px; }
+.skill-filter-panel--open { max-height: 700px; opacity: 1; margin-top: 14px; }
 
 .skill-filter-inner {
   display: flex; flex-wrap: wrap; gap: 9px;
