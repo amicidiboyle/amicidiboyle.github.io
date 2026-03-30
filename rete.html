@@ -867,10 +867,11 @@
     '</div>';
   }
 
-  function renderBioSnippet(prof) {
-    if (!prof || !prof.bio || prof.bio.trim().length < 12) return '';
-    var clean = prof.bio.replace(/\s+/g, ' ').trim();
-    var snippet = clean.length > 140 ? clean.slice(0, 137).trim() + '...' : clean;
+  function getMemberBioSnippet(profile) {
+    if (!profile || !profile.bio) return '';
+    const clean = profile.bio.replace(/\s+/g, ' ').trim();
+    if (clean.length < 18) return '';
+    const snippet = clean.length > 110 ? clean.slice(0, 107).trimEnd() + '...' : clean + '...';
     return `<p class="member-bio-snippet">“${snippet}”</p>`;
   }
 
@@ -910,7 +911,7 @@
         ${activeBadge}
         ${renderTags(m.tags)}
         <p class="member-role">${m.role}</p>
-        ${renderBioSnippet(prof)}
+        ${getMemberBioSnippet(prof)}
         <div class="member-location">
           <span class="member-location__line" aria-hidden="true"></span>
           <span class="member-location__city">
