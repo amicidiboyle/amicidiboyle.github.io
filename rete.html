@@ -935,13 +935,22 @@
       var p = profiles[key] || {};
       var hasBio = p.bio && p.bio.trim().length > 10;
       var hasLink = !!(p.linkedin || p.researchgate || p.scholar || p.orcid || p.website);
+      // ── Icona omino ──
       var btn = card.querySelector('.member-profile-btn');
-      if (!btn) return;
-      btn.classList.remove('profile-icon-partial', 'profile-icon-complete');
+      if (btn) {
+        btn.classList.remove('profile-icon-partial', 'profile-icon-complete');
+        if (hasBio && hasLink) {
+          btn.classList.add('profile-icon-complete');
+        } else if (hasBio) {
+          btn.classList.add('profile-icon-partial');
+        }
+      }
+      // ── Bordo card ──
+      card.classList.remove('member-card--complete', 'member-card--partial');
       if (hasBio && hasLink) {
-        btn.classList.add('profile-icon-complete');
-      } else if (hasBio) {
-        btn.classList.add('profile-icon-partial');
+        card.classList.add('member-card--complete');
+      } else if (hasBio || hasLink) {
+        card.classList.add('member-card--partial');
       }
     });
   }
