@@ -1064,8 +1064,19 @@
           obs.unobserve(e.target);
         }
       });
-    }, { threshold: 0.04, rootMargin: '0px 0px -20px 0px' });
-    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+    }, { threshold: 0.01, rootMargin: '0px 0px 0px 0px' });
+    // Prima osserva, poi dopo due frame triggera subito chi è già visibile
+    const els = document.querySelectorAll('.reveal');
+    els.forEach(el => obs.observe(el));
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      els.forEach(el => {
+        const r = el.getBoundingClientRect();
+        if (r.top < window.innerHeight && r.bottom > 0) {
+          setTimeout(() => el.classList.add('is-visible'), +(el.dataset.delay||0));
+          obs.unobserve(el);
+        }
+      });
+    }));
   }
 
   /* ── SYNAPSE CANVAS: rete neurale immersiva su tutta la pagina ── */
