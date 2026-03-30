@@ -128,12 +128,13 @@
                   <p class="hero-popover__title">Rete di Boyle</p>
                   <p class="hero-popover__desc">Riservata a medici, ricercatori, ingegneri e operatori militari con curriculum validato. Accesso selettivo e valutato caso per caso.</p>
                   <ul class="hero-popover__list">
-                    <li>✓ Card pubblica nella griglia</li>
-                    <li>✓ Contatti diretti dei membri</li>
-                    <li>✓ Collaborazioni scientifiche</li>
-                    <li>✓ Prima fila su congressi ed editoriali</li>
+                    <li>✓ Card digitale con codice personale di accesso</li>
+                    <li>✓ Contatti diretti di tutti i membri</li>
+                    <li>✓ Prima fila su congressi, editoriali e workshop</li>
                     <li>✓ Newsletter riservata</li>
-                    <li>✓ Pubblica corsi ed eventi</li>
+                    <li>✓ Collaborazioni a studi e ricerche</li>
+                    <li>✓ Disponibilità come relatore a congressi</li>
+                    <li>✓ Disponibilità come ospite del podcast Sotto Pressione</li>
                   </ul>
                 </div>
               </div>
@@ -152,11 +153,12 @@
                   <p class="hero-popover__title">Amici di Boyle</p>
                   <p class="hero-popover__desc">Per chi è curioso e ha voglia di contribuire. La porta d'ingresso alla community. L'immersione nella Scienza inizia da qui.</p>
                   <ul class="hero-popover__list">
-                    <li>✓ Codice personale di accesso</li>
-                    <li>✓ Contatti diretti dei membri</li>
-                    <li>✓ Profili estesi della Rete</li>
+                    <li>✓ Card digitale con codice personale di accesso</li>
+                    <li>✓ Contatti diretti dei membri della Rete</li>
+                    <li>✓ Profili estesi di tutti i professionisti</li>
                     <li>✓ Pubblica eventi di ambienti estremi</li>
                     <li>✓ Newsletter della community</li>
+                    <li>✓ I più attivi potranno essere invitati nella Rete</li>
                   </ul>
                 </div>
               </div>
@@ -164,7 +166,7 @@
           </div>
           <!-- Eventi -->
           <a class="btn-eventi" href="#prossimo-evento">
-            <span data-i18n="r_events_link">Gli eventi della Rete</span>
+            <span data-i18n="r_events_link">I prossimi eventi</span>
           </a>
 
           <div class="hero-access-bar" id="accessBar" style="justify-content:center;margin:0 auto;">
@@ -197,7 +199,7 @@
 
         <!-- Filtro per specialità -->
         <div class="skill-filter-wrap">
-          <button class="skill-filter-toggle" id="skillFilterToggle" type="button">
+          <button class="skill-filter-toggle skill-filter-toggle--prominent" id="skillFilterToggle" type="button">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M7 12h10M11 18h2"/></svg>
             Filtra per specialità
             <span id="skillFilterArrow">▾</span>
@@ -903,6 +905,13 @@
         ${activeBadge}
         ${renderTags(m.tags)}
         <p class="member-role">${m.role}</p>
+        ${(function(){
+          var p = window._profiles ? window._profiles[key] : null;
+          var bio = p && p.bio && p.bio.trim().length > 10 ? p.bio.trim() : '';
+          if (!bio) return '';
+          var snippet = bio.length > 80 ? bio.substring(0, 80) + '…' : bio;
+          return '<p class="member-bio-snippet">' + snippet + '</p>';
+        })()}
         <div class="member-location">
           <span class="member-location__line" aria-hidden="true"></span>
           <span class="member-location__city">
@@ -926,10 +935,13 @@
       var btn = card.querySelector('.member-profile-btn');
       if (!btn) return;
       btn.classList.remove('profile-icon-partial', 'profile-icon-complete');
+      card.classList.remove('member-card--complete', 'member-card--partial');
       if (hasBio && hasLink) {
         btn.classList.add('profile-icon-complete');
+        card.classList.add('member-card--complete');
       } else if (hasBio) {
         btn.classList.add('profile-icon-partial');
+        card.classList.add('member-card--partial');
       }
     });
   }
@@ -999,24 +1011,24 @@
     const grid = document.getElementById('membersGrid');
     const countEl = document.getElementById('memberCount');
     try {
-      const res = await fetch(MEMBERS_URL);
-      if (!res.ok) throw new Error('fetch failed');
-      const members = await res.json();
+      // Promise.all: fetch membri e profili in parallelo
+      const [resM, resP] = await Promise.all([
+        fetch(MEMBERS_URL),
+        fetch(PROFILES_URL + '?v=' + Date.now())
+      ]);
+      const members = resM.ok ? await resM.json() : [];
+      if (resP.ok) {
+        profilesCache = await resP.json();
+        window._profiles = profilesCache;
+      }
       grid.innerHTML = members.map(renderCard).join('');
       if (countEl) countEl.textContent = members.length;
       // Inizializza filtro
       initMembersFilter(members);
       initReveal();
       initSkillFilter(members);
-      // Colora icone profilo — usa cache se disponibile, altrimenti fetch
-      if (profilesCache) {
-        colorProfileIcons(profilesCache);
-      } else {
-        loadProfiles().then(function(profiles){
-          window._profiles = profiles;
-          colorProfileIcons(profiles);
-        }).catch(function(){});
-      }
+      // Colora icone subito (profili già in cache)
+      if (profilesCache) colorProfileIcons(profilesCache);
     } catch(e) {
       // Fallback: se rete-members.json non è ancora sul server, usa dati inline
       console.warn('rete-members.json non trovato, uso dati inline:', e);
@@ -1972,7 +1984,7 @@
         'rj_amici_b3':'✓ Profili estesi della Rete','rj_amici_b4':'✓ Pubblica eventi di ambienti estremi',
         'rj_amici_b5':'✓ Newsletter della community','rj_amici_b6':'✓ Scrivi a info@amicidiboyle.it',
         'rj_amici_cta':'Diventa Amico di Boyle',
-        'r_events_link':'Gli eventi della Rete',
+        'r_events_link':'I prossimi eventi',
         'r_code_ph':'🔑 Codice membro',
         'r_access_btn':'Accedi',
         'r_members_sub':'Professionisti selezionati per competenza, curiosità e impatto operativo.',
@@ -2023,7 +2035,7 @@
         'rj_amici_b3':'✓ Extended Network profiles','rj_amici_b4':'✓ Publish extreme environment events',
         'rj_amici_b5':'✓ Community newsletter','rj_amici_b6':'✓ Write to info@amicidiboyle.it',
         'rj_amici_cta':'Curious or passionate? → Become a Friend of Boyle',
-        'r_events_link':'Network events',
+        'r_events_link':'Upcoming events',
         'r_code_ph':'🔑 Member code',
         'r_access_btn':'Access',
         'r_members_sub':'Professionals selected for competence, curiosity and operational impact.',
@@ -2196,23 +2208,32 @@
   <script>
   (function() {
     function initPopovers() {
+      var isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
       [['infoRete','popoverRete'],['infoAmici','popoverAmici']].forEach(function(pair) {
         var btn = document.getElementById(pair[0]);
         var pop = document.getElementById(pair[1]);
         if (!btn || !pop) return;
+        var wrap = btn.parentElement;
+        if (!isTouchDevice) {
+          // Desktop: hover
+          wrap.addEventListener('mouseenter', function() {
+            document.querySelectorAll('.hero-popover').forEach(function(p){ p.classList.remove('hero-popover--open'); });
+            pop.classList.add('hero-popover--open');
+          });
+          wrap.addEventListener('mouseleave', function() {
+            pop.classList.remove('hero-popover--open');
+          });
+        }
+        // Mobile e fallback: tap
         btn.addEventListener('click', function(e) {
           e.stopPropagation();
           var isOpen = pop.classList.contains('hero-popover--open');
-          document.querySelectorAll('.hero-popover').forEach(function(p) {
-            p.classList.remove('hero-popover--open');
-          });
+          document.querySelectorAll('.hero-popover').forEach(function(p){ p.classList.remove('hero-popover--open'); });
           if (!isOpen) pop.classList.add('hero-popover--open');
         });
       });
       document.addEventListener('click', function() {
-        document.querySelectorAll('.hero-popover').forEach(function(p) {
-          p.classList.remove('hero-popover--open');
-        });
+        document.querySelectorAll('.hero-popover').forEach(function(p){ p.classList.remove('hero-popover--open'); });
       });
     }
     if (document.readyState==='loading') document.addEventListener('DOMContentLoaded', initPopovers);
