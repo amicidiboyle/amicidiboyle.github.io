@@ -2314,11 +2314,11 @@
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', function() {
         attachToggle(); attachMobileToggle();
-        if (lang === 'en') applyLang('en');
+        applyLang(lang);
       });
     } else {
       attachToggle(); attachMobileToggle();
-      if (lang === 'en') applyLang('en');
+      applyLang(lang);
     }
   })();
   </script>
