@@ -303,8 +303,9 @@
     mBtn.setAttribute('aria-expanded', String(!open));
     mBtn.classList.toggle('is-open', !open);
   });
-  mPanel?.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+  mPanel?.querySelectorAll('a, button').forEach(el => el.addEventListener('click', () => {
     mPanel.setAttribute('aria-hidden','true');
+    mBtn?.setAttribute('aria-expanded','false');
     mBtn?.classList.remove('is-open');
   }));
   document.addEventListener('click', e => {
