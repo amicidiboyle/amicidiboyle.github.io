@@ -935,22 +935,28 @@
       var p = profiles[key] || {};
       var hasBio = p.bio && p.bio.trim().length > 10;
       var hasLink = !!(p.linkedin || p.researchgate || p.scholar || p.orcid || p.website);
-      // ── Icona omino ──
+      var isComplete = hasBio && hasLink;
+      var isPartial  = hasBio || hasLink;
+
+      // ── 1. Icona omino ──
       var btn = card.querySelector('.member-profile-btn');
       if (btn) {
         btn.classList.remove('profile-icon-partial', 'profile-icon-complete');
-        if (hasBio && hasLink) {
-          btn.classList.add('profile-icon-complete');
-        } else if (hasBio) {
-          btn.classList.add('profile-icon-partial');
-        }
+        if (isComplete)     btn.classList.add('profile-icon-complete');
+        else if (hasBio)    btn.classList.add('profile-icon-partial');
       }
-      // ── Bordo card ──
+
+      // ── 2. Bordo card ──
       card.classList.remove('member-card--complete', 'member-card--partial');
-      if (hasBio && hasLink) {
-        card.classList.add('member-card--complete');
-      } else if (hasBio || hasLink) {
-        card.classList.add('member-card--partial');
+      if (isComplete)      card.classList.add('member-card--complete');
+      else if (isPartial)  card.classList.add('member-card--partial');
+
+      // ── 3. Circonferenza foto ──
+      var wrap = card.querySelector('.member-photo-wrap');
+      if (wrap) {
+        wrap.classList.remove('member-photo-wrap--complete', 'member-photo-wrap--partial');
+        if (isComplete)     wrap.classList.add('member-photo-wrap--complete');
+        else if (isPartial) wrap.classList.add('member-photo-wrap--partial');
       }
     });
   }
