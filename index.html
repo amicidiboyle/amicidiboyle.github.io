@@ -53,6 +53,7 @@
         <a href="podcast.html">Podcast</a>
         <a href="#partner">Partner</a>
         <a href="#contatti">Contatti</a>
+        <button id="langToggleMobileIndex" type="button" class="lang-toggle lang-toggle--mobile lang-toggle--nav" aria-label="Cambia lingua / Switch language"><span id="langCurrent_mob_idx">IT</span><span class="lang-sep"> · </span><span id="langOther_mob_idx">EN</span></button>
       </nav>
       <button class="lang-toggle" id="langToggle" type="button" aria-label="Cambia lingua / Switch language" title="Switch to English">
         <span id="langCurrent">IT</span><span class="lang-sep"> · </span><span id="langOther">EN</span>
@@ -1640,8 +1641,12 @@
       /* Update toggle button */
       var cur = document.getElementById('langCurrent');
       var oth = document.getElementById('langOther');
+      var curMob = document.getElementById('langCurrent_mob_idx');
+      var othMob = document.getElementById('langOther_mob_idx');
       if (cur) cur.textContent = lang.toUpperCase();
       if (oth) oth.textContent = lang === 'it' ? 'EN' : 'IT';
+      if (curMob) curMob.textContent = lang.toUpperCase();
+      if (othMob) othMob.textContent = lang === 'it' ? 'EN' : 'IT';
 
       document.documentElement.lang = lang;
       document.title = lang === 'en'
@@ -1663,16 +1668,18 @@
 
     // Expose applyLang globally for mobile toggle
     function attachToggle() {
-      var btn = document.getElementById('langToggle');
-      if (!btn) return;
-      btn.addEventListener('click', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
+      function doToggle() {
         var current = getLang();
         var next = current === 'it' ? 'en' : 'it';
         setLang(next);
         applyLang(next);
-      });
+      }
+      // Desktop toggle
+      var btn = document.getElementById('langToggle');
+      if (btn) btn.addEventListener('click', function(e) { e.preventDefault(); e.stopPropagation(); doToggle(); });
+      // Mobile toggle (dentro site-nav hamburger)
+      var mob = document.getElementById('langToggleMobileIndex');
+      if (mob) mob.addEventListener('click', function(e) { e.stopPropagation(); doToggle(); });
     }
 
     var initLang = getLang();
@@ -1680,11 +1687,11 @@
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', function() {
         attachToggle();
-        if (initLang === 'en') applyLang('en');
+        applyLang(initLang);
       });
     } else {
       attachToggle();
-      if (initLang === 'en') applyLang('en');
+      applyLang(initLang);
     }
   })();
   </script>
