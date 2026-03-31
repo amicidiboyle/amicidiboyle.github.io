@@ -2821,32 +2821,46 @@ html, body { overflow-x: hidden; }
   .lang-toggle--mobile { display: none !important; }
 }
 
-/* ── Hamburger mobile: layout compatto ── */
+
+/* ── Hamburger mobile: dropdown compatto proporzionato ── */
 @media (max-width: 768px) {
-  /* Larghezza adattiva — si espande quasi a tutto lo schermo */
-  .nav-mobile-panel {
-    width: calc(100vw - 24px) !important;
-    right: 8px !important;
-    left: auto !important;
-    padding: 8px 6px !important;
-  }
-  /* Link centrati e a tutta larghezza */
-  .nav-mobile-panel a {
-    text-align: center !important;
-    padding: 11px 12px !important;
-  }
-  /* site-nav (index): stessa larghezza */
+
+  /* Pannello: larghezza fissa compatta, allineato a destra */
   .site-nav {
-    width: calc(100vw - 24px) !important;
-    right: 8px !important;
+    width: 220px !important;
+    min-width: 0 !important;
+    right: 0 !important;
     left: auto !important;
-    padding: 8px 6px !important;
+    padding: 8px !important;
+    border-radius: 16px !important;
   }
+
+  /* Link: testo a sinistra, padding compatto */
   .site-nav > a {
-    text-align: center !important;
-    padding: 11px 12px !important;
+    padding: 10px 16px !important;
+    font-size: .95rem !important;
+    text-align: left !important;
+    border-radius: 10px !important;
   }
+
+  /* Dropdown Attività */
   .site-nav .nav-dropdown-btn {
-    text-align: center !important;
+    padding: 10px 16px !important;
+    font-size: .95rem !important;
+    text-align: left !important;
+    width: 100% !important;
+  }
+
+  /* Bottone lingua: compatto, in fondo */
+  .site-nav .lang-toggle--mobile {
+    display: flex !important;
+    margin-top: 4px !important;
+    padding: 8px 16px !important;
+    font-size: .8rem !important;
+  }
+
+  /* Mostra bottone lingua quando menu è aperto */
+  .nav-toggle:checked ~ .site-nav .lang-toggle--mobile {
+    display: flex !important;
   }
 }
