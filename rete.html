@@ -1671,8 +1671,9 @@
     mBtn.setAttribute('aria-expanded', String(!open));
     mBtn.classList.toggle('is-open', !open);
   });
-  mPanel?.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+  mPanel?.querySelectorAll('a, button').forEach(el => el.addEventListener('click', () => {
     mPanel.setAttribute('aria-hidden','true');
+    mBtn?.setAttribute('aria-expanded','false');
     mBtn?.classList.remove('is-open');
   }));
   document.addEventListener('click', e => {
@@ -2064,7 +2065,7 @@
         'rj_amici_b5':'\u2713 Newsletter della community',
         'rj_amici_b6':'\u2713 Scrivi a info@amicidiboyle.it',
         'rj_amici_cta':'Diventa Amico di Boyle',
-        'r_events_link':'Gli eventi della Rete',
+        'r_events_link':'Eventi',
         'r_code_ph':'\ud83d\udd11 Codice membro',
         'r_access_btn':'Accedi',
         'r_ev_kicker':'Prossimi eventi',
@@ -2198,7 +2199,7 @@
         'rj_amici_b5':'\u2713 Community newsletter',
         'rj_amici_b6':'\u2713 Write to info@amicidiboyle.it',
         'rj_amici_cta':'Become a Friend of Boyle',
-        'r_events_link':'Network events',
+        'r_events_link':'Events',
         'r_code_ph':'\ud83d\udd11 Member code',
         'r_access_btn':'Access',
         'r_ev_kicker':'Upcoming events',
