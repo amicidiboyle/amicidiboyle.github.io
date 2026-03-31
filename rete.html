@@ -958,6 +958,18 @@
         if (isComplete)     wrap.classList.add('member-photo-wrap--complete');
         else if (isPartial) wrap.classList.add('member-photo-wrap--partial');
       }
+
+      // ── 4. Bio snippet — iniettata qui perché i profili arrivano dopo renderCard ──
+      var bioEl = card.querySelector('.member-bio-snippet');
+      if (bioEl) {
+        if (hasBio) {
+          var clean = p.bio.replace(/\s+/g, ' ').trim();
+          var snippet = clean.length > 80 ? clean.slice(0, 77).trimEnd() + '…' : clean;
+          bioEl.textContent = '“' + snippet + '”';
+        } else {
+          bioEl.textContent = '';
+        }
+      }
     });
   }
 
