@@ -165,9 +165,24 @@
           <!-- Eventi -->
           <div class="hero-cta-group">
             <span class="hero-cta-label" data-i18n="r_hero_cta_label3">Cosa c’è di nuovo?</span>
-            <a class="btn-eventi" href="#prossimo-evento">
-            <span data-i18n="r_events_link">Gli eventi della Rete</span>
-          </a>
+            <div class="hero-cta-row">
+              <a class="btn-eventi" href="#prossimo-evento">
+                <span data-i18n="r_events_link">Gli eventi della Rete</span>
+              </a>
+              <div class="hero-info-wrap">
+                <button class="hero-info-btn" id="infoEventi" type="button">ⓘ</button>
+                <div class="hero-popover" id="popoverEventi" aria-hidden="true">
+                  <p class="hero-popover__title">Eventi della Rete</p>
+                  <p class="hero-popover__desc">Tutti i membri della Rete e gli Amici di Boyle possono pubblicare qui i loro eventi. Scopri cosa c’è di nuovo.</p>
+                  <ul class="hero-popover__list">
+                    <li>✓ Corsi e workshop di ambienti estremi</li>
+                    <li>✓ Congressi e conferenze scientifiche</li>
+                    <li>✓ Esercitazioni e simulazioni</li>
+                    <li>✓ Eventi aperti alla community</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
           </div>
 
           <div class="hero-access-bar" id="accessBar" style="justify-content:center;margin:0 auto;">
@@ -2246,19 +2261,50 @@
   <script>
   (function() {
     function initPopovers() {
-      [['infoRete','popoverRete'],['infoAmici','popoverAmici']].forEach(function(pair) {
+      var isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+      var pairs = [['infoRete','popoverRete'],['infoAmici','popoverAmici'],['infoEventi','popoverEventi']];
+
+      pairs.forEach(function(pair) {
         var btn = document.getElementById(pair[0]);
         var pop = document.getElementById(pair[1]);
         if (!btn || !pop) return;
-        btn.addEventListener('click', function(e) {
-          e.stopPropagation();
-          var isOpen = pop.classList.contains('hero-popover--open');
+
+        function closeAll() {
           document.querySelectorAll('.hero-popover').forEach(function(p) {
             p.classList.remove('hero-popover--open');
           });
-          if (!isOpen) pop.classList.add('hero-popover--open');
-        });
+        }
+
+        if (isTouchDevice) {
+          // ── Mobile: tap apre/chiude ──
+          btn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            var isOpen = pop.classList.contains('hero-popover--open');
+            closeAll();
+            if (!isOpen) pop.classList.add('hero-popover--open');
+          });
+        } else {
+          // ── Desktop: hover apre, mouseleave chiude ──
+          var wrap = btn.closest('.hero-info-wrap');
+          if (wrap) {
+            wrap.addEventListener('mouseenter', function() {
+              closeAll();
+              pop.classList.add('hero-popover--open');
+            });
+            wrap.addEventListener('mouseleave', function() {
+              pop.classList.remove('hero-popover--open');
+            });
+          }
+          // Click ancora supportato come fallback
+          btn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            var isOpen = pop.classList.contains('hero-popover--open');
+            closeAll();
+            if (!isOpen) pop.classList.add('hero-popover--open');
+          });
+        }
       });
+
       document.addEventListener('click', function() {
         document.querySelectorAll('.hero-popover').forEach(function(p) {
           p.classList.remove('hero-popover--open');
