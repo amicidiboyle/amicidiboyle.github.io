@@ -990,7 +990,6 @@ body::after {
     font-size: .98rem; font-weight: 600; color: var(--text);
     transition: background .15s, color .15s;
   }
-  .site-nav .lang-toggle--mobile { display: flex; }
   .site-nav > a:hover { background: rgba(123,228,255,.09); color: var(--cyan-2); }
 
   /* Separatore visivo tra gruppi */
