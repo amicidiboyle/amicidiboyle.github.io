@@ -29,21 +29,21 @@
         <a href="rete.html">Rete</a>
         <a class="nav-active" href="podcast.html" aria-current="page">Podcast</a>
         <a class="nav-cta" href="index.html#contatti">Contatti</a>
+      </nav>
       <button class="lang-toggle" id="langToggle" type="button" aria-label="Cambia lingua / Switch language">
         <span id="langCurrent">IT</span><span class="lang-sep"> · </span><span id="langOther">EN</span>
       </button>
-      </nav>
       <button class="nav-mobile-btn" id="navMobileBtn" aria-label="Apri menu" aria-expanded="false">
         <span></span><span></span><span></span>
       </button>
       <div class="nav-mobile-panel" id="navMobilePanel" aria-hidden="true">
-        <a href="index.html" data-i18n="pod_nav_home">Home</a>
-        <a href="index.html#visione" data-i18n="pod_nav_vis">Visione</a>
-        <a href="index.html#ricerca" data-i18n="pod_nav_ric">Ricerca</a>
-        <a href="rete.html" data-i18n="pod_nav_rete">Rete</a>
-        <a href="podcast.html" data-i18n="pod_nav_pod">Podcast</a>
-        <a href="index.html#contatti" data-i18n="pod_nav_cont">Contatti</a>
-        <button id="langToggleMobilePod" type="button" class="lang-toggle lang-toggle--mobile" aria-label="Cambia lingua / Switch language"><span id="langCurrent_mob_pod">IT</span><span class="lang-sep"> · </span><span id="langOther_mob_pod">EN</span></button>
+        <a href="index.html">Home</a>
+        <a href="index.html#visione">Visione</a>
+        <a href="index.html#ricerca">Ricerca</a>
+        <a href="rete.html">Rete</a>
+        <a href="podcast.html">Podcast</a>
+        <a href="index.html#contatti">Contatti</a>
+        <button id="langToggleMobilePod" type="button" class="lang-toggle--mobile" aria-label="Cambia lingua / Switch language"><span id="langCurrent_mob_pod">IT</span><span class="lang-sep"> · </span><span id="langOther_mob_pod">EN</span></button>
       </div>
     </div>
   </header>
@@ -313,52 +313,20 @@
       mBtn?.classList.remove('is-open');
     }
   });
-  
-      var langMobPod = document.getElementById('langToggleMobilePod');
-      if (langMobPod) {
-        langMobPod.addEventListener('click', function() {
-          var cur; try { cur = sessionStorage.getItem('boyle_lang') || 'it'; } catch(e) { cur = 'it'; }
-          var nxt = cur === 'it' ? 'en' : 'it';
-          try { sessionStorage.setItem('boyle_lang', nxt); } catch(e) {}
-          location.reload();
-        });
-      }
+
   </script>
 
   <!-- i18n: podcast.html -->
   <script>
   (function(){
-    // ── Dizionario traduzioni EN ──
     var T = {
-      it: {
-        'pod_nav_home':'Home','pod_nav_vis':'Visione','pod_nav_ric':'Ricerca',
-        'pod_nav_rete':'Rete','pod_nav_pod':'Podcast','pod_nav_cont':'Contatti',
-        'pod_meta':'Pressione · Immersione · Iperbarica · Spazio',
-        'pod_lead':'Contenuti originali dedicati alla medicina iperbarica, ipobarismo, astronautica e fisiologia estrema. Un podcast per curiosi, scritto da curiosi.',
-        'pod_cta_ep':'▶ Vai agli episodi',
-        'pod_cta_spotify':'Apri Spotify',
-        'pod_stat_stagioni':'Stagioni',
-        'pod_stat_episodi':'Episodi',
-        'pod_stat_curiosita':'Curiosità',
-        'pod_latest_badge':'🚀 Ultimo episodio · Stagione 3',
-        'pod_listen_spotify':'Ascolta su Spotify →',
-        'pod_s1_title':'Stagione 1',
-        'pod_s1_desc':'Le basi del mondo subacqueo: leggi fisiche, idoneità, attrezzatura e barotraumi.',
-        'pod_s2_title':'Stagione 2',
-        'pod_s2_desc':'Ipobarismo, cinema, visione, ossigeno, azoto e storie che meritano di essere capite davvero.',
-        'pod_s3_title':'Stagione 3',
-        'pod_s3_desc':'Dal mare allo spazio: elio, astronauti, fisiologia della pressione e emergenze spaziali.',
-        'pod_yt_title':'Disponibile anche su YouTube',
-        'pod_yt_desc':'Tutti gli episodi di Sotto Pressione sono disponibili anche sul canale YouTube degli Amici di Boyle. Scansiona il QR code o apri il link direttamente.',
-        'pod_all_ep':'Tutti gli episodi',
-        'pod_search_ph':'Cerca episodio...',
-        'pod_cta_h3':'Vuoi proporre un argomento o una collaborazione?',
-        'pod_cta_p':'Idee serie, casi interessanti, progetti editoriali. Se ha valore, lo trattiamo bene.',
-        'pod_cta_btn':'Contattaci',
-      },
       en: {
-        'pod_nav_home':'Home','pod_nav_vis':'Vision','pod_nav_ric':'Research',
-        'pod_nav_rete':'Network','pod_nav_pod':'Podcast','pod_nav_cont':'Contact',
+        'pod_nav_home':'Home',
+        'pod_nav_vis':'Vision',
+        'pod_nav_ric':'Research',
+        'pod_nav_rete':'Network',
+        'pod_nav_pod':'Podcast',
+        'pod_nav_cont':'Contact',
         'pod_meta':'Pressure · Immersion · Hyperbaric · Space',
         'pod_lead':'Original content only on hyperbaric medicine, hypobarism, astronautics and extreme physiology. A podcast for curious people, written by curious people.',
         'pod_cta_ep':'▶ Go to episodes',
@@ -380,69 +348,64 @@
         'pod_search_ph':'Search episode...',
         'pod_cta_h3':'Want to propose a topic or a collaboration?',
         'pod_cta_p':'Serious ideas, interesting cases, editorial projects. If it has value, we handle it well.',
-        'pod_cta_btn':'Contact us',
-      }
+        'pod_cta_btn':'Contact us'
+      },
+      it: {}
     };
 
-    // ── Funzione di traduzione richiamabile ──
     function applyLang(l) {
-      var dict = T[l] || T['it'];
-      // data-i18n
+      var dict = T[l] || T.it;
       document.querySelectorAll('[data-i18n]').forEach(function(el) {
-        var k = el.getAttribute('data-i18n');
-        if (dict[k] !== undefined) el.textContent = dict[k];
+        var key = el.getAttribute('data-i18n');
+        if (dict[key] !== undefined) el.textContent = dict[key];
       });
-      // data-i18n-placeholder
       document.querySelectorAll('[data-i18n-placeholder]').forEach(function(el) {
-        var k = el.getAttribute('data-i18n-placeholder');
-        if (dict[k] !== undefined) el.placeholder = dict[k];
+        var key = el.getAttribute('data-i18n-placeholder');
+        if (dict[key] !== undefined) el.placeholder = dict[key];
       });
-      // Nav links via data-i18n
-      document.querySelectorAll('.nav--desktop a[data-i18n], .nav-mobile-panel a[data-i18n]').forEach(function(a) {
-        var k = a.getAttribute('data-i18n');
-        if (dict[k] !== undefined) a.textContent = dict[k];
-      });
-      // Toggle buttons
+
       var cur = document.getElementById('langCurrent');
       var oth = document.getElementById('langOther');
+      if (cur) cur.textContent = l === 'en' ? 'EN' : 'IT';
+      if (oth) oth.textContent = l === 'en' ? 'IT' : 'EN';
+
       var curMob = document.getElementById('langCurrent_mob_pod');
       var othMob = document.getElementById('langOther_mob_pod');
-      if (l === 'en') {
-        if (cur) cur.textContent = 'EN'; if (oth) oth.textContent = 'IT';
-        if (curMob) curMob.textContent = 'EN'; if (othMob) othMob.textContent = 'IT';
-        document.title = 'Sotto Pressione · Podcast · Gli Amici di Boyle';
-        document.documentElement.lang = 'en';
-      } else {
-        if (cur) cur.textContent = 'IT'; if (oth) oth.textContent = 'EN';
-        if (curMob) curMob.textContent = 'IT'; if (othMob) othMob.textContent = 'EN';
-        document.title = 'Sotto Pressione · Podcast · Gli Amici di Boyle';
-        document.documentElement.lang = 'it';
-      }
+      if (curMob) curMob.textContent = l === 'en' ? 'EN' : 'IT';
+      if (othMob) othMob.textContent = l === 'en' ? 'IT' : 'EN';
+
+      document.documentElement.lang = l;
       try { sessionStorage.setItem('boyle_lang', l); } catch(ex) {}
     }
 
-    // ── Wire toggle desktop e mobile ──
-    function attachToggles() {
-      function toggle() {
+    function attachLangToggles() {
+      var desktopBtn = document.getElementById('langToggle');
+      var mobileBtn = document.getElementById('langToggleMobilePod');
+
+      function onToggle(e) {
+        if (e) {
+          e.preventDefault();
+          e.stopPropagation();
+        }
         var cur; try { cur = sessionStorage.getItem('boyle_lang') || 'it'; } catch(ex) { cur = 'it'; }
         applyLang(cur === 'it' ? 'en' : 'it');
       }
-      var btn = document.getElementById('langToggle');
-      if (btn) btn.addEventListener('click', function(e){ e.stopPropagation(); toggle(); });
-      var mob = document.getElementById('langToggleMobilePod');
-      if (mob) mob.addEventListener('click', function(){ toggle(); });
+
+      if (desktopBtn) desktopBtn.addEventListener('click', onToggle);
+      if (mobileBtn) mobileBtn.addEventListener('click', onToggle);
     }
 
-    // ── Inizializzazione ──
     function init() {
+      attachLangToggles();
       var lang; try { lang = sessionStorage.getItem('boyle_lang') || 'it'; } catch(ex) { lang = 'it'; }
       applyLang(lang);
-      attachToggles();
     }
 
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', init);
-    } else { init(); }
+    } else {
+      init();
+    }
   })();
   </script>
 </body>
