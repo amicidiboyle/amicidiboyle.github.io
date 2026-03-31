@@ -2673,8 +2673,7 @@ html, body { overflow-x: hidden; }
   pointer-events: auto;
   flex-shrink: 0;
 }
-.lang-toggle:hover,
-.lang-toggle-mobile:hover {
+.lang-toggle:hover {
   background: rgba(123,228,255,.15);
   border-color: rgba(123,228,255,.42);
   color: #a8eeff;
@@ -2685,27 +2684,6 @@ html, body { overflow-x: hidden; }
 }
 .lang-sep { opacity: .28; font-weight: 400; }
 #langOther { opacity: .52; }
-
-.lang-toggle-mobile {
-  display: none;
-  align-items: center;
-  justify-content: center;
-  gap: 3px;
-  width: 100%;
-  margin-top: 8px;
-  padding: 11px 16px;
-  border-radius: 12px;
-  background: rgba(123,228,255,.07);
-  border: 1px solid rgba(123,228,255,.22);
-  color: rgba(237,247,255,.65);
-  font-size: .86rem;
-  font-weight: 700;
-  letter-spacing: .1em;
-  cursor: pointer;
-  transition: background .2s, border-color .2s, color .2s;
-  white-space: nowrap;
-  line-height: 1;
-}
 
 
 /* ── Amici di Boyle button (home) ── */
@@ -2823,6 +2801,5 @@ html, body { overflow-x: hidden; }
 
 /* ══ LANG TOGGLE: solo desktop ══ */
 @media (max-width: 768px) {
-  .nav-wrap > .lang-toggle { display: none !important; }
-  .lang-toggle-mobile { display: inline-flex !important; }
+  .lang-toggle { display: none !important; }
 }
