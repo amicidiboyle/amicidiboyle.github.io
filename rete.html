@@ -55,6 +55,7 @@
         <a href="podcast.html" data-i18n="r_nav_pod">Podcast</a>
         <a href="#prossimo-evento" data-i18n="r_events_link">Eventi</a>
         <a href="index.html#contatti" data-i18n="r_nav_cont">Contatti</a>
+        <button id="langToggleMobileRete" type="button" class="lang-toggle lang-toggle--mobile" aria-label="Cambia lingua / Switch language"><span id="langCurrent_mob_rete">IT</span><span class="lang-sep"> · </span><span id="langOther_mob_rete">EN</span></button>
       </div>
     </div>
   </header>
@@ -125,15 +126,15 @@
               <div class="hero-info-wrap">
                 <button class="hero-info-btn" id="infoRete" type="button">ⓘ</button>
                 <div class="hero-popover" id="popoverRete" aria-hidden="true">
-                  <p class="hero-popover__title">Rete di Boyle</p>
-                  <p class="hero-popover__desc">Riservata a medici, ricercatori, ingegneri e operatori militari con curriculum validato. Accesso selettivo e valutato caso per caso.</p>
+                  <p class="hero-popover__title" data-i18n="r_pop_rete_title">Rete di Boyle</p>
+                  <p class="hero-popover__desc" data-i18n="r_pop_rete_desc">Riservata a medici, ricercatori, ingegneri e operatori militari con curriculum validato. Accesso selettivo e valutato caso per caso.</p>
                   <ul class="hero-popover__list">
-                    <li>✓ Card pubblica nella griglia</li>
-                    <li>✓ Contatti diretti dei membri</li>
-                    <li>✓ Collaborazioni scientifiche</li>
-                    <li>✓ Prima fila su congressi ed editoriali</li>
-                    <li>✓ Newsletter riservata</li>
-                    <li>✓ Pubblica corsi ed eventi</li>
+                    <li data-i18n="r_pop_rete_li1">✓ Card pubblica nella griglia</li>
+                    <li data-i18n="r_pop_rete_li2">✓ Contatti diretti dei membri</li>
+                    <li data-i18n="r_pop_rete_li3">✓ Collaborazioni scientifiche</li>
+                    <li data-i18n="r_pop_rete_li4">✓ Prima fila su congressi ed editoriali</li>
+                    <li data-i18n="r_pop_rete_li5">✓ Newsletter riservata</li>
+                    <li data-i18n="r_pop_rete_li6">✓ Pubblica corsi ed eventi</li>
                   </ul>
                 </div>
               </div>
@@ -149,14 +150,14 @@
               <div class="hero-info-wrap">
                 <button class="hero-info-btn" id="infoAmici" type="button">ⓘ</button>
                 <div class="hero-popover" id="popoverAmici" aria-hidden="true">
-                  <p class="hero-popover__title">Amici di Boyle</p>
-                  <p class="hero-popover__desc">Per chi è curioso e ha voglia di contribuire. La porta d'ingresso alla community. L'immersione nella Scienza inizia da qui.</p>
+                  <p class="hero-popover__title" data-i18n="r_pop_amici_title">Amici di Boyle</p>
+                  <p class="hero-popover__desc" data-i18n="r_pop_amici_desc">Per chi è curioso e ha voglia di contribuire. La porta d'ingresso alla community. L'immersione nella Scienza inizia da qui.</p>
                   <ul class="hero-popover__list">
-                    <li>✓ Codice personale di accesso</li>
+                    <li data-i18n="r_pop_amici_li1">✓ Codice personale di accesso</li>
                     <li>✓ Contatti diretti dei membri</li>
-                    <li>✓ Profili estesi della Rete</li>
-                    <li>✓ Pubblica eventi di ambienti estremi</li>
-                    <li>✓ Newsletter della community</li>
+                    <li data-i18n="r_pop_amici_li2">✓ Profili estesi della Rete</li>
+                    <li data-i18n="r_pop_amici_li3">✓ Pubblica eventi di ambienti estremi</li>
+                    <li data-i18n="r_pop_amici_li4">✓ Newsletter della community</li>
                   </ul>
                 </div>
               </div>
@@ -172,13 +173,13 @@
               <div class="hero-info-wrap">
                 <button class="hero-info-btn" id="infoEventi" type="button">ⓘ</button>
                 <div class="hero-popover" id="popoverEventi" aria-hidden="true">
-                  <p class="hero-popover__title">Eventi della Rete</p>
-                  <p class="hero-popover__desc">Tutti i membri della Rete e gli Amici di Boyle possono pubblicare qui i loro eventi. Scopri cosa c’è di nuovo.</p>
+                  <p class="hero-popover__title" data-i18n="r_pop_ev_title">Eventi della Rete</p>
+                  <p class="hero-popover__desc" data-i18n="r_pop_ev_desc">Tutti i membri della Rete e gli Amici di Boyle possono pubblicare qui i loro eventi. Scopri cosa c’è di nuovo.</p>
                   <ul class="hero-popover__list">
-                    <li>✓ Corsi e workshop di ambienti estremi</li>
-                    <li>✓ Congressi e conferenze scientifiche</li>
-                    <li>✓ Esercitazioni e simulazioni</li>
-                    <li>✓ Eventi aperti alla community</li>
+                    <li data-i18n="r_pop_ev_li1">✓ Corsi e workshop di ambienti estremi</li>
+                    <li data-i18n="r_pop_ev_li2">✓ Congressi e conferenze scientifiche</li>
+                    <li data-i18n="r_pop_ev_li3">✓ Esercitazioni e simulazioni</li>
+                    <li data-i18n="r_pop_ev_li4">✓ Eventi aperti alla community</li>
                   </ul>
                 </div>
               </div>
@@ -239,8 +240,8 @@
         <div class="email-wall__icon">
           <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
         </div>
-        <h3 class="email-wall__title">Area riservata ai membri</h3>
-        <p class="email-wall__text">Pubblicare un evento sulla Rete di Boyle è riservato ai membri attivi. Se sei già membro, inserisci il tuo codice di accesso.</p>
+        <h3 class="email-wall__title" data-i18n="r_ev_members_title">Area riservata ai membri</h3>
+        <p class="email-wall__text" data-i18n="r_ev_members_desc">Pubblicare un evento sulla Rete di Boyle è riservato ai membri attivi. Se sei già membro, inserisci il tuo codice di accesso.</p>
         <div class="email-wall__actions">
           <button class="btn-electric" id="publishWallCodeBtn" type="button">
             <span class="btn-electric__inner">
@@ -248,7 +249,7 @@
               Sono già membro — inserisci il codice
             </span>
           </button>
-          <button class="btn-ghost" id="publishWallJoin" style="min-height:44px;font-size:.88rem;margin-top:8px">Candidati alla rete →</button>
+          <button class="btn-ghost" id="publishWallJoin" style="min-height:44px;font-size:.88rem;margin-top:8px" data-i18n="r_ev_apply_cta">Candidati alla rete →</button>
           <p class="email-wall__note">Problemi? Scrivi a <a href="/cdn-cgi/l/email-protection#0a63646c654a6b676369636e63686573666f24637e"><span class="__cf_email__" data-cfemail="e1888f878ea1808c8882888588838e988d84cf8895">[email&#160;protected]</span></a></p>
         </div>
       </div>
@@ -260,18 +261,18 @@
         <div class="modal__head">
           <div>
             <p class="modal__kicker">Area membri</p>
-            <h3 class="modal__title" id="publishEventTitle">Pubblica il tuo evento</h3>
+            <h3 class="modal__title" id="publishEventTitle" data-i18n="r_pub_ev_title">Pubblica il tuo evento</h3>
           </div>
           <button class="modal__close" id="publishEventClose" aria-label="Chiudi">✕</button>
         </div>
-        <p class="modal__desc">Compila il form per proporre un evento o un corso da pubblicare sulla Rete di Boyle. Ti risponderemo entro 48 ore.</p>
+        <p class="modal__desc" data-i18n="r_pub_ev_desc">Compila il form per proporre un evento o un corso da pubblicare sulla Rete di Boyle. Ti risponderemo entro 48 ore.</p>
         <form class="modal__form" id="publishEventForm"
               action="https://formspree.io/f/xpwzgkqv"
               method="POST">
           <input type="hidden" name="_subject" value="Proposta evento — Rete di Boyle" />
           <div class="form-grid">
             <div class="form-field">
-              <label for="ev-nome">Nome e cognome *</label>
+              <label for="ev-nome" data-i18n="r_pub_label_name">Nome e cognome *</label>
               <input type="text" id="ev-nome" name="nome" required autocomplete="name" />
             </div>
             <div class="form-field">
@@ -283,33 +284,33 @@
               <input type="text" id="ev-titolo" name="titolo_evento" required />
             </div>
             <div class="form-field">
-              <label for="ev-data">Data / periodo</label>
+              <label for="ev-data" data-i18n="r_pub_label_date">Data / periodo</label>
               <input type="text" id="ev-data" name="data_evento" placeholder="es. 15 aprile 2025" />
             </div>
             <div class="form-field">
-              <label for="ev-luogo">Luogo / modalità</label>
+              <label for="ev-luogo" data-i18n="r_pub_label_place">Luogo / modalità</label>
               <input type="text" id="ev-luogo" name="luogo" placeholder="es. Milano / Online" />
             </div>
             <div class="form-field form-field--full">
-              <label for="ev-desc">Descrizione breve *</label>
+              <label for="ev-desc" data-i18n="r_pub_label_desc">Descrizione breve *</label>
               <textarea id="ev-desc" name="descrizione" rows="3" required placeholder="Argomento, obiettivi, pubblico target..."></textarea>
             </div>
             <div class="form-field form-field--full">
-              <label for="ev-link">Link esterno (sito evento, iscrizioni...)</label>
+              <label for="ev-link" data-i18n="r_pub_label_link">Link esterno (sito evento, iscrizioni...)</label>
               <input type="url" id="ev-link" name="link_esterno" placeholder="https://" />
             </div>
             <div class="form-field form-field--full">
-              <label for="ev-locandina">Link locandina (Drive, Dropbox, WeTransfer...)</label>
+              <label for="ev-locandina" data-i18n="r_pub_label_poster">Link locandina (Drive, Dropbox, WeTransfer...)</label>
               <input type="url" id="ev-locandina" name="link_locandina" placeholder="https://" />
             </div>
             <div class="form-field form-field--full">
-              <label for="ev-note">Note aggiuntive</label>
+              <label for="ev-note" data-i18n="r_pub_label_notes">Note aggiuntive</label>
               <textarea id="ev-note" name="note" rows="2" placeholder="Qualsiasi altra informazione utile..."></textarea>
             </div>
           </div>
           <div class="modal__actions">
             <button class="btn-electric" type="submit">
-              <span class="btn-electric__inner">Invia proposta</span>
+              <span class="btn-electric__inner" data-i18n="r_pub_submit">Invia proposta</span>
             </button>
           </div>
           <div class="form-status" id="publishEventStatus"></div>
@@ -325,14 +326,14 @@
         <div class="access-modal__icon">
           <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
         </div>
-        <h3 class="access-modal__title">Accesso membri</h3>
-        <p class="access-modal__desc">Inserisci il codice ricevuto nella email di benvenuto.</p>
+        <h3 class="access-modal__title" data-i18n="r_access_title">Accesso membri</h3>
+        <p class="access-modal__desc" data-i18n="r_access_desc">Inserisci il codice ricevuto nella email di benvenuto.</p>
         <div class="access-modal__form">
           <input type="text" id="accessCodeInput" class="access-modal__input"
             placeholder="es. BOYLE-K7X2-COGNOME"
             autocomplete="off" autocapitalize="characters" spellcheck="false" />
           <button class="btn-electric" id="accessCodeSubmit" type="button">
-            <span class="btn-electric__inner">Sblocca contatti</span>
+            <span class="btn-electric__inner" data-i18n="r_access_unlock">Sblocca contatti</span>
           </button>
         </div>
         <p class="access-modal__status" id="accessStatus"></p>
@@ -346,8 +347,8 @@
         <div class="email-wall__icon">
           <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
         </div>
-        <h3 class="email-wall__title">Contatti riservati ai membri</h3>
-        <p class="email-wall__text">Gli indirizzi email diretti dei professionisti della Rete di Boyle sono visibili solo ai membri attivi. È uno dei vantaggi concreti di far parte della rete.</p>
+        <h3 class="email-wall__title" data-i18n="r_contacts_title">Contatti riservati ai membri</h3>
+        <p class="email-wall__text" data-i18n="r_contacts_desc">Gli indirizzi email diretti dei professionisti della Rete di Boyle sono visibili solo ai membri attivi. È uno dei vantaggi concreti di far parte della rete.</p>
         <div class="email-wall__actions">
           <button class="btn-electric" id="wallCodeBtn" type="button">
             <span class="btn-electric__inner">🔑 Sono già membro — inserisci il codice</span>
@@ -531,7 +532,7 @@
       <button class="modal__close" id="close-network-modal" type="button" aria-label="Chiudi">✕</button>
       <div class="modal__head">
         <span class="modal__kicker">Rete di Boyle</span>
-        <h2 class="modal__title" id="modal-title">Connettiamo menti brillanti</h2>
+        <h2 class="modal__title" id="modal-title" data-i18n="r_join_title">Connettiamo menti brillanti</h2>
         <p class="modal__desc">La Rete di Boyle è riservata a professionisti con curriculum validato in medicina subacquea, iperbarica, aerospaziale, safety o fisiologia degli ambienti estremi. Valutiamo ogni candidatura individualmente.</p>
       </div>
       <form class="network-form" id="network-form" action="https://formspree.io/f/xzdareqw" method="POST">
@@ -540,7 +541,7 @@
         <input type="hidden" id="cand-snippet" name="codice_card_html" />
         <div class="form-grid">
           <div class="field">
-            <label for="cand-name">NOME E COGNOME</label>
+            <label for="cand-name" data-i18n="r_cand_label_name">NOME E COGNOME</label>
             <input id="cand-name" name="nome" type="text" required placeholder="Nome e Cognome" />
           </div>
           <div class="field">
@@ -548,15 +549,15 @@
             <input id="cand-email" name="email" type="email" required placeholder="nome@dominio.it" />
           </div>
           <div class="field">
-            <label for="cand-affiliation">AFFILIAZIONE</label>
+            <label for="cand-affiliation" data-i18n="r_cand_label_affil">AFFILIAZIONE</label>
             <input id="cand-affiliation" name="affiliazione" type="text" placeholder="Ospedale, Università, Centro, Azienda" />
           </div>
           <div class="field">
-            <label for="cand-role">QUALIFICA PROFESSIONALE</label>
+            <label for="cand-role" data-i18n="r_cand_label_qual">QUALIFICA PROFESSIONALE</label>
             <input id="cand-role" name="ruolo" type="text" placeholder="Es. Medico iperbarico, ricercatore, ingegnere biomedico" />
           </div>
           <div class="field field--full">
-            <label for="cand-interest">AREA DI INTERESSE / FOCUS</label>
+            <label for="cand-interest" data-i18n="r_cand_label_area">AREA DI INTERESSE / FOCUS</label>
             <input id="cand-interest" name="focus" type="text" placeholder="Es. Medicina iperbarica, neuroscienze, fisiologia, soccorso estremo" />
           </div>
           <div class="field field--full">
@@ -564,17 +565,17 @@
             <input id="cand-city" name="citta" type="text" placeholder="Es. Milano, Italia" />
           </div>
           <div class="field field--full">
-            <label for="cand-linkedin">PROFILO LINKEDIN</label>
+            <label for="cand-linkedin" data-i18n="r_cand_label_li">PROFILO LINKEDIN</label>
             <input id="cand-linkedin" name="linkedin" type="url" placeholder="https://www.linkedin.com/in/..." />
           </div>
           <div class="field field--full">
-            <label for="cand-bio">PRESENTAZIONE E MOTIVAZIONE</label>
+            <label for="cand-bio" data-i18n="r_cand_label_pres">PRESENTAZIONE E MOTIVAZIONE</label>
             <textarea id="cand-bio" name="presentazione" placeholder="Racconta chi sei, cosa fai e perché vorresti entrare nella Rete di Boyle."></textarea>
           </div>
         </div>
         <div class="modal__actions">
           <button class="btn-electric" type="submit">
-            <span class="btn-electric__inner">Invia candidatura</span>
+            <span class="btn-electric__inner" data-i18n="r_cand_submit">Invia candidatura</span>
           </button>
         </div>
         <div class="form-status" id="form-status" aria-live="polite"></div>
@@ -586,7 +587,7 @@
     <div class="container footer__inner">
       <div class="footer__brand">
         <img src="assets/logo.png" alt="" width="30" height="30" aria-hidden="true" />
-        <span>© 2026 Gli Amici di Boyle</span>
+        <span data-i18n="r_footer_copy">© 2026 Gli Amici di Boyle</span>
       </div>
       <nav class="footer__links">
         <a href="index.html" data-i18n="r_nav_home">Home</a>
@@ -604,18 +605,18 @@
       <div class="modal__head">
         <span class="modal__kicker modal__kicker--amici">Amici di Boyle</span>
         <h2 class="modal__title">Entra nella community</h2>
-        <p class="modal__desc">Diventa un Amico di Boyle: se sei appassionato di medicina degli ambienti estremi e della diffusione della cultura scientifica, questa è la tua community.</p>
+        <p class="modal__desc" data-i18n="r_amici_join_desc">Diventa un Amico di Boyle: se sei appassionato di medicina degli ambienti estremi e della diffusione della cultura scientifica, questa è la tua community.</p>
       </div>
 
       <!-- Vantaggi nel form -->
       <div class="amici-benefits-inline">
         <div class="amici-benefit-item">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.43 2 2 0 0 1 3.6 1.27h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8a16 16 0 0 0 6.08 6.08l.95-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16a2 2 0 0 1 .19.92z"/></svg>
-          <span>Contatti diretti dei membri della Rete</span>
+          <span data-i18n="r_amici_ben1">Contatti diretti dei membri della Rete</span>
         </div>
         <div class="amici-benefit-item">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-          <span>Profili estesi di tutti i membri</span>
+          <span data-i18n="r_amici_ben2">Profili estesi di tutti i membri</span>
         </div>
         <div class="amici-benefit-item">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
@@ -631,7 +632,7 @@
         </div>
         <div class="amici-benefit-item amici-benefit-item--note">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
-          <span>I più attivi potranno essere invitati a entrare nella Rete</span>
+          <span data-i18n="r_amici_ben4">I più attivi potranno essere invitati a entrare nella Rete</span>
         </div>
       </div>
 
@@ -641,7 +642,7 @@
         <input type="hidden" name="codice_generato" id="amici-codice-hidden" />
         <div class="form-grid">
           <div class="field">
-            <label for="amici-name">NOME E COGNOME *</label>
+            <label for="amici-name" data-i18n="r_amici_label_name">NOME E COGNOME *</label>
             <input id="amici-name" name="nome" type="text" required placeholder="Nome e Cognome" />
           </div>
           <div class="field">
@@ -665,11 +666,11 @@
             </select>
           </div>
           <div class="field field--full">
-            <label for="amici-motivazione">PERCHÉ VUOI ENTRARE NELLA COMMUNITY *</label>
+            <label for="amici-motivazione" data-i18n="r_amici_label_why">PERCHÉ VUOI ENTRARE NELLA COMMUNITY *</label>
             <textarea id="amici-motivazione" name="motivazione" required placeholder="Raccontaci chi sei e cosa ti ha spinto a conoscere gli Amici di Boyle..."></textarea>
           </div>
           <div class="field field--full">
-            <label for="amici-source">COME CI HAI CONOSCIUTO</label>
+            <label for="amici-source" data-i18n="r_amici_label_how">COME CI HAI CONOSCIUTO</label>
             <select id="amici-source" name="come_ci_hai_conosciuto">
               <option value="">Seleziona</option>
               <option value="Social media">Social media</option>
@@ -683,7 +684,7 @@
         </div>
         <div class="modal__actions">
           <button class="btn-amici-submit" type="submit">
-            <span>Invia la mia candidatura</span>
+            <span data-i18n="r_amici_submit">Invia la mia candidatura</span>
           </button>
         </div>
         <div class="form-status" id="amici-form-status" aria-live="polite"></div>
@@ -750,7 +751,7 @@
           <span class="edit-section-icon">✦</span> Bio pubblica
         </div>
         <div class="edit-field">
-          <label>Presentazione breve <span class="edit-field__hint">max 300 caratteri</span></label>
+          <label>Presentazione breve <span class="edit-field__hint" data-i18n="r_edit_maxchars">max 300 caratteri</span></label>
           <textarea id="ef-bio" maxlength="300" placeholder="Racconta chi sei e cosa fai in questo campo..."></textarea>
           <span class="edit-char-count" id="bioCount">0 / 300</span>
         </div>
@@ -770,14 +771,14 @@
             </div>
           </div>
           <div class="edit-field">
-            <label>ResearchGate</label>
+            <label data-i18n="r_edit_rg">ResearchGate</label>
             <div class="edit-field__input-wrap">
               <span class="edit-field__prefix">RG</span>
               <input type="url" id="ef-researchgate" placeholder="researchgate.net/profile/..." />
             </div>
           </div>
           <div class="edit-field">
-            <label>Google Scholar</label>
+            <label data-i18n="r_edit_scholar">Google Scholar</label>
             <div class="edit-field__input-wrap">
               <span class="edit-field__prefix">GS</span>
               <input type="url" id="ef-scholar" placeholder="scholar.google.com/..." />
@@ -791,14 +792,14 @@
             </div>
           </div>
           <div class="edit-field">
-            <label>Sito personale</label>
+            <label data-i18n="r_edit_site">Sito personale</label>
             <div class="edit-field__input-wrap">
               <span class="edit-field__prefix">↗</span>
               <input type="url" id="ef-website" placeholder="https://..." />
             </div>
           </div>
           <div class="edit-field">
-            <label>Corsi / Pubblicazioni</label>
+            <label data-i18n="r_edit_courses">Corsi / Pubblicazioni</label>
             <div class="edit-field__input-wrap">
               <span class="edit-field__prefix">↗</span>
               <input type="url" id="ef-courses" placeholder="https://..." />
@@ -827,14 +828,14 @@
           <span class="edit-section-icon">◈</span> Disponibilità
         </div>
         <div class="edit-checkboxes">
-          <label class="edit-checkbox"><input type="checkbox" id="ef-speaker" /><span>Relatore a corsi e congressi</span></label>
-          <label class="edit-checkbox"><input type="checkbox" id="ef-podcast" /><span>Ospite del podcast Sotto Pressione</span></label>
-          <label class="edit-checkbox"><input type="checkbox" id="ef-research" /><span>Collaborazioni di ricerca</span></label>
+          <label class="edit-checkbox"><input type="checkbox" id="ef-speaker" /><span data-i18n="r_edit_speaker">Relatore a corsi e congressi</span></label>
+          <label class="edit-checkbox"><input type="checkbox" id="ef-podcast" /><span data-i18n="r_edit_podcast">Ospite del podcast Sotto Pressione</span></label>
+          <label class="edit-checkbox"><input type="checkbox" id="ef-research" /><span data-i18n="r_edit_research">Collaborazioni di ricerca</span></label>
         </div>
       </div>
 
       <div class="edit-modal__footer">
-        <button class="edit-submit" id="editSubmit">Salva il profilo</button>
+        <button class="edit-submit" id="editSubmit" data-i18n="r_edit_save">Salva il profilo</button>
         <div class="edit-status" id="editStatus"></div>
       </div>
 
@@ -2063,7 +2064,77 @@
         'r_ev_propose_cta':'Proponi evento',
         // Footer
         'r_foot_rights':'Tutti i diritti riservati.',
-      },
+              'r_pop_rete_title':'Rete di Boyle',
+        'r_pop_rete_desc':'Riservata a medici, ricercatori, ingegneri e operatori militari con curriculum validato. Accesso selettivo e valutato caso per caso.',
+        'r_pop_rete_li1':'✓ Card pubblica nella griglia',
+        'r_pop_rete_li2':'✓ Contatti diretti dei membri',
+        'r_pop_rete_li3':'✓ Collaborazioni scientifiche',
+        'r_pop_rete_li4':'✓ Prima fila su congressi ed editoriali',
+        'r_pop_rete_li5':'✓ Newsletter riservata',
+        'r_pop_rete_li6':'✓ Pubblica corsi ed eventi',
+        'r_pop_amici_title':'Amici di Boyle',
+        'r_pop_amici_desc':'Per chi è curioso e ha voglia di contribuire. La porta d\'ingresso alla community. L\'immersione nella Scienza inizia da qui.',
+        'r_pop_amici_li1':'✓ Codice personale di accesso',
+        'r_pop_amici_li2':'✓ Profili estesi della Rete',
+        'r_pop_amici_li3':'✓ Pubblica eventi di ambienti estremi',
+        'r_pop_amici_li4':'✓ Newsletter della community',
+        'r_pop_ev_title':'Eventi della Rete',
+        'r_pop_ev_desc':'Tutti i membri della Rete e gli Amici di Boyle possono pubblicare qui i loro eventi. Scopri cosa c\'è di nuovo.',
+        'r_pop_ev_li1':'✓ Corsi e workshop di ambienti estremi',
+        'r_pop_ev_li2':'✓ Congressi e conferenze scientifiche',
+        'r_pop_ev_li3':'✓ Esercitazioni e simulazioni',
+        'r_pop_ev_li4':'✓ Eventi aperti alla community',
+        'r_ev_members_title':'Area riservata ai membri',
+        'r_ev_members_desc':'Pubblicare un evento sulla Rete di Boyle è riservato ai membri attivi. Se sei già membro, inserisci il tuo codice di accesso.',
+        'r_ev_apply_cta':'Candidati alla rete →',
+        'r_pub_ev_title':'Pubblica il tuo evento',
+        'r_pub_ev_desc':'Compila il form per proporre un evento o un corso da pubblicare sulla Rete di Boyle. Ti risponderemo entro 48 ore.',
+        'r_pub_label_name':'Nome e cognome *',
+        'r_pub_label_title':'Titolo dell\'evento *',
+        'r_pub_label_date':'Data / periodo',
+        'r_pub_label_place':'Luogo / modalità',
+        'r_pub_label_desc':'Descrizione breve *',
+        'r_pub_label_link':'Link esterno (sito evento, iscrizioni...)',
+        'r_pub_label_poster':'Link locandina (Drive, Dropbox, WeTransfer...)',
+        'r_pub_label_notes':'Note aggiuntive',
+        'r_pub_submit':'Invia proposta',
+        'r_access_title':'Accesso membri',
+        'r_access_desc':'Inserisci il codice ricevuto nella email di benvenuto.',
+        'r_access_unlock':'Sblocca contatti',
+        'r_contacts_title':'Contatti riservati ai membri',
+        'r_contacts_desc':'Gli indirizzi email diretti dei professionisti della Rete di Boyle sono visibili solo ai membri attivi.',
+        'r_contacts_cta':'🔑 Sono già membro — inserisci il codice',
+        'r_ev_badge_partner':'Corso partner',
+        'r_ev_download':'Scarica il programma',
+        'r_join_title':'Connettiamo menti brillanti',
+        'r_cand_label_name':'NOME E COGNOME',
+        'r_cand_label_affil':'AFFILIAZIONE',
+        'r_cand_label_qual':'QUALIFICA PROFESSIONALE',
+        'r_cand_label_area':'AREA DI INTERESSE / FOCUS',
+        'r_cand_label_city':'CITTÀ / NAZIONE',
+        'r_cand_label_li':'PROFILO LINKEDIN',
+        'r_cand_label_pres':'PRESENTAZIONE E MOTIVAZIONE',
+        'r_cand_submit':'Invia candidatura',
+        'r_footer_copy':'© 2026 Gli Amici di Boyle',
+        'r_amici_join_desc':'Diventa un Amico di Boyle: se sei appassionato di medicina degli ambienti estremi e della diffusione della cultura scientifica, questa è la tua community.',
+        'r_amici_ben1':'Contatti diretti dei membri della Rete',
+        'r_amici_ben2':'Profili estesi di tutti i membri',
+        'r_amici_ben3':'Newsletter della community',
+        'r_amici_ben4':'I più attivi potranno essere invitati a entrare nella Rete',
+        'r_amici_label_name':'NOME E COGNOME *',
+        'r_amici_label_why':'PERCHÉ VUOI ENTRARE NELLA COMMUNITY *',
+        'r_amici_label_how':'COME CI HAI CONOSCIUTO',
+        'r_amici_submit':'Invia la mia candidatura',
+        'r_edit_maxchars':'max 300 caratteri',
+        'r_edit_rg':'ResearchGate',
+        'r_edit_scholar':'Google Scholar',
+        'r_edit_site':'Sito personale',
+        'r_edit_courses':'Corsi / Pubblicazioni',
+        'r_edit_speaker':'Relatore a corsi e congressi',
+        'r_edit_podcast':'Ospite del podcast Sotto Pressione',
+        'r_edit_research':'Collaborazioni di ricerca',
+        'r_edit_save':'Salva il profilo',
+},
       en: {
         'r_nav_home':'Home','r_nav_vis':'Vision','r_nav_ric':'Research',
         'r_nav_rete':'Network','r_nav_pod':'Podcast','r_nav_cont':'Contact',
@@ -2112,7 +2183,77 @@
         'r_ev_propose_p':'Are you a member of the Network or a Friend of Boyle? Propose courses, conferences or training initiatives on the platform.',
         'r_ev_propose_cta':'Propose event',
         'r_foot_rights':'All rights reserved.',
-      }
+              'r_pop_rete_title':'Boyle Network',
+        'r_pop_rete_desc':'Reserved for physicians, researchers, engineers and military operators with a validated curriculum. Selective access, evaluated case by case.',
+        'r_pop_rete_li1':'✓ Public card in the network grid',
+        'r_pop_rete_li2':'✓ Direct contacts of all members',
+        'r_pop_rete_li3':'✓ Scientific collaborations',
+        'r_pop_rete_li4':'✓ Front row at congresses and editorials',
+        'r_pop_rete_li5':'✓ Members-only newsletter',
+        'r_pop_rete_li6':'✓ Publish courses and events',
+        'r_pop_amici_title':'Amici di Boyle',
+        'r_pop_amici_desc':'For those who are curious and want to contribute. The gateway to the community. The dive into Science starts here.',
+        'r_pop_amici_li1':'✓ Personal access code',
+        'r_pop_amici_li2':'✓ Extended profiles of the Network',
+        'r_pop_amici_li3':'✓ Publish extreme environment events',
+        'r_pop_amici_li4':'✓ Community newsletter',
+        'r_pop_ev_title':'Network Events',
+        'r_pop_ev_desc':'All Network members and Amici di Boyle can publish their events here. Discover what\'s new.',
+        'r_pop_ev_li1':'✓ Extreme environment courses and workshops',
+        'r_pop_ev_li2':'✓ Scientific congresses and conferences',
+        'r_pop_ev_li3':'✓ Drills and simulations',
+        'r_pop_ev_li4':'✓ Community open events',
+        'r_ev_members_title':'Members-only area',
+        'r_ev_members_desc':'Publishing an event on the Boyle Network is reserved for active members. If you are already a member, enter your access code.',
+        'r_ev_apply_cta':'Apply to the Network →',
+        'r_pub_ev_title':'Publish your event',
+        'r_pub_ev_desc':'Fill in the form to propose an event or course for the Boyle Network. We will get back to you within 48 hours.',
+        'r_pub_label_name':'Full name *',
+        'r_pub_label_title':'Event title *',
+        'r_pub_label_date':'Date / period',
+        'r_pub_label_place':'Venue / format',
+        'r_pub_label_desc':'Short description *',
+        'r_pub_label_link':'External link (event site, registration...)',
+        'r_pub_label_poster':'Poster link (Drive, Dropbox, WeTransfer...)',
+        'r_pub_label_notes':'Additional notes',
+        'r_pub_submit':'Submit proposal',
+        'r_access_title':'Member access',
+        'r_access_desc':'Enter the code received in your welcome email.',
+        'r_access_unlock':'Unlock contacts',
+        'r_contacts_title':'Members-only contacts',
+        'r_contacts_desc':'The direct email addresses of Boyle Network professionals are visible to active members only.',
+        'r_contacts_cta':'🔑 I\'m already a member — enter your code',
+        'r_ev_badge_partner':'Partner course',
+        'r_ev_download':'Download the programme',
+        'r_join_title':'Connecting brilliant minds',
+        'r_cand_label_name':'FULL NAME',
+        'r_cand_label_affil':'AFFILIATION',
+        'r_cand_label_qual':'PROFESSIONAL QUALIFICATION',
+        'r_cand_label_area':'AREA OF INTEREST / FOCUS',
+        'r_cand_label_city':'CITY / COUNTRY',
+        'r_cand_label_li':'LINKEDIN PROFILE',
+        'r_cand_label_pres':'PRESENTATION AND MOTIVATION',
+        'r_cand_submit':'Submit application',
+        'r_footer_copy':'© 2026 Gli Amici di Boyle',
+        'r_amici_join_desc':'Become an Amico di Boyle: if you are passionate about extreme environment medicine and the spread of scientific culture, this is your community.',
+        'r_amici_ben1':'Direct contacts of Network members',
+        'r_amici_ben2':'Extended profiles of all members',
+        'r_amici_ben3':'Community newsletter',
+        'r_amici_ben4':'The most active may be invited to join the Network',
+        'r_amici_label_name':'FULL NAME *',
+        'r_amici_label_why':'WHY DO YOU WANT TO JOIN THE COMMUNITY *',
+        'r_amici_label_how':'HOW DID YOU FIND US',
+        'r_amici_submit':'Submit my application',
+        'r_edit_maxchars':'max 300 characters',
+        'r_edit_rg':'ResearchGate',
+        'r_edit_scholar':'Google Scholar',
+        'r_edit_site':'Personal website',
+        'r_edit_courses':'Courses / Publications',
+        'r_edit_speaker':'Speaker at courses and congresses',
+        'r_edit_podcast':'Guest on the Sotto Pressione podcast',
+        'r_edit_research':'Research collaborations',
+        'r_edit_save':'Save profile',
+}
     };
 
     function applyLang(l) {
@@ -2129,11 +2270,15 @@
         var k = el.getAttribute('data-i18n-placeholder');
         if (dict[k] !== undefined) el.placeholder = dict[k];
       });
-      // Update toggle button text
+      // Update toggle button text — desktop e mobile
       var cur = document.getElementById('langCurrent');
       var oth = document.getElementById('langOther');
+      var curMob = document.getElementById('langCurrent_mob_rete');
+      var othMob = document.getElementById('langOther_mob_rete');
       if (cur) cur.textContent = l === 'en' ? 'EN' : 'IT';
       if (oth) oth.textContent = l === 'en' ? 'IT' : 'EN';
+      if (curMob) curMob.textContent = l === 'en' ? 'EN' : 'IT';
+      if (othMob) othMob.textContent = l === 'en' ? 'IT' : 'EN';
       sessionStorage.setItem('boyle_lang', l);
     }
 
@@ -2162,6 +2307,7 @@
         var nxt = cur === 'it' ? 'en' : 'it';
         sessionStorage.setItem('boyle_lang', nxt);
         applyLang(nxt);
+        updateMobileToggleLabels(nxt);
       });
     }
 
