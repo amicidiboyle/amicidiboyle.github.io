@@ -3279,3 +3279,31 @@ a { color: inherit; text-decoration: none; }
     transition: none !important;
   }
 }
+
+/* ── Toggle lingua mobile (hamburger menu) ── */
+.lang-toggle--mobile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  margin-top: 10px;
+  width: 100%;
+  padding: 9px 16px;
+  border-radius: 8px;
+  background: rgba(123,228,255,.08);
+  border: 1px solid rgba(123,228,255,.22);
+  color: #a8eeff;
+  font-size: .78rem;
+  font-weight: 700;
+  letter-spacing: .1em;
+  cursor: pointer;
+  transition: background .18s, border-color .18s;
+}
+.lang-toggle--mobile:hover {
+  background: rgba(123,228,255,.15);
+  border-color: rgba(123,228,255,.40);
+}
+.lang-toggle--mobile .lang-sep {
+  opacity: .45;
+  font-weight: 400;
+}
