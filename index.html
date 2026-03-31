@@ -1677,7 +1677,12 @@
       var btn = document.getElementById('langToggle');
       if (btn) btn.addEventListener('click', function(e) { e.preventDefault(); e.stopPropagation(); doToggle(); });
       var mob = document.getElementById('langToggleMobileIndex');
-      if (mob) mob.addEventListener('click', function(e) { e.stopPropagation(); doToggle(); });
+      if (mob) mob.addEventListener('click', function(e) {
+        e.stopPropagation();
+        doToggle();
+        var navToggle = document.getElementById('nav-toggle');
+        if (navToggle) navToggle.checked = false;
+      });
     }
 
     var initLang = getLang();
