@@ -886,9 +886,12 @@
   }
 
   function getMemberBioSnippet(profile) {
-    if (!profile || !profile.bio) return '';
+    // Emette SEMPRE il tag <p> (necessario per l'iniezione DOM in colorProfileIcons)
+    // Il contenuto viene scritto dopo dal fetch dei profili
+    if (!profile || !profile.bio || profile.bio.trim().length < 18) {
+      return '<p class="member-bio-snippet"></p>';
+    }
     const clean = profile.bio.replace(/\s+/g, ' ').trim();
-    if (clean.length < 18) return '';
     const snippet = clean.length > 80 ? clean.slice(0, 77).trimEnd() + '…' : clean;
     return `<p class="member-bio-snippet">“${snippet}”</p>`;
   }
@@ -1127,7 +1130,7 @@
     window.addEventListener('resize', resize, {passive:true});
 
     // 80 nodi: più dense connessioni, effetto immersivo
-    const N = 80;
+    const N = 52; // ridotto da 80 per performance (O(n²) = 1326 vs 3160 confronti/frame)
     // Distribuiti su un'area 3x alta rispetto alla viewport (copre tutto lo scroll)
     const nodes = Array.from({length: N}, (_, i) => ({
       x:  Math.random() * window.innerWidth,
@@ -1238,9 +1241,14 @@
         ctx.fill();
       }
 
-      requestAnimationFrame(draw);
+      if (!document.hidden) rafId = requestAnimationFrame(draw);
     }
-    requestAnimationFrame(draw);
+    let rafId = requestAnimationFrame(draw);
+    // Pausa quando la tab è in background
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) { cancelAnimationFrame(rafId); }
+      else { rafId = requestAnimationFrame(draw); }
+    });
   }
 
   /* ── Sistema accesso email per membri (codice personalizzato) ── */
@@ -1503,13 +1511,15 @@
   function initCardTilt() {
     document.querySelectorAll('.member-card').forEach(card => {
       card.addEventListener('mousemove', e => {
-        const r = card.getBoundingClientRect();
-        const x = (e.clientX - r.left) / r.width  - .5;  // -0.5 … 0.5
-        const y = (e.clientY - r.top)  / r.height - .5;
-        const ry =  x * 14;   // max 14deg sull'asse Y
-        const rx = -y * 10;   // max 10deg sull'asse X
-        card.style.setProperty('--rx', rx + 'deg');
-        card.style.setProperty('--ry', ry + 'deg');
+        if (card._tiltRAF) return; // throttle: max 1 aggiornamento per frame
+        card._tiltRAF = requestAnimationFrame(() => {
+          card._tiltRAF = null;
+          const r = card.getBoundingClientRect();
+          const x = (e.clientX - r.left) / r.width  - .5;
+          const y = (e.clientY - r.top)  / r.height - .5;
+          card.style.setProperty('--rx', (-y * 10) + 'deg');
+          card.style.setProperty('--ry', (x * 14)  + 'deg');
+        });
       });
       card.addEventListener('mouseleave', () => {
         card.style.setProperty('--rx', '0deg');
