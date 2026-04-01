@@ -673,7 +673,7 @@
     <div class="dialog__inner">
       <div class="dialog__head dialog__head--modern">
         <div class="dialog__head-text">
-          <span class="dialog__kicker">Contatto generale</span>
+          <span class="dialog__kicker" data-i18n="dlg1_kicker">Contatto generale</span>
           <h3 style="margin:0;" data-i18n="dlg1_h3">Scrivici</h3>
         </div>
         <button type="button" class="btn btn-ghost dialog__close" data-close-dialog aria-label="Chiudi">
@@ -683,14 +683,14 @@
       <p class="dialog__desc" data-i18n="dlg1_desc">Per domande, proposte di collaborazione, richieste editoriali o informazioni generali sul progetto.</p>
       <form id="contactFormGeneral" class="form modalForm" action="https://formspree.io/f/xzdareqw" method="POST" accept-charset="UTF-8">
         <input type="hidden" name="_subject" value="Nuovo contatto generale — Gli Amici di Boyle" />
-        <label class="field"><span>Nome e cognome</span><input name="name" type="text" autocomplete="name" placeholder="Come ti chiami?" required /></label>
+        <label class="field"><span data-i18n="dlg1_f1">Nome e cognome</span><input name="name" type="text" autocomplete="name" placeholder="Come ti chiami?" required /></label>
         <div class="section-grid split-2">
-          <label class="field"><span>Email</span><input name="email" type="email" autocomplete="email" placeholder="nome@dominio.it" required /></label>
-          <label class="field"><span>Oggetto</span><input name="subject" type="text" placeholder="In breve, di cosa si tratta" required /></label>
+          <label class="field"><span data-i18n="dlg1_f2">Email</span><input name="email" type="email" autocomplete="email" placeholder="nome@dominio.it" required /></label>
+          <label class="field"><span data-i18n="dlg1_f3">Oggetto</span><input name="subject" type="text" placeholder="In breve, di cosa si tratta" required /></label>
         </div>
-        <label class="field"><span>Messaggio</span><textarea name="message" rows="4" placeholder="Descrivi la tua richiesta o proposta. Più è chiara, prima rispondiamo." required></textarea></label>
+        <label class="field"><span data-i18n="dlg1_f4">Messaggio</span><textarea name="message" rows="4" placeholder="Descrivi la tua richiesta o proposta. Più è chiara, prima rispondiamo." required></textarea></label>
         <div class="dialog__actions">
-          <button id="submitGeneral" type="submit" class="btn btn-primary btn-electric">Invia messaggio</button>
+          <button id="submitGeneral" type="submit" class="btn btn-primary btn-electric" data-i18n="dlg1_submit">Invia messaggio</button>
           <button type="button" class="btn btn-ghost" data-close-dialog>Annulla</button>
         </div>
         <p class="form__status" id="statusGeneral" aria-live="polite"></p>
@@ -703,7 +703,7 @@
     <div class="dialog__inner">
       <div class="dialog__head dialog__head--modern">
         <div class="dialog__head-text">
-          <span class="dialog__kicker">Formazione e docenza</span>
+          <span class="dialog__kicker" data-i18n="dlg2_kicker">Formazione e docenza</span>
           <h3 style="margin:0;" data-i18n="dlg2_h3">Proponi un incontro</h3>
         </div>
         <button type="button" class="btn btn-ghost dialog__close" data-close-dialog aria-label="Chiudi">
@@ -713,14 +713,14 @@
       <p class="dialog__desc" data-i18n="dlg2_desc">Per docenze universitarie, corsi specialistici, congressi, seminari e collaborazioni strutturate con enti e istituzioni.</p>
       <form id="contactFormTeaching" class="form modalForm" action="https://formspree.io/f/xzdareqw" method="POST" accept-charset="UTF-8">
         <input type="hidden" name="_subject" value="Richiesta docenza o incontro — Gli Amici di Boyle" />
-        <label class="field"><span>Nome o ente richiedente</span><input name="name" type="text" placeholder="Nome, università, società scientifica, azienda…" required /></label>
+        <label class="field"><span data-i18n="dlg2_f1">Nome o ente richiedente</span><input name="name" type="text" placeholder="Nome, università, società scientifica, azienda…" required /></label>
         <div class="section-grid split-2">
-          <label class="field"><span>Email di riferimento</span><input name="email" type="email" autocomplete="email" placeholder="nome@dominio.it" required /></label>
-          <label class="field"><span>Tipo di attività</span><input name="subject" type="text" placeholder="Docenza, congresso, seminario, corso…" required /></label>
+          <label class="field"><span data-i18n="dlg2_f2">Email di riferimento</span><input name="email" type="email" autocomplete="email" placeholder="nome@dominio.it" required /></label>
+          <label class="field"><span data-i18n="dlg2_f3">Tipo di attività</span><input name="subject" type="text" placeholder="Docenza, congresso, seminario, corso…" required /></label>
         </div>
-        <label class="field"><span>Contesto e dettagli</span><textarea name="message" rows="4" placeholder="Descrivi l'evento, la data prevista, il pubblico di riferimento e qualsiasi altra informazione utile." required></textarea></label>
+        <label class="field"><span data-i18n="dlg2_f4">Contesto e dettagli</span><textarea name="message" rows="4" placeholder="Descrivi l'evento, la data prevista, il pubblico di riferimento e qualsiasi altra informazione utile." required></textarea></label>
         <div class="dialog__actions">
-          <button id="submitTeaching" type="submit" class="btn btn-primary btn-electric">Invia richiesta</button>
+          <button id="submitTeaching" type="submit" class="btn btn-primary btn-electric" data-i18n="dlg2_submit">Invia richiesta</button>
           <button type="button" class="btn btn-ghost" data-close-dialog>Annulla</button>
         </div>
         <p class="form__status" id="statusTeaching" aria-live="polite"></p>
@@ -733,7 +733,7 @@
     <div class="dialog__inner">
       <div class="dialog__head dialog__head--modern">
         <div class="dialog__head-text">
-          <span class="dialog__kicker">Rete di Boyle</span>
+          <span class="dialog__kicker" data-i18n="dlg3_kicker">Rete di Boyle</span>
           <h3 style="margin:0;" data-i18n="dlg3_h3">Connettiamo menti brillanti</h3>
         </div>
         <button type="button" class="btn btn-ghost dialog__close" data-close-dialog aria-label="Chiudi">
@@ -751,13 +751,13 @@
           <label class="field"><span data-i18n="dlg3_f3">Qualifica professionale</span><input name="subject" type="text" placeholder="Es. anestesista, ingegnere biomedico, ricercatore…" required /></label>
           <label class="field"><span data-i18n="dlg3_f4">Area di interesse principale</span>
             <select name="area_interesse" required>
-              <option value="">Seleziona un'area</option>
-              <option>Medicina iperbarica e subacquea</option>
-              <option>Ingegneria iperbarica e subacquea</option>
-              <option>Medicina di montagna</option>
-              <option>Medicina spaziale</option>
-              <option>Ingegneria spaziale</option>
-              <option>Altri ambienti estremi di interesse</option>
+              <option value="" data-i18n="dlg3_area0">Seleziona un'area</option>
+              <option data-i18n="dlg3_area1">Medicina iperbarica e subacquea</option>
+              <option data-i18n="dlg3_area2">Ingegneria iperbarica e subacquea</option>
+              <option data-i18n="dlg3_area3">Medicina di montagna</option>
+              <option data-i18n="dlg3_area4">Medicina spaziale</option>
+              <option data-i18n="dlg3_area5">Ingegneria spaziale</option>
+              <option data-i18n="dlg3_area6">Altri ambienti estremi di interesse</option>
             </select>
           </label>
         </div>
@@ -1279,7 +1279,7 @@
         // Attività
         'att_kicker':'Aree di attività',
         'att_h2':'Quattro direttrici chiare, con contenuti reali dentro',
-        'att_sub':'Ricerca, formazione, pubblicazioni e media organizzati in un ecosistema coerente, leggibile e utile ed in costante aggiornamento.',
+        'att_sub':'Ricerca, formazione, pubblicazioni e media organizzati in un ecosistema coerente, utile ed in costante aggiornamento.',
         'att1_k':'Macroarea 01','att1_h3':'Ricerca',
         'att1_p':'Studi clinici, collaborazioni scientifiche, progetti di ricerca e protocolli applicati alla medicina iperbarica e subacquea.',
         'att1_cta':'Esplora la ricerca',
@@ -1407,6 +1407,16 @@
         'dlg3_f4':'Area di interesse principale','dlg3_f5':'Presentazione e motivazione',
         'dlg3_submit':'Invia candidatura','dlg3_cancel':'Annulla',
         'dlg3_note':'Le candidature vengono valutate dal team. Riceverai risposta entro 5–7 giorni lavorativi.',
+        'dlg1_kicker':'Contatto generale','dlg1_f1':'Nome e cognome','dlg1_f2':'Email',
+        'dlg1_f3':'Oggetto','dlg1_f4':'Messaggio','dlg1_submit':'Invia messaggio',
+        'dlg2_kicker':'Formazione e docenza','dlg2_f1':'Nome o ente richiedente',
+        'dlg2_f2':'Email di riferimento','dlg2_f3':'Tipo di attività',
+        'dlg2_f4':'Contesto e dettagli','dlg2_submit':'Invia richiesta',
+        'dlg3_kicker':'Rete di Boyle',
+        'dlg3_area0':'Seleziona un’area','dlg3_area1':'Medicina iperbarica e subacquea',
+        'dlg3_area2':'Ingegneria iperbarica e subacquea','dlg3_area3':'Medicina di montagna',
+        'dlg3_area4':'Medicina spaziale','dlg3_area5':'Ingegneria spaziale',
+        'dlg3_area6':'Altri ambienti estremi di interesse',,
         // Partner SIMAE
         'part_simae_name':'Società Italiana Medicina Ambienti Estremi',
         'part_simae_p':'SIMAE è la prima società scientifica in Italia ad occuparsi della ricerca e della formazione in tutti gli ambienti impervi: dal soccorso in mare, alle patologie d\'alta quota fino alle spedizioni su tutti i continenti e nelle aree in cui ci si trova ad operare con scarse risorse.',
@@ -1467,7 +1477,7 @@
         // Attività
         'att_kicker':'Areas of activity',
         'att_h2':'Four clear directions, with real content inside',
-        'att_sub':'Research, training, publications and media organised in a coherent, readable and useful ecosystem, in constant development.',
+        'att_sub':'Research, training, publications and media organised in a coherent, useful ecosystem, in constant development.',
         'att1_k':'Area 01','att1_h3':'Research',
         'att1_p':'Clinical studies, scientific collaborations, research projects and protocols applied to hyperbaric and underwater medicine.',
         'att1_cta':'Explore research',
@@ -1595,6 +1605,16 @@
         'dlg3_f4':'Main area of interest','dlg3_f5':'Presentation and motivation',
         'dlg3_submit':'Submit application','dlg3_cancel':'Cancel',
         'dlg3_note':'Applications are reviewed by the team. You will receive a reply within 5–7 working days.',
+        'dlg1_kicker':'General contact','dlg1_f1':'Full name','dlg1_f2':'Email',
+        'dlg1_f3':'Subject','dlg1_f4':'Message','dlg1_submit':'Send message',
+        'dlg2_kicker':'Training and lectures','dlg2_f1':'Name or organisation',
+        'dlg2_f2':'Contact email','dlg2_f3':'Type of activity',
+        'dlg2_f4':'Context and details','dlg2_submit':'Send request',
+        'dlg3_kicker':'Boyle Network',
+        'dlg3_area0':'Select an area','dlg3_area1':'Hyperbaric and underwater medicine',
+        'dlg3_area2':'Hyperbaric and underwater engineering','dlg3_area3':'Mountain medicine',
+        'dlg3_area4':'Space medicine','dlg3_area5':'Space engineering',
+        'dlg3_area6':'Other extreme environments of interest',,
         // Partner SIMAE
         'part_simae_name':'Italian Society of Extreme Environment Medicine',
         'part_simae_p':'SIMAE is Italy\'s first scientific society dedicated to research and training across challenging environments: sea rescue, high-altitude pathologies, expeditions on all continents and areas with limited resources.',
@@ -1618,12 +1638,22 @@
         var key = el.getAttribute('data-i18n');
         if (dict[key] !== undefined) el.textContent = dict[key];
       });
+      // Traduci option con data-i18n
+      document.querySelectorAll('option[data-i18n]').forEach(function(el) {
+        var k = el.getAttribute('data-i18n');
+        if (dict[k] !== undefined) el.textContent = dict[k];
+      });
       document.querySelectorAll('[data-i18n-html]').forEach(function(el) {
         var key = el.getAttribute('data-i18n-html');
         if (dict[key] !== undefined) el.innerHTML = dict[key];
       });
 
       /* Apply data-i18n-html attributes — HTML content (for bold/tags) */
+      // Traduci option con data-i18n
+      document.querySelectorAll('option[data-i18n]').forEach(function(el) {
+        var k = el.getAttribute('data-i18n');
+        if (dict[k] !== undefined) el.textContent = dict[k];
+      });
       document.querySelectorAll('[data-i18n-html]').forEach(function(el) {
         var key = el.getAttribute('data-i18n-html');
         if (dict[key] !== undefined) el.innerHTML = dict[key];
