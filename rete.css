@@ -3361,3 +3361,15 @@ a { color: inherit; text-decoration: none; }
     font-size: .8rem !important;
   }
 }
+
+/* ── Fix select dropdown: testo leggibile nel modal amici ── */
+#amici-background,
+#amici-source {
+  background: rgba(6, 20, 50, 0.97);
+  color: #edf7ff;
+}
+#amici-background option,
+#amici-source option {
+  background: #0a1e3d;
+  color: #edf7ff;
+}
