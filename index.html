@@ -394,6 +394,7 @@
             <a class="btn btn-primary" href="#partner" data-i18n="ev_cta1">Scopri i partner</a>
             <button class="btn btn-secondary" type="button" data-open-dialog="incontroDialog" data-i18n="ev_cta2">Proponi un'attività</button>
           </div>
+          <p class="event-partner-note" data-i18n="ev_partner_note" style="margin-top:16px; font-size:.88rem; opacity:.72; font-style:italic;">I siti partner possono pubblicare i propri eventi sia qui in home page che nella sezione eventi della Rete.</p>
         </div>
         <article class="glass-card poster-card reveal reveal-right">
           <img src="assets/corsi/thedayafter.png" alt="Locandina The Day After" loading="lazy" decoding="async" onerror="this.style.display='none'" />
@@ -631,9 +632,9 @@
             <h3 data-i18n="cc2_title">Proponi incontro o docenza</h3>
             <p data-i18n="cc2_p">Per università, corsi, congressi, attività didattiche e collaborazioni strutturate.</p>
             <ul class="download-list compact-list">
-              <li>Lezioni e corsi specialistici</li>
-              <li>Collaborazioni scientifiche</li>
-              <li>Eventi e docenze</li>
+              <li data-i18n="cc2_li1">Lezioni e corsi specialistici</li>
+              <li data-i18n="cc2_li2">Collaborazioni scientifiche</li>
+              <li data-i18n="cc2_li3">Eventi e docenze</li>
             </ul>
             <button class="btn btn-electric btn-block" type="button" data-open-dialog="incontroDialog" data-i18n="cc2_cta">Apri modulo docenza</button>
           </article>
@@ -673,7 +674,7 @@
       <div class="dialog__head dialog__head--modern">
         <div class="dialog__head-text">
           <span class="dialog__kicker">Contatto generale</span>
-          <h3 style="margin:0;">Scrivici</h3>
+          <h3 style="margin:0;" data-i18n="dlg1_h3">Scrivici</h3>
         </div>
         <button type="button" class="btn btn-ghost dialog__close" data-close-dialog aria-label="Chiudi">
           <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M2 2l14 14M16 2L2 16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
@@ -703,7 +704,7 @@
       <div class="dialog__head dialog__head--modern">
         <div class="dialog__head-text">
           <span class="dialog__kicker">Formazione e docenza</span>
-          <h3 style="margin:0;">Proponi un incontro</h3>
+          <h3 style="margin:0;" data-i18n="dlg2_h3">Proponi un incontro</h3>
         </div>
         <button type="button" class="btn btn-ghost dialog__close" data-close-dialog aria-label="Chiudi">
           <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M2 2l14 14M16 2L2 16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
@@ -733,7 +734,7 @@
       <div class="dialog__head dialog__head--modern">
         <div class="dialog__head-text">
           <span class="dialog__kicker">Rete di Boyle</span>
-          <h3 style="margin:0;">Connettiamo menti brillanti</h3>
+          <h3 style="margin:0;" data-i18n="dlg3_h3">Connettiamo menti brillanti</h3>
         </div>
         <button type="button" class="btn btn-ghost dialog__close" data-close-dialog aria-label="Chiudi">
           <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M2 2l14 14M16 2L2 16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
@@ -743,12 +744,12 @@
       <form id="contactFormBoyle" class="form modalForm" action="https://formspree.io/f/xzdareqw" method="POST" accept-charset="UTF-8">
         <input type="hidden" name="_subject" value="Candidatura Rete di Boyle" />
         <div class="section-grid split-2">
-          <label class="field"><span>Nome e Cognome</span><input name="name" type="text" placeholder="Nome e Cognome" required /></label>
-          <label class="field"><span>Email</span><input name="email" type="email" autocomplete="email" placeholder="nome@dominio.it" required /></label>
+          <label class="field"><span data-i18n="dlg3_f1">Nome e Cognome</span><input name="name" type="text" placeholder="Nome e Cognome" required /></label>
+          <label class="field"><span data-i18n="dlg3_f2">Email</span><input name="email" type="email" autocomplete="email" placeholder="nome@dominio.it" required /></label>
         </div>
         <div class="section-grid split-2">
-          <label class="field"><span>Qualifica professionale</span><input name="subject" type="text" placeholder="Es. anestesista, ingegnere biomedico, ricercatore…" required /></label>
-          <label class="field"><span>Area di interesse principale</span>
+          <label class="field"><span data-i18n="dlg3_f3">Qualifica professionale</span><input name="subject" type="text" placeholder="Es. anestesista, ingegnere biomedico, ricercatore…" required /></label>
+          <label class="field"><span data-i18n="dlg3_f4">Area di interesse principale</span>
             <select name="area_interesse" required>
               <option value="">Seleziona un'area</option>
               <option>Medicina iperbarica e subacquea</option>
@@ -760,13 +761,13 @@
             </select>
           </label>
         </div>
-        <label class="field"><span>Presentazione e motivazione</span><textarea name="message" rows="4" placeholder="Chi sei, cosa fai, perché vuoi entrare nella Rete di Boyle e cosa puoi portare al progetto." required></textarea></label>
+        <label class="field"><span data-i18n="dlg3_f5">Presentazione e motivazione</span><textarea name="message" rows="4" placeholder="Chi sei, cosa fai, perché vuoi entrare nella Rete di Boyle e cosa puoi portare al progetto." required></textarea></label>
         <div class="dialog__actions">
-          <button id="submitBoyle" type="submit" class="btn btn-primary btn-electric">Invia candidatura</button>
-          <button type="button" class="btn btn-ghost" data-close-dialog>Annulla</button>
+          <button id="submitBoyle" type="submit" class="btn btn-primary btn-electric" data-i18n="dlg3_submit">Invia candidatura</button>
+          <button type="button" class="btn btn-ghost" data-close-dialog data-i18n="dlg3_cancel">Annulla</button>
         </div>
         <p class="form__status" id="statusBoyle" aria-live="polite"></p>
-        <p class="form__fineprint">Le candidature vengono valutate dal team. Riceverai risposta entro 5–7 giorni lavorativi.</p>
+        <p class="form__fineprint"><span data-i18n="dlg3_note">Le candidature vengono valutate dal team. Riceverai risposta entro 5–7 giorni lavorativi.</span></p>
       </form>
     </div>
   </dialog>
@@ -1263,7 +1264,7 @@
         'vis_kicker':'Visione',
         'vis_h2':'Rigore scientifico, impatto operativo',
         'vis_p':'Essere un riferimento internazionale per innovazione e ricerca in medicina iperbarica e subacquea, con un approccio multidisciplinare che integra competenze mediche, tecnologiche e scientifiche di alto livello.',
-        'vis_p2':'Amici di Boyle vuol dire ambienti estremi e gestione dell’emergenza negli scenari più complessi. Ricerca verificabile, metodi chiari e formazione continua, pensata per chi lavora sul campo.',
+        'vis_p2':'Amici di Boyle vuol dire insegnamento e divulgazione, vuol dire ambienti estremi e gestione dell’emergenza negli scenari più complessi. Ricerca verificabile, metodi chiari e formazione continua, pensata per chi lavora sul campo. La Rete di Boyle connette menti brillanti.',
         'vis_bullet1':'Professionisti di prima linea',
         'vis_bullet2':'Competenze che nascono dal lavoro sul campo',
         'vis_bullet3':'Clinica, ingegneria, fisiologia, safety',
@@ -1278,7 +1279,7 @@
         // Attività
         'att_kicker':'Aree di attività',
         'att_h2':'Quattro direttrici chiare, con contenuti reali dentro',
-        'att_sub':'Ricerca, formazione, pubblicazioni e media organizzati in un ecosistema coerente, leggibile e utile.',
+        'att_sub':'Ricerca, formazione, pubblicazioni e media organizzati in un ecosistema coerente, leggibile e utile ed in costante aggiornamento.',
         'att1_k':'Macroarea 01','att1_h3':'Ricerca',
         'att1_p':'Studi clinici, collaborazioni scientifiche, progetti di ricerca e protocolli applicati alla medicina iperbarica e subacquea.',
         'att1_cta':'Esplora la ricerca',
@@ -1298,7 +1299,7 @@
         'fond_role_silvio':'Fondatore','fond_role_luigi':'Direttore Ingegneria',
         'fond_role_vincenzo':'Responsabile Area Iperbarica','fond_role_dario':'Responsabile Area Diving',
         'fond_role_matteo':'Capo Ricercatore',
-        'fond_desc_silvio':'Anestesista rianimatore e medico subacqueo. Coordina la gestione del paziente critico in contesti ad alta complessità ed è docente di medicina iperbarica e subacquea e medicina aerospaziale.',
+        'fond_desc_silvio':'Anestesista Rianimatore e medico subacqueo. Coordina la gestione del paziente critico in contesti ad alta complessità ed è docente di medicina iperbarica, subacquea ed aerospaziale.',
         'fond_desc_luigi':'Ingegnere nucleare e biomedico, specialista in ambienti iperbarici, subacquei e aerospaziali. Si occupa di integrazione tra sistemi tecnologici e fisiologia in ambienti estremi.',
         'fond_desc_vincenzo':'Anestesista rianimatore e cardioanestesista, medico iperbarico e subacqueo. Si occupa di gestione clinica e studi fisiologici in ambienti ad alta pressione.',
         'fond_desc_dario':'Anestesista rianimatore e medico HEMS 118. Gestisce il paziente critico in scenari operativi complessi, dall’emergenza territoriale agli ambienti estremi.',
@@ -1333,6 +1334,7 @@
         'ev_kicker':'Prossimo evento','ev_h2':'The Day After',
         'ev_lead':'Un corso del partner ITCC dedicato alla gestione del trauma maggiore oltre la fase acuta, in piena coerenza con una visione moderna della medicina degli ambienti estremi.',
         'ev_p2':'Entrare nella Rete di Boyle significa anche poter dare visibilità a eventi e iniziative di qualità, quando condividono rigore, utilità e valore formativo.',
+        'ev_partner_note':'I siti partner possono pubblicare i propri eventi sia qui in home page che nella sezione eventi della Rete.',
         'ev_meta1':'Partner · ITCC','ev_meta2':'Tipologia · Corso partner',
         'ev_cta1':'Scopri i partner','ev_cta2':'Proponi un’attività',
         'ev_download':'Scarica il programma completo',
@@ -1342,6 +1344,7 @@
         'cont2_sub':'Tre canali distinti per rispondere a esigenze diverse: collaborazioni generali, docenze e incontri, candidature alla Rete. Ogni richiesta arriva direttamente a chi di competenza.',
         'cc1_title':'Contatto generale','cc1_p':'Per domande, progetti, richieste editoriali o informazioni generali.','cc1_cta':'Apri modulo contatti',
         'cc2_title':'Proponi incontro o docenza','cc2_p':'Per università, corsi, congressi, attività didattiche e collaborazioni strutturate.','cc2_cta':'Apri modulo docenza',
+        'cc2_li1':'Lezioni e corsi specialistici','cc2_li2':'Collaborazioni scientifiche','cc2_li3':'Attività ed eventi,',
         'cc3_title':'Entra nella Rete di Boyle','cc3_p':'La Rete di Boyle è internazionale e selettiva. Ogni membro ha una pagina personale, pubblica per i membri del network, dove poter condividere il proprio curriculum, le pubblicazioni e le iniziative scientifiche. I membri si scambiano contatti diretti e danno visibilità reciproca a corsi, ricerche e congressi. Tutto ciò che costruisci raggiunge l’intera community.','cc3_cta':'Candidati alla Rete',
         // Ricerca
         'ric_kicker':'Ricerca',
@@ -1399,6 +1402,11 @@
         'dlg1_desc':'Per domande, proposte di collaborazione, richieste editoriali o informazioni generali sul progetto.',
         'dlg2_desc':'Per docenze universitarie, corsi specialistici, congressi, seminari e collaborazioni strutturate con enti e istituzioni.',
         'dlg3_desc':'La Rete di Boyle è selettiva e orientata a chi opera davvero negli ambienti estremi. Presentati: valuteremo il profilo e ti contatteremo.',
+        'dlg1_h3':'Scrivici','dlg2_h3':'Proponi un incontro','dlg3_h3':'Connettiamo menti brillanti',
+        'dlg3_f1':'Nome e Cognome','dlg3_f2':'Email','dlg3_f3':'Qualifica professionale',
+        'dlg3_f4':'Area di interesse principale','dlg3_f5':'Presentazione e motivazione',
+        'dlg3_submit':'Invia candidatura','dlg3_cancel':'Annulla',
+        'dlg3_note':'Le candidature vengono valutate dal team. Riceverai risposta entro 5–7 giorni lavorativi.',
         // Partner SIMAE
         'part_simae_name':'Società Italiana Medicina Ambienti Estremi',
         'part_simae_p':'SIMAE è la prima società scientifica in Italia ad occuparsi della ricerca e della formazione in tutti gli ambienti impervi: dal soccorso in mare, alle patologie d\'alta quota fino alle spedizioni su tutti i continenti e nelle aree in cui ci si trova ad operare con scarse risorse.',
@@ -1444,7 +1452,7 @@
         'cont_kicker_label':'Content',
         'vis_h2':'Scientific rigour, operational impact',
         'vis_p':'To become an international reference for innovation and research in hyperbaric and underwater medicine, through a multidisciplinary approach integrating high-level medical, technological and scientific expertise.',
-        'vis_p2':'Amici di Boyle means extreme environments and emergency management in the most complex scenarios. Verifiable research, clear methods and continuous education, built for those who work in the field.',
+        'vis_p2':'Amici di Boyle means teaching and outreach, means extreme environments and emergency management in the most complex scenarios. Verifiable research, clear methods and continuous training, designed for those who work in the field. The Boyle Network connects brilliant minds.',
         'vis_bullet1':'Frontline professionals',
         'vis_bullet2':'Expertise born from field practice',
         'vis_bullet3':'Medicine, engineering, physiology, safety',
@@ -1459,7 +1467,7 @@
         // Attività
         'att_kicker':'Areas of activity',
         'att_h2':'Four clear directions, with real content inside',
-        'att_sub':'Research, education, publications and media organised in a coherent, readable and useful ecosystem.',
+        'att_sub':'Research, training, publications and media organised in a coherent, readable and useful ecosystem, in constant development.',
         'att1_k':'Area 01','att1_h3':'Research',
         'att1_p':'Clinical studies, scientific collaborations, research projects and protocols applied to hyperbaric and underwater medicine.',
         'att1_cta':'Explore research',
@@ -1479,7 +1487,7 @@
         'fond_role_silvio':'Founder','fond_role_luigi':'Engineering Director',
         'fond_role_vincenzo':'Hyperbaric Area Lead','fond_role_dario':'Diving Area Lead',
         'fond_role_matteo':'Chief Researcher',
-        'fond_desc_silvio':'Intensivist anaesthesiologist and diving physician. Coordinates critical patient management in high-complexity settings and teaches hyperbaric and underwater medicine and aerospace medicine.',
+        'fond_desc_silvio':'Anaesthesiologist and underwater physician. Coordinates critical patient management in high-complexity settings and teaches hyperbaric, underwater and aerospace medicine.',
         'fond_desc_luigi':'Nuclear and biomedical engineer, specialist in hyperbaric, underwater and aerospace environments. Works on the integration of technological systems and physiology in extreme conditions.',
         'fond_desc_vincenzo':'Intensivist anaesthesiologist and cardiac anaesthesiologist, hyperbaric and diving physician. Focuses on clinical management and physiological studies in high-pressure environments.',
         'fond_desc_dario':'Intensivist anaesthesiologist and HEMS 118 physician. Manages critically ill patients in complex operational scenarios, from pre-hospital emergency to extreme environments.',
@@ -1514,6 +1522,7 @@
         'ev_kicker':'Next event','ev_h2':'The Day After',
         'ev_lead':'A course by partner ITCC dedicated to managing major trauma beyond the acute phase, fully aligned with a modern vision of extreme environment medicine.',
         'ev_p2':'Joining the Boyle Network also means giving visibility to quality events and initiatives that share rigour, utility and educational value.',
+        'ev_partner_note':'Partner sites can publish their events both here on the home page and in the Network events section.',
         'ev_meta1':'Partner · ITCC','ev_meta2':'Type · Partner course',
         'ev_cta1':'Discover our partners','ev_cta2':'Propose an activity',
         'ev_download':'Download the full programme',
@@ -1523,6 +1532,7 @@
         'cont2_sub':'Three distinct channels to meet different needs: general enquiries, teaching and events, and network applications. Each request goes directly to the right person.',
         'cc1_title':'General contact','cc1_p':'For questions, projects, editorial requests or general information.','cc1_cta':'Open contact form',
         'cc2_title':'Propose a lecture or event','cc2_p':'For universities, courses, congresses, teaching activities and structured collaborations.','cc2_cta':'Open teaching form',
+        'cc2_li1':'Specialist lectures and courses','cc2_li2':'Scientific collaborations','cc2_li3':'Events and lectures',
         'cc3_title':'Join the Boyle Network','cc3_p':'The Boyle Network is international and selective. Every member has a personal page, visible to all network members, where they can share their curriculum, publications and scientific initiatives. Members exchange direct contacts and promote each other’s courses, research and conferences. Everything you build reaches the entire community.','cc3_cta':'Apply to the Network',
         // Ricerca
         'ric_kicker':'Research',
@@ -1580,6 +1590,11 @@
         'dlg1_desc':'For questions, collaboration proposals, editorial requests or general information about the project.',
         'dlg2_desc':'For university lectures, specialist courses, congresses, seminars and structured collaborations with institutions.',
         'dlg3_desc':'The Boyle Network is selective and oriented towards those who truly operate in extreme environments. Apply: we will review your profile and contact you.',
+        'dlg1_h3':'Write to us','dlg2_h3':'Propose a meeting or lecture','dlg3_h3':'Connecting brilliant minds',
+        'dlg3_f1':'Full name','dlg3_f2':'Email','dlg3_f3':'Professional qualification',
+        'dlg3_f4':'Main area of interest','dlg3_f5':'Presentation and motivation',
+        'dlg3_submit':'Submit application','dlg3_cancel':'Cancel',
+        'dlg3_note':'Applications are reviewed by the team. You will receive a reply within 5–7 working days.',
         // Partner SIMAE
         'part_simae_name':'Italian Society of Extreme Environment Medicine',
         'part_simae_p':'SIMAE is Italy\'s first scientific society dedicated to research and training across challenging environments: sea rescue, high-altitude pathologies, expeditions on all continents and areas with limited resources.',
