@@ -1649,11 +1649,6 @@
       });
 
       /* Apply data-i18n-html attributes — HTML content (for bold/tags) */
-      // Traduci option con data-i18n
-      document.querySelectorAll('option[data-i18n]').forEach(function(el) {
-        var k = el.getAttribute('data-i18n');
-        if (dict[k] !== undefined) el.textContent = dict[k];
-      });
       document.querySelectorAll('[data-i18n-html]').forEach(function(el) {
         var key = el.getAttribute('data-i18n-html');
         if (dict[key] !== undefined) el.innerHTML = dict[key];
