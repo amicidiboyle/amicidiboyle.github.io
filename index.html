@@ -618,7 +618,7 @@
             </div>
             <h3 data-i18n="cc1_title">Contatto generale</h3>
             <p data-i18n="cc1_p">Per domande, progetti, richieste editoriali o informazioni generali.</p>
-            <p><strong>Email:</strong> <a href="/cdn-cgi/l/email-protection#dcb5b2bab39cbdb1b5bfb5b8b5beb3a5b0b9f2b5a8" style="color:var(--cyan-2);"><span class="__cf_email__" data-cfemail="eb82858d84ab8a868288828f82898492878ec5829f">[info@amicidiboyle.it]</span></a></p>
+            <p><strong>Email:</strong> <a href="/cdn-cgi/l/email-protection#dcb5b2bab39cbdb1b5bfb5b8b5beb3a5b0b9f2b5a8" style="color:var(--cyan-2);"><span class="__cf_email__" data-cfemail="eb82858d84ab8a868288828f82898492878ec5829f">[email&#160;protected]</span></a></p>
             <button class="btn btn-electric btn-block" type="button" data-open-dialog="contattiDialog" data-i18n="cc1_cta">Apri modulo contatti</button>
           </article>
           <article class="glass-card contact-card contact-card--rich contact-card--edu reveal" data-delay="100">
@@ -663,6 +663,8 @@
         <a href="#visione">Visione</a>
         <a href="rete.html">Rete</a>
         <a href="podcast.html">Podcast</a>
+        <a href="privacy.html" data-i18n="footer_privacy">Privacy</a>
+        <a href="cookie.html" data-i18n="footer_cookie">Cookie</a>
       </nav>
     </div>
   </footer>
@@ -694,7 +696,7 @@
           <button type="button" class="btn btn-ghost" data-close-dialog>Annulla</button>
         </div>
         <p class="form__status" id="statusGeneral" aria-live="polite"></p>
-        <p class="form__fineprint">Risponderemo entro 48 ore. In alternativa: <a href="/cdn-cgi/l/email-protection#d8b1b6beb798b9b5b1bbb1bcb1bab7a1b4bdf6b1ac"><span class="__cf_email__" data-cfemail="177e79717857767a7e747e737e75786e7b72397e63">[info@amicidiboyle.it]</span></a></p>
+        <p class="form__fineprint">Risponderemo entro 48 ore. In alternativa: <a href="/cdn-cgi/l/email-protection#d8b1b6beb798b9b5b1bbb1bcb1bab7a1b4bdf6b1ac"><span class="__cf_email__" data-cfemail="177e79717857767a7e747e737e75786e7b72397e63">[email&#160;protected]</span></a></p>
       </form>
     </div>
   </dialog>
@@ -724,7 +726,7 @@
           <button type="button" class="btn btn-ghost" data-close-dialog>Annulla</button>
         </div>
         <p class="form__status" id="statusTeaching" aria-live="polite"></p>
-        <p class="form__fineprint">Valuteremo la richiesta e risponderemo entro 48 ore. In alternativa: <a href="/cdn-cgi/l/email-protection#aec7c0c8c1eecfc3c7cdc7cac7ccc1d7c2cb80c7da"><span class="__cf_email__" data-cfemail="86efe8e0e9c6e7ebefe5efe2efe4e9ffeae3a8eff2">[info@amicidiboyle.it]</span></a></p>
+        <p class="form__fineprint">Valuteremo la richiesta e risponderemo entro 48 ore. In alternativa: <a href="/cdn-cgi/l/email-protection#aec7c0c8c1eecfc3c7cdc7cac7ccc1d7c2cb80c7da"><span class="__cf_email__" data-cfemail="86efe8e0e9c6e7ebefe5efe2efe4e9ffeae3a8eff2">[email&#160;protected]</span></a></p>
       </form>
     </div>
   </dialog>
@@ -1407,6 +1409,7 @@
         'part_simae_cta':'Visita il sito',
         // Footer
         'footer_copy':'© Gli Amici di Boyle · Medicina subacquea, iperbarica e ambienti estremi.',
+        'footer_privacy':'Privacy','footer_cookie':'Cookie',
       },
       en: {
         // Nav
@@ -1589,6 +1592,7 @@
         'part_simae_cta':'Visit website',
         // Footer
         'footer_copy':'© Gli Amici di Boyle · Underwater, hyperbaric medicine and extreme environments.',
+        'footer_privacy':'Privacy','footer_cookie':'Cookie',
       
         'cc3_title':'Join the Boyle Network',
         'cc3_p':'The Network is international and selective. Every member has a public personal page — CV, publications, scientific initiatives — visible to professionals from 6 nations. Courses, research, congresses: everything you build reaches the entire community.',
@@ -1740,6 +1744,26 @@
     } else {
       initHomeCounters();
     }
+  })();
+  </script>
+  <!-- Cookie banner -->
+  <div id="cookie-banner" role="region" aria-label="Cookie">
+    <p>Questo sito usa cookie tecnici e servizi di terze parti (Formspree, GitHub Pages).
+      <a href="cookie.html">Cookie Policy</a> &middot; <a href="privacy.html" data-i18n="footer_privacy">Privacy</a></p>
+    <button id="cookie-accept">Accetta</button>
+  </div>
+  <script>
+  (function(){
+    if (!localStorage.getItem('boyle_cookie_ok')) {
+      var b = document.getElementById('cookie-banner');
+      if (b) setTimeout(function(){ b.classList.add('visible'); }, 600);
+    }
+    var btn = document.getElementById('cookie-accept');
+    if (btn) btn.addEventListener('click', function(){
+      localStorage.setItem('boyle_cookie_ok','1');
+      var b = document.getElementById('cookie-banner');
+      if (b) { b.style.transition='transform .3s ease-in'; b.style.transform='translateY(100%)'; }
+    });
   })();
   </script>
 </body>
