@@ -417,3 +417,104 @@ a   { color: inherit; text-decoration: none; }
   transition: background .2s;
 }
 #cookie-accept:hover { background: rgba(123,228,255,.22); }
+
+/* ══════════════════════════════════════════
+   MODAL PROPOSTA PODCAST
+══════════════════════════════════════════ */
+.pod-contact-modal {
+  position: fixed; inset: 0; z-index: 9000;
+  display: none; align-items: center; justify-content: center;
+  padding: 20px;
+}
+.pod-contact-modal--open { display: flex !important; }
+.pod-contact-modal__backdrop {
+  position: absolute; inset: 0;
+  background: rgba(1,6,18,.82);
+  backdrop-filter: blur(6px);
+  animation: podBackdropIn .28s ease;
+}
+@keyframes podBackdropIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+.pod-contact-modal__box {
+  position: relative; z-index: 1;
+  background: rgba(5,18,46,.92);
+  border: 1px solid rgba(123,228,255,.2);
+  border-radius: 24px;
+  padding: 40px 44px 36px;
+  width: 100%; max-width: 560px;
+  max-height: 92vh; overflow-y: auto;
+  box-shadow: 0 24px 60px rgba(0,0,0,.55), 0 0 40px rgba(80,180,255,.08);
+  backdrop-filter: blur(20px);
+  animation: podBoxIn .28s cubic-bezier(.22,1,.36,1);
+}
+@keyframes podBoxIn {
+  from { opacity: 0; transform: translateY(18px) scale(.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+.pod-contact-modal__close {
+  position: absolute; top: 14px; right: 14px;
+  width: 34px; height: 34px; border-radius: 50%;
+  background: rgba(255,255,255,.05);
+  border: 1px solid rgba(255,255,255,.1);
+  color: rgba(237,247,255,.6); font-size: .9rem;
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  transition: background .2s, color .2s;
+}
+.pod-contact-modal__close:hover { background: rgba(255,80,80,.15); color: #ff8080; }
+.pod-contact-modal__icon {
+  font-size: 2rem; margin-bottom: 10px;
+}
+.pod-contact-modal__title {
+  font-size: 1.35rem; font-weight: 800; letter-spacing: -.03em;
+  color: #edf7ff; margin-bottom: 6px;
+}
+.pod-contact-modal__desc {
+  font-size: .88rem; color: rgba(237,247,255,.6);
+  margin-bottom: 24px; line-height: 1.5;
+}
+.pod-contact-modal__form { display: flex; flex-direction: column; gap: 16px; }
+.pod-contact-modal__row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.pod-contact-modal__field { display: flex; flex-direction: column; gap: 6px; }
+.pod-contact-modal__field label {
+  font-size: .75rem; font-weight: 700; letter-spacing: .06em;
+  text-transform: uppercase; color: rgba(168,238,255,.7);
+}
+.pod-contact-modal__field input,
+.pod-contact-modal__field select,
+.pod-contact-modal__field textarea {
+  background: rgba(8,26,62,.7);
+  border: 1px solid rgba(123,228,255,.2);
+  border-radius: 10px; color: #edf7ff;
+  font-size: .88rem; font-family: inherit;
+  padding: 10px 14px; outline: none;
+  transition: border-color .2s, box-shadow .2s;
+}
+.pod-contact-modal__field input:focus,
+.pod-contact-modal__field select:focus,
+.pod-contact-modal__field textarea:focus {
+  border-color: rgba(123,228,255,.55);
+  box-shadow: 0 0 0 3px rgba(123,228,255,.1);
+}
+.pod-contact-modal__field select option { background: #071428; }
+.pod-contact-modal__field textarea { resize: vertical; min-height: 110px; }
+.pod-contact-modal__submit {
+  margin-top: 4px;
+  background: linear-gradient(135deg, #0057d9, #007cf0);
+  border: none; border-radius: 999px;
+  color: #fff; font-weight: 700; font-size: .9rem;
+  padding: 13px 28px; cursor: pointer;
+  transition: opacity .2s, transform .15s;
+  align-self: flex-start;
+}
+.pod-contact-modal__submit:hover { opacity: .88; transform: translateY(-1px); }
+.pod-contact-modal__ok {
+  display: none; font-size: .85rem;
+  color: #4dffd6; text-align: center;
+  padding: 8px 0; font-weight: 600;
+}
+@media (max-width: 560px) {
+  .pod-contact-modal__box { padding: 28px 20px 24px; }
+  .pod-contact-modal__row { grid-template-columns: 1fr; }
+}
