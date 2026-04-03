@@ -15,7 +15,35 @@
     .email-wall.is-open{display:flex}
     .access-modal{position:fixed;inset:0;z-index:9600;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(1,6,16,.88);backdrop-filter:blur(12px)}
     .access-modal.is-open{display:flex}
-  </style>
+  
+/* ── Cookie banner ── */
+#cookie-banner {
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 9999;
+  background: rgba(4,16,38,.92); backdrop-filter: blur(18px);
+  border-top: 1px solid rgba(120,210,255,.14);
+  padding: 14px 24px;
+  display: flex; align-items: center; justify-content: center;
+  gap: 16px; flex-wrap: wrap;
+  transform: translateY(100%);
+  transition: transform .4s cubic-bezier(.22,.68,0,1.2);
+}
+#cookie-banner.visible { transform: translateY(0); }
+#cookie-banner p {
+  font-size: .8rem; color: rgba(237,247,255,.72);
+  margin: 0; flex: 1; min-width: 200px;
+}
+#cookie-banner a { color: #a8eeff; text-decoration: none; }
+#cookie-banner a:hover { text-decoration: underline; }
+#cookie-accept {
+  padding: 7px 20px; border-radius: 999px;
+  background: rgba(123,228,255,.12);
+  border: 1px solid rgba(123,228,255,.28);
+  color: #a8eeff; font-size: .8rem; font-weight: 600;
+  cursor: pointer; white-space: nowrap;
+  transition: background .2s;
+}
+#cookie-accept:hover { background: rgba(123,228,255,.22); }
+</style>
 </head>
 <body>
   <!-- Canvas sinaptico globale -->
@@ -594,6 +622,8 @@
         <a href="podcast.html" data-i18n="r_nav_pod">Podcast</a>
         <a href="#top">↑ Su</a>
         <a href="index.html#contatti" data-i18n="r_nav_cont">Contatti</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="cookie.html">Cookie</a>
       </nav>
     </div>
   </footer>
@@ -2498,6 +2528,26 @@
     }
     if (document.readyState==='loading') document.addEventListener('DOMContentLoaded', initPopovers);
     else initPopovers();
+  })();
+  </script>
+  <!-- Cookie banner -->
+  <div id="cookie-banner" role="region" aria-label="Cookie">
+    <p>Questo sito usa cookie tecnici e servizi di terze parti (Formspree, GitHub Pages).
+      <a href="cookie.html">Cookie Policy</a> &middot; <a href="privacy.html">Privacy</a></p>
+    <button id="cookie-accept">Accetta</button>
+  </div>
+  <script>
+  (function(){
+    if (!localStorage.getItem('boyle_cookie_ok')) {
+      var b = document.getElementById('cookie-banner');
+      if (b) setTimeout(function(){ b.classList.add('visible'); }, 600);
+    }
+    var btn = document.getElementById('cookie-accept');
+    if (btn) btn.addEventListener('click', function(){
+      localStorage.setItem('boyle_cookie_ok','1');
+      var b = document.getElementById('cookie-banner');
+      if (b) { b.style.transition='transform .3s ease-in'; b.style.transform='translateY(100%)'; }
+    });
   })();
   </script>
 </body>
