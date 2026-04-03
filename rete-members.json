@@ -266,5 +266,17 @@
       "Medicina Interna",
       "Endocrinologia"
     ]
+  },
+  {
+    "name": "Andrea Barcellona",
+    "role": "Tecnico Iperbarico, Biologo Marino. Focus: Medicina Iperbarica.",
+    "img": "andrea-barcellona.jpg",
+    "city": "Palermo, IT",
+    "linkedin": "https://www.linkedin.com/in/andrea-barcellona-179154162",
+    "email": "branca84@hotmail.it",
+    "tags": [
+      "Iperbarica",
+      "Diving"
+    ]
   }
 ]
