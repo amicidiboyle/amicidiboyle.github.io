@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Privacy Policy — Gli Amici di Boyle</title>
+  <link rel="icon" href="assets/logo.png" type="image/png" />
+  <style>
+    :root {
+      --text: #edf7ff;
+      --muted: rgba(237,247,255,.78);
+      --soft: rgba(237,247,255,.55);
+      --cyan: #7be4ff;
+      --cyan-2: #a8eeff;
+      --border: rgba(120,210,255,.18);
+      --glass: rgba(8,26,52,.62);
+      --radius: 24px;
+      --radius-sm: 16px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, sans-serif;
+      color: var(--text);
+      line-height: 1.7;
+      background: #020e1c;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+    body::before {
+      content: "";
+      position: fixed; inset: 0; z-index: -1;
+      background: url("assets/ocean-desktop.jpg") center center / cover no-repeat;
+      opacity: .45;
+    }
+    body::after {
+      content: "";
+      position: fixed; inset: 0; z-index: -1;
+      background:
+        radial-gradient(ellipse 80% 40% at 50% 0%, rgba(0,80,180,.22), transparent 60%),
+        linear-gradient(to bottom, rgba(2,14,28,.6), rgba(2,14,28,.85));
+    }
+
+    /* Header */
+    .site-header {
+      position: sticky; top: 0; z-index: 80;
+      background: rgba(4,20,52,.88);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+    }
+    .nav-wrap {
+      max-width: 1180px; margin: 0 auto;
+      display: flex; align-items: center; gap: 16px;
+      min-height: 64px;
+    }
+    .brand {
+      display: flex; align-items: center; gap: 12px;
+      text-decoration: none; color: var(--text);
+    }
+    .brand img { width: 40px; height: 40px; }
+    .brand strong { font-size: .9rem; font-weight: 700; }
+    .brand em { font-size: .72rem; color: var(--soft); font-style: normal; display: block; }
+    .nav-back {
+      margin-left: auto;
+      color: var(--cyan-2); font-size: .82rem; text-decoration: none;
+      padding: 6px 14px; border-radius: 999px;
+      border: 1px solid rgba(168,238,255,.2);
+      transition: background .2s;
+    }
+    .nav-back:hover { background: rgba(168,238,255,.08); }
+
+    /* Main */
+    main { max-width: 780px; margin: 0 auto; padding: 60px 24px 80px; }
+
+    .page-kicker {
+      font-size: .72rem; letter-spacing: .18em; text-transform: uppercase;
+      color: var(--cyan-2); margin-bottom: 12px;
+    }
+    .page-title {
+      font-size: clamp(2rem, 4vw, 3rem); font-weight: 800;
+      letter-spacing: -.04em; line-height: 1.1;
+      margin-bottom: 8px;
+    }
+    .page-meta {
+      font-size: .82rem; color: var(--soft); margin-bottom: 48px;
+    }
+
+    /* Glass card */
+    .glass-card {
+      background: rgba(5,18,46,.55);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      backdrop-filter: blur(14px);
+      padding: 36px 40px;
+      margin-bottom: 24px;
+    }
+
+    .section-title {
+      font-size: 1rem; font-weight: 700; letter-spacing: -.01em;
+      color: var(--cyan-2); margin-bottom: 14px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .section-title::before {
+      content: ""; width: 3px; height: 16px;
+      background: var(--cyan); border-radius: 2px; flex-shrink: 0;
+    }
+
+    p { color: var(--muted); font-size: .9rem; margin-bottom: 12px; }
+    p:last-child { margin-bottom: 0; }
+    ul { color: var(--muted); font-size: .9rem; padding-left: 20px; margin-bottom: 12px; }
+    li { margin-bottom: 6px; }
+    a { color: var(--cyan-2); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    strong { color: var(--text); font-weight: 600; }
+
+    /* Footer */
+    .site-footer {
+      padding: 24px;
+      border-top: 1px solid var(--border);
+      background: rgba(1,7,17,.78);
+      backdrop-filter: blur(12px);
+      text-align: center;
+    }
+    .footer-inner {
+      max-width: 1180px; margin: 0 auto;
+      display: flex; flex-wrap: wrap; align-items: center;
+      justify-content: center; gap: 16px;
+    }
+    .footer-copy { font-size: .75rem; color: var(--soft); }
+    .footer-links { display: flex; gap: 16px; }
+    .footer-links a {
+      font-size: .75rem; color: var(--soft); text-decoration: none;
+      transition: color .2s;
+    }
+    .footer-links a:hover { color: var(--cyan-2); }
+    .footer-links a.active { color: var(--cyan-2); }
+
+    @media (max-width: 600px) {
+      .glass-card { padding: 24px 20px; }
+      main { padding: 40px 16px 60px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="nav-wrap">
+      <a class="brand" href="index.html">
+        <img src="assets/logo.png" alt="Logo Gli Amici di Boyle" />
+        <span>
+          <strong>Gli Amici di Boyle</strong>
+          <em>Diving &amp; Hyperbaric Medicine</em>
+        </span>
+      </a>
+      <a class="nav-back" href="index.html">← Home</a>
+    </div>
+  </header>
+
+  <main>
+    <p class="page-kicker">Informativa</p>
+    <h1 class="page-title">Privacy Policy</h1>
+    <p class="page-meta">Ultimo aggiornamento: aprile 2026</p>
+
+    <div class="glass-card">
+      <h2 class="section-title">Titolare del trattamento</h2>
+      <p>Il sito <strong>www.amicidiboyle.it</strong> è gestito da <strong>Silvio Zerbi</strong>, fondatore de Gli Amici di Boyle, contattabile all'indirizzo <a href="mailto:info@amicidiboyle.it">info@amicidiboyle.it</a>.</p>
+    </div>
+
+    <div class="glass-card">
+      <h2 class="section-title">Quali dati raccogliamo</h2>
+      <p>Questo sito raccoglie dati personali esclusivamente attraverso i moduli di contatto e candidatura presenti nelle pagine. I dati raccolti includono:</p>
+      <ul>
+        <li>Nome e cognome</li>
+        <li>Indirizzo email</li>
+        <li>Qualifica professionale, affiliazione e motivazione (per le candidature alla Rete)</li>
+        <li>Background e modalità di contatto (per le iscrizioni agli Amici di Boyle)</li>
+      </ul>
+      <p>Non raccogliamo dati di navigazione, non utilizziamo sistemi di analytics e non installiamo cookie di profilazione propri.</p>
+    </div>
+
+    <div class="glass-card">
+      <h2 class="section-title">Finalità e base giuridica</h2>
+      <p>I dati raccolti tramite i moduli sono trattati per le seguenti finalità:</p>
+      <ul>
+        <li><strong>Gestione delle candidature</strong> alla Rete di Boyle e agli Amici di Boyle (base giuridica: esecuzione di un contratto o misure precontrattuali — art. 6.1.b GDPR)</li>
+        <li><strong>Risposta alle richieste di contatto</strong> (base giuridica: legittimo interesse — art. 6.1.f GDPR)</li>
+        <li><strong>Invio di comunicazioni relative alla community</strong>, previa iscrizione (base giuridica: consenso — art. 6.1.a GDPR)</li>
+      </ul>
+    </div>
+
+    <div class="glass-card">
+      <h2 class="section-title">Servizi di terze parti</h2>
+      <p>I moduli di contatto e candidatura utilizzano il servizio <strong>Formspree</strong> (formspree.io) per la trasmissione dei dati. Formspree è un processore di dati che tratta le informazioni per nostro conto, in conformità al GDPR. Consultare la <a href="https://formspree.io/legal/privacy-policy" target="_blank" rel="noopener">Privacy Policy di Formspree</a> per ulteriori dettagli.</p>
+      <p>Il sito è ospitato su <strong>GitHub Pages</strong> (GitHub, Inc.). GitHub può raccogliere dati tecnici di navigazione (indirizzi IP, log del server) per finalità di sicurezza e diagnostica. Consultare la <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" target="_blank" rel="noopener">Privacy Policy di GitHub</a>.</p>
+    </div>
+
+    <div class="glass-card">
+      <h2 class="section-title">Conservazione dei dati</h2>
+      <p>I dati trasmessi tramite i moduli sono conservati per il tempo necessario alla gestione della candidatura o della richiesta, e comunque non oltre 24 mesi dalla raccolta, salvo diverso accordo con l'interessato.</p>
+    </div>
+
+    <div class="glass-card">
+      <h2 class="section-title">Diritti dell'interessato</h2>
+      <p>Ai sensi degli artt. 15–22 del GDPR, hai il diritto di:</p>
+      <ul>
+        <li>Accedere ai tuoi dati personali</li>
+        <li>Richiederne la rettifica o la cancellazione</li>
+        <li>Opporti al trattamento o richiederne la limitazione</li>
+        <li>Richiedere la portabilità dei dati</li>
+        <li>Revocare il consenso in qualsiasi momento</li>
+      </ul>
+      <p>Per esercitare questi diritti, scrivi a <a href="mailto:info@amicidiboyle.it">info@amicidiboyle.it</a>. Hai inoltre il diritto di proporre reclamo al Garante per la Protezione dei Dati Personali (<a href="https://www.garanteprivacy.it" target="_blank" rel="noopener">www.garanteprivacy.it</a>).</p>
+    </div>
+
+    <div class="glass-card">
+      <h2 class="section-title">Modifiche a questa policy</h2>
+      <p>Ci riserviamo il diritto di aggiornare questa informativa. Le modifiche sostanziali saranno comunicate tramite avviso sul sito. La data di ultimo aggiornamento è indicata in cima a questa pagina.</p>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p class="footer-copy">© 2026 Gli Amici di Boyle</p>
+      <nav class="footer-links" aria-label="Footer">
+        <a href="index.html">Home</a>
+        <a href="rete.html">Rete</a>
+        <a href="podcast.html">Podcast</a>
+        <a href="privacy.html" class="active">Privacy</a>
+        <a href="cookie.html">Cookie</a>
+      </nav>
+    </div>
+  </footer>
+</body>
+</html>
