@@ -2997,8 +2997,6 @@ a { color: inherit; text-decoration: none; }
 }
 .edit-status { color: #4dffd6 !important; font-size: .76rem !important; }
 
-.hero-cta-label { align-self: flex-start !important; padding-left: 4px !important; }
-
 /* ════ HERO CTA — etichette + layout + popover ════ */
 
 .hero__cta { display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-end; }
@@ -3009,6 +3007,7 @@ a { color: inherit; text-decoration: none; }
   font-size: .7rem; font-weight: 700; letter-spacing: .09em;
   text-transform: uppercase; color: rgba(160,220,255,.6);
   padding-left: 4px; align-self: flex-start; white-space: nowrap;
+  min-height: 1.6em; display: flex; align-items: flex-end;
 }
 
 .hero-cta-row { display: flex; align-items: center; gap: 8px; position: relative; }
