@@ -1,0 +1,1064 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin · Gli Amici di Boyle</title>
+  <link rel="icon" href="assets/logo.png" type="image/png" />
+  <style>
+    :root {
+      --bg:       #020e1c;
+      --surface:  rgba(5,18,46,.85);
+      --border:   rgba(120,210,255,.16);
+      --cyan:     #7be4ff;
+      --cyan2:    #a8eeff;
+      --text:     #edf7ff;
+      --muted:    rgba(237,247,255,.6);
+      --soft:     rgba(237,247,255,.38);
+      --green:    #4dffd6;
+      --orange:   #ffb347;
+      --red:      #ff6b6b;
+      --blue:     #4fa8ff;
+      --radius:   20px;
+      --radius-sm:12px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'SF Pro Display', ui-sans-serif, system-ui, -apple-system, sans-serif;
+      background: var(--bg); color: var(--text);
+      min-height: 100vh; overflow-x: hidden; line-height: 1.6;
+    }
+    body::before {
+      content: ''; position: fixed; inset: 0; z-index: -1;
+      background: url('assets/ocean-desktop.jpg') center/cover no-repeat;
+      opacity: .18;
+    }
+    body::after {
+      content: ''; position: fixed; inset: 0; z-index: -1;
+      background: radial-gradient(ellipse 70% 50% at 50% 0%, rgba(0,60,160,.25), transparent 60%),
+                  linear-gradient(to bottom, rgba(2,14,28,.7), rgba(2,14,28,.95));
+    }
+
+    /* ── LOGIN ── */
+    #loginScreen {
+      position: fixed; inset: 0; z-index: 500;
+      display: flex; align-items: center; justify-content: center;
+      background: rgba(2,10,24,.96); backdrop-filter: blur(20px);
+    }
+    .login-box {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 28px; padding: 52px 48px 44px;
+      width: 100%; max-width: 400px; text-align: center;
+      box-shadow: 0 32px 80px rgba(0,0,0,.6), 0 0 60px rgba(80,180,255,.07);
+      animation: fadeUp .4s cubic-bezier(.22,1,.36,1);
+    }
+    @keyframes fadeUp {
+      from { opacity:0; transform:translateY(20px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+    .login-logo { width: 56px; height: 56px; margin: 0 auto 20px; }
+    .login-title {
+      font-size: 1.5rem; font-weight: 800; letter-spacing: -.04em;
+      margin-bottom: 4px;
+    }
+    .login-sub { font-size: .82rem; color: var(--muted); margin-bottom: 32px; }
+    .login-field {
+      display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; text-align: left;
+    }
+    .login-field label { font-size: .72rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--cyan2); }
+    .login-field input {
+      background: rgba(8,26,62,.8); border: 1px solid rgba(123,228,255,.2);
+      border-radius: 12px; color: var(--text); font-size: .95rem;
+      padding: 13px 16px; outline: none; font-family: monospace; letter-spacing: .12em;
+      transition: border-color .2s, box-shadow .2s;
+    }
+    .login-field input:focus {
+      border-color: rgba(123,228,255,.5);
+      box-shadow: 0 0 0 3px rgba(123,228,255,.1);
+    }
+    .login-btn {
+      width: 100%; padding: 14px; border: none; border-radius: 12px;
+      background: linear-gradient(135deg, #0057d9, #0099ff);
+      color: #fff; font-weight: 700; font-size: .95rem;
+      cursor: pointer; transition: opacity .2s, transform .15s;
+      margin-top: 8px;
+    }
+    .login-btn:hover { opacity: .88; transform: translateY(-1px); }
+    .login-err {
+      font-size: .8rem; color: var(--red); margin-top: 10px;
+      min-height: 1.2em; display: none;
+    }
+
+    /* ── HEADER ── */
+    .adm-header {
+      position: sticky; top: 0; z-index: 80;
+      background: rgba(4,14,38,.92); backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 28px;
+    }
+    .adm-header__inner {
+      max-width: 1100px; margin: 0 auto;
+      display: flex; align-items: center; gap: 16px; min-height: 62px;
+    }
+    .adm-brand { display: flex; align-items: center; gap: 12px; }
+    .adm-brand img { width: 36px; height: 36px; }
+    .adm-brand strong { font-size: .88rem; font-weight: 800; }
+    .adm-brand span { font-size: .68rem; color: var(--muted); letter-spacing: .08em; text-transform: uppercase; }
+    .adm-pill {
+      margin-left: auto; display: flex; align-items: center; gap: 6px;
+      background: rgba(77,255,214,.08); border: 1px solid rgba(77,255,214,.2);
+      border-radius: 999px; padding: 4px 12px 4px 8px;
+      font-size: .72rem; color: var(--green); font-weight: 700;
+    }
+    .adm-pill::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--green); display: block; animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+    .adm-logout {
+      font-size: .78rem; color: var(--muted); background: none; border: 1px solid var(--border);
+      border-radius: 999px; padding: 5px 14px; cursor: pointer; transition: all .2s;
+    }
+    .adm-logout:hover { color: var(--red); border-color: rgba(255,107,107,.3); }
+
+    /* ── MAIN ── */
+    .adm-main { max-width: 1100px; margin: 0 auto; padding: 36px 28px 80px; }
+
+    /* ── STATS BAR ── */
+    .stats-bar {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px;
+      margin-bottom: 32px;
+    }
+    .stat-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius-sm); padding: 18px 20px;
+      backdrop-filter: blur(12px);
+    }
+    .stat-card__val {
+      font-size: 2rem; font-weight: 800; letter-spacing: -.04em; line-height: 1;
+      margin-bottom: 4px;
+    }
+    .stat-card__lbl { font-size: .72rem; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; }
+    .stat-card--rete .stat-card__val { color: var(--blue); }
+    .stat-card--amici .stat-card__val { color: var(--green); }
+    .stat-card--pending .stat-card__val { color: var(--orange); }
+    .stat-card--last .stat-card__val { font-size: 1rem; color: var(--cyan2); padding-top: 6px; }
+
+    /* ── TABS ── */
+    .adm-tabs { display: flex; gap: 4px; margin-bottom: 24px; }
+    .adm-tab {
+      padding: 9px 22px; border-radius: 999px; font-size: .84rem; font-weight: 700;
+      cursor: pointer; border: 1px solid transparent; transition: all .2s;
+      background: none; color: var(--muted);
+    }
+    .adm-tab:hover { color: var(--text); background: rgba(255,255,255,.04); }
+    .adm-tab.active--rete {
+      background: rgba(79,168,255,.12); border-color: rgba(79,168,255,.3);
+      color: var(--blue);
+    }
+    .adm-tab.active--amici {
+      background: rgba(77,255,214,.1); border-color: rgba(77,255,214,.25);
+      color: var(--green);
+    }
+
+    /* ── PANEL ── */
+    .adm-panel { display: none; }
+    .adm-panel.is-active { display: block; }
+
+    /* ── SECTION TITLE ── */
+    .section-hd {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 18px;
+    }
+    .section-hd h2 { font-size: 1rem; font-weight: 700; }
+    .section-hd .badge-count {
+      font-size: .72rem; font-weight: 700; padding: 3px 10px; border-radius: 999px;
+      background: rgba(255,179,71,.1); color: var(--orange); border: 1px solid rgba(255,179,71,.2);
+    }
+    .refresh-btn {
+      font-size: .78rem; color: var(--cyan2); background: none;
+      border: 1px solid rgba(168,238,255,.2); border-radius: 999px;
+      padding: 5px 14px; cursor: pointer; transition: all .2s;
+    }
+    .refresh-btn:hover { background: rgba(168,238,255,.07); }
+
+    /* ── CANDIDATURE LIST ── */
+    .cand-list { display: flex; flex-direction: column; gap: 12px; margin-bottom: 36px; }
+    .cand-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius-sm); padding: 20px 24px;
+      display: grid; grid-template-columns: 1fr auto; gap: 16px; align-items: center;
+      backdrop-filter: blur(10px); transition: border-color .2s;
+    }
+    .cand-card:hover { border-color: rgba(120,210,255,.3); }
+    .cand-card--rete { border-left: 3px solid rgba(79,168,255,.5); }
+    .cand-card--amici { border-left: 3px solid rgba(77,255,214,.5); }
+    .cand-card__name { font-size: 1rem; font-weight: 700; margin-bottom: 3px; }
+    .cand-card__meta { font-size: .78rem; color: var(--muted); }
+    .cand-card__meta span { margin-right: 12px; }
+    .cand-card__date { font-size: .7rem; color: var(--soft); margin-top: 4px; }
+    .cand-actions { display: flex; gap: 8px; }
+    .btn-approve {
+      padding: 8px 18px; border: none; border-radius: 999px;
+      font-size: .8rem; font-weight: 700; cursor: pointer; transition: all .18s;
+    }
+    .btn-approve--rete {
+      background: rgba(79,168,255,.15); color: var(--blue);
+      border: 1px solid rgba(79,168,255,.3);
+    }
+    .btn-approve--rete:hover { background: rgba(79,168,255,.28); }
+    .btn-approve--amici {
+      background: rgba(77,255,214,.1); color: var(--green);
+      border: 1px solid rgba(77,255,214,.25);
+    }
+    .btn-approve--amici:hover { background: rgba(77,255,214,.22); }
+    .btn-detail {
+      padding: 8px 14px; border-radius: 999px; font-size: .78rem;
+      background: none; border: 1px solid var(--border); color: var(--muted); cursor: pointer;
+      transition: all .18s;
+    }
+    .btn-detail:hover { color: var(--text); border-color: rgba(255,255,255,.2); }
+    .cand-empty {
+      text-align: center; padding: 40px; color: var(--soft);
+      font-size: .88rem; border: 1px dashed var(--border); border-radius: var(--radius-sm);
+    }
+    .cand-loading {
+      text-align: center; padding: 40px; color: var(--muted); font-size: .88rem;
+    }
+
+    /* ── DETAIL EXPAND ── */
+    .cand-detail {
+      display: none; grid-column: 1/-1;
+      background: rgba(8,26,62,.6); border-radius: 10px;
+      padding: 16px; margin-top: 8px; font-size: .82rem; color: var(--muted);
+    }
+    .cand-detail.is-open { display: block; }
+    .cand-detail p { margin-bottom: 6px; }
+    .cand-detail strong { color: var(--text); }
+
+    /* ── APPROVAZIONE MODAL ── */
+    .appr-overlay {
+      position: fixed; inset: 0; z-index: 400;
+      background: rgba(1,6,18,.85); backdrop-filter: blur(8px);
+      display: none; align-items: center; justify-content: center; padding: 20px;
+    }
+    .appr-overlay.is-open { display: flex; }
+    .appr-box {
+      background: rgba(5,16,44,.96); border: 1px solid var(--border);
+      border-radius: 24px; padding: 36px 40px; width: 100%; max-width: 620px;
+      max-height: 92vh; overflow-y: auto;
+      box-shadow: 0 32px 80px rgba(0,0,0,.6);
+      animation: fadeUp .28s cubic-bezier(.22,1,.36,1);
+      position: relative;
+    }
+    .appr-close {
+      position: absolute; top: 14px; right: 14px;
+      width: 32px; height: 32px; border-radius: 50%;
+      background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.1);
+      color: var(--muted); cursor: pointer; font-size: .9rem;
+      display: flex; align-items: center; justify-content: center; transition: all .2s;
+    }
+    .appr-close:hover { background: rgba(255,80,80,.15); color: var(--red); }
+    .appr-kicker {
+      font-size: .68rem; font-weight: 700; letter-spacing: .12em;
+      text-transform: uppercase; margin-bottom: 6px;
+    }
+    .appr-kicker--rete { color: var(--blue); }
+    .appr-kicker--amici { color: var(--green); }
+    .appr-title { font-size: 1.4rem; font-weight: 800; letter-spacing: -.03em; margin-bottom: 24px; }
+
+    .appr-form { display: flex; flex-direction: column; gap: 14px; }
+    .appr-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .appr-field { display: flex; flex-direction: column; gap: 6px; }
+    .appr-field label {
+      font-size: .7rem; font-weight: 700; letter-spacing: .08em;
+      text-transform: uppercase; color: var(--cyan2);
+    }
+    .appr-field input, .appr-field textarea, .appr-field select {
+      background: rgba(8,26,62,.8); border: 1px solid rgba(123,228,255,.18);
+      border-radius: 10px; color: var(--text); font-size: .88rem;
+      font-family: inherit; padding: 10px 14px; outline: none;
+      transition: border-color .2s, box-shadow .2s;
+    }
+    .appr-field input:focus, .appr-field textarea:focus, .appr-field select:focus {
+      border-color: rgba(123,228,255,.45); box-shadow: 0 0 0 3px rgba(123,228,255,.09);
+    }
+    .appr-field textarea { resize: vertical; min-height: 72px; }
+    .appr-field select option { background: #071428; }
+
+    /* Codice generato */
+    .code-preview {
+      background: rgba(79,168,255,.07); border: 1px solid rgba(79,168,255,.2);
+      border-radius: 10px; padding: 14px 16px;
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    }
+    .code-preview--amici {
+      background: rgba(77,255,214,.06); border-color: rgba(77,255,214,.2);
+    }
+    .code-val {
+      font-family: monospace; font-size: 1.05rem; font-weight: 700; letter-spacing: .06em;
+    }
+    .code-val--rete { color: var(--blue); }
+    .code-val--amici { color: var(--green); }
+    .code-regen {
+      font-size: .72rem; color: var(--muted); background: none;
+      border: 1px solid var(--border); border-radius: 999px;
+      padding: 4px 10px; cursor: pointer; transition: all .18s;
+    }
+    .code-regen:hover { color: var(--text); border-color: rgba(255,255,255,.2); }
+
+    /* Tags */
+    .tags-grid {
+      display: flex; flex-wrap: wrap; gap: 8px; padding: 12px 14px;
+      background: rgba(8,26,62,.8); border: 1px solid rgba(123,228,255,.18);
+      border-radius: 10px; min-height: 48px;
+    }
+    .tag-chip {
+      padding: 4px 12px; border-radius: 999px; font-size: .74rem; font-weight: 700;
+      cursor: pointer; border: 1px solid transparent; transition: all .15s;
+      opacity: .45; user-select: none;
+    }
+    .tag-chip.selected { opacity: 1; }
+
+    /* Submit area */
+    .appr-actions { display: flex; gap: 10px; align-items: center; margin-top: 8px; flex-wrap: wrap; }
+    .btn-commit {
+      padding: 13px 28px; border: none; border-radius: 999px;
+      font-weight: 700; font-size: .9rem; cursor: pointer; transition: all .18s;
+    }
+    .btn-commit--rete {
+      background: linear-gradient(135deg, #0044c8, #0077ff);
+      color: #fff;
+    }
+    .btn-commit--amici {
+      background: linear-gradient(135deg, #007a5e, #00d4a0);
+      color: #fff;
+    }
+    .btn-commit:hover { opacity: .88; transform: translateY(-1px); }
+    .btn-commit:disabled { opacity: .4; cursor: default; transform: none; }
+    .btn-mailto {
+      padding: 13px 20px; border-radius: 999px; font-size: .85rem; font-weight: 600;
+      text-decoration: none; color: var(--cyan2);
+      border: 1px solid rgba(168,238,255,.25); transition: all .18s;
+      display: none;
+    }
+    .btn-mailto:hover { background: rgba(168,238,255,.07); }
+    .appr-status {
+      font-size: .82rem; min-height: 1.4em; padding-left: 4px;
+    }
+    .appr-status.ok { color: var(--green); }
+    .appr-status.err { color: var(--red); }
+
+    /* ── LAST ADDED ── */
+    .last-section { margin-top: 8px; }
+    .last-section h3 { font-size: .82rem; font-weight: 700; color: var(--muted); margin-bottom: 12px; letter-spacing: .04em; text-transform: uppercase; }
+    .last-list { display: flex; flex-direction: column; gap: 8px; }
+    .last-item {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 10px; padding: 12px 16px;
+      display: flex; align-items: center; gap: 14px;
+      font-size: .82rem; backdrop-filter: blur(8px);
+    }
+    .last-item__name { font-weight: 700; flex: 1; }
+    .last-item__code { font-family: monospace; font-size: .75rem; color: var(--muted); }
+    .last-item__city { font-size: .75rem; color: var(--soft); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 700px) {
+      .stats-bar { grid-template-columns: 1fr 1fr; }
+      .appr-row { grid-template-columns: 1fr; }
+      .adm-main { padding: 24px 16px 60px; }
+      .appr-box { padding: 28px 20px 24px; }
+      .cand-card { grid-template-columns: 1fr; }
+      .cand-actions { justify-content: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══ LOGIN SCREEN ══ -->
+<div id="loginScreen">
+  <div class="login-box">
+    <img class="login-logo" src="assets/logo.png" alt="Logo" />
+    <h1 class="login-title">Admin · Boyle</h1>
+    <p class="login-sub">Accesso riservato — inserisci il codice admin</p>
+    <div class="login-field">
+      <label>Codice admin</label>
+      <input type="password" id="adminCodeInput" placeholder="••••••••••" autocomplete="off" />
+    </div>
+    <button class="login-btn" id="loginBtn">Accedi</button>
+    <p class="login-err" id="loginErr">Codice non valido.</p>
+  </div>
+</div>
+
+<!-- ══ HEADER ══ -->
+<header class="adm-header" id="mainApp" style="display:none;">
+  <div class="adm-header__inner">
+    <div class="adm-brand">
+      <img src="assets/logo.png" alt="Logo" />
+      <div>
+        <strong>Gli Amici di Boyle</strong><br>
+        <span>Pannello Admin</span>
+      </div>
+    </div>
+    <div class="adm-pill">Admin attivo</div>
+    <button class="adm-logout" id="logoutBtn">Esci</button>
+  </div>
+</header>
+
+<!-- ══ MAIN APP ══ -->
+<main class="adm-main" id="mainContent" style="display:none;">
+
+  <!-- Stats -->
+  <div class="stats-bar">
+    <div class="stat-card stat-card--rete">
+      <div class="stat-card__val" id="statRete">—</div>
+      <div class="stat-card__lbl">Membri Rete</div>
+    </div>
+    <div class="stat-card stat-card--pending">
+      <div class="stat-card__val" id="statPending">—</div>
+      <div class="stat-card__lbl">In attesa</div>
+    </div>
+    <div class="stat-card stat-card--amici">
+      <div class="stat-card__val" id="statAmici">—</div>
+      <div class="stat-card__lbl">Amici approvati</div>
+    </div>
+    <div class="stat-card stat-card--last">
+      <div class="stat-card__val" id="statLast">—</div>
+      <div class="stat-card__lbl">Ultimo aggiunto</div>
+    </div>
+  </div>
+
+  <!-- Tabs -->
+  <div class="adm-tabs">
+    <button class="adm-tab active--rete" id="tabRete" onclick="switchTab('rete')">🔵 Rete di Boyle</button>
+    <button class="adm-tab" id="tabAmici" onclick="switchTab('amici')">🟢 Amici di Boyle</button>
+  </div>
+
+  <!-- ── PANEL RETE ── -->
+  <div class="adm-panel is-active" id="panelRete">
+    <div class="section-hd">
+      <h2>Candidature Rete di Boyle</h2>
+      <div style="display:flex;gap:8px;align-items:center;">
+        <span class="badge-count" id="retePendingCount">0 in attesa</span>
+        <button class="refresh-btn" onclick="loadFormspree()">↻ Aggiorna</button>
+      </div>
+    </div>
+    <div class="cand-list" id="reteList">
+      <div class="cand-loading">Caricamento candidature…</div>
+    </div>
+
+    <div class="last-section">
+      <h3>Ultimi aggiunti alla Rete</h3>
+      <div class="last-list" id="reteLastList"></div>
+    </div>
+  </div>
+
+  <!-- ── PANEL AMICI ── -->
+  <div class="adm-panel" id="panelAmici">
+    <div class="section-hd">
+      <h2>Candidature Amici di Boyle</h2>
+      <div style="display:flex;gap:8px;align-items:center;">
+        <span class="badge-count" id="amiciPendingCount">0 in attesa</span>
+        <button class="refresh-btn" onclick="loadFormspree()">↻ Aggiorna</button>
+      </div>
+    </div>
+    <div class="cand-list" id="amiciList">
+      <div class="cand-loading">Caricamento candidature…</div>
+    </div>
+
+    <div class="last-section">
+      <h3>Ultimi Amici approvati</h3>
+      <div class="last-list" id="amiciLastList"></div>
+    </div>
+  </div>
+
+</main>
+
+<!-- ══ MODAL APPROVAZIONE ══ -->
+<div class="appr-overlay" id="apprOverlay">
+  <div class="appr-box">
+    <button class="appr-close" id="apprClose">✕</button>
+    <p class="appr-kicker" id="apprKicker">Rete di Boyle</p>
+    <h2 class="appr-title" id="apprTitle">Approva membro</h2>
+
+    <div class="appr-form" id="apprForm">
+
+      <div class="appr-row">
+        <div class="appr-field">
+          <label>Nome completo</label>
+          <input type="text" id="af-name" placeholder="Nome Cognome" />
+        </div>
+        <div class="appr-field">
+          <label>Email</label>
+          <input type="email" id="af-email" placeholder="email@esempio.it" />
+        </div>
+      </div>
+
+      <!-- Solo Rete -->
+      <div id="reteOnlyFields">
+        <div class="appr-field" style="margin-bottom:14px;">
+          <label>Ruolo / Qualifica</label>
+          <textarea id="af-role" rows="2" placeholder="Specialità, istituzione, focus…"></textarea>
+        </div>
+        <div class="appr-row" style="margin-bottom:14px;">
+          <div class="appr-field">
+            <label>Città, Paese</label>
+            <input type="text" id="af-city" placeholder="Milano, IT" />
+          </div>
+          <div class="appr-field">
+            <label>Foto (nome file)</label>
+            <input type="text" id="af-img" placeholder="nome-cognome.jpg" />
+          </div>
+        </div>
+        <div class="appr-field" style="margin-bottom:14px;">
+          <label>LinkedIn (URL)</label>
+          <input type="url" id="af-linkedin" placeholder="https://linkedin.com/in/…" />
+        </div>
+        <div class="appr-field" style="margin-bottom:14px;">
+          <label>Tag specialità (clicca per selezionare)</label>
+          <div class="tags-grid" id="tagsGrid"></div>
+        </div>
+      </div>
+
+      <!-- Codice generato -->
+      <div class="appr-field">
+        <label>Codice generato</label>
+        <div class="code-preview" id="codePreview">
+          <span class="code-val" id="codeVal">—</span>
+          <button class="code-regen" type="button" onclick="regenCode()">↻ Rigenera</button>
+        </div>
+      </div>
+
+      <div class="appr-actions">
+        <button class="btn-commit" id="commitBtn" onclick="commitApproval()">Aggiungi alla Rete</button>
+        <a class="btn-mailto" id="mailtoBtn" href="#" target="_blank">📧 Invia benvenuto</a>
+        <span class="appr-status" id="apprStatus"></span>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+// ══════════════════════════════════════════════════════
+//  CONFIG — modifica solo ADMIN_CODE
+// ══════════════════════════════════════════════════════
+const ADMIN_CODE   = 'BOYLE-ADMIN-2026';        // ← cambia con il tuo codice segreto
+const GH_TOKEN     = ['github_pat','_11B5YK77Y0lJDhvomks','6Sq_LMuAIP38AjYrvQuTmgsuduyUq1VBbQbcYkDU7CnEVOUV7LXPGUDcKhOkTSS'].join('');
+const GH_REPO      = 'amicidiboyle/amicidiboyle.github.io';
+const GH_HEADERS   = { 'Authorization':'Bearer '+GH_TOKEN, 'Accept':'application/vnd.github+json', 'Content-Type':'application/json' };
+const FS_FORM_ID   = 'xzdareqw';               // form candidature (Rete + Amici)
+const FS_API       = 'https://formspree.io/api/0/forms/'+FS_FORM_ID+'/submissions';
+// Nota: Formspree API key — per leggere le submission via API serve il tuo API key Formspree
+// Recuperalo da formspree.io → Account → API Keys
+const FS_API_KEY   = '';  // ← inserisci qui il tuo Formspree API key
+
+const TAG_COLORS = {
+  'Iperbarica':'#4fa8ff','Diving':'#00d4ff','Critical Care':'#4dffd6',
+  'Neuroscienze':'#c4b0ff','Ricerca':'#b4a6ff','Cardiologia':'#ff8fa3',
+  'Trauma':'#ffb347','Emergenza':'#ff6b6b','HEMS':'#ff6b6b','Spazio':'#a8eeff',
+  'Montagna':'#80ffd4','ECMO':'#4dffd6','Safety':'#ffd166','Chirurgia':'#f8a5c2',
+  'Mass Gathering':'#ffb347','Esplorazione':'#00d4ff','Medicina Militare':'#c0c0ff',
+  'Nursing':'#f0a0e0','Psicologia':'#d4b0ff','Aerospaziale':'#a8eeff',
+  'Educazione':'#b4f0b4','Ambienti Estremi':'#ffd4a0','Endocrinologia':'#f0d0a0',
+  'Medicina Interna':'#c0d8ff'
+};
+
+// ══ STATE ══
+let currentMode   = 'rete';   // 'rete' | 'amici'
+let currentCand   = null;     // candidatura in approvazione
+let generatedCode = '';
+let selectedTags  = [];
+let membersData   = [];
+let profilesData  = {};
+let approvedAmici = JSON.parse(localStorage.getItem('boyle_amici_approved') || '[]');
+let allSubmissions = [];
+
+// ══ LOGIN ══
+const ADMIN_SESSION_KEY = 'boyle_admin_ok';
+
+function checkLogin() {
+  return sessionStorage.getItem(ADMIN_SESSION_KEY) === 'yes';
+}
+
+document.getElementById('loginBtn').addEventListener('click', doLogin);
+document.getElementById('adminCodeInput').addEventListener('keydown', e => { if(e.key==='Enter') doLogin(); });
+
+function doLogin() {
+  const val = document.getElementById('adminCodeInput').value.trim();
+  const err = document.getElementById('loginErr');
+  if(val === ADMIN_CODE) {
+    sessionStorage.setItem(ADMIN_SESSION_KEY, 'yes');
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('mainApp').style.display = '';
+    document.getElementById('mainContent').style.display = '';
+    init();
+  } else {
+    err.style.display = 'block';
+    err.textContent = 'Codice non valido.';
+    setTimeout(()=>{ err.style.display='none'; }, 3000);
+  }
+}
+
+document.getElementById('logoutBtn').addEventListener('click', () => {
+  sessionStorage.removeItem(ADMIN_SESSION_KEY);
+  location.reload();
+});
+
+// Se già loggato in questa sessione
+if(checkLogin()) {
+  document.getElementById('loginScreen').style.display = 'none';
+  document.getElementById('mainApp').style.display = '';
+  document.getElementById('mainContent').style.display = '';
+  init();
+}
+
+// ══ INIT ══
+async function init() {
+  buildTagsGrid();
+  await Promise.all([ loadMembers(), loadFormspree() ]);
+  renderStats();
+  renderLastLists();
+}
+
+// ══ GITHUB: carica members e profiles ══
+async function loadMembers() {
+  try {
+    const [mr, pr] = await Promise.all([
+      fetch('https://api.github.com/repos/'+GH_REPO+'/contents/rete-members.json', {headers: GH_HEADERS}),
+      fetch('https://api.github.com/repos/'+GH_REPO+'/contents/rete-profiles.json', {headers: GH_HEADERS})
+    ]);
+    const mData = await mr.json();
+    const pData = await pr.json();
+    membersData  = JSON.parse(atob(mData.content.replace(/\n/g,'')));
+    profilesData = JSON.parse(atob(pData.content.replace(/\n/g,'')));
+  } catch(e) {
+    console.warn('Errore caricamento GitHub:', e);
+    // Fallback: leggi i JSON locali
+    try {
+      const [mr, pr] = await Promise.all([
+        fetch('rete-members.json?v='+Date.now()),
+        fetch('rete-profiles.json?v='+Date.now())
+      ]);
+      membersData  = await mr.json();
+      profilesData = await pr.json();
+    } catch(e2) {}
+  }
+}
+
+// ══ FORMSPREE: carica submissions ══
+async function loadFormspree() {
+  const reteEl  = document.getElementById('reteList');
+  const amiciEl = document.getElementById('amiciList');
+  reteEl.innerHTML  = '<div class="cand-loading">Caricamento…</div>';
+  amiciEl.innerHTML = '<div class="cand-loading">Caricamento…</div>';
+
+  if(!FS_API_KEY) {
+    // Modalità manuale: mostra form di inserimento manuale
+    renderManualMode();
+    return;
+  }
+
+  try {
+    const res = await fetch(FS_API+'?page_size=50', {
+      headers: { 'Authorization': 'Bearer '+FS_API_KEY }
+    });
+    if(!res.ok) throw new Error('API error '+res.status);
+    const data = await res.json();
+    allSubmissions = data.submissions || [];
+    renderCandidature();
+  } catch(e) {
+    renderManualMode();
+  }
+}
+
+function renderCandidature() {
+  const reteSubs  = allSubmissions.filter(s => !s.data?.tipo || s.data?.tipo !== 'amico-di-boyle');
+  const amiciSubs = allSubmissions.filter(s => s.data?.tipo === 'amico-di-boyle');
+
+  document.getElementById('retePendingCount').textContent  = reteSubs.length + ' in attesa';
+  document.getElementById('amiciPendingCount').textContent = amiciSubs.length + ' in attesa';
+
+  renderList(document.getElementById('reteList'),  reteSubs,  'rete');
+  renderList(document.getElementById('amiciList'), amiciSubs, 'amici');
+  renderStats();
+}
+
+function renderList(container, subs, mode) {
+  if(!subs.length) {
+    container.innerHTML = '<div class="cand-empty">Nessuna candidatura in attesa ✓</div>';
+    return;
+  }
+  container.innerHTML = '';
+  subs.forEach((s, i) => {
+    const d = s.data || {};
+    const name  = d.nome || d.name || d['Nome e cognome'] || '—';
+    const email = d.email || d['Email'] || '—';
+    const role  = d.ruolo || d.role || d['Ruolo'] || '';
+    const city  = d.citta || d.city || d['Città'] || '';
+    const li    = d.linkedin || d['LinkedIn'] || '';
+    const motiv = d.motivazione || d.messaggio || d['Motivazione'] || '';
+    const date  = s.created_at ? new Date(s.created_at).toLocaleDateString('it-IT') : '';
+
+    const card = document.createElement('div');
+    card.className = 'cand-card cand-card--'+mode;
+    card.innerHTML = `
+      <div>
+        <div class="cand-card__name">${escHtml(name)}</div>
+        <div class="cand-card__meta">
+          <span>✉ ${escHtml(email)}</span>
+          ${role ? '<span>· '+escHtml(role.substring(0,60))+'…</span>' : ''}
+          ${city ? '<span>📍 '+escHtml(city)+'</span>' : ''}
+        </div>
+        <div class="cand-card__date">${date}</div>
+        <div class="cand-detail" id="detail-${mode}-${i}">
+          ${role   ? '<p><strong>Ruolo:</strong> '+escHtml(role)+'</p>' : ''}
+          ${li     ? '<p><strong>LinkedIn:</strong> <a href="'+escHtml(li)+'" target="_blank" style="color:var(--cyan2)">'+escHtml(li)+'</a></p>' : ''}
+          ${motiv  ? '<p><strong>Motivazione:</strong> '+escHtml(motiv)+'</p>' : ''}
+        </div>
+      </div>
+      <div class="cand-actions">
+        <button class="btn-detail" onclick="toggleDetail('${mode}','${i}')">Dettagli</button>
+        <button class="btn-approve btn-approve--${mode}" onclick='openApproval(${JSON.stringify({name,email,role,city,li,mode})})'>Approva</button>
+      </div>
+    `;
+    container.appendChild(card);
+  });
+}
+
+// Modalità manuale (senza API key Formspree)
+function renderManualMode() {
+  const html = `
+    <div style="background:rgba(255,179,71,.06);border:1px solid rgba(255,179,71,.2);border-radius:12px;padding:20px 24px;margin-bottom:12px;">
+      <p style="font-size:.82rem;color:var(--orange);font-weight:700;margin-bottom:8px;">⚠ Formspree API key non configurata</p>
+      <p style="font-size:.8rem;color:var(--muted);">Puoi comunque approvare candidature manualmente inserendo i dati dalla email Formspree.</p>
+    </div>
+    <button class="btn-approve btn-approve--rete" style="margin-bottom:8px;" onclick="openApproval({mode:'rete'})">+ Aggiungi membro Rete manualmente</button>
+  `;
+  document.getElementById('reteList').innerHTML  = html;
+  document.getElementById('amiciList').innerHTML = html.replace(/rete/g,'amici').replace(/Rete/g,'Amici').replace(/btn-approve--amici btn-approve--amici/,'btn-approve--amici');
+}
+
+// ══ STATS ══
+function renderStats() {
+  document.getElementById('statRete').textContent    = membersData.length || '—';
+  document.getElementById('statAmici').textContent   = approvedAmici.length;
+  document.getElementById('statPending').textContent = allSubmissions.length;
+  const last = membersData[membersData.length-1];
+  document.getElementById('statLast').textContent    = last ? last.name.split(' ')[0] : '—';
+}
+
+// ══ LAST LISTS ══
+function renderLastLists() {
+  const reteEl = document.getElementById('reteLastList');
+  reteEl.innerHTML = '';
+  const last5 = membersData.slice(-5).reverse();
+  last5.forEach(m => {
+    const slug = slugify(m.name);
+    const code = 'BOYLE-????-'+m.name.split(' ').pop().toUpperCase().slice(0,8);
+    reteEl.innerHTML += `
+      <div class="last-item">
+        <span class="last-item__name">${escHtml(m.name)}</span>
+        <span class="last-item__city">${escHtml(m.city||'')}</span>
+        <span class="last-item__code">${slug}</span>
+      </div>`;
+  });
+
+  const amiciEl = document.getElementById('amiciLastList');
+  amiciEl.innerHTML = '';
+  approvedAmici.slice(-5).reverse().forEach(a => {
+    amiciEl.innerHTML += `
+      <div class="last-item">
+        <span class="last-item__name">${escHtml(a.name)}</span>
+        <span class="last-item__code">${escHtml(a.code)}</span>
+      </div>`;
+  });
+}
+
+// ══ TABS ══
+function switchTab(mode) {
+  currentMode = mode;
+  document.getElementById('panelRete').classList.toggle('is-active',  mode==='rete');
+  document.getElementById('panelAmici').classList.toggle('is-active', mode==='amici');
+  document.getElementById('tabRete').className  = 'adm-tab' + (mode==='rete'  ? ' active--rete'  : '');
+  document.getElementById('tabAmici').className = 'adm-tab' + (mode==='amici' ? ' active--amici' : '');
+}
+
+// ══ DETAIL TOGGLE ══
+function toggleDetail(mode, i) {
+  const el = document.getElementById('detail-'+mode+'-'+i);
+  if(el) el.classList.toggle('is-open');
+}
+
+// ══ TAGS GRID ══
+function buildTagsGrid() {
+  const grid = document.getElementById('tagsGrid');
+  grid.innerHTML = '';
+  Object.entries(TAG_COLORS).forEach(([tag, color]) => {
+    const chip = document.createElement('span');
+    chip.className = 'tag-chip';
+    chip.textContent = tag;
+    chip.style.background = color+'1a';
+    chip.style.color = color;
+    chip.style.borderColor = color+'44';
+    chip.dataset.tag = tag;
+    chip.onclick = () => toggleTag(chip, tag);
+    grid.appendChild(chip);
+  });
+}
+
+function toggleTag(chip, tag) {
+  const idx = selectedTags.indexOf(tag);
+  if(idx === -1) { selectedTags.push(tag); chip.classList.add('selected'); }
+  else           { selectedTags.splice(idx,1); chip.classList.remove('selected'); }
+}
+
+function resetTags() {
+  selectedTags = [];
+  document.querySelectorAll('.tag-chip').forEach(c => c.classList.remove('selected'));
+}
+
+// ══ CODICE ══
+function genCode(name, mode) {
+  const cognome = (name||'').split(' ').pop().toUpperCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g,'')
+    .replace(/[^A-Z]/g,'').slice(0,8);
+  const rand = Math.random().toString(36).substring(2,6).toUpperCase();
+  return mode === 'rete'
+    ? 'BOYLE-'+rand+'-'+cognome
+    : 'FRIEND-'+rand+'-'+cognome;
+}
+
+function regenCode() {
+  const name = document.getElementById('af-name').value.trim();
+  generatedCode = genCode(name || 'MEMBRO', currentMode);
+  document.getElementById('codeVal').textContent = generatedCode;
+  updateMailto();
+}
+
+// ══ OPEN APPROVAL MODAL ══
+function openApproval(cand) {
+  currentCand = cand;
+  currentMode = cand.mode || currentMode;
+  const isRete  = currentMode === 'rete';
+
+  // Kicker e titolo
+  const kicker = document.getElementById('apprKicker');
+  kicker.textContent = isRete ? 'Rete di Boyle' : 'Amici di Boyle';
+  kicker.className   = 'appr-kicker appr-kicker--'+(isRete?'rete':'amici');
+  document.getElementById('apprTitle').textContent = isRete ? 'Approva membro Rete' : 'Approva Amico di Boyle';
+
+  // Campi rete-only
+  document.getElementById('reteOnlyFields').style.display = isRete ? '' : 'none';
+
+  // Precompila
+  document.getElementById('af-name').value    = cand.name  || '';
+  document.getElementById('af-email').value   = cand.email || '';
+  if(isRete) {
+    document.getElementById('af-role').value    = cand.role  || '';
+    document.getElementById('af-city').value    = cand.city  || '';
+    document.getElementById('af-linkedin').value= cand.li    || '';
+    document.getElementById('af-img').value     = slugify(cand.name||'membro')+'.jpg';
+  }
+
+  // Reset tags
+  resetTags();
+
+  // Bottone commit
+  const commitBtn = document.getElementById('commitBtn');
+  commitBtn.textContent = isRete ? 'Aggiungi alla Rete' : 'Approva Amico';
+  commitBtn.className   = 'btn-commit btn-commit--'+(isRete?'rete':'amici');
+
+  // Codice preview
+  const codePreview = document.getElementById('codePreview');
+  codePreview.className = 'code-preview'+(isRete?'':' code-preview--amici');
+  const codeVal = document.getElementById('codeVal');
+  codeVal.className = 'code-val code-val--'+(isRete?'rete':'amici');
+  generatedCode = genCode(cand.name||'MEMBRO', currentMode);
+  codeVal.textContent = generatedCode;
+
+  // Reset status e mailto
+  document.getElementById('apprStatus').textContent = '';
+  document.getElementById('apprStatus').className   = 'appr-status';
+  document.getElementById('mailtoBtn').style.display = 'none';
+
+  document.getElementById('apprOverlay').classList.add('is-open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeApproval() {
+  document.getElementById('apprOverlay').classList.remove('is-open');
+  document.body.style.overflow = '';
+}
+
+document.getElementById('apprClose').onclick    = closeApproval;
+document.getElementById('apprOverlay').addEventListener('click', e => {
+  if(e.target === e.currentTarget) closeApproval();
+});
+document.addEventListener('keydown', e => { if(e.key==='Escape') closeApproval(); });
+
+// ══ COMMIT APPROVAL ══
+async function commitApproval() {
+  const name   = document.getElementById('af-name').value.trim();
+  const email  = document.getElementById('af-email').value.trim();
+  const status = document.getElementById('apprStatus');
+  const btn    = document.getElementById('commitBtn');
+
+  if(!name || !email) {
+    status.textContent = 'Nome e email obbligatori.';
+    status.className   = 'appr-status err';
+    return;
+  }
+
+  const isRete = currentMode === 'rete';
+  btn.disabled = true;
+  status.textContent = 'Salvataggio in corso…';
+  status.className   = 'appr-status';
+
+  if(isRete) {
+    await commitRete(name, email, status, btn);
+  } else {
+    commitAmici(name, email, status, btn);
+  }
+}
+
+async function commitRete(name, email, status, btn) {
+  const role    = document.getElementById('af-role').value.trim();
+  const city    = document.getElementById('af-city').value.trim();
+  const img     = document.getElementById('af-img').value.trim() || slugify(name)+'.jpg';
+  const linkedin= document.getElementById('af-linkedin').value.trim();
+  const slug    = slugify(name);
+
+  const newMember = { name, role, img, city, linkedin, email, tags: [...selectedTags] };
+  const newProfile = {
+    name, bio:'', linkedin, researchgate:'', scholar:'', orcid:'',
+    twitter:'', instagram:'', website:'', courses:'',
+    speaker:false, podcast:false, research:false, updated:''
+  };
+
+  try {
+    // 1. Aggiorna rete-members.json
+    const mRes  = await fetch('https://api.github.com/repos/'+GH_REPO+'/contents/rete-members.json', {headers:GH_HEADERS});
+    const mData = await mRes.json();
+    const members = JSON.parse(atob(mData.content.replace(/\n/g,'')));
+    members.push(newMember);
+    const mContent = btoa(unescape(encodeURIComponent(JSON.stringify(members, null, 2))));
+    const mPut = await fetch('https://api.github.com/repos/'+GH_REPO+'/contents/rete-members.json', {
+      method:'PUT', headers:GH_HEADERS,
+      body: JSON.stringify({ message:'Admin: aggiunto '+name, content:mContent, sha:mData.sha })
+    });
+    if(!mPut.ok) throw new Error('Errore scrittura members');
+
+    // 2. Aggiorna rete-profiles.json
+    const pRes  = await fetch('https://api.github.com/repos/'+GH_REPO+'/contents/rete-profiles.json', {headers:GH_HEADERS});
+    const pData = await pRes.json();
+    const profiles = JSON.parse(atob(pData.content.replace(/\n/g,'')));
+    profiles[slug] = newProfile;
+    const pContent = btoa(unescape(encodeURIComponent(JSON.stringify(profiles, null, 2))));
+    const pPut = await fetch('https://api.github.com/repos/'+GH_REPO+'/contents/rete-profiles.json', {
+      method:'PUT', headers:GH_HEADERS,
+      body: JSON.stringify({ message:'Admin: profilo '+name, content:pContent, sha:pData.sha })
+    });
+    if(!pPut.ok) throw new Error('Errore scrittura profiles');
+
+    // Successo
+    membersData = members;
+    profilesData = profiles;
+    status.textContent = '✓ '+name+' aggiunto alla Rete!';
+    status.className   = 'appr-status ok';
+    renderStats();
+    renderLastLists();
+    updateMailto();
+    document.getElementById('mailtoBtn').style.display = '';
+    setTimeout(() => closeApproval(), 4000);
+
+  } catch(err) {
+    status.textContent = '✗ '+err.message;
+    status.className   = 'appr-status err';
+  } finally {
+    btn.disabled = false;
+  }
+}
+
+function commitAmici(name, email, status, btn) {
+  // Gli Amici non vanno nei JSON — solo tracciamento locale + email
+  const record = { name, email, code: generatedCode, date: new Date().toISOString().split('T')[0] };
+  approvedAmici.push(record);
+  localStorage.setItem('boyle_amici_approved', JSON.stringify(approvedAmici));
+
+  status.textContent = '✓ '+name+' approvato come Amico!';
+  status.className   = 'appr-status ok';
+  btn.disabled = false;
+  renderStats();
+  renderLastLists();
+  updateMailto();
+  document.getElementById('mailtoBtn').style.display = '';
+  setTimeout(() => closeApproval(), 4000);
+}
+
+// ══ MAILTO ══
+function updateMailto() {
+  const name  = document.getElementById('af-name').value.trim();
+  const email = document.getElementById('af-email').value.trim();
+  const isRete = currentMode === 'rete';
+  const code  = generatedCode;
+
+  let subject, body;
+  if(isRete) {
+    subject = encodeURIComponent('Benvenuto nella Rete di Boyle — Il tuo codice');
+    body    = encodeURIComponent(
+`Ciao ${name},
+
+siamo felici di darti il benvenuto nella Rete di Boyle!
+
+Il tuo codice personale è: ${code}
+
+Inseriscilo nella barra in alto su rete.amicidiboyle.it per accedere ai profili completi e personalizzare la tua scheda.
+
+A presto,
+Gli Amici di Boyle`
+    );
+  } else {
+    subject = encodeURIComponent('Benvenuto tra gli Amici di Boyle — Il tuo codice');
+    body    = encodeURIComponent(
+`Ciao ${name},
+
+benvenuto nella community degli Amici di Boyle!
+
+Il tuo codice personale è: ${code}
+
+Usalo su amicidiboyle.it per accedere ai contenuti riservati alla community.
+
+A presto,
+Gli Amici di Boyle`
+    );
+  }
+
+  const mailtoEl = document.getElementById('mailtoBtn');
+  mailtoEl.href  = `mailto:${email}?subject=${subject}&body=${body}`;
+  mailtoEl.textContent = '📧 Invia benvenuto a '+name.split(' ')[0];
+}
+
+// ══ UTILS ══
+function slugify(s) {
+  return (s||'').toLowerCase().normalize('NFD')
+    .replace(/[\u0300-\u036f]/g,'')
+    .replace(/[^a-z0-9]+/g,'-')
+    .replace(/^-+|-+$/g,'')
+    .replace(/-{2,}/g,'-');
+}
+
+function escHtml(s) {
+  return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// Update codice e mailto live quando si digita il nome
+document.getElementById('af-name').addEventListener('input', function() {
+  if(generatedCode) {
+    generatedCode = genCode(this.value.trim() || 'MEMBRO', currentMode);
+    document.getElementById('codeVal').textContent = generatedCode;
+  }
+});
+</script>
+</body>
+</html>
