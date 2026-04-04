@@ -587,7 +587,7 @@
         <h2 class="modal__title" id="modal-title" data-i18n="r_join_title">Connettiamo menti brillanti</h2>
         <p class="modal__desc" data-i18n="r_cand_desc">La Rete di Boyle è riservata a professionisti con curriculum validato in medicina subacquea, iperbarica, aerospaziale, safety o fisiologia degli ambienti estremi. Valutiamo ogni candidatura individualmente.</p>
       </div>
-      <form class="network-form" id="network-form" action="https://formspree.io/f/xzdareqw" method="POST">
+      <form class="network-form" id="network-form" action="https://formspree.io/f/xzdareqw" method="POST" enctype="multipart/form-data">
         <input type="hidden" name="_subject" value="Nuova candidatura alla Rete di Boyle" />
         <input type="hidden" name="_language" value="it" />
         <input type="hidden" id="cand-snippet" name="codice_card_html" />
@@ -622,8 +622,8 @@
           </div>
           <div class="field field--full">
             <label for="cand-foto" data-i18n="r_cand_label_foto">FOTO PROFILO</label>
-            <input id="cand-foto" name="foto_url" type="url" placeholder="https://... (link diretto alla tua foto, es. da LinkedIn)" data-i18n-placeholder="r_cand_ph_foto" />
-            <p style="font-size:.72rem;color:rgba(237,247,255,.45);margin-top:4px;" data-i18n="r_cand_foto_hint">Incolla il link diretto alla tua foto profilo LinkedIn o a qualsiasi immagine pubblica.</p>
+            <input id="cand-foto" name="foto" type="file" accept="image/jpeg,image/png,image/webp" style="background:rgba(8,26,62,.7);border:1px solid rgba(123,228,255,.2);border-radius:10px;color:rgba(237,247,255,.8);font-size:.82rem;padding:10px 14px;width:100%;cursor:pointer;" />
+            <p style="font-size:.72rem;color:rgba(237,247,255,.45);margin-top:4px;" data-i18n="r_cand_foto_hint">Carica una foto profilo in formato JPG, PNG o WebP. Max 1MB.</p>
           </div>
           <div class="field field--full">
             <label for="cand-bio" data-i18n="r_cand_label_pres">PRESENTAZIONE E MOTIVAZIONE</label>
@@ -2188,8 +2188,8 @@
         'r_cand_label_li':'PROFILO LINKEDIN',
         'r_cand_label_pres':'PRESENTAZIONE E MOTIVAZIONE',
         'r_cand_label_foto':'FOTO PROFILO',
-        'r_cand_ph_foto':'https://... (link diretto alla tua foto, es. da LinkedIn)',
-        'r_cand_foto_hint':'Incolla il link diretto alla tua foto profilo LinkedIn o a qualsiasi immagine pubblica.',
+
+        'r_cand_foto_hint':'Carica una foto profilo in formato JPG, PNG o WebP. Max 1MB.',
         'r_cand_submit':'Invia candidatura',
         'r_footer_copy':'\u00a9 2026 Gli Amici di Boyle',
         'r_amici_join_desc':'Diventa un Amico di Boyle: se sei appassionato di medicina degli ambienti estremi e della diffusione della cultura scientifica, questa \u00e8 la tua community.',
@@ -2339,8 +2339,8 @@
         'r_cand_label_li':'LINKEDIN PROFILE',
         'r_cand_label_pres':'PRESENTATION AND MOTIVATION',
         'r_cand_label_foto':'PROFILE PHOTO',
-        'r_cand_ph_foto':'https://... (direct link to your photo, e.g. from LinkedIn)',
-        'r_cand_foto_hint':'Paste the direct link to your LinkedIn profile photo or any public image.',
+
+        'r_cand_foto_hint':'Upload a profile photo in JPG, PNG or WebP format. Max 1MB.',
         'r_cand_submit':'Submit application',
         'r_footer_copy':'\u00a9 2026 Gli Amici di Boyle',
         'r_amici_join_desc':'Become an Amico di Boyle: if you are passionate about extreme environment medicine and the spread of scientific culture, this is your community.',
