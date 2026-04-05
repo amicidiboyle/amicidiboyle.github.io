@@ -3382,3 +3382,109 @@ a { color: inherit; text-decoration: none; }
   transition: background .2s;
 }
 #cookie-accept:hover { background: rgba(123,228,255,.22); }
+
+/* ══════════════════════════════════════════
+   POST-IT NEWSLETTER
+══════════════════════════════════════════ */
+.newsletter-postit {
+  position: absolute;
+  right: -18px;
+  bottom: -32px;
+  width: 148px;
+  background: #f5c518;
+  background: linear-gradient(145deg, #ffe033, #f5c000);
+  border-radius: 3px;
+  padding: 14px 14px 16px;
+  transform: rotate(3.5deg);
+  box-shadow:
+    2px 4px 12px rgba(0,0,0,.35),
+    0 1px 3px rgba(0,0,0,.2),
+    inset 0 -2px 4px rgba(0,0,0,.08);
+  cursor: default;
+  z-index: 20;
+  transition: transform .25s cubic-bezier(.22,1,.36,1), box-shadow .25s;
+}
+.newsletter-postit:hover {
+  transform: rotate(1deg) translateY(-3px) scale(1.03);
+  box-shadow:
+    4px 8px 20px rgba(0,0,0,.4),
+    0 2px 6px rgba(0,0,0,.25);
+}
+/* Spillo in alto al centro */
+.newsletter-postit__pin {
+  position: absolute;
+  top: -7px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #ff6b6b, #cc2200);
+  box-shadow: 0 2px 4px rgba(0,0,0,.4);
+}
+.newsletter-postit__pin::after {
+  content: '';
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1.5px;
+  height: 6px;
+  background: rgba(0,0,0,.3);
+  border-radius: 1px;
+}
+.newsletter-postit__title {
+  font-family: 'Caveat', 'Patrick Hand', cursive, sans-serif;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #1a1000;
+  letter-spacing: .01em;
+  margin-bottom: 3px;
+  line-height: 1.1;
+}
+.newsletter-postit__kicker {
+  font-size: .6rem;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: rgba(40,20,0,.55);
+  margin-bottom: 8px;
+}
+.newsletter-postit__body {
+  font-size: .68rem;
+  color: rgba(30,15,0,.75);
+  line-height: 1.45;
+  margin-bottom: 10px;
+}
+.newsletter-postit__link {
+  display: block;
+  font-size: .62rem;
+  font-weight: 700;
+  color: #1a1000;
+  text-decoration: none;
+  word-break: break-all;
+  border-top: 1px solid rgba(0,0,0,.12);
+  padding-top: 8px;
+  transition: color .15s;
+}
+.newsletter-postit__link:hover { color: #8b4400; }
+
+/* Assicura che il container stats abbia overflow visible */
+.hero__stats { overflow: visible !important; position: relative; }
+
+/* Import font corsivo per il titolo */
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@700&display=swap');
+
+/* ── MOBILE ── */
+@media (max-width: 600px) {
+  .newsletter-postit {
+    right: -10px;
+    bottom: -28px;
+    width: 124px;
+    padding: 11px 11px 13px;
+    transform: rotate(3deg);
+  }
+  .newsletter-postit__title { font-size: .95rem; }
+  .newsletter-postit__body  { font-size: .6rem; }
+  .newsletter-postit__link  { font-size: .56rem; }
+}
