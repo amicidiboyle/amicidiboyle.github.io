@@ -3386,134 +3386,146 @@ a { color: inherit; text-decoration: none; }
 
 
 /* ══════════════════════════════════════════
-   TAB NEWSLETTER — segnalibro laterale
+   TAB NEWSLETTER — attaccato ai contatori
 ══════════════════════════════════════════ */
-.nl-tab {
-  position: fixed;
-  top: 50%;
-  right: 0;
-  transform: translateY(-50%);
-  z-index: 300;
-  display: flex;
-  align-items: flex-start;
+
+/* Il blocco stats deve permettere overflow */
+.hero__stats {
+  overflow: visible !important;
+  position: relative;
 }
 
-/* ── LINGUETTA (sempre visibile) ── */
+/* Container tab — si posiziona subito dopo "In crescita" */
+.nl-tab {
+  position: relative;
+  flex-shrink: 0;
+  display: flex;
+  align-items: stretch;
+  border-left: 1px solid rgba(255,215,0,.2);
+}
+
+/* ── LINGUETTA ── */
 .nl-tab__trigger {
   writing-mode: vertical-rl;
   text-orientation: mixed;
   transform: rotate(180deg);
-  background: rgba(255, 210, 20, 0.18);
-  border: 1px solid rgba(255, 215, 0, 0.35);
-  border-right: none;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  box-shadow:
-    -3px 0 16px rgba(255, 200, 0, 0.15),
-    inset 1px 0 0 rgba(255,255,255,.1);
-  border-radius: 8px 0 0 8px;
-  padding: 18px 10px;
+  background: rgba(255, 210, 20, 0.12);
+  border: none;
+  border-left: none;
+  padding: 14px 10px;
   cursor: pointer;
-  color: rgba(255, 220, 60, 0.9);
-  font-family: 'Inter', ui-sans-serif, sans-serif;
-  font-size: .72rem;
+  color: rgba(255, 220, 60, 0.85);
+  font-family: inherit;
+  font-size: .62rem;
   font-weight: 700;
   letter-spacing: .14em;
   text-transform: uppercase;
-  transition: background .22s, box-shadow .22s, color .22s;
   white-space: nowrap;
-  flex-shrink: 0;
+  transition: background .2s, color .2s;
+  border-radius: 0 8px 8px 0;
 }
 .nl-tab__trigger:hover {
-  background: rgba(255, 210, 20, 0.28);
-  box-shadow:
-    -4px 0 22px rgba(255, 200, 0, 0.28),
-    inset 1px 0 0 rgba(255,255,255,.15);
-  color: rgba(255, 230, 80, 1);
+  background: rgba(255, 210, 20, 0.22);
+  color: rgba(255, 235, 80, 1);
 }
 
-/* ── PANNELLO (nascosto di default) ── */
+/* ── PANNELLO — si apre verso il basso ── */
 .nl-tab__panel {
-  background: rgba(255, 210, 20, 0.14);
-  border: 1px solid rgba(255, 215, 0, 0.3);
-  border-right: none;
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  width: 210px;
+  background: rgba(10, 28, 60, 0.88);
+  border: 1px solid rgba(255, 215, 0, 0.28);
+  border-radius: 12px 0 12px 12px;
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
   box-shadow:
-    -4px 0 28px rgba(255, 200, 0, 0.18),
-    inset 1px 0 0 rgba(255,255,255,.08);
-  border-radius: 12px 0 0 12px;
-  padding: 20px 18px 18px;
-  width: 220px;
-  pointer-events: none;
+    0 8px 28px rgba(0,0,0,.45),
+    0 0 20px rgba(255,200,0,.1);
+  padding: 16px 16px 14px;
   opacity: 0;
-  transform: translateX(12px);
+  pointer-events: none;
+  transform: translateY(-6px);
   transition:
-    opacity .28s ease,
-    transform .32s cubic-bezier(.22,1,.36,1);
-  overflow: hidden;
+    opacity .25s ease,
+    transform .28s cubic-bezier(.22,1,.36,1);
+  z-index: 50;
+}
+/* Bordo dorato in cima */
+.nl-tab__panel::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 16px; right: 16px;
+  height: 2px;
+  background: linear-gradient(90deg,
+    transparent,
+    rgba(255,210,20,.6) 40%,
+    rgba(255,210,20,.6) 60%,
+    transparent);
+  border-radius: 2px;
 }
 
 /* Stato aperto */
 .nl-tab--open .nl-tab__panel {
   opacity: 1;
-  transform: translateX(0);
+  transform: translateY(0);
   pointer-events: auto;
 }
 
-/* Glow dorato sul bordo sinistro */
-.nl-tab__panel::before {
-  content: '';
-  position: absolute;
-  top: 16px;
-  bottom: 16px;
-  left: 0;
-  width: 2px;
-  background: linear-gradient(to bottom,
-    transparent,
-    rgba(255,210,20,.7) 30%,
-    rgba(255,210,20,.7) 70%,
-    transparent);
-  border-radius: 2px;
-}
-
 .nl-tab__kicker {
-  font-size: .6rem;
+  font-size: .58rem;
   font-weight: 700;
   letter-spacing: .1em;
   text-transform: uppercase;
-  color: rgba(255, 220, 80, .65);
-  margin-bottom: 8px;
+  color: rgba(255, 220, 60, .6);
+  margin-bottom: 7px;
 }
 .nl-tab__body {
   font-size: .72rem;
-  color: rgba(237, 247, 255, .78);
+  color: rgba(237,247,255,.75);
   line-height: 1.55;
-  margin-bottom: 12px;
+  margin-bottom: 11px;
 }
 .nl-tab__link {
   display: block;
-  font-size: .65rem;
+  font-size: .63rem;
   font-weight: 700;
-  color: rgba(255, 220, 60, .9);
+  color: rgba(255,220,60,.88);
   text-decoration: none;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  border-top: 1px solid rgba(255,215,0,.18);
-  padding-top: 10px;
+  border-top: 1px solid rgba(255,215,0,.15);
+  padding-top: 9px;
   transition: color .15s;
 }
-.nl-tab__link:hover {
-  color: #ffe84d;
-  text-decoration: underline;
-}
+.nl-tab__link:hover { color: #ffe84d; text-decoration: underline; }
 
-/* ── MOBILE ── */
-@media (max-width: 600px) {
-  .nl-tab { top: auto; bottom: 80px; transform: none; }
-  .nl-tab__trigger { padding: 14px 8px; font-size: .64rem; }
-  .nl-tab__panel { width: 180px; padding: 16px 14px 14px; }
-  .nl-tab__body { font-size: .66rem; }
-  .nl-tab__link { font-size: .6rem; white-space: nowrap; }
+/* ── MOBILE — compatto sotto i contatori ── */
+@media (max-width: 700px) {
+  .nl-tab {
+    border-left: none;
+    border-top: 1px solid rgba(255,215,0,.2);
+    width: 100%;
+    justify-content: center;
+  }
+  .nl-tab__trigger {
+    writing-mode: horizontal-tb;
+    transform: none;
+    border-radius: 0 0 8px 8px;
+    padding: 10px 20px;
+    font-size: .64rem;
+    letter-spacing: .1em;
+    width: 100%;
+    text-align: center;
+    border-top: none;
+  }
+  .nl-tab__panel {
+    top: calc(100% + 6px);
+    right: 0;
+    left: 0;
+    width: 100%;
+    border-radius: 0 0 12px 12px;
+  }
 }
