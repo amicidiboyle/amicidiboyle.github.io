@@ -3386,196 +3386,134 @@ a { color: inherit; text-decoration: none; }
 
 
 /* ══════════════════════════════════════════
-   POST-IT NEWSLETTER — ROTOLINO
-   Appare come un foglio arrotolato su puntina
-   Click → si srotola verso il basso
+   TAB NEWSLETTER — segnalibro laterale
 ══════════════════════════════════════════ */
-@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,600;1,400&display=swap');
-
-.nl-postit {
+.nl-tab {
   position: fixed;
-  bottom: 90px;
-  right: 28px;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
   z-index: 300;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 44px; /* larghezza rotolino */
-  cursor: pointer;
+  align-items: flex-start;
 }
 
-/* ── PUNTINA ── */
-.nl-postit__pin {
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background: none;
-  border: none;
-  padding: 0;
-  cursor: pointer;
-  position: relative;
-  z-index: 3;
-  margin-bottom: -2px;
-  transition: transform .2s;
-  flex-shrink: 0;
-}
-.nl-postit__pin:hover { transform: scale(1.2); }
-.nl-postit__pin-dot {
-  display: block;
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  background: radial-gradient(circle at 35% 28%, #ff9090, #cc1100);
-  box-shadow:
-    0 2px 6px rgba(0,0,0,.55),
-    inset 0 1px 2px rgba(255,255,255,.35);
-  margin: 0 auto;
-}
-
-/* ── ROTOLINO (stato chiuso) ── */
-.nl-postit__roll {
-  width: 44px;
-  height: 44px;
-  background: linear-gradient(160deg,
-    rgba(255,220,30,.88) 0%,
-    rgba(235,188,8,.82) 100%);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border-radius: 50% 50% 4px 4px / 30% 30% 4px 4px;
-  box-shadow:
-    2px 4px 14px rgba(0,0,0,.4),
-    inset 0 2px 4px rgba(255,255,255,.3),
-    inset 0 -2px 4px rgba(0,0,0,.1);
-  position: relative;
-  overflow: hidden;
-  transition: transform .2s, box-shadow .2s;
-  /* Striature del rotolino */
-  background-image:
-    linear-gradient(160deg, rgba(255,220,30,.88), rgba(235,188,8,.82)),
-    repeating-linear-gradient(
-      0deg,
-      transparent,
-      transparent 5px,
-      rgba(0,0,0,.06) 5px,
-      rgba(0,0,0,.06) 6px
-    );
-}
-.nl-postit:hover .nl-postit__roll {
-  transform: scale(1.06);
-  box-shadow: 3px 6px 20px rgba(0,0,0,.5), inset 0 2px 4px rgba(255,255,255,.3);
-}
-/* Etichetta "Newsletter" sul rotolino */
-.nl-postit__roll::after {
-  content: 'NL';
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: 'Lora', Georgia, serif;
-  font-size: .6rem;
-  font-weight: 600;
-  color: rgba(40,20,0,.65);
-  letter-spacing: .04em;
-}
-
-/* Nascondi rotolino quando aperto */
-.nl-postit--open .nl-postit__roll {
-  display: none;
-}
-
-/* ── FOGLIO SROTOLATO ── */
-.nl-postit__paper {
-  width: 182px;
-  background: linear-gradient(160deg,
-    rgba(255,218,30,.88) 0%,
-    rgba(238,192,8,.84) 100%);
+/* ── LINGUETTA (sempre visibile) ── */
+.nl-tab__trigger {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  transform: rotate(180deg);
+  background: rgba(255, 210, 20, 0.18);
+  border: 1px solid rgba(255, 215, 0, 0.35);
+  border-right: none;
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border-radius: 0 2px 4px 4px;
-  padding: 14px 14px 14px;
   box-shadow:
-    3px 8px 22px rgba(0,0,0,.42),
-    inset 0 1px 0 rgba(255,255,255,.22);
-  transform-origin: top center;
-  transform: scaleY(0) rotate(2deg);
-  opacity: 0;
-  pointer-events: none;
-  transition:
-    transform .42s cubic-bezier(.22,1,.36,1),
-    opacity .3s ease;
-  position: absolute;
-  top: 18px;
-  right: -70px;
-  /* Linee carta */
-  background-image:
-    linear-gradient(160deg, rgba(255,218,30,.88), rgba(238,192,8,.84)),
-    repeating-linear-gradient(
-      transparent,
-      transparent 21px,
-      rgba(0,0,0,.07) 21px,
-      rgba(0,0,0,.07) 22px
-    );
-  background-position: 0 0, 0 30px;
+    -3px 0 16px rgba(255, 200, 0, 0.15),
+    inset 1px 0 0 rgba(255,255,255,.1);
+  border-radius: 8px 0 0 8px;
+  padding: 18px 10px;
+  cursor: pointer;
+  color: rgba(255, 220, 60, 0.9);
+  font-family: 'Inter', ui-sans-serif, sans-serif;
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  transition: background .22s, box-shadow .22s, color .22s;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.nl-tab__trigger:hover {
+  background: rgba(255, 210, 20, 0.28);
+  box-shadow:
+    -4px 0 22px rgba(255, 200, 0, 0.28),
+    inset 1px 0 0 rgba(255,255,255,.15);
+  color: rgba(255, 230, 80, 1);
 }
 
-.nl-postit__paper--open {
-  transform: scaleY(1) rotate(2deg);
+/* ── PANNELLO (nascosto di default) ── */
+.nl-tab__panel {
+  background: rgba(255, 210, 20, 0.14);
+  border: 1px solid rgba(255, 215, 0, 0.3);
+  border-right: none;
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  box-shadow:
+    -4px 0 28px rgba(255, 200, 0, 0.18),
+    inset 1px 0 0 rgba(255,255,255,.08);
+  border-radius: 12px 0 0 12px;
+  padding: 20px 18px 18px;
+  width: 220px;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateX(12px);
+  transition:
+    opacity .28s ease,
+    transform .32s cubic-bezier(.22,1,.36,1);
+  overflow: hidden;
+}
+
+/* Stato aperto */
+.nl-tab--open .nl-tab__panel {
   opacity: 1;
+  transform: translateX(0);
   pointer-events: auto;
 }
 
-.nl-postit__title {
-  font-family: 'Lora', Georgia, serif;
-  font-size: 1rem;
-  font-weight: 600;
-  color: #1a0f00;
-  margin-bottom: 2px;
-  position: relative;
+/* Glow dorato sul bordo sinistro */
+.nl-tab__panel::before {
+  content: '';
+  position: absolute;
+  top: 16px;
+  bottom: 16px;
+  left: 0;
+  width: 2px;
+  background: linear-gradient(to bottom,
+    transparent,
+    rgba(255,210,20,.7) 30%,
+    rgba(255,210,20,.7) 70%,
+    transparent);
+  border-radius: 2px;
 }
-.nl-postit__kicker {
-  font-family: 'Lora', Georgia, serif;
-  font-size: .56rem;
-  font-style: italic;
-  letter-spacing: .05em;
-  color: rgba(50,25,0,.58);
-  text-transform: uppercase;
-  margin-bottom: 8px;
-  position: relative;
-}
-.nl-postit__body {
-  font-family: 'Lora', Georgia, serif;
-  font-size: .67rem;
-  font-style: italic;
-  color: rgba(40,20,0,.78);
-  line-height: 1.5;
-  margin-bottom: 10px;
-  position: relative;
-}
-.nl-postit__link {
-  display: block;
-  font-family: 'Lora', Georgia, serif;
+
+.nl-tab__kicker {
   font-size: .6rem;
-  font-weight: 600;
-  font-style: normal;
-  color: #1a0f00;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: rgba(255, 220, 80, .65);
+  margin-bottom: 8px;
+}
+.nl-tab__body {
+  font-size: .72rem;
+  color: rgba(237, 247, 255, .78);
+  line-height: 1.55;
+  margin-bottom: 12px;
+}
+.nl-tab__link {
+  display: block;
+  font-size: .65rem;
+  font-weight: 700;
+  color: rgba(255, 220, 60, .9);
   text-decoration: none;
   white-space: nowrap;
-  border-top: 1px solid rgba(0,0,0,.13);
-  padding-top: 7px;
-  position: relative;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  border-top: 1px solid rgba(255,215,0,.18);
+  padding-top: 10px;
   transition: color .15s;
 }
-.nl-postit__link:hover { color: #7a3800; text-decoration: underline; }
+.nl-tab__link:hover {
+  color: #ffe84d;
+  text-decoration: underline;
+}
 
 /* ── MOBILE ── */
 @media (max-width: 600px) {
-  .nl-postit { bottom: 72px; right: 16px; }
-  .nl-postit__paper {
-    width: 160px;
-    right: -58px;
-  }
-  .nl-postit__title { font-size: .88rem; }
-  .nl-postit__body  { font-size: .62rem; }
-  .nl-postit__link  { font-size: .56rem; }
+  .nl-tab { top: auto; bottom: 80px; transform: none; }
+  .nl-tab__trigger { padding: 14px 8px; font-size: .64rem; }
+  .nl-tab__panel { width: 180px; padding: 16px 14px 14px; }
+  .nl-tab__body { font-size: .66rem; }
+  .nl-tab__link { font-size: .6rem; white-space: nowrap; }
 }
