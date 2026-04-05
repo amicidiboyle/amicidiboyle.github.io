@@ -229,16 +229,23 @@
           <div class="hero__stat"><span class="hero__stat-n">6</span><span class="hero__stat-l" data-i18n="r_stat_naz">Nazioni</span></div>
           <div class="hero__stat hero__stat--growing"><span class="hero__stat-n">↑</span><span class="hero__stat-l" data-i18n="r_stat_grow">In crescita</span></div>
         </div>
-        <!-- POST-IT NEWSLETTER -->
-        <div class="newsletter-postit" id="newsletterPostit">
-          <div class="newsletter-postit__pin"></div>
-          <p class="newsletter-postit__title" data-i18n="r_nl_title">Newsletter</p>
-          <p class="newsletter-postit__kicker" data-i18n="r_nl_kicker">Bimestrale · Ambienti Estremi</p>
-          <p class="newsletter-postit__body" data-i18n="r_nl_body">Hai un caso, una ricerca o un evento da condividere con la Rete? I contributi migliori vengono pubblicati.</p>
-          <a class="newsletter-postit__link" href="mailto:newsletter@amicidiboyle.it" data-i18n="r_nl_cta">📩 newsletter@amicidiboyle.it</a>
-        </div>
+
       </div>
     </section>
+
+    <!-- POST-IT NEWSLETTER — fixed sull'angolo destra -->
+    <div class="nl-postit" id="nlPostit" aria-label="Newsletter degli Amici di Boyle">
+      <button class="nl-postit__pin" id="nlPostitPin" aria-expanded="false" aria-label="Apri newsletter post-it">
+        <span class="nl-postit__pin-dot"></span>
+      </button>
+      <div class="nl-postit__roll" aria-hidden="true"></div>
+      <div class="nl-postit__paper" id="nlPostitPaper" aria-hidden="true">
+        <p class="nl-postit__title" data-i18n="r_nl_title">Newsletter</p>
+        <p class="nl-postit__kicker" data-i18n="r_nl_kicker">Bimestrale &middot; Ambienti Estremi</p>
+        <p class="nl-postit__body" data-i18n="r_nl_body">Hai un caso, una ricerca o un evento da condividere con la Rete? I contributi migliori vengono pubblicati.</p>
+        <a class="nl-postit__link" href="mailto:newsletter@amicidiboyle.it">&#128233;&nbsp;newsletter@amicidiboyle.it</a>
+      </div>
+    </div>
 
     <!-- GRIGLIA MEMBRI -->
     <section class="members-section" id="members">
@@ -760,7 +767,7 @@
   </div>
 
 
-  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
 
   <!-- ── MODAL PROFILO ── -->
   <div class="profile-modal" id="profileModal" aria-hidden="true">
@@ -2605,6 +2612,49 @@
       var b = document.getElementById('cookie-banner');
       if (b) { b.style.transition='transform .3s ease-in'; b.style.transform='translateY(100%)'; }
     });
+  })();
+  </script>
+
+  <!-- ══ Post-it Newsletter Toggle ══ -->
+  <script>
+  (function() {
+    var pin    = document.getElementById('nlPostitPin');
+    var paper  = document.getElementById('nlPostitPaper');
+    var postit = document.getElementById('nlPostit');
+    if (!pin || !paper || !postit) return;
+    var isOpen = false;
+
+    function openIt() {
+      isOpen = true;
+      paper.classList.add('nl-postit__paper--open');
+      pin.setAttribute('aria-expanded','true');
+      paper.setAttribute('aria-hidden','false');
+      postit.classList.add('nl-postit--open');
+    }
+    function closeIt() {
+      isOpen = false;
+      paper.classList.remove('nl-postit__paper--open');
+      pin.setAttribute('aria-expanded','false');
+      paper.setAttribute('aria-hidden','true');
+      postit.classList.remove('nl-postit--open');
+    }
+
+    pin.addEventListener('click', function(e) {
+      e.stopPropagation();
+      isOpen ? closeIt() : openIt();
+    });
+
+    document.addEventListener('click', function(e) {
+      if (isOpen && !postit.contains(e.target)) closeIt();
+    });
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && isOpen) closeIt();
+    });
+
+    if (window.innerWidth >= 900) {
+      setTimeout(openIt, 1400);
+    }
   })();
   </script>
 </body>
