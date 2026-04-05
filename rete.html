@@ -223,22 +223,37 @@
           </div>
         </div>
         <div class="hero__stats">
-          <div class="hero__stat"><span class="hero__stat-n" id="memberCount">22</span><span class="hero__stat-l" data-i18n="r_stat_membri">Membri attivi</span></div>
+          <div class="hero__stat"><span class="hero__stat-n" id="memberCount">23</span><span class="hero__stat-l" data-i18n="r_stat_membri">Membri attivi</span></div>
           <div class="hero__stat"><span class="hero__stat-n">51</span><span class="hero__stat-l" data-i18n="r_stat_amici">Amici di Boyle</span></div>
           <div class="hero__stat"><span class="hero__stat-n">8+</span><span class="hero__stat-l" data-i18n="r_stat_spec">Specialità</span></div>
           <div class="hero__stat"><span class="hero__stat-n">6</span><span class="hero__stat-l" data-i18n="r_stat_naz">Nazioni</span></div>
           <div class="hero__stat hero__stat--growing"><span class="hero__stat-n">↑</span><span class="hero__stat-l" data-i18n="r_stat_grow">In crescita</span></div>
-          <!-- TAB NEWSLETTER attaccato ai contatori -->
+          <!-- TAB NEWSLETTER desktop -->
           <div class="nl-tab" id="nlTab">
-            <button class="nl-tab__trigger" id="nlTabTrigger" aria-expanded="false" aria-label="Newsletter">
-              <span class="nl-tab__label" data-i18n="r_nl_title">Newsletter</span>
+            <button class="nl-tab__trigger" id="nlTabTrigger" aria-expanded="false">
+              <span data-i18n="r_nl_title">Newsletter</span>
             </button>
-            <div class="nl-tab__panel" id="nlTabPanel" aria-hidden="true">
+            <div class="nl-tab__panel" id="nlTabPanel">
               <p class="nl-tab__kicker" data-i18n="r_nl_kicker">Bimestrale &middot; Ambienti Estremi</p>
               <p class="nl-tab__body" data-i18n="r_nl_body">Hai un caso, una ricerca o un evento da condividere con la Rete? I contributi migliori vengono pubblicati.</p>
-              <a class="nl-tab__link" href="/cdn-cgi/l/email-protection#630d0614100f061717061123020e0a000a070a010c1a0f064d0a17">&#128233;&nbsp;<span class="__cf_email__" data-cfemail="68060d1f1b040d1c1c0d1a280905010b010c010a0711040d46011c">[email&#160;protected]</span></a>
+              <a class="nl-tab__link" href="mailto:newsletter@amicidiboyle.it">&#128233;&nbsp;newsletter@amicidiboyle.it</a>
             </div>
           </div>
+        </div>
+        <!-- NEWSLETTER MOBILE -->
+        <button class="nl-mob" id="nlMob" aria-expanded="false">
+          <span class="nl-mob__left">
+            <span class="nl-mob__icon">&#128233;</span>
+            <span class="nl-mob__text">
+              <b class="nl-mob__title" data-i18n="r_nl_title">Newsletter</b>
+              <span class="nl-mob__sub" data-i18n="r_nl_kicker">Bimestrale · Ambienti Estremi</span>
+            </span>
+          </span>
+          <span class="nl-mob__arr" aria-hidden="true">›</span>
+        </button>
+        <div class="nl-mob__panel" id="nlMobPanel">
+          <p class="nl-mob__body" data-i18n="r_nl_body">Hai un caso, una ricerca o un evento da condividere con la Rete? I contributi migliori vengono pubblicati.</p>
+          <a class="nl-mob__link" href="mailto:newsletter@amicidiboyle.it">&#128233; newsletter@amicidiboyle.it</a>
         </div>
 
       </div>
@@ -2621,40 +2636,40 @@ ion(){
   })();
   </script>
 
-  <!-- ══ Tab Newsletter ══ -->
+  <!-- ══ Newsletter Toggles ══ -->
   <script>
   (function() {
+    // Desktop tab
     var trigger = document.getElementById('nlTabTrigger');
-    var panel   = document.getElementById('nlTabPanel');
-    var tab     = document.getElementById('nlTab');
-    if (!trigger || !panel || !tab) return;
-    var isOpen = false;
-
-    function openTab() {
-      isOpen = true;
-      tab.classList.add('nl-tab--open');
-      trigger.setAttribute('aria-expanded','true');
-      panel.setAttribute('aria-hidden','false');
+    var tabEl   = document.getElementById('nlTab');
+    if (trigger && tabEl) {
+      var tabOpen = false;
+      trigger.addEventListener('click', function(e) {
+        e.stopPropagation();
+        tabOpen = !tabOpen;
+        tabEl.classList.toggle('nl-tab--open', tabOpen);
+        trigger.setAttribute('aria-expanded', tabOpen);
+      });
+      document.addEventListener('click', function(e) {
+        if (tabOpen && !tabEl.contains(e.target)) {
+          tabOpen = false;
+          tabEl.classList.remove('nl-tab--open');
+          trigger.setAttribute('aria-expanded', 'false');
+        }
+      });
     }
-    function closeTab() {
-      isOpen = false;
-      tab.classList.remove('nl-tab--open');
-      trigger.setAttribute('aria-expanded','false');
-      panel.setAttribute('aria-hidden','true');
+    // Mobile button
+    var mob      = document.getElementById('nlMob');
+    var mobPanel = document.getElementById('nlMobPanel');
+    if (mob && mobPanel) {
+      var mobOpen = false;
+      mob.addEventListener('click', function() {
+        mobOpen = !mobOpen;
+        mob.classList.toggle('nl-mob--open', mobOpen);
+        mob.setAttribute('aria-expanded', mobOpen);
+        mobPanel.classList.toggle('nl-mob__panel--open', mobOpen);
+      });
     }
-
-    trigger.addEventListener('click', function(e) {
-      e.stopPropagation();
-      isOpen ? closeTab() : openTab();
-    });
-
-    document.addEventListener('click', function(e) {
-      if (isOpen && !tab.contains(e.target)) closeTab();
-    });
-
-    document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape' && isOpen) closeTab();
-    });
   })();
   </script>
 </body>
