@@ -3558,120 +3558,128 @@ a { color: inherit; text-decoration: none; }
     transform: none !important;
   }
 }
-
-  /* Nasconde il tab verticale su mobile */
-  .nl-tab { display: none !important; }
-}
 }
 
 /* ══════════════════════════════════════════
-   NEWSLETTER CARD MOBILE
-   Appare solo su mobile, sotto i contatori
+   NEWSLETTER MOBILE — PULSANTE COLLASSABILE
+   Desktop: nascosto. Mobile: pulsante pill
 ══════════════════════════════════════════ */
-.nl-mobile-card {
-  display: none; /* nascosta su desktop */
-}
+.nl-mobile-btn,
+.nl-mobile-panel { display: none; }
 
 @media (max-width: 700px) {
-  .nl-mobile-card {
+
+  /* ── PULSANTE ── */
+  .nl-mobile-btn {
     display: flex;
-    align-items: flex-start;
-    gap: 14px;
-    position: relative;
-    overflow: hidden;
-    margin: 12px 0 0;
-    padding: 18px 18px 16px;
-    background: rgba(8, 22, 52, 0.72);
-    border: 1px solid rgba(255, 215, 0, 0.32);
-    border-radius: 16px;
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    box-shadow:
-      0 4px 20px rgba(0,0,0,.35),
-      0 0 0 1px rgba(255,215,0,.08) inset;
-    animation: nlCardIn .6s cubic-bezier(.22,1,.36,1) both;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 10px;
+    padding: 13px 18px;
+    background: rgba(255, 210, 20, 0.10);
+    border: 1px solid rgba(255, 215, 0, 0.30);
+    border-radius: 12px;
+    cursor: pointer;
+    color: inherit;
+    font-family: inherit;
+    text-align: left;
+    transition: background .2s, border-color .2s;
+    backdrop-filter: blur(10px);
+  }
+  .nl-mobile-btn:hover,
+  .nl-mobile-btn--open {
+    background: rgba(255, 210, 20, 0.18);
+    border-color: rgba(255, 215, 0, 0.5);
   }
 
-  @keyframes nlCardIn {
-    from { opacity:0; transform:translateY(10px); }
-    to   { opacity:1; transform:translateY(0); }
+  .nl-mobile-btn__left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
   }
-
-  /* Glow pulsante sul bordo superiore */
-  .nl-mobile-card__glow {
-    position: absolute;
-    top: 0; left: 20%; right: 20%; height: 2px;
-    background: linear-gradient(90deg,
-      transparent,
-      rgba(255,210,20,.9) 40%,
-      rgba(255,210,20,.9) 60%,
-      transparent);
-    border-radius: 0 0 4px 4px;
-    animation: nlGlowPulse 2.8s ease-in-out infinite;
-  }
-
-  @keyframes nlGlowPulse {
-    0%,100% { opacity:.5; left:25%; right:25%; }
-    50%      { opacity:1;  left:10%; right:10%; }
-  }
-
-  .nl-mobile-card__icon {
-    font-size: 1.6rem;
+  .nl-mobile-btn__icon {
+    font-size: 1.3rem;
     flex-shrink: 0;
-    margin-top: 2px;
-    filter: drop-shadow(0 0 8px rgba(255,210,0,.6));
+    filter: drop-shadow(0 0 6px rgba(255,200,0,.5));
   }
-
-  .nl-mobile-card__content {
-    flex: 1;
-    min-width: 0;
-  }
-
-  .nl-mobile-card__title {
-    font-size: .88rem;
-    font-weight: 800;
-    color: rgba(255, 225, 60, .95);
-    letter-spacing: -.01em;
-    margin-bottom: 2px;
-  }
-
-  .nl-mobile-card__kicker {
-    font-size: .6rem;
+  .nl-mobile-btn__title {
+    display: block;
+    font-size: .82rem;
     font-weight: 700;
-    letter-spacing: .1em;
+    color: rgba(255, 225, 55, .95);
+    letter-spacing: -.01em;
+  }
+  .nl-mobile-btn__kicker {
+    display: block;
+    font-size: .58rem;
+    font-weight: 700;
+    letter-spacing: .08em;
     text-transform: uppercase;
-    color: rgba(255, 215, 0, .5);
-    margin-bottom: 8px;
+    color: rgba(255, 215, 0, .48);
+    margin-top: 1px;
+  }
+  .nl-mobile-btn__arrow {
+    font-size: 1.1rem;
+    color: rgba(255,215,0,.55);
+    transition: transform .28s cubic-bezier(.22,1,.36,1);
+    flex-shrink: 0;
+  }
+  .nl-mobile-btn--open .nl-mobile-btn__arrow {
+    transform: rotate(90deg);
   }
 
-  .nl-mobile-card__body {
+  /* ── PANNELLO ── */
+  .nl-mobile-panel {
+    display: block;
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+    padding: 0 18px;
+    background: rgba(6, 18, 46, 0.78);
+    border: 1px solid rgba(255, 215, 0, 0.22);
+    border-top: none;
+    border-radius: 0 0 12px 12px;
+    backdrop-filter: blur(14px);
+    transition:
+      max-height .38s cubic-bezier(.22,1,.36,1),
+      opacity .28s ease,
+      padding .3s;
+  }
+  .nl-mobile-panel--open {
+    max-height: 160px;
+    opacity: 1;
+    padding: 14px 18px 16px;
+  }
+  .nl-mobile-panel__body {
     font-size: .74rem;
-    color: rgba(237, 247, 255, .72);
-    line-height: 1.5;
-    margin-bottom: 10px;
+    color: rgba(237,247,255,.72);
+    line-height: 1.55;
+    margin-bottom: 11px;
   }
-
-  .nl-mobile-card__link {
+  .nl-mobile-panel__link {
     display: inline-flex;
     align-items: center;
     gap: 6px;
     font-size: .68rem;
     font-weight: 700;
-    color: rgba(255, 220, 60, .9);
+    color: rgba(255,220,55,.9);
     text-decoration: none;
     border: 1px solid rgba(255,215,0,.25);
     border-radius: 999px;
-    padding: 5px 12px;
+    padding: 5px 14px;
     background: rgba(255,215,0,.06);
     transition: background .2s, color .2s;
     white-space: nowrap;
   }
-  .nl-mobile-card__link:hover {
+  .nl-mobile-panel__link:hover {
     background: rgba(255,215,0,.14);
     color: #ffe84d;
   }
-  .nl-mobile-card__link::before {
-    content: '📩';
-    font-size: .8rem;
+
+  /* Arrotonda il pulsante in basso quando aperto */
+  .nl-mobile-btn--open {
+    border-radius: 12px 12px 0 0;
+    border-bottom-color: transparent;
   }
 }
