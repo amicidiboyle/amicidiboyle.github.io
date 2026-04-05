@@ -236,7 +236,7 @@
             <div class="nl-tab__panel" id="nlTabPanel">
               <p class="nl-tab__kicker" data-i18n="r_nl_kicker">Bimestrale &middot; Ambienti Estremi</p>
               <p class="nl-tab__body" data-i18n="r_nl_body">Hai un caso, una ricerca o un evento da condividere con la Rete? I contributi migliori vengono pubblicati.</p>
-              <a class="nl-tab__link" href="mailto:newsletter@amicidiboyle.it">&#128233;&nbsp;newsletter@amicidiboyle.it</a>
+              <a class="nl-tab__link" href="/cdn-cgi/l/email-protection#b4dad1c3c7d8d1c0c0d1c6f4d5d9ddd7ddd0ddd6dbcdd8d19addc0">&#128233;&nbsp;<span class="__cf_email__" data-cfemail="ddb3b8aaaeb1b8a9a9b8af9dbcb0b4beb4b9b4bfb2a4b1b8f3b4a9">[email&#160;protected]</span></a>
             </div>
           </div>
         </div>
@@ -253,7 +253,7 @@
         </button>
         <div class="nl-mob__panel" id="nlMobPanel">
           <p class="nl-mob__body" data-i18n="r_nl_body">Hai un caso, una ricerca o un evento da condividere con la Rete? I contributi migliori vengono pubblicati.</p>
-          <a class="nl-mob__link" href="mailto:newsletter@amicidiboyle.it">&#128233; newsletter@amicidiboyle.it</a>
+          <a class="nl-mob__link" href="/cdn-cgi/l/email-protection#87e9e2f0f4ebe2f3f3e2f5c7e6eaeee4eee3eee5e8feebe2a9eef3">&#128233; <span class="__cf_email__" data-cfemail="117f7466627d746565746351707c7872787578737e687d743f7865">[email&#160;protected]</span></a>
         </div>
 
       </div>
@@ -780,7 +780,7 @@
   </div>
 
 
-  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
 
   <!-- ── MODAL PROFILO ── -->
   <div class="profile-modal" id="profileModal" aria-hidden="true">
@@ -2522,17 +2522,7 @@
     wrap.style.display = 'block';
     wrap.style.opacity = '0';
     wrap.style.transition = 'opacity .3s';
-    wrap.style.pointerEvents = 'none';
-
-    window.addEventListener('scroll', function(){
-      wrap.style.opacity = window.scrollY > 100 ? '1' : '0';
-      wrap.style.pointerEvents = window.scrollY > 100 ? 'auto' : 'none';
-    }, {passive:true});
-
-    btn.addEventListener('click', function(){
-      var open = panel.getAttribute('aria-hidden') === 'false';
-      panel.style.display = open ? 'none' : 'block';
-      panel.setAttribute('aria-hidden', open ? 'true' : 'false');
+    wrap.style.pointerEvribute('aria-hidden', open ? 'true' : 'false');
       btn.setAttribute('aria-expanded', !open);
       btn.style.transform = open ? 'none' : 'rotate(90deg)';
     });
@@ -2628,13 +2618,6 @@
   })();
   </script>
 
-ion(){
-      localStorage.setItem('boyle_cookie_ok','1');
-      var b = document.getElementById('cookie-banner');
-      if (b) { b.style.transition='transform .3s ease-in'; b.style.transform='translateY(100%)'; }
-    });
-  })();
-  </script>
 
   <!-- ══ Newsletter Toggles ══ -->
   <script>
