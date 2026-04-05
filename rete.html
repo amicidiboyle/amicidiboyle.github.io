@@ -241,16 +241,20 @@
           </div>
         </div>
 
-        <!-- NEWSLETTER CARD MOBILE -->
-        <div class="nl-mobile-card reveal" data-delay="200">
-          <div class="nl-mobile-card__glow"></div>
-          <div class="nl-mobile-card__icon">📩</div>
-          <div class="nl-mobile-card__content">
-            <p class="nl-mobile-card__title" data-i18n="r_nl_title">Newsletter</p>
-            <p class="nl-mobile-card__kicker" data-i18n="r_nl_kicker">Bimestrale · Ambienti Estremi</p>
-            <p class="nl-mobile-card__body" data-i18n="r_nl_body">Hai un caso, una ricerca o un evento da condividere con la Rete? I contributi migliori vengono pubblicati.</p>
-            <a class="nl-mobile-card__link" href="mailto:newsletter@amicidiboyle.it">newsletter@amicidiboyle.it</a>
-          </div>
+        <!-- NEWSLETTER MOBILE BTN -->
+        <button class="nl-mobile-btn reveal" id="nlMobileBtn" data-delay="150" aria-expanded="false">
+          <span class="nl-mobile-btn__left">
+            <span class="nl-mobile-btn__icon">📩</span>
+            <span class="nl-mobile-btn__text">
+              <span class="nl-mobile-btn__title" data-i18n="r_nl_title">Newsletter</span>
+              <span class="nl-mobile-btn__kicker" data-i18n="r_nl_kicker">Bimestrale · Ambienti Estremi</span>
+            </span>
+          </span>
+          <span class="nl-mobile-btn__arrow" aria-hidden="true">›</span>
+        </button>
+        <div class="nl-mobile-panel" id="nlMobilePanel" aria-hidden="true">
+          <p class="nl-mobile-panel__body" data-i18n="r_nl_body">Hai un caso, una ricerca o un evento da condividere con la Rete? I contributi migliori vengono pubblicati.</p>
+          <a class="nl-mobile-panel__link" href="mailto:newsletter@amicidiboyle.it">📩&nbsp;newsletter@amicidiboyle.it</a>
         </div>
 
       </div>
@@ -2666,6 +2670,23 @@ ion(){
 
     document.addEventListener('keydown', function(e) {
       if (e.key === 'Escape' && isOpen) closeTab();
+    });
+  })();
+  </script>
+
+  <!-- ══ Newsletter Mobile Toggle ══ -->
+  <script>
+  (function() {
+    var btn   = document.getElementById('nlMobileBtn');
+    var panel = document.getElementById('nlMobilePanel');
+    if (!btn || !panel) return;
+    var open  = false;
+    btn.addEventListener('click', function() {
+      open = !open;
+      btn.setAttribute('aria-expanded', open);
+      panel.setAttribute('aria-hidden', !open);
+      panel.classList.toggle('nl-mobile-panel--open', open);
+      btn.classList.toggle('nl-mobile-btn--open', open);
     });
   })();
   </script>
