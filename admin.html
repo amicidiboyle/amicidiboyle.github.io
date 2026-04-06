@@ -295,22 +295,22 @@ body::before{content:'';position:fixed;inset:0;z-index:-1;
   <nav class="sidebar">
     <div class="nav-section">
       <div class="nav-label">Dashboard</div>
-      <button class="nav-btn active" onclick="goto('dash',this)"><span class="ico">📊</span>Panoramica</button>
+      <button class="nav-btn active" onclick="goto('dash')"><span class="ico">📊</span>Panoramica</button>
     </div>
     <div class="nav-section">
       <div class="nav-label">Candidature</div>
-      <button class="nav-btn" onclick="goto('cret',this)"><span class="ico">🔵</span>Rete<span class="nav-badge" id="nb-r">0</span></button>
-      <button class="nav-btn" onclick="goto('cami',this)"><span class="ico">🟢</span>Amici<span class="nav-badge" id="nb-a">0</span></button>
+      <button class="nav-btn" onclick="goto('cret')"><span class="ico">🔵</span>Rete<span class="nav-badge" id="nb-r">0</span></button>
+      <button class="nav-btn" onclick="goto('cami')"><span class="ico">🟢</span>Amici<span class="nav-badge" id="nb-a">0</span></button>
     </div>
     <div class="nav-section">
       <div class="nav-label">Gestione</div>
-      <button class="nav-btn" onclick="goto('mret',this)"><span class="ico">👥</span>Membri Rete</button>
-      <button class="nav-btn" onclick="goto('mami',this)"><span class="ico">🤝</span>Amici approvati</button>
+      <button class="nav-btn" onclick="goto('mret')"><span class="ico">👥</span>Membri Rete</button>
+      <button class="nav-btn" onclick="goto('mami')"><span class="ico">🤝</span>Amici approvati</button>
     </div>
     <div class="nav-section">
       <div class="nav-label">Sistema</div>
-      <button class="nav-btn" onclick="goto('cest',this)"><span class="ico">🗑</span>Cestino<span class="nav-badge" id="nb-cest" style="background:rgba(255,90,106,.12);color:var(--red)">0</span></button>
-      <button class="nav-btn" onclick="goto('log',this)"><span class="ico">📋</span>Log attività</button>
+      <button class="nav-btn" onclick="goto('cest')"><span class="ico">🗑</span>Cestino<span class="nav-badge" id="nb-cest" style="background:rgba(255,90,106,.12);color:var(--red)">0</span></button>
+      <button class="nav-btn" onclick="goto('log')"><span class="ico">📋</span>Log attività</button>
     </div>
   </nav>
 
@@ -328,13 +328,13 @@ body::before{content:'';position:fixed;inset:0;z-index:-1;
 
       <div class="sec-hd">
         <h2>Ultimi aggiunti alla Rete</h2>
-        <button class="btn-sm btn-sm--blue" onclick="goto('mret',this)">Vedi tutti →</button>
+        <button class="btn-sm btn-sm--blue" onclick="goto('mret')">Vedi tutti →</button>
       </div>
       <div class="mlist" id="rLL" style="margin-bottom:24px"></div>
 
       <div class="sec-hd">
         <h2>Ultimi Amici approvati</h2>
-        <button class="btn-sm btn-sm--green" onclick="goto('mami',this)">Vedi tutti →</button>
+        <button class="btn-sm btn-sm--green" onclick="goto('mami')">Vedi tutti →</button>
       </div>
       <div class="mlist" id="aLL"></div>
     </div>
@@ -508,11 +508,11 @@ document.getElementById('lob').onclick=()=>{sessionStorage.removeItem('ba');loca
 if(sessionStorage.getItem('ba')==='1') showApp();
 
 // ═══ NAVIGATION ═══
-function goto(id, el){
+function goto(id){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('on'));
   document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
   document.getElementById('p-'+id)?.classList.add('on');
-  if(el) el.classList.add('active');
+  event?.currentTarget?.classList.add('active');
   if(id==='mret') renderMembersPage();
   if(id==='mami') renderAmiciPage();
   if(id==='cest') renderCestino();
@@ -523,6 +523,17 @@ function goto(id, el){
 async function init(){
   buildTags();
   updateCestBadge();
+  // Carica blacklist GitHub e fai merge con quella locale
+  // (cross-device: unifica lo stato tra browser diversi)
+  try{
+    const ghIds = await loadGhBlacklist();
+    if(ghIds.length){
+      const local = [...getBlacklist()];
+      const merged = [...new Set([...local,...ghIds].filter(Boolean))];
+      localStorage.setItem('boyle_blacklist', JSON.stringify(merged));
+      addLog('🔗','Blacklist GitHub caricata: '+ghIds.length+' ID');
+    }
+  }catch(e){ console.warn('GitHub blacklist non disponibile:', e); }
   try{ await Promise.all([loadMembers(), loadFS()]); }catch(e){console.warn(e)}
   renderStats(); renderDashLists();
 }
@@ -560,9 +571,10 @@ async function loadFS(){
       Object.keys(s).forEach(k=>{ if(k!=='id') d[k]=s[k]; });
       return {...s, _id: s.id, data: d};
     });
-    totalFormspree = allSubs.length; // totale storico grezzo
-    const blacklist = getBlacklist();
-    subs = allSubs.filter(s => !blacklist.has(s.id||s._id||''));
+    totalFormspree = allSubs.length;
+    // Filtra con blacklist persistente (localStorage + GitHub)
+    const bl = getBlacklist();
+    subs = allSubs.filter(s => !bl.has(s.id||s._id||'__none__'));
     renderCands();
   }catch(err){
     document.getElementById('dbg').textContent='ERRORE: '+err.message;
@@ -669,10 +681,73 @@ function renderList(el, list, m){
 
 function togDet(sid){document.getElementById('cd-'+sid)?.classList.toggle('on')}
 
-// ═══ CESTINO ═══
+// ═══ CESTINO + BLACKLIST ═══
+// Due livelli di persistenza:
+//   1. localStorage  → fallback rapido, perde dati se si cambia browser/device
+//   2. GitHub JSON   → source of truth cross-device (boyle-blacklist.json)
+//
+// Schema entry cestino:
+//   _realId      : ID Formspree reale (null se non disponibile)
+//   _tempKey     : chiave locale univoca (per dedup)
+//   _mode        : 'rete' | 'amici'
+//   _isTest      : bool
+//   _deletedAt   : ISO timestamp
+//   data         : campi submission (nome, email, ruolo…)
+
 let cestino = JSON.parse(localStorage.getItem('boyle_cestino')||'[]');
 
-function saveCestino(){ localStorage.setItem('boyle_cestino', JSON.stringify(cestino)); }
+// ── Blacklist locale (localStorage) ──────────────────────────────
+function getBlacklist(){
+  const ids = JSON.parse(localStorage.getItem('boyle_blacklist')||'[]');
+  return new Set(ids.filter(Boolean));
+}
+
+// Salva cestino + rigenera blacklist locale dagli _realId presenti
+function saveCestino(){
+  localStorage.setItem('boyle_cestino', JSON.stringify(cestino));
+  const ids = cestino.map(c=>c._realId).filter(Boolean);
+  localStorage.setItem('boyle_blacklist', JSON.stringify(ids));
+}
+
+// ── Blacklist GitHub (cross-device, source of truth) ─────────────
+let ghBlacklistSha = null; // SHA necessario per PUT GitHub
+
+async function loadGhBlacklist(){
+  try{
+    const r = await fetch('https://api.github.com/repos/'+GH_REPO+'/contents/boyle-blacklist.json',{headers:GH_H});
+    if(r.status===404){ ghBlacklistSha=null; return []; }
+    const d = await r.json();
+    ghBlacklistSha = d.sha;
+    return JSON.parse(atob(d.content.replace(/\n/g,'')));
+  }catch(){ return []; }
+}
+
+async function saveGhBlacklist(ids){
+  const content = btoa(unescape(encodeURIComponent(JSON.stringify(ids,null,2))));
+  const body = {message:'Admin: aggiorna blacklist candidature', content};
+  if(ghBlacklistSha) body.sha = ghBlacklistSha;
+  try{
+    const r = await fetch('https://api.github.com/repos/'+GH_REPO+'/contents/boyle-blacklist.json',
+      {method:'PUT', headers:GH_H, body:JSON.stringify(body)});
+    if(r.ok){ const d=await r.json(); ghBlacklistSha=d.content?.sha||ghBlacklistSha; }
+    else addLog('⚠','GitHub blacklist: HTTP '+r.status);
+  }catch(e){ addLog('⚠','GitHub blacklist: errore rete'); }
+}
+
+// Merge blacklist locale + GitHub e aggiorna localStorage
+async function mergeAndSaveBlacklist(newIds){
+  const local = [...getBlacklist()];
+  const merged = [...new Set([...local, ...newIds].filter(Boolean))];
+  localStorage.setItem('boyle_blacklist', JSON.stringify(merged));
+  await saveGhBlacklist(merged);
+  return merged;
+}
+
+async function removeFromBlacklist(id){
+  const ids = [...getBlacklist()].filter(x=>x!==id);
+  localStorage.setItem('boyle_blacklist', JSON.stringify(ids));
+  await saveGhBlacklist(ids);
+}
 
 function updateCestBadge(){
   const n = cestino.length;
@@ -681,167 +756,192 @@ function updateCestBadge(){
   if(el) el.textContent = n+' element'+(n===1?'o':'i');
 }
 
-function mandaInCestino(sid, m, btn){
+// ── Risolve sub dalla card cliccata (sid o posizione DOM) ─────────
+function resolveSubFromBtn(sid, m, btn){
   const cardEl = (btn && typeof btn.closest==='function') ? btn.closest('.cc') : null;
-
-  // Cerca la sub per sid (anche i fallback _idx_ non matchano subs reali)
-  const realSid = (sid&&!sid.startsWith('_idx_')) ? sid : null;
+  const realSid = (sid && !sid.startsWith('_idx_')) ? sid : null;
   let sub = realSid ? subs.find(s=>(s._id||s.id)===realSid) : null;
-
-  // Se non trovata per sid, cerca per posizione della card nel DOM
   if(!sub && cardEl){
-    const cardId = cardEl.id; // cc-rete-_idx_3 oppure cc-rete-REALID
     const allCards = Array.from(cardEl.parentElement?.querySelectorAll('.cc')||[]);
-    const idx = allCards.indexOf(cardEl);
+    const pos = allCards.indexOf(cardEl);
     const list = getSubList(m);
-    if(idx>=0 && idx<list.length) sub = list[idx];
+    if(pos>=0 && pos<list.length) sub = list[pos];
   }
+  return {sub, cardEl};
+}
 
-  const localKey = sub ? (sub._id||sub.id||'local-'+Date.now()) : ('local-'+Date.now());
-  const alreadyIn = cestino.some(c=>c._localKey===localKey);
-  if(!alreadyIn){
-    const entry = sub
-      ? {...sub, _localKey:localKey, _mode:m, _deletedAt:new Date().toISOString()}
-      : {_localKey:localKey, _mode:m, _deletedAt:new Date().toISOString(), _noId:true, data:{nome:'—'}};
+// ── Manda nel cestino ─────────────────────────────────────────────
+async function mandaInCestino(sid, m, btn, isTest=false){
+  const {sub, cardEl} = resolveSubFromBtn(sid, m, btn);
+
+  // _realId sempre esplicito: ID Formspree reale o null
+  const realId = sub ? (sub._id || sub.id || null) : null;
+  const tempKey = realId || ('local-'+Date.now()+'-'+Math.random().toString(36).slice(2,5));
+
+  // Evita duplicati
+  if(!cestino.some(c=> realId ? c._realId===realId : c._tempKey===tempKey)){
+    const nomeFallback = cardEl?.querySelector('.cname')?.textContent?.trim() || '—';
+    const entry = {
+      _realId:    realId,    // ID Formspree — chiave blacklist; null se non disponibile
+      _tempKey:   tempKey,   // chiave locale univoca per dedup senza ID
+      _mode:      m,
+      _isTest:    isTest,
+      _deletedAt: new Date().toISOString(),
+      data:       sub?.data || {nome: nomeFallback}
+    };
     cestino.unshift(entry);
-    saveCestino();
+    saveCestino(); // aggiorna localStorage blacklist subito
+    // Aggiorna anche GitHub blacklist (asincrono, non blocca UI)
+    if(realId) mergeAndSaveBlacklist([realId]).catch(()=>{});
   }
-  if(sub) subs = subs.filter(s=>(s._id||s.id)!==(sub._id||sub.id));
 
+  if(sub) subs = subs.filter(s=>(s._id||s.id)!==(sub._id||sub.id));
   updateCestBadge();
   if(cardEl){
-    cardEl.style.opacity='0';cardEl.style.transform='translateX(40px)';cardEl.style.transition='all .25s';
-    setTimeout(()=>{ cardEl.remove(); renderCands(); },260);
+    cardEl.style.opacity='0'; cardEl.style.transform='translateX(40px)'; cardEl.style.transition='all .25s';
+    setTimeout(()=>{ cardEl.remove(); renderCands(); }, 260);
   } else { renderCands(); }
-  addLog('🗑','Spostata nel cestino: '+(sub?.data?.nome||'candidatura'));
+  addLog(isTest?'🧪':'🗑', (isTest?'Test':'Candidatura')+' nel cestino: '+(sub?.data?.nome||'—'));
 }
 
-// ═══ ELIMINA SUBMISSION FORMSPREE (aggiornato) ═══
-async function delSub(sid, m, btn){
-  mandaInCestino(sid, m, (btn&&typeof btn.closest==='function') ? btn : null);
+// ═══ ELIMINA SUBMISSION FORMSPREE ═══
+function delSub(sid, m, btn){
+  mandaInCestino(sid, m, (btn&&typeof btn.closest==='function') ? btn : null, false);
 }
 
+// ── Render cestino ────────────────────────────────────────────────
 function renderCestino(){
   updateCestBadge();
   const el = document.getElementById('cestList');
   if(!cestino.length){ el.innerHTML='<div class="empty">Il cestino è vuoto. ✓</div>'; return; }
   el.innerHTML='';
   cestino.forEach((s,i)=>{
-    const d = s.data||{};
-    const name  = d.nome||'—';
-    const email = d.email||'—';
-    const role  = d.ruolo||'';
-    const aff   = d.affiliazione||'';
-    const mode  = s._mode||'?';
-    const delAt = s._deletedAt ? new Date(s._deletedAt).toLocaleString('it-IT') : '';
-    const isTest = s._isTest;
-    const card = document.createElement('div');
-    card.className='cc cc--'+(mode==='rete'?'r':'a');
-    card.id='cest-'+i;
+    const d      = s.data||{};
+    const name   = d.nome||'—';
+    const email  = d.email||'—';
+    const role   = d.ruolo||'';
+    const mode   = s._mode||'?';
+    const delAt  = s._deletedAt ? new Date(s._deletedAt).toLocaleString('it-IT') : '';
+    const isTest = !!s._isTest;
+    const hasId  = !!s._realId;
+    const card   = document.createElement('div');
+    card.className = 'cc cc--'+(mode==='rete'?'r':'a');
     if(isTest) card.style.borderLeftColor='rgba(255,209,102,.6)';
     card.innerHTML=`
       <div class="cbody">
-        <div style="display:flex;align-items:center;gap:8px">
+        <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
           <span class="cname">${esc(name)}</span>
-          ${isTest?'<span style="font-size:.62rem;font-weight:700;background:rgba(255,209,102,.12);color:var(--gold);border:1px solid rgba(255,209,102,.25);border-radius:999px;padding:1px 8px">TEST</span>':''}
-          <span style="font-size:.62rem;color:var(--soft);margin-left:4px">${mode==='rete'?'Rete':'Amici'}</span>
+          ${isTest ? '<span style="font-size:.62rem;font-weight:700;background:rgba(255,209,102,.12);color:var(--gold);border:1px solid rgba(255,209,102,.25);border-radius:999px;padding:1px 8px">TEST</span>' : ''}
+          <span style="font-size:.62rem;color:var(--soft)">${mode==='rete'?'Rete':'Amici'}</span>
+          ${!hasId ? '<span title="Nessun ID Formspree: blacklist solo locale, può riapparire su altri browser" style="font-size:.6rem;color:var(--red);opacity:.7;cursor:help">⚠ no ID</span>' : ''}
         </div>
         <div class="cmeta"><span>✉ ${esc(email)}</span>${role?'<span>· '+esc(role.substring(0,50))+'</span>':''}</div>
-        <div class="cdate">Nel cestino dal: ${delAt}</div>
+        <div class="cdate">Nel cestino dal: ${delAt}${!hasId?' · <span style="color:var(--orange);font-size:.6rem">Solo blacklist locale</span>':''}</div>
       </div>
       <div class="cacts">
         <button class="btn-sm btn-sm--green" onclick="ripristina(${i})">↩ Ripristina</button>
-        <button class="btn-sm btn-sm--red" onclick="eliminaDefin(${i})">✕ Elimina</button>
+        <button class="btn-sm btn-sm--red" id="del-btn-${i}" onclick="eliminaDefin(${i}, this)">✕ Elimina</button>
       </div>`;
     el.appendChild(card);
   });
 }
 
+// ── Ripristina: rimuove da blacklist + ricarica da Formspree ──────
 async function ripristina(i){
   const s = cestino[i];
   if(!s) return;
-  // Rimuovi dalla blacklist (se ha ID reale) e dal cestino
   if(s._realId){
-    const ids = JSON.parse(localStorage.getItem('boyle_blacklist')||'[]').filter(id=>id!==s._realId);
-    localStorage.setItem('boyle_blacklist', JSON.stringify(ids));
+    await removeFromBlacklist(s._realId);
   }
   cestino.splice(i,1);
   saveCestino();
   updateCestBadge();
   renderCestino();
   addLog('↩','Ripristinata: '+(s.data?.nome||'—'));
-  // Ricarica da Formspree — unico modo per avere dati puliti
-  await loadFS();
+  await loadFS(); // ricarica dati puliti da Formspree
 }
 
-async function eliminaDefin(i){
+// ── Elimina definitivamente: non ottimistico, btn disabilitato ────
+async function eliminaDefin(i, btn){
   const s = cestino[i];
   if(!s||!confirm('Eliminare definitivamente? Non sarà recuperabile.')) return;
   const nome = s.data?.nome||'—';
-  // Se c'è un ID Formspree reale, tenta DELETE e attendi esito
+  if(btn) btn.disabled = true; // anti-spam
+
   if(s._realId && FS_API_KEY){
     let deleteOk = false;
     try{
-      const r = await fetch('https://formspree.io/api/0/forms/'+FS_FORM_ID+'/submissions/'+s._realId,{
-        method:'DELETE', headers:{'Authorization':'Bearer '+FS_API_KEY}
-      });
+      const r = await fetch('https://formspree.io/api/0/forms/'+FS_FORM_ID+'/submissions/'+s._realId,
+        {method:'DELETE', headers:{'Authorization':'Bearer '+FS_API_KEY}});
       deleteOk = r.ok;
-      addLog(r.ok?'✓':'⚠', 'DELETE Formspree '+(r.ok?'OK':'fallito HTTP '+r.status)+': '+nome);
-    }catch(e){ addLog('⚠','DELETE Formspree errore rete: '+nome); }
-    // Se DELETE fallisce: rimuovi dal cestino ma MANTIENI in blacklist
-    // così non ricompare al prossimo login
+      addLog(r.ok?'✓':'⚠','DELETE Formspree '+(r.ok?'OK':'fallito HTTP '+r.status)+': '+nome);
+    }catch(){ addLog('⚠','DELETE Formspree errore rete: '+nome); }
+
     if(!deleteOk){
-      // Aggiorna solo cestino, lascia blacklist intatta
+      // DELETE fallito: rimuovi dal cestino UI ma mantieni in blacklist
+      // → non riapparirà al prossimo login
       cestino.splice(i,1);
       localStorage.setItem('boyle_cestino', JSON.stringify(cestino));
-      // NON chiamare saveCestino() che rigenera la blacklist
+      // NON chiamare saveCestino() che rigenera blacklist da cestino
+      // La blacklist rimane intatta con questo ID
       updateCestBadge();
       renderCestino();
-      addLog('ℹ','Rimossa dal cestino ma blacklistata (DELETE non riuscito): '+nome);
+      if(btn) btn.disabled = false;
+      addLog('ℹ','Rimossa dal cestino, resta blacklistata (DELETE fallito): '+nome);
       return;
     }
+    // DELETE OK: rimuovi dall'blacklist GitHub
+    await removeFromBlacklist(s._realId);
   }
-  // DELETE ok (o nessun ID reale): rimuovi tutto
+
+  // Rimuovi tutto
   cestino.splice(i,1);
   saveCestino();
   updateCestBadge();
   renderCestino();
+  if(btn) btn.disabled = false;
   addLog('✕','Eliminata definitivamente: '+nome);
 }
 
+// ── Svuota cestino: Promise.all, non distruttivo sulla blacklist ──
 async function svuotaCestino(){
   if(!cestino.length) return;
   const n = cestino.length;
   if(!confirm('Svuotare tutto il cestino? ('+n+' element'+(n===1?'o':'i')+')')) return;
 
-  // Per ogni elemento con ID reale: tenta DELETE e tieni traccia degli esiti
-  const idsConDeleteOk   = new Set(); // rimossi davvero da Formspree
-  const idsConDeleteFail = new Set(); // DELETE fallito → restano in blacklist
+  const idsConId     = cestino.filter(s=>s._realId).map(s=>s._realId);
+  const idsNoId      = cestino.filter(s=>!s._realId).length;
+  const deleteOkIds  = [];
+  const deleteFailIds= [];
 
   await Promise.all(
     cestino.filter(s=>s._realId).map(async s=>{
       try{
-        const r = await fetch('https://formspree.io/api/0/forms/'+FS_FORM_ID+'/submissions/'+s._realId,{
-          method:'DELETE', headers:{'Authorization':'Bearer '+FS_API_KEY}
-        });
-        r.ok ? idsConDeleteOk.add(s._realId) : idsConDeleteFail.add(s._realId);
-      }catch(){ idsConDeleteFail.add(s._realId); }
+        const r = await fetch('https://formspree.io/api/0/forms/'+FS_FORM_ID+'/submissions/'+s._realId,
+          {method:'DELETE', headers:{'Authorization':'Bearer '+FS_API_KEY}});
+        r.ok ? deleteOkIds.push(s._realId) : deleteFailIds.push(s._realId);
+      }catch(){ deleteFailIds.push(s._realId); }
     })
   );
 
-  // Svuota cestino in UI
+  // Svuota cestino in memoria e localStorage
   cestino = [];
-  localStorage.setItem('boyle_cestino', JSON.stringify(cestino));
+  localStorage.setItem('boyle_cestino', JSON.stringify([]));
 
-  // Blacklist: mantieni solo gli ID dove DELETE è fallito
-  const blacklistResidue = [...idsConDeleteFail];
-  localStorage.setItem('boyle_blacklist', JSON.stringify(blacklistResidue));
+  // Blacklist: mantieni solo gli ID dove DELETE è fallito (non controllabili lato server)
+  localStorage.setItem('boyle_blacklist', JSON.stringify(deleteFailIds));
+  // Aggiorna anche GitHub con solo i falliti
+  await saveGhBlacklist(deleteFailIds);
 
   updateCestBadge();
   renderCestino();
-  const okN = idsConDeleteOk.size, failN = idsConDeleteFail.size, localN = n - okN - failN;
-  addLog('🗑',\`Cestino svuotato: \${n} totali — \${okN} eliminati da Formspree, \${failN} ancora blacklistati (DELETE fallito), \${localN} solo locali\`);
-  if(failN>0) addLog('ℹ',\`\${failN} candidature blacklistate: non riappariranno anche se DELETE non è riuscito\`);
+  addLog('🗑',
+    'Cestino svuotato: '+n+' totali — '+
+    deleteOkIds.length+' eliminati da Formspree, '+
+    deleteFailIds.length+' blacklistati (DELETE fallito), '+
+    idsNoId+' solo locali (no ID)');
+  if(deleteFailIds.length>0)
+    addLog('ℹ',deleteFailIds.length+' ID restano in blacklist: non ricompariranno al login');
 }
 
 // ═══ MARCA COME TEST ═══
@@ -875,14 +975,12 @@ function renderManual(){
 
 // ═══ STATS ═══
 function renderStats(){
-  // Candidature in attesa = quelle visibili ora (già filtrate dalla blacklist)
-  const pending = subs.filter(s=> !(s._subject||'').includes('Amici') && s.data?.tipo!=='amico-di-boyle').length
-                + subs.filter(s=> (s._subject||'').includes('Amici') || s.data?.tipo==='amico-di-boyle').length;
+  const pending = subs.length; // già filtrati dalla blacklist
   document.getElementById('sR').textContent = members.length||'—';
-  document.getElementById('sP').textContent = pending||subs.length;
+  document.getElementById('sP').textContent = pending;
   document.getElementById('sA').textContent = approvedAmici.length;
-  // Totale storico: submission Formspree al lordo della blacklist
-  document.getElementById('sF').textContent = totalFormspree||subs.length;
+  // sF = totale storico Formspree (al lordo della blacklist)
+  document.getElementById('sF').textContent = totalFormspree||pending;
   document.getElementById('mRetBadge').textContent = members.length+' membri';
   document.getElementById('mAmiBadge').textContent = approvedAmici.length+' amici';
 }
