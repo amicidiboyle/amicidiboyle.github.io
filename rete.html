@@ -2087,6 +2087,20 @@
   initEditModal();
   initPublishEvent();
   initAmiciModal();
+
+  // Fix bfcache: reinizializza quando la pagina torna dalla cache browser
+  window.addEventListener('pageshow', function(e) {
+    if (e.persisted) {
+      document.getElementById('open-network-modal')?.addEventListener('click', openModal);
+      document.getElementById('open-network-modal-2')?.addEventListener('click', openModal);
+      initAmiciModal();
+      initAccessBar();
+      initPublishEvent();
+      if (isMemberUnlocked()) {
+        unlockAll(sessionStorage.getItem('boyle_member_code') || '');
+      }
+    }
+  });
   </script>
 <!-- i18n: rete.html -->
   <script>
