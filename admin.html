@@ -488,6 +488,7 @@ let mode='rete', cand=null, code='', selTags=[], members=[], profiles={};
 let approvedAmici = JSON.parse(localStorage.getItem('boyle_amici')||'[]');
 let subs=[], foto=null, dbgOn=false, isEdit=false, editSlug='';
 let actLog = JSON.parse(localStorage.getItem('boyle_log')||'[]');
+let cestino = JSON.parse(localStorage.getItem('boyle_cestino')||'[]');
 
 // ═══ LOGIN ═══
 function doLogin(){
@@ -555,11 +556,13 @@ async function loadFS(){
     const data = await res.json();
     document.getElementById('dbg').textContent = JSON.stringify(data,null,2).substring(0,5000);
     // I campi Formspree sono nella RADICE della submission
+    // Filtra subito le submission già nel cestino (persistono tra sessioni)
+    const cestKeys = new Set(cestino.map(c=>c._localKey).filter(Boolean));
     subs = (data.submissions||[]).map(s=>{
       const d={};
       Object.keys(s).forEach(k=>{ if(k!=='id') d[k]=s[k]; });
       return {...s, _id: s.id, data: d};
-    });
+    }).filter(s => !cestKeys.has(s.id||s._id));
     renderCands();
   }catch(err){
     document.getElementById('dbg').textContent='ERRORE: '+err.message;
@@ -667,8 +670,6 @@ function renderList(el, list, m){
 function togDet(sid){document.getElementById('cd-'+sid)?.classList.toggle('on')}
 
 // ═══ CESTINO ═══
-let cestino = JSON.parse(localStorage.getItem('boyle_cestino')||'[]');
-
 function saveCestino(){ localStorage.setItem('boyle_cestino', JSON.stringify(cestino)); }
 
 function updateCestBadge(){
