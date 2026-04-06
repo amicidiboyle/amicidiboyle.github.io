@@ -32,7 +32,7 @@
     body::before{content:'';position:fixed;inset:0;z-index:-1;background:radial-gradient(ellipse 120% 60% at 10% 0%,rgba(0,80,200,.18),transparent 55%),radial-gradient(ellipse 80% 80% at 90% 100%,rgba(0,180,140,.1),transparent 50%)}
 
     /* LOGIN */
-    #loginScreen{position:fixed;inset:0;z-index:900;display:flex;align-items:center;justify-content:center;background:rgba(3,8,20,.97);backdrop-filter:blur(24px)}
+    #ls{position:fixed;inset:0;z-index:900;display:flex;align-items:center;justify-content:center;background:rgba(3,8,20,.97);backdrop-filter:blur(24px)}
     .login-box{width:100%;max-width:400px;padding:48px 40px 40px;background:var(--surf);border:1px solid var(--bdr2);border-radius:24px;box-shadow:0 32px 80px rgba(0,0,0,.6);animation:fadeUp .4s cubic-bezier(.22,1,.36,1);text-align:center}
     @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
     .login-logo{width:60px;height:60px;border-radius:50%;margin:0 auto 20px;display:block}
@@ -295,7 +295,7 @@ const GH_REPO    = 'amicidiboyle/amicidiboyle.github.io';
 const GH_H       = {'Authorization':'Bearer '+GH_TOKEN,'Accept':'application/vnd.github+json','Content-Type':'application/json'};
 const FS_FORM_ID = 'xzdareqw';
 const FS_API     = 'https://formspree.io/api/0/forms/'+FS_FORM_ID+'/submissions';
-const FS_API_KEY = '12b726bea2b345b294435a00c649418f';  // ← inserisci qui la tua Formspree Master API key
+const FS_API_KEY = '';  // ← inserisci qui la tua Formspree Master API key
 
 const TAGS = {
   'Iperbarica':'#4fa8ff','Diving':'#00d4ff','Critical Care':'#4dffd6','Neuroscienze':'#c4b0ff',
@@ -354,10 +354,13 @@ async function loadFS(){
     const data=await res.json();
     document.getElementById('dbg').textContent=JSON.stringify(data,null,2).substring(0,4000);
     // Normalizza: data può essere oggetto piatto o array [{name,value}]
+    // Formspree: i campi sono nella radice della submission, non in s.data
     subs=(data.submissions||[]).map(s=>{
-      let d=s.data||s.body||{};
-      if(Array.isArray(d)){const o={};d.forEach(x=>{if(x.name)o[x.name]=x.value});d=o}
-      return{...s,data:d};
+      // I dati sono direttamente in s (es. s.nome, s.email)
+      // Creiamo s.data come alias per compatibilità
+      const d = {};
+      Object.keys(s).forEach(k=>{ if(!k.startsWith('_') && k!=='id') d[k]=s[k]; });
+      return {...s, data:d};
     });
     renderCands();
   }catch(err){
@@ -370,8 +373,9 @@ async function loadFS(){
 function togDbg(){dbgOn=!dbgOn;document.getElementById('dbg').classList.toggle('on',dbgOn)}
 
 function renderCands(){
-  const rs=subs.filter(s=>s.data.tipo!=='amico-di-boyle');
-  const as=subs.filter(s=>s.data.tipo==='amico-di-boyle');
+  // Distingui Rete da Amici: usa tipo O _subject
+  const rs=subs.filter(s=> s.data.tipo!=='amico-di-boyle' && !(s._subject||'').includes('Amici'));
+  const as=subs.filter(s=> s.data.tipo==='amico-di-boyle' || (s._subject||'').includes('Amici'));
   document.getElementById('rpb').textContent=rs.length+' in attesa';
   document.getElementById('apb').textContent=as.length+' in attesa';
   renderList(document.getElementById('rL'),rs,'rete');
@@ -437,9 +441,26 @@ function renderList(el,list,m){
 
 function togDet(m,i){document.getElementById('cd-'+m+'-'+i)?.classList.toggle('on')}
 
-function delCard(m,i){
+async function delCard(m,i){
   const c=document.getElementById('cc-'+m+'-'+i);
+  // Trova submission id
+  const subList = m==='rete'
+    ? subs.filter(s=> s.data.tipo!=='amico-di-boyle' && !(s._subject||'').includes('Amici'))
+    : subs.filter(s=> s.data.tipo==='amico-di-boyle' || (s._subject||'').includes('Amici'));
+  const sub = subList[i];
   if(c){c.style.opacity='0';c.style.transform='translateX(40px)';c.style.transition='all .25s';setTimeout(()=>c.remove(),260)}
+  // DELETE su Formspree API per eliminazione permanente
+  if(sub && sub.id && FS_API_KEY){
+    try{
+      await fetch('https://formspree.io/api/0/forms/'+FS_FORM_ID+'/submissions/'+sub.id,{
+        method:'DELETE',
+        headers:{'Authorization':'Bearer '+FS_API_KEY}
+      });
+      // Rimuovi da array locale
+      subs = subs.filter(s=>s.id!==sub.id);
+      renderStats();
+    }catch(e){console.warn('DELETE Formspree:',e)}
+  }
 }
 
 function renderManual(){
