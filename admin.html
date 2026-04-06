@@ -295,7 +295,7 @@ const GH_REPO    = 'amicidiboyle/amicidiboyle.github.io';
 const GH_H       = {'Authorization':'Bearer '+GH_TOKEN,'Accept':'application/vnd.github+json','Content-Type':'application/json'};
 const FS_FORM_ID = 'xzdareqw';
 const FS_API     = 'https://formspree.io/api/0/forms/'+FS_FORM_ID+'/submissions';
-const FS_API_KEY = '';  /12b726bea2b345b294435a00c649418f/ ← inserisci qui la tua Formspree Master API key
+const FS_API_KEY = '12b726bea2b345b294435a00c649418f';
 
 const TAGS = {
   'Iperbarica':'#4fa8ff','Diving':'#00d4ff','Critical Care':'#4dffd6','Neuroscienze':'#c4b0ff',
@@ -316,10 +316,14 @@ function doLogin(){
   else{e.style.display='block';setTimeout(()=>e.style.display='none',3000)}
 }
 function show(){
-  document.getElementById('ls').style.display='none';
-  document.getElementById('ah').style.display='';
-  document.getElementById('am').style.display='';
-  init();
+  try {
+    document.getElementById('ls').style.display='none';
+    document.getElementById('ah').style.display='';
+    document.getElementById('am').style.display='';
+    init().catch(err=>console.warn('Init error:',err));
+  } catch(e) {
+    console.error('Show error:',e);
+  }
 }
 document.getElementById('lb').onclick=doLogin;
 document.getElementById('ai').onkeydown=e=>{if(e.key==='Enter')doLogin()};
@@ -327,7 +331,11 @@ document.getElementById('lob').onclick=()=>{sessionStorage.removeItem('ba');loca
 if(sessionStorage.getItem('ba')==='1') show();
 
 // ═══ INIT ═══
-async function init(){buildTags();await Promise.all([loadMembers(),loadFS()]);renderStats();renderLasts()}
+async function init(){
+  try { buildTags(); } catch(e){}
+  try { await Promise.all([loadMembers(), loadFS()]); } catch(e){ console.warn(e); }
+  try { renderStats(); renderLasts(); } catch(e){}
+}
 
 // ═══ GITHUB ═══
 async function loadMembers(){
