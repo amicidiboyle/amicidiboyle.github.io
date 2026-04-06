@@ -211,6 +211,13 @@
       border: 1px solid rgba(77,255,214,.25);
     }
     .btn-approve--amici:hover { background: rgba(77,255,214,.22); }
+.btn-reject {
+  padding: 8px 14px; border-radius: 999px; font-size: .78rem;
+  background: rgba(255,80,80,.08); color: rgba(255,100,100,.85);
+  border: 1px solid rgba(255,80,80,.25); cursor: pointer;
+  transition: all .18s; white-space: nowrap;
+}
+.btn-reject:hover { background: rgba(255,80,80,.2); color: #ff6b6b; border-color: rgba(255,80,80,.5); }
     .btn-detail {
       padding: 8px 14px; border-radius: 999px; font-size: .78rem;
       background: none; border: 1px solid var(--border); color: var(--muted); cursor: pointer;
@@ -506,16 +513,8 @@
             <input type="text" id="af-city" placeholder="Milano, IT" />
           </div>
           <div class="appr-field">
-            <label>Foto profilo</label>
-            <div style="display:flex;flex-direction:column;gap:8px;">
-              <input type="text" id="af-img" placeholder="nome-cognome.jpg" style="font-size:.8rem;" />
-              <div style="display:flex;gap:8px;align-items:center;">
-                <input type="file" id="af-foto-file" accept="image/*" style="display:none;" />
-                <button type="button" class="code-regen" style="padding:7px 14px;border-radius:8px;font-size:.78rem;" onclick="document.getElementById('af-foto-file').click()">📎 Seleziona foto</button>
-                <button type="button" id="downloadFotoBtn" class="code-regen" style="padding:7px 14px;border-radius:8px;font-size:.78rem;display:none;" onclick="downloadFoto()">⬇ Scarica rinominata</button>
-                <span id="fotoFileName" style="font-size:.74rem;color:var(--muted);"></span>
-              </div>
-            </div>
+            <label>Foto (nome file)</label>
+            <input type="text" id="af-img" placeholder="nome-cognome.jpg" />
           </div>
         </div>
         <div class="appr-field" style="margin-bottom:14px;">
@@ -559,7 +558,7 @@ const FS_FORM_ID   = 'xzdareqw';               // form candidature (Rete + Amici
 const FS_API       = 'https://formspree.io/api/0/forms/'+FS_FORM_ID+'/submissions';
 // Nota: Formspree API key — per leggere le submission via API serve il tuo API key Formspree
 // Recuperalo da formspree.io → Account → API Keys
-const FS_API_KEY   = '12b726bea2b345b294435a00c649418f';
+const FS_API_KEY   = '';  // ← inserisci qui il tuo Formspree API key
 
 const TAG_COLORS = {
   'Iperbarica':'#4fa8ff','Diving':'#00d4ff','Critical Care':'#4dffd6',
@@ -700,41 +699,64 @@ function renderList(container, subs, mode) {
   container.innerHTML = '';
   subs.forEach((s, i) => {
     const d = s.data || {};
-    // Mappa campi dal form reale di rete.html
+    // Mappa tutti i campi possibili dal form rete.html e amici
     const name  = d.nome  || d.name  || '—';
     const email = d.email || '—';
-    const role  = d.ruolo || d.qualifica || '';
+    const role  = d.ruolo || '';
     const aff   = d.affiliazione || '';
-    const city  = d.citta || d.city || '';
-    const li    = d.linkedin || '';
     const focus = d.focus || '';
-    const motiv = d.presentazione || d.motivazione || '';
-    const foto  = d.foto_url || '';
+    const city  = d.citta || '';
+    const li    = d.linkedin || '';
+    const pres  = d.presentazione || '';
+    // Campi amici
+    const bg    = d.background || '';
+    const motiv = d.motivazione || '';
+    const fonte = d.come_ci_hai_conosciuto || '';
+    const codice= d.codice_generato || '';
+    const tipo  = d.tipo || '';
     const date  = s.created_at ? new Date(s.created_at).toLocaleDateString('it-IT') : '';
+    const sid   = s.id || s._id || '';
+
+    // Componi ruolo display
+    const roleDisplay = [role, aff ? '('+aff+')' : ''].filter(Boolean).join(' ');
+    // Testo descrizione breve per amici
+    const bgLabels = {
+      'studente-medicina':'Studente di medicina','medico':'Medico/Clinico',
+      'infermiere':'Infermiere/Paramedico','ingegnere':'Ingegnere/Tecnico',
+      'operatore-soccorso':'Operatore soccorso','subacqueo':'Subacqueo/Istruttore',
+      'ricercatore':'Ricercatore/Accademico','appassionato':'Appassionato',
+      'giornalista':'Giornalista/Divulgatore','altro':'Altro'
+    };
+    const bgLabel = bgLabels[bg] || bg;
 
     const card = document.createElement('div');
     card.className = 'cand-card cand-card--'+mode;
     card.innerHTML = `
-      <div>
+      <div style="flex:1;min-width:0;">
         <div class="cand-card__name">${escHtml(name)}</div>
         <div class="cand-card__meta">
           <span>✉ ${escHtml(email)}</span>
-          ${role ? '<span>· '+escHtml(role.substring(0,60))+'…</span>' : ''}
+          ${roleDisplay ? '<span>· '+escHtml(roleDisplay.substring(0,70))+'</span>' : ''}
+          ${bgLabel && mode==='amici' ? '<span>· '+escHtml(bgLabel)+'</span>' : ''}
           ${city ? '<span>📍 '+escHtml(city)+'</span>' : ''}
         </div>
-        <div class="cand-card__date">${date}</div>
+        <div class="cand-card__date">${date}${tipo ? ' · '+escHtml(tipo) : ''}</div>
         <div class="cand-detail" id="detail-${mode}-${i}">
           ${aff    ? '<p><strong>Affiliazione:</strong> '+escHtml(aff)+'</p>' : ''}
-          ${role   ? '<p><strong>Ruolo:</strong> '+escHtml(role)+'</p>' : ''}
-          ${focus  ? '<p><strong>Focus:</strong> '+escHtml(focus)+'</p>' : ''}
-          ${li     ? '<p><strong>LinkedIn:</strong> <a href="'+escHtml(li)+'" target="_blank" style="color:var(--cyan2)">'+escHtml(li)+'</a></p>' : ''}
-          ${foto   ? '<p><strong>Foto:</strong> <a href="'+escHtml(foto)+'" target="_blank" style="color:var(--cyan2)">Visualizza foto →</a></p>' : ''}
-          ${motiv  ? '<p><strong>Presentazione:</strong> '+escHtml(motiv)+'</p>' : ''}
+          ${role   ? '<p><strong>Ruolo/Qualifica:</strong> '+escHtml(role)+'</p>' : ''}
+          ${focus  ? '<p><strong>Area/Focus:</strong> '+escHtml(focus)+'</p>' : ''}
+          ${li     ? '<p><strong>LinkedIn:</strong> <a href="'+escHtml(li)+'" target="_blank" style="color:var(--cyan2)">Apri profilo →</a></p>' : ''}
+          ${pres   ? '<p><strong>Presentazione:</strong> '+escHtml(pres)+'</p>' : ''}
+          ${motiv  ? '<p><strong>Motivazione:</strong> '+escHtml(motiv)+'</p>' : ''}
+          ${bgLabel && mode==='amici' ? '<p><strong>Background:</strong> '+escHtml(bgLabel)+'</p>' : ''}
+          ${fonte  ? '<p><strong>Come ci ha conosciuto:</strong> '+escHtml(fonte)+'</p>' : ''}
+          ${codice ? '<p><strong>Codice generato:</strong> <code style="color:var(--green)">'+escHtml(codice)+'</code></p>' : ''}
         </div>
       </div>
       <div class="cand-actions">
         <button class="btn-detail" onclick="toggleDetail('${mode}','${i}')">Dettagli</button>
-        <button class="btn-approve btn-approve--${mode}" onclick='openApproval(${JSON.stringify({name,email,role,roleRaw:role,aff,focus,city,li,foto,mode})})'>Approva</button>
+        <button class="btn-approve btn-approve--${mode}" onclick='openApproval(${JSON.stringify({name,email,role,roleRaw:role,aff,focus,city,li,pres,motiv,bg,mode,sid})})'>Approva</button>
+        <button class="btn-reject" onclick='rejectCandidature(${JSON.stringify({name,email,mode,sid})})' title="Rifiuta e notifica">✕ Rifiuta</button>
       </div>
     `;
     container.appendChild(card);
@@ -869,22 +891,17 @@ function openApproval(cand) {
   // Precompila
   document.getElementById('af-name').value    = cand.name  || '';
   document.getElementById('af-email').value   = cand.email || '';
-  // Reset foto
-  fotoFile = null;
-  document.getElementById('af-foto-file').value = '';
-  document.getElementById('fotoFileName').textContent = '';
-  document.getElementById('downloadFotoBtn').style.display = 'none';
   if(isRete) {
     // Componi ruolo da campi multipli del form
-    const roleParts = [cand.role, cand.aff, cand.focus ? 'Focus: '+cand.focus : ''].filter(Boolean);
-    document.getElementById('af-role').value    = cand.roleRaw || roleParts.join('. ') || '';
-    document.getElementById('af-city').value    = cand.city  || '';
-    document.getElementById('af-linkedin').value= cand.li    || '';
-    document.getElementById('af-img').value     = slugify(cand.name||'membro')+'.jpg';
-    // Se c'è foto URL precompila il campo nome con hint
-    if(cand.foto) {
-      document.getElementById('fotoFileName').textContent = '🔗 URL disponibile nei dettagli';
-    }
+    const rParts = [
+      cand.role  || '',
+      cand.aff   ? '— ' + cand.aff : '',
+      cand.focus ? 'Focus: ' + cand.focus : ''
+    ].filter(Boolean);
+    document.getElementById('af-role').value     = rParts.join('. ') || '';
+    document.getElementById('af-city').value     = cand.city  || '';
+    document.getElementById('af-linkedin').value = cand.li    || '';
+    document.getElementById('af-img').value      = slugify(cand.name||'membro')+'.jpg';
   }
 
   // Reset tags
@@ -1023,6 +1040,26 @@ function commitAmici(name, email, status, btn) {
 }
 
 // ══ MAILTO ══
+function rejectCandidature(cand) {
+  const isRete = cand.mode === 'rete';
+  const subject = encodeURIComponent(
+    isRete
+      ? 'La tua candidatura alla Rete di Boyle'
+      : 'La tua iscrizione agli Amici di Boyle'
+  );
+  const body = encodeURIComponent(
+    'Ciao ' + cand.name + ',\n\n' +
+    'grazie per il tuo interesse per ' + (isRete ? 'la Rete di Boyle' : 'gli Amici di Boyle') + '.\n\n' +
+    'Dopo attenta valutazione, in questa fase non possiamo procedere con la tua ' +
+    (isRete ? 'candidatura' : 'iscrizione') + '. ' +
+    'Ti invitiamo a ripresentarti in futuro se le tue esperienze si allineano maggiormente ai criteri della rete.\n\n' +
+    'Grazie ancora per il tuo interesse.\n\nGli Amici di Boyle\nwww.amicidiboyle.it'
+  );
+  const mailto = 'mailto:' + cand.email + '?subject=' + subject + '&body=' + body;
+  // Apri client email con testo precompilato
+  window.open(mailto);
+}
+
 function updateMailto() {
   const name  = document.getElementById('af-name').value.trim();
   const email = document.getElementById('af-email').value.trim();
@@ -1076,42 +1113,6 @@ function slugify(s) {
 
 function escHtml(s) {
   return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-}
-
-// ══ GESTIONE FOTO ══
-let fotoFile = null;
-
-document.getElementById('af-foto-file').addEventListener('change', function() {
-  if(this.files && this.files[0]) {
-    fotoFile = this.files[0];
-    const nameEl = document.getElementById('fotoFileName');
-    const dlBtn  = document.getElementById('downloadFotoBtn');
-    nameEl.textContent = fotoFile.name;
-    dlBtn.style.display = '';
-    // Aggiorna automaticamente il campo nome file con lo slug corretto
-    const name = document.getElementById('af-name').value.trim();
-    if(name) {
-      const slug = slugify(name);
-      document.getElementById('af-img').value = slug + '.' + fotoFile.name.split('.').pop().toLowerCase();
-    }
-  }
-});
-
-function downloadFoto() {
-  if(!fotoFile) return;
-  const name = document.getElementById('af-name').value.trim();
-  const slug = slugify(name || 'membro');
-  const ext  = fotoFile.name.split('.').pop().toLowerCase();
-  const filename = slug + '.' + ext;
-  // Aggiorna campo img
-  document.getElementById('af-img').value = filename;
-  // Scarica con nome corretto
-  const url = URL.createObjectURL(fotoFile);
-  const a   = document.createElement('a');
-  a.href    = url;
-  a.download = filename;
-  a.click();
-  URL.revokeObjectURL(url);
 }
 
 // Update codice e mailto live quando si digita il nome
