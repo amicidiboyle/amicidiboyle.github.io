@@ -309,6 +309,7 @@ body::before{content:'';position:fixed;inset:0;z-index:-1;
     </div>
     <div class="nav-section">
       <div class="nav-label">Sistema</div>
+      <button class="nav-btn" onclick="goto('cest')"><span class="ico">🗑</span>Cestino<span class="nav-badge" id="nb-cest" style="background:rgba(255,90,106,.12);color:var(--red)">0</span></button>
       <button class="nav-btn" onclick="goto('log')"><span class="ico">📋</span>Log attività</button>
     </div>
   </nav>
@@ -380,6 +381,21 @@ body::before{content:'';position:fixed;inset:0;z-index:-1;
         <span class="badge badge-green" id="mAmiBadge">0 amici</span>
       </div>
       <div class="mlist" id="mAmiList"></div>
+    </div>
+
+    <!-- ═ CESTINO ═ -->
+    <div class="page" id="p-cest">
+      <div class="sec-hd">
+        <h2>🗑 Cestino candidature</h2>
+        <span class="badge" id="cestBadge" style="background:rgba(255,90,106,.08);color:var(--red);border-color:rgba(255,90,106,.2)">0 elementi</span>
+        <button class="btn-sm btn-sm--red" onclick="svuotaCestino()">🗑 Svuota tutto</button>
+        <button class="btn-sm" onclick="renderCestino()">↻ Aggiorna</button>
+      </div>
+      <div class="warn-box" style="margin-bottom:14px">
+        <p>ℹ Candidature nel cestino</p>
+        <p>Vengono rimosse dalla lista candidature attive. Puoi ripristinarle o eliminarle definitivamente. I dati sono salvati localmente nel browser.</p>
+      </div>
+      <div class="clist" id="cestList"><div class="empty">Il cestino è vuoto.</div></div>
     </div>
 
     <!-- ═ LOG ═ -->
@@ -499,12 +515,14 @@ function goto(id){
   event?.currentTarget?.classList.add('active');
   if(id==='mret') renderMembersPage();
   if(id==='mami') renderAmiciPage();
+  if(id==='cest') renderCestino();
   if(id==='log')  renderLog();
 }
 
 // ═══ INIT ═══
 async function init(){
   buildTags();
+  updateCestBadge();
   try{ await Promise.all([loadMembers(), loadFS()]); }catch(e){console.warn(e)}
   renderStats(); renderDashLists();
 }
@@ -605,7 +623,7 @@ function renderList(el, list, m){
     const codg  = d.codice_generato||'';
     const date  = s._date||s.created_at ? new Date(s._date||s.created_at).toLocaleDateString('it-IT') : '';
     const rs    = [role, aff?'('+aff+')':''].filter(Boolean).join(' ');
-    const sid   = s._id||s.id||'';
+    const sid   = s._id||s.id||('_idx_'+i);
 
     const c=document.createElement('div');
     c.className='cc cc--'+(m==='rete'?'r':'a');
@@ -639,7 +657,8 @@ function renderList(el, list, m){
           onclick='openApp(${JSON.stringify({name,email,role,aff,focus,city,li,pres,motiv,bg,mode:m,sid,idx:i})})'>✓ Approva</button>
         ${m==='rete'?`<button class="btn-sm btn-sm--gold" onclick='shiftAmici(${JSON.stringify({name,email,pres,motiv,sid,idx:i})})'>→ Amici</button>`:''}
         <button class="btn-sm btn-sm--red" onclick='rejectC(${JSON.stringify({name,email,mode:m,sid,idx:i})})'>✕ Rifiuta</button>
-        <button class="btn-sm" onclick="delSub('${sid}','${m}',this)" style="opacity:.4;font-size:.68rem">🗑 Elimina</button>
+        <button class="btn-sm btn-sm--gold" onclick="marcaTest('${sid}','${m}',this)" title="Candidatura di test — sposta nel cestino">🧪 Test</button>
+        <button class="btn-sm" onclick="delSub('${sid}','${m}',this)" style="opacity:.4;font-size:.68rem">🗑 Cestino</button>
       </div>`;
     el.appendChild(c);
   });
@@ -647,38 +666,172 @@ function renderList(el, list, m){
 
 function togDet(sid){document.getElementById('cd-'+sid)?.classList.toggle('on')}
 
-// ═══ ELIMINA SUBMISSION FORMSPREE ═══
-async function delSub(sid, m, btn){
-  if(!sid){alert('ID submission non disponibile.');return}
-  if(!confirm('Eliminare definitivamente questa candidatura?')) return;
-  btn.textContent='⏳';btn.disabled=true;
-  try{
-    const res = await fetch('https://formspree.io/api/0/forms/'+FS_FORM_ID+'/submissions/'+sid,{
-      method:'DELETE',
-      headers:{'Authorization':'Bearer '+FS_API_KEY}
-    });
-    if(!res.ok){
-      // Alcuni piani non supportano DELETE — proviamo il workaround
-      throw new Error('DELETE non supportato (HTTP '+res.status+')');
-    }
-    // Rimuovi da array locale
-    subs = subs.filter(s=>(s._id||s.id)!==sid);
-    const card = document.getElementById('cc-'+m+'-'+sid);
-    if(card){card.style.opacity='0';card.style.transform='translateX(40px)';card.style.transition='all .25s';setTimeout(()=>card.remove(),260)}
-    addLog('🗑','Candidatura eliminata: '+sid.substring(0,12)+'…');
-    renderCands();
-  }catch(err){
-    // DELETE non supportato dal piano — segna come "archiviata" localmente
-    const archived = JSON.parse(localStorage.getItem('boyle_archived')||'[]');
-    if(!archived.includes(sid)){archived.push(sid);localStorage.setItem('boyle_archived',JSON.stringify(archived))}
-    subs = subs.filter(s=>(s._id||s.id)!==sid);
-    const card = document.getElementById('cc-'+m+'-'+sid);
-    if(card){card.style.opacity='0';card.style.transform='translateX(40px)';card.style.transition='all .25s';setTimeout(()=>card.remove(),260)}
-    addLog('📦','Candidatura archiviata localmente (DELETE non supportato): '+sid.substring(0,12));
-    renderStats();
-    btn.disabled=false;btn.textContent='🗑 Elimina';
-  }
+// ═══ CESTINO ═══
+let cestino = JSON.parse(localStorage.getItem('boyle_cestino')||'[]');
+
+function saveCestino(){ localStorage.setItem('boyle_cestino', JSON.stringify(cestino)); }
+
+function updateCestBadge(){
+  const n = cestino.length;
+  document.getElementById('nb-cest').textContent = n;
+  const el = document.getElementById('cestBadge');
+  if(el) el.textContent = n+' element'+(n===1?'o':'i');
 }
+
+function mandaInCestino(sid, m, btn){
+  const cardEl = (btn && typeof btn.closest==='function') ? btn.closest('.cc') : null;
+
+  // Cerca la sub per sid (anche i fallback _idx_ non matchano subs reali)
+  const realSid = (sid&&!sid.startsWith('_idx_')) ? sid : null;
+  let sub = realSid ? subs.find(s=>(s._id||s.id)===realSid) : null;
+
+  // Se non trovata per sid, cerca per posizione della card nel DOM
+  if(!sub && cardEl){
+    const cardId = cardEl.id; // cc-rete-_idx_3 oppure cc-rete-REALID
+    const allCards = Array.from(cardEl.parentElement?.querySelectorAll('.cc')||[]);
+    const idx = allCards.indexOf(cardEl);
+    const list = getSubList(m);
+    if(idx>=0 && idx<list.length) sub = list[idx];
+  }
+
+  const localKey = sub ? (sub._id||sub.id||'local-'+Date.now()) : ('local-'+Date.now());
+  const alreadyIn = cestino.some(c=>c._localKey===localKey);
+  if(!alreadyIn){
+    const entry = sub
+      ? {...sub, _localKey:localKey, _mode:m, _deletedAt:new Date().toISOString()}
+      : {_localKey:localKey, _mode:m, _deletedAt:new Date().toISOString(), _noId:true, data:{nome:'—'}};
+    cestino.unshift(entry);
+    saveCestino();
+  }
+  if(sub) subs = subs.filter(s=>(s._id||s.id)!==(sub._id||sub.id));
+
+  updateCestBadge();
+  if(cardEl){
+    cardEl.style.opacity='0';cardEl.style.transform='translateX(40px)';cardEl.style.transition='all .25s';
+    setTimeout(()=>{ cardEl.remove(); renderCands(); },260);
+  } else { renderCands(); }
+  addLog('🗑','Spostata nel cestino: '+(sub?.data?.nome||'candidatura'));
+}
+
+// ═══ ELIMINA SUBMISSION FORMSPREE (aggiornato) ═══
+async function delSub(sid, m, btn){
+  mandaInCestino(sid, m, (btn&&typeof btn.closest==='function') ? btn : null);
+}
+
+function renderCestino(){
+  updateCestBadge();
+  const el = document.getElementById('cestList');
+  if(!cestino.length){ el.innerHTML='<div class="empty">Il cestino è vuoto. ✓</div>'; return; }
+  el.innerHTML='';
+  cestino.forEach((s,i)=>{
+    const d = s.data||{};
+    const name  = d.nome||'—';
+    const email = d.email||'—';
+    const role  = d.ruolo||'';
+    const aff   = d.affiliazione||'';
+    const mode  = s._mode||'?';
+    const delAt = s._deletedAt ? new Date(s._deletedAt).toLocaleString('it-IT') : '';
+    const isTest = s._isTest;
+    const card = document.createElement('div');
+    card.className='cc cc--'+(mode==='rete'?'r':'a');
+    card.id='cest-'+i;
+    if(isTest) card.style.borderLeftColor='rgba(255,209,102,.6)';
+    card.innerHTML=`
+      <div class="cbody">
+        <div style="display:flex;align-items:center;gap:8px">
+          <span class="cname">${esc(name)}</span>
+          ${isTest?'<span style="font-size:.62rem;font-weight:700;background:rgba(255,209,102,.12);color:var(--gold);border:1px solid rgba(255,209,102,.25);border-radius:999px;padding:1px 8px">TEST</span>':''}
+          <span style="font-size:.62rem;color:var(--soft);margin-left:4px">${mode==='rete'?'Rete':'Amici'}</span>
+        </div>
+        <div class="cmeta"><span>✉ ${esc(email)}</span>${role?'<span>· '+esc(role.substring(0,50))+'</span>':''}</div>
+        <div class="cdate">Nel cestino dal: ${delAt}</div>
+      </div>
+      <div class="cacts">
+        <button class="btn-sm btn-sm--green" onclick="ripristina(${i})">↩ Ripristina</button>
+        <button class="btn-sm btn-sm--red" onclick="eliminaDefin(${i})">✕ Elimina</button>
+      </div>`;
+    el.appendChild(card);
+  });
+}
+
+function ripristina(i){
+  const s = cestino[i];
+  if(!s) return;
+  // Rimetti in subs solo se aveva un _id reale
+  if(s._id && !s._noId){
+    subs.unshift({...s, _deletedAt:undefined, _localKey:undefined, _mode:undefined});
+  }
+  cestino.splice(i,1);
+  saveCestino();
+  updateCestBadge();
+  renderCestino();
+  renderCands();
+  addLog('↩','Ripristinata dal cestino: '+(s.data?.nome||'candidatura'));
+}
+
+function eliminaDefin(i){
+  const s = cestino[i];
+  if(!s||!confirm('Eliminare definitivamente? Non sarà recuperabile.')) return;
+  // Prova DELETE su Formspree se c'è un sid reale
+  if(s._id&&!s._noId&&FS_API_KEY){
+    fetch('https://formspree.io/api/0/forms/'+FS_FORM_ID+'/submissions/'+s._id,{
+      method:'DELETE',headers:{'Authorization':'Bearer '+FS_API_KEY}
+    }).catch(()=>{}); // silenzioso — potrebbe non essere supportato
+  }
+  cestino.splice(i,1);
+  saveCestino();
+  updateCestBadge();
+  renderCestino();
+  addLog('✕','Eliminata definitivamente: '+(s.data?.nome||'candidatura'));
+}
+
+function svuotaCestino(){
+  if(!cestino.length) return;
+  if(!confirm('Svuotare tutto il cestino? ('+cestino.length+' element'+(cestino.length===1?'o':'i')+')')) return;
+  // Prova a eliminare da Formspree quelli con ID reale
+  cestino.filter(s=>s._id&&!s._noId).forEach(s=>{
+    fetch('https://formspree.io/api/0/forms/'+FS_FORM_ID+'/submissions/'+s._id,{
+      method:'DELETE',headers:{'Authorization':'Bearer '+FS_API_KEY}
+    }).catch(()=>{});
+  });
+  const n=cestino.length;
+  cestino=[];
+  saveCestino();
+  updateCestBadge();
+  renderCestino();
+  addLog('🗑','Cestino svuotato ('+n+' element'+(n===1?'o':'i')+')');
+}
+
+// ═══ MARCA COME TEST ═══
+function marcaTest(sid, m, btn){
+  const cardEl = (btn && typeof btn.closest==='function') ? btn.closest('.cc') : null;
+  const realSid = (sid&&!sid.startsWith('_idx_')) ? sid : null;
+  let sub = realSid ? subs.find(s=>(s._id||s.id)===realSid) : null;
+  if(!sub && cardEl){
+    const allCards = Array.from(cardEl.parentElement?.querySelectorAll('.cc')||[]);
+    const idx = allCards.indexOf(cardEl);
+    const list = getSubList(m);
+    if(idx>=0 && idx<list.length) sub = list[idx];
+  }
+  const localKey = sub ? (sub._id||sub.id||'local-'+Date.now()) : ('local-'+Date.now());
+  if(!cestino.some(c=>c._localKey===localKey)){
+    const entry = sub
+      ? {...sub, _localKey:localKey, _mode:m, _deletedAt:new Date().toISOString(), _isTest:true}
+      : {_localKey:localKey, _mode:m, _deletedAt:new Date().toISOString(), _isTest:true, _noId:true,
+         data:{nome: cardEl?.querySelector('.cname')?.textContent?.trim()||'Test'}};
+    cestino.unshift(entry);
+    saveCestino();
+  }
+  if(sub) subs = subs.filter(s=>(s._id||s.id)!==(sub._id||sub.id));
+  updateCestBadge();
+  if(cardEl){
+    cardEl.style.opacity='0';cardEl.style.transform='translateX(20px)';cardEl.style.transition='all .22s';
+    setTimeout(()=>{ cardEl.remove(); renderCands(); },230);
+  } else { renderCands(); }
+  addLog('🧪','Test spostato nel cestino: '+(sub?.data?.nome||'candidatura'));
+}
+
+
 
 // ═══ SHIFT RETE → AMICI ═══
 function shiftAmici(c){
