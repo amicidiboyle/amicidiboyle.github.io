@@ -216,7 +216,7 @@
 
           <div class="hero-access-bar" id="accessBar" style="justify-content:center;margin:0 auto;">
             <input class="hero-access-input" id="barCodeInput"
-                   type="text" data-i18n-placeholder="r_code_ph" placeholder="🔑 Codice membro" data-i18n-placeholder="r_code_ph"
+                   type="text" data-i18n-placeholder="r_code_ph" placeholder="🔑 Codice membro"
                    autocomplete="off" spellcheck="false" maxlength="30" />
             <button class="hero-access-btn" id="barCodeBtn" data-i18n="r_access_btn">Accedi</button>
             <span class="hero-access-status" id="barStatus"></span>
@@ -386,7 +386,6 @@
         <p class="access-modal__desc" data-i18n="r_access_desc">Inserisci il codice ricevuto nella email di benvenuto.</p>
         <div class="access-modal__form">
           <input type="text" id="accessCodeInput" class="access-modal__input"
-            placeholder="es. BOYLE-K7X2-COGNOME"
             autocomplete="off" autocapitalize="characters" spellcheck="false" />
           <button class="btn-electric" id="accessCodeSubmit" type="button">
             <span class="btn-electric__inner" data-i18n="r_access_unlock">Sblocca contatti</span>
@@ -407,10 +406,10 @@
         <p class="email-wall__text" data-i18n="r_contacts_desc">Gli indirizzi email diretti dei professionisti della Rete di Boyle sono visibili solo ai membri attivi. È uno dei vantaggi concreti di far parte della rete.</p>
         <div class="email-wall__actions">
           <button class="btn-electric" id="wallCodeBtn" type="button">
-            <span class="btn-electric__inner">🔑 Sono già membro — inserisci il codice</span>
+            <span class="btn-electric__inner" data-i18n="r_wall_member_btn">🔑 Sono già membro — inserisci il codice</span>
           </button>
-          <button class="btn-ghost" id="emailWallJoin" style="min-height:44px;font-size:.88rem;margin-top:8px">Candidati alla rete →</button>
-          <p class="email-wall__note">Problemi? Scrivi a <a href="/cdn-cgi/l/email-protection#e48d8a828ba485898d878d808d868b9d8881ca8d90"><span class="__cf_email__" data-cfemail="f69f989099b6979b9f959f929f94998f9a93d89f82">[email&#160;protected]</span></a> per ottenere l'accesso completo.</p>
+          <button class="btn-ghost" id="emailWallJoin" style="min-height:44px;font-size:.88rem;margin-top:8px" data-i18n="r_wall_join_btn">Candidati alla rete →</button>
+          <p class="email-wall__note" data-i18n-html="r_wall_note">Problemi? Scrivi a <a href="mailto:info@amicidiboyle.it">info@amicidiboyle.it</a> per ottenere l'accesso completo.</p>
         </div>
       </div>
     </div>
@@ -596,7 +595,7 @@
           </div>
           <button class="rete-event-publish-btn btn-secondary next-event-publish-btn" id="publishEventBtn2" type="button">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
-            Proponi un evento
+            <span data-i18n="r_ev_propose_cta">Proponi un evento</span>
           </button>
         </div>
       </div>
@@ -1091,7 +1090,7 @@
       });
     });
     allTags.sort();
-    inner.innerHTML = '<button class="skill-tag-btn skill-tag-btn--all skill-tag-btn--active" data-tag="">Tutti (' + members.length + ')</button>';
+    inner.innerHTML = '<button class="skill-tag-btn skill-tag-btn--all skill-tag-btn--active" data-tag="">' + (window.boyleT ? window.boyleT('r_filter_all') : 'Tutti') + ' (' + members.length + ')</button>';
     allTags.forEach(function(tag) {
       var color = (typeof TAG_COLORS !== 'undefined' && TAG_COLORS[tag]) || '#7be4ff';
       var count = members.filter(function(m){ return m.tags && m.tags.indexOf(tag) >= 0; }).length;
@@ -1426,7 +1425,7 @@
     const bb = document.getElementById('barCodeBtn');
     if (bs) {
         const hasPencil = CODE_TO_KEY[code];
-        bs.textContent = hasPencil ? '✓ Accesso confermato — matita attiva sulla tua card' : '✓ Accesso confermato';
+        bs.textContent = hasPencil ? window.boyleT('r_access_ok_pencil') : window.boyleT('r_access_ok');
         bs.className = 'hero-access-status ok';
       }
     if (bi) bi.disabled = true;
@@ -1488,11 +1487,11 @@
     function tryCode() {
       const code = (accInput?.value || '').trim().toUpperCase();
       if (ALL_CODES.includes(code)) {
-        if (accStatus) { accStatus.textContent = "✓ Accesso confermato. Benvenuto."; accStatus.className = 'access-modal__status success'; }
+        if (accStatus) { accStatus.textContent = window.boyleT('r_access_ok'); accStatus.className = 'access-modal__status success'; }
         unlockAll(code);
         setTimeout(closeAcc, 1400);
       } else {
-        if (accStatus) { accStatus.textContent = "✗ Codice non riconosciuto. Controlla l'email di benvenuto."; accStatus.className = 'access-modal__status error'; }
+        if (accStatus) { accStatus.textContent = window.boyleT('r_access_err'); accStatus.className = 'access-modal__status error'; }
         accInput?.classList.add('shake');
         setTimeout(() => accInput?.classList.remove('shake'), 500);
       }
@@ -1569,20 +1568,20 @@
       e.preventDefault();
       const btn = pubForm.querySelector('button[type="submit"]');
       if (btn) btn.disabled = true;
-      if (pubStatus) { pubStatus.textContent = 'Invio in corso...'; pubStatus.className = 'form-status'; }
+      if (pubStatus) { pubStatus.textContent = window.boyleT('r_form_sending'); pubStatus.className = 'form-status'; }
       try {
         const res = await fetch(pubForm.action, {
           method: 'POST', body: new FormData(pubForm),
           headers: { 'Accept': 'application/json' }
         });
         if (res.ok) {
-          pubStatus.textContent = "✓ Proposta inviata. Ti risponderemo entro 48 ore.";
+          pubStatus.textContent = window.boyleT('r_form_ev_ok');
           pubStatus.className = 'form-status success';
           pubForm.reset();
           setTimeout(closePubModal, 2800);
         } else { throw new Error(); }
-      } catch {
-        pubStatus.textContent = "Errore nell'invio. Scrivi a info@amicidiboyle.it";
+      } catch(e) {
+        pubStatus.textContent = window.boyleT('r_form_ev_err');
         pubStatus.className = 'form-status error';
       } finally { if (btn) btn.disabled = false; }
     });
@@ -1724,7 +1723,7 @@
     const sf = document.getElementById('cand-snippet');
     if (sf) sf.value = buildJSONSnippet();
 
-    if (statusBox) { statusBox.textContent = 'Invio in corso…'; statusBox.className = 'form-status'; }
+    if (statusBox) { statusBox.textContent = window.boyleT('r_form_sending'); statusBox.className = 'form-status'; }
     try {
       const res = await fetch(netForm.action, {
         method: 'POST',
@@ -1733,16 +1732,16 @@
       });
       if (res.ok) {
         if (statusBox) {
-          statusBox.textContent = '✓ Candidatura inviata. Ti contatteremo presto.';
+          statusBox.textContent = window.boyleT('r_form_rete_ok');
           statusBox.className = 'form-status is-success';
         }
         netForm.reset();
         setTimeout(closeModal, 2800);
       } else {
-        if (statusBox) { statusBox.textContent = 'Invio non riuscito. Scrivi a info@amicidiboyle.it'; statusBox.className = 'form-status is-error'; }
+        if (statusBox) { statusBox.textContent = window.boyleT('r_form_rete_err'); statusBox.className = 'form-status is-error'; }
       }
     } catch(err) {
-      if (statusBox) { statusBox.textContent = 'Errore di rete. Scrivi a info@amicidiboyle.it'; statusBox.className = 'form-status is-error'; }
+      if (statusBox) { statusBox.textContent = window.boyleT('r_form_rete_err'); statusBox.className = 'form-status is-error'; }
     }
   });
 
@@ -1779,7 +1778,7 @@
       if (ALL_CODES.includes(code)) {
         unlockAll(code);
       } else {
-        if (bs) { bs.textContent = '✗ Codice non valido'; bs.className = 'hero-access-status err'; }
+        if (bs) { bs.textContent = window.boyleT('r_bar_err'); bs.className = 'hero-access-status err'; }
         bi?.classList.add('shake'); setTimeout(()=>bi?.classList.remove('shake'),500);
       }
     }
@@ -1788,7 +1787,7 @@
     if (isMemberUnlocked()) {
       if (bs) {
         const hasPencil = CODE_TO_KEY[code];
-        bs.textContent = hasPencil ? '✓ Accesso confermato — matita attiva sulla tua card' : '✓ Accesso confermato';
+        bs.textContent = hasPencil ? window.boyleT('r_access_ok_pencil') : window.boyleT('r_access_ok');
         bs.className = 'hero-access-status ok';
       }
       if (bi) bi.disabled = true;
@@ -2048,7 +2047,7 @@
       const hiddenCode = document.getElementById('amici-codice-hidden');
       if (hiddenCode) hiddenCode.value = friendCode;
 
-      if (statusBox) { statusBox.textContent = 'Invio in corso…'; statusBox.className = 'form-status'; }
+      if (statusBox) { statusBox.textContent = window.boyleT('r_form_sending'); statusBox.className = 'form-status'; }
       const submitBtn = form.querySelector('button[type="submit"]');
       if (submitBtn) submitBtn.disabled = true;
 
@@ -2060,7 +2059,7 @@
         });
         if (res.ok) {
           if (statusBox) {
-            statusBox.innerHTML = "✓ Candidatura ricevuta! Il nostro team la valuterà e ti contatterà via email nei prossimi giorni.";
+            statusBox.textContent = window.boyleT('r_form_amici_ok');
             statusBox.className = 'form-status is-success';
           }
           form.reset();
@@ -2070,7 +2069,7 @@
         }
       } catch(err) {
         if (statusBox) {
-          statusBox.textContent = "Errore nell'invio. Scrivi a info@amicidiboyle.it";
+          statusBox.textContent = window.boyleT('r_form_amici_err');
           statusBox.className = 'form-status is-error';
         }
       } finally {
@@ -2248,7 +2247,22 @@
         'r_simsi_place':'Cattolica (RN) · Waldorf Palace Hotel',
         'r_simsi_cta1':'Scarica il programma',
         'r_simsi_cta2':'www.simsi.it',
-        'r_cand_desc':'La Rete di Boyle è riservata a professionisti con curriculum validato in medicina subacquea, iperbarica, aerospaziale, safety o fisiologia degli ambienti estremi. Valutiamo ogni candidatura individualmente.'
+        'r_cand_desc':'La Rete di Boyle è riservata a professionisti con curriculum validato in medicina subacquea, iperbarica, aerospaziale, safety o fisiologia degli ambienti estremi. Valutiamo ogni candidatura individualmente.',
+        'r_wall_member_btn':'\ud83d\udd11 Sono gi\u00e0 membro \u2014 inserisci il codice',
+        'r_wall_join_btn':'Candidati alla rete \u2192',
+        'r_wall_note':'Problemi? Scrivi a <a href="mailto:info@amicidiboyle.it">info@amicidiboyle.it</a> per ottenere l\u2019accesso completo.',
+        'r_access_ok':'✓ Accesso confermato',
+        'r_access_ok_pencil':'✓ Accesso confermato \u2014 matita attiva sulla tua card',
+        'r_access_err':'✗ Codice non riconosciuto. Controlla l\u2019email di benvenuto.',
+        'r_bar_err':'✗ Codice non valido',
+        'r_form_sending':'Invio in corso\u2026',
+        'r_form_rete_ok':'✓ Candidatura inviata. Ti contatteremo presto.',
+        'r_form_rete_err':'Invio non riuscito. Scrivi a info@amicidiboyle.it',
+        'r_form_amici_ok':'✓ Iscrizione ricevuta. Riceverai una email di conferma con i prossimi passaggi.',
+        'r_form_amici_err':'Errore nell\u2019invio. Scrivi a info@amicidiboyle.it',
+        'r_form_ev_ok':'✓ Proposta inviata. Ti risponderemo entro 48 ore.',
+        'r_form_ev_err':'Errore nell\u2019invio. Scrivi a info@amicidiboyle.it',
+        'r_filter_all':'Tutti'
       },
       en: {
         'r_nav_home':'Home','r_nav_vis':'Vision','r_nav_ric':'Research',
@@ -2399,7 +2413,22 @@
         'r_simsi_place':'Cattolica (RN) · Waldorf Palace Hotel',
         'r_simsi_cta1':'Download the programme',
         'r_simsi_cta2':'www.simsi.it',
-        'r_cand_desc':'The Boyle Network is reserved for professionals with a validated curriculum in underwater, hyperbaric, aerospace medicine, safety or extreme environment physiology. We evaluate each application individually.'
+        'r_cand_desc':'The Boyle Network is reserved for professionals with a validated curriculum in underwater, hyperbaric, aerospace medicine, safety or extreme environment physiology. We evaluate each application individually.',
+        'r_wall_member_btn':'\ud83d\udd11 I\u2019m already a member \u2014 enter your code',
+        'r_wall_join_btn':'Apply to the Network \u2192',
+        'r_wall_note':'Problems? Write to <a href="mailto:info@amicidiboyle.it">info@amicidiboyle.it</a> for full access.',
+        'r_access_ok':'\u2713 Access confirmed',
+        'r_access_ok_pencil':'\u2713 Access confirmed \u2014 pencil active on your card',
+        'r_access_err':'\u2717 Code not recognised. Check your welcome email.',
+        'r_bar_err':'\u2717 Invalid code',
+        'r_form_sending':'Sending\u2026',
+        'r_form_rete_ok':'\u2713 Application sent. We will be in touch soon.',
+        'r_form_rete_err':'Submission failed. Write to info@amicidiboyle.it',
+        'r_form_amici_ok':'\u2713 Registration received. You\u2019ll receive a confirmation email with the next steps.',
+        'r_form_amici_err':'Submission error. Write to info@amicidiboyle.it',
+        'r_form_ev_ok':'\u2713 Proposal sent. We will get back to you within 48 hours.',
+        'r_form_ev_err':'Submission error. Write to info@amicidiboyle.it',
+        'r_filter_all':'All'
       }
     };
 
@@ -2430,6 +2459,10 @@
     }
 
     window.boyleApplyLang = applyLang;
+    window.boyleT = function(k) {
+      var l = getLang();
+      return (T[l] && T[l][k] !== undefined) ? T[l][k] : (T['it'][k] || k);
+    };
 
     function attachToggles() {
       function toggle() {
@@ -2454,7 +2487,7 @@
       applyLang(getLang());
     }
   })();
-  </script>  </script>
+  </script>
 
   <!-- ── FILTRO MEMBRI (script separato, fuori dall'IIFE) ── -->
   <script>
@@ -2519,13 +2552,21 @@
     wrap.style.display = 'block';
     wrap.style.opacity = '0';
     wrap.style.transition = 'opacity .3s';
-    wrap.style.pointerEvribute('aria-hidden', open ? 'true' : 'false');
-      btn.setAttribute('aria-expanded', !open);
-      btn.style.transform = open ? 'none' : 'rotate(90deg)';
+    wrap.style.pointerEvents = 'none';
+    setTimeout(function(){ wrap.style.opacity = '1'; wrap.style.pointerEvents = ''; }, 800);
+
+    var open = false;
+    btn.addEventListener('click', function(){
+      open = !open;
+      panel.style.display = open ? 'block' : 'none';
+      panel.setAttribute('aria-hidden', open ? 'false' : 'true');
+      btn.setAttribute('aria-expanded', open);
+      btn.style.transform = open ? 'rotate(90deg)' : 'none';
     });
 
     panel.querySelectorAll('a').forEach(function(a){
       a.addEventListener('click', function(){
+        open = false;
         panel.style.display = 'none';
         panel.setAttribute('aria-hidden','true');
         btn.setAttribute('aria-expanded','false');
