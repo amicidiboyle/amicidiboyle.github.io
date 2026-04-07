@@ -141,12 +141,12 @@ body::before{content:'';position:fixed;inset:0;z-index:-1;
 /* ── CANDIDATURE ── */
 .clist{display:flex;flex-direction:column;gap:8px;margin-bottom:28px}
 .cc{background:var(--surf);border:1px solid var(--bdr);border-radius:var(--r);
-  padding:16px 18px;display:flex;align-items:flex-start;gap:14px;
+  padding:16px 18px;display:grid;grid-template-columns:minmax(0,1fr) 156px;align-items:start;gap:14px;
   transition:border-color .2s,transform .2s,opacity .2s}
 .cc:hover{border-color:var(--bdr2)}
 .cc--r{border-left:3px solid rgba(77,166,255,.5)}
 .cc--a{border-left:3px solid rgba(61,255,192,.45)}
-.cbody{flex:1;min-width:0}
+.cbody{min-width:0;position:relative;z-index:1}
 .cname{font-size:.95rem;font-weight:700;margin-bottom:2px}
 .cmeta{font-size:.74rem;color:var(--muted);display:flex;flex-wrap:wrap;gap:4px 12px}
 .cdate{font-size:.65rem;color:var(--soft);margin-top:2px}
@@ -156,7 +156,8 @@ body::before{content:'';position:fixed;inset:0;z-index:-1;
 .cdet p strong{color:var(--text);margin-right:4px}
 .cdet a{color:var(--cyan2);text-decoration:none}.cdet a:hover{text-decoration:underline}
 .cdet code{font-family:'DM Mono',monospace;color:var(--green);font-size:.82em}
-.cacts{display:flex;flex-direction:column;gap:5px;flex-shrink:0}
+.cacts{display:flex;flex-direction:column;gap:5px;flex-shrink:0;position:relative;z-index:4;pointer-events:auto}
+.cacts .btn-sm,.mi-acts .btn-sm{pointer-events:auto;position:relative;z-index:5}
 
 /* ── MEMBRI LIST ── */
 .mlist{display:flex;flex-direction:column;gap:6px}
@@ -279,7 +280,7 @@ body::before{content:'';position:fixed;inset:0;z-index:-1;
 @media(max-width:560px){
   .stats-grid{grid-template-columns:1fr}
   .abox{padding:22px 16px 20px}
-  .cc{flex-direction:column}
+  .cc{display:flex;flex-direction:column}
   .cacts{flex-direction:row;flex-wrap:wrap}
 }
 </style>
@@ -695,12 +696,13 @@ function renderList(el, list, m){
         </div>
       </div>
       <div class="cacts">
-        <button class="btn-sm" type="button" data-action="details" data-sid="${sid}">Dettagli</button>
-        <button class="btn-sm btn-sm--${m==='rete'?'blue':'green'}" type="button" data-action="approve" data-sid="${sid}" data-mode="${m}" data-idx="${i}">✓ Approva</button>
-        ${m==='rete'?`<button class="btn-sm btn-sm--gold" type="button" data-action="shift" data-sid="${sid}" data-mode="${m}" data-idx="${i}">→ Amici</button>`:''}
-        <button class="btn-sm btn-sm--red" type="button" data-action="reject" data-sid="${sid}" data-mode="${m}" data-idx="${i}">✕ Rifiuta</button>
-        <button class="btn-sm btn-sm--gold" type="button" data-action="test" data-sid="${sid}" data-mode="${m}" title="Candidatura di test — sposta nel cestino">🧪 Test</button>
-        <button class="btn-sm" type="button" data-action="trash" data-sid="${sid}" data-mode="${m}" style="opacity:.8;font-size:.72rem">🗑 Archivia</button>
+        <button class="btn-sm" type="button" onclick="togDet('${sid}')">Dettagli</button>
+        <button class="btn-sm btn-sm--${m==='rete'?'blue':'green'}"
+          onclick='openApp(${JSON.stringify({name,email,role,aff,focus,city,li,pres,motiv,bg,mode:m,sid,idx:i})})'>✓ Approva</button>
+        ${m==='rete'?`<button class="btn-sm btn-sm--gold" onclick='shiftAmici(${JSON.stringify({name,email,pres,motiv,sid,idx:i})})'>→ Amici</button>`:''}
+        <button class="btn-sm btn-sm--red" onclick='rejectC(${JSON.stringify({name,email,mode:m,sid,idx:i})})'>✕ Rifiuta</button>
+        <button class="btn-sm btn-sm--gold" type="button" onclick="marcaTest('${sid}','${m}',this)" title="Candidatura di test — sposta nell'archivio">🧪 Test</button>
+        <button class="btn-sm" type="button" onclick="delSub('${sid}','${m}',this)" style="opacity:.9;font-size:.72rem">🗂 Archivia</button>
       </div>`;
     el.appendChild(c);
   });
@@ -730,34 +732,6 @@ function showToast(msg){
 }
 
 
-['rL','aL'].forEach(listId=>{
-  document.addEventListener('click', (e)=>{
-    const btn = e.target.closest('#'+listId+' [data-action]');
-    if(!btn) return;
-    const action = btn.dataset.action;
-    const sid = btn.dataset.sid;
-    const m = btn.dataset.mode || (listId==='rL' ? 'rete' : 'amici');
-    const idx = Number(btn.dataset.idx || 0);
-    if(action==='details'){ togDet(sid); return; }
-    if(action==='test'){ marcaTest(sid, m, btn); showToast('Candidatura archiviata come test'); return; }
-    if(action==='trash'){ delSub(sid, m, btn); showToast('Candidatura archiviata'); return; }
-    if(action==='approve'){
-      const payload = getCardPayloadById(sid, m);
-      if(payload) openApp({...payload, idx});
-      return;
-    }
-    if(action==='shift'){
-      const payload = getCardPayloadById(sid, m);
-      if(payload) shiftAmici({...payload, idx});
-      return;
-    }
-    if(action==='reject'){
-      const payload = getCardPayloadById(sid, m);
-      if(payload) rejectC({...payload, idx});
-      return;
-    }
-  });
-});
 
 // ═══ ARCHIVIO CANDIDATURE ═══
 // Workflow reale: le candidature già viste vengono archiviate e non devono più ricomparire
