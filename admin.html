@@ -184,6 +184,18 @@ body::before{content:'';position:fixed;inset:0;z-index:-1;
 .warn-box p:first-child{font-size:.78rem;color:var(--orange);font-weight:700;margin-bottom:3px}
 .warn-box p{font-size:.74rem;color:var(--muted)}
 
+
+.cbody{position:relative;z-index:1}
+.cacts{position:relative;z-index:3}
+.cacts .btn-sm{pointer-events:auto}
+@media(min-width:901px){
+  .cc{align-items:stretch}
+  .cacts{justify-content:flex-start;min-width:126px}
+}
+.toast-wrap{position:fixed;right:18px;bottom:18px;z-index:1200;display:flex;flex-direction:column;gap:8px}
+.toast{background:rgba(5,16,44,.96);border:1px solid var(--bdr2);color:var(--text);padding:10px 14px;border-radius:12px;box-shadow:var(--shadow);font-size:.82rem;animation:toastIn .18s ease-out}
+@keyframes toastIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
 /* ── MODAL ── */
 .ov{position:fixed;inset:0;z-index:400;background:rgba(1,5,16,.9);
   backdrop-filter:blur(12px);display:none;align-items:center;justify-content:center;padding:20px}
@@ -398,16 +410,16 @@ body::before{content:'';position:fixed;inset:0;z-index:-1;
     <!-- ═ CESTINO ═ -->
     <div class="page" id="p-cest">
       <div class="sec-hd">
-        <h2>🗑 Cestino candidature</h2>
+        <h2>🗑 Archivio candidature</h2>
         <span class="badge" id="cestBadge" style="background:rgba(255,90,106,.08);color:var(--red);border-color:rgba(255,90,106,.2)">0 elementi</span>
-        <button class="btn-sm btn-sm--red" onclick="svuotaCestino()">🗑 Svuota tutto</button>
+        <button class="btn-sm btn-sm--red" onclick="svuotaCestino()">🗑 Pulisci vista</button>
         <button class="btn-sm" onclick="renderCestino()">↻ Aggiorna</button>
       </div>
       <div class="warn-box" style="margin-bottom:14px">
         <p>ℹ Archivio candidature</p>
         <p>Qui finiscono le candidature già gestite. Non tornano nelle liste nuove finché non le ripristini. Svuotare il cestino rimuove solo la vista del cestino: le candidature restano archiviate.</p>
       </div>
-      <div class="clist" id="cestList"><div class="empty">Il cestino è vuoto.</div></div>
+      <div class="clist" id="cestList"><div class="empty">Nessuna candidatura archiviata.</div></div>
     </div>
 
     <!-- ═ LOG ═ -->
@@ -484,6 +496,8 @@ body::before{content:'';position:fixed;inset:0;z-index:-1;
     </div>
   </div>
 </div>
+
+<div class="toast-wrap" id="toastWrap" aria-live="polite"></div>
 
 <script>
 // ═══ CONFIG ═══
@@ -681,19 +695,69 @@ function renderList(el, list, m){
         </div>
       </div>
       <div class="cacts">
-        <button class="btn-sm" onclick="togDet('${sid}')">Dettagli</button>
-        <button class="btn-sm btn-sm--${m==='rete'?'blue':'green'}"
-          onclick='openApp(${JSON.stringify({name,email,role,aff,focus,city,li,pres,motiv,bg,mode:m,sid,idx:i})})'>✓ Approva</button>
-        ${m==='rete'?`<button class="btn-sm btn-sm--gold" onclick='shiftAmici(${JSON.stringify({name,email,pres,motiv,sid,idx:i})})'>→ Amici</button>`:''}
-        <button class="btn-sm btn-sm--red" onclick='rejectC(${JSON.stringify({name,email,mode:m,sid,idx:i})})'>✕ Rifiuta</button>
-        <button class="btn-sm btn-sm--gold" onclick="marcaTest('${sid}','${m}',this)" title="Candidatura di test — sposta nel cestino">🧪 Test</button>
-        <button class="btn-sm" onclick="delSub('${sid}','${m}',this)" style="opacity:.4;font-size:.68rem">🗑 Cestino</button>
+        <button class="btn-sm" type="button" data-action="details" data-sid="${sid}">Dettagli</button>
+        <button class="btn-sm btn-sm--${m==='rete'?'blue':'green'}" type="button" data-action="approve" data-sid="${sid}" data-mode="${m}" data-idx="${i}">✓ Approva</button>
+        ${m==='rete'?`<button class="btn-sm btn-sm--gold" type="button" data-action="shift" data-sid="${sid}" data-mode="${m}" data-idx="${i}">→ Amici</button>`:''}
+        <button class="btn-sm btn-sm--red" type="button" data-action="reject" data-sid="${sid}" data-mode="${m}" data-idx="${i}">✕ Rifiuta</button>
+        <button class="btn-sm btn-sm--gold" type="button" data-action="test" data-sid="${sid}" data-mode="${m}" title="Candidatura di test — sposta nel cestino">🧪 Test</button>
+        <button class="btn-sm" type="button" data-action="trash" data-sid="${sid}" data-mode="${m}" style="opacity:.8;font-size:.72rem">🗑 Archivia</button>
       </div>`;
     el.appendChild(c);
   });
 }
 
 function togDet(sid){document.getElementById('cd-'+sid)?.classList.toggle('on')}
+
+function getCardPayloadById(sid, m){
+  const s = findSubById(sid);
+  if(!s) return null;
+  const d = s.data||{};
+  return {
+    name:d.nome||'—', email:d.email||'—', role:d.ruolo||'', aff:d.affiliazione||'', focus:d.focus||'',
+    city:d.citta||'', li:d.linkedin||'', pres:d.presentazione||'', motiv:d.motivazione||'',
+    bg:BG_MAP[d.background]||d.background||'', mode:m, sid
+  };
+}
+function showToast(msg){
+  const wrap=document.getElementById('toastWrap');
+  if(!wrap) return;
+  const el=document.createElement('div');
+  el.className='toast';
+  el.textContent=msg;
+  wrap.appendChild(el);
+  setTimeout(()=>{ el.style.opacity='0'; el.style.transform='translateY(6px)'; el.style.transition='all .18s'; },1800);
+  setTimeout(()=>el.remove(), 2100);
+}
+
+
+['rL','aL'].forEach(listId=>{
+  document.addEventListener('click', (e)=>{
+    const btn = e.target.closest('#'+listId+' [data-action]');
+    if(!btn) return;
+    const action = btn.dataset.action;
+    const sid = btn.dataset.sid;
+    const m = btn.dataset.mode || (listId==='rL' ? 'rete' : 'amici');
+    const idx = Number(btn.dataset.idx || 0);
+    if(action==='details'){ togDet(sid); return; }
+    if(action==='test'){ marcaTest(sid, m, btn); showToast('Candidatura archiviata come test'); return; }
+    if(action==='trash'){ delSub(sid, m, btn); showToast('Candidatura archiviata'); return; }
+    if(action==='approve'){
+      const payload = getCardPayloadById(sid, m);
+      if(payload) openApp({...payload, idx});
+      return;
+    }
+    if(action==='shift'){
+      const payload = getCardPayloadById(sid, m);
+      if(payload) shiftAmici({...payload, idx});
+      return;
+    }
+    if(action==='reject'){
+      const payload = getCardPayloadById(sid, m);
+      if(payload) rejectC({...payload, idx});
+      return;
+    }
+  });
+});
 
 // ═══ ARCHIVIO CANDIDATURE ═══
 // Workflow reale: le candidature già viste vengono archiviate e non devono più ricomparire
@@ -768,13 +832,17 @@ function pushToCestino(sub, m, isTest=false){
 function delSub(sid, m, btn){
   const sub = findSubById(sid);
   if(!sub) return;
-  pushToCestino(sub, m, false);
+  const card = btn?.closest?.('.cc');
+  if(card){ card.style.opacity='0'; card.style.transform='translateX(18px)'; card.style.transition='all .18s'; }
+  setTimeout(()=>pushToCestino(sub, m, false), 120);
 }
 
 function marcaTest(sid, m, btn){
   const sub = findSubById(sid);
   if(!sub) return;
-  pushToCestino(sub, m, true);
+  const card = btn?.closest?.('.cc');
+  if(card){ card.style.opacity='0'; card.style.transform='translateX(18px)'; card.style.transition='all .18s'; }
+  setTimeout(()=>pushToCestino(sub, m, true), 120);
 }
 
 function renderCestino(){
