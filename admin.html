@@ -524,6 +524,14 @@ function goto(id, el){
 async function init(){
   buildTags();
   updateCestBadge();
+  try{
+    const ghIds = await loadGhBlacklist();
+    if(ghIds && ghIds.length){
+      const local = JSON.parse(localStorage.getItem('boyle_blacklist')||'[]');
+      const merged = [...new Set([...local, ...ghIds])];
+      localStorage.setItem('boyle_blacklist', JSON.stringify(merged));
+    }
+  }catch(e){ console.warn('loadGhBlacklist init:', e) }
   try{ await Promise.all([loadMembers(), loadFS()]); }catch(e){console.warn(e)}
   renderStats(); renderDashLists();
 }
@@ -672,13 +680,51 @@ function togDet(sid){document.getElementById('cd-'+sid)?.classList.toggle('on')}
 // ═══ CESTINO + BLACKLIST ═══
 function saveCestino(){
   localStorage.setItem('boyle_cestino', JSON.stringify(cestino));
-  const ids = cestino.map(c=>c._realId).filter(Boolean);
-  localStorage.setItem('boyle_blacklist', JSON.stringify(ids));
 }
 
 function getBlacklist(){
   const ids = JSON.parse(localStorage.getItem('boyle_blacklist')||'[]');
   return new Set(ids);
+}
+
+// ═══ GITHUB BLACKLIST ═══
+async function loadGhBlacklist(){
+  try{
+    const r = await fetch('https://api.github.com/repos/'+GH_REPO+'/contents/boyle-blacklist.json',{headers:GH_H});
+    if(r.status===404) return [];
+    if(!r.ok) throw new Error('HTTP '+r.status);
+    const d = await r.json();
+    return JSON.parse(atob(d.content.replace(/\n/g,'')));
+  }catch(e){ return []; }
+}
+
+async function saveGhBlacklist(ids){
+  try{
+    const content = btoa(unescape(encodeURIComponent(JSON.stringify([...new Set(ids)], null, 2))));
+    // Prova a leggere SHA esistente
+    let sha;
+    try{
+      const r = await fetch('https://api.github.com/repos/'+GH_REPO+'/contents/boyle-blacklist.json',{headers:GH_H});
+      if(r.ok){ const d=await r.json(); sha=d.sha; }
+    }catch(e){}
+    const body = {message:'Admin: aggiorna blacklist', content};
+    if(sha) body.sha = sha;
+    await fetch('https://api.github.com/repos/'+GH_REPO+'/contents/boyle-blacklist.json',
+      {method:'PUT', headers:GH_H, body:JSON.stringify(body)});
+  }catch(e){ console.warn('saveGhBlacklist:', e) }
+}
+
+async function mergeAndSaveBlacklist(newIds){
+  const local = JSON.parse(localStorage.getItem('boyle_blacklist')||'[]');
+  const merged = [...new Set([...local, ...newIds])];
+  localStorage.setItem('boyle_blacklist', JSON.stringify(merged));
+  await saveGhBlacklist(merged);
+}
+
+async function removeFromBlacklist(id){
+  const local = JSON.parse(localStorage.getItem('boyle_blacklist')||'[]').filter(x=>x!==id);
+  localStorage.setItem('boyle_blacklist', JSON.stringify(local));
+  await saveGhBlacklist(local);
 }
 
 function updateCestBadge(){
@@ -718,6 +764,7 @@ function mandaInCestino(sid, m, btn, isTest=false){
     };
     cestino.unshift(entry);
     saveCestino();
+    if(realId){ mergeAndSaveBlacklist([realId]); }
   }
 
   if(sub) subs = subs.filter(s => (s._id||s.id)!==(sub._id||sub.id));
@@ -762,7 +809,7 @@ function renderCestino(){
       </div>
       <div class="cacts">
         <button class="btn-sm btn-sm--green" onclick="ripristina(${i})">↩ Ripristina</button>
-        <button class="btn-sm btn-sm--red" onclick="eliminaDefin(${i})">✕ Elimina</button>
+        <button class="btn-sm btn-sm--red" onclick="eliminaDefin(${i},this)">✕ Elimina</button>
       </div>`;
     el.appendChild(card);
   });
@@ -772,8 +819,7 @@ async function ripristina(i){
   const s = cestino[i];
   if(!s) return;
   if(s._realId){
-    const ids = JSON.parse(localStorage.getItem('boyle_blacklist')||'[]').filter(id=>id!==s._realId);
-    localStorage.setItem('boyle_blacklist', JSON.stringify(ids));
+    await removeFromBlacklist(s._realId);
   }
   cestino.splice(i,1);
   saveCestino();
@@ -783,9 +829,11 @@ async function ripristina(i){
   await loadFS();
 }
 
-async function eliminaDefin(i){
+async function eliminaDefin(i, btn){
   const s = cestino[i];
   if(!s || !confirm('Eliminare definitivamente? Non sarà recuperabile.')) return;
+  if(btn) btn.disabled = true;
+  if(btn) btn.style.opacity = '0.5';
   const nome = s.data?.nome||'—';
 
   if(s._realId && FS_API_KEY){
@@ -808,6 +856,8 @@ async function eliminaDefin(i){
       addLog('ℹ','Rimossa dal cestino ma blacklistata (DELETE non riuscito): '+nome);
       return;
     }
+    // DELETE ok: rimuovi anche dalla blacklist
+    await removeFromBlacklist(s._realId);
   }
 
   cestino.splice(i,1);
@@ -842,7 +892,10 @@ async function svuotaCestino(){
 
   cestino = [];
   localStorage.setItem('boyle_cestino', JSON.stringify(cestino));
-  localStorage.setItem('boyle_blacklist', JSON.stringify([...idsConDeleteFail]));
+  const current = JSON.parse(localStorage.getItem('boyle_blacklist')||'[]');
+  const merged = [...new Set([...current.filter(id=>!idsConDeleteOk.has(id)), ...idsConDeleteFail])];
+  localStorage.setItem('boyle_blacklist', JSON.stringify(merged));
+  await saveGhBlacklist(merged);
 
   updateCestBadge();
   renderCestino();
