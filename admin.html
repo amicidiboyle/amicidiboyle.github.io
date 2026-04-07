@@ -307,22 +307,22 @@ body::before{content:'';position:fixed;inset:0;z-index:-1;
   <nav class="sidebar">
     <div class="nav-section">
       <div class="nav-label">Dashboard</div>
-      <button class="nav-btn active" onclick="goto('dash')"><span class="ico">📊</span>Panoramica</button>
+      <button class="nav-btn active" onclick="goto('dash',this)"><span class="ico">📊</span>Panoramica</button>
     </div>
     <div class="nav-section">
       <div class="nav-label">Candidature</div>
-      <button class="nav-btn" onclick="goto('cret')"><span class="ico">🔵</span>Rete<span class="nav-badge" id="nb-r">0</span></button>
-      <button class="nav-btn" onclick="goto('cami')"><span class="ico">🟢</span>Amici<span class="nav-badge" id="nb-a">0</span></button>
+      <button class="nav-btn" onclick="goto('cret',this)"><span class="ico">🔵</span>Rete<span class="nav-badge" id="nb-r">0</span></button>
+      <button class="nav-btn" onclick="goto('cami',this)"><span class="ico">🟢</span>Amici<span class="nav-badge" id="nb-a">0</span></button>
     </div>
     <div class="nav-section">
       <div class="nav-label">Gestione</div>
-      <button class="nav-btn" onclick="goto('mret')"><span class="ico">👥</span>Membri Rete</button>
-      <button class="nav-btn" onclick="goto('mami')"><span class="ico">🤝</span>Amici approvati</button>
+      <button class="nav-btn" onclick="goto('mret',this)"><span class="ico">👥</span>Membri Rete</button>
+      <button class="nav-btn" onclick="goto('mami',this)"><span class="ico">🤝</span>Amici approvati</button>
     </div>
     <div class="nav-section">
       <div class="nav-label">Sistema</div>
-      <button class="nav-btn" onclick="goto('cest')"><span class="ico">🗑</span>Cestino<span class="nav-badge" id="nb-cest" style="background:rgba(255,90,106,.12);color:var(--red)">0</span></button>
-      <button class="nav-btn" onclick="goto('log')"><span class="ico">📋</span>Log attività</button>
+      <button class="nav-btn" onclick="goto('cest',this)"><span class="ico">🗑</span>Cestino<span class="nav-badge" id="nb-cest" style="background:rgba(255,90,106,.12);color:var(--red)">0</span></button>
+      <button class="nav-btn" onclick="goto('log',this)"><span class="ico">📋</span>Log attività</button>
     </div>
   </nav>
 
@@ -340,13 +340,13 @@ body::before{content:'';position:fixed;inset:0;z-index:-1;
 
       <div class="sec-hd">
         <h2>Ultimi aggiunti alla Rete</h2>
-        <button class="btn-sm btn-sm--blue" onclick="goto('mret')">Vedi tutti →</button>
+        <button class="btn-sm btn-sm--blue" onclick="goto('mret',this)">Vedi tutti →</button>
       </div>
       <div class="mlist" id="rLL" style="margin-bottom:24px"></div>
 
       <div class="sec-hd">
         <h2>Ultimi Amici approvati</h2>
-        <button class="btn-sm btn-sm--green" onclick="goto('mami')">Vedi tutti →</button>
+        <button class="btn-sm btn-sm--green" onclick="goto('mami',this)">Vedi tutti →</button>
       </div>
       <div class="mlist" id="aLL"></div>
     </div>
@@ -404,8 +404,8 @@ body::before{content:'';position:fixed;inset:0;z-index:-1;
         <button class="btn-sm" onclick="renderCestino()">↻ Aggiorna</button>
       </div>
       <div class="warn-box" style="margin-bottom:14px">
-        <p>ℹ Candidature nel cestino</p>
-        <p>Vengono rimosse dalla lista candidature attive. Puoi ripristinarle o eliminarle definitivamente. I dati sono salvati localmente nel browser.</p>
+        <p>ℹ Archivio candidature</p>
+        <p>Qui finiscono le candidature già gestite. Non tornano nelle liste nuove finché non le ripristini. Svuotare il cestino rimuove solo la vista del cestino: le candidature restano archiviate.</p>
       </div>
       <div class="clist" id="cestList"><div class="empty">Il cestino è vuoto.</div></div>
     </div>
@@ -535,12 +535,11 @@ document.getElementById('lob').onclick=()=>{sessionStorage.removeItem('ba');loca
 if(sessionStorage.getItem('ba')==='1') showApp();
 
 // ═══ NAVIGATION ═══
-function goto(id){
+function goto(id, el){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('on'));
   document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
   document.getElementById('p-'+id)?.classList.add('on');
-  const ev = window.event;
-  ev?.currentTarget?.classList?.add('active');
+  if(el && el.classList) el.classList.add('active');
   if(id==='mret') renderMembersPage();
   if(id==='mami') renderAmiciPage();
   if(id==='cest') renderCestino();
@@ -781,7 +780,7 @@ function marcaTest(sid, m, btn){
 function renderCestino(){
   updateCestBadge();
   const el = document.getElementById('cestList');
-  if(!cestino.length){ el.innerHTML='<div class="empty">Il cestino è vuoto. ✓</div>'; return; }
+  if(!cestino.length){ el.innerHTML='<div class="empty">Nessuna candidatura archiviata. ✓</div>'; return; }
   el.innerHTML='';
   cestino.forEach((s,i)=>{
     const d = s.data||{};
@@ -806,7 +805,7 @@ function renderCestino(){
       </div>
       <div class="cacts">
         <button class="btn-sm btn-sm--green" onclick="ripristina(${i})">↩ Ripristina</button>
-        <button class="btn-sm btn-sm--red" onclick="eliminaDefin(${i})">✕ Elimina dal cestino</button>
+        <button class="btn-sm btn-sm--red" onclick="eliminaDefin(${i})">✕ Rimuovi dal cestino</button>
       </div>`;
     el.appendChild(card);
   });
