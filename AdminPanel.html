@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Boyle Admin</title>
+  <style>
+    :root{
+      --bg:#050d1a;--surf:rgba(8,20,48,.88);--bdr:rgba(100,180,255,.12);--bdr2:rgba(100,180,255,.26);
+      --text:#e8f4ff;--muted:rgba(232,244,255,.55);--soft:rgba(232,244,255,.28);
+      --blue:#4da6ff;--green:#3dffc0;--orange:#ffb84d;--red:#ff5a6a;--gold:#ffd166;--cyan:#5be5ff;
+      --shadow:0 12px 40px rgba(0,0,0,.42);--r:14px;--rsm:8px;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+    body::before{content:"";position:fixed;inset:0;z-index:-1;background:
+      radial-gradient(ellipse 130% 60% at 5% 0%,rgba(0,70,200,.2),transparent 50%),
+      radial-gradient(ellipse 80% 80% at 95% 100%,rgba(0,160,130,.12),transparent 50%),
+      radial-gradient(ellipse 60% 40% at 50% 50%,rgba(0,40,120,.08),transparent 60%)}
+    header{position:sticky;top:0;background:rgba(3,10,28,.95);backdrop-filter:blur(22px);border-bottom:1px solid var(--bdr);padding:0 20px;display:flex;align-items:center;gap:12px;min-height:56px;z-index:20}
+    header strong{font-size:.9rem} header small{font-size:.62rem;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+    .hsp{flex:1}.pill{padding:3px 10px;border-radius:999px;font-size:.68rem;background:rgba(61,255,192,.08);border:1px solid rgba(61,255,192,.2);color:var(--green)}
+    .main{max-width:1160px;margin:0 auto;padding:18px}
+    .stats{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:16px}
+    .sc{background:var(--surf);border:1px solid var(--bdr);border-radius:12px;padding:14px 16px}
+    .sv{font-size:1.8rem;font-weight:700;line-height:1}.sl{font-size:.64rem;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-top:2px}
+    .toolbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:12px}
+    .tab,.btn{padding:7px 14px;border-radius:999px;border:1px solid var(--bdr);background:none;color:var(--muted);font:600 .76rem system-ui,sans-serif;cursor:pointer}
+    .tab:hover,.btn:hover{border-color:var(--bdr2);color:var(--text)}
+    .tab.on{background:rgba(77,166,255,.12);border-color:rgba(77,166,255,.32);color:var(--blue)}
+    .btn-blue{background:rgba(77,166,255,.10);border-color:rgba(77,166,255,.28);color:var(--blue)}
+    .btn-green{background:rgba(61,255,192,.08);border-color:rgba(61,255,192,.22);color:var(--green)}
+    .btn-red{background:rgba(255,90,106,.06);border-color:rgba(255,90,106,.2);color:var(--red)}
+    .btn-gold{background:rgba(255,209,102,.08);border-color:rgba(255,209,102,.2);color:var(--gold)}
+    .btn:disabled{opacity:.45;cursor:default}
+    .search{width:100%;margin-bottom:12px;padding:10px 14px;border-radius:10px;border:1px solid var(--bdr);background:var(--surf);color:var(--text);font-size:.82rem}
+    .search:focus{outline:none;border-color:var(--bdr2)}
+    .layout{display:grid;grid-template-columns:1fr;gap:12px}
+    .list{display:flex;flex-direction:column;gap:10px}
+    .card{display:grid;grid-template-columns:minmax(0,1fr) 150px;gap:14px;background:var(--surf);border:1px solid var(--bdr);border-radius:14px;padding:15px 16px;transition:border-color .15s,transform .15s,opacity .15s}
+    .card:hover{border-color:var(--bdr2)}
+    .card.rete{border-left:3px solid rgba(77,166,255,.5)}
+    .card.amici{border-left:3px solid rgba(61,255,192,.45)}
+    .cname{font-size:.98rem;font-weight:700;margin-bottom:2px}
+    .cmeta{display:flex;flex-wrap:wrap;gap:5px 12px;font-size:.72rem;color:var(--muted)}
+    .cdate{font-size:.62rem;color:var(--soft);margin-top:2px}
+    .badge{display:inline-flex;align-items:center;padding:2px 8px;border-radius:999px;font-size:.60rem;font-weight:700}
+    .b-att{background:rgba(255,184,77,.1);border:1px solid rgba(255,184,77,.2);color:var(--orange)}
+    .b-app{background:rgba(61,255,192,.08);border:1px solid rgba(61,255,192,.2);color:var(--green)}
+    .b-arc{background:rgba(232,244,255,.05);border:1px solid rgba(232,244,255,.10);color:rgba(232,244,255,.45)}
+    .b-rif{background:rgba(255,90,106,.06);border:1px solid rgba(255,90,106,.16);color:var(--red)}
+    .cdet{display:none;margin-top:10px;padding-top:10px;border-top:1px solid rgba(100,180,255,.08);font-size:.74rem;color:var(--muted);line-height:1.7}
+    .cdet.on{display:block}.cdet b{color:var(--text)} .cdet a{color:#9ee8ff;text-decoration:none}
+    .cacts{display:flex;flex-direction:column;gap:6px;align-items:stretch}
+    .empty,.loading{padding:30px;border:1px dashed var(--bdr);border-radius:12px;text-align:center;color:var(--soft)}
+    .section{display:none}.section.on{display:block}
+    .warn{background:rgba(255,180,70,.06);border:1px solid rgba(255,180,70,.2);border-radius:12px;padding:14px 16px;font-size:.75rem;color:var(--muted);margin-bottom:12px}
+    .warn b{color:var(--orange)}
+    .mcard{display:flex;gap:12px;align-items:center;background:var(--surf);border:1px solid var(--bdr);border-radius:12px;padding:12px 14px}
+    .mcard img{width:42px;height:42px;border-radius:50%;object-fit:cover;border:1px solid var(--bdr2);background:rgba(77,166,255,.1)}
+    .mmeta{flex:1;min-width:0}.mname{font-size:.86rem;font-weight:700}.mrole{font-size:.72rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .mtags{display:flex;gap:4px;flex-wrap:wrap;margin-top:4px}.tag{font-size:.60rem;border-radius:999px;padding:2px 7px;background:rgba(77,166,255,.10);border:1px solid rgba(77,166,255,.2);color:#9ee8ff}
+    .toastWrap{position:fixed;right:18px;bottom:18px;display:flex;flex-direction:column;gap:8px;z-index:200}
+    .toast{background:rgba(5,16,44,.96);border:1px solid var(--bdr2);color:var(--text);padding:10px 14px;border-radius:12px;box-shadow:var(--shadow);font-size:.82rem}
+    .modalBg{display:none;position:fixed;inset:0;background:rgba(1,5,16,.88);backdrop-filter:blur(8px);z-index:150;align-items:center;justify-content:center;padding:20px}
+    .modalBg.on{display:flex}
+    .modal{background:rgba(5,16,44,.98);border:1px solid var(--bdr2);border-radius:18px;padding:24px;max-width:620px;width:100%;max-height:90vh;overflow:auto;box-shadow:var(--shadow)}
+    .modal h3{font-size:1rem;margin-bottom:4px}.msub{font-size:.78rem;color:var(--muted);margin-bottom:14px}
+    .grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .field{display:flex;flex-direction:column;gap:4px}.field label{font-size:.64rem;color:#9ee8ff;text-transform:uppercase;letter-spacing:.08em;font-weight:700}
+    .field input{padding:9px 12px;border-radius:8px;border:1px solid var(--bdr);background:rgba(0,14,44,.8);color:var(--text)}
+    .field input:focus{outline:none;border-color:var(--bdr2)}
+    .preview{margin:12px 0;background:rgba(4,18,46,.82);border:1px solid var(--bdr2);border-radius:16px;padding:14px 16px}
+    .preview .name{font-size:1rem;font-weight:700}.preview .sub{font-size:.76rem;color:var(--muted);margin-top:3px}.preview .row{font-size:.72rem;color:var(--soft);margin-top:6px}
+    .codebox{font-family:ui-monospace,SFMono-Regular,monospace;color:var(--cyan);background:rgba(91,229,255,.06);border:1px solid rgba(91,229,255,.16);border-radius:8px;padding:10px 12px;margin-top:10px}
+    .actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+    .log{display:flex;flex-direction:column;gap:8px}
+    .logItem{display:flex;justify-content:space-between;gap:12px;background:var(--surf);border:1px solid var(--bdr);border-radius:10px;padding:10px 12px;font-size:.74rem}
+    @media(max-width:900px){.stats{grid-template-columns:1fr 1fr}.card{grid-template-columns:1fr}.cacts{flex-direction:row;flex-wrap:wrap}.grid2{grid-template-columns:1fr}}
+    @media(max-width:560px){.stats{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+<header>
+  <strong>Gli Amici di Boyle</strong>
+  <small>Admin Google Sheets</small>
+  <div class="hsp"></div>
+  <span class="pill" id="pill">Caricamento…</span>
+</header>
+
+<div class="main">
+  <div class="stats">
+    <div class="sc"><div class="sv" id="sAtt">—</div><div class="sl">In attesa</div></div>
+    <div class="sc"><div class="sv" id="sApp" style="color:var(--green)">—</div><div class="sl">Approvati</div></div>
+    <div class="sc"><div class="sv" id="sRet" style="color:var(--blue)">—</div><div class="sl">Rete</div></div>
+    <div class="sc"><div class="sv" id="sAmi" style="color:var(--gold)">—</div><div class="sl">Amici</div></div>
+    <div class="sc"><div class="sv" id="sArc" style="color:var(--orange)">—</div><div class="sl">Archivio/Rifiuti</div></div>
+  </div>
+
+  <div class="toolbar">
+    <button class="tab on" data-filter="attesa">In attesa</button>
+    <button class="tab" data-filter="rete">Rete</button>
+    <button class="tab" data-filter="amici">Amici</button>
+    <button class="tab" data-filter="archiviati">Archivio</button>
+    <button class="tab" data-filter="approvati">Approvati</button>
+    <button class="tab" data-filter="all">Tutti</button>
+    <button class="tab" data-filter="membri">Membri rete</button>
+    <button class="btn" id="btnRefresh" style="margin-left:auto">↻ Aggiorna</button>
+    <button class="btn btn-blue" id="btnManual">+ Aggiungi membro</button>
+  </div>
+
+  <input class="search" id="searchBox" type="text" placeholder="Cerca per nome, email, ruolo, città…">
+
+  <section class="section on" id="secList">
+    <div class="list" id="list"><div class="loading">Caricamento candidature…</div></div>
+  </section>
+
+  <section class="section" id="secMembri">
+    <div class="list" id="membriList"><div class="loading">Caricamento membri GitHub…</div></div>
+  </section>
+
+  <section class="section" id="secLog">
+    <div class="log" id="logList"></div>
+  </section>
+</div>
+
+<div class="toastWrap" id="toastWrap"></div>
+
+<div class="modalBg" id="modalBg">
+  <div class="modal">
+    <h3 id="modalTitle">Approva candidatura</h3>
+    <div class="msub" id="modalSub"></div>
+
+    <div id="approveWrap" style="display:none">
+      <div class="preview">
+        <div class="name" id="pvName">Nome Cognome</div>
+        <div class="sub" id="pvSubtitle">Ruolo / Affiliazione / Focus</div>
+        <div class="row" id="pvRow">Città · Email</div>
+        <div class="codebox" id="pvCode">CODICE</div>
+        <div class="row" id="pvFile"></div>
+      </div>
+      <div class="actions">
+        <button class="btn btn-blue" id="btnConfirmApprove">Conferma approvazione</button>
+        <button class="btn" id="btnCloseModal1">Chiudi</button>
+      </div>
+      <div class="row" id="approveMsg" style="margin-top:10px;color:var(--muted)"></div>
+    </div>
+
+    <div id="manualWrap" style="display:none">
+      <div class="grid2">
+        <div class="field"><label>Nome</label><input id="mNome"></div>
+        <div class="field"><label>Email</label><input id="mEmail"></div>
+        <div class="field"><label>Ruolo</label><input id="mRuolo"></div>
+        <div class="field"><label>Affiliazione</label><input id="mAff"></div>
+        <div class="field"><label>Focus</label><input id="mFocus"></div>
+        <div class="field"><label>Città</label><input id="mCitta"></div>
+      </div>
+      <div class="field" style="margin-top:10px"><label>LinkedIn</label><input id="mLinkedin"></div>
+      <div class="preview">
+        <div class="name" id="mpvName">Nome Cognome</div>
+        <div class="sub" id="mpvSubtitle">Ruolo / Affiliazione / Focus</div>
+        <div class="row" id="mpvRow">Città · Email</div>
+        <div class="row" id="mpvFile"></div>
+      </div>
+      <div class="actions">
+        <button class="btn btn-blue" id="btnCreateManual">Crea membro</button>
+        <button class="btn" id="btnCloseModal2">Chiudi</button>
+      </div>
+      <div class="row" id="manualMsg" style="margin-top:10px;color:var(--muted)"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+let ALL_ROWS = [];
+let CURRENT_FILTER = 'attesa';
+let LOGS = [];
+let APPROVE_CTX = null;
+let MEMBERS_CACHE = null;
+
+const $ = (id) => document.getElementById(id);
+
+function esc(s){
+  return String(s || '')
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
+function toast(msg){
+  const el=document.createElement('div');
+  el.className='toast';
+  el.textContent=msg;
+  $('toastWrap').appendChild(el);
+  setTimeout(()=>{el.style.opacity='0';el.style.transform='translateY(6px)';el.style.transition='all .18s';},1800);
+  setTimeout(()=>el.remove(),2100);
+}
+function log(msg){
+  LOGS.unshift({t:new Date().toLocaleTimeString('it-IT'), msg:msg});
+  if(LOGS.length>40) LOGS.pop();
+}
+function renderLog(){
+  $('logList').innerHTML = LOGS.length ? LOGS.map(x => '<div class="logItem"><span>'+esc(x.msg)+'</span><span style="color:var(--soft)">'+esc(x.t)+'</span></div>').join('') : '<div class="empty">Nessuna attività.</div>';
+}
+function setPill(text){ $('pill').textContent = text; }
+
+function statusBadge(stato){
+  const cls = stato === 'APPROVATO' ? 'b-app' : stato === 'ARCHIVIATO' ? 'b-arc' : stato === 'RIFIUTATO' ? 'b-rif' : 'b-att';
+  return '<span class="badge '+cls+'">'+esc(stato.replace('_',' '))+'</span>';
+}
+function prettyTs(ts){
+  if(!ts) return '';
+  try { return new Date(ts).toLocaleDateString('it-IT'); } catch(e) { return String(ts); }
+}
+function slugifyClient(s){
+  return String(s || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'').replace(/-{2,}/g,'-');
+}
+
+function refreshAll(){
+  $('list').innerHTML = '<div class="loading">Caricamento…</div>';
+  setPill('Caricamento…');
+  google.script.run
+    .withSuccessHandler(function(r){
+      if(!r.ok){ $('list').innerHTML = '<div class="empty">Errore: '+esc(r.error)+'</div>'; setPill('Errore'); return; }
+      ALL_ROWS = r.rows || [];
+      updateStats();
+      renderCurrent();
+      setPill('Sessione attiva');
+      log('Dati aggiornati');
+      renderLog();
+    })
+    .withFailureHandler(function(e){
+      $('list').innerHTML = '<div class="empty">Errore: '+esc(e.message)+'</div>';
+      setPill('Errore');
+    })
+    .serverGetCandidature();
+}
+
+function updateStats(){
+  const att = ALL_ROWS.filter(r => r.stato === 'IN_ATTESA').length;
+  const app = ALL_ROWS.filter(r => r.stato === 'APPROVATO').length;
+  const ret = ALL_ROWS.filter(r => r.tipo === 'rete').length;
+  const ami = ALL_ROWS.filter(r => r.tipo === 'amici').length;
+  const arc = ALL_ROWS.filter(r => r.stato === 'ARCHIVIATO' || r.stato === 'RIFIUTATO').length;
+  $('sAtt').textContent = att;
+  $('sApp').textContent = app;
+  $('sRet').textContent = ret;
+  $('sAmi').textContent = ami;
+  $('sArc').textContent = arc;
+}
+
+function getFilteredRows(){
+  const q = $('searchBox').value.trim().toLowerCase();
+  let rows = ALL_ROWS.slice();
+
+  if(CURRENT_FILTER === 'attesa') rows = rows.filter(r => r.stato === 'IN_ATTESA');
+  else if(CURRENT_FILTER === 'rete') rows = rows.filter(r => r.tipo === 'rete' && r.stato === 'IN_ATTESA');
+  else if(CURRENT_FILTER === 'amici') rows = rows.filter(r => r.tipo === 'amici' && r.stato === 'IN_ATTESA');
+  else if(CURRENT_FILTER === 'archiviati') rows = rows.filter(r => r.stato === 'ARCHIVIATO' || r.stato === 'RIFIUTATO');
+  else if(CURRENT_FILTER === 'approvati') rows = rows.filter(r => r.stato === 'APPROVATO');
+
+  if(q){
+    rows = rows.filter(r => [r.nome,r.email,r.ruolo,r.aff,r.focus,r.citta,r.noteAdmin].join(' ').toLowerCase().includes(q));
+  }
+  return rows;
+}
+
+function renderCurrent(){
+  if(CURRENT_FILTER === 'membri'){
+    $('secList').classList.remove('on');
+    $('secMembri').classList.add('on');
+    $('btnManual').style.display = '';
+    loadMembri();
+    return;
+  }
+  $('secMembri').classList.remove('on');
+  $('secList').classList.add('on');
+  $('btnManual').style.display = CURRENT_FILTER === 'membri' ? '' : 'none';
+
+  const rows = getFilteredRows();
+  const el = $('list');
+  if(!rows.length){
+    el.innerHTML = '<div class="empty">Nessun elemento in questa vista.</div>';
+    return;
+  }
+  el.innerHTML = '';
+  rows.forEach(function(r){
+    const det = [
+      r.aff ? '<div><b>Affiliazione:</b> '+esc(r.aff)+'</div>' : '',
+      r.ruolo ? '<div><b>Ruolo:</b> '+esc(r.ruolo)+'</div>' : '',
+      r.focus ? '<div><b>Focus:</b> '+esc(r.focus)+'</div>' : '',
+      r.linkedin ? '<div><b>LinkedIn:</b> <a target="_blank" href="'+esc(r.linkedin)+'">Apri profilo</a></div>' : '',
+      r.pres ? '<div><b>Presentazione:</b> '+esc(r.pres)+'</div>' : '',
+      r.motiv ? '<div><b>Motivazione:</b> '+esc(r.motiv)+'</div>' : '',
+      r.bg ? '<div><b>Background:</b> '+esc(r.bg)+'</div>' : '',
+      r.noteAdmin ? '<div><b>Note admin:</b> '+esc(r.noteAdmin)+'</div>' : '',
+      r.codice ? '<div><b>Codice:</b> '+esc(r.codice)+'</div>' : '',
+      r.id ? '<div><b>ID:</b> <code>'+esc(r.id)+'</code></div>' : ''
+    ].filter(Boolean).join('');
+
+    const card = document.createElement('div');
+    card.className = 'card ' + (r.tipo === 'rete' ? 'rete' : 'amici');
+    card.innerHTML =
+      '<div class="cbody">' +
+        '<div class="cname">'+esc(r.nome || '—')+'</div>' +
+        '<div class="cmeta">' +
+          (r.email ? '<span>✉ '+esc(r.email)+'</span>' : '') +
+          (r.ruolo ? '<span>· '+esc(r.ruolo.substring(0,55))+'</span>' : '') +
+          (r.citta ? '<span>📍 '+esc(r.citta)+'</span>' : '') +
+        '</div>' +
+        '<div class="cdate">'+esc(prettyTs(r.timestamp))+(r.dataGestione ? ' · gestita: '+esc(r.dataGestione) : '')+'</div>' +
+        '<div class="cdet" id="det_'+esc(r.id)+'">'+det+'</div>' +
+      '</div>' +
+      '<div class="cacts"></div>';
+
+    const acts = card.querySelector('.cacts');
+    const detBtn = button('Dettagli', '', () => {
+      card.querySelector('.cdet').classList.toggle('on');
+    });
+    acts.appendChild(statusPill(r.stato));
+    acts.appendChild(detBtn);
+
+    if(r.stato === 'IN_ATTESA'){
+      acts.appendChild(button('✓ Approva', 'btn-blue', () => openApproveModal(r)));
+      if(r.tipo === 'rete') acts.appendChild(button('→ Amici', 'btn-gold', () => doShiftToAmici(r)));
+      acts.appendChild(button('✕ Rifiuta', 'btn-red', () => doRifiuta(r)));
+      acts.appendChild(button('🗑 Archivia', '', () => doSetStato(r, 'ARCHIVIATO', 'Archiviato da admin', 'Candidatura archiviata')));
+    } else {
+      acts.appendChild(button('↩ Ripristina', 'btn-green', () => doSetStato(r, 'IN_ATTESA', 'Ripristinato', 'Candidatura ripristinata')));
+    }
+    acts.appendChild(button('✕ Elimina', 'btn-red', () => doDelete(r)));
+    el.appendChild(card);
+  });
+}
+
+function button(label, cls, handler){
+  const b = document.createElement('button');
+  b.className = 'btn ' + (cls || '');
+  b.textContent = label;
+  b.type = 'button';
+  b.addEventListener('click', handler);
+  return b;
+}
+function statusPill(stato){
+  const span = document.createElement('span');
+  span.className = 'badge ' + (stato === 'APPROVATO' ? 'b-app' : stato === 'ARCHIVIATO' ? 'b-arc' : stato === 'RIFIUTATO' ? 'b-rif' : 'b-att');
+  span.textContent = stato.replace('_',' ');
+  return span;
+}
+
+function openApproveModal(r){
+  APPROVE_CTX = r;
+  $('modalTitle').textContent = r.tipo === 'rete' ? 'Approva candidatura Rete' : 'Approva candidatura Amici';
+  $('modalSub').textContent = (r.nome || '—') + ' · ' + (r.email || '—');
+  $('manualWrap').style.display = 'none';
+  $('approveWrap').style.display = 'block';
+  $('approveMsg').textContent = 'Preparazione anteprima…';
+  $('modalBg').classList.add('on');
+
+  google.script.run
+    .withSuccessHandler(function(res){
+      if(!res.ok){ $('approveMsg').textContent = 'Errore: ' + res.error; return; }
+      const p = res.preview;
+      $('pvName').textContent = p.nome || 'Nome Cognome';
+      const subtitle = [p.ruolo, p.aff ? '('+p.aff+')' : '', p.focus ? 'Focus: '+p.focus : ''].filter(Boolean).join('. ');
+      $('pvSubtitle').textContent = subtitle || 'Ruolo / Affiliazione / Focus';
+      $('pvRow').textContent = [p.citta, p.email].filter(Boolean).join(' · ');
+      $('pvCode').textContent = p.codice || '—';
+      $('pvFile').textContent = p.tipo === 'rete' ? ('Foto da caricare: ' + (p.nomeFile || '—')) : 'Nessun file foto richiesto';
+      $('approveMsg').textContent = 'Controlla i dati e conferma.';
+    })
+    .withFailureHandler(function(e){
+      $('approveMsg').textContent = 'Errore: ' + e.message;
+    })
+    .serverPrepareApproval(r.id, r.tipo);
+}
+
+function confirmApprove(){
+  if(!APPROVE_CTX) return;
+  $('btnConfirmApprove').disabled = true;
+  google.script.run
+    .withSuccessHandler(function(res){
+      $('btnConfirmApprove').disabled = false;
+      if(!res.ok){ $('approveMsg').textContent = 'Errore: ' + res.error; return; }
+      toast('Approvazione completata');
+      log('Approvato: ' + res.nome + (res.ghOk === false ? ' (GitHub fallito)' : ''));
+      if(res.ghOk === false) {
+        $('approveMsg').textContent = 'Approvato, ma GitHub ha dato errore: ' + res.ghMsg;
+      } else {
+        $('approveMsg').textContent = res.tipo === 'rete'
+          ? 'Membro approvato. Codice: ' + res.codice + (res.nomeFile ? ' · Foto: ' + res.nomeFile : '')
+          : 'Amico approvato. Codice: ' + res.codice;
+      }
+      refreshAll();
+    })
+    .withFailureHandler(function(e){
+      $('btnConfirmApprove').disabled = false;
+      $('approveMsg').textContent = 'Errore: ' + e.message;
+    })
+    .serverApprova(APPROVE_CTX.id, APPROVE_CTX.tipo);
+}
+
+function doSetStato(r, stato, note, okMsg){
+  google.script.run
+    .withSuccessHandler(function(res){
+      if(!res.ok){ toast('Errore: ' + res.error); return; }
+      toast(okMsg);
+      log(okMsg + ': ' + (r.nome || '—'));
+      refreshAll();
+    })
+    .withFailureHandler(function(e){ toast('Errore: ' + e.message); })
+    .serverSetStato(r.id, stato, note);
+}
+
+function doShiftToAmici(r){
+  if(!confirm('Spostare questa candidatura negli Amici di Boyle?')) return;
+  google.script.run
+    .withSuccessHandler(function(res){
+      if(!res.ok){ toast('Errore: ' + res.error); return; }
+      toast('Spostata in Amici');
+      log('Spostata in Amici: ' + (r.nome || '—'));
+      refreshAll();
+    })
+    .withFailureHandler(function(e){ toast('Errore: ' + e.message); })
+    .serverShiftToAmici(r.id);
+}
+
+function doRifiuta(r){
+  if(!confirm('Rifiutare questa candidatura?')) return;
+  google.script.run
+    .withSuccessHandler(function(res){
+      if(!res.ok){ toast('Errore: ' + res.error); return; }
+      toast('Candidatura rifiutata');
+      log('Rifiutata: ' + (r.nome || '—'));
+      refreshAll();
+    })
+    .withFailureHandler(function(e){ toast('Errore: ' + e.message); })
+    .serverRifiuta(r.id);
+}
+
+function doDelete(r){
+  if(!confirm('Eliminare definitivamente questa candidatura dal foglio? Operazione irreversibile.')) return;
+  google.script.run
+    .withSuccessHandler(function(res){
+      if(!res.ok){ toast('Errore: ' + res.error); return; }
+      toast('Candidatura eliminata');
+      log('Eliminata: ' + (r.nome || '—'));
+      refreshAll();
+    })
+    .withFailureHandler(function(e){ toast('Errore: ' + e.message); })
+    .serverDeleteById(r.id);
+}
+
+function openManualModal(){
+  $('modalTitle').textContent = 'Aggiungi membro manuale';
+  $('modalSub').textContent = 'Crea una card direttamente nella Rete';
+  $('approveWrap').style.display = 'none';
+  $('manualWrap').style.display = 'block';
+  $('manualMsg').textContent = '';
+  ['mNome','mEmail','mRuolo','mAff','mFocus','mCitta','mLinkedin'].forEach(id => $(id).value = '');
+  updateManualPreview();
+  $('modalBg').classList.add('on');
+}
+
+function updateManualPreview(){
+  const nome = $('mNome').value.trim() || 'Nome Cognome';
+  const ruolo = $('mRuolo').value.trim();
+  const aff = $('mAff').value.trim();
+  const focus = $('mFocus').value.trim();
+  const citta = $('mCitta').value.trim();
+  const email = $('mEmail').value.trim();
+  $('mpvName').textContent = nome;
+  $('mpvSubtitle').textContent = [ruolo, aff ? '('+aff+')' : '', focus ? 'Focus: '+focus : ''].filter(Boolean).join('. ') || 'Ruolo / Affiliazione / Focus';
+  $('mpvRow').textContent = [citta, email].filter(Boolean).join(' · ') || 'Città · Email';
+  $('mpvFile').textContent = 'Foto da caricare: ' + (slugifyClient(nome) || 'membro') + '.jpg';
+}
+
+function createManualMember(){
+  const payload = {
+    nome:$('mNome').value.trim(),
+    email:$('mEmail').value.trim(),
+    ruolo:$('mRuolo').value.trim(),
+    aff:$('mAff').value.trim(),
+    focus:$('mFocus').value.trim(),
+    citta:$('mCitta').value.trim(),
+    linkedin:$('mLinkedin').value.trim()
+  };
+  if(!payload.nome){
+    $('manualMsg').textContent = 'Nome obbligatorio.';
+    return;
+  }
+  $('btnCreateManual').disabled = true;
+  google.script.run
+    .withSuccessHandler(function(res){
+      $('btnCreateManual').disabled = false;
+      if(!res.ok){ $('manualMsg').textContent = 'Errore: ' + res.error; return; }
+      $('manualMsg').textContent = 'Membro creato. Codice: ' + res.codice + ' · Foto: ' + res.nomeFile;
+      toast('Membro creato');
+      log('Membro creato manualmente: ' + res.nome);
+      loadMembri();
+    })
+    .withFailureHandler(function(e){
+      $('btnCreateManual').disabled = false;
+      $('manualMsg').textContent = 'Errore: ' + e.message;
+    })
+    .serverCreateManualMember(payload);
+}
+
+function loadMembri(){
+  $('membriList').innerHTML = '<div class="loading">Caricamento membri GitHub…</div>';
+  google.script.run
+    .withSuccessHandler(function(res){
+      if(!res.ok){ $('membriList').innerHTML = '<div class="empty">Errore: ' + esc(res.error) + '</div>'; return; }
+      MEMBERS_CACHE = res;
+      renderMembri(res.members || [], res.profiles || {});
+    })
+    .withFailureHandler(function(e){
+      $('membriList').innerHTML = '<div class="empty">Errore: ' + esc(e.message) + '</div>';
+    })
+    .serverGetMembri();
+}
+
+function renderMembri(members, profiles){
+  const el = $('membriList');
+  if(!members.length){ el.innerHTML = '<div class="empty">Nessun membro trovato.</div>'; return; }
+  el.innerHTML = '';
+  members.forEach(function(m){
+    const slug = slugifyClient(m.name || '');
+    const p = (profiles && profiles[slug]) || {};
+    const hasBio = p.bio && p.bio.trim().length > 5;
+    const hasLink = p.linkedin || p.researchgate || p.scholar || p.orcid || p.website;
+    const stato = hasBio && hasLink ? 'COMPLETO' : (hasBio || hasLink ? 'PARZIALE' : 'BASE');
+    const div = document.createElement('div');
+    div.className = 'mcard';
+    div.innerHTML =
+      '<img src="https://amicidiboyle.it/assets/rete/'+esc(m.img || 'logo.png')+'" onerror="this.src=\'https://amicidiboyle.it/assets/logo.png\'">' +
+      '<div class="mmeta">' +
+        '<div class="mname">'+esc(m.name || '—')+'</div>' +
+        '<div class="mrole">'+esc(m.role || '') + (m.city ? ' · ' + esc(m.city) : '') + (m.email ? ' · ' + esc(m.email) : '') + '</div>' +
+        ((m.tags || []).length ? '<div class="mtags">'+m.tags.map(function(t){ return '<span class="tag">'+esc(t)+'</span>'; }).join('')+'</div>' : '') +
+      '</div>' +
+      statusPill(stato);
+    el.appendChild(div);
+  });
+}
+
+function closeModal(){
+  $('modalBg').classList.remove('on');
+  APPROVE_CTX = null;
+}
+
+document.querySelectorAll('.tab').forEach(function(btn){
+  btn.addEventListener('click', function(){
+    document.querySelectorAll('.tab').forEach(x => x.classList.remove('on'));
+    btn.classList.add('on');
+    CURRENT_FILTER = btn.dataset.filter;
+    if(CURRENT_FILTER === 'membri'){
+      $('secList').classList.remove('on');
+      $('secMembri').classList.add('on');
+      $('btnManual').style.display = '';
+      loadMembri();
+    } else {
+      $('secMembri').classList.remove('on');
+      $('secList').classList.add('on');
+      $('btnManual').style.display = 'none';
+      renderCurrent();
+    }
+  });
+});
+
+$('searchBox').addEventListener('input', renderCurrent);
+$('btnRefresh').addEventListener('click', refreshAll);
+$('btnManual').addEventListener('click', openManualModal);
+$('btnConfirmApprove').addEventListener('click', confirmApprove);
+$('btnCloseModal1').addEventListener('click', closeModal);
+$('btnCloseModal2').addEventListener('click', closeModal);
+$('modalBg').addEventListener('click', function(e){ if(e.target === $('modalBg')) closeModal(); });
+['mNome','mEmail','mRuolo','mAff','mFocus','mCitta','mLinkedin'].forEach(function(id){ $(id).addEventListener('input', updateManualPreview); });
+$('btnCreateManual').addEventListener('click', createManualMember);
+
+refreshAll();
+renderLog();
+</script>
+</body>
+</html>
