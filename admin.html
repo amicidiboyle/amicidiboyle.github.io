@@ -475,7 +475,7 @@ body::before{content:'';position:fixed;inset:0;z-index:-1;
             <div class="preview-role" id="previewRole">Ruolo / qualifica</div>
             <div class="preview-row">
               <span id="previewCity">Città, Paese</span>
-              <span id="previewEmail">email@dominio.it</span>
+              <span id="previewEmail"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="fd98909c9491bd99929094939492d39489">[email&#160;protected]</a></span>
             </div>
             <div class="preview-tags" id="previewTags"><span class="preview-empty">Seleziona alcune specialità per vedere i tag.</span></div>
           </div>
@@ -499,7 +499,7 @@ body::before{content:'';position:fixed;inset:0;z-index:-1;
 
 <div class="toast-wrap" id="toastWrap" aria-live="polite"></div>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // ═══ CONFIG ═══
 const ADMIN_CODE = 'BOYLE-ADMIN-2026';
 const GH_TOKEN   = ['github_pat','_11B5YK77Y0lJDhvomks','6Sq_LMuAIP38AjYrvQuTmgsuduyUq1VBbQbcYkDU7CnEVOUV7LXPGUDcKhOkTSS'].join('');
@@ -1308,7 +1308,6 @@ document.getElementById('af-name').addEventListener('input',function(){
   const el=document.getElementById(id);
   if(el) el.addEventListener('input', renderApprovalPreview);
 });
-document.getElementById('af-foto').addEventListener('change',()=>setTimeout(renderApprovalPreview,50));
 </script>
 </body>
 </html>
