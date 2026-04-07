@@ -513,7 +513,7 @@ const BG_MAP = {
 // ═══ STATE ═══
 let mode='rete', cand=null, code='', selTags=[], members=[], profiles={};
 let approvedAmici = JSON.parse(localStorage.getItem('boyle_amici')||'[]');
-let subs=[], foto=null, dbgOn=false, isEdit=false, editSlug='';
+let subs=[], totalFormspree=0, foto=null, dbgOn=false, isEdit=false, editSlug='';
 let actLog = JSON.parse(localStorage.getItem('boyle_log')||'[]');
 
 // ═══ LOGIN ═══
@@ -539,7 +539,8 @@ function goto(id){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('on'));
   document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
   document.getElementById('p-'+id)?.classList.add('on');
-  event?.currentTarget?.classList.add('active');
+  const ev = window.event;
+  ev?.currentTarget?.classList?.add('active');
   if(id==='mret') renderMembersPage();
   if(id==='mami') renderAmiciPage();
   if(id==='cest') renderCestino();
@@ -581,13 +582,12 @@ async function loadFS(){
     if(!res.ok) throw new Error('HTTP '+res.status);
     const data = await res.json();
     document.getElementById('dbg').textContent = JSON.stringify(data,null,2).substring(0,5000);
-    // I campi Formspree sono nella RADICE della submission
     const allSubs = (data.submissions||[]).map(s=>{
       const d={};
       Object.keys(s).forEach(k=>{ if(k!=='id') d[k]=s[k]; });
       return {...s, _id: s.id, data: d};
     });
-    // Filtra subito le submission nella blacklist (cestino persistente)
+    totalFormspree = allSubs.length;
     const blacklist = getBlacklist();
     subs = allSubs.filter(s => !blacklist.has(s.id||s._id||''));
     renderCands();
@@ -696,22 +696,37 @@ function renderList(el, list, m){
 
 function togDet(sid){document.getElementById('cd-'+sid)?.classList.toggle('on')}
 
-// ═══ CESTINO + BLACKLIST ═══
-// La blacklist è la fonte di verità: contiene gli ID Formspree da escludere sempre.
-// Il cestino contiene i dati completi per mostrare la UI del cestino.
+// ═══ ARCHIVIO CANDIDATURE ═══
+// Workflow reale: le candidature già viste vengono archiviate e non devono più ricomparire
+// in home. Formspree resta l'inbox grezza; l'archivio è la verità operativa.
 let cestino = JSON.parse(localStorage.getItem('boyle_cestino')||'[]');
+let archivio = JSON.parse(localStorage.getItem('boyle_archivio')||'[]');
 
 function saveCestino(){
   localStorage.setItem('boyle_cestino', JSON.stringify(cestino));
-  // Aggiorna anche la blacklist degli ID reali
-  const ids = cestino.map(c=>c._realId).filter(Boolean);
-  localStorage.setItem('boyle_blacklist', JSON.stringify(ids));
 }
-
-// Ritorna un Set degli ID Formspree da escludere — usato in loadFS
+function saveArchivio(){
+  localStorage.setItem('boyle_archivio', JSON.stringify(archivio));
+  // compatibilità col filtro già presente in loadFS
+  localStorage.setItem('boyle_blacklist', JSON.stringify(archivio));
+}
 function getBlacklist(){
-  const ids = JSON.parse(localStorage.getItem('boyle_blacklist')||'[]');
-  return new Set(ids);
+  return new Set(archivio);
+}
+function isArchiviata(id){
+  return !!id && archivio.includes(id);
+}
+function archivia(id){
+  if(!id) return;
+  if(!archivio.includes(id)){
+    archivio.push(id);
+    saveArchivio();
+  }
+}
+function dearchivia(id){
+  if(!id) return;
+  archivio = archivio.filter(x=>x!==id);
+  saveArchivio();
 }
 
 function updateCestBadge(){
@@ -721,56 +736,46 @@ function updateCestBadge(){
   if(el) el.textContent = n+' element'+(n===1?'o':'i');
 }
 
-// Risolve la sub corretta dalla card cliccata, indipendentemente da sid
-function resolveSubFromBtn(sid, m, btn){
-  const cardEl = (btn && typeof btn.closest==='function') ? btn.closest('.cc') : null;
-  // Prima prova: sid reale (non fallback _idx_)
-  const realSid = (sid && !sid.startsWith('_idx_')) ? sid : null;
-  let sub = realSid ? subs.find(s=>(s._id||s.id)===realSid) : null;
-  // Seconda prova: posizione card nel DOM → indice nella lista filtrata
-  if(!sub && cardEl){
-    const allCards = Array.from(cardEl.parentElement?.querySelectorAll('.cc')||[]);
-    const pos = allCards.indexOf(cardEl);
-    const list = getSubList(m);
-    if(pos>=0 && pos<list.length) sub = list[pos];
-  }
-  return {sub, cardEl};
+function findSubById(id){
+  if(!id) return null;
+  return subs.find(s => (s._id||s.id) === id) || null;
 }
 
-async function mandaInCestino(sid, m, btn, isTest=false){
-  const {sub, cardEl} = resolveSubFromBtn(sid, m, btn);
-  // _realId è l'ID Formspree — la chiave della blacklist
-  const realId = sub ? (sub._id||sub.id||null) : null;
-  const tempKey = realId || ('local-'+Date.now()+'-'+Math.random().toString(36).slice(2,5));
+function pushToCestino(sub, m, isTest=false){
+  if(!sub) return false;
+  const realId = sub._id || sub.id || null;
+  if(!realId) return false;
 
-  if(!cestino.some(c=>c._realId===realId && realId)){
-    const nome = sub?.data?.nome || cardEl?.querySelector('.cname')?.textContent?.trim() || '—';
-    const entry = {
-      _realId: realId,     // ID Formspree reale (può essere null per sub senza ID)
-      _tempKey: tempKey,   // chiave unica locale
+  if(!cestino.some(c => c._realId === realId)){
+    cestino.unshift({
+      _realId: realId,
       _mode: m,
       _isTest: isTest,
       _deletedAt: new Date().toISOString(),
-      data: sub?.data || {nome}
-    };
-    cestino.unshift(entry);
-    saveCestino(); // aggiorna anche boyle_blacklist
+      data: sub.data || {}
+    });
+    saveCestino();
   }
 
-  // Rimuovi da subs in memoria
-  if(sub) subs = subs.filter(s=>(s._id||s.id)!==(sub._id||sub.id));
-
+  archivia(realId);
+  subs = subs.filter(s => (s._id||s.id)!==realId);
   updateCestBadge();
-  if(cardEl){
-    cardEl.style.opacity='0'; cardEl.style.transform='translateX(40px)'; cardEl.style.transition='all .25s';
-    setTimeout(()=>{ cardEl.remove(); renderCands(); }, 260);
-  } else { renderCands(); }
-  addLog(isTest?'🧪':'🗑', (isTest?'Test':'Candidatura')+' nel cestino: '+(sub?.data?.nome||'—'));
+  renderCands();
+  if(document.getElementById('p-cest')?.classList.contains('on')) renderCestino();
+  addLog(isTest?'🧪':'🗑', (isTest?'Test archiviata':'Candidatura archiviata')+': '+(sub.data?.nome||'—'));
+  return true;
 }
 
-// ═══ ELIMINA SUBMISSION FORMSPREE ═══
 function delSub(sid, m, btn){
-  mandaInCestino(sid, m, (btn&&typeof btn.closest==='function') ? btn : null, false);
+  const sub = findSubById(sid);
+  if(!sub) return;
+  pushToCestino(sub, m, false);
+}
+
+function marcaTest(sid, m, btn){
+  const sub = findSubById(sid);
+  if(!sub) return;
+  pushToCestino(sub, m, true);
 }
 
 function renderCestino(){
@@ -786,7 +791,6 @@ function renderCestino(){
     const mode  = s._mode||'?';
     const delAt = s._deletedAt ? new Date(s._deletedAt).toLocaleString('it-IT') : '';
     const isTest = s._isTest;
-    const hasRealId = !!s._realId;
     const card = document.createElement('div');
     card.className='cc cc--'+(mode==='rete'?'r':'a');
     if(isTest) card.style.borderLeftColor='rgba(255,209,102,.6)';
@@ -796,14 +800,13 @@ function renderCestino(){
           <span class="cname">${esc(name)}</span>
           ${isTest?'<span style="font-size:.62rem;font-weight:700;background:rgba(255,209,102,.12);color:var(--gold);border:1px solid rgba(255,209,102,.25);border-radius:999px;padding:1px 8px">TEST</span>':''}
           <span style="font-size:.62rem;color:var(--soft)">${mode==='rete'?'Rete':'Amici'}</span>
-          ${!hasRealId?'<span style="font-size:.6rem;color:var(--red);opacity:.6" title="Nessun ID Formspree — solo blacklist locale">⚠ no ID</span>':''}
         </div>
         <div class="cmeta"><span>✉ ${esc(email)}</span>${role?'<span>· '+esc(role.substring(0,50))+'</span>':''}</div>
-        <div class="cdate">Nel cestino dal: ${delAt}</div>
+        <div class="cdate">Archiviata il: ${delAt}</div>
       </div>
       <div class="cacts">
         <button class="btn-sm btn-sm--green" onclick="ripristina(${i})">↩ Ripristina</button>
-        <button class="btn-sm btn-sm--red" onclick="eliminaDefin(${i})">✕ Elimina</button>
+        <button class="btn-sm btn-sm--red" onclick="eliminaDefin(${i})">✕ Elimina dal cestino</button>
       </div>`;
     el.appendChild(card);
   });
@@ -812,63 +815,35 @@ function renderCestino(){
 function ripristina(i){
   const s = cestino[i];
   if(!s) return;
-  // Rimetti in subs in memoria (verrà ricaricata da Formspree al prossimo login)
-  if(s._realId){
-    // Rimuovi dalla blacklist — al prossimo loadFS riapparirà
-    const ids = JSON.parse(localStorage.getItem('boyle_blacklist')||'[]').filter(id=>id!==s._realId);
-    localStorage.setItem('boyle_blacklist', JSON.stringify(ids));
-    // Rimetti anche in subs ora per renderla visibile subito
-    const restored = {...s.data, _id:s._realId, id:s._realId, data:s.data};
-    subs.unshift(restored);
-  }
+  dearchivia(s._realId);
   cestino.splice(i,1);
   saveCestino();
   updateCestBadge();
   renderCestino();
-  renderCands();
   addLog('↩','Ripristinata: '+(s.data?.nome||'—'));
+  loadFS();
 }
 
 function eliminaDefin(i){
   const s = cestino[i];
-  if(!s||!confirm('Eliminare definitivamente? Non sarà recuperabile.')) return;
-  // Tenta DELETE su Formspree (piano Professional potrebbe supportarla)
-  if(s._realId && FS_API_KEY){
-    fetch('https://formspree.io/api/0/forms/'+FS_FORM_ID+'/submissions/'+s._realId,{
-      method:'DELETE', headers:{'Authorization':'Bearer '+FS_API_KEY}
-    }).then(r=>{
-      addLog(r.ok?'✓':'⚠','DELETE Formspree '+(r.ok?'riuscito':'fallito (HTTP '+r.status+')')+': '+s._realId.substring(0,10));
-    }).catch(()=>addLog('⚠','DELETE Formspree: errore rete'));
-  }
+  if(!s || !confirm('Rimuovere solo dal cestino? La candidatura resterà archiviata e non tornerà nelle nuove.')) return;
   cestino.splice(i,1);
-  saveCestino(); // aggiorna blacklist
+  saveCestino();
   updateCestBadge();
   renderCestino();
-  addLog('✕','Eliminata definitivamente: '+(s.data?.nome||'—'));
+  addLog('✕','Rimossa dal cestino (resta archiviata): '+(s.data?.nome||'—'));
 }
 
 function svuotaCestino(){
   if(!cestino.length) return;
-  if(!confirm('Svuotare tutto il cestino? ('+cestino.length+' element'+(cestino.length===1?'o':'i')+')')) return;
-  cestino.filter(s=>s._realId).forEach(s=>{
-    fetch('https://formspree.io/api/0/forms/'+FS_FORM_ID+'/submissions/'+s._realId,{
-      method:'DELETE', headers:{'Authorization':'Bearer '+FS_API_KEY}
-    }).catch(()=>{});
-  });
-  const n=cestino.length;
-  cestino=[];
+  if(!confirm('Svuotare tutto il cestino? Le candidature resteranno archiviate e non torneranno nella lista nuove.')) return;
+  const n = cestino.length;
+  cestino = [];
   saveCestino();
   updateCestBadge();
   renderCestino();
-  addLog('🗑','Cestino svuotato ('+n+' element'+(n===1?'o':'i')+')');
+  addLog('🗑','Cestino svuotato ('+n+' element'+(n===1?'o':'i')+'). Le candidature restano archiviate.');
 }
-
-// ═══ MARCA COME TEST ═══
-async function marcaTest(sid, m, btn){
-  await mandaInCestino(sid, m, (btn&&typeof btn.closest==='function') ? btn : null, true);
-}
-
-
 
 // ═══ SHIFT RETE → AMICI ═══
 function shiftAmici(c){
@@ -897,7 +872,7 @@ function renderStats(){
   document.getElementById('sR').textContent = members.length||'—';
   document.getElementById('sP').textContent = subs.length;
   document.getElementById('sA').textContent = approvedAmici.length;
-  document.getElementById('sF').textContent = subs.length;
+  document.getElementById('sF').textContent = totalFormspree||subs.length;
   document.getElementById('mRetBadge').textContent = members.length+' membri';
   document.getElementById('mAmiBadge').textContent = approvedAmici.length+' amici';
 }
