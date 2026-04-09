@@ -1,0 +1,1205 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <base target="_top">
+  <meta charset="utf-8">
+  <title>Boyle - Admin</title>
+
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+      background: #050b1a;
+      color: #f5f7ff;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      padding: 16px 24px;
+      border-bottom: 1px solid rgba(123,228,255,.2);
+      background: radial-gradient(circle at top left, #123b5f 0, #050b1a 55%);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 1.2rem;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+
+    header span {
+      font-size: .8rem;
+      opacity: .7;
+    }
+
+    main {
+      padding: 16px 24px 32px;
+    }
+
+    .login-box, .panel {
+      max-width: 1200px;
+      margin: 24px auto;
+      background: rgba(8,26,62,.9);
+      border-radius: 12px;
+      border: 1px solid rgba(123,228,255,.25);
+      padding: 20px 22px;
+      box-shadow: 0 18px 40px rgba(0,0,0,.55);
+    }
+
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px 16px;
+      align-items: center;
+      margin-bottom: 12px;
+      font-size: .8rem;
+    }
+
+    .filters select,
+    .filters input[type="text"],
+    #adminPass,
+    #reteSearch {
+      background: rgba(3,12,32,.9);
+      color: #f5f7ff;
+      border-radius: 999px;
+      border: 1px solid rgba(123,228,255,.4);
+      padding: 8px 10px;
+      font-size: .85rem;
+    }
+
+    #adminPass {
+      min-width: 280px;
+      margin-right: 8px;
+    }
+
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+    }
+
+    .stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 16px;
+      font-size: .75rem;
+      opacity: .85;
+    }
+
+    .stats span strong {
+      font-weight: 600;
+      margin-right: 2px;
+    }
+
+    .toolbar-buttons, .trash-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: .8rem;
+    }
+
+    thead {
+      background: rgba(10,32,70,.9);
+      position: sticky;
+      top: 0;
+      z-index: 1;
+    }
+
+    th, td {
+      padding: 6px 8px;
+      border-bottom: 1px solid rgba(123,228,255,.12);
+      vertical-align: top;
+    }
+
+    tr:nth-child(even) td {
+      background: rgba(4,14,34,.7);
+    }
+
+    tr:hover td {
+      background: rgba(18,52,96,.9);
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: .7rem;
+      border: 1px solid rgba(123,228,255,.4);
+      background: rgba(3,12,32,.9);
+      white-space: nowrap;
+    }
+
+    .pill.rete { color: #4fd1ff; border-color: #4fd1ff; }
+    .pill.amico { color: #ffb347; border-color: #ffb347; }
+    .pill.nuovo { color: #7be4ff; border-color: #7be4ff; }
+    .pill.ok { color: #4dffd6; border-color: #4dffd6; }
+    .pill.ko { color: #ff6b6b; border-color: #ff6b6b; }
+    .pill.archiviato { color: #c7d2fe; border-color: #c7d2fe; }
+    .pill.attesa { color: #ffd166; border-color: #ffd166; }
+
+    .small-input,
+    .small-textarea {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 4px 6px;
+      border-radius: 6px;
+      border: 1px solid rgba(123,228,255,.4);
+      background: rgba(3,12,32,.9);
+      color: #f5f7ff;
+      font-size: .75rem;
+    }
+
+    .small-textarea {
+      resize: vertical;
+      min-height: 40px;
+    }
+
+    .row-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+    }
+
+    button {
+      font-size: .78rem;
+      padding: 7px 10px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .row-actions button {
+      font-size: .7rem;
+      padding: 4px 8px;
+      border-radius: 6px;
+    }
+
+    button[disabled] {
+      opacity: .55;
+      cursor: not-allowed;
+    }
+
+    .muted { opacity: .6; }
+
+    .status-msg {
+      margin-top: 8px;
+      font-size: .8rem;
+      min-height: 1.2em;
+    }
+
+    .status-msg.ok { color: #4dffd6; }
+    .status-msg.error { color: #ff6b6b; }
+
+    .trash-panel {
+      margin-top: 20px;
+      padding: 16px;
+      border-radius: 10px;
+      background: rgba(20,20,20,.4);
+      border: 1px solid rgba(255,255,255,.1);
+    }
+
+    .modal-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.65);
+      z-index: 9999;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .modal {
+      width: min(1000px, 96vw);
+      max-height: 90vh;
+      overflow: auto;
+      background: rgba(8,26,62,.98);
+      border: 1px solid rgba(123,228,255,.25);
+      border-radius: 12px;
+      box-shadow: 0 18px 40px rgba(0,0,0,.55);
+      padding: 16px;
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div>
+    <h1>Boyle - Admin Rete & Amici</h1>
+    <span>Gestione candidature</span>
+  </div>
+  <div>
+    <span id="loginStatusHeader" class="muted">Non autenticato</span>
+  </div>
+</header>
+
+<main>
+
+  <!-- LOGIN -->
+  <section class="login-box" id="loginBox">
+    <h2>Accesso amministratore</h2>
+    <label for="adminPass">Password</label>
+    <div>
+      <input type="password" id="adminPass" autocomplete="current-password">
+      <button id="loginBtn">Entra</button>
+    </div>
+    <div id="loginMsg" class="status-msg"></div>
+  </section>
+
+  <!-- PANNELLO -->
+  <section class="panel" id="panel" style="display:none;">
+    <!-- PANNELLO PRINCIPALE -->
+    <div id="mainCandidatesSection">
+
+      <div class="top-bar">
+        <div class="stats" id="statsBar"></div>
+
+        <div class="toolbar-buttons">
+          <button id="exportJsonBtn" style="background:#22c55e;color:#041021;">Esporta JSON</button>
+          <button id="deleteFilteredBtn" style="background:#ef4444;color:white;">Cestina filtrate</button>
+          <button id="deleteEmptyBtn" style="background:#f97316;color:white;">Elimina vuote</button>
+          <button id="openReteOnlineBtn" style="background:#4fd1ff;color:#041021;">Rete di Boyle – Online</button>
+        </div>
+      </div>
+
+      <div class="filters">
+        <div>
+          <strong>Tipo:</strong>
+          <select id="filterTipo">
+            <option value="">Tutti</option>
+            <option value="rete">Rete</option>
+            <option value="amico">Amico</option>
+          </select>
+        </div>
+
+        <div>
+          <strong>Stato:</strong>
+          <select id="filterStato">
+            <option value="">Tutti</option>
+            <option value="NUOVO">Nuovo</option>
+            <option value="IN_ATTESA">In attesa</option>
+            <option value="RETE">Accettato Rete</option>
+            <option value="AMICO">Passato ad Amici</option>
+            <option value="ARCHIVIATO">Archiviato</option>
+            <option value="RIFIUTATO">Rifiutato</option>
+          </select>
+        </div>
+
+        <div>
+          <strong>Cerca:</strong>
+          <input type="text" id="filterSearch" placeholder="Nome o email">
+        </div>
+
+        <div style="margin-left:auto;">
+          <span id="rowsInfo" class="muted"></span>
+        </div>
+      </div>
+
+      <div style="overflow:auto;max-height:70vh;">
+        <table id="dataTable">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Tipo</th>
+              <th>Nome / Email</th>
+              <th>Stato</th>
+              <th>Codice</th>
+              <th>Note</th>
+              <th>Data</th>
+              <th>Azioni</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td colspan="8" class="muted">Caricamento...</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div id="panelMsg" class="status-msg"></div>
+
+      <div class="trash-panel">
+        <h3>Cestino</h3>
+        <div class="trash-buttons">
+          <button id="openTrashBtn" style="background:#3b82f6;color:white;">Apri cestino</button>
+          <button id="emptyTrashBtn" style="background:#dc2626;color:white;">Svuota cestino</button>
+        </div>
+      </div>
+
+    </div> <!-- fine mainCandidatesSection -->
+
+
+    <!-- ⭐ SEZIONE RETE ONLINE -->
+    <section id="reteOnlineSection" style="display:none;margin-top:0;">
+
+      <div class="top-bar">
+        <div>
+          <h3 style="margin:0;">Rete di Boyle – Online</h3>
+          <div id="reteMsg" class="status-msg"></div>
+        </div>
+
+        <div class="toolbar-buttons">
+          <input type="text" id="reteSearch" placeholder="Cerca nome, città, tag…">
+          <button id="reloadReteBtn" style="background:#0ea5e9;color:#041021;">Aggiorna elenco</button>
+          <button id="backToCandidatesBtn" style="background:#6366f1;color:white;">Torna alle candidature</button>
+        </div>
+      </div>
+
+      <div id="reteCardsContainer"
+           style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;margin-top:16px;">
+      </div>
+
+    </section>
+
+
+    <!-- ⭐ MODALE EXPORT -->
+    <div class="modal-backdrop" id="exportModal">
+      <div class="modal">
+        <div class="modal-header">
+          <strong>Esporta JSON</strong>
+          <div class="modal-actions">
+            <button id="copyExportBtn" style="background:#0ea5e9;color:#041021;">Copia</button>
+            <button id="closeExportModalBtn">Chiudi</button>
+          </div>
+        </div>
+        <textarea id="exportJsonArea" readonly></textarea>
+      </div>
+    </div>
+
+
+    <!-- ⭐ MODALE CESTINO -->
+    <div class="modal-backdrop" id="trashModal">
+      <div class="modal">
+        <div class="modal-header">
+          <strong>Cestino</strong>
+          <button id="closeTrashModalBtn">Chiudi</button>
+        </div>
+        <div id="trashContent">Caricamento...</div>
+      </div>
+    </div>
+
+  </section> <!-- fine #panel -->
+</main>
+
+<script>
+/* ============================================================
+   VARIABILI GLOBALI
+   ============================================================ */
+let ADMIN_OK = false;
+let ADMIN_TOKEN = '';
+let ALL_ROWS = [];
+let LAST_STATS = null;
+let UI_BUSY = false;
+let PUBLISHED_MEMBERS_CACHE = [];
+let TRASH_ROWS_CACHE = [];
+/* ============================================================
+   UTILITY DI BASE
+   ============================================================ */
+function setBusy(isBusy) {
+  UI_BUSY = isBusy;
+  document.querySelectorAll('button').forEach(btn => {
+    btn.disabled = isBusy;
+  });
+}
+
+function setLoginState(ok) {
+  ADMIN_OK = ok;
+  document.getElementById('loginBox').style.display = ok ? 'none' : 'block';
+  document.getElementById('panel').style.display = ok ? 'block' : 'none';
+  document.getElementById('loginStatusHeader').textContent = ok ? 'Admin autenticato' : 'Non autenticato';
+
+  if (!ok) {
+    ADMIN_TOKEN = '';
+    document.getElementById('exportModal').style.display = 'none';
+    document.getElementById('trashModal').style.display = 'none';
+    showCandidatesPanel();
+  }
+}
+
+function escapeHtml(v) {
+  return String(v || '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
+function getErrorMessage(err) {
+  return err && err.message ? err.message : JSON.stringify(err);
+}
+
+function handleAuthFailure(err, targetEl) {
+  const msg = getErrorMessage(err);
+
+  if (/sessione admin/i.test(msg) || /non autorizzato/i.test(msg)) {
+    setLoginState(false);
+  }
+
+  if (targetEl) {
+    targetEl.textContent = 'Errore: ' + msg;
+    targetEl.className = 'status-msg error';
+  }
+}
+
+/* ============================================================
+   LOGIN ADMIN
+   ============================================================ */
+document.getElementById('loginBtn').onclick = () => {
+  const pass = document.getElementById('adminPass').value;
+  const msg = document.getElementById('loginMsg');
+
+  msg.textContent = 'Verifica...';
+  msg.className = 'status-msg';
+  setBusy(true);
+
+  google.script.run
+    .withSuccessHandler(result => {
+      if (result && result.ok && result.token) {
+        ADMIN_TOKEN = result.token;
+        msg.textContent = '';
+        document.getElementById('adminPass').value = '';
+        setLoginState(true);
+        setBusy(false);
+        loadData();
+      } else {
+        msg.textContent = (result && result.message) ? result.message : 'Password errata.';
+        msg.className = 'status-msg error';
+        setBusy(false);
+      }
+    })
+    .withFailureHandler(err => {
+      msg.textContent = 'Errore: ' + getErrorMessage(err);
+      msg.className = 'status-msg error';
+      setBusy(false);
+    })
+    .createAdminSession(pass);
+};
+
+document.getElementById('adminPass').addEventListener('keydown', e => {
+  if (e.key === 'Enter') document.getElementById('loginBtn').click();
+});
+
+/* ============================================================
+   FUNZIONI DI SUPPORTO PER TABELLA
+   ============================================================ */
+function getTipoNormalized(row) {
+  const t = String(row.TIPO || '').toLowerCase().trim();
+  if (t.includes('rete')) return 'rete';
+  if (t.includes('amico')) return 'amico';
+  return '';
+}
+
+function getStatoPill(stato) {
+  const s = String(stato || '').toUpperCase().trim();
+  if (!s || s === 'NUOVO') return {cls:'nuovo', label:'Nuovo'};
+  if (s === 'IN_ATTESA') return {cls:'attesa', label:'In attesa'};
+  if (s === 'RETE') return {cls:'ok', label:'Accettato Rete'};
+  if (s === 'AMICO') return {cls:'amico', label:'Passato ad Amici'};
+  if (s === 'ARCHIVIATO') return {cls:'archiviato', label:'Archiviato'};
+  if (s === 'RIFIUTATO') return {cls:'ko', label:'Rifiutato'};
+  return {cls:'', label:s};
+}
+
+function makeActionButton(label, bg, color, onClick) {
+  const btn = document.createElement('button');
+  btn.textContent = label;
+  btn.style.background = bg;
+  btn.style.color = color;
+  btn.onclick = onClick;
+  return btn;
+}
+
+/* ============================================================
+   RENDERING TABELLA PRINCIPALE
+   ============================================================ */
+function renderTable() {
+  const tbody = document.querySelector('#dataTable tbody');
+  tbody.innerHTML = '';
+
+  const tipoFilter  = document.getElementById('filterTipo').value;
+  const statoFilter = document.getElementById('filterStato').value;
+  const search      = document.getElementById('filterSearch').value.toLowerCase().trim();
+
+  let visible = 0;
+
+  ALL_ROWS.forEach((row) => {
+    const tipo = getTipoNormalized(row);
+    const stato = String(row.STATO_BOYLE || '').toUpperCase().trim();
+
+    if (tipoFilter && tipo !== tipoFilter) return;
+    if (statoFilter && stato !== statoFilter) return;
+
+    const hay = `${row.NOME || ''} ${row.EMAIL || ''}`.toLowerCase();
+    if (search && !hay.includes(search)) return;
+
+    visible++;
+    const statoInfo = getStatoPill(stato);
+    const tr = document.createElement('tr');
+
+    tr.innerHTML = `
+      <td>${visible}</td>
+      <td><span class="pill ${tipo}">${tipo || '-'}</span></td>
+      <td><strong>${escapeHtml(row.NOME)}</strong><br><span class="muted">${escapeHtml(row.EMAIL)}</span></td>
+      <td><span class="pill ${statoInfo.cls}">${statoInfo.label}</span></td>
+      <td><input class="small-input" value="${escapeHtml(row.CODICE_BOYLE || '')}"></td>
+      <td><textarea class="small-textarea">${escapeHtml(row.NOTE_ADMIN || '')}</textarea></td>
+      <td>${escapeHtml(row.DATA_GESTIONE || '-')}</td>
+    `;
+
+    const tdAct = document.createElement('td');
+    const wrap = document.createElement('div');
+    wrap.className = 'row-actions';
+
+    const inputEl = tr.querySelector('input');
+    const noteEl  = tr.querySelector('textarea');
+
+    wrap.appendChild(makeActionButton('Rete', '#0ea5e9', '#041021', () =>
+      saveRow(row._rowIndex, 'RETE', inputEl.value, noteEl.value)
+    ));
+
+    wrap.appendChild(makeActionButton('Amico', '#facc15', '#041021', () =>
+      saveRow(row._rowIndex, 'AMICO', inputEl.value, noteEl.value)
+    ));
+
+    wrap.appendChild(makeActionButton('Archivia', '#6366f1', '#fff', () =>
+      saveRow(row._rowIndex, 'ARCHIVIATO', inputEl.value, noteEl.value)
+    ));
+
+    wrap.appendChild(makeActionButton('Rifiuta', 'linear-gradient(135deg,#ff6b6b,#ff8f8f)', '#fff', () =>
+      saveRow(row._rowIndex, 'RIFIUTATO', inputEl.value, noteEl.value)
+    ));
+
+    wrap.appendChild(makeActionButton('Cestina', '#111827', '#fff', () => {
+      if (confirm('Vuoi spostare questa riga nel cestino?')) {
+        deleteRow(row._rowIndex);
+      }
+    }));
+
+    wrap.appendChild(makeActionButton('Pubblica', '#22c55e', '#041021', () =>
+      publishRow(row._rowIndex)
+    ));
+
+    tdAct.appendChild(wrap);
+    tr.appendChild(tdAct);
+    tbody.appendChild(tr);
+  });
+
+  if (visible === 0) {
+    const tr = document.createElement('tr');
+    const td = document.createElement('td');
+    td.colSpan = 8;
+    td.className = 'muted';
+    td.textContent = ALL_ROWS.length === 0
+      ? 'Nessun dato disponibile.'
+      : 'Nessuna riga corrisponde ai filtri.';
+    tr.appendChild(td);
+    tbody.appendChild(tr);
+  }
+
+  document.getElementById('rowsInfo').textContent = `${visible} righe visibili`;
+}
+
+/* ============================================================
+   SALVATAGGIO RIGA
+   ============================================================ */
+function saveRow(rowIndex, stato, codice, note) {
+  setBusy(true);
+  const panelMsg = document.getElementById('panelMsg');
+  panelMsg.textContent = 'Salvataggio...';
+  panelMsg.className = 'status-msg';
+
+  google.script.run
+    .withSuccessHandler(() => {
+      panelMsg.textContent = 'Salvato.';
+      panelMsg.className = 'status-msg ok';
+      setBusy(false);
+      loadData();
+    })
+    .withFailureHandler(err => {
+      handleAuthFailure(err, panelMsg);
+      setBusy(false);
+    })
+    .updateAdminRow({ rowIndex, stato, codice, note, token: ADMIN_TOKEN });
+}
+
+/* ============================================================
+   CESTINA SINGOLA RIGA
+   ============================================================ */
+function deleteRow(rowIndex) {
+  setBusy(true);
+  const panelMsg = document.getElementById('panelMsg');
+  panelMsg.textContent = 'Spostamento nel cestino...';
+  panelMsg.className = 'status-msg';
+
+  google.script.run
+    .withSuccessHandler(() => {
+      panelMsg.textContent = 'Spostata nel cestino.';
+      panelMsg.className = 'status-msg ok';
+      setBusy(false);
+      loadData();
+    })
+    .withFailureHandler(err => {
+      handleAuthFailure(err, panelMsg);
+      setBusy(false);
+    })
+    .deleteAdminRow(ADMIN_TOKEN, rowIndex);
+}
+
+/* ============================================================
+   PUBBLICAZIONE SU RETE ONLINE
+   ============================================================ */
+function publishRow(rowIndex) {
+  if (!confirm('Pubblicare questo membro nella Rete di Boyle?')) return;
+
+  setBusy(true);
+  const panelMsg = document.getElementById('panelMsg');
+  panelMsg.textContent = 'Pubblicazione...';
+  panelMsg.className = 'status-msg';
+
+  google.script.run
+    .withSuccessHandler(() => {
+      panelMsg.textContent = 'Pubblicato.';
+      panelMsg.className = 'status-msg ok';
+      setBusy(false);
+      loadData();
+      if (document.getElementById('reteOnlineSection').style.display !== 'none') {
+        loadReteOnline();
+      }
+    })
+    .withFailureHandler(err => {
+      handleAuthFailure(err, panelMsg);
+      setBusy(false);
+    })
+    .publishCandidate(ADMIN_TOKEN, rowIndex);
+}
+
+/* ============================================================
+   CARICAMENTO DATI PRINCIPALI
+   ============================================================ */
+function loadData() {
+  const panelMsg = document.getElementById('panelMsg');
+  const tbody = document.querySelector('#dataTable tbody');
+
+  tbody.innerHTML = '<tr><td colspan="8" class="muted">Caricamento...</td></tr>';
+  panelMsg.textContent = 'Caricamento dati...';
+  panelMsg.className = 'status-msg';
+
+  google.script.run
+    .withSuccessHandler(data => {
+      ALL_ROWS = (data && data.rows) ? data.rows : [];
+      LAST_STATS = data ? data.stats : null;
+      renderStatsBar();
+      renderTable();
+      panelMsg.textContent = 'Dati caricati.';
+      panelMsg.className = 'status-msg ok';
+    })
+    .withFailureHandler(err => {
+      handleAuthFailure(err, panelMsg);
+      tbody.innerHTML = '<tr><td colspan="8" class="status-msg error">Errore nel caricamento dei dati.</td></tr>';
+    })
+    .getAdminData(ADMIN_TOKEN);
+}
+/* ============================================================
+   CESTINO — CARICAMENTO
+   ============================================================ */
+function loadTrashData() {
+  document.getElementById('trashModal').style.display = 'flex';
+  document.getElementById('trashContent').innerHTML = 'Caricamento...';
+  setBusy(true);
+
+  google.script.run
+    .withSuccessHandler(data => {
+      TRASH_ROWS_CACHE = (data && data.rows) ? data.rows : [];
+      renderTrashContent(TRASH_ROWS_CACHE);
+      setBusy(false);
+    })
+    .withFailureHandler(err => {
+      document.getElementById('trashContent').innerHTML = 'Errore: ' + getErrorMessage(err);
+      handleAuthFailure(err);
+      setBusy(false);
+    })
+    .getTrashData(ADMIN_TOKEN);
+}
+
+/* ============================================================
+   CESTINO — RENDER
+   ============================================================ */
+function renderTrashContent(rows) {
+  const wrapper = document.createElement('div');
+
+  if (!rows.length) {
+    wrapper.innerHTML = '<div class="muted">Il cestino è vuoto.</div>';
+    const tc = document.getElementById('trashContent');
+    tc.innerHTML = '';
+    tc.appendChild(wrapper);
+    return;
+  }
+
+  const info = document.createElement('div');
+  info.className = 'muted';
+  info.style.marginBottom = '10px';
+  info.textContent = `${rows.length} righe nel cestino`;
+  wrapper.appendChild(info);
+
+  const tableWrap = document.createElement('div');
+  tableWrap.style.overflow = 'auto';
+  tableWrap.style.maxHeight = '60vh';
+
+  const table = document.createElement('table');
+  table.innerHTML = `
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Tipo</th>
+        <th>Nome / Email</th>
+        <th>Stato</th>
+        <th>Data</th>
+        <th>Azioni</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  `;
+
+  const tbody = table.querySelector('tbody');
+
+  rows.forEach((row, i) => {
+    const tr = document.createElement('tr');
+    const tipo = getTipoNormalized(row);
+    const statoInfo = getStatoPill(row.STATO_BOYLE || '');
+
+    tr.innerHTML = `
+      <td>${i + 1}</td>
+      <td><span class="pill ${tipo}">${tipo || '-'}</span></td>
+      <td><strong>${escapeHtml(row.NOME)}</strong><br><span class="muted">${escapeHtml(row.EMAIL)}</span></td>
+      <td><span class="pill ${statoInfo.cls}">${statoInfo.label}</span></td>
+      <td>${escapeHtml(row.DATA_GESTIONE || '-')}</td>
+      <td></td>
+    `;
+
+    const td = tr.querySelector('td:last-child');
+    const actions = document.createElement('div');
+    actions.className = 'trash-table-actions';
+
+    const restoreBtn = document.createElement('button');
+    restoreBtn.textContent = 'Ripristina';
+    restoreBtn.style.background = '#22c55e';
+    restoreBtn.style.color = '#041021';
+    restoreBtn.onclick = () => restoreTrashRow(row._rowIndex);
+
+    actions.appendChild(restoreBtn);
+    td.appendChild(actions);
+    tbody.appendChild(tr);
+  });
+
+  tableWrap.appendChild(table);
+  wrapper.appendChild(tableWrap);
+
+  const footer = document.createElement('div');
+  footer.className = 'modal-actions';
+  footer.style.marginTop = '12px';
+
+  const restoreAllBtn = document.createElement('button');
+  restoreAllBtn.textContent = 'Ripristina tutto';
+  restoreAllBtn.style.background = '#0ea5e9';
+  restoreAllBtn.style.color = '#041021';
+  restoreAllBtn.onclick = () => restoreAllTrashRows();
+
+  footer.appendChild(restoreAllBtn);
+  wrapper.appendChild(footer);
+
+  const tc = document.getElementById('trashContent');
+  tc.innerHTML = '';
+  tc.appendChild(wrapper);
+}
+
+/* ============================================================
+   CESTINO — RIPRISTINO
+   ============================================================ */
+function restoreTrashRow(rowIndex) {
+  if (!confirm('Ripristinare questa riga dal cestino?')) return;
+  setBusy(true);
+
+  google.script.run
+    .withSuccessHandler(() => {
+      setBusy(false);
+      loadTrashData();
+      loadData();
+    })
+    .withFailureHandler(err => {
+      alert('Errore ripristino: ' + getErrorMessage(err));
+      handleAuthFailure(err);
+      setBusy(false);
+    })
+    .restoreFromTrash(ADMIN_TOKEN, [rowIndex]);
+}
+
+function restoreAllTrashRows() {
+  if (!TRASH_ROWS_CACHE.length) return;
+  if (!confirm(`Ripristinare tutte le ${TRASH_ROWS_CACHE.length} righe dal cestino?`)) return;
+
+  setBusy(true);
+
+  google.script.run
+    .withSuccessHandler(() => {
+      setBusy(false);
+      loadTrashData();
+      loadData();
+    })
+    .withFailureHandler(err => {
+      alert('Errore ripristino: ' + getErrorMessage(err));
+      handleAuthFailure(err);
+      setBusy(false);
+    })
+    .restoreFromTrash(ADMIN_TOKEN, TRASH_ROWS_CACHE.map(r => r._rowIndex));
+}
+
+/* ============================================================
+   RETE ONLINE — CARICAMENTO
+   ============================================================ */
+function loadReteOnline() {
+  const msg = document.getElementById('reteMsg');
+  const container = document.getElementById('reteCardsContainer');
+
+  msg.textContent = 'Caricamento...';
+  msg.className = 'status-msg';
+  container.innerHTML = '';
+  setBusy(true);
+
+  google.script.run
+    .withSuccessHandler(list => {
+      PUBLISHED_MEMBERS_CACHE = Array.isArray(list) ? list : [];
+      renderReteCards(PUBLISHED_MEMBERS_CACHE);
+      msg.textContent = PUBLISHED_MEMBERS_CACHE.length
+        ? `Caricati ${PUBLISHED_MEMBERS_CACHE.length} membri.`
+        : 'Nessun membro pubblicato trovato.';
+      msg.className = 'status-msg ok';
+      setBusy(false);
+    })
+    .withFailureHandler(err => {
+      handleAuthFailure(err, msg);
+      setBusy(false);
+    })
+    .getPublishedMembers(ADMIN_TOKEN);
+}
+
+/* ============================================================
+   RETE ONLINE — RENDER
+   ============================================================ */
+function renderReteCards(list) {
+  const container = document.getElementById('reteCardsContainer');
+  const q = document.getElementById('reteSearch').value.toLowerCase().trim();
+
+  container.innerHTML = '';
+
+  const filtered = list.filter(m => {
+    const hay = [m.nome, m.ruolo, m.citta, m.email, ...(m.tags || [])]
+      .join(' ')
+      .toLowerCase();
+    return !q || hay.includes(q);
+  });
+
+  if (!filtered.length) {
+    container.innerHTML = '<div class="muted">Nessun membro trovato.</div>';
+    return;
+  }
+
+  filtered.forEach(m => {
+    const card = document.createElement('div');
+    card.className = 'rete-card';
+
+    const img = document.createElement('img');
+    img.src = m.foto || 'https://via.placeholder.com/60?text=%20';
+    img.alt = m.nome || 'Membro';
+    img.onerror = function() {
+      this.src = 'https://via.placeholder.com/60?text=%20';
+    };
+
+    const name = document.createElement('strong');
+    name.textContent = m.nome || '-';
+
+    const ruolo = document.createElement('span');
+    ruolo.className = 'muted';
+    ruolo.textContent = m.ruolo || '';
+
+    const city = document.createElement('span');
+    city.textContent = m.citta || '';
+
+    const email = document.createElement('span');
+    email.className = 'muted';
+    email.textContent = m.email || '';
+
+    const tagsWrap = document.createElement('div');
+    tagsWrap.className = 'rete-pills';
+    (m.tags || []).forEach(t => {
+      const tag = document.createElement('span');
+      tag.className = 'rete-pill';
+      tag.textContent = t;
+      tagsWrap.appendChild(tag);
+    });
+
+    const removeBtn = document.createElement('button');
+    removeBtn.className = 'rete-remove-btn';
+    removeBtn.textContent = 'Rimuovi dal sito';
+    removeBtn.onclick = () => removePublished(m.email || '');
+
+    card.appendChild(img);
+    card.appendChild(name);
+    if (m.ruolo) card.appendChild(ruolo);
+    if (m.citta) card.appendChild(city);
+    if (m.email) card.appendChild(email);
+    if ((m.tags || []).length) card.appendChild(tagsWrap);
+    if (m.email) card.appendChild(removeBtn);
+
+    container.appendChild(card);
+  });
+}
+
+/* ============================================================
+   RETE ONLINE — RIMOZIONE
+   ============================================================ */
+function removePublished(email) {
+  if (!email) return;
+  if (!confirm(`Rimuovere ${email} dal sito?`)) return;
+
+  const msg = document.getElementById('reteMsg');
+  msg.textContent = 'Rimozione...';
+  msg.className = 'status-msg';
+  setBusy(true);
+
+  google.script.run
+    .withSuccessHandler(() => {
+      msg.textContent = 'Rimosso.';
+      msg.className = 'status-msg ok';
+      setBusy(false);
+      loadReteOnline();
+    })
+    .withFailureHandler(err => {
+      handleAuthFailure(err, msg);
+      setBusy(false);
+    })
+    .removePublishedMember(ADMIN_TOKEN, email);
+}
+
+/* ============================================================
+   FUNZIONI MANCANTI — NECESSARIE
+   ============================================================ */
+function showCandidatesPanel() {
+  document.getElementById('mainCandidatesSection').style.display = 'block';
+  document.getElementById('reteOnlineSection').style.display = 'none';
+}
+
+function showReteOnlinePanel() {
+  document.getElementById('mainCandidatesSection').style.display = 'none';
+  document.getElementById('reteOnlineSection').style.display = 'block';
+}
+
+function getFilteredIndexes() {
+  const tipoFilter  = document.getElementById('filterTipo').value;
+  const statoFilter = document.getElementById('filterStato').value;
+  const search      = document.getElementById('filterSearch').value.toLowerCase().trim();
+
+  const indexes = [];
+
+  ALL_ROWS.forEach((row) => {
+    const tipo = getTipoNormalized(row);
+    const stato = String(row.STATO_BOYLE || '').toUpperCase().trim();
+
+    if (tipoFilter && tipo !== tipoFilter) return;
+    if (statoFilter && stato !== statoFilter) return;
+
+    const hay = `${row.NOME || ''} ${row.EMAIL || ''}`.toLowerCase();
+    if (search && !hay.includes(search)) return;
+
+    indexes.push(row._rowIndex);
+  });
+
+  return indexes;
+}
+
+function renderStatsBar() {
+  const bar = document.getElementById('statsBar');
+  if (!LAST_STATS) {
+    bar.innerHTML = '';
+    return;
+  }
+
+  bar.innerHTML = `
+    <span><strong>${LAST_STATS.tot}</strong> totali</span>
+    <span><strong>${LAST_STATS.nuovi}</strong> nuovi</span>
+    <span><strong>${LAST_STATS.attesa}</strong> in attesa</span>
+    <span><strong>${LAST_STATS.rete}</strong> rete</span>
+    <span><strong>${LAST_STATS.amici}</strong> amici</span>
+    <span><strong>${LAST_STATS.archiviati}</strong> archiviati</span>
+    <span><strong>${LAST_STATS.rifiutati}</strong> rifiutati</span>
+  `;
+}
+
+/* ============================================================
+   EVENTI FINALI
+   ============================================================ */
+document.getElementById('deleteFilteredBtn').onclick = () => {
+  const indexes = getFilteredIndexes();
+  if (!indexes.length) {
+    alert('Nessuna riga da spostare nel cestino.');
+    return;
+  }
+  if (!confirm(`Vuoi spostare nel cestino ${indexes.length} righe?`)) return;
+
+  setBusy(true);
+
+  google.script.run
+    .withSuccessHandler(() => {
+      setBusy(false);
+      loadData();
+    })
+    .withFailureHandler(err => {
+      const panelMsg = document.getElementById('panelMsg');
+      handleAuthFailure(err, panelMsg);
+      setBusy(false);
+    })
+    .deleteFilteredRows(ADMIN_TOKEN, indexes);
+};
+
+document.getElementById('deleteEmptyBtn').onclick = () => {
+  if (!confirm('Vuoi eliminare tutte le righe vuote?')) return;
+
+  setBusy(true);
+
+  google.script.run
+    .withSuccessHandler(() => {
+      setBusy(false);
+      loadData();
+    })
+    .withFailureHandler(err => {
+      const panelMsg = document.getElementById('panelMsg');
+      handleAuthFailure(err, panelMsg);
+      setBusy(false);
+    })
+    .deleteEmptyRows(ADMIN_TOKEN);
+};
+
+document.getElementById('exportJsonBtn').onclick = () => {
+  setBusy(true);
+
+  google.script.run
+    .withSuccessHandler(json => {
+      document.getElementById('exportJsonArea').value = json;
+      document.getElementById('exportModal').style.display = 'flex';
+      setBusy(false);
+    })
+    .withFailureHandler(err => {
+      alert('Errore export: ' + getErrorMessage(err));
+      handleAuthFailure(err);
+      setBusy(false);
+    })
+    .exportAdminJson(ADMIN_TOKEN);
+};
+
+document.getElementById('copyExportBtn').onclick = async () => {
+  const area = document.getElementById('exportJsonArea');
+  try {
+    await navigator.clipboard.writeText(area.value || '');
+    alert('JSON copiato.');
+  } catch (e) {
+    area.select();
+    document.execCommand('copy');
+    alert('JSON copiato.');
+  }
+};
+
+document.getElementById('closeExportModalBtn').onclick = () => {
+  document.getElementById('exportModal').style.display = 'none';
+};
+
+document.getElementById('openTrashBtn').onclick = loadTrashData;
+document.getElementById('closeTrashModalBtn').onclick = () => {
+  document.getElementById('trashModal').style.display = 'none';
+};
+
+document.getElementById('emptyTrashBtn').onclick = () => {
+  if (!confirm('Svuotare il cestino?')) return;
+
+  setBusy(true);
+
+  google.script.run
+    .withSuccessHandler(() => {
+      alert('Cestino svuotato.');
+      document.getElementById('trashContent').innerHTML = 'Cestino vuoto.';
+      setBusy(false);
+      loadData();
+      if (document.getElementById('trashModal').style.display === 'flex') {
+        loadTrashData();
+      }
+    })
+    .withFailureHandler(err => {
+      alert('Errore svuotamento cestino: ' + getErrorMessage(err));
+      handleAuthFailure(err);
+      setBusy(false);
+    })
+    .emptyTrash(ADMIN_TOKEN);
+};
+
+document.getElementById('filterTipo').addEventListener('change', renderTable);
+document.getElementById('filterStato').addEventListener('change', renderTable);
+document.getElementById('filterSearch').addEventListener('input', renderTable);
+
+document.getElementById('exportModal').addEventListener('click', e => {
+  if (e.target.id === 'exportModal') {
+    document.getElementById('exportModal').style.display = 'none';
+  }
+});
+
+document.getElementById('trashModal').addEventListener('click', e => {
+  if (e.target.id === 'trashModal') {
+    document.getElementById('trashModal').style.display = 'none';
+  }
+});
+
+document.getElementById('openReteOnlineBtn').onclick = () => {
+  showReteOnlinePanel();
+  loadReteOnline();
+};
+
+document.getElementById('backToCandidatesBtn').onclick = showCandidatesPanel;
+document.getElementById('reloadReteBtn').onclick = loadReteOnline;
+
+document.getElementById('reteSearch').addEventListener('input', () =>
+  renderReteCards(PUBLISHED_MEMBERS_CACHE)
+);
+
+/* ============================================================
+   CHIUSURA SCRIPT
+   ============================================================ */
+</script>
+
+</body>
+</html>
