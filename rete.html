@@ -1740,12 +1740,12 @@
         // Secondo invio silenzioso ad Apps Script (non blocca l'utente se fallisce)
         try {
           const fd = new FormData(netForm);
-          const payload = {};
-          fd.forEach((v,k) => { payload[k] = v; });
+          const params = new URLSearchParams();
+          fd.forEach((v,k) => { if(typeof v === 'string') params.append(k, v); });
           fetch(ADMIN_SCRIPT_URL, {
             method: 'POST',
-            body: JSON.stringify(payload),
-            headers: { 'Content-Type': 'application/json' }
+            body: params,
+            mode: 'no-cors'
           }).catch(() => {});
         } catch(_) {}
         netForm.reset();
@@ -2078,12 +2078,12 @@
           // Secondo invio silenzioso ad Apps Script
           try {
             const fd2 = new FormData(form);
-            const payload2 = {};
-            fd2.forEach((v,k) => { payload2[k] = v; });
+            const params2 = new URLSearchParams();
+            fd2.forEach((v,k) => { if(typeof v === 'string') params2.append(k, v); });
             fetch(ADMIN_SCRIPT_URL, {
               method: 'POST',
-              body: JSON.stringify(payload2),
-              headers: { 'Content-Type': 'application/json' }
+              body: params2,
+              mode: 'no-cors'
             }).catch(() => {});
           } catch(_) {}
           form.reset();
