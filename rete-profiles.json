@@ -13,7 +13,8 @@
     "speaker": false,
     "podcast": false,
     "research": false,
-    "updated": ""
+    "updated": "",
+    "accessCode": "BOYLE-K7X2-DAMIANO"
   },
   "andrea-murdock-alpini": {
     "name": "Andrea Murdock Alpini",
@@ -29,7 +30,8 @@
     "speaker": false,
     "podcast": false,
     "research": false,
-    "updated": ""
+    "updated": "",
+    "accessCode": "BOYLE-9QM4-ALPINI"
   },
   "valerio-zerbi": {
     "name": "Valerio Zerbi",
@@ -45,7 +47,8 @@
     "speaker": false,
     "podcast": false,
     "research": false,
-    "updated": ""
+    "updated": "",
+    "accessCode": "BOYLE-R3N8-ZERBI"
   },
   "erika-borotto": {
     "name": "Erika Borotto",
@@ -61,7 +64,8 @@
     "speaker": false,
     "podcast": false,
     "research": false,
-    "updated": ""
+    "updated": "",
+    "accessCode": "BOYLE-F5W1-BOROTTO"
   },
   "andrea-galvani": {
     "name": "Andrea Galvani",
@@ -77,7 +81,8 @@
     "speaker": false,
     "podcast": false,
     "research": false,
-    "updated": ""
+    "updated": "",
+    "accessCode": "BOYLE-M2J9-GALVANI"
   },
   "federica-giuffrida": {
     "name": "Federica Giuffrida",
@@ -93,7 +98,8 @@
     "speaker": false,
     "podcast": false,
     "research": false,
-    "updated": ""
+    "updated": "",
+    "accessCode": "BOYLE-T6P3-GIUFFRIDA"
   },
   "paolo-calzavacca": {
     "name": "Paolo Calzavacca",
@@ -109,7 +115,8 @@
     "speaker": false,
     "podcast": false,
     "research": false,
-    "updated": ""
+    "updated": "",
+    "accessCode": "BOYLE-W8L5-CALZAVACCA"
   },
   "erion-xhepa": {
     "name": "Erion Xhepa",
@@ -125,7 +132,8 @@
     "speaker": false,
     "podcast": false,
     "research": false,
-    "updated": ""
+    "updated": "",
+    "accessCode": "BOYLE-N4R7-XHEPA"
   },
   "david-james-marsland": {
     "name": "David James Marsland",
@@ -141,7 +149,8 @@
     "speaker": false,
     "podcast": false,
     "research": false,
-    "updated": ""
+    "updated": "",
+    "accessCode": "BOYLE-D1K6-MARSLAND"
   },
   "tommaso-antonio-giacon": {
     "name": "Tommaso Antonio Giacon",
@@ -157,7 +166,8 @@
     "speaker": false,
     "podcast": false,
     "research": false,
-    "updated": ""
+    "updated": "",
+    "accessCode": "BOYLE-H3Y8-GIACON"
   },
   "tiago-miguel-cardoso": {
     "name": "Tiago Miguel Cardoso",
@@ -173,7 +183,8 @@
     "speaker": false,
     "podcast": false,
     "research": false,
-    "updated": ""
+    "updated": "",
+    "accessCode": "BOYLE-C9F2-CARDOSO"
   },
   "federica-venturelli": {
     "name": "Federica Venturelli",
@@ -189,7 +200,8 @@
     "speaker": false,
     "podcast": false,
     "research": false,
-    "updated": ""
+    "updated": "",
+    "accessCode": "BOYLE-V7Q4-VENTURELLI"
   },
   "giulio-saletti": {
     "name": "Giulio Saletti",
@@ -205,7 +217,8 @@
     "speaker": false,
     "podcast": false,
     "research": false,
-    "updated": ""
+    "updated": "",
+    "accessCode": "BOYLE-X5B1-SALETTI"
   },
   "gabriele-soldini": {
     "name": "Gabriele Soldini",
@@ -221,7 +234,8 @@
     "speaker": false,
     "podcast": false,
     "research": false,
-    "updated": ""
+    "updated": "",
+    "accessCode": "BOYLE-J2M8-SOLDINI"
   },
   "matteo-denaro": {
     "name": "Matteo Denaro",
@@ -237,7 +251,8 @@
     "speaker": false,
     "podcast": false,
     "research": false,
-    "updated": ""
+    "updated": "",
+    "accessCode": "BOYLE-E6N3-DENARO"
   },
   "giovanni-cappa": {
     "bio": "",
@@ -252,7 +267,8 @@
     "speaker": false,
     "podcast": false,
     "research": false,
-    "updated": ""
+    "updated": "",
+    "accessCode": "BOYLE-ENAR-CAPPA"
   },
   "claudio-camponovo": {
     "bio": "",
@@ -267,7 +283,8 @@
     "speaker": false,
     "podcast": false,
     "research": false,
-    "updated": ""
+    "updated": "",
+    "accessCode": "BOYLE-YHT9-CAMPONOVO"
   },
   "ho-man-mak": {
     "bio": "Love to connect with international hyperbaric professionals. Would like to set up Hong Kong standard of hyperbaric training and operation based on international guidelines and standards.",
@@ -282,7 +299,8 @@
     "speaker": false,
     "podcast": false,
     "research": true,
-    "updated": ""
+    "updated": "",
+    "accessCode": "BOYLE-X7N3-MAK"
   },
   "lidia-porri": {
     "bio": "Psicologa psicoterapeuta esperta in Psicologia Subacquea e Divemaster PADI. Docente di un Corso di formazione Teorico-Pratico di Psicologia Subacquea.",
@@ -297,12 +315,12 @@
     "speaker": true,
     "podcast": false,
     "research": false,
-    "updated": ""
+    "updated": "",
+    "accessCode": "BOYLE-L9P5-PORRI"
   },
   "adriana-almeida": {
-    "name": "adriana-almeida",
-    "bio": "Pulmonologist and interest in aerospace medicine, analogue astronaut missions and medical education. Motivated to contribute to a global network of extreme medicine professionals.",
-    "linkedin": "https://www.linkedin.com/in/adriana-Ã¡vila-almeida-843780213/",
+    "bio": "Physician with over 30 years of clinical experience. Background in aerospace medicine, analogue astronaut missions and medical education. Motivated to contribute to a global network of extreme medicine professionals.",
+    "linkedin": "https://www.linkedin.com/in/adriana-ávila-almeida-843780213/",
     "researchgate": "",
     "scholar": "",
     "orcid": "",
@@ -313,11 +331,11 @@
     "speaker": true,
     "podcast": false,
     "research": true,
-    "updated": "2026-04-05"
+    "updated": "",
+    "accessCode": "BOYLE-A8T2-ALMEIDA"
   },
   "antonello-sanna": {
-    "name": "antonello-sanna",
-    "bio": "Tecnico iperbarico di area clinica presso il Centro Iperbarico Sassarese. Incarichi: Responsabile Tecnico, della manutenzione programmata dell'impianto iperbarico, della formazione tecnica del personale e degli Specializzandi di Anestesia e Rianimazione dell'AOU Sassari, RLS, Preposto alla Sicurezza",
+    "bio": "Tecnico iperbarico di area clinica formato alla Sistemi Iperbarici-Sapio e all'Università di Padova con il prof. Bosco. Lavoro da 20 anni presso il Centro Iperbarico Sassarese come Responsabile Tecnico e della manutenzione preventiva dell'impianto. Mi occupo di sicurezza sul lavoro come RLS e Preposto alla Sicurezza. Entro nella Rete di Boyle per restare aggiornato e confrontarmi con le professionalità della Medicina Subacquea ed Iperbarica.",
     "linkedin": "https://www.linkedin.com/in/antonello-sanna-948368241",
     "researchgate": "",
     "scholar": "",
@@ -328,11 +346,12 @@
     "courses": "",
     "speaker": false,
     "podcast": false,
-    "research": true,
-    "updated": "2026-04-03"
+    "research": false,
+    "updated": "",
+    "accessCode": "BOYLE-S4K7-SANNA"
   },
   "luigi-liparulo": {
-    "bio": "Medico chirurgo specialista in Endocrinologia, Responsabile della Struttura Semplice di Endocrinologia presso l'Ospedale Valduce di Como. Dive Expert. Da anni mi occupo del monitoraggio e del training del paziente diabetico durante le attivitÃÂ  subacquee, per far sÃÂ¬ che si possano svolgere in benessere e totale sicurezza.",
+    "bio": "Medico chirurgo specialista in Endocrinologia, Responsabile della Struttura Semplice di Endocrinologia presso l'Ospedale Valduce di Como. Dive Expert. Da anni mi occupo del monitoraggio e del training del paziente diabetico durante le attività subacquee, per far sì che si possano svolgere in benessere e totale sicurezza.",
     "linkedin": "https://www.linkedin.com/in/luigi-liparulo-942b3359/",
     "researchgate": "",
     "scholar": "",
@@ -344,10 +363,11 @@
     "speaker": false,
     "podcast": false,
     "research": true,
-    "updated": ""
+    "updated": "",
+    "accessCode": "BOYLE-P2R9-LIPARULO"
   },
   "andrea-barcellona": {
-    "bio": "Laureato in Biologia Marina, ho lavorato diversi anni come istruttore subacqueo e operatore tecnico commerciale. Da qualche anno lavoro come tecnico di camera iperbarica, curioso e appassionato di tutto ciÃÂ² che ruota intorno alla medicina iperbarica.",
+    "bio": "Laureato in Biologia Marina, ho lavorato diversi anni come istruttore subacqueo e operatore tecnico commerciale. Da qualche anno lavoro come tecnico di camera iperbarica, curioso e appassionato di tutto ciò che ruota intorno alla medicina iperbarica.",
     "linkedin": "https://www.linkedin.com/in/andrea-barcellona-179154162",
     "researchgate": "",
     "scholar": "",
@@ -359,6 +379,7 @@
     "speaker": false,
     "podcast": false,
     "research": false,
-    "updated": ""
+    "updated": "",
+    "accessCode": "BOYLE-W3T6-BARCELLONA"
   }
 }
