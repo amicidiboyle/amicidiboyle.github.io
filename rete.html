@@ -927,7 +927,6 @@
   </div>
 
   <script>
-const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx7_Yey5jukRe45tD3N9lCoFH2QV8YfOEpaAsb6cLzvBy-R-5QFBFdfbX7Ec2z2Kg3JEw/exec";
   /* ════════════════════════════════════════════════
      MEMBERS DATA — driven by rete-members.json
      ════════════════════════════════════════════════ */
@@ -1338,7 +1337,7 @@ const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx7_Yey5jukRe45
   }
 
   /* ── Sistema accesso email per membri (codice personalizzato) ── */
-  const STATIC_CODE_TO_KEY = {
+  const CODE_TO_KEY = {
     'BOYLE-K7X2-DAMIANO':    'simona-damiano',
     'BOYLE-9QM4-ALPINI':     'andrea-murdock-alpini',
     'BOYLE-R3N8-ZERBI':      'valerio-zerbi',
@@ -1361,26 +1360,27 @@ const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx7_Yey5jukRe45
     'BOYLE-A8T2-ALMEIDA':    'adriana-almeida',
     'BOYLE-S4K7-SANNA':      'antonello-sanna',
     'BOYLE-P2R9-LIPARULO':   'luigi-liparulo',
-    'BOYLE-W3T6-BARCELLONA': 'andrea-barcellona',
-    'BOYLE-FONDATORI':       '__founders__'
   };
-  let CODE_TO_KEY = Object.assign({}, STATIC_CODE_TO_KEY);
-  let VALID_CODES = {};
-  let ALL_CODES = Object.keys(CODE_TO_KEY);
-
-  function rebuildAccessMapsFromProfiles_(profiles) {
-    CODE_TO_KEY = Object.assign({}, STATIC_CODE_TO_KEY);
-    Object.keys(profiles || {}).forEach(function(key) {
-      var code = String((profiles[key] && profiles[key].accessCode) || '').trim().toUpperCase();
-      if (code) CODE_TO_KEY[code] = key;
-    });
-    VALID_CODES = {};
-    Object.keys(CODE_TO_KEY).forEach(function(code) {
-      if (CODE_TO_KEY[code] && CODE_TO_KEY[code] !== '__founders__') VALID_CODES[CODE_TO_KEY[code]] = code;
-    });
-    ALL_CODES = Array.from(new Set(Object.keys(CODE_TO_KEY)));
-  }
-
+  const VALID_CODES = {
+    'simona-damiano':         'BOYLE-K7X2-DAMIANO',
+    'andrea-murdock-alpini':  'BOYLE-9QM4-ALPINI',
+    'valerio-zerbi':          'BOYLE-R3N8-ZERBI',
+    'erika-borotto':          'BOYLE-F5W1-BOROTTO',
+    'andrea-galvani':         'BOYLE-M2J9-GALVANI',
+    'federica-giuffrida':     'BOYLE-T6P3-GIUFFRIDA',
+    'paolo-calzavacca':       'BOYLE-W8L5-CALZAVACCA',
+    'erion-xhepa':            'BOYLE-N4R7-XHEPA',
+    'david-james-marsland':   'BOYLE-D1K6-MARSLAND',
+    'tommaso-antonio-giacon': 'BOYLE-H3Y8-GIACON',
+    'tiago-miguel-cardoso':   'BOYLE-C9F2-CARDOSO',
+    'federica-venturelli':    'BOYLE-V7Q4-VENTURELLI',
+    'giulio-saletti':         'BOYLE-X5B1-SALETTI',
+    'gabriele-soldini':       'BOYLE-J2M8-SOLDINI',
+    'matteo-denaro':          'BOYLE-E6N3-DENARO',
+    'giovanni-cappa':         'BOYLE-ENAR-CAPPA',
+    'claudio-camponovo':      'BOYLE-YHT9-CAMPONOVO',
+  };
+  const ALL_CODES = [...Object.keys(CODE_TO_KEY), 'BOYLE-FONDATORI'];
   const ACCESS_KEY = 'boyle_member_access';
   const EMAIL_ICON_HTML = '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6.75A2.75 2.75 0 0 1 5.75 4h12.5A2.75 2.75 0 0 1 21 6.75v10.5A2.75 2.75 0 0 1 18.25 20H5.75A2.75 2.75 0 0 1 3 17.25V6.75Zm2.2-.25 6.27 5.05a.83.83 0 0 0 1.06 0L18.8 6.5H5.2Zm13.8 1.46-5.42 4.36a2.33 2.33 0 0 1-2.96 0L5.2 7.96v9.29c0 .3.25.55.55.55h12.5c.3 0 .55-.25.55-.55V7.96Z"/></svg>';
 
@@ -1485,9 +1485,8 @@ const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx7_Yey5jukRe45
     accModal?.addEventListener('click', e => { if (e.target === accModal) closeAcc(); });
     accJoin?.addEventListener('click', () => { closeAcc(); openModal(); });
 
-    async function tryCode() {
+    function tryCode() {
       const code = (accInput?.value || '').trim().toUpperCase();
-      await loadProfiles();
       if (ALL_CODES.includes(code)) {
         if (accStatus) { accStatus.textContent = "✓ Accesso confermato. Benvenuto."; accStatus.className = 'access-modal__status success'; }
         unlockAll(code);
@@ -1686,25 +1685,6 @@ const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx7_Yey5jukRe45
   document.getElementById('network-modal')?.addEventListener('click', e => { if (e.target === e.currentTarget) closeModal(); });
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
-
-  const ADMIN_WEBAPP_URL = 'https://script.google.com/macros/s/AKfycbwRA2kTiSxcP1vJQju1xJNCc5Abx3fxxAkTUEwlg5wATUchrqUE4QPfbJsUbPb3PF9_4w/exec';
-  function sendCandidateToAdmin(payload) {
-    try {
-      const params = new URLSearchParams();
-      params.set('action', 'submitCandidate');
-      Object.keys(payload || {}).forEach(function(k) {
-        if (payload[k] !== undefined && payload[k] !== null && String(payload[k]).trim() !== '') {
-          params.set(k, String(payload[k]).slice(0, 450));
-        }
-      });
-      params.set('_ts', String(Date.now()));
-      const beacon = new Image();
-      beacon.src = ADMIN_WEBAPP_URL + '?' + params.toString();
-    } catch(err) {
-      console.warn('Sync admin candidature fallita', err);
-    }
-  }
-
   /* ── Slug helper ── */
   function slugify(s) {
     return (s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'')
@@ -1752,18 +1732,6 @@ const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx7_Yey5jukRe45
         headers: { 'Accept': 'application/json' }
       });
       if (res.ok) {
-        sendCandidateToAdmin({
-          tipo: 'RETE',
-          nome: document.getElementById('cand-name')?.value || '',
-          email: document.getElementById('cand-email')?.value || '',
-          affiliazione: document.getElementById('cand-affiliation')?.value || '',
-          ruolo: document.getElementById('cand-role')?.value || '',
-          focus: document.getElementById('cand-interest')?.value || '',
-          citta: document.getElementById('cand-city')?.value || '',
-          linkedin: document.getElementById('cand-linkedin')?.value || '',
-          bio: document.getElementById('cand-bio')?.value || '',
-          source: 'rete.html/network-form'
-        });
         if (statusBox) {
           statusBox.textContent = '✓ Candidatura inviata. Ti contatteremo presto.';
           statusBox.className = 'form-status is-success';
@@ -1805,10 +1773,9 @@ const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx7_Yey5jukRe45
     const bi = document.getElementById('barCodeInput');
     const bb = document.getElementById('barCodeBtn');
     const bs = document.getElementById('barStatus');
-    async function tryBar() {
+    function tryBar() {
       const code = (bi?.value||'').trim().toUpperCase();
       if (!code) return;
-      await loadProfiles();
       if (ALL_CODES.includes(code)) {
         unlockAll(code);
       } else {
@@ -1819,9 +1786,8 @@ const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx7_Yey5jukRe45
     bb?.addEventListener('click', tryBar);
     bi?.addEventListener('keydown', e=>{ if(e.key==='Enter') tryBar(); });
     if (isMemberUnlocked()) {
-      const currentCode = (sessionStorage.getItem('boyle_member_code') || '').trim().toUpperCase();
       if (bs) {
-        const hasPencil = CODE_TO_KEY[currentCode];
+        const hasPencil = CODE_TO_KEY[code];
         bs.textContent = hasPencil ? '✓ Accesso confermato — matita attiva sulla tua card' : '✓ Accesso confermato';
         bs.className = 'hero-access-status ok';
       }
@@ -1837,14 +1803,8 @@ const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx7_Yey5jukRe45
     if (profilesCache) return profilesCache;
     try {
       const r = await fetch(PROFILES_URL+'?v='+Date.now());
-      if (r.ok) {
-        profilesCache = await r.json();
-        window._profiles = profilesCache;
-        rebuildAccessMapsFromProfiles_(profilesCache);
-        return profilesCache;
-      }
+      if (r.ok) { profilesCache = await r.json(); window._profiles = profilesCache; return profilesCache; }
     } catch(e) {}
-    rebuildAccessMapsFromProfiles_({});
     return {};
   }
 
@@ -2099,16 +2059,6 @@ const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx7_Yey5jukRe45
           headers: { 'Accept': 'application/json' }
         });
         if (res.ok) {
-          sendCandidateToAdmin({
-            tipo: 'AMICO',
-            nome: document.getElementById('amici-name')?.value || '',
-            email: document.getElementById('amici-email')?.value || '',
-            ruolo: document.getElementById('amici-background')?.value || '',
-            bio: document.getElementById('amici-motivazione')?.value || '',
-            note_admin: document.getElementById('amici-source')?.value || '',
-            codice_generato: friendCode,
-            source: 'rete.html/amici-form'
-          });
           if (statusBox) {
             statusBox.innerHTML = "✓ Candidatura ricevuta! Il nostro team la valuterà e ti contatterà via email nei prossimi giorni.";
             statusBox.className = 'form-status is-success';
@@ -2140,7 +2090,6 @@ const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx7_Yey5jukRe45
   </script>
 <!-- i18n: rete.html -->
   <script>
-const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx7_Yey5jukRe45tD3N9lCoFH2QV8YfOEpaAsb6cLzvBy-R-5QFBFdfbX7Ec2z2Kg3JEw/exec";
   (function(){
     function getLang() {
       try { return sessionStorage.getItem('boyle_lang') || 'it'; } catch(e) { return 'it'; }
@@ -2509,7 +2458,6 @@ const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx7_Yey5jukRe45
 
   <!-- ── FILTRO MEMBRI (script separato, fuori dall'IIFE) ── -->
   <script>
-const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx7_Yey5jukRe45tD3N9lCoFH2QV8YfOEpaAsb6cLzvBy-R-5QFBFdfbX7Ec2z2Kg3JEw/exec";
   (function() {
     function initMembersFilter(allMembers) {
       var btns = document.querySelectorAll('.filter-btn');
@@ -2562,7 +2510,6 @@ const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx7_Yey5jukRe45
   </div>
 
   <script>
-const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx7_Yey5jukRe45tD3N9lCoFH2QV8YfOEpaAsb6cLzvBy-R-5QFBFdfbX7Ec2z2Kg3JEw/exec";
   (function(){
     if (window.innerWidth > 768) return;
     var wrap  = document.getElementById('rete-mobile-qn');
@@ -2591,7 +2538,6 @@ const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx7_Yey5jukRe45
 
 
   <script>
-const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx7_Yey5jukRe45tD3N9lCoFH2QV8YfOEpaAsb6cLzvBy-R-5QFBFdfbX7Ec2z2Kg3JEw/exec";
   (function() {
     function initPopovers() {
       var isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
@@ -2655,7 +2601,6 @@ const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx7_Yey5jukRe45
     <button id="cookie-accept">Accetta</button>
   </div>
   <script>
-const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx7_Yey5jukRe45tD3N9lCoFH2QV8YfOEpaAsb6cLzvBy-R-5QFBFdfbX7Ec2z2Kg3JEw/exec";
   (function(){
     if (!localStorage.getItem('boyle_cookie_ok')) {
       var b = document.getElementById('cookie-banner');
@@ -2673,7 +2618,6 @@ const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx7_Yey5jukRe45
 
   <!-- ══ Newsletter Toggles ══ -->
   <script>
-const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx7_Yey5jukRe45tD3N9lCoFH2QV8YfOEpaAsb6cLzvBy-R-5QFBFdfbX7Ec2z2Kg3JEw/exec";
   (function() {
     // Desktop tab
     var trigger = document.getElementById('nlTabTrigger');
