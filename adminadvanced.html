@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <base target="_top">
+  <meta charset="utf-8">
+  <title>Boyle - Admin</title>
+
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+      background: #050b1a;
+      color: #f5f7ff;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      padding: 16px 24px;
+      border-bottom: 1px solid rgba(123,228,255,.2);
+      background: radial-gradient(circle at top left, #123b5f 0, #050b1a 55%);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 1.2rem;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+
+    header span {
+      font-size: .8rem;
+      opacity: .7;
+    }
+
+    main {
+      padding: 16px 24px 32px;
+    }
+
+    .login-box, .panel {
+      max-width: 1200px;
+      margin: 24px auto;
+      background: rgba(8,26,62,.9);
+      border-radius: 12px;
+      border: 1px solid rgba(123,228,255,.25);
+      padding: 20px 22px;
+      box-shadow: 0 18px 40px rgba(0,0,0,.55);
+    }
+
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px 16px;
+      align-items: center;
+      margin-bottom: 12px;
+      font-size: .8rem;
+    }
+
+    .filters select,
+    .filters input[type="text"],
+    #adminPass {
+      background: rgba(3,12,32,.9);
+      color: #f5f7ff;
+      border-radius: 999px;
+      border: 1px solid rgba(123,228,255,.4);
+      padding: 8px 10px;
+      font-size: .85rem;
+    }
+
+    #adminPass {
+      min-width: 280px;
+      margin-right: 8px;
+    }
+
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+    }
+
+    .stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 16px;
+      font-size: .75rem;
+      opacity: .85;
+    }
+
+    .stats span strong {
+      font-weight: 600;
+      margin-right: 2px;
+    }
+
+    .toolbar-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: .8rem;
+    }
+
+    thead {
+      background: rgba(10,32,70,.9);
+      position: sticky;
+      top: 0;
+      z-index: 1;
+    }
+
+    th, td {
+      padding: 6px 8px;
+      border-bottom: 1px solid rgba(123,228,255,.12);
+      vertical-align: top;
+    }
+
+    tr:nth-child(even) td {
+      background: rgba(4,14,34,.7);
+    }
+
+    tr:hover td {
+      background: rgba(18,52,96,.9);
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: .7rem;
+      border: 1px solid rgba(123,228,255,.4);
+      background: rgba(3,12,32,.9);
+      white-space: nowrap;
+    }
+
+    .pill.rete { color: #4fd1ff; border-color: #4fd1ff; }
+    .pill.amico { color: #ffb347; border-color: #ffb347; }
+    .pill.nuovo { color: #7be4ff; border-color: #7be4ff; }
+    .pill.ok { color: #4dffd6; border-color: #4dffd6; }
+    .pill.ko { color: #ff6b6b; border-color: #ff6b6b; }
+    .pill.archiviato { color: #c7d2fe; border-color: #c7d2fe; }
+    .pill.attesa { color: #ffd166; border-color: #ffd166; }
+
+    .small-input,
+    .small-textarea {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 4px 6px;
+      border-radius: 6px;
+      border: 1px solid rgba(123,228,255,.4);
+      background: rgba(3,12,32,.9);
+      color: #f5f7ff;
+      font-size: .75rem;
+    }
+
+    .small-textarea {
+      resize: vertical;
+      min-height: 40px;
+    }
+
+    .row-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+    }
+
+    button {
+      font-size: .78rem;
+      padding: 7px 10px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .row-actions button {
+      font-size: .7rem;
+      padding: 4px 8px;
+      border-radius: 6px;
+    }
+
+    button[disabled] {
+      opacity: .55;
+      cursor: not-allowed;
+    }
+
+    .muted {
+      opacity: .6;
+    }
+
+    .status-msg {
+      margin-top: 8px;
+      font-size: .8rem;
+      min-height: 1.2em;
+    }
+
+    .status-msg.ok { color: #4dffd6; }
+    .status-msg.error { color: #ff6b6b; }
+
+    .trash-panel {
+      margin-top: 20px;
+      padding: 16px;
+      border-radius: 10px;
+      background: rgba(20,20,20,.4);
+      border: 1px solid rgba(255,255,255,.1);
+    }
+
+    .trash-buttons {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .modal-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.65);
+      z-index: 9999;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .modal {
+      width: min(1000px, 96vw);
+      max-height: 90vh;
+      overflow: auto;
+      background: rgba(8,26,62,.98);
+      border: 1px solid rgba(123,228,255,.25);
+      border-radius: 12px;
+      box-shadow: 0 18px 40px rgba(0,0,0,.55);
+      padding: 16px;
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    #exportJsonArea {
+      width: 100%;
+      min-height: 420px;
+      box-sizing: border-box;
+      background: rgba(3,12,32,.95);
+      color: #f5f7ff;
+      border: 1px solid rgba(123,228,255,.35);
+      border-radius: 8px;
+      padding: 10px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: .78rem;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div>
+    <h1>Boyle - Admin Rete & Amici</h1>
+    <span>Gestione candidature</span>
+  </div>
+  <div>
+    <span id="loginStatusHeader" class="muted">Non autenticato</span>
+  </div>
+</header>
+
+<main>
+
+  <section class="login-box" id="loginBox">
+    <h2>Accesso amministratore</h2>
+    <label for="adminPass">Password</label>
+    <div>
+      <input type="password" id="adminPass" autocomplete="current-password">
+      <button id="loginBtn">Entra</button>
+    </div>
+    <div id="loginMsg" class="status-msg"></div>
+  </section>
+
+  <section class="panel" id="panel" style="display:none;">
+
+    <div class="top-bar">
+      <div class="stats" id="statsBar"></div>
+
+      <div class="toolbar-buttons">
+        <button id="exportJsonBtn" style="background:#22c55e;color:#041021;">Esporta JSON</button>
+        <button id="deleteFilteredBtn" style="background:#ef4444;color:white;">Cestina filtrate</button>
+        <button id="deleteEmptyBtn" style="background:#f97316;color:white;">Elimina vuote</button>
+      </div>
+    </div>
+
+    <div class="filters">
+      <div>
+        <strong>Tipo:</strong>
+        <select id="filterTipo">
+          <option value="">Tutti</option>
+          <option value="rete">Rete</option>
+          <option value="amico">Amico</option>
+        </select>
+      </div>
+
+      <div>
+        <strong>Stato:</strong>
+        <select id="filterStato">
+          <option value="">Tutti</option>
+          <option value="NUOVO">Nuovo</option>
+          <option value="IN_ATTESA">In attesa</option>
+          <option value="RETE">Accettato Rete</option>
+          <option value="AMICO">Passato ad Amici</option>
+          <option value="ARCHIVIATO">Archiviato</option>
+          <option value="RIFIUTATO">Rifiutato</option>
+        </select>
+      </div>
+
+      <div>
+        <strong>Cerca:</strong>
+        <input type="text" id="filterSearch" placeholder="Nome o email">
+      </div>
+
+      <div style="margin-left:auto;">
+        <span id="rowsInfo" class="muted"></span>
+      </div>
+    </div>
+
+    <div style="overflow:auto;max-height:70vh;">
+      <table id="dataTable">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Tipo</th>
+            <th>Nome / Email</th>
+            <th>Stato</th>
+            <th>Codice</th>
+            <th>Note</th>
+            <th>Data</th>
+            <th>Azioni</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td colspan="8" class="muted">Caricamento...</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div id="panelMsg" class="status-msg"></div>
+
+    <div class="trash-panel">
+      <h3>Cestino</h3>
+      <div class="trash-buttons">
+        <button id="openTrashBtn" style="background:#3b82f6;color:white;">Apri cestino</button>
+        <button id="emptyTrashBtn" style="background:#dc2626;color:white;">Svuota cestino</button>
+      </div>
+    </div>
+
+  </section>
+
+  <div class="modal-backdrop" id="exportModal">
+    <div class="modal">
+      <div class="modal-header">
+        <strong>Esporta JSON</strong>
+        <div class="modal-actions">
+          <button id="copyExportBtn" style="background:#0ea5e9;color:#041021;">Copia</button>
+          <button id="closeExportModalBtn">Chiudi</button>
+        </div>
+      </div>
+      <textarea id="exportJsonArea" readonly></textarea>
+    </div>
+  </div>
+
+  <div class="modal-backdrop" id="trashModal">
+    <div class="modal">
+      <div class="modal-header">
+        <strong>Cestino</strong>
+        <button id="closeTrashModalBtn">Chiudi</button>
+      </div>
+      <div id="trashContent">Caricamento...</div>
+    </div>
+  </div>
+
+</main>
+
+<script>
+let ADMIN_OK = false;
+let ALL_ROWS = [];
+let LAST_STATS = null;
+let UI_BUSY = false;
+
+function setBusy(isBusy) {
+  UI_BUSY = isBusy;
+  document.querySelectorAll('button').forEach(btn => {
+    btn.disabled = isBusy;
+  });
+}
+
+function setLoginState(ok) {
+  ADMIN_OK = ok;
+  document.getElementById('loginBox').style.display = ok ? 'none' : 'block';
+  document.getElementById('panel').style.display = ok ? 'block' : 'none';
+  document.getElementById('loginStatusHeader').textContent = ok ? 'Admin autenticato' : 'Non autenticato';
+}
+
+function escapeHtml(v) {
+  return String(v || "")
+    .replace(/&/g,'&amp;')
+    .replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;')
+    .replace(/'/g,'&#039;');
+}
+
+function getTipoNormalized(row) {
+  const t = String(row.TIPO || "").toLowerCase().trim();
+  if (t.includes('rete')) return 'rete';
+  if (t.includes('amico')) return 'amico';
+  return "";
+}
+
+function getStatoPill(stato) {
+  const s = String(stato || "").toUpperCase().trim();
+  if (!s || s === 'NUOVO') return {cls:'nuovo', label:'Nuovo'};
+  if (s === 'IN_ATTESA') return {cls:'attesa', label:'In attesa'};
+  if (s === 'RETE') return {cls:'ok', label:'Accettato Rete'};
+  if (s === 'AMICO') return {cls:'amico', label:'Passato ad Amici'};
+  if (s === 'ARCHIVIATO') return {cls:'archiviato', label:'Archiviato'};
+  if (s === 'RIFIUTATO') return {cls:'ko', label:'Rifiutato'};
+  return {cls:'', label:s};
+}
+
+function renderStatsBar() {
+  const el = document.getElementById('statsBar');
+  const s = LAST_STATS;
+
+  if (!s) {
+    el.innerHTML = '';
+    return;
+  }
+
+  el.innerHTML = `
+    <span><strong>Totale:</strong> ${s.totale}</span>
+    <span><strong>Rete:</strong> ${s.rete}</span>
+    <span><strong>Amici:</strong> ${s.amici}</span>
+    <span><strong>Nuovi:</strong> ${s.nuovo}</span>
+    <span><strong>In attesa:</strong> ${s.in_attesa}</span>
+    <span><strong>Accettati rete:</strong> ${s.accettato_rete}</span>
+    <span><strong>Passati amici:</strong> ${s.passato_amici}</span>
+    <span><strong>Archiviati:</strong> ${s.archiviato}</span>
+    <span><strong>Rifiutati:</strong> ${s.rifiutato}</span>
+  `;
+}
+
+function renderTable() {
+  const tbody = document.querySelector('#dataTable tbody');
+  tbody.innerHTML = "";
+
+  const tipoFilter  = document.getElementById('filterTipo').value;
+  const statoFilter = document.getElementById('filterStato').value;
+  const search      = document.getElementById('filterSearch').value.toLowerCase().trim();
+
+  let visible = 0;
+
+  ALL_ROWS.forEach((row) => {
+    const tipo = getTipoNormalized(row);
+    const stato = String(row.STATO_BOYLE || "").toUpperCase().trim();
+
+    if (tipoFilter && tipo !== tipoFilter) return;
+    if (statoFilter && stato !== statoFilter) return;
+
+    const hay = `${row.NOME || ''} ${row.EMAIL || ''}`.toLowerCase();
+    if (search && !hay.includes(search)) return;
+
+    visible++;
+
+    const statoInfo = getStatoPill(stato);
+    const tr = document.createElement('tr');
+
+    tr.innerHTML = `
+      <td>${visible}</td>
+      <td><span class="pill ${tipo}">${tipo || '-'}</span></td>
+      <td><strong>${escapeHtml(row.NOME)}</strong><br><span class="muted">${escapeHtml(row.EMAIL)}</span></td>
+      <td><span class="pill ${statoInfo.cls}">${statoInfo.label}</span></td>
+      <td><input class="small-input" data-row="${row._rowIndex}" value="${escapeHtml(row.CODICE_BOYLE || '')}"></td>
+      <td><textarea class="small-textarea" data-row="${row._rowIndex}">${escapeHtml(row.NOTE_ADMIN || '')}</textarea></td>
+      <td>${escapeHtml(row.DATA_GESTIONE || '-')}</td>
+      <td></td>
+    `;
+
+    const tdAct = tr.querySelector('td:last-child');
+    const wrap = document.createElement('div');
+    wrap.className = 'row-actions';
+
+    const inputEl = tr.querySelector('input');
+    const noteEl  = tr.querySelector('textarea');
+
+    const btnRete = document.createElement('button');
+    btnRete.textContent = 'Rete';
+    btnRete.style.background = '#0ea5e9';
+    btnRete.style.color = '#041021';
+    btnRete.onclick = () => saveRow(row._rowIndex, 'RETE', inputEl.value, noteEl.value);
+    wrap.appendChild(btnRete);
+
+    const btnAmico = document.createElement('button');
+    btnAmico.textContent = 'Amico';
+    btnAmico.style.background = '#facc15';
+    btnAmico.style.color = '#041021';
+    btnAmico.onclick = () => saveRow(row._rowIndex, 'AMICO', inputEl.value, noteEl.value);
+    wrap.appendChild(btnAmico);
+
+    const btnArch = document.createElement('button');
+    btnArch.textContent = 'Archivia';
+    btnArch.style.background = '#6366f1';
+    btnArch.style.color = '#fff';
+    btnArch.onclick = () => saveRow(row._rowIndex, 'ARCHIVIATO', inputEl.value, noteEl.value);
+    wrap.appendChild(btnArch);
+
+    const btnRifiuta = document.createElement('button');
+    btnRifiuta.textContent = 'Rifiuta';
+    btnRifiuta.style.background = 'linear-gradient(135deg,#ff6b6b,#ff8f8f)';
+    btnRifiuta.style.color = '#fff';
+    btnRifiuta.onclick = () => saveRow(row._rowIndex, 'RIFIUTATO', inputEl.value, noteEl.value);
+    wrap.appendChild(btnRifiuta);
+
+    const btnDelete = document.createElement('button');
+    btnDelete.textContent = 'Cestina';
+    btnDelete.style.background = '#111827';
+    btnDelete.style.color = '#fff';
+    btnDelete.onclick = () => {
+      if (confirm("Vuoi spostare questa riga nel cestino? Potrai ripristinarla finché il cestino non verrà svuotato.")) {
+        deleteRow(row._rowIndex);
+      }
+    };
+    wrap.appendChild(btnDelete);
+
+    const btnPublish = document.createElement('button');
+    btnPublish.textContent = 'Pubblica';
+    btnPublish.style.background = '#22c55e';
+    btnPublish.style.color = '#041021';
+    btnPublish.onclick = () => publishRow(row._rowIndex);
+    wrap.appendChild(btnPublish);
+
+    tdAct.appendChild(wrap);
+    tbody.appendChild(tr);
+  });
+
+  if (visible === 0) {
+    const tr = document.createElement('tr');
+    const td = document.createElement('td');
+    td.colSpan = 8;
+    td.className = 'muted';
+    td.textContent = ALL_ROWS.length === 0
+      ? 'Nessun dato disponibile.'
+      : 'Nessuna riga corrisponde ai filtri.';
+    tr.appendChild(td);
+    tbody.appendChild(tr);
+  }
+
+  document.getElementById('rowsInfo').textContent = `${visible} righe visibili`;
+}
+
+function saveRow(rowIndex, stato, codice, note) {
+  const panelMsg = document.getElementById('panelMsg');
+  panelMsg.textContent = 'Salvataggio...';
+  panelMsg.className = 'status-msg';
+  setBusy(true);
+
+  google.script.run
+    .withSuccessHandler(() => {
+      panelMsg.textContent = 'Salvato.';
+      panelMsg.className = 'status-msg ok';
+      setBusy(false);
+      loadData();
+    })
+    .withFailureHandler(err => {
+      panelMsg.textContent = 'Errore: ' + (err && err.message ? err.message : JSON.stringify(err));
+      panelMsg.className = 'status-msg error';
+      setBusy(false);
+    })
+    .updateAdminRow({ rowIndex, stato, codice, note });
+}
+
+function deleteRow(rowIndex) {
+  const panelMsg = document.getElementById('panelMsg');
+  panelMsg.textContent = 'Spostamento nel cestino...';
+  panelMsg.className = 'status-msg';
+  setBusy(true);
+
+  google.script.run
+    .withSuccessHandler(() => {
+      panelMsg.textContent = 'Riga spostata nel cestino.';
+      panelMsg.className = 'status-msg ok';
+      setBusy(false);
+      loadData();
+    })
+    .withFailureHandler(err => {
+      panelMsg.textContent = 'Errore: ' + (err && err.message ? err.message : JSON.stringify(err));
+      panelMsg.className = 'status-msg error';
+      setBusy(false);
+    })
+    .deleteAdminRow(rowIndex);
+}
+
+function publishRow(rowIndex) {
+  const panelMsg = document.getElementById('panelMsg');
+  panelMsg.textContent = 'Pubblicazione su sito...';
+  panelMsg.className = 'status-msg';
+  setBusy(true);
+
+  google.script.run
+    .withSuccessHandler(() => {
+      panelMsg.textContent = 'Pubblicato su rete-members.json';
+      panelMsg.className = 'status-msg ok';
+      setBusy(false);
+    })
+    .withFailureHandler(err => {
+      panelMsg.textContent = 'Errore pubblicazione: ' + (err && err.message ? err.message : JSON.stringify(err));
+      panelMsg.className = 'status-msg error';
+      setBusy(false);
+    })
+    .publishCandidate(rowIndex);
+}
+
+function getFilteredIndexes() {
+  const tipoFilter = document.getElementById('filterTipo').value;
+  const statoFilter = document.getElementById('filterStato').value;
+  const search = document.getElementById('filterSearch').value.toLowerCase().trim();
+
+  return ALL_ROWS
+    .filter(row => {
+      const tipo = getTipoNormalized(row);
+      const stato = String(row.STATO_BOYLE || "").toUpperCase().trim();
+      const hay = `${row.NOME || ''} ${row.EMAIL || ''}`.toLowerCase();
+
+      if (tipoFilter && tipo !== tipoFilter) return false;
+      if (statoFilter && stato !== statoFilter) return false;
+      if (search && !hay.includes(search)) return false;
+
+      return true;
+    })
+    .map(r => r._rowIndex);
+}
+
+document.getElementById('deleteFilteredBtn').onclick = () => {
+  const indexes = getFilteredIndexes();
+
+  if (indexes.length === 0) {
+    alert("Nessuna riga da spostare nel cestino.");
+    return;
+  }
+
+  if (!confirm(`Vuoi spostare nel cestino ${indexes.length} righe?`)) return;
+
+  setBusy(true);
+
+  google.script.run
+    .withSuccessHandler(() => {
+      setBusy(false);
+      loadData();
+    })
+    .withFailureHandler(err => {
+      const panelMsg = document.getElementById('panelMsg');
+      panelMsg.textContent = 'Errore: ' + (err && err.message ? err.message : JSON.stringify(err));
+      panelMsg.className = 'status-msg error';
+      setBusy(false);
+    })
+    .deleteFilteredRows(indexes);
+};
+
+document.getElementById('deleteEmptyBtn').onclick = () => {
+  if (!confirm("Vuoi eliminare tutte le righe vuote?")) return;
+
+  setBusy(true);
+
+  google.script.run
+    .withSuccessHandler(() => {
+      setBusy(false);
+      loadData();
+    })
+    .withFailureHandler(err => {
+      const panelMsg = document.getElementById('panelMsg');
+      panelMsg.textContent = 'Errore: ' + (err && err.message ? err.message : JSON.stringify(err));
+      panelMsg.className = 'status-msg error';
+      setBusy(false);
+    })
+    .deleteEmptyRows();
+};
+
+document.getElementById('exportJsonBtn').onclick = () => {
+  setBusy(true);
+
+  google.script.run
+    .withSuccessHandler(json => {
+      document.getElementById('exportJsonArea').value = json;
+      document.getElementById('exportModal').style.display = 'flex';
+      setBusy(false);
+    })
+    .withFailureHandler(err => {
+      alert('Errore export: ' + (err && err.message ? err.message : JSON.stringify(err)));
+      setBusy(false);
+    })
+    .exportAdminJson();
+};
+
+document.getElementById('copyExportBtn').onclick = async () => {
+  const area = document.getElementById('exportJsonArea');
+  try {
+    await navigator.clipboard.writeText(area.value || '');
+    alert('JSON copiato.');
+  } catch (e) {
+    area.select();
+    document.execCommand('copy');
+    alert('JSON copiato.');
+  }
+};
+
+document.getElementById('closeExportModalBtn').onclick = () => {
+  document.getElementById('exportModal').style.display = 'none';
+};
+
+document.getElementById('openTrashBtn').onclick = () => {
+  document.getElementById('trashModal').style.display = 'flex';
+  document.getElementById('trashContent').innerHTML = 'Caricamento...';
+
+  setBusy(true);
+
+  google.script.run
+    .withSuccessHandler(html => {
+      document.getElementById('trashContent').innerHTML = html;
+      setBusy(false);
+    })
+    .withFailureHandler(err => {
+      document.getElementById('trashContent').innerHTML = "Errore: " + (err && err.message ? err.message : JSON.stringify(err));
+      setBusy(false);
+    })
+    .include('TrashView');
+};
+
+document.getElementById('closeTrashModalBtn').onclick = () => {
+  document.getElementById('trashModal').style.display = 'none';
+};
+
+document.getElementById('emptyTrashBtn').onclick = () => {
+  if (!confirm("Svuotare il cestino?")) return;
+
+  setBusy(true);
+
+  google.script.run
+    .withSuccessHandler(() => {
+      alert("Cestino svuotato.");
+      document.getElementById('trashContent').innerHTML = 'Cestino vuoto.';
+      setBusy(false);
+      loadData();
+    })
+    .withFailureHandler(err => {
+      alert('Errore svuotamento cestino: ' + (err && err.message ? err.message : JSON.stringify(err)));
+      setBusy(false);
+    })
+    .emptyTrash();
+};
+
+document.getElementById('loginBtn').onclick = () => {
+  const pass = document.getElementById('adminPass').value;
+  const msg = document.getElementById('loginMsg');
+  msg.textContent = 'Verifica...';
+  msg.className = 'status-msg';
+  setBusy(true);
+
+  google.script.run
+    .withSuccessHandler(ok => {
+      if (ok) {
+        msg.textContent = '';
+        setLoginState(true);
+        setBusy(false);
+        loadData();
+      } else {
+        msg.textContent = "Password errata.";
+        msg.className = 'status-msg error';
+        setBusy(false);
+      }
+    })
+    .withFailureHandler(err => {
+      msg.textContent = 'Errore: ' + (err && err.message ? err.message : JSON.stringify(err));
+      msg.className = 'status-msg error';
+      setBusy(false);
+    })
+    .checkAdminPassword(pass);
+};
+
+document.getElementById('adminPass').addEventListener('keydown', e => {
+  if (e.key === 'Enter') {
+    document.getElementById('loginBtn').click();
+  }
+});
+
+document.getElementById('filterTipo').addEventListener('change', renderTable);
+document.getElementById('filterStato').addEventListener('change', renderTable);
+document.getElementById('filterSearch').addEventListener('input', renderTable);
+
+document.getElementById('exportModal').addEventListener('click', (e) => {
+  if (e.target.id === 'exportModal') {
+    document.getElementById('exportModal').style.display = 'none';
+  }
+});
+
+document.getElementById('trashModal').addEventListener('click', (e) => {
+  if (e.target.id === 'trashModal') {
+    document.getElementById('trashModal').style.display = 'none';
+  }
+});
+
+function loadData() {
+  const panelMsg = document.getElementById('panelMsg');
+  const tbody = document.querySelector('#dataTable tbody');
+
+  tbody.innerHTML = '<tr><td colspan="8" class="muted">Caricamento...</td></tr>';
+  panelMsg.textContent = 'Caricamento dati...';
+  panelMsg.className = 'status-msg';
+
+  google.script.run
+    .withSuccessHandler(data => {
+      ALL_ROWS = (data && data.rows) ? data.rows : [];
+      LAST_STATS = data ? data.stats : null;
+      renderStatsBar();
+      renderTable();
+      panelMsg.textContent = 'Dati caricati.';
+      panelMsg.className = 'status-msg ok';
+    })
+    .withFailureHandler(err => {
+      console.error(err);
+      panelMsg.textContent = 'Errore caricamento: ' + (err && err.message ? err.message : JSON.stringify(err));
+      panelMsg.className = 'status-msg error';
+      tbody.innerHTML = '<tr><td colspan="8" class="status-msg error">Errore nel caricamento dei dati.</td></tr>';
+    })
+    .getAdminData();
+}
+</script>
+
+</body>
+</html>
