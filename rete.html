@@ -1767,16 +1767,24 @@
           statusBox.textContent = window.boyleT ? window.boyleT('r_form_rete_ok') : '✓ Candidatura inviata. Ti contatteremo presto.';
           statusBox.className = 'form-status is-success';
         }
-        // Secondo invio silenzioso ad Apps Script (non blocca l'utente se fallisce)
+        // Secondo invio silenzioso ad Apps Script via form bridge
         try {
           const fd = new FormData(netForm);
-          const params = new URLSearchParams();
-          fd.forEach((v,k) => { if(typeof v === 'string') params.append(k, v); });
-          fetch(ADMIN_SCRIPT_URL, {
-            method: 'POST',
-            body: params,
-            mode: 'no-cors'
-          }).catch(() => {});
+          const get = (name) => { const v = fd.get(name); return v && typeof v === 'string' ? v : ''; };
+          sendCandidateToAdmin({
+            tipo: 'RETE',
+            nome: get('nome'),
+            email: get('email'),
+            affiliazione: get('affiliazione'),
+            ruolo: get('ruolo'),
+            focus: get('focus'),
+            citta: get('citta'),
+            linkedin: get('linkedin'),
+            bio: get('presentazione'),
+            note_admin: '',
+            codice_generato: '',
+            source: 'rete.html/network-form'
+          });
         } catch(_) {}
         netForm.reset();
         setTimeout(closeModal, 2800);
@@ -2715,5 +2723,28 @@
     }
   })();
   </script>
+<!-- Bridge form per invio candidature ad Apps Script (no-CORS) -->
+<iframe name="boyle-admin-bridge-frame" id="boyle-admin-bridge-frame" style="display:none" aria-hidden="true"></iframe>
+<form id="boyle-admin-bridge-form"
+      action="https://script.google.com/macros/s/AKfycbwzgZvPxxW3yjA_Fa0_9GYINJO1QwBC_cT8sHhmRG5oDi3dJ9egqMGVznBcDIDP2ED_fQ/exec"
+      method="POST"
+      target="boyle-admin-bridge-frame"
+      style="display:none"
+      aria-hidden="true">
+  <input type="hidden" name="action"              id="bridge_action"/>
+  <input type="hidden" name="tipo"                id="bridge_tipo"/>
+  <input type="hidden" name="nome"                id="bridge_nome"/>
+  <input type="hidden" name="email"               id="bridge_email"/>
+  <input type="hidden" name="affiliazione"        id="bridge_affiliazione"/>
+  <input type="hidden" name="ruolo"               id="bridge_ruolo"/>
+  <input type="hidden" name="focus"               id="bridge_focus"/>
+  <input type="hidden" name="citta"               id="bridge_citta"/>
+  <input type="hidden" name="linkedin"            id="bridge_linkedin"/>
+  <input type="hidden" name="bio"                 id="bridge_bio"/>
+  <input type="hidden" name="note_admin"          id="bridge_note_admin"/>
+  <input type="hidden" name="codice_generato"     id="bridge_codice_generato"/>
+  <input type="hidden" name="source"              id="bridge_source"/>
+  <input type="hidden" name="ts"                  id="bridge_ts"/>
+</form>
 </body>
 </html>
