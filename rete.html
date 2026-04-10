@@ -1691,6 +1691,37 @@
       .replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'').replace(/-{2,}/g,'-');
   }
 
+
+  const ADMIN_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwzgZvPxxW3yjA_Fa0_9GYINJO1QwBC_cT8sHhmRG5oDi3dJ9egqMGVznBcDIDP2ED_fQ/exec';
+
+  function sendCandidateToAdmin(payload) {
+    try {
+      const form = document.getElementById('boyle-admin-bridge-form');
+      if (!form) return;
+      const set = (id, val) => {
+        const el = document.getElementById(id);
+        if (el) el.value = val == null ? '' : String(val);
+      };
+      set('bridge_action', 'submitCandidate');
+      set('bridge_tipo', payload.tipo || '');
+      set('bridge_nome', payload.nome || '');
+      set('bridge_email', payload.email || '');
+      set('bridge_affiliazione', payload.affiliazione || '');
+      set('bridge_ruolo', payload.ruolo || '');
+      set('bridge_focus', payload.focus || '');
+      set('bridge_citta', payload.citta || '');
+      set('bridge_linkedin', payload.linkedin || '');
+      set('bridge_bio', payload.bio || '');
+      set('bridge_note_admin', payload.note_admin || '');
+      set('bridge_codice_generato', payload.codice_generato || '');
+      set('bridge_source', payload.source || '');
+      set('bridge_ts', Date.now());
+      form.submit();
+    } catch (err) {
+      console.warn('Sync admin candidature fallita', err);
+    }
+  }
+
   /* ── Costruisce lo snippet JSON da incollare in rete-members.json ── */
   function buildJSONSnippet() {
     const name  = (document.getElementById('cand-name')?.value||'').trim();
@@ -1716,7 +1747,6 @@
   }
 
   /* ── Form submit: inietta snippet + invia via fetch ── */
-  const ADMIN_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwzgZvPxxW3yjA_Fa0_9GYINJO1QwBC_cT8sHhmRG5oDi3dJ9egqMGVznBcDIDP2ED_fQ/exec';
   const netForm   = document.getElementById('network-form');
   const statusBox = document.getElementById('form-status');
   netForm?.addEventListener('submit', async e => {
@@ -2075,17 +2105,19 @@
             statusBox.innerHTML = window.boyleT ? window.boyleT('r_form_amici_ok') : "✓ Iscrizione ricevuta. Riceverai una email di conferma con i prossimi passaggi.";
             statusBox.className = 'form-status is-success';
           }
-          // Secondo invio silenzioso ad Apps Script
-          try {
-            const fd2 = new FormData(form);
-            const params2 = new URLSearchParams();
-            fd2.forEach((v,k) => { if(typeof v === 'string') params2.append(k, v); });
-            fetch(ADMIN_SCRIPT_URL, {
-              method: 'POST',
-              body: params2,
-              mode: 'no-cors'
-            }).catch(() => {});
-          } catch(_) {}
+          sendCandidateToAdmin({
+            tipo: 'AMICO',
+            nome: document.getElementById('amici-name')?.value || '',
+            email: document.getElementById('amici-email')?.value || '',
+            ruolo: document.getElementById('amici-background')?.value || '',
+            focus: '',
+            citta: '',
+            linkedin: '',
+            bio: document.getElementById('amici-motivazione')?.value || '',
+            note_admin: document.getElementById('amici-source')?.value || '',
+            codice_generato: friendCode,
+            source: 'rete.html/amici-form'
+          });
           form.reset();
           setTimeout(closeAmici, 5000);
         } else {
