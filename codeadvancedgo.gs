@@ -770,6 +770,112 @@ function debugConfigStatus() {
 }
 
 /*************************************************
+ * FIND MEMBER SHEET INFO (chiamato da getPublishedMembers)
+ *************************************************/
+function findMemberSheetInfo_(name, email) {
+  try {
+    const sheet = getSheet_();
+    const meta = getHeaderMap_(sheet);
+    const headers = meta.headers;
+    const map = meta.map;
+    const lastRow = sheet.getLastRow();
+    if (lastRow < 2) return null;
+
+    const nomeCol   = map['NOME']         || 0;
+    const emailCol  = map['EMAIL']        || 0;
+    const codiceCol = map['CODICE_BOYLE'] || 0;
+    const statoCol  = map['STATO_BOYLE']  || 0;
+    const tipoCol   = map['TIPO']         || 0;
+
+    const values = sheet.getRange(2, 1, lastRow - 1, headers.length).getValues();
+    const nameLower  = String(name  || '').trim().toLowerCase();
+    const emailLower = String(email || '').trim().toLowerCase();
+
+    for (var i = 0; i < values.length; i++) {
+      const row = values[i];
+      const rNome  = String(row[(nomeCol  || 1) - 1] || '').trim().toLowerCase();
+      const rEmail = String(row[(emailCol || 1) - 1] || '').trim().toLowerCase();
+      if ((nameLower  && rNome  === nameLower)  ||
+          (emailLower && rEmail === emailLower)) {
+        return {
+          codice: codiceCol ? String(row[codiceCol - 1] || '') : '',
+          stato:  statoCol  ? String(row[statoCol  - 1] || '') : '',
+          tipo:   tipoCol   ? String(row[tipoCol   - 1] || '') : ''
+        };
+      }
+    }
+    return null;
+  } catch(e) {
+    Logger.log('findMemberSheetInfo_ error: ' + e.message);
+    return null;
+  }
+}
+
+/*************************************************
+ * RECEIVE CANDIDATE (chiamato da doPost — rete.html)
+ *************************************************/
+function receiveCandidate_(data) {
+  return withLock_(function() {
+    const sheet = getSheet_();
+    const meta  = getHeaderMap_(sheet);
+    const map   = meta.map;
+
+    var tipo = 'RETE';
+    var subj = String(data._subject || data.tipo || '').toLowerCase();
+    if (subj.indexOf('amico') !== -1 || subj.indexOf('friend') !== -1) tipo = 'AMICI';
+
+    var nome  = valueFromObject_(data, ['nome', 'name', 'NOME']);
+    var email = valueFromObject_(data, ['email', 'EMAIL']);
+
+    if (!nome || !email) return { ok: false, error: 'nome o email mancanti' };
+
+    // Evita duplicati: stessa email già presente
+    const lastRow = sheet.getLastRow();
+    if (lastRow >= 2) {
+      const emailCol = map['EMAIL'];
+      if (emailCol) {
+        const existing = sheet.getRange(2, emailCol, lastRow - 1, 1).getDisplayValues().flat();
+        for (var i = 0; i < existing.length; i++) {
+          if (String(existing[i] || '').trim().toLowerCase() === email.trim().toLowerCase()) {
+            return { ok: true, duplicate: true };
+          }
+        }
+      }
+    }
+
+    const row = new Array(REQUIRED_HEADERS.length).fill('');
+    row[0] = getNowString_();  // ID_BOYLE (timestamp)
+    row[1] = tipo;             // TIPO
+    row[2] = nome;             // NOME
+    row[3] = email;            // EMAIL
+    row[4] = 'NUOVO';          // STATO_BOYLE
+
+    // Colonne opzionali
+    const extraCol   = ensureOptionalHeader_(sheet, 'EXTRA_DATA');
+    const arrivoCol  = ensureOptionalHeader_(sheet, 'DATA_ARRIVO');
+
+    var extra = {};
+    ['ruolo','role','affiliazione','affiliation','focus','citta','city',
+     'linkedin','presentazione','bio','background','motivazione','come_ci_hai_conosciuto',
+     'codice_generato','_subject'].forEach(function(k) {
+      if (data[k] !== undefined && data[k] !== null && String(data[k]).trim()) {
+        extra[k] = String(data[k]).trim();
+      }
+    });
+
+    // Costruisce riga con il numero corretto di colonne
+    const totalCols = Math.max(REQUIRED_HEADERS.length, extraCol, arrivoCol);
+    const fullRow = new Array(totalCols).fill('');
+    row.forEach(function(v, i) { fullRow[i] = v; });
+    fullRow[extraCol  - 1] = JSON.stringify(extra);
+    fullRow[arrivoCol - 1] = getNowString_();  // DATA_ARRIVO — immutabile, solo all'ingresso
+
+    sheet.appendRow(fullRow);
+    return { ok: true, duplicate: false };
+  });
+}
+
+/*************************************************
  * WEB APP
  *************************************************/
 function doGet() {
@@ -777,4 +883,55 @@ function doGet() {
     .evaluate()
     .setTitle('Boyle - Admin Rete & Amici')
     .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
+}
+
+function doPost(e) {
+  try {
+    var data = {};
+
+    if (e && e.postData && e.postData.contents) {
+      var raw = e.postData.contents;
+
+      // Tenta JSON
+      try {
+        var parsed = JSON.parse(raw);
+        // Struttura Formspree webhook: { submission: { nome, email, ... } }
+        if (parsed.submission && typeof parsed.submission === 'object') {
+          data = parsed.submission;
+          // Aggiungi tipo dal _subject di Formspree se presente
+          if (!data.tipo && parsed.submission._subject) {
+            data.tipo = parsed.submission._subject;
+          }
+        } else {
+          data = parsed;
+        }
+      } catch(err) {
+        // Fallback: query string (application/x-www-form-urlencoded)
+        raw.split('&').forEach(function(pair) {
+          var idx = pair.indexOf('=');
+          if (idx > 0) {
+            var k = decodeURIComponent(pair.substring(0, idx).replace(/\+/g,' '));
+            var v = decodeURIComponent(pair.substring(idx+1).replace(/\+/g,' '));
+            if (k && !data[k]) data[k] = v;
+          }
+        });
+      }
+    }
+
+    // e.parameter come ulteriore fallback
+    if (e && e.parameter) {
+      Object.keys(e.parameter).forEach(function(k) {
+        if (!data[k]) data[k] = e.parameter[k];
+      });
+    }
+
+    var result = receiveCandidate_(data);
+    return ContentService
+      .createTextOutput(JSON.stringify(result))
+      .setMimeType(ContentService.MimeType.JSON);
+  } catch(err) {
+    return ContentService
+      .createTextOutput(JSON.stringify({ ok: false, error: err.message }))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
 }
