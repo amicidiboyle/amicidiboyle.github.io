@@ -1716,6 +1716,7 @@
   }
 
   /* ── Form submit: inietta snippet + invia via fetch ── */
+  const ADMIN_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx7_Yey5jukRe45tD3N9lCoFH2QV8YfOEpaAsb6cLzvBy-R-5QFBFdfbX7Ec2z2Kg3JEw/exec';
   const netForm   = document.getElementById('network-form');
   const statusBox = document.getElementById('form-status');
   netForm?.addEventListener('submit', async e => {
@@ -1733,16 +1734,27 @@
       });
       if (res.ok) {
         if (statusBox) {
-          statusBox.textContent = '✓ Candidatura inviata. Ti contatteremo presto.';
+          statusBox.textContent = window.boyleT ? window.boyleT('r_form_rete_ok') : '✓ Candidatura inviata. Ti contatteremo presto.';
           statusBox.className = 'form-status is-success';
         }
+        // Secondo invio silenzioso ad Apps Script (non blocca l'utente se fallisce)
+        try {
+          const fd = new FormData(netForm);
+          const payload = {};
+          fd.forEach((v,k) => { payload[k] = v; });
+          fetch(ADMIN_SCRIPT_URL, {
+            method: 'POST',
+            body: JSON.stringify(payload),
+            headers: { 'Content-Type': 'application/json' }
+          }).catch(() => {});
+        } catch(_) {}
         netForm.reset();
         setTimeout(closeModal, 2800);
       } else {
-        if (statusBox) { statusBox.textContent = 'Invio non riuscito. Scrivi a info@amicidiboyle.it'; statusBox.className = 'form-status is-error'; }
+        if (statusBox) { statusBox.textContent = window.boyleT ? window.boyleT('r_form_rete_err') : 'Invio non riuscito. Scrivi a info@amicidiboyle.it'; statusBox.className = 'form-status is-error'; }
       }
     } catch(err) {
-      if (statusBox) { statusBox.textContent = 'Errore di rete. Scrivi a info@amicidiboyle.it'; statusBox.className = 'form-status is-error'; }
+      if (statusBox) { statusBox.textContent = window.boyleT ? window.boyleT('r_form_rete_err') : 'Errore di rete. Scrivi a info@amicidiboyle.it'; statusBox.className = 'form-status is-error'; }
     }
   });
 
@@ -2060,9 +2072,20 @@
         });
         if (res.ok) {
           if (statusBox) {
-            statusBox.innerHTML = "✓ Candidatura ricevuta! Il nostro team la valuterà e ti contatterà via email nei prossimi giorni.";
+            statusBox.innerHTML = window.boyleT ? window.boyleT('r_form_amici_ok') : "✓ Iscrizione ricevuta. Riceverai una email di conferma con i prossimi passaggi.";
             statusBox.className = 'form-status is-success';
           }
+          // Secondo invio silenzioso ad Apps Script
+          try {
+            const fd2 = new FormData(form);
+            const payload2 = {};
+            fd2.forEach((v,k) => { payload2[k] = v; });
+            fetch(ADMIN_SCRIPT_URL, {
+              method: 'POST',
+              body: JSON.stringify(payload2),
+              headers: { 'Content-Type': 'application/json' }
+            }).catch(() => {});
+          } catch(_) {}
           form.reset();
           setTimeout(closeAmici, 5000);
         } else {
@@ -2519,13 +2542,21 @@
     wrap.style.display = 'block';
     wrap.style.opacity = '0';
     wrap.style.transition = 'opacity .3s';
-    wrap.style.pointerEvribute('aria-hidden', open ? 'true' : 'false');
-      btn.setAttribute('aria-expanded', !open);
-      btn.style.transform = open ? 'none' : 'rotate(90deg)';
+    wrap.style.pointerEvents = 'none';
+    setTimeout(function(){ wrap.style.opacity = '1'; wrap.style.pointerEvents = ''; }, 800);
+
+    var open = false;
+    btn.addEventListener('click', function(){
+      open = !open;
+      panel.style.display = open ? 'block' : 'none';
+      panel.setAttribute('aria-hidden', open ? 'false' : 'true');
+      btn.setAttribute('aria-expanded', String(open));
+      btn.style.transform = open ? 'rotate(90deg)' : 'none';
     });
 
     panel.querySelectorAll('a').forEach(function(a){
       a.addEventListener('click', function(){
+        open = false;
         panel.style.display = 'none';
         panel.setAttribute('aria-hidden','true');
         btn.setAttribute('aria-expanded','false');
