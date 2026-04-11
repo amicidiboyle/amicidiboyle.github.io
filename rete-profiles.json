@@ -383,8 +383,8 @@
   },
   "alessandro-balzani": {
     "name": "Alessandro Balzani",
-    "bio": "",
-    "linkedin": "",
+    "bio": "Istruttore Subacqueo PADI - Medico Specializzando in Anestesia, LP 118.",
+    "linkedin": "https://www.linkedin.com/in/balzanialessandro/?locale=%22%2C",
     "researchgate": "",
     "scholar": "",
     "orcid": "",
@@ -396,21 +396,5 @@
     "podcast": false,
     "research": false,
     "updated": "2026-04-11 18:37:32"
+    "accessCode": "BOYLE-ZPK5-BALZANI"
   },
-  "upgrade-test-prova": {
-    "name": "upgrade test prova",
-    "bio": "",
-    "linkedin": "",
-    "researchgate": "",
-    "scholar": "",
-    "orcid": "",
-    "twitter": "",
-    "instagram": "",
-    "website": "",
-    "courses": "",
-    "speaker": false,
-    "podcast": false,
-    "research": false,
-    "updated": "2026-04-11 19:00:23"
-  }
-}
