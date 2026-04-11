@@ -278,5 +278,16 @@
       "Iperbarica",
       "Diving"
     ]
+  },
+  {
+    "name": "Alessandro Balzani",
+    "role": "",
+    "img": "alessandro-balzani.jpg",
+    "city": "Italia",
+    "linkedin": "",
+    "email": "alessandro.balzani@gmail.com",
+    "tags": [
+      "Rete"
+    ]
   }
 ]
