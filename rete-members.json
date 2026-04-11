@@ -281,24 +281,15 @@
   },
   {
     "name": "Alessandro Balzani",
-    "role": "",
+    "role": "Istruttore Subacqueo PADI, Specializzando in Anestesia e Rianimazione - LP 118. Focus: Medicina Iperbarica, Soccorsi in ambienti Estremi,",
     "img": "alessandro-balzani.jpg",
     "city": "Italia",
-    "linkedin": "",
+    "linkedin": "https://www.linkedin.com/in/balzanialessandro/?locale=%22%2C",
     "email": "alessandro.balzani@gmail.com",
     "tags": [
-      "Rete"
+      "Diving"
+      "Ambienti Estremi"
     ]
   },
-  {
-    "name": "upgrade test prova",
-    "role": "",
-    "img": "upgrade-test-prova.jpg",
-    "city": "Italia",
-    "linkedin": "",
-    "email": "silvio.zerbi@asst-settelaghi.it",
-    "tags": [
-      "Rete"
-    ]
-  }
+
 ]
