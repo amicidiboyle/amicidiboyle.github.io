@@ -396,5 +396,21 @@
     "podcast": false,
     "research": false,
     "updated": "2026-04-11 18:37:32"
+  },
+  "upgrade-test-prova": {
+    "name": "upgrade test prova",
+    "bio": "",
+    "linkedin": "",
+    "researchgate": "",
+    "scholar": "",
+    "orcid": "",
+    "twitter": "",
+    "instagram": "",
+    "website": "",
+    "courses": "",
+    "speaker": false,
+    "podcast": false,
+    "research": false,
+    "updated": "2026-04-11 19:00:23"
   }
 }
