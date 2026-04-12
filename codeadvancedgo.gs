@@ -11,6 +11,7 @@ const TRASH_NAME = 'CESTINO_ADMIN';
 const GITHUB_REPO          = 'amicidiboyle/amicidiboyle.github.io';
 const GITHUB_RETE_PATH     = 'rete-members.json';
 const GITHUB_PROFILES_PATH = 'rete-profiles.json';
+const GITHUB_RETE_HTML     = 'rete.html';
 
 const REQUIRED_HEADERS = [
   'ID_BOYLE',
@@ -468,6 +469,62 @@ function getRepoObjectFile_(path) {
   return { items: JSON.parse(content || '{}'), sha: data.sha };
 }
 
+/*************************************************
+ * rete.html — lettura e aggiornamento CODE_TO_KEY
+ *************************************************/
+function getReteHtml_() {
+  var url = 'https://api.github.com/repos/' + GITHUB_REPO + '/contents/' + GITHUB_RETE_HTML;
+  var resp = githubRequest_('get', url, null);
+  var content = Utilities.newBlob(Utilities.base64Decode(resp.content)).getDataAsString();
+  return { content: content, sha: resp.sha };
+}
+
+function saveReteHtml_(content, sha, message) {
+  var url = 'https://api.github.com/repos/' + GITHUB_REPO + '/contents/' + GITHUB_RETE_HTML;
+  var contentB64 = Utilities.base64Encode(content, Utilities.Charset.UTF_8);
+  return githubRequest_('put', url, {
+    message: message || 'Update rete.html CODE_TO_KEY via Admin',
+    content: contentB64,
+    sha: sha
+  });
+}
+
+function addCodeToKey_(memberKey, memberCode) {
+  // Adds a new entry to CODE_TO_KEY in rete.html
+  // memberKey: 'alessandro-balzani', memberCode: 'BOYLE-ZPK5-BALZANI'
+  try {
+    var file = getReteHtml_();
+    var html = file.content;
+
+    // Check if already present
+    if (html.indexOf("'" + memberCode + "'") !== -1) {
+      Logger.log('Code already in CODE_TO_KEY: ' + memberCode);
+      return true;
+    }
+
+    // Find the closing }; of CODE_TO_KEY block
+    var dictStart = html.indexOf('CODE_TO_KEY = {');
+    if (dictStart === -1) throw new Error('CODE_TO_KEY not found in rete.html');
+
+    var dictEnd = html.indexOf('};', dictStart);
+    if (dictEnd === -1) throw new Error('CODE_TO_KEY closing }; not found');
+
+    // Build the new entry line (aligned style)
+    var entry = "    '" + memberCode + "': '" + memberKey + "',\n  ";
+
+    // Insert before the closing };
+    var newHtml = html.substring(0, dictEnd) + entry + html.substring(dictEnd);
+
+    saveReteHtml_(newHtml, file.sha, 'Add ' + memberCode + ' to CODE_TO_KEY');
+    Logger.log('Added to CODE_TO_KEY: ' + memberCode + ' -> ' + memberKey);
+    return true;
+  } catch(e) {
+    Logger.log('addCodeToKey_ error: ' + e.message);
+    throw e;
+  }
+}
+
+
 function saveRepoFile_(path, value, sha, message) {
   const url = 'https://api.github.com/repos/' + GITHUB_REPO + '/contents/' + path;
   const json = JSON.stringify(value, null, 2);
@@ -613,7 +670,7 @@ function updatePublishedMember(payload) {
 
 
 
-function publishCandidate(rowIndex) {
+function publishCandidate(rowIndex, overrides) {
   return withLock_(function() {
     const sheet = getSheet_();
     const meta = getHeaderMap_(sheet);
@@ -629,28 +686,51 @@ function publishCandidate(rowIndex) {
     const obj = {};
     headers.forEach(function(h, i) { obj[h] = row[i]; });
 
+    // Dichiara colonne subito — servono per leggere le note nel blocco override
+    var codiceCol = map['CODICE_BOYLE'];
+    var statoCol  = map['STATO_BOYLE'];
+    var noteCol   = map['NOTE_ADMIN'];
+    var dataCol   = map['DATA_GESTIONE'];
+
+    if (!codiceCol || !statoCol || !noteCol || !dataCol) {
+      throw new Error('Mancano colonne obbligatorie nel foglio');
+    }
+
     const name  = valueFromObject_(obj, ['NOME', 'NAME', 'Nome']);
     const email = valueFromObject_(obj, ['EMAIL', 'Email', 'MAIL']);
     const tipo  = valueFromObject_(obj, ['TIPO']);
-    const city  = valueFromObject_(obj, ['CITTA', 'CITTÀ', 'CITY', 'citta', 'city']);
-    const ruolo = valueFromObject_(obj, ['RUOLO', 'ROLE', 'ruolo', 'role']);
-    const focus = valueFromObject_(obj, ['FOCUS', 'INTERESSE', 'INTEREST', 'focus']);
-    const linkedin = valueFromObject_(obj, ['LINKEDIN', 'linkedin']);
     const fotoUrl  = valueFromObject_(obj, ['FOTO', 'IMG', 'foto', 'img']);
     const bio      = valueFromObject_(obj, ['BIO', 'bio']);
+
+    // Leggi dati base dal foglio
+    var _citySheet   = valueFromObject_(obj, ['CITTA', 'CITTÀ', 'CITY', 'citta', 'city']) || '';
+    var _ruoloSheet  = valueFromObject_(obj, ['RUOLO', 'ROLE', 'ruolo', 'role']) || '';
+    var _focusSheet  = valueFromObject_(obj, ['FOCUS', 'INTERESSE', 'INTEREST', 'focus']) || '';
+    var _liSheet     = valueFromObject_(obj, ['LINKEDIN', 'linkedin']) || '';
+
+    // Fallback: leggi dalle NOTE_ADMIN se le colonne sono vuote
+    var noteText = String(row[noteCol - 1] || '');
+    function getNoteField(label) {
+      var m = noteText.match(new RegExp(label + ':\\s*(.+?)(?:\\n|$)', 'i'));
+      return m ? m[1].trim() : '';
+    }
+    if (!_ruoloSheet)  _ruoloSheet  = getNoteField('Ruolo');
+    if (!_citySheet)   _citySheet   = getNoteField('Citt[àa]') || getNoteField('Citta');
+    if (!_focusSheet)  _focusSheet  = getNoteField('Focus');
+    if (!_liSheet)     _liSheet     = getNoteField('LinkedIn') || getNoteField('Linkedin');
+
+    // Overrides dalla preview (priorità massima — sono i dati modificati dall'admin)
+    var ov = (overrides && typeof overrides === 'object') ? overrides : {};
+    var city    = (ov.citta    && String(ov.citta).trim())    ? String(ov.citta).trim()    : _citySheet;
+    var ruolo   = (ov.ruolo    && String(ov.ruolo).trim())    ? String(ov.ruolo).trim()    : _ruoloSheet;
+    var focus   = _focusSheet;  // focus viene dal foglio, non dall'override (è già incluso nel ruolo)
+    var linkedin = (ov.linkedin && String(ov.linkedin).trim()) ? String(ov.linkedin).trim() : _liSheet;
 
     if (!name || !email) {
       throw new Error('Per pubblicare servono almeno NOME ed EMAIL');
     }
 
-    const codiceCol = map['CODICE_BOYLE'];
-    const statoCol  = map['STATO_BOYLE'];
-    const noteCol   = map['NOTE_ADMIN'];
-    const dataCol   = map['DATA_GESTIONE'];
-
-    if (!codiceCol || !statoCol || !noteCol || !dataCol) {
-      throw new Error('Mancano colonne obbligatorie nel foglio');
-    }
+    // codiceCol/statoCol/noteCol/dataCol già dichiarate sopra
 
     var codice = String(row[codiceCol - 1] || '').trim();
     if (!codice) {
@@ -680,13 +760,34 @@ function publishCandidate(rowIndex) {
     }
     if (!img) img = slugify_(name) + '.jpg';
 
+    // roleText: se ov.ruolo è già il testo completo della card (include Focus), usalo direttamente
+    // Se invece ruolo viene dal foglio (campo RUOLO separato, senza Focus), aggiungi focus
     var roleText = ruolo || '';
-    if (focus) roleText = roleText ? (roleText + '. Focus: ' + focus) : ('Focus: ' + focus);
+    if (focus && roleText && roleText.toLowerCase().indexOf('focus') === -1) {
+      roleText = roleText + '. Focus: ' + focus;
+    } else if (focus && !roleText) {
+      roleText = 'Focus: ' + focus;
+    }
 
-    const tags = [];
-    if (tipo && String(tipo).toLowerCase().indexOf('rete') !== -1) tags.push('Rete');
-    if (tipo && String(tipo).toLowerCase().indexOf('amico') !== -1) tags.push('Amico');
-    if (focus) tags.push(focus);
+    // Tags: se l'admin li ha impostati nella preview usali (split per virgola se unica stringa)
+    // altrimenti ricava dal focus dividendo per virgola
+    var tags = [];
+    if (ov.tags && Array.isArray(ov.tags) && ov.tags.length > 0) {
+      // Ogni elemento dell'array va splittato per virgola (il campo pTags può essere una stringa)
+      ov.tags.forEach(function(t) {
+        String(t).split(',').forEach(function(piece) {
+          var p = piece.trim();
+          if (p && p.length < 30) tags.push(p); // ignora tag troppo lunghi
+        });
+      });
+    }
+    if (tags.length === 0 && focus) {
+      // Nessun tag dall'admin: ricava dal focus (splitti per virgola, max 3 tag)
+      focus.split(',').slice(0, 3).forEach(function(t) {
+        var p = t.trim();
+        if (p && p.length < 30) tags.push(p);
+      });
+    }
 
     const member = {
       name: name,
@@ -727,6 +828,7 @@ function publishCandidate(rowIndex) {
     }
 
     if (isAmico) {
+      // ⚠️ NON inviare mail automaticamente — l'admin la invia manualmente dopo aver verificato la card
       return { ok: true, published: false, member: member, codice: codice, key: key, tipo: 'AMICO' };
     }
 
@@ -741,6 +843,16 @@ function publishCandidate(rowIndex) {
     else items.push(member);
 
     saveReteMembers_(items, rete.sha);
+
+    // Aggiorna CODE_TO_KEY in rete.html con il nuovo codice
+    try {
+      addCodeToKey_(key, codice);
+    } catch(htmlErr) {
+      Logger.log('rete.html CODE_TO_KEY update failed: ' + htmlErr.message);
+      // Non bloccare la pubblicazione se l'aggiornamento HTML fallisce
+    }
+
+    // ⚠️ NON inviare mail automaticamente — l'admin la invia manualmente dopo aver verificato la card
 
     return { ok: true, published: true, member: member, codice: codice, key: key, tipo: 'RETE' };
   });
@@ -820,16 +932,27 @@ function receiveCandidate_(data) {
     const meta  = getHeaderMap_(sheet);
     const map   = meta.map;
 
-    var tipo = 'RETE';
+    // Normalizza TIPO
     var subj = String(data._subject || data.tipo || '').toLowerCase();
-    if (subj.indexOf('amico') !== -1 || subj.indexOf('friend') !== -1) tipo = 'AMICI';
+    // Rileva amico da: _subject/tipo field, OPPURE campo 'tipo' esplicito,
+    // OPPURE presenza di 'presentazione' senza 'ruolo' (form Amici vs form Rete)
+    var tipoEsplicito = String(data.tipo || data.TIPO || '').toLowerCase();
+    var hasPresentazione = !!(data.presentazione || data.bio || data.background || data.motivazione);
+    var hasRuolo = !!(data.ruolo || data.role);
+    var isAmico = subj.indexOf('amico') !== -1 || 
+                  subj.indexOf('friend') !== -1 ||
+                  tipoEsplicito.indexOf('amico') !== -1 ||
+                  tipoEsplicito.indexOf('friend') !== -1 ||
+                  (hasPresentazione && !hasRuolo);
+    var tipo  = isAmico ? 'AMICO' : 'RETE';
+    var stato = isAmico ? 'NUOVO'    : 'IN_ATTESA';
 
     var nome  = valueFromObject_(data, ['nome', 'name', 'NOME']);
     var email = valueFromObject_(data, ['email', 'EMAIL']);
 
     if (!nome || !email) return { ok: false, error: 'nome o email mancanti' };
 
-    // Evita duplicati: stessa email già presente
+    // Evita duplicati per email
     const lastRow = sheet.getLastRow();
     if (lastRow >= 2) {
       const emailCol = map['EMAIL'];
@@ -843,36 +966,315 @@ function receiveCandidate_(data) {
       }
     }
 
+    // Estrai campi extra
+    var ruolo       = valueFromObject_(data, ['ruolo','role']);
+    var affiliazione= valueFromObject_(data, ['affiliazione','affiliation']);
+    var focus       = valueFromObject_(data, ['focus']);
+    var citta       = valueFromObject_(data, ['citta','city']);
+    var linkedin    = valueFromObject_(data, ['linkedin']);
+    var presentazione = valueFromObject_(data, ['presentazione','bio','background','motivazione']);
+    var fonte       = valueFromObject_(data, ['come_ci_hai_conosciuto','source']);
+    var codiceGen   = valueFromObject_(data, ['codice_generato']);
+
+    // Costruisce NOTE_ADMIN leggibile
+    var noteLines = [];
+    if (ruolo)        noteLines.push('Ruolo: '        + ruolo);
+    if (affiliazione) noteLines.push('Affiliazione: ' + affiliazione);
+    if (focus)        noteLines.push('Focus: '        + focus);
+    if (citta)        noteLines.push('Città: '        + citta);
+    if (linkedin)     noteLines.push('LinkedIn: '     + linkedin);
+    if (presentazione)noteLines.push('Presentazione: '+ presentazione);
+    if (fonte)        noteLines.push('Fonte: '        + fonte);
+    if (codiceGen)    noteLines.push('Codice: '       + codiceGen);
+    noteLines.push('Source: webhook-formspree');
+    var note = noteLines.join('\n');
+
+    // Riga principale
     const row = new Array(REQUIRED_HEADERS.length).fill('');
-    row[0] = getNowString_();  // ID_BOYLE (timestamp)
-    row[1] = tipo;             // TIPO
-    row[2] = nome;             // NOME
-    row[3] = email;            // EMAIL
-    row[4] = 'NUOVO';          // STATO_BOYLE
+    row[0] = getNowString_();                          // ID_BOYLE
+    row[1] = tipo;                                     // TIPO
+    row[2] = nome;                                     // NOME
+    row[3] = email;                                    // EMAIL
+    row[4] = stato;                                    // STATO_BOYLE
+    row[5] = isAmico ? (codiceGen || '') : '';         // CODICE_BOYLE (pre-compilato per Amici)
+    row[6] = note;                                     // NOTE_ADMIN
 
-    // Colonne opzionali
-    const extraCol   = ensureOptionalHeader_(sheet, 'EXTRA_DATA');
-    const arrivoCol  = ensureOptionalHeader_(sheet, 'DATA_ARRIVO');
-
-    var extra = {};
-    ['ruolo','role','affiliazione','affiliation','focus','citta','city',
-     'linkedin','presentazione','bio','background','motivazione','come_ci_hai_conosciuto',
-     'codice_generato','_subject'].forEach(function(k) {
-      if (data[k] !== undefined && data[k] !== null && String(data[k]).trim()) {
-        extra[k] = String(data[k]).trim();
-      }
-    });
-
-    // Costruisce riga con il numero corretto di colonne
-    const totalCols = Math.max(REQUIRED_HEADERS.length, extraCol, arrivoCol);
-    const fullRow = new Array(totalCols).fill('');
+    // Colonna DATA_ARRIVO
+    const arrivoCol = ensureOptionalHeader_(sheet, 'DATA_ARRIVO');
+    const totalCols = Math.max(REQUIRED_HEADERS.length, arrivoCol);
+    const fullRow   = new Array(totalCols).fill('');
     row.forEach(function(v, i) { fullRow[i] = v; });
-    fullRow[extraCol  - 1] = JSON.stringify(extra);
-    fullRow[arrivoCol - 1] = getNowString_();  // DATA_ARRIVO — immutabile, solo all'ingresso
+    fullRow[arrivoCol - 1] = getNowString_();
 
     sheet.appendRow(fullRow);
     return { ok: true, duplicate: false };
   });
+}
+
+/*************************************************
+ * BREVO — INVIO MAIL AUTOMATICO
+ *************************************************/
+function getBrevoApiKey_() {
+  var key = PropertiesService.getScriptProperties().getProperty('BREVO_API_KEY');
+  if (!key) throw new Error('BREVO_API_KEY non configurata nelle Script Properties');
+  return String(key).trim();
+}
+
+function sendBrevoEmail_(toEmail, toName, subject, htmlContent) {
+  try {
+    var apiKey = getBrevoApiKey_();
+    
+    if (!apiKey) {
+      Logger.log('Brevo: BREVO_API_KEY non configurata');
+      return false;
+    }
+    if (!toEmail || !htmlContent) {
+      Logger.log('Brevo: email o htmlContent mancanti. toEmail=' + toEmail + ' htmlLen=' + (htmlContent||'').length);
+      return false;
+    }
+
+    Logger.log('Brevo: invio a ' + toEmail + ' | soggetto: ' + subject + ' | html size: ' + htmlContent.length + ' chars');
+
+    var payload = {
+      sender: { name: 'Gli Amici di Boyle', email: 'info@amicidiboyle.it' },
+      to: [{ email: toEmail, name: toName || '' }],
+      subject: subject,
+      htmlContent: htmlContent,
+      textContent: 'Benvenuto/a negli Amici di Boyle. Apri questa email in un client che supporta HTML per visualizzarla correttamente.'
+    };
+
+    var payloadStr = JSON.stringify(payload);
+    Logger.log('Brevo: payload size ' + payloadStr.length + ' bytes');
+
+    var resp = UrlFetchApp.fetch('https://api.brevo.com/v3/smtp/email', {
+      method: 'post',
+      contentType: 'application/json',
+      headers: { 'api-key': apiKey },
+      payload: payloadStr,
+      muteHttpExceptions: true
+    });
+
+    var respCode = resp.getResponseCode();
+    var respBody = resp.getContentText();
+    Logger.log('Brevo response: ' + respCode + ' | ' + respBody);
+
+    if (respCode < 200 || respCode >= 300) {
+      Logger.log('Brevo ERRORE ' + respCode + ': ' + respBody);
+      return false;
+    }
+
+    Logger.log('Brevo: mail inviata con successo a ' + toEmail);
+    return true;
+
+  } catch(e) {
+    Logger.log('sendBrevoEmail_ exception: ' + e.message + ' | stack: ' + e.stack);
+    return false;
+  }
+}
+
+/*************************************************
+ * TEST BREVO — esegui manualmente da Apps Script
+ * per verificare che la chiave API funzioni
+ *************************************************/
+function testBrevoConnection() {
+  try {
+    var apiKey = getBrevoApiKey_();
+    Logger.log('BREVO_API_KEY configurata: ' + (apiKey ? 'SÌ (length=' + apiKey.length + ')' : 'NO'));
+    
+    // Test connessione — GET account info
+    var resp = UrlFetchApp.fetch('https://api.brevo.com/v3/account', {
+      method: 'get',
+      headers: { 'api-key': apiKey },
+      muteHttpExceptions: true
+    });
+    Logger.log('Brevo account check: ' + resp.getResponseCode() + ' | ' + resp.getContentText().substring(0, 200));
+  } catch(e) {
+    Logger.log('testBrevoConnection error: ' + e.message);
+  }
+}
+
+function testSendMail() {
+  // Invia una mail di test a te stesso
+  var result = sendBrevoEmail_(
+    'zerbi.silvio@gmail.com',
+    'Silvio Zerbi',
+    'TEST — Boyle mail system',
+    '<h1>Test funzionante</h1><p>Se vedi questo, Brevo funziona correttamente.</p>'
+  );
+  Logger.log('testSendMail result: ' + result);
+}
+
+function testSendMailCompleta() {
+  // Test con template completo — verifica che buildWelcomeEmail_ funzioni
+  Logger.log('testSendMailCompleta: start');
+  try {
+    var html = buildWelcomeEmail_('RETE', 'Silvio Zerbi', 'BOYLE-TEST-ZERBI', null, 'IT');
+    Logger.log('testSendMailCompleta: template built, size=' + html.length);
+    var result = sendBrevoEmail_(
+      'zerbi.silvio@gmail.com',
+      'Silvio Zerbi', 
+      'TEST COMPLETO — Mail Rete di Boyle',
+      html
+    );
+    Logger.log('testSendMailCompleta: send result=' + result);
+    return result;
+  } catch(e) {
+    Logger.log('testSendMailCompleta ERROR: ' + e.message);
+    return false;
+  }
+}
+
+
+/*************************************************
+ * RIMUOVI MEMBRO PUBBLICATO da rete-members.json
+ * e da CODE_TO_KEY in rete.html
+ *************************************************/
+function removePublishedMember(email) {
+  return withLock_(function() {
+    if (!email) throw new Error('Email mancante');
+    var emailLow = String(email).trim().toLowerCase();
+
+    // 1. Rimuovi da rete-members.json
+    var reteFile = getReteMembers_();
+    var items = Array.isArray(reteFile.items) ? reteFile.items : [];
+    var memberToRemove = null;
+    var newItems = items.filter(function(m) {
+      if (String(m.email || '').trim().toLowerCase() === emailLow) {
+        memberToRemove = m;
+        return false;
+      }
+      return true;
+    });
+
+    if (!memberToRemove) {
+      throw new Error('Membro non trovato in rete-members.json: ' + email);
+    }
+
+    saveReteMembers_(newItems, reteFile.sha);
+    Logger.log('removePublishedMember: rimosso ' + memberToRemove.name + ' da rete-members.json');
+
+    // 2. Rimuovi il codice da CODE_TO_KEY in rete.html
+    // Prima cerca il codice del membro nel foglio
+    try {
+      var sheet = getSheet_();
+      var meta = getHeaderMap_(sheet);
+      var emailCol = meta.map['EMAIL'];
+      var codiceCol = meta.map['CODICE_BOYLE'];
+      if (emailCol && codiceCol && sheet.getLastRow() >= 2) {
+        var emails = sheet.getRange(2, emailCol, sheet.getLastRow()-1, 1).getDisplayValues().flat();
+        for (var i = 0; i < emails.length; i++) {
+          if (String(emails[i] || '').trim().toLowerCase() === emailLow) {
+            var codice = String(sheet.getRange(i+2, codiceCol, 1, 1).getDisplayValue() || '').trim();
+            if (codice) {
+              removeCodeFromHtml_(codice);
+              Logger.log('removePublishedMember: rimosso codice ' + codice + ' da rete.html');
+            }
+            break;
+          }
+        }
+      }
+    } catch(htmlErr) {
+      Logger.log('removePublishedMember: errore rimozione da rete.html: ' + htmlErr.message);
+      // Non bloccare — il JSON è già aggiornato
+    }
+
+    // 3. Rimuovi anche da rete-profiles.json
+    try {
+      var key = slugify_(memberToRemove.name || '');
+      var profFile = getReteProfiles_();
+      var profiles = profFile.items || {};
+      if (profiles[key]) {
+        delete profiles[key];
+        saveReteProfiles_(profiles, profFile.sha);
+        Logger.log('removePublishedMember: rimosso profilo ' + key);
+      }
+    } catch(profErr) {
+      Logger.log('removePublishedMember: errore rimozione profilo: ' + profErr.message);
+    }
+
+    return { ok: true, removed: memberToRemove.name };
+  });
+}
+
+function removeCodeFromHtml_(codice) {
+  var file = getReteHtml_();
+  var html = file.content;
+  var lineStart = "    '" + codice + "':";
+  var lines = html.split('\n');
+  var filtered = [];
+  for (var i = 0; i < lines.length; i++) {
+    if (lines[i].indexOf(lineStart) === -1) {
+      filtered.push(lines[i]);
+    }
+  }
+  if (filtered.length < lines.length) {
+    saveReteHtml_(filtered.join('\n'), file.sha, 'Remove code from CODE_TO_KEY');
+    Logger.log('removeCodeFromHtml_: removed ' + codice);
+  }
+}
+
+function buildWelcomeEmail_(tipo, nome, codice, testoHeroCustom, lang) {
+  // Estrai nome breve (primo nome)
+  var nomeBreve = String(nome || '').trim().split(/\s+/)[0];
+  var isAmico = String(tipo || '').toLowerCase().indexOf('amico') !== -1 ||
+                String(tipo || '').toLowerCase().indexOf('friend') !== -1;
+
+  // Testo hero — usa custom se fornito dall'admin, altrimenti default ricco
+  var isEN = String(lang || '').toUpperCase() === 'EN';
+  var testoHeroDefault = isEN
+    ? (isAmico
+        ? 'We are genuinely glad to have you among the Amici di Boyle. This is not a mailing list \u2014 it is an open community for anyone who shares the same passion for medicine in extreme environments, whether your professional path is well established or just beginning. You are in the right place.'
+        : 'It is truly a pleasure to have your expertise within the Boyle Network. What you are receiving is not a service notification \u2014 it is a welcome from a group of people who chose to work together with dedication, method, and the same passion for a field of medicine that few know and even fewer truly practice.')
+    : (isAmico
+        ? 'Siamo davvero felici di averti tra gli Amici di Boyle. Non si tratta di una lista \u2014 \u00e8 una community aperta a chi condivide la stessa passione per la medicina degli ambienti estremi, che si tratti di un percorso professionale gi\u00e0 consolidato o ancora in costruzione. Sei nel posto giusto.'
+        : '\u00c8 davvero un piacere avere la tua professionalit\u00e0 all\u2019interno della Rete di Boyle. Quella che stai ricevendo non \u00e8 una comunicazione di servizio: \u00e8 il benvenuto di un gruppo di persone che ha scelto di lavorare insieme con seriet\u00e0, con metodo e con la stessa passione per una medicina che pochi conoscono e ancora meno praticano davvero.');
+
+  var testoHero = (testoHeroCustom && String(testoHeroCustom).trim())
+    ? String(testoHeroCustom).trim()
+    : testoHeroDefault;
+
+  var template = isAmico
+    ? HtmlService.createHtmlOutputFromFile('template_amici').getContent()
+    : HtmlService.createHtmlOutputFromFile('template_rete').getContent();
+
+  template = template
+    .replace(/__NOME__/g, nome)
+    .replace(/__NOME_BREVE__/g, nomeBreve)
+    .replace(/__CODICE__/g, codice)
+    .replace(/__TESTO_HERO__/g, testoHero);
+
+  return template;
+}
+
+function sendWelcomeEmail_(nome, email, codice, tipo, subjectCustom, testoHeroCustom, lang) {
+  try {
+    var isAmico = String(tipo || '').toLowerCase().indexOf('amico') !== -1 ||
+                  String(tipo || '').toLowerCase().indexOf('friend') !== -1;
+    var nomeBreve = String(nome || '').trim().split(/\s+/)[0];
+
+    var isEN = String(lang || '').toUpperCase() === 'EN';
+    var subjectDefault = isEN
+      ? (isAmico
+          ? 'Welcome to Gli Amici di Boyle, ' + nomeBreve + ' \u2014 your personal access code'
+          : 'Welcome to the Boyle Network, ' + nomeBreve + ' \u2014 your personal access code')
+      : (isAmico
+          ? 'Benvenuto/a tra gli Amici di Boyle, ' + nomeBreve + ' \u2014 ecco il tuo codice'
+          : 'Benvenuto nella Rete di Boyle, ' + nomeBreve + ' \u2014 ecco il tuo codice personale');
+
+    var subject = (subjectCustom && String(subjectCustom).trim())
+      ? String(subjectCustom).trim()
+      : subjectDefault;
+
+    var html = buildWelcomeEmail_(tipo, nome, codice, testoHeroCustom, lang);
+    return sendBrevoEmail_(email, nome, subject, html);
+  } catch(e) {
+    Logger.log('sendWelcomeEmail_ error: ' + e.message);
+    return false;
+  }
+}
+
+function getMailPreview(nome, codice, tipo, testoHeroCustom, lang) {
+  return buildWelcomeEmail_(tipo, nome, codice, testoHeroCustom, lang);
 }
 
 /*************************************************
