@@ -1360,6 +1360,8 @@
     'BOYLE-A8T2-ALMEIDA':    'adriana-almeida',
     'BOYLE-S4K7-SANNA':      'antonello-sanna',
     'BOYLE-P2R9-LIPARULO':   'luigi-liparulo',
+    'BOYLE-ZPK5-BALZANI':    'alessandro-balzani',
+    'FRIEND-M7R3-MARTEL':    'angelo-martellotti',
   };
   const VALID_CODES = {
     'simona-damiano':         'BOYLE-K7X2-DAMIANO',
@@ -1691,37 +1693,6 @@
       .replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'').replace(/-{2,}/g,'-');
   }
 
-
-  const ADMIN_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwzgZvPxxW3yjA_Fa0_9GYINJO1QwBC_cT8sHhmRG5oDi3dJ9egqMGVznBcDIDP2ED_fQ/exec';
-
-  function sendCandidateToAdmin(payload) {
-    try {
-      const form = document.getElementById('boyle-admin-bridge-form');
-      if (!form) return;
-      const set = (id, val) => {
-        const el = document.getElementById(id);
-        if (el) el.value = val == null ? '' : String(val);
-      };
-      set('bridge_action', 'submitCandidate');
-      set('bridge_tipo', payload.tipo || '');
-      set('bridge_nome', payload.nome || '');
-      set('bridge_email', payload.email || '');
-      set('bridge_affiliazione', payload.affiliazione || '');
-      set('bridge_ruolo', payload.ruolo || '');
-      set('bridge_focus', payload.focus || '');
-      set('bridge_citta', payload.citta || '');
-      set('bridge_linkedin', payload.linkedin || '');
-      set('bridge_bio', payload.bio || '');
-      set('bridge_note_admin', payload.note_admin || '');
-      set('bridge_codice_generato', payload.codice_generato || '');
-      set('bridge_source', payload.source || '');
-      set('bridge_ts', Date.now());
-      form.submit();
-    } catch (err) {
-      console.warn('Sync admin candidature fallita', err);
-    }
-  }
-
   /* ── Costruisce lo snippet JSON da incollare in rete-members.json ── */
   function buildJSONSnippet() {
     const name  = (document.getElementById('cand-name')?.value||'').trim();
@@ -1764,35 +1735,16 @@
       });
       if (res.ok) {
         if (statusBox) {
-          statusBox.textContent = window.boyleT ? window.boyleT('r_form_rete_ok') : '✓ Candidatura inviata. Ti contatteremo presto.';
+          statusBox.textContent = '✓ Candidatura inviata. Ti contatteremo presto.';
           statusBox.className = 'form-status is-success';
         }
-        // Secondo invio silenzioso ad Apps Script via form bridge
-        try {
-          const fd = new FormData(netForm);
-          const get = (name) => { const v = fd.get(name); return v && typeof v === 'string' ? v : ''; };
-          sendCandidateToAdmin({
-            tipo: 'RETE',
-            nome: get('nome'),
-            email: get('email'),
-            affiliazione: get('affiliazione'),
-            ruolo: get('ruolo'),
-            focus: get('focus'),
-            citta: get('citta'),
-            linkedin: get('linkedin'),
-            bio: get('presentazione'),
-            note_admin: '',
-            codice_generato: '',
-            source: 'rete.html/network-form'
-          });
-        } catch(_) {}
         netForm.reset();
         setTimeout(closeModal, 2800);
       } else {
-        if (statusBox) { statusBox.textContent = window.boyleT ? window.boyleT('r_form_rete_err') : 'Invio non riuscito. Scrivi a info@amicidiboyle.it'; statusBox.className = 'form-status is-error'; }
+        if (statusBox) { statusBox.textContent = 'Invio non riuscito. Scrivi a info@amicidiboyle.it'; statusBox.className = 'form-status is-error'; }
       }
     } catch(err) {
-      if (statusBox) { statusBox.textContent = window.boyleT ? window.boyleT('r_form_rete_err') : 'Errore di rete. Scrivi a info@amicidiboyle.it'; statusBox.className = 'form-status is-error'; }
+      if (statusBox) { statusBox.textContent = 'Errore di rete. Scrivi a info@amicidiboyle.it'; statusBox.className = 'form-status is-error'; }
     }
   });
 
@@ -2110,22 +2062,9 @@
         });
         if (res.ok) {
           if (statusBox) {
-            statusBox.innerHTML = window.boyleT ? window.boyleT('r_form_amici_ok') : "✓ Iscrizione ricevuta. Riceverai una email di conferma con i prossimi passaggi.";
+            statusBox.innerHTML = "✓ Candidatura ricevuta! Il nostro team la valuterà e ti contatterà via email nei prossimi giorni.";
             statusBox.className = 'form-status is-success';
           }
-          sendCandidateToAdmin({
-            tipo: 'AMICO',
-            nome: document.getElementById('amici-name')?.value || '',
-            email: document.getElementById('amici-email')?.value || '',
-            ruolo: document.getElementById('amici-background')?.value || '',
-            focus: '',
-            citta: '',
-            linkedin: '',
-            bio: document.getElementById('amici-motivazione')?.value || '',
-            note_admin: document.getElementById('amici-source')?.value || '',
-            codice_generato: friendCode,
-            source: 'rete.html/amici-form'
-          });
           form.reset();
           setTimeout(closeAmici, 5000);
         } else {
@@ -2582,21 +2521,13 @@
     wrap.style.display = 'block';
     wrap.style.opacity = '0';
     wrap.style.transition = 'opacity .3s';
-    wrap.style.pointerEvents = 'none';
-    setTimeout(function(){ wrap.style.opacity = '1'; wrap.style.pointerEvents = ''; }, 800);
-
-    var open = false;
-    btn.addEventListener('click', function(){
-      open = !open;
-      panel.style.display = open ? 'block' : 'none';
-      panel.setAttribute('aria-hidden', open ? 'false' : 'true');
-      btn.setAttribute('aria-expanded', String(open));
-      btn.style.transform = open ? 'rotate(90deg)' : 'none';
+    wrap.style.pointerEvribute('aria-hidden', open ? 'true' : 'false');
+      btn.setAttribute('aria-expanded', !open);
+      btn.style.transform = open ? 'none' : 'rotate(90deg)';
     });
 
     panel.querySelectorAll('a').forEach(function(a){
       a.addEventListener('click', function(){
-        open = false;
         panel.style.display = 'none';
         panel.setAttribute('aria-hidden','true');
         btn.setAttribute('aria-expanded','false');
@@ -2723,28 +2654,5 @@
     }
   })();
   </script>
-<!-- Bridge form per invio candidature ad Apps Script (no-CORS) -->
-<iframe name="boyle-admin-bridge-frame" id="boyle-admin-bridge-frame" style="display:none" aria-hidden="true"></iframe>
-<form id="boyle-admin-bridge-form"
-      action="https://script.google.com/macros/s/AKfycbwzgZvPxxW3yjA_Fa0_9GYINJO1QwBC_cT8sHhmRG5oDi3dJ9egqMGVznBcDIDP2ED_fQ/exec"
-      method="POST"
-      target="boyle-admin-bridge-frame"
-      style="display:none"
-      aria-hidden="true">
-  <input type="hidden" name="action"              id="bridge_action"/>
-  <input type="hidden" name="tipo"                id="bridge_tipo"/>
-  <input type="hidden" name="nome"                id="bridge_nome"/>
-  <input type="hidden" name="email"               id="bridge_email"/>
-  <input type="hidden" name="affiliazione"        id="bridge_affiliazione"/>
-  <input type="hidden" name="ruolo"               id="bridge_ruolo"/>
-  <input type="hidden" name="focus"               id="bridge_focus"/>
-  <input type="hidden" name="citta"               id="bridge_citta"/>
-  <input type="hidden" name="linkedin"            id="bridge_linkedin"/>
-  <input type="hidden" name="bio"                 id="bridge_bio"/>
-  <input type="hidden" name="note_admin"          id="bridge_note_admin"/>
-  <input type="hidden" name="codice_generato"     id="bridge_codice_generato"/>
-  <input type="hidden" name="source"              id="bridge_source"/>
-  <input type="hidden" name="ts"                  id="bridge_ts"/>
-</form>
 </body>
 </html>
