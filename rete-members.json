@@ -290,16 +290,5 @@
       "Soccorso in ambienti Estremi",
       "Diving"
     ]
-  },
-  {
-    "name": "Test name",
-    "role": "Test qualification. Test affiliation. Focus: Test focus",
-    "img": "test-name.jpg",
-    "city": "Test city",
-    "linkedin": "https://www.linkedin.com/in/silvio-zerbi?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
-    "email": "silvio.zerbi@asst-settelaghi.it",
-    "tags": [
-      "Test focus"
-    ]
   }
 ]
