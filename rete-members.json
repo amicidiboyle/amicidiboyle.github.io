@@ -290,16 +290,5 @@
       "Soccorso in ambienti Estremi",
       "Diving"
     ]
-  },
-  {
-    "name": "test_rete_name",
-    "role": "test- qualifica. test-affiliazione. Focus: test-area",
-    "img": "test-rete-name.jpg",
-    "city": "test-city",
-    "linkedin": "https://www.linkedin.com/in/erika-borotto-79a4a796/",
-    "email": "silvio.zerbi@asst-settelaghi.it",
-    "tags": [
-      "test-area"
-    ]
   }
 ]
