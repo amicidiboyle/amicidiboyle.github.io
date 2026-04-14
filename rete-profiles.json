@@ -1,8 +1,15 @@
 {
   "simona-damiano": {
-    "name": "Simona Damiano",
-    "bio": "",
+    "name": "Simona damiano",
+    "email": "sdamiano1981@gmail.com",
+    "code": "FRIEND-P7C2-DAMIANO",
+    "accessCode": "FRIEND-P7C2-DAMIANO",
+    "type": "AMICO",
+    "city": "Italia",
     "linkedin": "",
+    "bio": "Medico / Clinico",
+    "role": "",
+    "focus": "",
     "researchgate": "",
     "scholar": "",
     "orcid": "",
@@ -13,7 +20,7 @@
     "speaker": false,
     "podcast": false,
     "research": false,
-    "updated": ""
+    "updated": "2026-04-14 20:33:10"
   },
   "andrea-murdock-alpini": {
     "name": "Andrea Murdock Alpini",
