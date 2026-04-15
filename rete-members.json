@@ -290,5 +290,16 @@
       "Soccorso in ambienti Estremi",
       "Diving"
     ]
+  },
+  {
+    "name": "last test",
+    "role": "test- qualifica. test-affiliazione. Focus: area di interesse",
+    "img": "last-test.jpg",
+    "city": "città",
+    "linkedin": "https://www.linkedin.com/in/erika-borotto-79a4a796/",
+    "email": "zerbi.silvio@gmail.com",
+    "tags": [
+      "area di interesse"
+    ]
   }
 ]
