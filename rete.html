@@ -1390,7 +1390,19 @@
     'giovanni-cappa':         'BOYLE-ENAR-CAPPA',
     'claudio-camponovo':      'BOYLE-YHT9-CAMPONOVO',
   };
-  const ALL_CODES = [...Object.keys(CODE_TO_KEY), 'BOYLE-FONDATORI'];
+  let ALL_CODES = [...Object.keys(CODE_TO_KEY), 'BOYLE-FONDATORI'];
+  const DYNAMIC_CODE_TO_KEY = {};
+  fetch('boyle-access-codes.json?v=' + Date.now())
+    .then(function(r){ return r.ok ? r.json() : null; })
+    .then(function(data){
+      if (!data || !data.codes) return;
+      Object.entries(data.codes).forEach(function(e){
+        var k = String(e[0]||'').trim().toUpperCase();
+        var v = String(e[1]||'').trim();
+        if (k) ALL_CODES = [...new Set([...ALL_CODES, k])];
+        if (k && v) DYNAMIC_CODE_TO_KEY[k] = v;
+      });
+    }).catch(function(){});
   const ACCESS_KEY = 'boyle_member_access';
   const EMAIL_ICON_HTML = '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6.75A2.75 2.75 0 0 1 5.75 4h12.5A2.75 2.75 0 0 1 21 6.75v10.5A2.75 2.75 0 0 1 18.25 20H5.75A2.75 2.75 0 0 1 3 17.25V6.75Zm2.2-.25 6.27 5.05a.83.83 0 0 0 1.06 0L18.8 6.5H5.2Zm13.8 1.46-5.42 4.36a2.33 2.33 0 0 1-2.96 0L5.2 7.96v9.29c0 .3.25.55.55.55h12.5c.3 0 .55-.25.55-.55V7.96Z"/></svg>';
 
@@ -1399,7 +1411,8 @@
   function unlockAll(code) {
     sessionStorage.setItem(ACCESS_KEY, 'true');
     sessionStorage.setItem('boyle_member_code', code);
-    const memberKey = CODE_TO_KEY[code] || null;
+    const nc = String(code||'').trim().toUpperCase();
+    const memberKey = CODE_TO_KEY[nc] || DYNAMIC_CODE_TO_KEY[nc] || null;
 
     // Sblocca email
     document.querySelectorAll('.member-email-btn').forEach(btn => {
@@ -1802,8 +1815,9 @@
     bb?.addEventListener('click', tryBar);
     bi?.addEventListener('keydown', e=>{ if(e.key==='Enter') tryBar(); });
     if (isMemberUnlocked()) {
+      const _sc = (sessionStorage.getItem('boyle_member_code')||'').toUpperCase();
       if (bs) {
-        const hasPencil = CODE_TO_KEY[code];
+        const hasPencil = !!(CODE_TO_KEY[_sc] || DYNAMIC_CODE_TO_KEY[_sc]);
         bs.textContent = hasPencil ? '✓ Accesso confermato — matita attiva sulla tua card' : '✓ Accesso confermato';
         bs.className = 'hero-access-status ok';
       }
