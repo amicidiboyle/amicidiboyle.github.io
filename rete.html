@@ -1362,10 +1362,6 @@
     'BOYLE-P2R9-LIPARULO':   'luigi-liparulo',
     'BOYLE-ZPK5-BALZANI':    'alessandro-balzani',
     'FRIEND-M7R3-MARTEL':    'angelo-martellotti',
-      'prova-testh-9-49': 'BOYLE-RDBF-49',
-      'test-amici-9-50': 'FRIEND-6ZLU-',
-      'silvio-zerbi-secondi': 'FRIEND-UOPM-SECONDI',
-      'prova-diecidiciassette': 'FRIEND-XS65-DIECIDIC',
   };
   const VALID_CODES = {
     'simona-damiano':         'BOYLE-K7X2-DAMIANO',
@@ -1445,7 +1441,7 @@
     if (bs) {
         var _uc = (sessionStorage.getItem('boyle_member_code')||'').toUpperCase();
         const hasPencil = !!(CODE_TO_KEY[_uc] || DYNAMIC_CODE_TO_KEY[_uc]);
-        bs.textContent = hasPencil ? '✓ Accesso confermato — matita attiva sulla tua card' : '✓ Accesso confermato';
+        bs.textContent = hasPencil ? '✓ Accesso confermato' : '✓ Accesso confermato';
         bs.className = 'hero-access-status ok';
       }
     if (bi) bi.disabled = true;
@@ -1807,7 +1803,7 @@
     if (isMemberUnlocked()) {
       if (bs) {
         const hasPencil = CODE_TO_KEY[code];
-        bs.textContent = hasPencil ? '✓ Accesso confermato — matita attiva sulla tua card' : '✓ Accesso confermato';
+        bs.textContent = hasPencil ? '✓ Accesso confermato' : '✓ Accesso confermato';
         bs.className = 'hero-access-status ok';
       }
       if (bi) bi.disabled = true;
