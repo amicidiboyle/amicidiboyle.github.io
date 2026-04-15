@@ -1412,8 +1412,9 @@
     sessionStorage.setItem('boyle_member_code', code);
     var nc = String(code||'').trim().toUpperCase();
     const memberKey = CODE_TO_KEY[nc] || DYNAMIC_CODE_TO_KEY[nc] || null;
+    const isReteCode = nc.indexOf('BOYLE-') === 0;
 
-    // Sblocca email
+    // Sblocca email membri
     document.querySelectorAll('.member-email-btn').forEach(btn => {
       const email = btn.dataset.email;
       if (!email) return;
@@ -1425,13 +1426,22 @@
       btn.replaceWith(a);
     });
 
+    // Sblocca link newsletter
+    document.querySelectorAll('.nl-tab__link, .nl-mob__link').forEach(link => {
+      link.href = 'mailto:newsletter@amicidiboyle.it';
+      link.removeAttribute('data-cfemail');
+      link.removeAttribute('data-cfasync');
+      link.classList.remove('__cf_email__');
+      link.innerHTML = '&#128233;&nbsp;newsletter@amicidiboyle.it';
+    });
+
     // Sblocca foglio profilo
     document.querySelectorAll('.member-profile-btn').forEach(btn => {
       btn.classList.remove('icon-btn--locked');
     });
 
-    // Attiva matita solo al titolare
-    if (memberKey) {
+    // Attiva matita solo ai membri rete con card personale
+    if (isReteCode && memberKey) {
       const ownerCard = document.querySelector('[data-key="' + memberKey + '"]');
       if (ownerCard) {
         const pencil = ownerCard.querySelector('.member-edit-btn');
@@ -1447,11 +1457,12 @@
     const bi = document.getElementById('barCodeInput');
     const bb = document.getElementById('barCodeBtn');
     if (bs) {
-        var _uc = (sessionStorage.getItem('boyle_member_code')||'').toUpperCase();
-        const hasPencil = !!(CODE_TO_KEY[_uc] || DYNAMIC_CODE_TO_KEY[_uc]);
-        bs.textContent = hasPencil ? '✓ Accesso confermato — matita attiva sulla tua card' : '✓ Accesso confermato';
-        bs.className = 'hero-access-status ok';
-      }
+      const hasPencil = isReteCode && !!(CODE_TO_KEY[nc] || DYNAMIC_CODE_TO_KEY[nc]);
+      bs.textContent = hasPencil
+        ? '✓ Accesso confermato — matita attiva sulla tua card'
+        : '✓ Accesso confermato';
+      bs.className = 'hero-access-status ok';
+    }
     if (bi) bi.disabled = true;
     if (bb) bb.disabled = true;
   }
@@ -1810,8 +1821,12 @@
     bi?.addEventListener('keydown', e=>{ if(e.key==='Enter') tryBar(); });
     if (isMemberUnlocked()) {
       if (bs) {
-        const hasPencil = CODE_TO_KEY[code];
-        bs.textContent = hasPencil ? '✓ Accesso confermato — matita attiva sulla tua card' : '✓ Accesso confermato';
+        var _uc = (sessionStorage.getItem('boyle_member_code') || '').toUpperCase();
+        const isReteCode = _uc.indexOf('BOYLE-') === 0;
+        const hasPencil = isReteCode && !!(CODE_TO_KEY[_uc] || DYNAMIC_CODE_TO_KEY[_uc]);
+        bs.textContent = hasPencil
+          ? '✓ Accesso confermato — matita attiva sulla tua card'
+          : '✓ Accesso confermato';
         bs.className = 'hero-access-status ok';
       }
       if (bi) bi.disabled = true;
