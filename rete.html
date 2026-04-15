@@ -1441,7 +1441,7 @@
     if (bs) {
         var _uc = (sessionStorage.getItem('boyle_member_code')||'').toUpperCase();
         const hasPencil = !!(CODE_TO_KEY[_uc] || DYNAMIC_CODE_TO_KEY[_uc]);
-        bs.textContent = hasPencil ? '✓ Accesso confermato' : '✓ Accesso confermato';
+        bs.textContent = hasPencil ? '✓ Accesso confermato — matita attiva sulla tua card' : '✓ Accesso confermato';
         bs.className = 'hero-access-status ok';
       }
     if (bi) bi.disabled = true;
@@ -1803,7 +1803,7 @@
     if (isMemberUnlocked()) {
       if (bs) {
         const hasPencil = CODE_TO_KEY[code];
-        bs.textContent = hasPencil ? '✓ Accesso confermato' : '✓ Accesso confermato';
+        bs.textContent = hasPencil ? '✓ Accesso confermato — matita attiva sulla tua card' : '✓ Accesso confermato';
         bs.className = 'hero-access-status ok';
       }
       if (bi) bi.disabled = true;
