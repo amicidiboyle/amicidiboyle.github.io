@@ -290,5 +290,16 @@
       "Soccorso in ambienti Estremi",
       "Diving"
     ]
+  },
+  {
+    "name": "Prova testh 9.49",
+    "role": "Dirigente. Varese. Focus: Anestesia",
+    "img": "prova-testh-9-49.jpg",
+    "city": "Gavirate",
+    "linkedin": "https://www.linkedin.com/in/silvio-zerbi?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
+    "email": "zerbi.silvio@gmail.com",
+    "tags": [
+      "Anestesia"
+    ]
   }
 ]
