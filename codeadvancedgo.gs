@@ -303,12 +303,45 @@ function updateAdminRow(payload) {
     const rowValues = sheet.getRange(rowIndex, 1, 1, sheet.getLastColumn()).getValues()[0];
 
     if (stato !== undefined && stato !== null && stato !== '') rowValues[statoCol - 1] = stato;
-    if (codice !== undefined) rowValues[codiceCol - 1] = codice;
     if (note !== undefined) rowValues[noteCol - 1] = note;
     rowValues[dataCol - 1] = getNowString_();
 
+    // Genera codice automaticamente se stato è RETE o AMICO e il codice è vuoto
+    var finalCodice = (codice !== undefined && String(codice).trim()) ? String(codice).trim() : '';
+    var statoUp = String(stato || '').toUpperCase();
+    var nomeCandidato = String(rowValues[map['NOME'] - 1] || '').trim();
+
+    if (!finalCodice && (statoUp === 'RETE' || statoUp === 'AMICO') && nomeCandidato) {
+      try {
+        finalCodice = generateAccessCode_(statoUp === 'AMICO' ? 'AMICO' : 'RETE', nomeCandidato);
+        Logger.log('updateAdminRow: generated code ' + finalCodice + ' for ' + nomeCandidato);
+      } catch(genErr) {
+        Logger.log('updateAdminRow: code generation failed: ' + genErr.message);
+      }
+    }
+
+    if (finalCodice) rowValues[codiceCol - 1] = finalCodice;
+
     sheet.getRange(rowIndex, 1, 1, rowValues.length).setValues([rowValues]);
-    return { ok: true, rowIndex: rowIndex };
+
+    // Aggiungi il codice a CODE_TO_KEY in rete.html
+    var codeKeyOk = false;
+    var codeKeyErr = '';
+    if (finalCodice && (statoUp === 'RETE' || statoUp === 'AMICO')) {
+      try {
+        var memberKey = slugify_(nomeCandidato);
+        if (memberKey) {
+          addCodeToKey_(finalCodice, memberKey);
+          codeKeyOk = true;
+          Logger.log('updateAdminRow: added ' + finalCodice + ' -> ' + memberKey + ' to CODE_TO_KEY');
+        }
+      } catch(codeErr) {
+        codeKeyErr = codeErr.message;
+        Logger.log('updateAdminRow: CODE_TO_KEY update failed: ' + codeErr.message);
+      }
+    }
+
+    return { ok: true, rowIndex: rowIndex, codice: finalCodice, codeKeyOk: codeKeyOk, codeKeyErr: codeKeyErr };
   });
 }
 
@@ -631,36 +664,45 @@ function updatePublishedMember(payload) {
     items[idx] = member;
     saveReteMembers_(items, rete.sha);
 
-    try {
-      const profilesFile = getReteProfiles_();
-      const profiles = profilesFile.items || {};
-      const newKey = slugify_(name);
-      const prevProfile = profiles[oldKey] || profiles[newKey] || {};
-      const mergedProfile = {
-        name: name,
-        bio: bio || prevProfile.bio || '',
-        linkedin: linkedin || prevProfile.linkedin || '',
-        researchgate: prevProfile.researchgate || '',
-        scholar: prevProfile.scholar || '',
-        orcid: prevProfile.orcid || '',
-        twitter: prevProfile.twitter || '',
-        instagram: prevProfile.instagram || '',
-        website: prevProfile.website || '',
-        courses: prevProfile.courses || '',
-        speaker: !!prevProfile.speaker,
-        podcast: !!prevProfile.podcast,
-        research: !!prevProfile.research,
-        updated: getNowString_()
-      };
-
-      if (oldKey && oldKey !== newKey) delete profiles[oldKey];
-      profiles[newKey] = mergedProfile;
-      saveReteProfiles_(profiles, profilesFile.sha);
-    } catch (profileErr) {
-      Logger.log('Errore update rete-profiles: ' + profileErr.message);
-    }
-
     return { ok: true, member: member, key: slugify_(name) };
+  });
+}
+
+function updatePublishedMemberProfile(payload) {
+  return withLock_(function() {
+    payload = payload || {};
+    const oldKey  = String(payload.oldKey || '').trim();
+    const name    = String(payload.nome   || '').trim();
+    const linkedin= String(payload.linkedin || '').trim();
+    const bio     = String(payload.bio    || '').trim();
+
+    if (!name) throw new Error('Nome mancante');
+
+    const profilesFile = getReteProfiles_();
+    const profiles = profilesFile.items || {};
+    const newKey = slugify_(name);
+    const prevProfile = profiles[oldKey] || profiles[newKey] || {};
+    const mergedProfile = {
+      name: name,
+      bio: bio || prevProfile.bio || '',
+      linkedin: linkedin || prevProfile.linkedin || '',
+      researchgate: prevProfile.researchgate || '',
+      scholar: prevProfile.scholar || '',
+      orcid: prevProfile.orcid || '',
+      twitter: prevProfile.twitter || '',
+      instagram: prevProfile.instagram || '',
+      website: prevProfile.website || '',
+      courses: prevProfile.courses || '',
+      speaker: !!prevProfile.speaker,
+      podcast: !!prevProfile.podcast,
+      research: !!prevProfile.research,
+      updated: getNowString_()
+    };
+
+    if (oldKey && oldKey !== newKey) delete profiles[oldKey];
+    profiles[newKey] = mergedProfile;
+    saveReteProfiles_(profiles, profilesFile.sha);
+    return { ok: true };
   });
 }
 
@@ -1213,9 +1255,149 @@ function removeCodeFromHtml_(codice) {
   }
 }
 
+function sendWelcomeMail(nome, email, codice, tipo, subjectCustom, testoHeroCustom, lang) {
+  return sendWelcomeEmail_(nome, email, codice, tipo, subjectCustom, testoHeroCustom, lang);
+}
+
+
+function getAmiciMembers() {
+  return withLock_(function() {
+    var sheet = getSheet_();
+    var meta = getHeaderMap_(sheet);
+    var headers = meta.headers;
+    var map = meta.map;
+    var lastRow = sheet.getLastRow();
+    if (lastRow < 2) return [];
+
+    var nomeCol   = map['NOME']         || 0;
+    var emailCol  = map['EMAIL']        || 0;
+    var statoCol  = map['STATO_BOYLE']  || 0;
+    var codiceCol = map['CODICE_BOYLE'] || 0;
+    var noteCol   = map['NOTE_ADMIN']   || 0;
+    var dataCol   = map['DATA_GESTIONE']|| 0;
+
+    var values = sheet.getRange(2, 1, lastRow - 1, headers.length).getDisplayValues();
+    var amici = [];
+
+    values.forEach(function(row) {
+      var stato = String(row[statoCol - 1] || '').toUpperCase();
+      if (stato !== 'AMICO') return;
+
+      var nome  = String(row[nomeCol  - 1] || '');
+      var email = String(row[emailCol - 1] || '');
+      var codice= String(row[codiceCol- 1] || '');
+      var note  = String(row[noteCol  - 1] || '');
+      var data  = String(row[dataCol  - 1] || '');
+
+      function getNote(label) {
+        var m = note.match(new RegExp(label + ':\s*(.+?)(?:\n|$)', 'i'));
+        return m ? m[1].trim() : '';
+      }
+
+      amici.push({
+        nome:   nome,
+        email:  email,
+        codice: codice,
+        stato:  stato,
+        data:   data,
+        ruolo:  getNote('Ruolo'),
+        affil:  getNote('Affiliazione'),
+        focus:  getNote('Focus'),
+        citta:  getNote('Citt[àa]') || getNote('Citta'),
+        linkedin: getNote('LinkedIn'),
+        presentazione: getNote('Presentazione')
+      });
+    });
+
+    return amici;
+  });
+}
+
+function getMailingList() {
+  return withLock_(function() {
+    var emailSeen = {};
+    var rete = [], amici = [];
+
+    // 1. Leggi dalla Rete pubblicata (rete-members.json) — fonte primaria
+    try {
+      var reteFile = getReteMembers_();
+      var members = Array.isArray(reteFile.items) ? reteFile.items : [];
+      members.forEach(function(m) {
+        var email = String(m.email || '').trim().toLowerCase();
+        var nome  = String(m.name  || '').trim();
+        if (!email || emailSeen[email]) return;
+        emailSeen[email] = true;
+        rete.push({ nome: nome, email: m.email.trim(), stato: 'RETE' });
+      });
+    } catch(e) { Logger.log('getMailingList rete-members error: ' + e.message); }
+
+    // 2. Leggi dal foglio admin — cattura amici e rete non ancora in JSON
+    try {
+      var sheet = getSheet_();
+      var meta = getHeaderMap_(sheet);
+      var map = meta.map;
+      var lastRow = sheet.getLastRow();
+      if (lastRow >= 2) {
+        var nomeCol  = map['NOME']        || 0;
+        var emailCol = map['EMAIL']       || 0;
+        var statoCol = map['STATO_BOYLE'] || 0;
+        var cols = Math.max(nomeCol, emailCol, statoCol);
+        var values = sheet.getRange(2, 1, lastRow - 1, cols).getDisplayValues();
+        values.forEach(function(row) {
+          var stato = String(row[statoCol - 1] || '').toUpperCase();
+          var nome  = String(row[nomeCol  - 1] || '').trim();
+          var email = String(row[emailCol - 1] || '').trim();
+          if (!email) return;
+          var emailL = email.toLowerCase();
+          if (stato === 'RETE' && !emailSeen[emailL]) {
+            emailSeen[emailL] = true;
+            rete.push({ nome: nome, email: email, stato: 'RETE' });
+          } else if (stato === 'AMICO' && !emailSeen[emailL]) {
+            emailSeen[emailL] = true;
+            amici.push({ nome: nome, email: email, stato: 'AMICO' });
+          }
+        });
+      }
+    } catch(e) { Logger.log('getMailingList sheet error: ' + e.message); }
+
+    return {
+      rete:  rete,
+      amici: amici,
+      tutti: rete.concat(amici)
+    };
+  });
+}
+
+
+function archiviaRiga(rowIndex) {
+  return withLock_(function() {
+    var sheet = getSheet_();
+    var meta = getHeaderMap_(sheet);
+    var statoCol = meta.map['STATO_BOYLE'];
+    var dataCol  = meta.map['DATA_GESTIONE'];
+    if (!statoCol) throw new Error('Colonna STATO_BOYLE non trovata');
+    sheet.getRange(rowIndex, statoCol, 1, 1).setValue('ARCHIVIATO');
+    if (dataCol) sheet.getRange(rowIndex, dataCol, 1, 1).setValue(getNowString_());
+    return { ok: true };
+  });
+}
+
+
+function testAddCode(codice, memberKey) {
+  try {
+    addCodeToKey_(memberKey, codice);
+    return { ok: true, message: 'Codice ' + codice + ' aggiunto a CODE_TO_KEY' };
+  } catch(e) {
+    return { ok: false, message: e.message };
+  }
+}
+
+
 function buildWelcomeEmail_(tipo, nome, codice, testoHeroCustom, lang) {
   // Estrai nome breve (primo nome)
-  var nomeBreve = String(nome || '').trim().split(/\s+/)[0];
+  // Capitalizza ogni parola del nome (es. "Simona damiano" → "Simona Damiano")
+  nome = String(nome || '').trim().replace(/\b\w/g, function(c) { return c.toUpperCase(); });
+  var nomeBreve = nome.split(/\s+/)[0];
   var isAmico = String(tipo || '').toLowerCase().indexOf('amico') !== -1 ||
                 String(tipo || '').toLowerCase().indexOf('friend') !== -1;
 
@@ -1233,9 +1415,10 @@ function buildWelcomeEmail_(tipo, nome, codice, testoHeroCustom, lang) {
     ? String(testoHeroCustom).trim()
     : testoHeroDefault;
 
-  var template = isAmico
-    ? HtmlService.createHtmlOutputFromFile('template_amici').getContent()
-    : HtmlService.createHtmlOutputFromFile('template_rete').getContent();
+  var templateName = isEN
+    ? (isAmico ? 'template_amici_en' : 'template_rete_en')
+    : (isAmico ? 'template_amici'    : 'template_rete');
+  var template = HtmlService.createHtmlOutputFromFile(templateName).getContent();
 
   template = template
     .replace(/__NOME__/g, nome)
@@ -1250,7 +1433,8 @@ function sendWelcomeEmail_(nome, email, codice, tipo, subjectCustom, testoHeroCu
   try {
     var isAmico = String(tipo || '').toLowerCase().indexOf('amico') !== -1 ||
                   String(tipo || '').toLowerCase().indexOf('friend') !== -1;
-    var nomeBreve = String(nome || '').trim().split(/\s+/)[0];
+    nome = String(nome || '').trim().replace(/\b\w/g, function(c) { return c.toUpperCase(); });
+    var nomeBreve = nome.split(/\s+/)[0];
 
     var isEN = String(lang || '').toUpperCase() === 'EN';
     var subjectDefault = isEN
