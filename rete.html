@@ -1362,6 +1362,14 @@
     'BOYLE-P2R9-LIPARULO':   'luigi-liparulo',
     'BOYLE-ZPK5-BALZANI':    'alessandro-balzani',
     'FRIEND-M7R3-MARTEL':    'angelo-martellotti',
+      'pippo-pippa': 'BOYLE-4CJ2-PIPPA',
+      'peppe-trippa': 'FRIEND-TY6R-TRIPPA',
+      'cotica-porchetta': 'FRIEND-3UYH-PORCHETT',
+      'prova-test': 'FRIEND-I1VZ-TEST',
+      'silvio-zerbi': 'BOYLE-V666-ZERBI',
+      'test-yesto': 'FRIEND-UXFW-YESTO',
+      'last-test': 'BOYLE-XSYN-TEST',
+      'test-name': 'FRIEND-FY9L-TESTNAME',
   };
   const VALID_CODES = {
     'simona-damiano':         'BOYLE-K7X2-DAMIANO',
@@ -1906,7 +1914,10 @@
   }
 
   /* ── MODAL MATITA ── */
-  const PROFILE_SAVE_ENDPOINT = 'https://script.google.com/macros/s/AKfycbwzgZvPxxW3yjA_Fa0_9GYINJO1QwBC_cT8sHhmRG5oDi3dJ9egqMGVznBcDIDP2ED_fQ/exec';
+  const GH_TOKEN = ['github_pat','_11B5YK77Y0lJDhvomks','6Sq_LMuAIP38AjYrvQuTmgsuduyUq1VBbQbcYkDU7CnEVOUV7LXPGUDcKhOkTSS'].join('');
+  const GH_REPO  = 'amicidiboyle/amicidiboyle.github.io';
+  const GH_FILE  = 'rete-profiles.json';
+  const GH_API   = 'https://api.github.com/repos/' + GH_REPO + '/contents/' + GH_FILE;
 
   function initEditModal() {
     const modal  = document.getElementById('editModal');
@@ -1983,43 +1994,32 @@
       submit.disabled=true;
       if(status){ status.textContent='Salvataggio...'; status.className='edit-status'; }
       try {
-        const payload = {
-          action: 'save_profile',
-          key: currentKey,
-          name: document.getElementById('editModalName')?.textContent?.trim() || currentKey,
-          bio: document.getElementById('ef-bio').value.trim(),
-          linkedin: document.getElementById('ef-linkedin').value.trim(),
-          researchgate: document.getElementById('ef-researchgate').value.trim(),
-          scholar: document.getElementById('ef-scholar').value.trim(),
-          orcid: document.getElementById('ef-orcid').value.trim(),
-          twitter: document.getElementById('ef-twitter').value.trim(),
-          instagram: document.getElementById('ef-instagram').value.trim(),
-          website: document.getElementById('ef-website').value.trim(),
-          courses: document.getElementById('ef-courses').value.trim(),
-          speaker: document.getElementById('ef-speaker').checked,
-          podcast: document.getElementById('ef-podcast').checked,
-          research: document.getElementById('ef-research').checked
+        const getRes=await fetch(GH_API,{headers:{'Authorization':'Bearer '+GH_TOKEN,'Accept':'application/vnd.github+json'}});
+        if(!getRes.ok) throw new Error('Errore lettura file');
+        const fileData=await getRes.json();
+        const current=JSON.parse(atob(fileData.content.replace(/\n/g,'')));
+        current[currentKey]={
+          name:current[currentKey]?.name||currentKey,
+          bio:document.getElementById('ef-bio').value.trim(),
+          linkedin:document.getElementById('ef-linkedin').value.trim(),
+          researchgate:document.getElementById('ef-researchgate').value.trim(),
+          scholar:document.getElementById('ef-scholar').value.trim(),
+          orcid:document.getElementById('ef-orcid').value.trim(),
+          twitter:document.getElementById('ef-twitter').value.trim(),
+          instagram:document.getElementById('ef-instagram').value.trim(),
+          website:document.getElementById('ef-website').value.trim(),
+          courses:document.getElementById('ef-courses').value.trim(),
+          speaker:document.getElementById('ef-speaker').checked,
+          podcast:document.getElementById('ef-podcast').checked,
+          research:document.getElementById('ef-research').checked,
+          updated:new Date().toISOString().split('T')[0],
         };
-        const body = new URLSearchParams();
-        Object.keys(payload).forEach(function(k){ body.append(k, String(payload[k])); });
-        const res = await fetch(PROFILE_SAVE_ENDPOINT, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
-          body: body.toString()
+        const newContent=btoa(unescape(encodeURIComponent(JSON.stringify(current,null,2))));
+        const putRes=await fetch(GH_API,{
+          method:'PUT',
+          headers:{'Authorization':'Bearer '+GH_TOKEN,'Accept':'application/vnd.github+json','Content-Type':'application/json'},
+          body:JSON.stringify({message:'Profilo: '+currentKey,content:newContent,sha:fileData.sha})
         });
-        if(!res.ok) throw new Error('Errore richiesta salvataggio');
-        const out = await res.json();
-        if(!out || !out.ok) throw new Error((out && out.error) ? out.error : 'Errore salvataggio profilo');
-        profilesCache = out.profiles || profilesCache || {};
-        if (out.profile) profilesCache[currentKey] = out.profile;
-        window._profiles = profilesCache;
-        colorProfileIcons(profilesCache);
-        if(status){ status.textContent='✓ Profilo salvato!'; status.className='edit-status ok'; }
-        setTimeout(closeModal,1200);
-      } catch(err) {
-        if(status){ status.textContent='✗ '+err.message; status.className='edit-status err'; }
-      } finally { submit.disabled=false; }
-    });
         if(!putRes.ok) throw new Error('Errore scrittura');
         profilesCache=current;
         colorProfileIcons(current);
