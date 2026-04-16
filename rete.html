@@ -2019,41 +2019,59 @@
           body:new URLSearchParams(payload).toString()
         });
 
-        const expected = {
-          bio: payload.bio, linkedin: payload.linkedin, researchgate: payload.researchgate,
-          scholar: payload.scholar, orcid: payload.orcid, twitter: payload.twitter,
-          instagram: payload.instagram, website: payload.website, courses: payload.courses,
-          speaker: payload.speaker === 'true', podcast: payload.podcast === 'true', research: payload.research === 'true'
-        };
+       const expected = {
+  bio: payload.bio, linkedin: payload.linkedin, researchgate: payload.researchgate,
+  scholar: payload.scholar, orcid: payload.orcid, twitter: payload.twitter,
+  instagram: payload.instagram, website: payload.website, courses: payload.courses,
+  speaker: payload.speaker === 'true', podcast: payload.podcast === 'true', research: payload.research === 'true'
+};
 
-        let saved = false;
-        for(let i=0;i<8;i++){
-          await new Promise(r=>setTimeout(r, 1500));
-          const fresh = await loadProfiles(true);
-          const p = fresh[currentKey] || {};
-          const ok =
-            (p.bio||'') === expected.bio &&
-            (p.linkedin||'') === expected.linkedin &&
-            (p.researchgate||'') === expected.researchgate &&
-            (p.scholar||'') === expected.scholar &&
-            (p.orcid||'') === expected.orcid &&
-            (p.twitter||'') === expected.twitter &&
-            (p.instagram||'') === expected.instagram &&
-            (p.website||'') === expected.website &&
-            (p.courses||'') === expected.courses &&
-            (!!p.speaker) === expected.speaker &&
-            (!!p.podcast) === expected.podcast &&
-            (!!p.research) === expected.research;
-          if(ok){
-            profilesCache = fresh;
-            colorProfileIcons(fresh);
-            if(status){ status.textContent='✓ Profilo salvato!'; status.className='edit-status ok'; }
-            saved = true;
-            setTimeout(closeModal, 1200);
-            break;
-          }
-        }
-        if(!saved) throw new Error('Timeout salvataggio');
+let saved = false;
+for(let i=0;i<8;i++){
+  await new Promise(r=>setTimeout(r, 1500));
+
+  const verifyRes = await fetch(GH_API, {
+    headers: {
+      'Authorization': 'Bearer ' + GH_TOKEN,
+      'Accept': 'application/vnd.github+json'
+    }
+  });
+
+  if (!verifyRes.ok) continue;
+
+  const verifyFile = await verifyRes.json();
+  const fresh = JSON.parse(atob(verifyFile.content.replace(/\n/g, '')));
+  const p = fresh[currentKey] || {};
+
+  const ok =
+    (p.bio||'') === expected.bio &&
+    (p.linkedin||'') === expected.linkedin &&
+    (p.researchgate||'') === expected.researchgate &&
+    (p.scholar||'') === expected.scholar &&
+    (p.orcid||'') === expected.orcid &&
+    (p.twitter||'') === expected.twitter &&
+    (p.instagram||'') === expected.instagram &&
+    (p.website||'') === expected.website &&
+    (p.courses||'') === expected.courses &&
+    (!!p.speaker) === expected.speaker &&
+    (!!p.podcast) === expected.podcast &&
+    (!!p.research) === expected.research;
+
+  if (ok) {
+    profilesCache = fresh;
+    window._profiles = fresh;
+    colorProfileIcons(fresh);
+    if (status) {
+      status.textContent = '✓ Profilo salvato!';
+      status.className = 'edit-status ok';
+    }
+    saved = true;
+    setTimeout(closeModal, 1200);
+    break;
+  }
+}
+
+if (!saved) throw new Error('Timeout salvataggio');
       } catch(err) {
         if(status){ status.textContent='✗ '+err.message; status.className='edit-status err'; }
       } finally { submit.disabled=false; }
