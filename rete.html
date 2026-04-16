@@ -1914,10 +1914,59 @@
   }
 
   /* ── MODAL MATITA ── */
-  const GH_TOKEN = ['github_pat','_11B5YK77Y0lJDhvomks','6Sq_LMuAIP38AjYrvQuTmgsuduyUq1VBbQbcYkDU7CnEVOUV7LXPGUDcKhOkTSS'].join('');
-  const GH_REPO  = 'amicidiboyle/amicidiboyle.github.io';
-  const GH_FILE  = 'rete-profiles.json';
-  const GH_API   = 'https://api.github.com/repos/' + GH_REPO + '/contents/' + GH_FILE;
+  const PROFILE_SAVE_URL = 'https://script.google.com/macros/s/AKfycbwzgZvPxxW3yjA_Fa0_9GYINJO1QwBC_cT8sHhmRG5oDi3dJ9egqMGVznBcDIDP2ED_fQ/exec';
+
+  function ensureProfileSaveBridge() {
+    let iframe = document.getElementById('profileSaveFrame');
+    if (!iframe) {
+      iframe = document.createElement('iframe');
+      iframe.id = 'profileSaveFrame';
+      iframe.name = 'profileSaveFrame';
+      iframe.style.display = 'none';
+      document.body.appendChild(iframe);
+    }
+    return iframe;
+  }
+
+  function submitProfileToAppsScript(payload) {
+    return new Promise((resolve, reject) => {
+      ensureProfileSaveBridge();
+
+      const timeoutId = setTimeout(() => {
+        window.removeEventListener('message', onMessage);
+        reject(new Error('Timeout salvataggio'));
+      }, 20000);
+
+      function onMessage(event) {
+        const data = event && event.data;
+        if (!data || data.type !== 'boyle_save_profile') return;
+        clearTimeout(timeoutId);
+        window.removeEventListener('message', onMessage);
+        if (data.ok) resolve(data);
+        else reject(new Error(data.error || 'Errore salvataggio'));
+      }
+
+      window.addEventListener('message', onMessage);
+
+      const form = document.createElement('form');
+      form.method = 'POST';
+      form.action = PROFILE_SAVE_URL;
+      form.target = 'profileSaveFrame';
+      form.style.display = 'none';
+
+      Object.entries(payload).forEach(([key, value]) => {
+        const input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = key;
+        input.value = value == null ? '' : String(value);
+        form.appendChild(input);
+      });
+
+      document.body.appendChild(form);
+      form.submit();
+      setTimeout(() => form.remove(), 1500);
+    });
+  }
 
   function initEditModal() {
     const modal  = document.getElementById('editModal');
@@ -1925,13 +1974,14 @@
     const submit = document.getElementById('editSubmit');
     const status = document.getElementById('editStatus');
     let currentKey = '';
+    let currentName = '';
     function closeModal() {
       modal?.classList.remove('is-open'); modal?.setAttribute('aria-hidden','true');
       document.body.style.overflow='';
     }
     function openModal(key, name, role) {
       currentKey = key;
-      // Header identità
+      currentName = name || '';
       const nameEl = document.getElementById('editModalName');
       const subEl  = document.getElementById('editModalSub');
       const avatarEl = document.getElementById('editModalAvatar');
@@ -1945,20 +1995,19 @@
       modal?.classList.add('is-open'); modal?.setAttribute('aria-hidden','false');
       document.body.style.overflow='hidden';
       if(status) status.textContent='';
-      // Char counter bio
       const bioEl2 = document.getElementById('ef-bio');
       const bioCount = document.getElementById('bioCount');
-      if (bioEl2 && bioCount) {
+      if (bioEl2 && bioCount && !bioEl2.dataset.counterBound) {
         bioEl2.addEventListener('input', function() {
           bioCount.textContent = bioEl2.value.length + ' / 300';
         });
+        bioEl2.dataset.counterBound = '1';
       }
       loadProfiles().then(profiles=>{
         const p=profiles[key]||{};
         const bioVal = p.bio||'';
         document.getElementById('ef-bio').value = bioVal;
         if (bioCount) bioCount.textContent = bioVal.length + ' / 300';
-        // Status profilo
         if (statusEl) {
           const isActive = bioVal.trim().length > 10 &&
             (p.linkedin||p.researchgate||p.scholar||p.orcid||p.website);
@@ -1993,46 +2042,55 @@
       if(!currentKey) return;
       submit.disabled=true;
       if(status){ status.textContent='Salvataggio...'; status.className='edit-status'; }
+      const profileData = {
+        action: 'save_profile',
+        key: currentKey,
+        name: currentName,
+        bio: document.getElementById('ef-bio').value.trim(),
+        linkedin: document.getElementById('ef-linkedin').value.trim(),
+        researchgate: document.getElementById('ef-researchgate').value.trim(),
+        scholar: document.getElementById('ef-scholar').value.trim(),
+        orcid: document.getElementById('ef-orcid').value.trim(),
+        twitter: document.getElementById('ef-twitter').value.trim(),
+        instagram: document.getElementById('ef-instagram').value.trim(),
+        website: document.getElementById('ef-website').value.trim(),
+        courses: document.getElementById('ef-courses').value.trim(),
+        speaker: document.getElementById('ef-speaker').checked ? 'true' : 'false',
+        podcast: document.getElementById('ef-podcast').checked ? 'true' : 'false',
+        research: document.getElementById('ef-research').checked ? 'true' : 'false'
+      };
       try {
-        const getRes=await fetch(GH_API,{headers:{'Authorization':'Bearer '+GH_TOKEN,'Accept':'application/vnd.github+json'}});
-        if(!getRes.ok) throw new Error('Errore lettura file');
-        const fileData=await getRes.json();
-        const current=JSON.parse(atob(fileData.content.replace(/\n/g,'')));
-        current[currentKey]={
-          name:current[currentKey]?.name||currentKey,
-          bio:document.getElementById('ef-bio').value.trim(),
-          linkedin:document.getElementById('ef-linkedin').value.trim(),
-          researchgate:document.getElementById('ef-researchgate').value.trim(),
-          scholar:document.getElementById('ef-scholar').value.trim(),
-          orcid:document.getElementById('ef-orcid').value.trim(),
-          twitter:document.getElementById('ef-twitter').value.trim(),
-          instagram:document.getElementById('ef-instagram').value.trim(),
-          website:document.getElementById('ef-website').value.trim(),
-          courses:document.getElementById('ef-courses').value.trim(),
-          speaker:document.getElementById('ef-speaker').checked,
-          podcast:document.getElementById('ef-podcast').checked,
-          research:document.getElementById('ef-research').checked,
-          updated:new Date().toISOString().split('T')[0],
+        await submitProfileToAppsScript(profileData);
+        const current = profilesCache && typeof profilesCache === 'object' ? profilesCache : {};
+        current[currentKey] = {
+          name: currentName || currentKey,
+          bio: profileData.bio,
+          linkedin: profileData.linkedin,
+          researchgate: profileData.researchgate,
+          scholar: profileData.scholar,
+          orcid: profileData.orcid,
+          twitter: profileData.twitter,
+          instagram: profileData.instagram,
+          website: profileData.website,
+          courses: profileData.courses,
+          speaker: profileData.speaker === 'true',
+          podcast: profileData.podcast === 'true',
+          research: profileData.research === 'true',
+          updated: new Date().toISOString().split('T')[0]
         };
-        const newContent=btoa(unescape(encodeURIComponent(JSON.stringify(current,null,2))));
-        const putRes=await fetch(GH_API,{
-          method:'PUT',
-          headers:{'Authorization':'Bearer '+GH_TOKEN,'Accept':'application/vnd.github+json','Content-Type':'application/json'},
-          body:JSON.stringify({message:'Profilo: '+currentKey,content:newContent,sha:fileData.sha})
-        });
-        if(!putRes.ok) throw new Error('Errore scrittura');
-        profilesCache=current;
+        profilesCache = current;
+        window._profiles = current;
         colorProfileIcons(current);
         if(status){ status.textContent='✓ Profilo salvato!'; status.className='edit-status ok'; }
-        setTimeout(closeModal,2000);
+        setTimeout(closeModal, 1600);
       } catch(err) {
-        if(status){ status.textContent='✗ '+err.message; status.className='edit-status err'; }
-      } finally { submit.disabled=false; }
+        if(status){ status.textContent='✗ ' + (err && err.message ? err.message : 'Errore salvataggio'); status.className='edit-status err'; }
+      } finally {
+        submit.disabled=false;
+      }
     });
   }
-
-
-  /* ── AMICI DI BOYLE: modal + codice ── */
+/* ── AMICI DI BOYLE: modal + codice ── */
   function initAmiciModal() {
     const modal     = document.getElementById('amici-modal');
     const openBtn   = document.getElementById('open-amici-modal');
