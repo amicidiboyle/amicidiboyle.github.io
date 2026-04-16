@@ -388,14 +388,14 @@
     "linkedin": "https://www.linkedin.com/in/silvio-zerbi/",
     "researchgate": "",
     "scholar": "",
-    "orcid": "",
+    "orcid": "orcid.org/12930",
     "twitter": "",
     "instagram": "",
     "website": "",
     "courses": "",
     "speaker": true,
     "podcast": true,
-    "research": false,
-    "updated": "2026-04-16"
+    "research": true,
+    "updated": "2026-04-16 12:25:19"
   }
 }
