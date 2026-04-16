@@ -383,7 +383,7 @@
     "updated": "2026-04-12 00:04:42"
   },
   "silvio-zerbi": {
-    "name": "silvio zerbi",
+    "name": "silvio-zerbi",
     "bio": "",
     "linkedin": "https://www.linkedin.com/in/silvio-zerbi/",
     "researchgate": "",
@@ -394,7 +394,7 @@
     "website": "",
     "courses": "",
     "speaker": true,
-    "podcast": false,
+    "podcast": true,
     "research": false,
     "updated": "2026-04-16"
   }
