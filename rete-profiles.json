@@ -381,21 +381,5 @@
     "podcast": false,
     "research": false,
     "updated": "2026-04-12 00:04:42"
-  },
-  "silvio-zerbi": {
-    "name": "silvio-zerbi",
-    "bio": "prova test",
-    "linkedin": "https://www.linkedin.com/in/silvio-zerbi/",
-    "researchgate": "",
-    "scholar": "",
-    "orcid": "orcid.org/12930",
-    "twitter": "",
-    "instagram": "",
-    "website": "",
-    "courses": "",
-    "speaker": true,
-    "podcast": true,
-    "research": true,
-    "updated": "2026-04-16 13:55:12"
   }
 }
