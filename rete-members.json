@@ -290,5 +290,17 @@
       "Soccorso in ambienti Estremi",
       "Diving"
     ]
+  },
+  {
+    "name": "pre lancio",
+    "role": "medico. ospedale. Focus: test-area,",
+    "img": "pre-lancio.jpg",
+    "city": "spagna",
+    "linkedin": "https://www.linkedin.com/in/silvio-zerbi/",
+    "email": "info@amicidiboyle.it",
+    "tags": [
+      "test-area",
+      "test lancio"
+    ]
   }
 ]
