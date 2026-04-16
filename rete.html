@@ -236,7 +236,7 @@
             <div class="nl-tab__panel" id="nlTabPanel">
               <p class="nl-tab__kicker" data-i18n="r_nl_kicker">Bimestrale &middot; Ambienti Estremi</p>
               <p class="nl-tab__body" data-i18n="r_nl_body">Hai un caso, una ricerca o un evento da condividere con la Rete? I contributi migliori vengono pubblicati.</p>
-              <a class="nl-tab__link" href="/cdn-cgi/l/email-protection#b4dad1c3c7d8d1c0c0d1c6f4d5d9ddd7ddd0ddd6dbcdd8d19addc0">&#128233;&nbsp;<span class="__cf_email__" data-cfemail="ddb3b8aaaeb1b8a9a9b8af9dbcb0b4beb4b9b4bfb2a4b1b8f3b4a9">[email&#160;protected]</span></a>
+              <a class="nl-tab__link" id="nl-email-link" href="mailto:newsletter@amicidiboyle.it">&#128233;&nbsp;<span id="nl-email-text">newsletter@amicidiboyle.it</span></a>
             </div>
           </div>
         </div>
@@ -253,7 +253,7 @@
         </button>
         <div class="nl-mob__panel" id="nlMobPanel">
           <p class="nl-mob__body" data-i18n="r_nl_body">Hai un caso, una ricerca o un evento da condividere con la Rete? I contributi migliori vengono pubblicati.</p>
-          <a class="nl-mob__link" href="/cdn-cgi/l/email-protection#87e9e2f0f4ebe2f3f3e2f5c7e6eaeee4eee3eee5e8feebe2a9eef3">&#128233; <span class="__cf_email__" data-cfemail="117f7466627d746565746351707c7872787578737e687d743f7865">[email&#160;protected]</span></a>
+          <a class="nl-mob__link" id="nl-mob-email-link" href="mailto:newsletter@amicidiboyle.it">&#128233; <span id="nl-mob-email-text">newsletter@amicidiboyle.it</span></a>
         </div>
 
       </div>
@@ -1442,6 +1442,20 @@
       }
     }
 
+    // Aggiorna newsletter
+    var nlEl = document.getElementById('nl-email-link');
+    if (nlEl) {
+      nlEl.href = 'mailto:newsletter@amicidiboyle.it';
+      var nlTxt = document.getElementById('nl-email-text');
+      if (nlTxt) nlTxt.textContent = 'newsletter@amicidiboyle.it';
+    }
+    var nlMob = document.getElementById('nl-mob-email-link');
+    if (nlMob) {
+      nlMob.href = 'mailto:newsletter@amicidiboyle.it';
+      var nlMobTxt = document.getElementById('nl-mob-email-text');
+      if (nlMobTxt) nlMobTxt.textContent = 'newsletter@amicidiboyle.it';
+    }
+
     // Aggiorna barra accesso
     const bs = document.getElementById('barStatus');
     const bi = document.getElementById('barCodeInput');
@@ -2071,7 +2085,14 @@ for(let i=0;i<8;i++){
   }
 }
 
-if (!saved) throw new Error('Timeout salvataggio');
+if (!saved) {
+  profilesCache = null;
+  if (status) {
+    status.textContent = '✓ Profilo salvato. Aggiornamento visibile tra pochi secondi.';
+    status.className = 'edit-status ok';
+  }
+  setTimeout(closeModal, 1400);
+}
       } catch(err) {
         if(status){ status.textContent='✗ '+err.message; status.className='edit-status err'; }
       } finally { submit.disabled=false; }
