@@ -384,7 +384,7 @@
   },
   "silvio-zerbi": {
     "name": "silvio-zerbi",
-    "bio": "",
+    "bio": "prova test",
     "linkedin": "https://www.linkedin.com/in/silvio-zerbi/",
     "researchgate": "",
     "scholar": "",
@@ -393,9 +393,9 @@
     "instagram": "",
     "website": "",
     "courses": "",
-    "speaker": false,
+    "speaker": true,
     "podcast": true,
     "research": true,
-    "updated": "2026-04-16 13:53:43"
+    "updated": "2026-04-16 13:55:12"
   }
 }
