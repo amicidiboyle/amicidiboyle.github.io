@@ -236,7 +236,7 @@
             <div class="nl-tab__panel" id="nlTabPanel">
               <p class="nl-tab__kicker" data-i18n="r_nl_kicker">Bimestrale &middot; Ambienti Estremi</p>
               <p class="nl-tab__body" data-i18n="r_nl_body">Hai un caso, una ricerca o un evento da condividere con la Rete? I contributi migliori vengono pubblicati.</p>
-              <a class="nl-tab__link" href="/cdn-cgi/l/email-protection#b4dad1c3c7d8d1c0c0d1c6f4d5d9ddd7ddd0ddd6dbcdd8d19addc0">&#128233;&nbsp;<span class="__cf_email__" data-cfemail="ddb3b8aaaeb1b8a9a9b8af9dbcb0b4beb4b9b4bfb2a4b1b8f3b4a9">[email&#160;protected]</span></a>
+              <a class="nl-tab__link" id="nl-email-link" href="mailto:newsletter@amicidiboyle.it">&#128233;&nbsp;<span id="nl-email-text">newsletter@amicidiboyle.it</span></a>
             </div>
           </div>
         </div>
@@ -253,7 +253,7 @@
         </button>
         <div class="nl-mob__panel" id="nlMobPanel">
           <p class="nl-mob__body" data-i18n="r_nl_body">Hai un caso, una ricerca o un evento da condividere con la Rete? I contributi migliori vengono pubblicati.</p>
-          <a class="nl-mob__link" href="/cdn-cgi/l/email-protection#87e9e2f0f4ebe2f3f3e2f5c7e6eaeee4eee3eee5e8feebe2a9eef3">&#128233; <span class="__cf_email__" data-cfemail="117f7466627d746565746351707c7872787578737e687d743f7865">[email&#160;protected]</span></a>
+          <a class="nl-mob__link" id="nl-mob-email-link" href="mailto:newsletter@amicidiboyle.it">&#128233; <span id="nl-mob-email-text">newsletter@amicidiboyle.it</span></a>
         </div>
 
       </div>
@@ -1822,8 +1822,8 @@
   /* ── MODAL PROFILO ── */
   const PROFILES_URL = 'rete-profiles.json';
   let profilesCache = null;
-  async function loadProfiles(force=false) {
-    if (!force && profilesCache) return profilesCache;
+  async function loadProfiles() {
+    if (profilesCache) return profilesCache;
     try {
       const r = await fetch(PROFILES_URL+'?v='+Date.now());
       if (r.ok) { profilesCache = await r.json(); window._profiles = profilesCache; return profilesCache; }
@@ -1918,7 +1918,6 @@
   const GH_REPO  = 'amicidiboyle/amicidiboyle.github.io';
   const GH_FILE  = 'rete-profiles.json';
   const GH_API   = 'https://api.github.com/repos/' + GH_REPO + '/contents/' + GH_FILE;
-  const PROFILE_SAVE_WEBAPP = 'https://script.google.com/macros/s/AKfycbwzgZvPxxW3yjA_Fa0_9GYINJO1QwBC_cT8sHhmRG5oDi3dJ9egqMGVznBcDIDP2ED_fQ/exec';
 
   function initEditModal() {
     const modal  = document.getElementById('editModal');
@@ -1994,84 +1993,38 @@
       if(!currentKey) return;
       submit.disabled=true;
       if(status){ status.textContent='Salvataggio...'; status.className='edit-status'; }
-      const payload = {
-        action:'save_profile',
-        key: currentKey,
-        name: currentKey,
-        bio: document.getElementById('ef-bio').value.trim(),
-        linkedin: document.getElementById('ef-linkedin').value.trim(),
-        researchgate: document.getElementById('ef-researchgate').value.trim(),
-        scholar: document.getElementById('ef-scholar').value.trim(),
-        orcid: document.getElementById('ef-orcid').value.trim(),
-        twitter: document.getElementById('ef-twitter').value.trim(),
-        instagram: document.getElementById('ef-instagram').value.trim(),
-        website: document.getElementById('ef-website').value.trim(),
-        courses: document.getElementById('ef-courses').value.trim(),
-        speaker: document.getElementById('ef-speaker').checked ? 'true' : 'false',
-        podcast: document.getElementById('ef-podcast').checked ? 'true' : 'false',
-        research: document.getElementById('ef-research').checked ? 'true' : 'false'
-      };
       try {
-        await fetch(PROFILE_SAVE_WEBAPP,{
-          method:'POST',
-          mode:'no-cors',
-          headers:{'Content-Type':'application/x-www-form-urlencoded;charset=UTF-8'},
-          body:new URLSearchParams(payload).toString()
+        const getRes=await fetch(GH_API,{headers:{'Authorization':'Bearer '+GH_TOKEN,'Accept':'application/vnd.github+json'}});
+        if(!getRes.ok) throw new Error('Errore lettura file');
+        const fileData=await getRes.json();
+        const current=JSON.parse(atob(fileData.content.replace(/\n/g,'')));
+        current[currentKey]={
+          name:current[currentKey]?.name||currentKey,
+          bio:document.getElementById('ef-bio').value.trim(),
+          linkedin:document.getElementById('ef-linkedin').value.trim(),
+          researchgate:document.getElementById('ef-researchgate').value.trim(),
+          scholar:document.getElementById('ef-scholar').value.trim(),
+          orcid:document.getElementById('ef-orcid').value.trim(),
+          twitter:document.getElementById('ef-twitter').value.trim(),
+          instagram:document.getElementById('ef-instagram').value.trim(),
+          website:document.getElementById('ef-website').value.trim(),
+          courses:document.getElementById('ef-courses').value.trim(),
+          speaker:document.getElementById('ef-speaker').checked,
+          podcast:document.getElementById('ef-podcast').checked,
+          research:document.getElementById('ef-research').checked,
+          updated:new Date().toISOString().split('T')[0],
+        };
+        const newContent=btoa(unescape(encodeURIComponent(JSON.stringify(current,null,2))));
+        const putRes=await fetch(GH_API,{
+          method:'PUT',
+          headers:{'Authorization':'Bearer '+GH_TOKEN,'Accept':'application/vnd.github+json','Content-Type':'application/json'},
+          body:JSON.stringify({message:'Profilo: '+currentKey,content:newContent,sha:fileData.sha})
         });
-
-       const expected = {
-  bio: payload.bio, linkedin: payload.linkedin, researchgate: payload.researchgate,
-  scholar: payload.scholar, orcid: payload.orcid, twitter: payload.twitter,
-  instagram: payload.instagram, website: payload.website, courses: payload.courses,
-  speaker: payload.speaker === 'true', podcast: payload.podcast === 'true', research: payload.research === 'true'
-};
-
-let saved = false;
-for(let i=0;i<8;i++){
-  await new Promise(r=>setTimeout(r, 1500));
-
-  const verifyRes = await fetch(GH_API, {
-    headers: {
-      'Authorization': 'Bearer ' + GH_TOKEN,
-      'Accept': 'application/vnd.github+json'
-    }
-  });
-
-  if (!verifyRes.ok) continue;
-
-  const verifyFile = await verifyRes.json();
-  const fresh = JSON.parse(atob(verifyFile.content.replace(/\n/g, '')));
-  const p = fresh[currentKey] || {};
-
-  const ok =
-    (p.bio||'') === expected.bio &&
-    (p.linkedin||'') === expected.linkedin &&
-    (p.researchgate||'') === expected.researchgate &&
-    (p.scholar||'') === expected.scholar &&
-    (p.orcid||'') === expected.orcid &&
-    (p.twitter||'') === expected.twitter &&
-    (p.instagram||'') === expected.instagram &&
-    (p.website||'') === expected.website &&
-    (p.courses||'') === expected.courses &&
-    (!!p.speaker) === expected.speaker &&
-    (!!p.podcast) === expected.podcast &&
-    (!!p.research) === expected.research;
-
-  if (ok) {
-    profilesCache = fresh;
-    window._profiles = fresh;
-    colorProfileIcons(fresh);
-    if (status) {
-      status.textContent = '✓ Profilo salvato!';
-      status.className = 'edit-status ok';
-    }
-    saved = true;
-    setTimeout(closeModal, 1200);
-    break;
-  }
-}
-
-if (!saved) throw new Error('Timeout salvataggio');
+        if(!putRes.ok) throw new Error('Errore scrittura');
+        profilesCache=current;
+        colorProfileIcons(current);
+        if(status){ status.textContent='✓ Profilo salvato!'; status.className='edit-status ok'; }
+        setTimeout(closeModal,2000);
       } catch(err) {
         if(status){ status.textContent='✗ '+err.message; status.className='edit-status err'; }
       } finally { submit.disabled=false; }
