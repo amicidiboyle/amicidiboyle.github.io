@@ -135,7 +135,7 @@
     "updated": ""
   },
   "david-james-marsland": {
-    "name": "David James Marsland",
+    "name": "david-james-marsland",
     "bio": "",
     "linkedin": "",
     "researchgate": "",
@@ -146,9 +146,9 @@
     "website": "",
     "courses": "",
     "speaker": false,
-    "podcast": false,
+    "podcast": true,
     "research": false,
-    "updated": ""
+    "updated": "2026-04-16"
   },
   "tommaso-antonio-giacon": {
     "name": "Tommaso Antonio Giacon",
