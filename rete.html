@@ -1464,7 +1464,8 @@
     const bb = document.getElementById('barCodeBtn');
     if (bs) {
         var _uc = (sessionStorage.getItem('boyle_member_code')||'').toUpperCase();
-        const hasPencil = !!(CODE_TO_KEY[_uc] || DYNAMIC_CODE_TO_KEY[_uc]);
+        const isFriendCode = _uc.startsWith('FRIEND-');
+        const hasPencil = !isFriendCode && !!(CODE_TO_KEY[_uc] || DYNAMIC_CODE_TO_KEY[_uc]);
         bs.textContent = hasPencil ? '✓ Accesso confermato — matita attiva sulla tua card' : '✓ Accesso confermato';
         bs.className = 'hero-access-status ok';
       }
@@ -1826,7 +1827,9 @@
     bi?.addEventListener('keydown', e=>{ if(e.key==='Enter') tryBar(); });
     if (isMemberUnlocked()) {
       if (bs) {
-        const hasPencil = CODE_TO_KEY[code];
+        const storedCode = (sessionStorage.getItem('boyle_member_code') || code || '').toUpperCase();
+        const isFriendCode = storedCode.startsWith('FRIEND-');
+        const hasPencil = !isFriendCode && !!(CODE_TO_KEY[storedCode] || DYNAMIC_CODE_TO_KEY[storedCode]);
         bs.textContent = hasPencil ? '✓ Accesso confermato — matita attiva sulla tua card' : '✓ Accesso confermato';
         bs.className = 'hero-access-status ok';
       }
