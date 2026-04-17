@@ -384,7 +384,7 @@
   },
   "felicia-vinciguerra": {
     "name": "Felicia Vinciguerra",
-    "bio": "",
+    "bio": "Docente, Biologa, esperta in Astrobiologia con una forte passione per il mondo \"space\" che si traduce in aggiornamento costante e ricerca di nuove opportunità accademiche e lavorative",
     "linkedin": "https://www.linkedin.com/in/felicia-vinciguerra-853b4417a/",
     "researchgate": "",
     "scholar": "",
@@ -395,7 +395,7 @@
     "courses": "",
     "speaker": false,
     "podcast": false,
-    "research": false,
-    "updated": "2026-04-17 09:13:24"
+    "research": true,
+    "updated": "2026-04-17 10:39:51"
   }
 }
