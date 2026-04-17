@@ -2035,19 +2035,10 @@
         });
 
        const expected = {
-  name: currentKey,
-  bio: payload.bio,
-  linkedin: payload.linkedin,
-  researchgate: payload.researchgate,
-  scholar: payload.scholar,
-  orcid: payload.orcid,
-  twitter: payload.twitter,
-  instagram: payload.instagram,
-  website: payload.website,
-  courses: payload.courses,
-  speaker: payload.speaker === 'true',
-  podcast: payload.podcast === 'true',
-  research: payload.research === 'true'
+  bio: payload.bio, linkedin: payload.linkedin, researchgate: payload.researchgate,
+  scholar: payload.scholar, orcid: payload.orcid, twitter: payload.twitter,
+  instagram: payload.instagram, website: payload.website, courses: payload.courses,
+  speaker: payload.speaker === 'true', podcast: payload.podcast === 'true', research: payload.research === 'true'
 };
 
 let saved = false;
@@ -2065,21 +2056,21 @@ for(let i=0;i<8;i++){
 
   const verifyFile = await verifyRes.json();
   const fresh = JSON.parse(atob(verifyFile.content.replace(/\n/g, '')));
-  const prof = fresh[currentKey] || {};
+  const p = fresh[currentKey] || {};
 
   const ok =
-    (prof.bio||'') === expected.bio &&
-    (prof.linkedin||'') === expected.linkedin &&
-    (prof.researchgate||'') === expected.researchgate &&
-    (prof.scholar||'') === expected.scholar &&
-    (prof.orcid||'') === expected.orcid &&
-    (prof.twitter||'') === expected.twitter &&
-    (prof.instagram||'') === expected.instagram &&
-    (prof.website||'') === expected.website &&
-    (prof.courses||'') === expected.courses &&
-    (!!prof.speaker) === expected.speaker &&
-    (!!prof.podcast) === expected.podcast &&
-    (!!prof.research) === expected.research;
+    (p.bio||'') === expected.bio &&
+    (p.linkedin||'') === expected.linkedin &&
+    (p.researchgate||'') === expected.researchgate &&
+    (p.scholar||'') === expected.scholar &&
+    (p.orcid||'') === expected.orcid &&
+    (p.twitter||'') === expected.twitter &&
+    (p.instagram||'') === expected.instagram &&
+    (p.website||'') === expected.website &&
+    (p.courses||'') === expected.courses &&
+    (!!p.speaker) === expected.speaker &&
+    (!!p.podcast) === expected.podcast &&
+    (!!p.research) === expected.research;
 
   if (ok) {
     profilesCache = fresh;
@@ -2096,16 +2087,27 @@ for(let i=0;i<8;i++){
 }
 
 if (!saved) {
-  const localProfiles = profilesCache && typeof profilesCache === 'object' ? profilesCache : {};
+  const localProfiles = (profilesCache && typeof profilesCache === 'object') ? profilesCache : {};
   localProfiles[currentKey] = {
     ...(localProfiles[currentKey] || {}),
-    ...expected
+    name: currentKey,
+    bio: payload.bio,
+    linkedin: payload.linkedin,
+    researchgate: payload.researchgate,
+    scholar: payload.scholar,
+    orcid: payload.orcid,
+    twitter: payload.twitter,
+    instagram: payload.instagram,
+    website: payload.website,
+    courses: payload.courses,
+    speaker: payload.speaker === 'true',
+    podcast: payload.podcast === 'true',
+    research: payload.research === 'true',
+    updated: new Date().toISOString().split('T')[0]
   };
-
   profilesCache = localProfiles;
   window._profiles = localProfiles;
   colorProfileIcons(localProfiles);
-
   if (status) {
     status.textContent = '✓ Profilo salvato!';
     status.className = 'edit-status ok';
