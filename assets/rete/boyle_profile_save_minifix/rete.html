@@ -1,0 +1,2708 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+  <title>Rete di Boyle · Gli Amici di Boyle</title>
+  <meta name="description" content="La rete di professionisti e ricercatori degli Amici di Boyle: medicina subacquea, iperbarica, ambienti estremi, fisiologia umana e sicurezza." />
+  <meta name="theme-color" content="#031427" />
+  <link rel="icon" href="assets/logo.png" type="image/png" />
+  <link rel="stylesheet" href="rete.css" />
+  <style>
+    .modal{position:fixed;inset:0;z-index:9000;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(1,6,16,.78);backdrop-filter:blur(8px)}
+    .modal.is-open{display:flex}
+    .email-wall{position:fixed;inset:0;z-index:9500;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(1,6,16,.82);backdrop-filter:blur(10px)}
+    .email-wall.is-open{display:flex}
+    .access-modal{position:fixed;inset:0;z-index:9600;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(1,6,16,.88);backdrop-filter:blur(12px)}
+    .access-modal.is-open{display:flex}
+  
+/* ── Cookie banner ── */
+#cookie-banner {
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 9999;
+  background: rgba(4,16,38,.92); backdrop-filter: blur(18px);
+  border-top: 1px solid rgba(120,210,255,.14);
+  padding: 14px 24px;
+  display: flex; align-items: center; justify-content: center;
+  gap: 16px; flex-wrap: wrap;
+  transform: translateY(100%);
+  transition: transform .4s cubic-bezier(.22,.68,0,1.2);
+}
+#cookie-banner.visible { transform: translateY(0); }
+#cookie-banner p {
+  font-size: .8rem; color: rgba(237,247,255,.72);
+  margin: 0; flex: 1; min-width: 200px;
+}
+#cookie-banner a { color: #a8eeff; text-decoration: none; }
+#cookie-banner a:hover { text-decoration: underline; }
+#cookie-accept {
+  padding: 7px 20px; border-radius: 999px;
+  background: rgba(123,228,255,.12);
+  border: 1px solid rgba(123,228,255,.28);
+  color: #a8eeff; font-size: .8rem; font-weight: 600;
+  cursor: pointer; white-space: nowrap;
+  transition: background .2s;
+}
+#cookie-accept:hover { background: rgba(123,228,255,.22); }
+</style>
+</head>
+<body>
+  <!-- Canvas sinaptico globale -->
+  <canvas id="synapseCanvas" aria-hidden="true" style="position:fixed;inset:0;z-index:0;pointer-events:none;width:100%;height:100%;opacity:.35;"></canvas>
+  <a class="skip" href="#contenuto">Vai al contenuto</a>
+
+  <!-- HEADER (stesso dell'home) -->
+  <header class="header" role="banner">
+    <div class="container header__inner">
+      <a class="brand" href="index.html" aria-label="Gli Amici di Boyle — Home">
+        <img src="assets/logo.png" alt="Logo Gli Amici di Boyle" width="52" height="52" />
+        <span class="brand__text">
+          <strong>Gli Amici di Boyle</strong>
+          <em>Diving &amp; Hyperbaric Medicine · Research &amp; Education</em>
+        </span>
+      </a>
+      <nav class="nav--desktop">
+        <a href="index.html" data-i18n="r_nav_home">Home</a>
+        <a href="index.html#visione" data-i18n="r_nav_vis">Visione</a>
+        <a href="index.html#ricerca" data-i18n="r_nav_ric">Ricerca</a>
+        <a class="nav-active" href="rete.html" aria-current="page">Rete</a>
+        <a href="podcast.html" data-i18n="r_nav_pod">Podcast</a>
+        <a href="#prossimo-evento" data-i18n="r_events_link">Eventi</a>
+        <a href="index.html#contatti" data-i18n="r_nav_cont">Contatti</a>
+      </nav>
+      <button class="lang-toggle" id="langToggle" type="button" aria-label="Cambia lingua / Switch language">
+        <span id="langCurrent">IT</span><span class="lang-sep"> · </span><span id="langOther">EN</span>
+      </button>
+      <button class="nav-mobile-btn" id="navMobileBtn" aria-label="Apri menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="nav-mobile-panel" id="navMobilePanel" aria-hidden="true">
+        <a href="index.html" data-i18n="r_nav_home">Home</a>
+        <a href="index.html#visione" data-i18n="r_nav_vis">Visione</a>
+        <a href="index.html#ricerca" data-i18n="r_nav_ric">Ricerca</a>
+        <a href="rete.html" data-i18n="r_nav_rete">Rete</a>
+        <a href="podcast.html" data-i18n="r_nav_pod">Podcast</a>
+        <a href="#prossimo-evento" data-i18n="r_events_link">Eventi</a>
+        <a href="index.html#contatti" data-i18n="r_nav_cont">Contatti</a>
+        <button id="langToggleMobileRete" type="button" class="lang-toggle lang-toggle--mobile" aria-label="Cambia lingua / Switch language"><span id="langCurrent_mob_rete">IT</span><span class="lang-sep"> · </span><span id="langOther_mob_rete">EN</span></button>
+      </div>
+    </div>
+  </header>
+
+  <main id="contenuto">
+
+    <!-- HERO con connectome -->
+    <section class="hero" id="top">
+      <div class="hero__connectome" aria-hidden="true">
+        <svg class="connectome-svg" viewBox="0 0 1400 520" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <filter id="glow-line"><feGaussianBlur stdDeviation="1.8" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+            <filter id="glow-node"><feGaussianBlur stdDeviation="3.5" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+            <linearGradient id="lineGradA" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#d9fbff" stop-opacity="0.04"/><stop offset="50%" stop-color="#9aefff" stop-opacity="0.22"/><stop offset="100%" stop-color="#d9fbff" stop-opacity="0.04"/></linearGradient>
+            <radialGradient id="nodeGrad" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#ffffff" stop-opacity="0.98"/><stop offset="45%" stop-color="#bff8ff" stop-opacity="0.88"/><stop offset="100%" stop-color="#7cf3ff" stop-opacity="0.18"/></radialGradient>
+            <mask id="connectomeFade"><rect width="1400" height="520" fill="white"/><rect x="0" y="0" width="520" height="520" fill="url(#leftFade)"/></mask>
+            <linearGradient id="leftFade" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="black"/><stop offset="45%" stop-color="black"/><stop offset="80%" stop-color="white"/><stop offset="100%" stop-color="white"/></linearGradient>
+          </defs>
+          <g class="connectome-base" mask="url(#connectomeFade)">
+            <g class="connectome-links" filter="url(#glow-line)">
+              <path id="path-a" d="M 420 145 C 560 70, 770 90, 930 160 S 1160 240, 1310 150" />
+              <path id="path-b" d="M 455 220 C 620 130, 790 160, 940 235 S 1160 330, 1325 245" />
+              <path id="path-c" d="M 390 305 C 560 225, 720 250, 865 320 S 1080 410, 1280 330" />
+              <path id="path-d" d="M 520 120 C 610 220, 730 300, 885 280 S 1110 185, 1275 215" />
+              <path id="path-e" d="M 600 95 C 700 180, 810 210, 930 185 S 1150 115, 1295 175" />
+              <path id="path-f" d="M 650 355 C 760 250, 905 240, 1045 285 S 1200 355, 1330 315" />
+              <path id="path-g" d="M 745 85 C 780 180, 780 280, 745 405" class="link-faint" />
+              <path id="path-h" d="M 560 118 C 635 210, 665 305, 640 420" class="link-soft" />
+              <path id="path-i" d="M 905 118 C 850 200, 820 288, 835 392" class="link-soft" />
+              <path id="path-k" d="M 440 268 C 595 255, 760 305, 915 285 S 1140 220, 1305 250" class="link-soft" />
+            </g>
+            <g class="connectome-nodes" filter="url(#glow-node)">
+              <circle cx="455" cy="128" r="5.4" class="node node-1"/><circle cx="598" cy="98" r="4.6" class="node node-2"/>
+              <circle cx="734" cy="114" r="6.2" class="node node-3"/><circle cx="880" cy="144" r="5.2" class="node node-4"/>
+              <circle cx="1045" cy="175" r="4.6" class="node node-5"/><circle cx="1214" cy="165" r="6.4" class="node node-6"/>
+              <circle cx="520" cy="220" r="4.2" class="node node-7"/><circle cx="690" cy="196" r="5.8" class="node node-8"/>
+              <circle cx="846" cy="224" r="4.8" class="node node-9"/><circle cx="1012" cy="260" r="6.6" class="node node-10"/>
+              <circle cx="1156" cy="286" r="4.9" class="node node-11"/><circle cx="595" cy="300" r="4.8" class="node node-12"/>
+              <circle cx="742" cy="334" r="5.9" class="node node-13"/><circle cx="896" cy="318" r="4.1" class="node node-14"/>
+              <circle cx="1088" cy="348" r="5.7" class="node node-15"/><circle cx="1260" cy="332" r="4.7" class="node node-16"/>
+            </g>
+            <g class="travelers">
+              <circle r="3.8" class="traveler traveler-a"><animateMotion dur="7.2s" repeatCount="indefinite" rotate="auto"><mpath href="#path-a"/></animateMotion></circle>
+              <circle r="3.1" class="traveler traveler-b"><animateMotion dur="8.9s" begin="-2.1s" repeatCount="indefinite" rotate="auto"><mpath href="#path-b"/></animateMotion></circle>
+              <circle r="3.5" class="traveler traveler-c"><animateMotion dur="10.4s" begin="-5.4s" repeatCount="indefinite" rotate="auto"><mpath href="#path-c"/></animateMotion></circle>
+              <circle r="2.9" class="traveler traveler-d"><animateMotion dur="6.6s" begin="-1.8s" repeatCount="indefinite" rotate="auto"><mpath href="#path-d"/></animateMotion></circle>
+              <circle r="3.2" class="traveler traveler-e"><animateMotion dur="9.6s" begin="-3.8s" repeatCount="indefinite" rotate="auto"><mpath href="#path-e"/></animateMotion></circle>
+              <circle r="3.4" class="traveler traveler-f"><animateMotion dur="8.2s" begin="-4.6s" repeatCount="indefinite" rotate="auto"><mpath href="#path-f"/></animateMotion></circle>
+            </g>
+          </g>
+        </svg>
+      </div>
+      <div class="hero__content">
+        <div class="hero__eyebrow" data-i18n="r_hero_eyebrow">Network scientifico · Ambienti estremi</div>
+        <h1 class="hero__title" data-i18n="r_hero_title"><span class="hero__glow">Rete</span> di Boyle</h1>
+        <p class="hero__subtitle" data-i18n="r_hero_sub">Un ecosistema multidisciplinare di professionisti, ricercatori e innovatori dedicati alla medicina subacquea, iperbarica, aerospaziale e alla fisiologia degli ambienti estremi.</p>
+        <div class="hero__cta">
+          <!-- Rete -->
+          <div class="hero-cta-group">
+            <span class="hero-cta-label" data-i18n="r_hero_cta_label1">Sei un professionista?</span>
+            <div class="hero-cta-row">
+              <button class="btn-electric" id="open-network-modal" type="button">
+                <span class="btn-electric__inner">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                  <span data-i18n="r_hero_cta1">Candidati alla Rete</span>
+                </span>
+              </button>
+              <div class="hero-info-wrap">
+                <button class="hero-info-btn" id="infoRete" type="button">ⓘ</button>
+                <div class="hero-popover" id="popoverRete" aria-hidden="true">
+                  <p class="hero-popover__title" data-i18n="r_pop_rete_title">Rete di Boyle</p>
+                  <p class="hero-popover__desc" data-i18n="r_pop_rete_desc">Riservata a medici, ricercatori, ingegneri e operatori militari con curriculum validato. Accesso selettivo e valutato caso per caso.</p>
+                  <ul class="hero-popover__list">
+                    <li data-i18n="r_pop_rete_li1">✓ Card pubblica nella griglia</li>
+                    <li data-i18n="r_pop_rete_li2">✓ Contatti diretti dei membri</li>
+                    <li data-i18n="r_pop_rete_li3">✓ Collaborazioni scientifiche</li>
+                    <li data-i18n="r_pop_rete_li4">✓ Prima fila su congressi ed editoriali</li>
+                    <li data-i18n="r_pop_rete_li5">✓ Newsletter riservata</li>
+                    <li data-i18n="r_pop_rete_li6">✓ Pubblica corsi ed eventi</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Amici -->
+          <div class="hero-cta-group">
+            <span class="hero-cta-label" data-i18n="r_hero_cta_label2">Curioso o appassionato?</span>
+            <div class="hero-cta-row">
+              <button class="btn-amici" id="open-amici-modal-hero" type="button">
+                <span data-i18n="rj_amici_cta">Diventa Amico di Boyle</span>
+              </button>
+              <div class="hero-info-wrap">
+                <button class="hero-info-btn" id="infoAmici" type="button">ⓘ</button>
+                <div class="hero-popover" id="popoverAmici" aria-hidden="true">
+                  <p class="hero-popover__title" data-i18n="r_pop_amici_title">Amici di Boyle</p>
+                  <p class="hero-popover__desc" data-i18n="r_pop_amici_desc">Per chi è curioso e ha voglia di contribuire. La porta d'ingresso alla community. L'immersione nella Scienza inizia da qui.</p>
+                  <ul class="hero-popover__list">
+                    <li data-i18n="r_pop_amici_li1">✓ Codice personale di accesso</li>
+                    <li>✓ Contatti diretti dei membri</li>
+                    <li data-i18n="r_pop_amici_li2">✓ Profili estesi della Rete</li>
+                    <li data-i18n="r_pop_amici_li3">✓ Pubblica eventi di ambienti estremi</li>
+                    <li data-i18n="r_pop_amici_li4">✓ Newsletter della community</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Eventi -->
+          <div class="hero-cta-group">
+            <span class="hero-cta-label" data-i18n="r_hero_cta_label3">Cosa c’è di nuovo?</span>
+            <div class="hero-cta-row">
+              <a class="btn-eventi" href="#prossimo-evento">
+                <span data-i18n="r_events_link">Gli eventi della Rete</span>
+              </a>
+              <div class="hero-info-wrap">
+                <button class="hero-info-btn" id="infoEventi" type="button">ⓘ</button>
+                <div class="hero-popover" id="popoverEventi" aria-hidden="true">
+                  <p class="hero-popover__title" data-i18n="r_pop_ev_title">Eventi della Rete</p>
+                  <p class="hero-popover__desc" data-i18n="r_pop_ev_desc">Tutti i membri della Rete e gli Amici di Boyle possono pubblicare qui i loro eventi. Scopri cosa c’è di nuovo.</p>
+                  <ul class="hero-popover__list">
+                    <li data-i18n="r_pop_ev_li1">✓ Corsi e workshop di ambienti estremi</li>
+                    <li data-i18n="r_pop_ev_li2">✓ Congressi e conferenze scientifiche</li>
+                    <li data-i18n="r_pop_ev_li3">✓ Esercitazioni e simulazioni</li>
+                    <li data-i18n="r_pop_ev_li4">✓ Eventi aperti alla community</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="hero-access-bar" id="accessBar" style="justify-content:center;margin:0 auto;">
+            <input class="hero-access-input" id="barCodeInput"
+                   type="text" data-i18n-placeholder="r_code_ph" placeholder="🔑 Codice membro" data-i18n-placeholder="r_code_ph"
+                   autocomplete="off" spellcheck="false" maxlength="30" />
+            <button class="hero-access-btn" id="barCodeBtn" data-i18n="r_access_btn">Accedi</button>
+            <span class="hero-access-status" id="barStatus"></span>
+          </div>
+        </div>
+        <div class="hero__stats">
+          <div class="hero__stat"><span class="hero__stat-n" id="memberCount">23</span><span class="hero__stat-l" data-i18n="r_stat_membri">Membri attivi</span></div>
+          <div class="hero__stat"><span class="hero__stat-n">51</span><span class="hero__stat-l" data-i18n="r_stat_amici">Amici di Boyle</span></div>
+          <div class="hero__stat"><span class="hero__stat-n">8+</span><span class="hero__stat-l" data-i18n="r_stat_spec">Specialità</span></div>
+          <div class="hero__stat"><span class="hero__stat-n">6</span><span class="hero__stat-l" data-i18n="r_stat_naz">Nazioni</span></div>
+          <div class="hero__stat hero__stat--growing"><span class="hero__stat-n">↑</span><span class="hero__stat-l" data-i18n="r_stat_grow">In crescita</span></div>
+          <!-- TAB NEWSLETTER desktop -->
+          <div class="nl-tab" id="nlTab">
+            <button class="nl-tab__trigger" id="nlTabTrigger" aria-expanded="false">
+              <span data-i18n="r_nl_title">Newsletter</span>
+            </button>
+            <div class="nl-tab__panel" id="nlTabPanel">
+              <p class="nl-tab__kicker" data-i18n="r_nl_kicker">Bimestrale &middot; Ambienti Estremi</p>
+              <p class="nl-tab__body" data-i18n="r_nl_body">Hai un caso, una ricerca o un evento da condividere con la Rete? I contributi migliori vengono pubblicati.</p>
+              <a class="nl-tab__link" href="/cdn-cgi/l/email-protection#b4dad1c3c7d8d1c0c0d1c6f4d5d9ddd7ddd0ddd6dbcdd8d19addc0">&#128233;&nbsp;<span class="__cf_email__" data-cfemail="ddb3b8aaaeb1b8a9a9b8af9dbcb0b4beb4b9b4bfb2a4b1b8f3b4a9">[email&#160;protected]</span></a>
+            </div>
+          </div>
+        </div>
+        <!-- NEWSLETTER MOBILE -->
+        <button class="nl-mob" id="nlMob" aria-expanded="false">
+          <span class="nl-mob__left">
+            <span class="nl-mob__icon">&#128233;</span>
+            <span class="nl-mob__text">
+              <b class="nl-mob__title" data-i18n="r_nl_title">Newsletter</b>
+              <span class="nl-mob__sub" data-i18n="r_nl_kicker">Bimestrale · Ambienti Estremi</span>
+            </span>
+          </span>
+          <span class="nl-mob__arr" aria-hidden="true">›</span>
+        </button>
+        <div class="nl-mob__panel" id="nlMobPanel">
+          <p class="nl-mob__body" data-i18n="r_nl_body">Hai un caso, una ricerca o un evento da condividere con la Rete? I contributi migliori vengono pubblicati.</p>
+          <a class="nl-mob__link" href="/cdn-cgi/l/email-protection#87e9e2f0f4ebe2f3f3e2f5c7e6eaeee4eee3eee5e8feebe2a9eef3">&#128233; <span class="__cf_email__" data-cfemail="117f7466627d746565746351707c7872787578737e687d743f7865">[email&#160;protected]</span></a>
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- GRIGLIA MEMBRI -->
+    <section class="members-section" id="members">
+      <div class="container">
+        <div class="members-header">
+          <h2 class="members-title" data-i18n="r_members_title">I Membri della Rete</h2>
+          <p class="members-sub" data-i18n="r_members_sub">Professionisti selezionati per competenza, curriculum e impatto operativo.</p>
+        <div class="profile-legend"><span class="pleg pleg--base"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>&nbsp;Base</span><span class="pleg pleg--partial"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>&nbsp;Parzialmente completo</span><span class="pleg pleg--complete"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>&nbsp;Completo</span></div>
+        
+        </div>
+
+        <!-- Filtro per specialità -->
+        <div class="skill-filter-wrap">
+          <button class="skill-filter-toggle" id="skillFilterToggle" type="button">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M7 12h10M11 18h2"/></svg>
+            Filtra per specialità
+            <span id="skillFilterArrow">▾</span>
+          </button>
+          <div class="skill-filter-panel" id="skillFilterPanel" aria-hidden="true">
+            <div class="skill-filter-inner" id="skillFilterInner"></div>
+          </div>
+        </div>
+
+        <!-- Le card vengono iniettate da JS -->
+        <div class="members-grid" id="membersGrid" role="list"></div>
+      </div>
+    </section>
+
+    <!-- EMAIL MEMBERS ONLY MODAL -->
+    
+<!-- ── PUBLISH EVENT: access wall ── -->
+    <div class="email-wall" id="publishWall" aria-hidden="true">
+      <div class="email-wall__dialog">
+        <button class="email-wall__close" id="publishWallClose" aria-label="Chiudi">✕</button>
+        <div class="email-wall__icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+        </div>
+        <h3 class="email-wall__title" data-i18n="r_ev_members_title">Area riservata ai membri</h3>
+        <p class="email-wall__text" data-i18n="r_ev_members_desc">Pubblicare un evento sulla Rete di Boyle è riservato ai membri attivi. Se sei già membro, inserisci il tuo codice di accesso.</p>
+        <div class="email-wall__actions">
+          <button class="btn-electric" id="publishWallCodeBtn" type="button">
+            <span class="btn-electric__inner">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              Sono già membro — inserisci il codice
+            </span>
+          </button>
+          <button class="btn-ghost" id="publishWallJoin" style="min-height:44px;font-size:.88rem;margin-top:8px" data-i18n="r_ev_apply_cta">Candidati alla rete →</button>
+          <p class="email-wall__note">Problemi? Scrivi a <a href="/cdn-cgi/l/email-protection#0a63646c654a6b676369636e63686573666f24637e"><span class="__cf_email__" data-cfemail="e1888f878ea1808c8882888588838e988d84cf8895">[email&#160;protected]</span></a></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── PUBLISH EVENT: form modal ── -->
+    <div class="modal" id="publishEventModal" aria-hidden="true" role="dialog" aria-labelledby="publishEventTitle">
+      <div class="modal__dialog" style="max-width:560px">
+        <div class="modal__head">
+          <div>
+            <p class="modal__kicker">Area membri</p>
+            <h3 class="modal__title" id="publishEventTitle" data-i18n="r_pub_ev_title">Pubblica il tuo evento</h3>
+          </div>
+          <button class="modal__close" id="publishEventClose" aria-label="Chiudi">✕</button>
+        </div>
+        <p class="modal__desc" data-i18n="r_pub_ev_desc">Compila il form per proporre un evento o un corso da pubblicare sulla Rete di Boyle. Ti risponderemo entro 48 ore.</p>
+        <form class="modal__form" id="publishEventForm"
+              action="https://formspree.io/f/xpwzgkqv"
+              method="POST">
+          <input type="hidden" name="_subject" value="Proposta evento — Rete di Boyle" />
+          <div class="form-grid">
+            <div class="form-field">
+              <label for="ev-nome" data-i18n="r_pub_label_name">Nome e cognome *</label>
+              <input type="text" id="ev-nome" name="nome" required autocomplete="name" />
+            </div>
+            <div class="form-field">
+              <label for="ev-email">Email *</label>
+              <input type="email" id="ev-email" name="email" required autocomplete="email" />
+            </div>
+            <div class="form-field form-field--full">
+              <label for="ev-titolo">Titolo dell'evento *</label>
+              <input type="text" id="ev-titolo" name="titolo_evento" required />
+            </div>
+            <div class="form-field">
+              <label for="ev-data" data-i18n="r_pub_label_date">Data / periodo</label>
+              <input type="text" id="ev-data" name="data_evento" placeholder="es. 15 aprile 2025" />
+            </div>
+            <div class="form-field">
+              <label for="ev-luogo" data-i18n="r_pub_label_place">Luogo / modalità</label>
+              <input type="text" id="ev-luogo" name="luogo" placeholder="es. Milano / Online" />
+            </div>
+            <div class="form-field form-field--full">
+              <label for="ev-desc" data-i18n="r_pub_label_desc">Descrizione breve *</label>
+              <textarea id="ev-desc" name="descrizione" rows="3" required placeholder="Argomento, obiettivi, pubblico target..."></textarea>
+            </div>
+            <div class="form-field form-field--full">
+              <label for="ev-link" data-i18n="r_pub_label_link">Link esterno (sito evento, iscrizioni...)</label>
+              <input type="url" id="ev-link" name="link_esterno" placeholder="https://" />
+            </div>
+            <div class="form-field form-field--full">
+              <label for="ev-locandina" data-i18n="r_pub_label_poster">Link locandina (Drive, Dropbox, WeTransfer...)</label>
+              <input type="url" id="ev-locandina" name="link_locandina" placeholder="https://" />
+            </div>
+            <div class="form-field form-field--full">
+              <label for="ev-note" data-i18n="r_pub_label_notes">Note aggiuntive</label>
+              <textarea id="ev-note" name="note" rows="2" placeholder="Qualsiasi altra informazione utile..."></textarea>
+            </div>
+          </div>
+          <div class="modal__actions">
+            <button class="btn-electric" type="submit">
+              <span class="btn-electric__inner" data-i18n="r_pub_submit">Invia proposta</span>
+            </button>
+          </div>
+          <div class="form-status" id="publishEventStatus"></div>
+        </form>
+      </div>
+    </div>
+
+
+    <!-- ACCESS CODE MODAL -->
+    <div class="access-modal" id="accessModal" aria-hidden="true">
+      <div class="access-modal__dialog">
+        <button class="access-modal__close" id="accessModalClose" aria-label="Chiudi">✕</button>
+        <div class="access-modal__icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        </div>
+        <h3 class="access-modal__title" data-i18n="r_access_title">Accesso membri</h3>
+        <p class="access-modal__desc" data-i18n="r_access_desc">Inserisci il codice ricevuto nella email di benvenuto.</p>
+        <div class="access-modal__form">
+          <input type="text" id="accessCodeInput" class="access-modal__input"
+            placeholder="es. BOYLE-K7X2-COGNOME"
+            autocomplete="off" autocapitalize="characters" spellcheck="false" />
+          <button class="btn-electric" id="accessCodeSubmit" type="button">
+            <span class="btn-electric__inner" data-i18n="r_access_unlock">Sblocca contatti</span>
+          </button>
+        </div>
+        <p class="access-modal__status" id="accessStatus"></p>
+        <p class="access-modal__note">Non hai ancora il codice? <button class="access-modal__link" id="accessJoin">Candidati alla rete</button></p>
+      </div>
+    </div>
+
+    <div class="email-wall" id="emailWall" aria-hidden="true">
+      <div class="email-wall__dialog">
+        <button class="email-wall__close" id="emailWallClose" aria-label="Chiudi">✕</button>
+        <div class="email-wall__icon">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+        </div>
+        <h3 class="email-wall__title" data-i18n="r_contacts_title">Contatti riservati ai membri</h3>
+        <p class="email-wall__text" data-i18n="r_contacts_desc">Gli indirizzi email diretti dei professionisti della Rete di Boyle sono visibili solo ai membri attivi. È uno dei vantaggi concreti di far parte della rete.</p>
+        <div class="email-wall__actions">
+          <button class="btn-electric" id="wallCodeBtn" type="button">
+            <span class="btn-electric__inner">🔑 Sono già membro — inserisci il codice</span>
+          </button>
+          <button class="btn-ghost" id="emailWallJoin" style="min-height:44px;font-size:.88rem;margin-top:8px">Candidati alla rete →</button>
+          <p class="email-wall__note">Problemi? Scrivi a <a href="/cdn-cgi/l/email-protection#e48d8a828ba485898d878d808d868b9d8881ca8d90"><span class="__cf_email__" data-cfemail="f69f989099b6979b9f959f929f94998f9a93d89f82">[email&#160;protected]</span></a> per ottenere l'accesso completo.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- VANTAGGI DELLA RETE -->
+    <!-- ── PERCHÉ ENTRARE + EVENTO ── -->
+    <section class="section rete-why-section" id="rete-why">
+      <div class="container">
+
+        <div class="rete-why-header reveal">
+          <p class="section-kicker" data-i18n="r_why_kicker">Perché entrare</p>
+          <h2 data-i18n="r_why_title">Cosa significa far parte della Rete di Boyle</h2>
+          <p class="section-subheading" data-i18n="r_why_sub">La rete non è una directory. È un ecosistema attivo dove ogni membro contribuisce e riceve valore concreto.</p>
+        </div>
+
+        <div class="rete-why-grid">
+
+          <!-- Benefit cards -->
+          <div class="rete-benefits-col">
+            <div class="benefit-card reveal">
+              <div class="benefit-icon benefit-icon--cyan"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+              <div><h3 data-i18n="r_b1_title">Contatti diretti</h3><p data-i18n="r_b1_p">Email personali di tutti i membri, visibili solo a chi è dentro la rete.</p></div>
+            </div>
+            <div class="benefit-card reveal" data-delay="60">
+              <div class="benefit-icon benefit-icon--green"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div>
+              <div><h3 data-i18n="r_b2_title">Visibilità sul portale</h3><p data-i18n="r_b2_p">La tua card è pubblica. CV, pubblicazioni, link professionali — sempre aggiornati.</p></div>
+            </div>
+            <div class="benefit-card reveal" data-delay="120">
+              <div class="benefit-icon benefit-icon--purple"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></div>
+              <div><h3 data-i18n="r_b3_title">Newsletter</h3><p data-i18n="r_b3_p">Proponi articoli, casi clinici, contributi. Arrivi direttamente a tutta la community.</p></div>
+            </div>
+            <div class="benefit-card reveal" data-delay="60">
+              <div class="benefit-icon benefit-icon--orange"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M22 10v6M2 10l10-8 10 8M4 20v-6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v6"/></svg></div>
+              <div><h3 data-i18n="r_b4_title">Pubblica i tuoi corsi</h3><p data-i18n="r_b4_p">Hai un evento formativo? La sezione formazione è aperta ai membri del portale.</p></div>
+            </div>
+            <div class="benefit-card reveal" data-delay="120">
+              <div class="benefit-icon benefit-icon--cyan"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2v-4M9 21H5a2 2 0 0 1-2-2v-4m0 0h18"/></svg></div>
+              <div><h3 data-i18n="r_b5_title">Ricerca scientifica</h3><p data-i18n="r_b5_p">Studi, protocolli, pubblicazioni. I membri vengono invitati alle iniziative di ricerca.</p></div>
+            </div>
+            <div class="benefit-card reveal" data-delay="180">
+              <div class="benefit-icon benefit-icon--green"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg></div>
+              <div><h3 data-i18n="r_b6_title">Prima fila</h3><p data-i18n="r_b6_p">Congressi, workshop, editoriali. I membri vengono coinvolti per primi, prima del pubblico.</p></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- CTA ENTRATA RETE -->
+    <section class="cta-section" id="amici">
+      <div class="container">
+
+        <!-- DUE CARD: Rete + Amici -->
+        <div class="join-grid">
+
+          <!-- Rete di Boyle -->
+          <div class="join-card join-card--rete">
+            <div class="join-card__badge" data-i18n="rj_rete_badge">Rete di Boyle</div>
+            <h2 class="join-card__title" data-i18n="rj_rete_title">Sei un professionista degli ambienti estremi?</h2>
+            <p class="join-card__text" data-i18n="rj_rete_p">La Rete di Boyle è riservata a medici, ricercatori, ingegneri e operatori militari con un curriculum validato in medicina subacquea, iperbarica, aerospaziale, safety, medicina militare o fisiologia degli ambienti estremi. L'accesso è selettivo e valutato caso per caso.</p>
+            <div class="join-card__benefits">
+              <span data-i18n="rj_rete_b1">✓ Card pubblica nella griglia</span>
+              <span data-i18n="rj_rete_b2">✓ Contatti diretti dei membri</span>
+              <span data-i18n="rj_rete_b3">✓ Collaborazioni scientifiche</span>
+              <span data-i18n="rj_rete_b4">✓ Prima fila su congressi ed editoriali</span>
+              <span data-i18n="rj_rete_b5">✓ Newsletter riservata</span>
+              <span data-i18n="rj_rete_b6">✓ Pubblica corsi ed eventi</span>
+              <span>✓ Accesso alla Biblioteca di Boyle <em style="opacity:.6;font-size:.85em">- in progress</em></span>
+            </div>
+            <button class="btn-electric" id="open-network-modal-2" type="button">
+              <span class="btn-electric__inner" data-i18n="rj_rete_cta">Candidati alla Rete</span>
+            </button>
+          </div>
+
+          <!-- Amici di Boyle -->
+          <div class="join-card join-card--amici">
+            <div class="join-card__badge join-card__badge--amici" data-i18n="rj_amici_badge">Amici di Boyle</div>
+            <h2 class="join-card__title" data-i18n="rj_amici_title">Entra nella community e aiutaci a crescere con le tue idee.</h2>
+            <p class="join-card__text" data-i18n="rj_amici_p">Per chi è curioso e ha voglia di contribuire. La porta d\u2019ingresso alla community. L\u2019immersione nella Scienza inizia da qui.</p>
+            <div class="join-card__benefits">
+              <span data-i18n="rj_amici_b1">✓ Codice personale di accesso</span>
+              <span>✓ Contatti diretti dei membri</span>
+              <span data-i18n="rj_amici_b3">✓ Profili estesi della Rete</span>
+              <span data-i18n="rj_amici_b4">✓ Pubblica eventi di ambienti estremi</span>
+              <span data-i18n="rj_amici_b5">✓ Newsletter della community</span>
+              <span>✓ Accesso alla Biblioteca di Boyle <em style="opacity:.6;font-size:.85em">- in progress</em></span>
+              <span data-i18n="rj_amici_b6">✓ Scrivi a <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="ea83848c85aa8b878389838e83888593868fc4839e">[email&#160;protected]</a></span>
+            </div>
+            <button class="btn-amici" id="open-amici-modal" type="button">
+              <span data-i18n="rj_amici_cta">Curioso o appassionato? → Diventa Amico di Boyle</span>
+            </button>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  <!-- ── PROSSIMO EVENTO ── -->
+  <section class="section next-event-section" id="prossimo-evento">
+    <div class="container">
+      <div class="section-heading reveal" style="margin-bottom:32px">
+        <p class="section-kicker">
+          <span class="rete-event-dot"></span><span data-i18n="r_ev_kicker">Prossimi eventi</span>
+        </p>
+      </div>
+
+      <!-- Locandina + info fianco a fianco -->
+      <div class="next-event-grid reveal">
+        <div class="next-event-poster">
+          <img src="assets/corsi/thedayafter.png"
+               alt="Locandina The Day After"
+               loading="lazy"
+               onerror="this.style.display='none'" />
+        </div>
+        <div class="next-event-info-col">
+          <p class="section-kicker" style="margin-bottom:8px" data-i18n="r_ev_partner">Partner · ITCC</p>
+          <h2 class="next-event-title" data-i18n="r_ev_title">The Day After</h2>
+          <p class="next-event-desc" data-i18n="r_ev_p">Gestione del trauma maggiore oltre la fase acuta. In piena coerenza con la visione degli Amici di Boyle.</p>
+          <div class="event-meta">
+            <span data-i18n="r_ev_badge">6 Maggio 2026</span>
+            <span>Corso partner</span>
+          </div>
+          <a class="btn btn-ghost" href="assets/corsi/the_day_after_brochure.pdf" target="_blank" rel="noopener" style="margin-top:20px;display:inline-flex" data-i18n="r_ev_cta" data-i18n="r_psi_cta1">Scarica il programma</a>
+        </div>
+      </div>
+
+
+      <!-- Secondo evento: Corso Psicologia Subacquea -->
+      <div class="next-event-grid reveal" style="margin-top:40px;">
+        <div class="next-event-poster">
+          <img src="assets/corsi/corso-psicologia-subacquea.jpg"
+               alt="Corso di Psicologia Subacquea"
+               loading="lazy"
+               onerror="this.style.display='none'" />
+        </div>
+        <div class="next-event-info-col">
+          <p class="section-kicker" style="margin-bottom:8px" data-i18n="r_psi_kicker">Membro Rete · Lidia Porri</p>
+          <h2 class="next-event-title" data-i18n="r_psi_title">Corso di Psicologia Subacquea</h2>
+          <p class="next-event-desc" data-i18n="r_psi_desc">Corso Teorico-Pratico dedicato alla dimensione psicologica dell'immersione. Gestione di stress, ansia, panico e PTSD in ambiente subacqueo e iperbarico. Rivolto a psicologi, medici, istruttori e subacquei.</p>
+          <div class="event-meta">
+            <span data-i18n="r_psi_date">30–31 Maggio 2026</span>
+            <span>Isola d'Elba · In presenza</span>
+          </div>
+          <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:20px;">
+            <a class="btn btn-ghost" href="assets/corsi/programma-corso-psicologia.pdf" target="_blank" rel="noopener" style="display:inline-flex" data-i18n="r_psi_cta1">Scarica il programma</a>
+            <a class="btn btn-ghost" href="https://www.psicologiasubacquea.it" target="_blank" rel="noopener" style="display:inline-flex">psicologiasubacquea.it</a>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- Convegno SIMSI Cattolica -->
+      <div class="next-event-grid reveal" style="margin-top:40px;">
+        <div class="next-event-poster">
+          <img src="assets/corsi/locandina_simsi_cattolica.jpg"
+               alt="Convegno SIMSI Cattolica 2026"
+               loading="lazy"
+               onerror="this.style.display='none'" />
+        </div>
+        <div class="next-event-info-col">
+          <p class="section-kicker" style="margin-bottom:8px" data-i18n="r_simsi_kicker">Convegno Nazionale · SIMSI</p>
+          <h2 class="next-event-title" data-i18n="r_simsi_title">Convegno SIMSI 2026</h2>
+          <p class="next-event-desc" data-i18n="r_simsi_desc">Convegno Nazionale della Società Italiana di Medicina Subacquea e Iperbarica. Appuntamento scientifico di riferimento per la comunità medica subacquea e iperbarica italiana.</p>
+          <div class="event-meta">
+            <span data-i18n="r_simsi_date">10–11 Aprile 2026</span>
+            <span data-i18n="r_simsi_place">Cattolica (RN) · Waldorf Palace Hotel</span>
+          </div>
+          <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:20px;">
+            <a class="btn btn-ghost" href="assets/corsi/programma_simsi_cattolica.pdf" target="_blank" rel="noopener" style="display:inline-flex" data-i18n="r_simsi_cta1">Scarica il programma</a>
+            <a class="btn btn-ghost" href="https://www.simsi.it" target="_blank" rel="noopener" style="display:inline-flex" data-i18n="r_simsi_cta2">www.simsi.it</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Box proponi evento — solo sotto -->
+      <div class="next-event-propose reveal">
+        <div class="next-event-propose__inner">
+          <div class="next-event-propose__text">
+            <p class="next-event-propose__title" data-i18n="r_ev_propose">Hai un evento da proporre?</p>
+            <p class="next-event-propose__desc" data-i18n="r_ev_propose_p">Sei un membro della Rete o un Amico di Boyle? Proponi corsi, congressi o iniziative legate agli ambienti estremi. La pubblicazione è riservata alla community.</p>
+          </div>
+          <button class="rete-event-publish-btn btn-secondary next-event-publish-btn" id="publishEventBtn2" type="button">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+            Proponi un evento
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  </main>
+
+  <!-- MODAL CANDIDATURA -->
+  <div class="modal" id="network-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal__dialog">
+      <button class="modal__close" id="close-network-modal" type="button" aria-label="Chiudi">✕</button>
+      <div class="modal__head">
+        <span class="modal__kicker">Rete di Boyle</span>
+        <h2 class="modal__title" id="modal-title" data-i18n="r_join_title">Connettiamo menti brillanti</h2>
+        <p class="modal__desc" data-i18n="r_cand_desc">La Rete di Boyle è riservata a professionisti con curriculum validato in medicina subacquea, iperbarica, aerospaziale, safety o fisiologia degli ambienti estremi. Valutiamo ogni candidatura individualmente.</p>
+      </div>
+      <form class="network-form" id="network-form" action="https://formspree.io/f/xzdareqw" method="POST" enctype="multipart/form-data">
+        <input type="hidden" name="_subject" value="Nuova candidatura alla Rete di Boyle" />
+        <input type="hidden" name="_language" value="it" />
+        <input type="hidden" id="cand-snippet" name="codice_card_html" />
+        <div class="form-grid">
+          <div class="field">
+            <label for="cand-name" data-i18n="r_cand_label_name">NOME E COGNOME</label>
+            <input id="cand-name" name="nome" type="text" required placeholder="Nome e Cognome" />
+          </div>
+          <div class="field">
+            <label for="cand-email">EMAIL</label>
+            <input id="cand-email" name="email" type="email" required placeholder="nome@dominio.it" />
+          </div>
+          <div class="field">
+            <label for="cand-affiliation" data-i18n="r_cand_label_affil">AFFILIAZIONE</label>
+            <input id="cand-affiliation" name="affiliazione" type="text" placeholder="Ospedale, Università, Centro, Azienda" />
+          </div>
+          <div class="field">
+            <label for="cand-role" data-i18n="r_cand_label_qual">QUALIFICA PROFESSIONALE</label>
+            <input id="cand-role" name="ruolo" type="text" placeholder="Es. Medico iperbarico, ricercatore, ingegnere biomedico" />
+          </div>
+          <div class="field field--full">
+            <label for="cand-interest" data-i18n="r_cand_label_area">AREA DI INTERESSE / FOCUS</label>
+            <input id="cand-interest" name="focus" type="text" placeholder="Es. Medicina iperbarica, neuroscienze, fisiologia, soccorso estremo" />
+          </div>
+          <div class="field field--full">
+            <label for="cand-city">CITTÀ / NAZIONE</label>
+            <input id="cand-city" name="citta" type="text" placeholder="Es. Milano, Italia" />
+          </div>
+          <div class="field field--full">
+            <label for="cand-linkedin" data-i18n="r_cand_label_li">PROFILO LINKEDIN</label>
+            <input id="cand-linkedin" name="linkedin" type="url" placeholder="https://www.linkedin.com/in/..." required />
+          </div>
+          <div class="field field--full">
+            <label for="cand-foto" data-i18n="r_cand_label_foto">FOTO PROFILO</label>
+            <input id="cand-foto" name="foto" type="file" accept="image/jpeg,image/png,image/webp" style="background:rgba(8,26,62,.7);border:1px solid rgba(123,228,255,.2);border-radius:10px;color:rgba(237,247,255,.8);font-size:.82rem;padding:10px 14px;width:100%;cursor:pointer;" />
+            <p style="font-size:.72rem;color:rgba(237,247,255,.45);margin-top:4px;" data-i18n="r_cand_foto_hint">Carica una foto profilo in formato JPG, PNG o WebP. Max 1MB.</p>
+          </div>
+          <div class="field field--full">
+            <label for="cand-bio" data-i18n="r_cand_label_pres">PRESENTAZIONE E MOTIVAZIONE</label>
+            <textarea id="cand-bio" name="presentazione" placeholder="Racconta chi sei, cosa fai e perché vorresti entrare nella Rete di Boyle."></textarea>
+          </div>
+        </div>
+        <div class="modal__actions">
+          <button class="btn-electric" type="submit">
+            <span class="btn-electric__inner" data-i18n="r_cand_submit">Invia candidatura</span>
+          </button>
+        </div>
+        <div class="form-status" id="form-status" aria-live="polite"></div>
+      </form>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <p class="footer-copy" data-i18n="r_footer_copy">© Gli Amici di Boyle · Medicina subacquea, iperbarica e ambienti estremi.</p>
+      <nav aria-label="Footer navigation">
+        <a href="index.html" data-i18n="r_nav_home">Home</a>
+        <a href="index.html#visione">Visione</a>
+        <a href="rete.html">Rete</a>
+        <a href="podcast.html" data-i18n="r_nav_pod">Podcast</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="cookie.html">Cookie</a>
+      </nav>
+    </div>
+  </footer>
+
+  <!-- ── MODAL AMICI DI BOYLE ── -->
+  <div class="modal" id="amici-modal" aria-hidden="true" role="dialog" aria-modal="true">
+    <div class="modal__dialog modal__dialog--amici">
+      <button class="modal__close" id="close-amici-modal" aria-label="Chiudi">✕</button>
+      <div class="modal__head">
+        <span class="modal__kicker modal__kicker--amici">Amici di Boyle</span>
+        <h2 class="modal__title">Entra nella community</h2>
+        <p class="modal__desc" data-i18n="r_amici_join_desc">Diventa un Amico di Boyle: se sei appassionato di medicina degli ambienti estremi e della diffusione della cultura scientifica, questa è la tua community.</p>
+      </div>
+
+      <!-- Vantaggi nel form -->
+      <div class="amici-benefits-inline">
+        <div class="amici-benefit-item">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.43 2 2 0 0 1 3.6 1.27h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8a16 16 0 0 0 6.08 6.08l.95-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16a2 2 0 0 1 .19.92z"/></svg>
+          <span data-i18n="r_amici_ben1">Contatti diretti dei membri della Rete</span>
+        </div>
+        <div class="amici-benefit-item">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          <span data-i18n="r_amici_ben2">Profili estesi di tutti i membri</span>
+        </div>
+        <div class="amici-benefit-item">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+          <span>Pubblica eventi di ambienti estremi</span>
+        </div>
+        <div class="amici-benefit-item">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          <span>Newsletter della community</span>
+        </div>
+        <div class="amici-benefit-item">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          <span>Scrivi direttamente a <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="b7ded9d1d8f7d6daded4ded3ded5d8cedbd299dec3">[email&#160;protected]</a></span>
+        </div>
+        <div class="amici-benefit-item amici-benefit-item--note">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+          <span data-i18n="r_amici_ben4">I più attivi potranno essere invitati a entrare nella Rete</span>
+        </div>
+      </div>
+
+      <form class="network-form" id="amici-form" action="https://formspree.io/f/xzdareqw" method="POST">
+        <input type="hidden" name="_subject" value="Nuova iscrizione — Amici di Boyle" />
+        <input type="hidden" name="tipo" value="amico-di-boyle" />
+        <input type="hidden" name="codice_generato" id="amici-codice-hidden" />
+        <div class="form-grid">
+          <div class="field">
+            <label for="amici-name" data-i18n="r_amici_label_name">NOME E COGNOME *</label>
+            <input id="amici-name" name="nome" type="text" required placeholder="Nome e Cognome" />
+          </div>
+          <div class="field">
+            <label for="amici-email">EMAIL *</label>
+            <input id="amici-email" name="email" type="email" required placeholder="nome@dominio.it" />
+          </div>
+          <div class="field field--full">
+            <label for="amici-background">CHI SEI</label>
+            <select id="amici-background" name="background">
+              <option value="">Seleziona il tuo background</option>
+              <option value="Studente di medicina">Studente di medicina</option>
+              <option value="Medico / Clinico">Medico / Clinico</option>
+              <option value="Infermiere / Paramedico">Infermiere / Paramedico</option>
+              <option value="Ingegnere / Tecnico">Ingegnere / Tecnico</option>
+              <option value="Operatore del soccorso">Operatore del soccorso</option>
+              <option value="Subacqueo / Istruttore diving">Subacqueo / Istruttore diving</option>
+              <option value="Ricercatore / Accademico">Ricercatore / Accademico</option>
+              <option value="Appassionato di ambienti estremi">Appassionato di ambienti estremi</option>
+              <option value="Giornalista / Divulgatore">Giornalista / Divulgatore</option>
+              <option value="Altro">Altro</option>
+            </select>
+          </div>
+          <div class="field field--full">
+            <label for="amici-motivazione" data-i18n="r_amici_label_why">PERCHÉ VUOI ENTRARE NELLA COMMUNITY *</label>
+            <textarea id="amici-motivazione" name="motivazione" required placeholder="Raccontaci chi sei e cosa ti ha spinto a conoscere gli Amici di Boyle..."></textarea>
+          </div>
+          <div class="field field--full">
+            <label for="amici-source" data-i18n="r_amici_label_how">COME CI HAI CONOSCIUTO</label>
+            <select id="amici-source" name="come_ci_hai_conosciuto">
+              <option value="">Seleziona</option>
+              <option value="Social media">Social media</option>
+              <option value="Podcast Sotto Pressione">Podcast Sotto Pressione</option>
+              <option value="Passaparola">Passaparola</option>
+              <option value="Ricerca web">Ricerca web</option>
+              <option value="Evento / Congresso">Evento / Congresso</option>
+              <option value="Altro">Altro</option>
+            </select>
+          </div>
+        </div>
+        <div class="modal__actions">
+          <button class="btn-amici-submit" type="submit">
+            <span data-i18n="r_amici_submit">Invia la mia candidatura</span>
+          </button>
+        </div>
+        <div class="form-status" id="amici-form-status" aria-live="polite"></div>
+      </form>
+    </div>
+  </div>
+
+
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+
+  <!-- ── MODAL PROFILO ── -->
+  <div class="profile-modal" id="profileModal" aria-hidden="true">
+    <div class="profile-modal__dialog">
+
+      <!-- Hero profilo -->
+      <div class="profile-hero">
+        <img class="profile-hero__photo" id="pm-photo" src="" alt="" />
+        <div class="profile-hero__info">
+          <div class="profile-hero__kicker">Membro della Rete di Boyle</div>
+          <h2 class="profile-hero__name" id="pm-name"></h2>
+          <p class="profile-hero__role" id="pm-role"></p>
+          <div class="profile-hero__location" id="pm-location"></div>
+          <div class="profile-tags" id="pm-tags" style="margin-top:10px;"></div>
+        </div>
+        <button class="profile-modal__close" id="profileModalClose" aria-label="Chiudi">✕</button>
+      </div>
+
+      <!-- Body profilo -->
+      <div class="profile-body">
+        <div id="pm-bio-wrap">
+          <div class="profile-section-label">Presentazione</div>
+          <div class="profile-bio-box"><p id="pm-bio"></p></div>
+        </div>
+        <div id="pm-avail-wrap">
+          <div class="profile-section-label">Disponibilità</div>
+          <div class="profile-availability" id="pm-avail"></div>
+        </div>
+        <div id="pm-links-wrap">
+          <div class="profile-section-label">Link professionali</div>
+          <div class="profile-links" id="pm-links"></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <!-- ── MODAL MATITA ── -->
+  <div class="edit-modal" id="editModal" aria-hidden="true">
+    <div class="edit-modal__dialog">
+
+      <!-- Header identità -->
+      <div class="edit-modal__header">
+        <div class="edit-modal__avatar" id="editModalAvatar"></div>
+        <div class="edit-modal__identity">
+          <p class="edit-modal__name" id="editModalName"></p>
+          <p class="edit-modal__role-label" id="editModalSub"></p>
+          <span class="edit-modal__status" id="editModalStatus"></span>
+        </div>
+        <button class="edit-modal__close" id="editModalClose" aria-label="Chiudi">✕</button>
+      </div>
+
+      <!-- Blocco A: Identità pubblica -->
+      <div class="edit-section-block">
+        <div class="edit-section-label">
+          <span class="edit-section-icon">✦</span> Bio pubblica
+        </div>
+        <div class="edit-field">
+          <label>Presentazione breve <span class="edit-field__hint" data-i18n="r_edit_maxchars">max 300 caratteri</span></label>
+          <textarea id="ef-bio" maxlength="300" placeholder="Racconta chi sei e cosa fai in questo campo..."></textarea>
+          <span class="edit-char-count" id="bioCount">0 / 300</span>
+        </div>
+      </div>
+
+      <!-- Blocco B: Link professionali -->
+      <div class="edit-section-block">
+        <div class="edit-section-label">
+          <span class="edit-section-icon">⬡</span> Link professionali
+        </div>
+        <div class="edit-fields-grid">
+          <div class="edit-field">
+            <label>LinkedIn</label>
+            <div class="edit-field__input-wrap">
+              <span class="edit-field__prefix">in</span>
+              <input type="url" id="ef-linkedin" placeholder="linkedin.com/in/..." />
+            </div>
+          </div>
+          <div class="edit-field">
+            <label data-i18n="r_edit_rg">ResearchGate</label>
+            <div class="edit-field__input-wrap">
+              <span class="edit-field__prefix">RG</span>
+              <input type="url" id="ef-researchgate" placeholder="researchgate.net/profile/..." />
+            </div>
+          </div>
+          <div class="edit-field">
+            <label data-i18n="r_edit_scholar">Google Scholar</label>
+            <div class="edit-field__input-wrap">
+              <span class="edit-field__prefix">GS</span>
+              <input type="url" id="ef-scholar" placeholder="scholar.google.com/..." />
+            </div>
+          </div>
+          <div class="edit-field">
+            <label>ORCID</label>
+            <div class="edit-field__input-wrap">
+              <span class="edit-field__prefix">ID</span>
+              <input type="url" id="ef-orcid" placeholder="orcid.org/0000-..." />
+            </div>
+          </div>
+          <div class="edit-field">
+            <label data-i18n="r_edit_site">Sito personale</label>
+            <div class="edit-field__input-wrap">
+              <span class="edit-field__prefix">↗</span>
+              <input type="url" id="ef-website" placeholder="https://..." />
+            </div>
+          </div>
+          <div class="edit-field">
+            <label data-i18n="r_edit_courses">Corsi / Pubblicazioni</label>
+            <div class="edit-field__input-wrap">
+              <span class="edit-field__prefix">↗</span>
+              <input type="url" id="ef-courses" placeholder="https://..." />
+            </div>
+          </div>
+          <div class="edit-field">
+            <label>X / Twitter</label>
+            <div class="edit-field__input-wrap">
+              <span class="edit-field__prefix">𝕏</span>
+              <input type="url" id="ef-twitter" placeholder="x.com/..." />
+            </div>
+          </div>
+          <div class="edit-field">
+            <label>Instagram</label>
+            <div class="edit-field__input-wrap">
+              <span class="edit-field__prefix">◎</span>
+              <input type="url" id="ef-instagram" placeholder="instagram.com/..." />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Blocco C: Disponibilità -->
+      <div class="edit-section-block">
+        <div class="edit-section-label">
+          <span class="edit-section-icon">◈</span> Disponibilità
+        </div>
+        <div class="edit-checkboxes">
+          <label class="edit-checkbox"><input type="checkbox" id="ef-speaker" /><span data-i18n="r_edit_speaker">Relatore a corsi e congressi</span></label>
+          <label class="edit-checkbox"><input type="checkbox" id="ef-podcast" /><span data-i18n="r_edit_podcast">Ospite del podcast Sotto Pressione</span></label>
+          <label class="edit-checkbox"><input type="checkbox" id="ef-research" /><span data-i18n="r_edit_research">Collaborazioni di ricerca</span></label>
+        </div>
+      </div>
+
+      <div class="edit-modal__footer">
+        <button class="edit-submit" id="editSubmit" data-i18n="r_edit_save">Salva il profilo</button>
+        <div class="edit-status" id="editStatus"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+  /* ════════════════════════════════════════════════
+     MEMBERS DATA — driven by rete-members.json
+     ════════════════════════════════════════════════ */
+  const MEMBERS_URL = 'rete-members.json';
+
+  const LI_ICON = `<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.94 8.5H3.56V20h3.38V8.5ZM5.25 3A2.03 2.03 0 1 0 5.3 7.06 2.03 2.03 0 0 0 5.25 3Zm4.23 5.5V20h3.38v-5.7c0-1.5.28-2.95 2.14-2.95 1.83 0 1.86 1.71 1.86 3.05V20h3.39v-6.29c0-3.09-.67-5.46-4.28-5.46-1.73 0-2.88.95-3.35 1.85h-.05V8.5H9.48Z"/></svg>`;
+
+  const EMAIL_ICON = `<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6.75A2.75 2.75 0 0 1 5.75 4h12.5A2.75 2.75 0 0 1 21 6.75v10.5A2.75 2.75 0 0 1 18.25 20H5.75A2.75 2.75 0 0 1 3 17.25V6.75Zm2.2-.25 6.27 5.05a.83.83 0 0 0 1.06 0L18.8 6.5H5.2Zm13.8 1.46-5.42 4.36a2.33 2.33 0 0 1-2.96 0L5.2 7.96v9.29c0 .3.25.55.55.55h12.5c.3 0 .55-.25.55-.55V7.96Z"/></svg>`;
+  const LOCK_ICON = `<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4" stroke-linecap="round"/></svg>`;
+  const PROFILE_ICON = `<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>`;
+  const PENCIL_ICON = `<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="2" x2="22" y2="6"/><path d="M7.5 20.5 19 9l-4-4L3.5 16.5 2 22z"/></svg>`;
+
+  // Tag colori per area
+  const TAG_COLORS = {
+    'Iperbarica':       '#4fa8ff',
+    'Diving':           '#00d4ff',
+    'Critical Care':    '#4dffd6',
+    'Neuroscienze':     '#c4b0ff',
+    'Ricerca':          '#b4a6ff',
+    'Cardiologia':      '#ff8fa3',
+    'Trauma':           '#ffb347',
+    'Emergenza':        '#ff6b6b',
+    'HEMS':             '#ff6b6b',
+    'Spazio':           '#a8eeff',
+    'Montagna':         '#80ffd4',
+    'ECMO':             '#4dffd6',
+    'Safety':           '#ffd166',
+    'Chirurgia':        '#f8a5c2',
+    'Mass Gathering':   '#ffb347',
+    'Esplorazione':     '#00d4ff',
+    'Medicina Militare':'#c0c0ff',
+  };
+
+  function renderTags(tags) {
+    if (!tags || !tags.length) return '';
+    return '<div class="member-tags">' +
+      tags.map(t => {
+        const c = TAG_COLORS[t] || '#7be4ff';
+        return `<span class="member-tag" style="--tag-color:${c}">${t}</span>`;
+      }).join('') +
+    '</div>';
+  }
+
+  function getMemberBioSnippet(profile) {
+    // Emette SEMPRE il tag <p> (necessario per l'iniezione DOM in colorProfileIcons)
+    // Il contenuto viene scritto dopo dal fetch dei profili
+    if (!profile || !profile.bio || profile.bio.trim().length < 18) {
+      return '<p class="member-bio-snippet"></p>';
+    }
+    const clean = profile.bio.replace(/\s+/g, ' ').trim();
+    const snippet = clean.length > 80 ? clean.slice(0, 77).trimEnd() + '…' : clean;
+    return `<p class="member-bio-snippet">“${snippet}”</p>`;
+  }
+
+  function renderCard(m) {
+    // Determina se profilo è attivo (bio + almeno 1 link nel profile)
+    const prof = window._profiles ? window._profiles[m.name.toLowerCase().replace(/\s+/g,'-')] : null;
+    // Profilo visibile se ha BIO oppure almeno 1 link
+    const hasContent = prof && (
+      (prof.bio && prof.bio.trim().length > 5) ||
+      prof.linkedin || prof.researchgate || prof.scholar ||
+      prof.orcid || prof.website || prof.courses
+    );
+    const isComplete = prof && prof.bio && prof.bio.trim().length > 10 &&
+      (prof.linkedin || prof.researchgate || prof.scholar || prof.orcid || prof.website);
+    const activeBadge = isComplete
+      ? `<span class="profile-active-badge profile-active-badge--full" title="Profilo completo">● Profilo attivo</span>`
+      : hasContent
+        ? `<span class="profile-active-badge profile-active-badge--partial" title="Profilo parziale">◐ Profilo in aggiornamento</span>`
+        : '';
+    const li = m.linkedin && m.linkedin !== 'https://www.linkedin.com/'
+      ? `<a class="icon-btn" href="${m.linkedin}" aria-label="LinkedIn di ${m.name}" target="_blank" rel="noopener">${LI_ICON}</a>`
+      : '';
+    // Email: visibile solo ai membri — mostra lucchetto con tooltip per i non-membri
+    const emailBtn = m.email
+      ? `<button class="icon-btn member-email-btn" data-email="${m.email}" aria-label="Contatta ${m.name}" title="Visibile ai membri della Rete">${LOCK_ICON}</button>`
+      : '';
+    const key = m.name.toLowerCase().replace(/\s+/g, '-');
+    const profileBtn = `<button class="icon-btn member-profile-btn icon-btn--locked" data-key="${key}" data-name="${m.name}" data-role="${m.role||''}" data-tip="Pagina personale">${PROFILE_ICON}</button>`;
+    const editBtn = `<button class="icon-btn icon-btn--pencil member-edit-btn icon-btn--locked" data-key="${key}" data-name="${m.name}" data-role="${m.role||''}" data-tip="Modifica profilo">${PENCIL_ICON}</button>`;
+
+    return `
+      <article class="member-card reveal${isComplete ? ' member-card--complete' : hasContent ? ' member-card--partial' : ''}" role="listitem" data-key="${key}">
+        <div class="member-photo-wrap">
+          <img class="member-photo" src="assets/rete/${m.img}" alt="${m.name}" loading="lazy" onerror="this.style.background='rgba(5,18,46,.8)';this.style.opacity='.4'" />
+        </div>
+        <h2 class="member-name">${m.name}</h2>
+        ${activeBadge}
+        ${renderTags(m.tags)}
+        <p class="member-role">${m.role}</p>
+        ${getMemberBioSnippet(prof)}
+        <div class="member-location">
+          <span class="member-location__line" aria-hidden="true"></span>
+          <span class="member-location__city">
+            <svg width="11" height="11" viewBox="0 0 14 14" fill="currentColor" aria-hidden="true"><path d="M7 0a5 5 0 0 0-5 5c0 4 5 9 5 9s5-5 5-9a5 5 0 0 0-5-5Zm0 7a2 2 0 1 1 0-4 2 2 0 0 1 0 4Z"/></svg>
+            ${m.city || 'Italia'}
+          </span>
+          <span class="member-location__line" aria-hidden="true"></span>
+        </div>
+        <div class="member-links">${li}${emailBtn}${profileBtn}${editBtn}</div>
+      </article>`;
+  }
+
+    function colorProfileIcons(profiles) {
+    if (!profiles) return;
+    document.querySelectorAll('.member-card').forEach(function(card) {
+      var key = card.getAttribute('data-key');
+      if (!key) return;
+      var p = profiles[key] || {};
+      var hasBio = p.bio && p.bio.trim().length > 10;
+      var hasLink = !!(p.linkedin || p.researchgate || p.scholar || p.orcid || p.website);
+      var isComplete = hasBio && hasLink;
+      var isPartial  = hasBio || hasLink;
+
+      // ── 1. Icona omino ──
+      var btn = card.querySelector('.member-profile-btn');
+      if (btn) {
+        btn.classList.remove('profile-icon-partial', 'profile-icon-complete');
+        if (isComplete)     btn.classList.add('profile-icon-complete');
+        else if (hasBio)    btn.classList.add('profile-icon-partial');
+      }
+
+      // ── 2. Bordo card ──
+      card.classList.remove('member-card--complete', 'member-card--partial');
+      if (isComplete)      card.classList.add('member-card--complete');
+      else if (isPartial)  card.classList.add('member-card--partial');
+
+      // ── 3. Circonferenza foto ──
+      var wrap = card.querySelector('.member-photo-wrap');
+      if (wrap) {
+        wrap.classList.remove('member-photo-wrap--complete', 'member-photo-wrap--partial');
+        if (isComplete)     wrap.classList.add('member-photo-wrap--complete');
+        else if (isPartial) wrap.classList.add('member-photo-wrap--partial');
+      }
+
+      // ── 4. Bio snippet — iniettata qui perché i profili arrivano dopo renderCard ──
+      var bioEl = card.querySelector('.member-bio-snippet');
+      if (bioEl) {
+        if (hasBio) {
+          var clean = p.bio.replace(/\s+/g, ' ').trim();
+          var snippet = clean.length > 80 ? clean.slice(0, 77).trimEnd() + '…' : clean;
+          bioEl.textContent = '“' + snippet + '”';
+        } else {
+          bioEl.textContent = '';
+        }
+      }
+    });
+  }
+
+  function initSkillFilter(members) {
+    var toggle = document.getElementById('skillFilterToggle');
+    var panel  = document.getElementById('skillFilterPanel');
+    var inner  = document.getElementById('skillFilterInner');
+    var arrow  = document.getElementById('skillFilterArrow');
+    if (!toggle || !panel || !inner) return;
+
+    // Costruisci tag unici con conteggi
+    var allTags = [];
+    members.forEach(function(m) {
+      if (m.tags) m.tags.forEach(function(t) {
+        if (allTags.indexOf(t) < 0) allTags.push(t);
+      });
+    });
+    allTags.sort();
+    inner.innerHTML = '<button class="skill-tag-btn skill-tag-btn--all skill-tag-btn--active" data-tag="">Tutti (' + members.length + ')</button>';
+    allTags.forEach(function(tag) {
+      var color = (typeof TAG_COLORS !== 'undefined' && TAG_COLORS[tag]) || '#7be4ff';
+      var count = members.filter(function(m){ return m.tags && m.tags.indexOf(tag) >= 0; }).length;
+      var btn = document.createElement('button');
+      btn.className = 'skill-tag-btn';
+      btn.dataset.tag = tag;
+      btn.style.setProperty('--tc', color);
+      btn.textContent = tag + ' (' + count + ')';
+      inner.appendChild(btn);
+    });
+
+    // Apri/chiudi pannello
+    var open = false;
+    toggle.addEventListener('click', function() {
+      open = !open;
+      panel.classList.toggle('skill-filter-panel--open', open);
+      arrow.textContent = open ? '▴' : '▾';
+    });
+
+    // Filtra card
+    var activeTag = '';
+    inner.addEventListener('click', function(e) {
+      var btn = e.target.closest('.skill-tag-btn');
+      if (!btn) return;
+      var tag = btn.dataset.tag;
+      activeTag = (activeTag === tag && tag !== '') ? '' : tag;
+      inner.querySelectorAll('.skill-tag-btn').forEach(function(b) {
+        b.classList.toggle('skill-tag-btn--active',
+          activeTag === '' ? b.dataset.tag === '' : b.dataset.tag === activeTag);
+      });
+      document.querySelectorAll('#membersGrid .member-card').forEach(function(card) {
+        if (!activeTag) { card.style.display = ''; return; }
+        var cardTags = Array.from(card.querySelectorAll('.member-tag'))
+          .map(function(el){ return el.textContent.trim(); });
+        card.style.display = cardTags.indexOf(activeTag) >= 0 ? '' : 'none';
+      });
+      // Chiudi dopo selezione
+      if (activeTag) {
+        open = false;
+        panel.classList.remove('skill-filter-panel--open');
+        arrow.textContent = '▾';
+      }
+    });
+  }
+
+  async function loadMembers() {
+    const grid = document.getElementById('membersGrid');
+    const countEl = document.getElementById('memberCount');
+    try {
+      const res = await fetch(MEMBERS_URL);
+      if (!res.ok) throw new Error('fetch failed');
+      const members = await res.json();
+      grid.innerHTML = members.map(renderCard).join('');
+      if (countEl) countEl.textContent = members.length;
+      // Inizializza filtro
+      initMembersFilter(members);
+      initReveal();
+      initSkillFilter(members);
+      // Colora icone profilo — usa cache se disponibile, altrimenti fetch
+      if (profilesCache) {
+        colorProfileIcons(profilesCache);
+      } else {
+        loadProfiles().then(function(profiles){
+          window._profiles = profiles;
+          colorProfileIcons(profiles);
+        }).catch(function(){});
+      }
+    } catch(e) {
+      // Fallback: se rete-members.json non è ancora sul server, usa dati inline
+      console.warn('rete-members.json non trovato, uso dati inline:', e);
+      try {
+        const fallback = await fetch('rete-members.json?v=' + Date.now());
+        if (fallback.ok) {
+          const members = await fallback.json();
+          grid.innerHTML = members.map(renderCard).join('');
+          if (countEl) countEl.textContent = members.length;
+          initReveal();
+        }
+      } catch(e2) {
+        grid.innerHTML = '<p style="color:rgba(237,247,255,.5);padding:20px;text-align:center;">Profili in caricamento. Assicurati che rete-members.json sia nel repository.</p>';
+      }
+    }
+  }
+
+  /* ── Scroll reveal ── */
+  function initReveal() {
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          setTimeout(() => e.target.classList.add('is-visible'), +(e.target.dataset.delay||0));
+          obs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.01, rootMargin: '0px 0px 0px 0px' });
+    // Prima osserva, poi dopo due frame triggera subito chi è già visibile
+    const els = document.querySelectorAll('.reveal');
+    els.forEach(el => obs.observe(el));
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      els.forEach(el => {
+        const r = el.getBoundingClientRect();
+        if (r.top < window.innerHeight && r.bottom > 0) {
+          setTimeout(() => el.classList.add('is-visible'), +(el.dataset.delay||0));
+          obs.unobserve(el);
+        }
+      });
+    }));
+  }
+
+  /* ── SYNAPSE CANVAS: rete neurale immersiva su tutta la pagina ── */
+  function initSynapseCanvas() {
+    const canvas = document.getElementById('synapseCanvas');
+    if (!canvas || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const ctx = canvas.getContext('2d');
+
+    // Canvas fixed, dimensioni viewport — scroll gestito via offset dei nodi
+    function resize() {
+      canvas.width  = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    resize();
+    window.addEventListener('resize', resize, {passive:true});
+
+    // 80 nodi: più dense connessioni, effetto immersivo
+    const N = 52; // ridotto da 80 per performance (O(n²) = 1326 vs 3160 confronti/frame)
+    // Distribuiti su un'area 3x alta rispetto alla viewport (copre tutto lo scroll)
+    const nodes = Array.from({length: N}, (_, i) => ({
+      x:  Math.random() * window.innerWidth,
+      y:  Math.random() * (window.innerHeight * 3),   // altura 3x per pagina lunga
+      vx: (Math.random() - .5) * .28,
+      vy: (Math.random() - .5) * .28,
+      r:  1.2 + Math.random() * 2.8,
+      pulse: Math.random() * Math.PI * 2,
+      bright: Math.random(),                           // nodi più o meno brillanti
+    }));
+
+    // Mouse tracking per repulsione/attrazione
+    let mouseX = -9999, mouseY = -9999, scrollY = 0;
+    window.addEventListener('mousemove', e => { mouseX = e.clientX; mouseY = e.clientY; }, {passive:true});
+    window.addEventListener('scroll', () => { scrollY = window.scrollY; }, {passive:true});
+
+    const MAX_D  = 180;   // distanza massima per connessione
+    const MAX_D2 = MAX_D * MAX_D;
+
+    function draw(t) {
+      const ofs = scrollY;  // offset scroll per far scorrere i nodi con la pagina
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Muovi nodi
+      for (let i = 0; i < N; i++) {
+        const n = nodes[i];
+        n.x  += n.vx;
+        n.y  += n.vy;
+        n.pulse += .012;
+
+        // Rimbalzo sui bordi (largezza viewport, altezza 3x)
+        if (n.x < 0 || n.x > canvas.width)           n.vx *= -1;
+        if (n.y < 0 || n.y > canvas.height * 3)       n.vy *= -1;
+
+        // Leggera repulsione dal cursore (effetto interattivo)
+        const dx = n.x - mouseX;
+        const dy = (n.y - ofs) - mouseY;
+        const dm2 = dx*dx + dy*dy;
+        if (dm2 < 14400) {  // 120px
+          const f = .06 / Math.sqrt(dm2 + 1);
+          n.vx += dx * f;
+          n.vy += dy * f;
+          // Limita velocità
+          const spd = Math.sqrt(n.vx*n.vx + n.vy*n.vy);
+          if (spd > 1.2) { n.vx *= .8; n.vy *= .8; }
+        }
+      }
+
+      // Disegna connessioni
+      for (let i = 0; i < N; i++) {
+        const ni = nodes[i];
+        const niy = ni.y - ofs;
+        if (niy < -MAX_D || niy > canvas.height + MAX_D) continue; // fuori viewport
+
+        for (let j = i + 1; j < N; j++) {
+          const nj = nodes[j];
+          const njy = nj.y - ofs;
+          if (njy < -MAX_D || njy > canvas.height + MAX_D) continue;
+
+          const dx = ni.x - nj.x;
+          const dy = niy - njy;
+          const d2 = dx*dx + dy*dy;
+          if (d2 > MAX_D2) continue;
+
+          const d = Math.sqrt(d2);
+          const alpha = (1 - d / MAX_D) * .22 * ((ni.bright + nj.bright) * .5 + .3);
+
+          // Gradiente lungo la linea (effetto impulso elettrico)
+          const grd = ctx.createLinearGradient(ni.x, niy, nj.x, njy);
+          const pulse = .5 + .5 * Math.sin(t * .001 + ni.pulse + nj.pulse * .5);
+          grd.addColorStop(0,    `rgba(80,210,255,${alpha * .4})`);
+          grd.addColorStop(pulse, `rgba(160,240,255,${alpha})`);
+          grd.addColorStop(1,    `rgba(80,180,255,${alpha * .3})`);
+
+          ctx.beginPath();
+          ctx.moveTo(ni.x, niy);
+          ctx.lineTo(nj.x, njy);
+          ctx.strokeStyle = grd;
+          ctx.lineWidth = .65 + alpha * .8;
+          ctx.stroke();
+        }
+      }
+
+      // Disegna nodi
+      for (let i = 0; i < N; i++) {
+        const n  = nodes[i];
+        const ny = n.y - ofs;
+        if (ny < -40 || ny > canvas.height + 40) continue;
+
+        const pulse = .5 + .5 * Math.sin(n.pulse + t * .0007);
+        const r = n.r * (.8 + .4 * pulse);
+        const brightness = n.bright * pulse;
+
+        // Alone esterno grande
+        const grd = ctx.createRadialGradient(n.x, ny, 0, n.x, ny, r * 5);
+        grd.addColorStop(0,   `rgba(180,245,255,${brightness * .7})`);
+        grd.addColorStop(.35, `rgba(100,220,255,${brightness * .28})`);
+        grd.addColorStop(1,   `rgba(60,160,255,0)`);
+        ctx.beginPath();
+        ctx.arc(n.x, ny, r * 5, 0, Math.PI * 2);
+        ctx.fillStyle = grd;
+        ctx.fill();
+
+        // Nucleo brillante
+        ctx.beginPath();
+        ctx.arc(n.x, ny, r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(210,250,255,${.65 + brightness * .35})`;
+        ctx.fill();
+      }
+
+      if (!document.hidden) rafId = requestAnimationFrame(draw);
+    }
+    let rafId = requestAnimationFrame(draw);
+    // Pausa quando la tab è in background
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) { cancelAnimationFrame(rafId); }
+      else { rafId = requestAnimationFrame(draw); }
+    });
+  }
+
+  /* ── Sistema accesso email per membri (codice personalizzato) ── */
+  const CODE_TO_KEY = {
+    'BOYLE-K7X2-DAMIANO':    'simona-damiano',
+    'BOYLE-9QM4-ALPINI':     'andrea-murdock-alpini',
+    'BOYLE-R3N8-ZERBI':      'valerio-zerbi',
+    'BOYLE-F5W1-BOROTTO':    'erika-borotto',
+    'BOYLE-M2J9-GALVANI':    'andrea-galvani',
+    'BOYLE-T6P3-GIUFFRIDA':  'federica-giuffrida',
+    'BOYLE-W8L5-CALZAVACCA': 'paolo-calzavacca',
+    'BOYLE-N4R7-XHEPA':      'erion-xhepa',
+    'BOYLE-D1K6-MARSLAND':   'david-james-marsland',
+    'BOYLE-H3Y8-GIACON':     'tommaso-antonio-giacon',
+    'BOYLE-C9F2-CARDOSO':    'tiago-miguel-cardoso',
+    'BOYLE-V7Q4-VENTURELLI': 'federica-venturelli',
+    'BOYLE-X5B1-SALETTI':    'giulio-saletti',
+    'BOYLE-J2M8-SOLDINI':    'gabriele-soldini',
+    'BOYLE-E6N3-DENARO':     'matteo-denaro',
+    'BOYLE-ENAR-CAPPA':      'giovanni-cappa',
+    'BOYLE-YHT9-CAMPONOVO':  'claudio-camponovo',
+    'BOYLE-X7N3-MAK':        'ho-man-mak',
+    'BOYLE-L9P5-PORRI':      'lidia-porri',
+    'BOYLE-A8T2-ALMEIDA':    'adriana-almeida',
+    'BOYLE-S4K7-SANNA':      'antonello-sanna',
+    'BOYLE-P2R9-LIPARULO':   'luigi-liparulo',
+    'BOYLE-ZPK5-BALZANI':    'alessandro-balzani',
+    'FRIEND-M7R3-MARTEL':    'angelo-martellotti',
+      'pippo-pippa': 'BOYLE-4CJ2-PIPPA',
+      'peppe-trippa': 'FRIEND-TY6R-TRIPPA',
+      'cotica-porchetta': 'FRIEND-3UYH-PORCHETT',
+      'prova-test': 'FRIEND-I1VZ-TEST',
+      'silvio-zerbi': 'BOYLE-V666-ZERBI',
+      'test-yesto': 'FRIEND-UXFW-YESTO',
+      'last-test': 'BOYLE-XSYN-TEST',
+      'test-name': 'FRIEND-FY9L-TESTNAME',
+  };
+  const VALID_CODES = {
+    'simona-damiano':         'BOYLE-K7X2-DAMIANO',
+    'andrea-murdock-alpini':  'BOYLE-9QM4-ALPINI',
+    'valerio-zerbi':          'BOYLE-R3N8-ZERBI',
+    'erika-borotto':          'BOYLE-F5W1-BOROTTO',
+    'andrea-galvani':         'BOYLE-M2J9-GALVANI',
+    'federica-giuffrida':     'BOYLE-T6P3-GIUFFRIDA',
+    'paolo-calzavacca':       'BOYLE-W8L5-CALZAVACCA',
+    'erion-xhepa':            'BOYLE-N4R7-XHEPA',
+    'david-james-marsland':   'BOYLE-D1K6-MARSLAND',
+    'tommaso-antonio-giacon': 'BOYLE-H3Y8-GIACON',
+    'tiago-miguel-cardoso':   'BOYLE-C9F2-CARDOSO',
+    'federica-venturelli':    'BOYLE-V7Q4-VENTURELLI',
+    'giulio-saletti':         'BOYLE-X5B1-SALETTI',
+    'gabriele-soldini':       'BOYLE-J2M8-SOLDINI',
+    'matteo-denaro':          'BOYLE-E6N3-DENARO',
+    'giovanni-cappa':         'BOYLE-ENAR-CAPPA',
+    'claudio-camponovo':      'BOYLE-YHT9-CAMPONOVO',
+  };
+  let ALL_CODES = [...Object.keys(CODE_TO_KEY), 'BOYLE-FONDATORI'];
+  const DYNAMIC_CODE_TO_KEY = {};
+  fetch('boyle-access-codes.json?v=' + Date.now())
+    .then(function(r){ return r.ok ? r.json() : null; })
+    .then(function(d){
+      if (!d || !d.codes) return;
+      Object.keys(d.codes).forEach(function(k){
+        var ck = k.trim().toUpperCase();
+        ALL_CODES = [...new Set([...ALL_CODES, ck])];
+        DYNAMIC_CODE_TO_KEY[ck] = String(d.codes[k]||'').trim();
+      });
+    }).catch(function(){});
+  const ACCESS_KEY = 'boyle_member_access';
+  const EMAIL_ICON_HTML = '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6.75A2.75 2.75 0 0 1 5.75 4h12.5A2.75 2.75 0 0 1 21 6.75v10.5A2.75 2.75 0 0 1 18.25 20H5.75A2.75 2.75 0 0 1 3 17.25V6.75Zm2.2-.25 6.27 5.05a.83.83 0 0 0 1.06 0L18.8 6.5H5.2Zm13.8 1.46-5.42 4.36a2.33 2.33 0 0 1-2.96 0L5.2 7.96v9.29c0 .3.25.55.55.55h12.5c.3 0 .55-.25.55-.55V7.96Z"/></svg>';
+
+  function isMemberUnlocked() { return sessionStorage.getItem(ACCESS_KEY) === 'true'; }
+
+  function unlockAll(code) {
+    sessionStorage.setItem(ACCESS_KEY, 'true');
+    sessionStorage.setItem('boyle_member_code', code);
+    var nc = String(code||'').trim().toUpperCase();
+    const memberKey = CODE_TO_KEY[nc] || DYNAMIC_CODE_TO_KEY[nc] || null;
+
+    // Sblocca email
+    document.querySelectorAll('.member-email-btn').forEach(btn => {
+      const email = btn.dataset.email;
+      if (!email) return;
+      const a = document.createElement('a');
+      a.className = 'icon-btn';
+      a.href = 'mailto:' + email;
+      a.setAttribute('data-tip', 'Indirizzo e-mail');
+      a.innerHTML = EMAIL_ICON_HTML;
+      btn.replaceWith(a);
+    });
+
+    // Sblocca foglio profilo
+    document.querySelectorAll('.member-profile-btn').forEach(btn => {
+      btn.classList.remove('icon-btn--locked');
+    });
+
+    // Attiva matita solo al titolare
+    if (memberKey) {
+      const ownerCard = document.querySelector('[data-key="' + memberKey + '"]');
+      if (ownerCard) {
+        const pencil = ownerCard.querySelector('.member-edit-btn');
+        if (pencil) {
+          pencil.classList.remove('icon-btn--locked');
+          pencil.setAttribute('data-tip', 'Personalizza la tua card');
+        }
+      }
+    }
+
+    // Aggiorna barra accesso
+    const bs = document.getElementById('barStatus');
+    const bi = document.getElementById('barCodeInput');
+    const bb = document.getElementById('barCodeBtn');
+    if (bs) {
+        var _uc = (sessionStorage.getItem('boyle_member_code')||'').toUpperCase();
+        const hasPencil = !!(CODE_TO_KEY[_uc] || DYNAMIC_CODE_TO_KEY[_uc]);
+        bs.textContent = hasPencil ? '✓ Accesso confermato — matita attiva sulla tua card' : '✓ Accesso confermato';
+        bs.className = 'hero-access-status ok';
+      }
+    if (bi) bi.disabled = true;
+    if (bb) bb.disabled = true;
+  }
+  function unlockEmails() { unlockAll(sessionStorage.getItem('boyle_member_code') || ''); }
+
+  function initEmailWall() {
+    if (isMemberUnlocked()) { unlockEmails(); return; }
+
+    const wall      = document.getElementById('emailWall');
+    const wallClose = document.getElementById('emailWallClose');
+    const wallJoin  = document.getElementById('emailWallJoin');
+    const wallCode  = document.getElementById('wallCodeBtn');
+    const accModal  = document.getElementById('accessModal');
+    const accClose  = document.getElementById('accessModalClose');
+    const accInput  = document.getElementById('accessCodeInput');
+    const accBtn    = document.getElementById('accessCodeSubmit');
+    const accStatus = document.getElementById('accessStatus');
+    const accJoin   = document.getElementById('accessJoin');
+
+    function closeWall() {
+      wall?.classList.remove('is-open');
+      wall?.setAttribute('aria-hidden','true');
+      document.body.style.overflow = '';
+    }
+    function closeAcc() {
+      accModal?.classList.remove('is-open');
+      accModal?.setAttribute('aria-hidden','true');
+      document.body.style.overflow = '';
+    }
+    function openAcc() {
+      closeWall();
+      accModal?.classList.add('is-open');
+      accModal?.setAttribute('aria-hidden','false');
+      document.body.style.overflow = 'hidden';
+      setTimeout(() => accInput?.focus(), 100);
+    }
+    // Espone openAcc globalmente
+    window._openAccessModal = openAcc;
+
+    document.addEventListener('click', e => {
+      const btn = e.target.closest('.member-email-btn');
+      if (!btn || isMemberUnlocked()) return;
+      e.preventDefault();
+      wall?.classList.add('is-open');
+      wall?.setAttribute('aria-hidden','false');
+      document.body.style.overflow = 'hidden';
+    });
+
+    wallClose?.addEventListener('click', closeWall);
+    wall?.addEventListener('click', e => { if (e.target === wall) closeWall(); });
+    wallJoin?.addEventListener('click', () => { closeWall(); openModal(); });
+    wallCode?.addEventListener('click', openAcc);
+    accClose?.addEventListener('click', closeAcc);
+    accModal?.addEventListener('click', e => { if (e.target === accModal) closeAcc(); });
+    accJoin?.addEventListener('click', () => { closeAcc(); openModal(); });
+
+    function tryCode() {
+      const code = (accInput?.value || '').trim().toUpperCase();
+      if (ALL_CODES.includes(code)) {
+        if (accStatus) { accStatus.textContent = "✓ Accesso confermato. Benvenuto."; accStatus.className = 'access-modal__status success'; }
+        unlockAll(code);
+        setTimeout(closeAcc, 1400);
+      } else {
+        if (accStatus) { accStatus.textContent = "✗ Codice non riconosciuto. Controlla l'email di benvenuto."; accStatus.className = 'access-modal__status error'; }
+        accInput?.classList.add('shake');
+        setTimeout(() => accInput?.classList.remove('shake'), 500);
+      }
+    }
+    accBtn?.addEventListener('click', tryCode);
+    accInput?.addEventListener('keydown', e => { if (e.key === 'Enter') tryCode(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeWall(); closeAcc(); } });
+  }
+
+/* ── Pubblica evento: accesso riservato ai membri ── */
+  function initPublishEvent() {
+    const pubBtn       = document.getElementById('publishEventBtn');
+    const pubWall      = document.getElementById('publishWall');
+    const pubWallClose = document.getElementById('publishWallClose');
+    const pubWallCode  = document.getElementById('publishWallCodeBtn');
+    const pubWallJoin  = document.getElementById('publishWallJoin');
+    const pubModal     = document.getElementById('publishEventModal');
+    const pubClose     = document.getElementById('publishEventClose');
+    const pubForm      = document.getElementById('publishEventForm');
+    const pubStatus    = document.getElementById('publishEventStatus');
+
+    function closePubWall() {
+      pubWall?.classList.remove('is-open');
+      pubWall?.setAttribute('aria-hidden','true');
+      document.body.style.overflow = '';
+    }
+    function openPubModal() {
+      closePubWall();
+      pubModal?.classList.add('is-open');
+      pubModal?.setAttribute('aria-hidden','false');
+      document.body.style.overflow = 'hidden';
+    }
+    function closePubModal() {
+      pubModal?.classList.remove('is-open');
+      pubModal?.setAttribute('aria-hidden','true');
+      document.body.style.overflow = '';
+    }
+
+    // Secondo bottone "Proponi un evento" (sezione prossimo evento)
+    document.getElementById('publishEventBtn2')?.addEventListener('click', () => {
+      if (isMemberUnlocked()) { openPubModal(); }
+      else {
+        pubWall?.classList.add('is-open');
+        pubWall?.setAttribute('aria-hidden','false');
+        document.body.style.overflow = 'hidden';
+      }
+    });
+
+    pubBtn?.addEventListener('click', () => {
+      if (isMemberUnlocked()) { openPubModal(); }
+      else {
+        pubWall?.classList.add('is-open');
+        pubWall?.setAttribute('aria-hidden','false');
+        document.body.style.overflow = 'hidden';
+      }
+    });
+
+    pubWallClose?.addEventListener('click', closePubWall);
+    pubWall?.addEventListener('click', e => { if (e.target === pubWall) closePubWall(); });
+    pubWallJoin?.addEventListener('click', () => { closePubWall(); openModal(); });
+    pubWallCode?.addEventListener('click', () => {
+      closePubWall();
+      const accModal = document.getElementById('accessModal');
+      accModal?.classList.add('is-open');
+      accModal?.setAttribute('aria-hidden','false');
+      document.body.style.overflow = 'hidden';
+      setTimeout(() => document.getElementById('accessCodeInput')?.focus(), 100);
+    });
+
+    pubClose?.addEventListener('click', closePubModal);
+    pubModal?.addEventListener('click', e => { if (e.target === pubModal) closePubModal(); });
+
+    pubForm?.addEventListener('submit', async e => {
+      e.preventDefault();
+      const btn = pubForm.querySelector('button[type="submit"]');
+      if (btn) btn.disabled = true;
+      if (pubStatus) { pubStatus.textContent = 'Invio in corso...'; pubStatus.className = 'form-status'; }
+      try {
+        const res = await fetch(pubForm.action, {
+          method: 'POST', body: new FormData(pubForm),
+          headers: { 'Accept': 'application/json' }
+        });
+        if (res.ok) {
+          pubStatus.textContent = "✓ Proposta inviata. Ti risponderemo entro 48 ore.";
+          pubStatus.className = 'form-status success';
+          pubForm.reset();
+          setTimeout(closePubModal, 2800);
+        } else { throw new Error(); }
+      } catch {
+        pubStatus.textContent = "Errore nell'invio. Scrivi a info@amicidiboyle.it";
+        pubStatus.className = 'form-status error';
+      } finally { if (btn) btn.disabled = false; }
+    });
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') { closePubWall(); closePubModal(); }
+    });
+  }
+
+  /* ── 3D Card Tilt: segue il mouse ── */
+  function initCardTilt() {
+    document.querySelectorAll('.member-card').forEach(card => {
+      card.addEventListener('mousemove', e => {
+        if (card._tiltRAF) return; // throttle: max 1 aggiornamento per frame
+        card._tiltRAF = requestAnimationFrame(() => {
+          card._tiltRAF = null;
+          const r = card.getBoundingClientRect();
+          const x = (e.clientX - r.left) / r.width  - .5;
+          const y = (e.clientY - r.top)  / r.height - .5;
+          card.style.setProperty('--rx', (-y * 10) + 'deg');
+          card.style.setProperty('--ry', (x * 14)  + 'deg');
+        });
+      });
+      card.addEventListener('mouseleave', () => {
+        card.style.setProperty('--rx', '0deg');
+        card.style.setProperty('--ry', '0deg');
+      });
+    });
+  }
+
+  /* ── Counter animato per le hero stats ── */
+  function animateCounter(el, target, duration) {
+    const isInfinity = el.textContent.includes('∞');
+    if (isInfinity) return;
+    const suffix = el.textContent.replace(/[0-9.,]/g, '');
+    const start = performance.now();
+    function step(now) {
+      const p = Math.min((now - start) / duration, 1);
+      const ease = 1 - Math.pow(1 - p, 3);
+      el.textContent = Math.round(target * ease) + suffix;
+      if (p < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+
+  function initCounters() {
+    const stats = document.querySelectorAll('.hero__stat-n');
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (!e.isIntersecting) return;
+        const el = e.target;
+        const raw = el.textContent.replace(/[^0-9]/g, '');
+        if (raw) animateCounter(el, parseInt(raw), 1200);
+        obs.unobserve(el);
+      });
+    }, { threshold: .8 });
+    stats.forEach(el => obs.observe(el));
+  }
+
+  /* ── Impulso luminoso tra le card ── */
+  function initCardPulse() {
+    const canvas = document.getElementById('synapseCanvas');
+    if (!canvas) return;
+    // Aggiunge un impulso extra quando si fa hover su una card
+    document.querySelectorAll('.member-card').forEach(card => {
+      card.addEventListener('mouseenter', () => {
+        card.classList.add('card-pulse-active');
+        setTimeout(() => card.classList.remove('card-pulse-active'), 600);
+      });
+    });
+  }
+
+  /* Inizializza dopo caricamento cards */
+  const origLoad = loadMembers;
+  async function loadMembersEnhanced() {
+    await loadMembers();
+    setTimeout(() => {
+      initCardTilt();
+      initCounters();
+      initCardPulse();
+      initEmailWall();
+      if (isMemberUnlocked()) {
+        unlockAll(sessionStorage.getItem('boyle_member_code') || '');
+      }
+    }, 200);
+  }
+
+  /* ── Modal apri/chiudi ── */
+  function openModal() {
+    document.getElementById('network-modal').classList.add('is-open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal() {
+    document.getElementById('network-modal').classList.remove('is-open');
+    document.body.style.overflow = '';
+  }
+  document.getElementById('open-network-modal')?.addEventListener('click', openModal);
+  document.getElementById('open-network-modal-2')?.addEventListener('click', openModal);
+  document.getElementById('close-network-modal')?.addEventListener('click', closeModal);
+  document.getElementById('network-modal')?.addEventListener('click', e => { if (e.target === e.currentTarget) closeModal(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+  /* ── Slug helper ── */
+  function slugify(s) {
+    return (s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'')
+      .replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'').replace(/-{2,}/g,'-');
+  }
+
+  /* ── Costruisce lo snippet JSON da incollare in rete-members.json ── */
+  function buildJSONSnippet() {
+    const name  = (document.getElementById('cand-name')?.value||'').trim();
+    const email = (document.getElementById('cand-email')?.value||'').trim();
+    const role  = (document.getElementById('cand-role')?.value||'').trim();
+    const aff   = (document.getElementById('cand-affiliation')?.value||'').trim();
+    const city  = (document.getElementById('cand-city')?.value||'Italia').trim();
+    const li    = (document.getElementById('cand-linkedin')?.value||'').trim();
+    const focus = (document.getElementById('cand-interest')?.value||'').trim();
+    const slug  = slugify(name) || 'nuovo-membro';
+    let parts   = [];
+    if (role)  parts.push(role);
+    if (aff)   parts.push(aff);
+    if (focus) parts.push('Focus: ' + focus);
+    return JSON.stringify({
+      name,
+      role: parts.join('. '),
+      img:  slug + '.jpg',
+      city,
+      linkedin: li,
+      email
+    }, null, 2);
+  }
+
+  /* ── Form submit: inietta snippet + invia via fetch ── */
+  const netForm   = document.getElementById('network-form');
+  const statusBox = document.getElementById('form-status');
+  netForm?.addEventListener('submit', async e => {
+    e.preventDefault();
+    // Inietta snippet JSON nel campo hidden
+    const sf = document.getElementById('cand-snippet');
+    if (sf) sf.value = buildJSONSnippet();
+
+    if (statusBox) { statusBox.textContent = 'Invio in corso…'; statusBox.className = 'form-status'; }
+    try {
+      const res = await fetch(netForm.action, {
+        method: 'POST',
+        body: new FormData(netForm),
+        headers: { 'Accept': 'application/json' }
+      });
+      if (res.ok) {
+        if (statusBox) {
+          statusBox.textContent = '✓ Candidatura inviata. Ti contatteremo presto.';
+          statusBox.className = 'form-status is-success';
+        }
+        netForm.reset();
+        setTimeout(closeModal, 2800);
+      } else {
+        if (statusBox) { statusBox.textContent = 'Invio non riuscito. Scrivi a info@amicidiboyle.it'; statusBox.className = 'form-status is-error'; }
+      }
+    } catch(err) {
+      if (statusBox) { statusBox.textContent = 'Errore di rete. Scrivi a info@amicidiboyle.it'; statusBox.className = 'form-status is-error'; }
+    }
+  });
+
+  /* ── Mobile nav ── */
+  const mBtn = document.getElementById('navMobileBtn');
+  const mPanel = document.getElementById('navMobilePanel');
+  mBtn?.addEventListener('click', () => {
+    const open = mPanel.getAttribute('aria-hidden') === 'false';
+    mPanel.setAttribute('aria-hidden', String(open));
+    mBtn.setAttribute('aria-expanded', String(!open));
+    mBtn.classList.toggle('is-open', !open);
+  });
+  mPanel?.querySelectorAll('a, button').forEach(el => el.addEventListener('click', () => {
+    mPanel.setAttribute('aria-hidden','true');
+    mBtn?.setAttribute('aria-expanded','false');
+    mBtn?.classList.remove('is-open');
+  }));
+  document.addEventListener('click', e => {
+    if (!mBtn?.contains(e.target) && !mPanel?.contains(e.target)) {
+      mPanel?.setAttribute('aria-hidden','true');
+      mBtn?.classList.remove('is-open');
+    }
+  });
+
+
+  /* ── BARRA ACCESSO ── */
+  function initAccessBar() {
+    const bi = document.getElementById('barCodeInput');
+    const bb = document.getElementById('barCodeBtn');
+    const bs = document.getElementById('barStatus');
+    function tryBar() {
+      const code = (bi?.value||'').trim().toUpperCase();
+      if (!code) return;
+      if (ALL_CODES.includes(code)) {
+        unlockAll(code);
+      } else {
+        if (bs) { bs.textContent = '✗ Codice non valido'; bs.className = 'hero-access-status err'; }
+        bi?.classList.add('shake'); setTimeout(()=>bi?.classList.remove('shake'),500);
+      }
+    }
+    bb?.addEventListener('click', tryBar);
+    bi?.addEventListener('keydown', e=>{ if(e.key==='Enter') tryBar(); });
+    if (isMemberUnlocked()) {
+      if (bs) {
+        const hasPencil = CODE_TO_KEY[code];
+        bs.textContent = hasPencil ? '✓ Accesso confermato — matita attiva sulla tua card' : '✓ Accesso confermato';
+        bs.className = 'hero-access-status ok';
+      }
+      if (bi) bi.disabled = true;
+      if (bb) bb.disabled = true;
+    }
+  }
+
+  /* ── MODAL PROFILO ── */
+  const PROFILES_URL = 'rete-profiles.json';
+  let profilesCache = null;
+  async function loadProfiles(force=false) {
+    if (!force && profilesCache) return profilesCache;
+    try {
+      const r = await fetch(PROFILES_URL+'?v='+Date.now());
+      if (r.ok) { profilesCache = await r.json(); window._profiles = profilesCache; return profilesCache; }
+    } catch(e) {}
+    return {};
+  }
+
+  function initProfileModal() {
+    const modal = document.getElementById('profileModal');
+    const closeB = document.getElementById('profileModalClose');
+    function closeModal() {
+      modal?.classList.remove('is-open'); modal?.setAttribute('aria-hidden','true');
+      document.body.style.overflow='';
+    }
+    document.addEventListener('click', async e => {
+      const btn = e.target.closest('.member-profile-btn');
+      if (!btn || btn.classList.contains('icon-btn--locked')) return;
+      document.getElementById('pm-name').textContent = btn.dataset.name;
+      document.getElementById('pm-role').textContent = btn.dataset.role;
+      // Foto
+      const photoEl = document.getElementById('pm-photo');
+      const memberKey = btn.dataset.key;
+      if (photoEl) {
+        // Trova img dalla card
+        const card = document.querySelector('[data-key="'+memberKey+'"]');
+        const cardImg = card ? card.querySelector('.member-photo') : null;
+        photoEl.src = cardImg ? cardImg.src : '';
+        photoEl.alt = btn.dataset.name;
+        photoEl.onerror = function() { this.style.display='none'; };
+      }
+      // Location
+      const locEl = document.getElementById('pm-location');
+      if (locEl) {
+        const card2 = document.querySelector('[data-key="'+memberKey+'"]');
+        const cityEl = card2 ? card2.querySelector('.member-location__city') : null;
+        locEl.textContent = cityEl ? cityEl.textContent.trim() : '';
+      }
+      const profiles = await loadProfiles();
+      const p = profiles[memberKey] || {};
+      // Bio
+      const bioEl = document.getElementById('pm-bio');
+      const bioWrap = document.getElementById('pm-bio-wrap');
+      if (p.bio) {
+        bioEl.textContent = p.bio;
+        if (bioWrap) bioWrap.style.display = '';
+      } else {
+        bioEl.textContent = 'Il profilo non è ancora stato compilato. Accedi con il tuo codice e clicca la matita per aggiornarlo.';
+        bioEl.style.opacity = '.4'; bioEl.style.fontStyle = 'italic';
+      }
+      // Links con pill style
+      const linksEl = document.getElementById('pm-links');
+      const linksWrap = document.getElementById('pm-links-wrap');
+      linksEl.innerHTML = '';
+      const linkIcons = {
+        'LinkedIn':'in','ResearchGate':'RG','Scholar':'GS',
+        'ORCID':'ID','X':'𝕏','Instagram':'◎','Sito':'↗','Corsi':'↗'
+      };
+      [['LinkedIn',p.linkedin],['ResearchGate',p.researchgate],
+       ['Scholar',p.scholar],['ORCID',p.orcid],['X',p.twitter],
+       ['Instagram',p.instagram],['Sito',p.website],['Corsi',p.courses]
+      ].forEach(([l,u])=>{
+        if(!u) return;
+        const a=document.createElement('a');
+        a.className='profile-link-pill'; a.href=u; a.target='_blank'; a.rel='noopener';
+        a.innerHTML='<span class="profile-link-pill__icon">'+( linkIcons[l]||'↗')+'</span>'+l;
+        linksEl.appendChild(a);
+      });
+      if (linksWrap) linksWrap.style.display = linksEl.children.length ? '' : 'none';
+      const availEl=document.getElementById('pm-avail');
+      availEl.innerHTML='';
+      if(p.speaker) availEl.innerHTML+='<span class="avail-badge avail-badge--speaker">📢 Disponibile come relatore</span>';
+      if(p.podcast) availEl.innerHTML+='<span class="avail-badge avail-badge--podcast">🎙 Disponibile per il podcast</span>';
+      if(p.research) availEl.innerHTML+='<span class="avail-badge avail-badge--research">🔬 Aperto a collaborazioni</span>';
+      // Tags from member card
+      const tagsEl=document.getElementById('pm-tags');
+      if(tagsEl){
+        const memberCard=document.querySelector('[data-key="'+btn.dataset.key+'"]');
+        const tagEls=memberCard?memberCard.querySelectorAll('.member-tag'):[];
+        tagsEl.innerHTML='';
+        tagEls.forEach(function(t){ tagsEl.innerHTML+='<span class="pm-tag">'+t.textContent+'</span>'; });
+      }
+      modal?.classList.add('is-open'); modal?.setAttribute('aria-hidden','false');
+      document.body.style.overflow='hidden';
+    });
+    closeB?.addEventListener('click', closeModal);
+    modal?.addEventListener('click', e=>{ if(e.target===modal) closeModal(); });
+    document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeModal(); });
+  }
+
+  /* ── MODAL MATITA ── */
+  const GH_TOKEN = ['github_pat','_11B5YK77Y0lJDhvomks','6Sq_LMuAIP38AjYrvQuTmgsuduyUq1VBbQbcYkDU7CnEVOUV7LXPGUDcKhOkTSS'].join('');
+  const GH_REPO  = 'amicidiboyle/amicidiboyle.github.io';
+  const GH_FILE  = 'rete-profiles.json';
+  const GH_API   = 'https://api.github.com/repos/' + GH_REPO + '/contents/' + GH_FILE;
+  const PROFILE_SAVE_WEBAPP = 'https://script.google.com/macros/s/AKfycbwzgZvPxxW3yjA_Fa0_9GYINJO1QwBC_cT8sHhmRG5oDi3dJ9egqMGVznBcDIDP2ED_fQ/exec';
+
+  function initEditModal() {
+    const modal  = document.getElementById('editModal');
+    const closeB = document.getElementById('editModalClose');
+    const submit = document.getElementById('editSubmit');
+    const status = document.getElementById('editStatus');
+    let currentKey = '';
+    function closeModal() {
+      modal?.classList.remove('is-open'); modal?.setAttribute('aria-hidden','true');
+      document.body.style.overflow='';
+    }
+    function openModal(key, name, role) {
+      currentKey = key;
+      // Header identità
+      const nameEl = document.getElementById('editModalName');
+      const subEl  = document.getElementById('editModalSub');
+      const avatarEl = document.getElementById('editModalAvatar');
+      const statusEl = document.getElementById('editModalStatus');
+      if (nameEl) nameEl.textContent = name || '';
+      if (subEl)  subEl.textContent  = role || '';
+      if (avatarEl) {
+        const initials = (name||'?').split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);
+        avatarEl.textContent = initials;
+      }
+      modal?.classList.add('is-open'); modal?.setAttribute('aria-hidden','false');
+      document.body.style.overflow='hidden';
+      if(status) status.textContent='';
+      // Char counter bio
+      const bioEl2 = document.getElementById('ef-bio');
+      const bioCount = document.getElementById('bioCount');
+      if (bioEl2 && bioCount) {
+        bioEl2.addEventListener('input', function() {
+          bioCount.textContent = bioEl2.value.length + ' / 300';
+        });
+      }
+      loadProfiles().then(profiles=>{
+        const p=profiles[key]||{};
+        const bioVal = p.bio||'';
+        document.getElementById('ef-bio').value = bioVal;
+        if (bioCount) bioCount.textContent = bioVal.length + ' / 300';
+        // Status profilo
+        if (statusEl) {
+          const isActive = bioVal.trim().length > 10 &&
+            (p.linkedin||p.researchgate||p.scholar||p.orcid||p.website);
+          statusEl.textContent = isActive ? '● Profilo attivo' : '○ Profilo base';
+          statusEl.className = 'edit-modal__status ' + (isActive ? 'edit-modal__status--active' : '');
+        }
+        document.getElementById('ef-linkedin').value=p.linkedin||'';
+        document.getElementById('ef-researchgate').value=p.researchgate||'';
+        document.getElementById('ef-scholar').value=p.scholar||'';
+        document.getElementById('ef-orcid').value=p.orcid||'';
+        document.getElementById('ef-twitter').value=p.twitter||'';
+        document.getElementById('ef-instagram').value=p.instagram||'';
+        document.getElementById('ef-website').value=p.website||'';
+        document.getElementById('ef-courses').value=p.courses||'';
+        document.getElementById('ef-speaker').checked=!!p.speaker;
+        document.getElementById('ef-podcast').checked=!!p.podcast;
+        document.getElementById('ef-research').checked=!!p.research;
+      });
+    }
+    document.addEventListener('click', e=>{
+      const btn=e.target.closest('.member-edit-btn');
+      if(!btn) return;
+      if(btn.classList.contains('icon-btn--locked')) {
+        window._openAccessModal?.(); return;
+      }
+      openModal(btn.dataset.key, btn.dataset.name, btn.dataset.role);
+    });
+    closeB?.addEventListener('click', closeModal);
+    modal?.addEventListener('click', e=>{ if(e.target===modal) closeModal(); });
+    document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeModal(); });
+    submit?.addEventListener('click', async ()=>{
+      if(!currentKey) return;
+      submit.disabled=true;
+      if(status){ status.textContent='Salvataggio...'; status.className='edit-status'; }
+      const payload = {
+        action:'save_profile',
+        key: currentKey,
+        name: currentKey,
+        bio: document.getElementById('ef-bio').value.trim(),
+        linkedin: document.getElementById('ef-linkedin').value.trim(),
+        researchgate: document.getElementById('ef-researchgate').value.trim(),
+        scholar: document.getElementById('ef-scholar').value.trim(),
+        orcid: document.getElementById('ef-orcid').value.trim(),
+        twitter: document.getElementById('ef-twitter').value.trim(),
+        instagram: document.getElementById('ef-instagram').value.trim(),
+        website: document.getElementById('ef-website').value.trim(),
+        courses: document.getElementById('ef-courses').value.trim(),
+        speaker: document.getElementById('ef-speaker').checked ? 'true' : 'false',
+        podcast: document.getElementById('ef-podcast').checked ? 'true' : 'false',
+        research: document.getElementById('ef-research').checked ? 'true' : 'false'
+      };
+      try {
+        await fetch(PROFILE_SAVE_WEBAPP,{
+          method:'POST',
+          mode:'no-cors',
+          headers:{'Content-Type':'application/x-www-form-urlencoded;charset=UTF-8'},
+          body:new URLSearchParams(payload).toString()
+        });
+
+        const expected = {
+          bio: payload.bio, linkedin: payload.linkedin, researchgate: payload.researchgate,
+          scholar: payload.scholar, orcid: payload.orcid, twitter: payload.twitter,
+          instagram: payload.instagram, website: payload.website, courses: payload.courses,
+          speaker: payload.speaker === 'true', podcast: payload.podcast === 'true', research: payload.research === 'true'
+        };
+
+        let saved = false;
+        for(let i=0;i<8;i++){
+          await new Promise(r=>setTimeout(r, 1500));
+          const fresh = await loadProfiles(true);
+          const p = fresh[currentKey] || {};
+          const ok =
+            (p.bio||'') === expected.bio &&
+            (p.linkedin||'') === expected.linkedin &&
+            (p.researchgate||'') === expected.researchgate &&
+            (p.scholar||'') === expected.scholar &&
+            (p.orcid||'') === expected.orcid &&
+            (p.twitter||'') === expected.twitter &&
+            (p.instagram||'') === expected.instagram &&
+            (p.website||'') === expected.website &&
+            (p.courses||'') === expected.courses &&
+            (!!p.speaker) === expected.speaker &&
+            (!!p.podcast) === expected.podcast &&
+            (!!p.research) === expected.research;
+          if(ok){
+            profilesCache = fresh;
+            colorProfileIcons(fresh);
+            if(status){ status.textContent='✓ Profilo salvato!'; status.className='edit-status ok'; }
+            saved = true;
+            setTimeout(closeModal, 1200);
+            break;
+          }
+        }
+        if(!saved) throw new Error('Timeout salvataggio');
+      } catch(err) {
+        if(status){ status.textContent='✗ '+err.message; status.className='edit-status err'; }
+      } finally { submit.disabled=false; }
+    });
+  }
+
+
+  /* ── AMICI DI BOYLE: modal + codice ── */
+  function initAmiciModal() {
+    const modal     = document.getElementById('amici-modal');
+    const openBtn   = document.getElementById('open-amici-modal');
+    const closeBtn  = document.getElementById('close-amici-modal');
+    const form      = document.getElementById('amici-form');
+    const statusBox = document.getElementById('amici-form-status');
+
+    function openAmici() {
+      modal?.classList.add('is-open');
+      modal?.setAttribute('aria-hidden','false');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeAmici() {
+      modal?.classList.remove('is-open');
+      modal?.setAttribute('aria-hidden','true');
+      document.body.style.overflow = '';
+    }
+
+    openBtn?.addEventListener('click', openAmici);
+    document.getElementById('open-amici-modal-hero')?.addEventListener('click', openAmici);
+    closeBtn?.addEventListener('click', closeAmici);
+    modal?.addEventListener('click', e => { if (e.target === modal) closeAmici(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeAmici(); });
+
+    form?.addEventListener('submit', async e => {
+      e.preventDefault();
+      const nameVal = (document.getElementById('amici-name')?.value || '').trim();
+      if (!nameVal) return;
+
+      const cognome = nameVal.split(' ').pop().toUpperCase()
+        .normalize('NFD').replace(/[\u0300-\u036f]/g,'')
+        .replace(/[^A-Z]/g,'').slice(0,8);
+      const rand = Math.random().toString(36).substring(2,6).toUpperCase();
+      const friendCode = 'FRIEND-' + rand + '-' + cognome;
+
+      const hiddenCode = document.getElementById('amici-codice-hidden');
+      if (hiddenCode) hiddenCode.value = friendCode;
+
+      if (statusBox) { statusBox.textContent = 'Invio in corso…'; statusBox.className = 'form-status'; }
+      const submitBtn = form.querySelector('button[type="submit"]');
+      if (submitBtn) submitBtn.disabled = true;
+
+      try {
+        const res = await fetch(form.action, {
+          method: 'POST',
+          body: new FormData(form),
+          headers: { 'Accept': 'application/json' }
+        });
+        if (res.ok) {
+          if (statusBox) {
+            statusBox.innerHTML = "✓ Candidatura ricevuta! Il nostro team la valuterà e ti contatterà via email nei prossimi giorni.";
+            statusBox.className = 'form-status is-success';
+          }
+          form.reset();
+          setTimeout(closeAmici, 5000);
+        } else {
+          throw new Error('server');
+        }
+      } catch(err) {
+        if (statusBox) {
+          statusBox.textContent = "Errore nell'invio. Scrivi a info@amicidiboyle.it";
+          statusBox.className = 'form-status is-error';
+        }
+      } finally {
+        if (submitBtn) submitBtn.disabled = false;
+      }
+    });
+  }
+
+  /* ── INIT ── */
+  loadMembersEnhanced();
+  initSynapseCanvas();
+  initAccessBar();
+  initProfileModal();
+  initEditModal();
+  initPublishEvent();
+  initAmiciModal();
+  </script>
+<!-- i18n: rete.html -->
+  <script>
+  (function(){
+    function getLang() {
+      try { return sessionStorage.getItem('boyle_lang') || 'it'; } catch(e) { return 'it'; }
+    }
+    function setLang(l) {
+      try { sessionStorage.setItem('boyle_lang', l); } catch(e) {}
+    }
+
+    var T = {
+      it: {
+        'r_nav_home':'Home','r_nav_vis':'Visione','r_nav_ric':'Ricerca',
+        'r_nav_rete':'Rete','r_nav_pod':'Podcast','r_nav_cont':'Contatti',
+        'r_hero_eyebrow':'Network scientifico \u00b7 Ambienti estremi',
+        'r_hero_title':'Rete di Boyle',
+        'r_hero_sub':'Un ecosistema multidisciplinare di professionisti, ricercatori e innovatori dedicati alla medicina subacquea, iperbarica, aerospaziale e alla fisiologia degli ambienti estremi.',
+        'r_hero_cta1':'Candidati alla Rete',
+        'r_hero_cta_label1':'Sei un professionista?',
+        'r_hero_cta_label2':'Curioso o appassionato?',
+        'r_hero_cta_label3':'Cosa c\u2019\u00e8 di nuovo?',
+        'r_hero_cta2':'Esplora i profili',
+        'r_stat_membri':'Membri attivi','r_stat_amici':'Amici di Boyle',
+        'r_stat_spec':'Specialit\u00e0','r_stat_naz':'Nazioni','r_stat_grow':'In crescita','r_nl_title':'Newsletter','r_nl_kicker':'Bimestrale \u00b7 Ambienti Estremi','r_nl_body':'Hai un caso, una ricerca o un evento da condividere con la Rete? I contributi migliori vengono pubblicati.','r_nl_cta':'\ud83d\udce9 newsletter@amicidiboyle.it',
+        'r_members_title':'I Membri della Rete',
+        'r_members_sub':'Professionisti selezionati per competenza, curriculum e impatto operativo.',
+        'r_why_kicker':'Perch\u00e9 entrare',
+        'r_why_title':'Cosa significa far parte della Rete di Boyle',
+        'r_why_sub':'La rete non \u00e8 una directory. \u00c8 un ecosistema attivo dove ogni membro contribuisce e riceve valore concreto.',
+        'r_b1_title':'Contatti diretti',
+        'r_b1_p':'Email personali di tutti i membri, visibili solo a chi \u00e8 dentro la rete.',
+        'r_b2_title':'Visibilit\u00e0 sul portale',
+        'r_b2_p':'La tua card \u00e8 pubblica. CV, pubblicazioni, link professionali — sempre aggiornati.',
+        'r_b3_title':'Newsletter',
+        'r_b3_p':'Proponi articoli, casi clinici, contributi. Arrivi direttamente a tutta la community.',
+        'r_b4_title':'Pubblica i tuoi corsi',
+        'r_b4_p':'Hai un evento formativo? La sezione formazione \u00e8 aperta ai membri del portale.',
+        'r_b5_title':'Ricerca scientifica',
+        'r_b5_p':'Studi, protocolli, pubblicazioni. I membri vengono invitati alle iniziative di ricerca.',
+        'r_b6_title':'Prima fila',
+        'r_b6_p':'Congressi, workshop, editoriali. I membri vengono coinvolti per primi, prima del pubblico.',
+        'rj_rete_badge':'Rete di Boyle',
+        'rj_rete_title':'Sei un professionista degli ambienti estremi?',
+        'rj_rete_p':'La Rete di Boyle \u00e8 riservata a medici, ricercatori, ingegneri e operatori militari con un curriculum validato in medicina subacquea, iperbarica, aerospaziale, safety, medicina militare o fisiologia degli ambienti estremi. L\u2019accesso \u00e8 selettivo e valutato caso per caso.',
+        'rj_rete_b1':'\u2713 Card pubblica nella griglia',
+        'rj_rete_b2':'\u2713 Contatti diretti dei membri',
+        'rj_rete_b3':'\u2713 Collaborazioni scientifiche',
+        'rj_rete_b4':'\u2713 Prima fila su congressi ed editoriali',
+        'rj_rete_b5':'\u2713 Newsletter riservata',
+        'rj_rete_b6':'\u2713 Pubblica corsi ed eventi',
+        'rj_rete_cta':'Candidati alla Rete',
+        'rj_amici_badge':'Amici di Boyle',
+        'rj_amici_title':'Entra nella community e aiutaci a crescere con le tue idee.',
+        'rj_amici_p':'Sei uno studente, un appassionato, un operatore o semplicemente qualcuno che condivide la nostra visione? Gli Amici di Boyle sono la porta d\u2019ingresso alla community. Nessun curriculum richiesto, solo curiosit\u00e0 e voglia di contribuire.',
+        'rj_amici_b1':'\u2713 Codice personale di accesso',
+        'rj_amici_b2':'\u2713 Contatti diretti dei membri',
+        'rj_amici_b3':'\u2713 Profili estesi della Rete',
+        'rj_amici_b4':'\u2713 Pubblica eventi di ambienti estremi',
+        'rj_amici_b5':'\u2713 Newsletter della community',
+        'rj_amici_b6':'\u2713 Scrivi a info@amicidiboyle.it',
+        'rj_amici_cta':'Diventa Amico di Boyle',
+        'r_events_link':'Prossimi eventi',
+        'r_code_ph':'\ud83d\udd11 Codice membro',
+        'r_access_btn':'Accedi',
+        'r_ev_kicker':'Prossimi eventi',
+        'r_ev_badge':'6 Maggio 2026 \u00b7 Corso partner',
+        'r_ev_title':'The Day After',
+        'r_ev_partner':'Partner \u00b7 ITCC',
+        'r_ev_p':'Gestione del trauma maggiore oltre la fase acuta. Rigore clinico, taglio operativo.',
+        'r_ev_cta':'Scarica il programma',
+        'r_ev_propose':'Hai un evento da proporre?',
+        'r_ev_propose_p':'Sei un membro della Rete o un Amico di Boyle? Proponi corsi, congressi o iniziative formative sulla piattaforma.',
+        'r_ev_propose_cta':'Proponi evento',
+        'r_foot_rights':'Tutti i diritti riservati.',
+        'r_pop_rete_title':'Rete di Boyle',
+        'r_pop_rete_desc':'Riservata a medici, ricercatori, ingegneri e operatori militari con curriculum validato. Accesso selettivo e valutato caso per caso.',
+        'r_pop_rete_li1':'\u2713 Card pubblica nella griglia',
+        'r_pop_rete_li2':'\u2713 Contatti diretti dei membri',
+        'r_pop_rete_li3':'\u2713 Collaborazioni scientifiche',
+        'r_pop_rete_li4':'\u2713 Prima fila su congressi ed editoriali',
+        'r_pop_rete_li5':'\u2713 Newsletter riservata',
+        'r_pop_rete_li6':'\u2713 Pubblica corsi ed eventi',
+        'r_pop_amici_title':'Amici di Boyle',
+        'r_pop_amici_desc':'Per chi \u00e8 curioso e ha voglia di contribuire. La porta d\u2019ingresso alla community. L\u2019immersione nella Scienza inizia da qui.',
+        'r_pop_amici_li1':'\u2713 Codice personale di accesso',
+        'r_pop_amici_li2':'\u2713 Profili estesi della Rete',
+        'r_pop_amici_li3':'\u2713 Pubblica eventi di ambienti estremi',
+        'r_pop_amici_li4':'\u2713 Newsletter della community',
+        'r_pop_ev_title':'Eventi della Rete',
+        'r_pop_ev_desc':'Tutti i membri della Rete e gli Amici di Boyle possono pubblicare qui i loro eventi. Scopri cosa c\u2019\u00e8 di nuovo.',
+        'r_pop_ev_li1':'\u2713 Corsi e workshop di ambienti estremi',
+        'r_pop_ev_li2':'\u2713 Congressi e conferenze scientifiche',
+        'r_pop_ev_li3':'\u2713 Esercitazioni e simulazioni',
+        'r_pop_ev_li4':'\u2713 Eventi aperti alla community',
+        'r_ev_members_title':'Area riservata ai membri',
+        'r_ev_members_desc':'Pubblicare un evento sulla Rete di Boyle \u00e8 riservato ai membri attivi. Se sei gi\u00e0 membro, inserisci il tuo codice di accesso.',
+        'r_ev_apply_cta':'Candidati alla rete \u2192',
+        'r_pub_ev_title':'Pubblica il tuo evento',
+        'r_pub_ev_desc':'Compila il form per proporre un evento o un corso da pubblicare sulla Rete di Boyle. Ti risponderemo entro 48 ore.',
+        'r_pub_label_name':'Nome e cognome *',
+        'r_pub_label_title':'Titolo dell\u2019evento *',
+        'r_pub_label_date':'Data / periodo',
+        'r_pub_label_place':'Luogo / modalit\u00e0',
+        'r_pub_label_desc':'Descrizione breve *',
+        'r_pub_label_link':'Link esterno (sito evento, iscrizioni...)',
+        'r_pub_label_poster':'Link locandina (Drive, Dropbox, WeTransfer...)',
+        'r_pub_label_notes':'Note aggiuntive',
+        'r_pub_submit':'Invia proposta',
+        'r_access_title':'Accesso membri',
+        'r_access_desc':'Inserisci il codice ricevuto nella email di benvenuto.',
+        'r_access_unlock':'Sblocca contatti',
+        'r_contacts_title':'Contatti riservati ai membri',
+        'r_contacts_desc':'Gli indirizzi email diretti dei professionisti della Rete di Boyle sono visibili solo ai membri attivi.',
+        'r_contacts_cta':'\ud83d\udd11 Sono gi\u00e0 membro \u2014 inserisci il codice',
+        'r_ev_badge_partner':'Corso partner',
+        'r_ev_download':'Scarica il programma',
+        'r_join_title':'Connettiamo menti brillanti',
+        'r_cand_label_name':'NOME E COGNOME',
+        'r_cand_label_affil':'AFFILIAZIONE',
+        'r_cand_label_qual':'QUALIFICA PROFESSIONALE',
+        'r_cand_label_area':'AREA DI INTERESSE / FOCUS',
+        'r_cand_label_city':'CIT\u00c0 / NAZIONE',
+        'r_cand_label_li':'PROFILO LINKEDIN',
+        'r_cand_label_pres':'PRESENTAZIONE E MOTIVAZIONE',
+        'r_cand_label_foto':'FOTO PROFILO',
+
+        'r_cand_foto_hint':'Carica una foto profilo in formato JPG, PNG o WebP. Max 1MB.',
+        'r_cand_submit':'Invia candidatura',
+        'r_footer_copy':'\u00a9 Gli Amici di Boyle \u00b7 Medicina subacquea, iperbarica e ambienti estremi.',
+        'r_amici_join_desc':'Diventa un Amico di Boyle: se sei appassionato di medicina degli ambienti estremi e della diffusione della cultura scientifica, questa \u00e8 la tua community.',
+        'r_amici_ben1':'Contatti diretti dei membri della Rete',
+        'r_amici_ben2':'Profili estesi di tutti i membri',
+        'r_amici_ben3':'Newsletter della community',
+        'r_amici_ben4':'I pi\u00f9 attivi potranno essere invitati a entrare nella Rete',
+        'r_amici_label_name':'NOME E COGNOME *',
+        'r_amici_label_why':'PERCH\u00c9 VUOI ENTRARE NELLA COMMUNITY *',
+        'r_amici_label_how':'COME CI HAI CONOSCIUTO',
+        'r_amici_submit':'Invia la mia candidatura',
+        'r_edit_maxchars':'max 300 caratteri',
+        'r_edit_rg':'ResearchGate',
+        'r_edit_scholar':'Google Scholar',
+        'r_edit_site':'Sito personale',
+        'r_edit_courses':'Corsi / Pubblicazioni',
+        'r_edit_speaker':'Relatore a corsi e congressi',
+        'r_edit_podcast':'Ospite del podcast Sotto Pressione',
+        'r_edit_research':'Collaborazioni di ricerca',
+        'r_edit_save':'Salva il profilo',
+        'r_psi_kicker':'Membro Rete · Lidia Porri',
+        'r_psi_title':'Corso di Psicologia Subacquea',
+        'r_psi_desc':'Corso Teorico-Pratico dedicato alla dimensione psicologica dell’immersione. Gestione di stress, ansia, panico e PTSD in ambiente subacqueo e iperbarico. Rivolto a psicologi, medici, istruttori e subacquei.',
+        'r_psi_date':'30–31 Maggio 2026',
+        'r_psi_place':'Isola d’Elba · In presenza',
+        'r_psi_cta1':'Scarica il programma',
+        'r_simsi_kicker':'Convegno Nazionale · SIMSI',
+        'r_simsi_title':'Convegno SIMSI 2026',
+        'r_simsi_desc':'Convegno Nazionale della Società Italiana di Medicina Subacquea e Iperbarica. Appuntamento scientifico di riferimento per la comunità medica subacquea e iperbarica italiana.',
+        'r_simsi_date':'10–11 Aprile 2026',
+        'r_simsi_place':'Cattolica (RN) · Waldorf Palace Hotel',
+        'r_simsi_cta1':'Scarica il programma',
+        'r_simsi_cta2':'www.simsi.it',
+        'r_cand_desc':'La Rete di Boyle è riservata a professionisti con curriculum validato in medicina subacquea, iperbarica, aerospaziale, safety o fisiologia degli ambienti estremi. Valutiamo ogni candidatura individualmente.'
+      },
+      en: {
+        'r_nav_home':'Home','r_nav_vis':'Vision','r_nav_ric':'Research',
+        'r_nav_rete':'Network','r_nav_pod':'Podcast','r_nav_cont':'Contact',
+        'r_hero_eyebrow':'Scientific Network \u00b7 Extreme Environments',
+        'r_hero_title':'Boyle Network',
+        'r_hero_sub':'A multidisciplinary ecosystem of professionals, researchers and innovators dedicated to underwater, hyperbaric, aerospace medicine and the physiology of extreme environments.',
+        'r_hero_cta1':'Apply to the Network',
+        'r_hero_cta_label1':'Are you a professional?',
+        'r_hero_cta_label2':'Curious or passionate?',
+        'r_hero_cta_label3':'What\u2019s new?',
+        'r_hero_cta2':'Explore profiles',
+        'r_stat_membri':'Active members','r_stat_amici':'Friends of Boyle',
+        'r_stat_spec':'Specialties','r_stat_naz':'Nations','r_stat_grow':'Growing','r_nl_title':'Newsletter','r_nl_kicker':'Bimonthly \u00b7 Extreme Environments','r_nl_body':'Have a case, research or event to share with the Network? The best contributions get published.','r_nl_cta':'\ud83d\udce9 newsletter@amicidiboyle.it',
+        'r_members_title':'Network Members',
+        'r_members_sub':'Professionals selected for competence, curriculum and operational impact.',
+        'r_why_kicker':'Why join',
+        'r_why_title':'What it means to be part of the Boyle Network',
+        'r_why_sub':'The network is not a directory. It is an active ecosystem where every member contributes and receives concrete value.',
+        'r_b1_title':'Direct contacts',
+        'r_b1_p':'Personal emails of all members, visible only to those inside the network.',
+        'r_b2_title':'Portal visibility',
+        'r_b2_p':'Your card is public. CV, publications, professional links \u2014 always up to date.',
+        'r_b3_title':'Newsletter',
+        'r_b3_p':'Propose articles, clinical cases, contributions. Reach the entire community directly.',
+        'r_b4_title':'Publish your courses',
+        'r_b4_p':'Have a training event? The training section is open to portal members.',
+        'r_b5_title':'Scientific research',
+        'r_b5_p':'Studies, protocols, publications. Members are invited to research initiatives.',
+        'r_b6_title':'Front row',
+        'r_b6_p':'Conferences, workshops, editorials. Members are involved first, before the public.',
+        'rj_rete_badge':'Boyle Network',
+        'rj_rete_title':'Are you a professional in extreme environments?',
+        'rj_rete_p':'The Boyle Network is reserved for doctors, researchers, engineers and military operators with a validated background in underwater, hyperbaric, aerospace medicine, safety, military medicine or extreme environment physiology. Access is selective and evaluated case by case.',
+        'rj_rete_b1':'\u2713 Public card in the grid',
+        'rj_rete_b2':'\u2713 Direct member contacts',
+        'rj_rete_b3':'\u2713 Scientific collaborations',
+        'rj_rete_b4':'\u2713 Front row at conferences and editorials',
+        'rj_rete_b5':'\u2713 Reserved newsletter',
+        'rj_rete_b6':'\u2713 Publish courses and events',
+        'rj_rete_cta':'Apply to the Network',
+        'rj_amici_badge':'Friends of Boyle',
+        'rj_amici_title':'Join the community and help us grow with your ideas.',
+        'rj_amici_p':'Are you a student, enthusiast, practitioner or simply someone who shares our vision? Friends of Boyle are the gateway to the community. No curriculum required, just curiosity and a desire to contribute.',
+        'rj_amici_b1':'\u2713 Personal access code',
+        'rj_amici_b2':'\u2713 Direct member contacts',
+        'rj_amici_b3':'\u2713 Extended Network profiles',
+        'rj_amici_b4':'\u2713 Publish extreme environment events',
+        'rj_amici_b5':'\u2713 Community newsletter',
+        'rj_amici_b6':'\u2713 Write to info@amicidiboyle.it',
+        'rj_amici_cta':'Become a Boyle\'s Friend',
+        'r_events_link':'Upcoming events',
+        'r_code_ph':'\ud83d\udd11 Member code',
+        'r_access_btn':'Access',
+        'r_ev_kicker':'Upcoming events',
+        'r_ev_badge':'6 May 2026 \u00b7 Partner course',
+        'r_ev_title':'The Day After',
+        'r_ev_partner':'Partner \u00b7 ITCC',
+        'r_ev_p':'Management of major trauma beyond the acute phase. Clinical rigour, operational approach.',
+        'r_ev_cta':'Download the programme',
+        'r_ev_propose':'Have an event to propose?',
+        'r_ev_propose_p':'Are you a member of the Network or a Friend of Boyle? Propose courses, conferences or training initiatives on the platform.',
+        'r_ev_propose_cta':'Propose event',
+        'r_foot_rights':'All rights reserved.',
+        'r_pop_rete_title':'Boyle Network',
+        'r_pop_rete_desc':'Reserved for physicians, researchers, engineers and military operators with a validated curriculum. Selective access, evaluated case by case.',
+        'r_pop_rete_li1':'\u2713 Public card in the network grid',
+        'r_pop_rete_li2':'\u2713 Direct contacts of all members',
+        'r_pop_rete_li3':'\u2713 Scientific collaborations',
+        'r_pop_rete_li4':'\u2713 Front row at congresses and editorials',
+        'r_pop_rete_li5':'\u2713 Members-only newsletter',
+        'r_pop_rete_li6':'\u2713 Publish courses and events',
+        'r_pop_amici_title':'Amici di Boyle',
+        'r_pop_amici_desc':'For those who are curious and want to contribute. The gateway to the community. The dive into Science starts here.',
+        'r_pop_amici_li1':'\u2713 Personal access code',
+        'r_pop_amici_li2':'\u2713 Extended profiles of the Network',
+        'r_pop_amici_li3':'\u2713 Publish extreme environment events',
+        'r_pop_amici_li4':'\u2713 Community newsletter',
+        'r_pop_ev_title':'Network Events',
+        'r_pop_ev_desc':'All Network members and Amici di Boyle can publish their events here. Discover what\u2019s new.',
+        'r_pop_ev_li1':'\u2713 Extreme environment courses and workshops',
+        'r_pop_ev_li2':'\u2713 Scientific congresses and conferences',
+        'r_pop_ev_li3':'\u2713 Drills and simulations',
+        'r_pop_ev_li4':'\u2713 Community open events',
+        'r_ev_members_title':'Members-only area',
+        'r_ev_members_desc':'Publishing an event on the Boyle Network is reserved for active members. If you are already a member, enter your access code.',
+        'r_ev_apply_cta':'Apply to the Network \u2192',
+        'r_pub_ev_title':'Publish your event',
+        'r_pub_ev_desc':'Fill in the form to propose an event or course for the Boyle Network. We will get back to you within 48 hours.',
+        'r_pub_label_name':'Full name *',
+        'r_pub_label_title':'Event title *',
+        'r_pub_label_date':'Date / period',
+        'r_pub_label_place':'Venue / format',
+        'r_pub_label_desc':'Short description *',
+        'r_pub_label_link':'External link (event site, registration...)',
+        'r_pub_label_poster':'Poster link (Drive, Dropbox, WeTransfer...)',
+        'r_pub_label_notes':'Additional notes',
+        'r_pub_submit':'Submit proposal',
+        'r_access_title':'Member access',
+        'r_access_desc':'Enter the code received in your welcome email.',
+        'r_access_unlock':'Unlock contacts',
+        'r_contacts_title':'Members-only contacts',
+        'r_contacts_desc':'The direct email addresses of Boyle Network professionals are visible to active members only.',
+        'r_contacts_cta':'\ud83d\udd11 I\u2019m already a member \u2014 enter your code',
+        'r_ev_badge_partner':'Partner course',
+        'r_ev_download':'Download the programme',
+        'r_join_title':'Connecting brilliant minds',
+        'r_cand_label_name':'FULL NAME',
+        'r_cand_label_affil':'AFFILIATION',
+        'r_cand_label_qual':'PROFESSIONAL QUALIFICATION',
+        'r_cand_label_area':'AREA OF INTEREST / FOCUS',
+        'r_cand_label_city':'CITY / COUNTRY',
+        'r_cand_label_li':'LINKEDIN PROFILE',
+        'r_cand_label_pres':'PRESENTATION AND MOTIVATION',
+        'r_cand_label_foto':'PROFILE PHOTO',
+
+        'r_cand_foto_hint':'Upload a profile photo in JPG, PNG or WebP format. Max 1MB.',
+        'r_cand_submit':'Submit application',
+        'r_footer_copy':'\u00a9 2026 Gli Amici di Boyle',
+        'r_amici_join_desc':'Become an Amico di Boyle: if you are passionate about extreme environment medicine and the spread of scientific culture, this is your community.',
+        'r_amici_ben1':'Direct contacts of Network members',
+        'r_amici_ben2':'Extended profiles of all members',
+        'r_amici_ben3':'Community newsletter',
+        'r_amici_ben4':'The most active may be invited to join the Network',
+        'r_amici_label_name':'FULL NAME *',
+        'r_amici_label_why':'WHY DO YOU WANT TO JOIN THE COMMUNITY *',
+        'r_amici_label_how':'HOW DID YOU FIND US',
+        'r_amici_submit':'Submit my application',
+        'r_edit_maxchars':'max 300 characters',
+        'r_edit_rg':'ResearchGate',
+        'r_edit_scholar':'Google Scholar',
+        'r_edit_site':'Personal website',
+        'r_edit_courses':'Courses / Publications',
+        'r_edit_speaker':'Speaker at courses and congresses',
+        'r_edit_podcast':'Guest on the Sotto Pressione podcast',
+        'r_edit_research':'Research collaborations',
+        'r_edit_save':'Save profile',
+        'r_psi_kicker':'Network Member · Lidia Porri',
+        'r_psi_title':'Underwater Psychology Course',
+        'r_psi_desc':'Theory and Practice course on the psychological dimension of diving. Stress, anxiety, panic and PTSD management in underwater and hyperbaric environments. For psychologists, physicians, instructors and divers.',
+        'r_psi_date':'30–31 May 2026',
+        'r_psi_place':'Elba Island · In person',
+        'r_psi_cta1':'Download the programme',
+        'r_simsi_kicker':'National Congress · SIMSI',
+        'r_simsi_title':'SIMSI Congress 2026',
+        'r_simsi_desc':'National Congress of the Italian Society of Underwater and Hyperbaric Medicine. Key scientific meeting for the Italian underwater and hyperbaric medical community.',
+        'r_simsi_date':'10–11 April 2026',
+        'r_simsi_place':'Cattolica (RN) · Waldorf Palace Hotel',
+        'r_simsi_cta1':'Download the programme',
+        'r_simsi_cta2':'www.simsi.it',
+        'r_cand_desc':'The Boyle Network is reserved for professionals with a validated curriculum in underwater, hyperbaric, aerospace medicine, safety or extreme environment physiology. We evaluate each application individually.'
+      }
+    };
+
+    function applyLang(l) {
+      var dict = T[l] || T['it'];
+      document.querySelectorAll('[data-i18n]').forEach(function(el) {
+        var k = el.getAttribute('data-i18n');
+        if (dict[k] !== undefined) el.textContent = dict[k];
+      });
+      document.querySelectorAll('[data-i18n-html]').forEach(function(el) {
+        var k = el.getAttribute('data-i18n-html');
+        if (dict[k] !== undefined) el.innerHTML = dict[k];
+      });
+      document.querySelectorAll('[data-i18n-placeholder]').forEach(function(el) {
+        var k = el.getAttribute('data-i18n-placeholder');
+        if (dict[k] !== undefined) el.placeholder = dict[k];
+      });
+      // Aggiorna tutti i toggle (desktop + mobile)
+      ['langCurrent','langCurrent_mob_rete'].forEach(function(id) {
+        var el = document.getElementById(id);
+        if (el) el.textContent = l === 'en' ? 'EN' : 'IT';
+      });
+      ['langOther','langOther_mob_rete'].forEach(function(id) {
+        var el = document.getElementById(id);
+        if (el) el.textContent = l === 'en' ? 'IT' : 'EN';
+      });
+      setLang(l);
+    }
+
+    window.boyleApplyLang = applyLang;
+
+    function attachToggles() {
+      function toggle() {
+        var next = getLang() === 'it' ? 'en' : 'it';
+        applyLang(next);
+      }
+      var desktop = document.getElementById('langToggle');
+      if (desktop) desktop.addEventListener('click', function(e) {
+        e.preventDefault(); e.stopPropagation(); toggle();
+      });
+      var mobile = document.getElementById('langToggleMobileRete');
+      if (mobile) mobile.addEventListener('click', function() { toggle(); });
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', function() {
+        attachToggles();
+        applyLang(getLang());
+      });
+    } else {
+      attachToggles();
+      applyLang(getLang());
+    }
+  })();
+  </script>  </script>
+
+  <!-- ── FILTRO MEMBRI (script separato, fuori dall'IIFE) ── -->
+  <script>
+  (function() {
+    function initMembersFilter(allMembers) {
+      var btns = document.querySelectorAll('.filter-btn');
+      var grid = document.getElementById('members-grid') || document.querySelector('.members__grid');
+      if (!btns.length || !grid) return;
+      btns.forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          btns.forEach(function(b) { b.classList.remove('filter-btn--active'); });
+          btn.classList.add('filter-btn--active');
+          var filter = btn.dataset.filter;
+          var cards = grid.querySelectorAll('.member-card');
+          cards.forEach(function(card) {
+            if (filter === 'all') {
+              card.style.display = '';
+            } else {
+              var badge = card.querySelector('.profile-active-badge');
+              card.style.display = badge ? '' : 'none';
+            }
+          });
+        });
+      });
+    }
+    // Esponi globalmente per essere chiamata da renderAndDisplay
+    window.initMembersFilter = initMembersFilter;
+  })();
+  </script>
+
+  <!-- ── QUICKNAV MOBILE RETE ── -->
+  <div id="rete-mobile-qn" style="display:none; position:fixed; bottom:20px; right:16px; z-index:8000;">
+    <button id="rete-qn-btn" aria-label="Navigazione rapida" aria-expanded="false"
+      style="width:48px;height:48px;border-radius:50%;
+        background:linear-gradient(135deg,rgba(16,130,255,.97),rgba(0,195,255,.92));
+        border:1px solid rgba(100,220,255,.5);color:rgba(2,12,28,.96);
+        display:flex;align-items:center;justify-content:center;cursor:pointer;
+        box-shadow:0 8px 28px rgba(0,120,255,.4);transition:transform .2s;">
+      <svg viewBox="0 0 22 22" fill="none" width="20" height="20">
+        <circle cx="11" cy="11" r="9" stroke="currentColor" stroke-width="1.6"/>
+        <path d="M11 7v8M7 11l4-4 4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+      </svg>
+    </button>
+    <div id="rete-qn-panel" aria-hidden="true"
+      style="display:none; position:absolute; bottom:56px; right:0;
+        background:rgba(3,14,32,.97); border:1px solid rgba(100,220,255,.22);
+        border-radius:14px; padding:8px; min-width:160px;
+        box-shadow:0 12px 40px rgba(0,0,0,.5);">
+      <a href="#top" style="display:block;padding:10px 14px;color:rgba(168,238,255,.85);font-size:.82rem;font-weight:600;text-decoration:none;border-radius:10px;">↑ Inizio</a>
+      <a href="#members" style="display:block;padding:10px 14px;color:rgba(168,238,255,.7);font-size:.82rem;font-weight:500;text-decoration:none;border-radius:10px;">👥 Membri</a>
+      <a href="#prossimo-evento" style="display:block;padding:10px 14px;color:rgba(168,238,255,.7);font-size:.82rem;font-weight:500;text-decoration:none;border-radius:10px;">🗓 Evento</a>
+    </div>
+  </div>
+
+  <script>
+  (function(){
+    if (window.innerWidth > 768) return;
+    var wrap  = document.getElementById('rete-mobile-qn');
+    var btn   = document.getElementById('rete-qn-btn');
+    var panel = document.getElementById('rete-qn-panel');
+    if (!wrap || !btn || !panel) return;
+    wrap.style.display = 'block';
+    wrap.style.opacity = '0';
+    wrap.style.transition = 'opacity .3s';
+    wrap.style.pointerEvribute('aria-hidden', open ? 'true' : 'false');
+      btn.setAttribute('aria-expanded', !open);
+      btn.style.transform = open ? 'none' : 'rotate(90deg)';
+    });
+
+    panel.querySelectorAll('a').forEach(function(a){
+      a.addEventListener('click', function(){
+        panel.style.display = 'none';
+        panel.setAttribute('aria-hidden','true');
+        btn.setAttribute('aria-expanded','false');
+        btn.style.transform = 'none';
+      });
+    });
+  })();
+  </script>
+
+
+
+  <script>
+  (function() {
+    function initPopovers() {
+      var isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+      var pairs = [['infoRete','popoverRete'],['infoAmici','popoverAmici'],['infoEventi','popoverEventi']];
+
+      pairs.forEach(function(pair) {
+        var btn = document.getElementById(pair[0]);
+        var pop = document.getElementById(pair[1]);
+        if (!btn || !pop) return;
+
+        function closeAll() {
+          document.querySelectorAll('.hero-popover').forEach(function(p) {
+            p.classList.remove('hero-popover--open');
+          });
+        }
+
+        if (isTouchDevice) {
+          // ── Mobile: tap apre/chiude ──
+          btn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            var isOpen = pop.classList.contains('hero-popover--open');
+            closeAll();
+            if (!isOpen) pop.classList.add('hero-popover--open');
+          });
+        } else {
+          // ── Desktop: hover apre, mouseleave chiude ──
+          var wrap = btn.closest('.hero-info-wrap');
+          if (wrap) {
+            wrap.addEventListener('mouseenter', function() {
+              closeAll();
+              pop.classList.add('hero-popover--open');
+            });
+            wrap.addEventListener('mouseleave', function() {
+              pop.classList.remove('hero-popover--open');
+            });
+          }
+          // Click ancora supportato come fallback
+          btn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            var isOpen = pop.classList.contains('hero-popover--open');
+            closeAll();
+            if (!isOpen) pop.classList.add('hero-popover--open');
+          });
+        }
+      });
+
+      document.addEventListener('click', function() {
+        document.querySelectorAll('.hero-popover').forEach(function(p) {
+          p.classList.remove('hero-popover--open');
+        });
+      });
+    }
+    if (document.readyState==='loading') document.addEventListener('DOMContentLoaded', initPopovers);
+    else initPopovers();
+  })();
+  </script>
+  <!-- Cookie banner -->
+  <div id="cookie-banner" role="region" aria-label="Cookie">
+    <p>Questo sito usa cookie tecnici e servizi di terze parti (Formspree, GitHub Pages).
+      <a href="cookie.html">Cookie Policy</a> &middot; <a href="privacy.html">Privacy</a></p>
+    <button id="cookie-accept">Accetta</button>
+  </div>
+  <script>
+  (function(){
+    if (!localStorage.getItem('boyle_cookie_ok')) {
+      var b = document.getElementById('cookie-banner');
+      if (b) setTimeout(function(){ b.classList.add('visible'); }, 600);
+    }
+    var btn = document.getElementById('cookie-accept');
+    if (btn) btn.addEventListener('click', function(){
+      localStorage.setItem('boyle_cookie_ok','1');
+      var b = document.getElementById('cookie-banner');
+      if (b) { b.style.transition='transform .3s ease-in'; b.style.transform='translateY(100%)'; }
+    });
+  })();
+  </script>
+
+
+  <!-- ══ Newsletter Toggles ══ -->
+  <script>
+  (function() {
+    // Desktop tab
+    var trigger = document.getElementById('nlTabTrigger');
+    var tabEl   = document.getElementById('nlTab');
+    if (trigger && tabEl) {
+      var tabOpen = false;
+      trigger.addEventListener('click', function(e) {
+        e.stopPropagation();
+        tabOpen = !tabOpen;
+        tabEl.classList.toggle('nl-tab--open', tabOpen);
+        trigger.setAttribute('aria-expanded', tabOpen);
+      });
+      document.addEventListener('click', function(e) {
+        if (tabOpen && !tabEl.contains(e.target)) {
+          tabOpen = false;
+          tabEl.classList.remove('nl-tab--open');
+          trigger.setAttribute('aria-expanded', 'false');
+        }
+      });
+    }
+    // Mobile button
+    var mob      = document.getElementById('nlMob');
+    var mobPanel = document.getElementById('nlMobPanel');
+    if (mob && mobPanel) {
+      var mobOpen = false;
+      mob.addEventListener('click', function() {
+        mobOpen = !mobOpen;
+        mob.classList.toggle('nl-mob--open', mobOpen);
+        mob.setAttribute('aria-expanded', mobOpen);
+        mobPanel.classList.toggle('nl-mob__panel--open', mobOpen);
+      });
+    }
+  })();
+  </script>
+</body>
+</html>
