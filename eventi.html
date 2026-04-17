@@ -204,8 +204,16 @@
 
             <div class="ev-meta">
               <span class="ev-meta-item">
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+                <span data-i18n="ev_2_date">4–17 Mag 2026</span>
+              </span>
+              <span class="ev-meta-item">
                 <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                <span data-i18n="ev_2_meta1">Google Meet · iscrizioni aperte</span>
+                <span data-i18n="ev_2_meta1">Google Meet · Virtuale</span>
+              </span>
+              <span class="ev-meta-item">
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                <span data-i18n="ev_2_place">São Luís, Brasile</span>
               </span>
               <span class="ev-meta-item">
                 <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
@@ -262,6 +270,10 @@
             <div class="ev-desc" data-i18n="ev_3_desc">Dimensione psicologica dell'immersione: stress, ansia, panico e PTSD in ambiente subacqueo e iperbarico. Per psicologi, medici, istruttori e subacquei esperti.</div>
             <div class="ev-meta">
               <span class="ev-meta-item">
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+                <span data-i18n="ev_3_date">30–31 Mag 2026</span>
+              </span>
+              <span class="ev-meta-item">
                 <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
                 <span data-i18n="ev_3_meta">Isola d'Elba · In presenza</span>
               </span>
@@ -290,19 +302,19 @@
         </article>
 
         <!-- PAST TOGGLE -->
-        <button class="ev-past-toggle" id="pastToggle" type="button" aria-expanded="false">
+        <button class="ev-past-toggle" id="pastToggle" type="button" aria-expanded="true">
           <span class="ev-toggle-line"></span>
           <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 8 12 12 14 14"/></svg>
-          <span data-i18n="ev_past_toggle">&nbsp;1 evento concluso · clicca per mostrare&nbsp;</span>
+          <span data-i18n="ev_past_toggle">&nbsp;1 evento concluso&nbsp;</span>
           <span class="ev-toggle-line"></span>
         </button>
 
-        <!-- EVENTI PASSATI (nascosti di default) -->
-        <div id="pastEvents" hidden>
+        <!-- EVENTI PASSATI — visibili di default -->
+        <div id="pastEvents">
           <div class="ev-ray" aria-hidden="true"></div>
 
           <!-- CARD PAST — SIMSI -->
-          <article class="ev-card ev-card--past past" data-categories="it" style="animation-delay:.08s">
+          <article class="ev-card ev-card--past past" data-categories="it" data-date="2026-04-11" style="animation-delay:.08s">
             <div class="ev-accent"></div>
             <div class="ev-poster">
               <img src="assets/corsi/locandina_simsi_cattolica.jpg"
@@ -313,14 +325,24 @@
               <div class="ev-body__top">
                 <div class="ev-badges">
                   <span class="ev-badge ev-badge--past" data-i18n="ev_badge_past">Concluso</span>
-                  <span class="ev-badge ev-badge--it" style="opacity:.28" data-i18n="ev_badge_it">Nazionale</span>
+                  <span class="ev-badge ev-badge--it" style="opacity:.35" data-i18n="ev_badge_it">Nazionale</span>
                 </div>
-                <span class="ev-datechip" style="opacity:.35" data-i18n="ev_4_date">10–11 Apr 2026</span>
+                <span class="ev-datechip" data-i18n="ev_4_date">10–11 Apr 2026</span>
               </div>
               <div class="ev-title" data-i18n="ev_4_title">Convegno SIMSI 2026</div>
-              <div class="ev-partner-line" style="opacity:.4" data-i18n="ev_4_org">SIMSI · Cattolica (RN) · Waldorf Palace Hotel</div>
+              <div class="ev-partner-line" data-i18n="ev_4_org">SIMSI · Società Italiana Medicina Subacquea e Iperbarica</div>
               <div class="ev-desc" data-i18n="ev_4_desc">Convegno Nazionale della Società Italiana di Medicina Subacquea e Iperbarica. Appuntamento scientifico di riferimento per la comunità medica italiana.</div>
-              <div class="ev-proposer" style="opacity:.3">
+              <div class="ev-meta">
+                <span class="ev-meta-item">
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                  <span data-i18n="ev_4_place">Cattolica (RN) · Waldorf Palace Hotel</span>
+                </span>
+                <span class="ev-meta-item">
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+                  <span data-i18n="ev_4_format">Congresso · In presenza</span>
+                </span>
+              </div>
+              <div class="ev-proposer">
                 <div class="ev-proposer__photo">
                   <img src="assets/rete/andrea-galvani.jpg"
                        onerror="this.src='assets/logo.png'"
@@ -332,11 +354,11 @@
                 </div>
               </div>
               <div class="ev-actions">
-                <a class="ev-btn ev-btn--ghost" href="assets/corsi/programma_simsi_cattolica.pdf" target="_blank" rel="noopener" download style="opacity:.4">
+                <a class="ev-btn ev-btn--ghost" href="assets/corsi/programma_simsi_cattolica.pdf" target="_blank" rel="noopener" download>
                   <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
                   <span data-i18n="ev_4_cta">Programma PDF</span>
                 </a>
-                <a class="ev-btn ev-btn--ghost" href="https://www.simsi.it" target="_blank" rel="noopener" style="opacity:.4">simsi.it</a>
+                <a class="ev-btn ev-btn--ghost" href="https://www.simsi.it" target="_blank" rel="noopener">simsi.it</a>
               </div>
             </div>
           </article>
@@ -571,7 +593,7 @@
         'ev_1_date':'6 Mag 2026','ev_1_title':'The Day After',
         'ev_1_org':'ITCC \u00b7 Inside Trauma Critical Care',
         'ev_1_desc':'Gestione del trauma maggiore oltre la fase acuta: continuit\u00e0 delle cure dall\u2019ospedale al territorio. Corso ECM in collaborazione con gli Amici di Boyle.',
-        'ev_1_meta':'In presenza \u00b7 ECM','ev_1_cta':'Scarica locandina',
+        'ev_1_place':'Italia \u00b7 In presenza','ev_1_meta':'Corso ECM','ev_1_cta':'Scarica locandina',
         'ev_2_date':'4\u201317 Mag 2026','ev_2_title':'1st World Space Med Hackathon',
         'ev_2_org':'Metasense \u00b7 S\u00e3o Lu\u00eds, Brasile \u00b7 Virtuale',
         'ev_2_desc':'Hackathon sulla medicina in microgravit\u00e0: soluzioni per la salute spaziale con spin-off terrestre. Aperto a studenti delle professioni sanitarie. Team da 6 \u00b7 30h certificazione.',
@@ -583,7 +605,7 @@
         'ev_2_sum_p4':'<strong>Fasi:</strong> apertura (4 Mag) \u2192 capacitazioni (5\u20139) \u2192 sviluppo + mentoring (10\u201313) \u2192 consegna (14 Mag ore 17) \u2192 Demoday (17 Mag, 14\u201320h).',
         'ev_2_sum_p5':'<strong>Consegne:</strong> video pitch max 3 min + slides + documento scritto (tutti su template ufficiale).',
         'ev_2_sum_p6':'<strong>Premiazione:</strong> Top 5 team. Il 1\u00b0 posto accede al Programma di Ricerca Metasense 2026. Tutti ricevono certificato.',
-        'ev_2_meta1':'Google Meet \u00b7 iscrizioni aperte','ev_2_meta2':'R$ 200 / team',
+        'ev_2_place':'S\u00e3o Lu\u00eds, Brasile','ev_2_meta1':'Google Meet \u00b7 Virtuale','ev_2_meta2':'R$ 200 / team',
         'ev_2_cta1':'Regolamento PDF (PT)','ev_2_cta2':'Sintesi IT','ev_2_cta3':'Iscriviti su Sympla \u2192',
         'ev_3_date':'30\u201331 Mag 2026','ev_3_title':'Corso di Psicologia Subacquea',
         'ev_3_org':'Teorico-pratico \u00b7 Isola d\u2019Elba',
@@ -591,6 +613,7 @@
         'ev_3_meta':'Isola d\u2019Elba \u00b7 In presenza',
         'ev_3_cta1':'Programma PDF','ev_3_cta2':'psicologiasubacquea.it',
         'ev_past_toggle':'\u00a01 evento concluso \u00b7 clicca per mostrare\u00a0',
+        'ev_past_toggle':'\u00a01 evento concluso\u00a0',
         'ev_4_date':'10\u201311 Apr 2026','ev_4_title':'Convegno SIMSI 2026',
         'ev_4_org':'SIMSI \u00b7 Cattolica (RN) \u00b7 Waldorf Palace Hotel',
         'ev_4_desc':'Convegno Nazionale della Societ\u00e0 Italiana di Medicina Subacquea e Iperbarica.',
@@ -652,7 +675,7 @@
         'ev_1_date':'6 May 2026','ev_1_title':'The Day After',
         'ev_1_org':'ITCC \u00b7 Inside Trauma Critical Care',
         'ev_1_desc':'Management of major trauma beyond the acute phase: continuity of care from hospital to territory. ECM course in collaboration with Gli Amici di Boyle.',
-        'ev_1_meta':'In person \u00b7 ECM','ev_1_cta':'Download poster',
+        'ev_1_place':'Italy \u00b7 In person','ev_1_meta':'ECM course','ev_1_cta':'Download poster',
         'ev_2_date':'4\u201317 May 2026','ev_2_title':'1st World Space Med Hackathon',
         'ev_2_org':'Metasense \u00b7 S\u00e3o Lu\u00eds, Brazil \u00b7 Virtual',
         'ev_2_desc':'Hackathon on medicine in microgravity: solutions for space health with terrestrial spin-off. Open to healthcare students. Teams of 6 \u00b7 30h certification.',
@@ -664,7 +687,7 @@
         'ev_2_sum_p4':'<strong>Phases:</strong> opening (4 May) \u2192 training (5\u20139) \u2192 development + mentoring (10\u201313) \u2192 submission (14 May, 5pm) \u2192 Demoday (17 May, 2\u20138pm).',
         'ev_2_sum_p5':'<strong>Deliverables:</strong> max 3-min video pitch + slides + written project document (all on official template).',
         'ev_2_sum_p6':'<strong>Awards:</strong> Top 5 teams. 1st place joins the Metasense 2026 Research Programme. All participants receive a certificate.',
-        'ev_2_meta1':'Google Meet \u00b7 registrations open','ev_2_meta2':'R$ 200 / team',
+        'ev_2_place':'S\u00e3o Lu\u00eds, Brazil','ev_2_meta1':'Google Meet \u00b7 Virtual','ev_2_meta2':'R$ 200 / team',
         'ev_2_cta1':'Regulations PDF (PT)','ev_2_cta2':'Summary IT','ev_2_cta3':'Register on Sympla \u2192',
         'ev_3_date':'30\u201331 May 2026','ev_3_title':'Underwater Psychology Course',
         'ev_3_org':'Theory & Practice \u00b7 Elba Island',
@@ -673,8 +696,12 @@
         'ev_3_cta1':'Programme PDF','ev_3_cta2':'psicologiasubacquea.it',
         'ev_past_toggle':'\u00a01 past event \u00b7 click to show\u00a0',
         'ev_4_date':'10\u201311 Apr 2026','ev_4_title':'SIMSI Congress 2026',
-        'ev_4_org':'SIMSI \u00b7 Cattolica (RN) \u00b7 Waldorf Palace Hotel',
-        'ev_4_desc':'National Congress of the Italian Society of Underwater and Hyperbaric Medicine.',
+        'ev_4_org':'SIMSI \u00b7 Italian Society of Underwater and Hyperbaric Medicine',
+        'ev_4_place':'Cattolica (RN) \u00b7 Waldorf Palace Hotel',
+        'ev_4_format':'Congress \u00b7 In person',
+        'ev_4_place':'Cattolica (RN) \u00b7 Waldorf Palace Hotel',
+        'ev_4_format':'Congress \u00b7 In person',
+        'ev_4_desc':'National Congress of the Italian Society of Underwater and Hyperbaric Medicine. Key scientific meeting for the Italian underwater and hyperbaric medical community.',
         'ev_4_cta':'Programme PDF',
         'ev_propose_kicker':'For network members',
         'ev_propose_title':'Have something to share\u00a0with the Network?',
