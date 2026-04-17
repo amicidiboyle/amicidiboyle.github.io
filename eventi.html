@@ -355,7 +355,7 @@
             <span data-i18n="ev_propose_kicker">Per i membri del network</span>
           </div>
           <h2 data-i18n="ev_propose_title">Hai qualcosa da condividere<br>con la Rete?</h2>
-          <p class="ev-propose__sub" data-i18n="ev_propose_sub">Un corso che stai organizzando, un congresso da segnalare, un'iniziativa legata agli ambienti estremi. Questa pagina è costruita dai membri, per i membri — il tuo nome e la tua foto ci sono già.</p>
+          <p class="ev-propose__sub" data-i18n="ev_propose_sub">Un corso che stai organizzando, un congresso da segnalare, un'iniziativa legata agli ambienti estremi. Questa pagina è costruita dalla Rete, per la Rete — il tuo nome e la tua foto ci sono già.</p>
           <div class="ev-feats">
             <div class="ev-feat">
               <div class="ev-feat__icon">
@@ -597,7 +597,7 @@
         'ev_4_cta':'Programma PDF',
         'ev_propose_kicker':'Per i membri del network',
         'ev_propose_title':'Hai qualcosa da condividere\u00a0con la Rete?',
-        'ev_propose_sub':'Un corso che stai organizzando, un congresso da segnalare, un\u2019iniziativa legata agli ambienti estremi. Questa pagina \u00e8 costruita dai membri, per i membri \u2014 il tuo nome e la tua foto ci sono gi\u00e0.',
+        'ev_propose_sub':'Un corso che stai organizzando, un congresso da segnalare, un\u2019iniziativa legata agli ambienti estremi. Questa pagina \u00e8 costruita dalla Rete, per la Rete \u2014 il tuo nome e la tua foto ci sono gi\u00e0.',
         'ev_feat1_t':'Visibilit\u00e0 mirata','ev_feat1_d':'Raggiungi specialisti in medicina degli ambienti estremi',
         'ev_feat2_t':'Online in 48h','ev_feat2_d':'Revisione rapida, pubblicazione immediata dopo approvazione',
         'ev_feat3_t':'Col tuo nome','ev_feat3_d':'La tua foto e profilo compaiono sulla card dell\u2019evento',
@@ -678,7 +678,7 @@
         'ev_4_cta':'Programme PDF',
         'ev_propose_kicker':'For network members',
         'ev_propose_title':'Have something to share\u00a0with the Network?',
-        'ev_propose_sub':'A course you are running, a congress worth sharing, an initiative linked to extreme environments. This page is built by members, for members \u2014 your name and photo are already there.',
+        'ev_propose_sub':'A course you are running, a congress worth sharing, an initiative linked to extreme environments. This page is built by the Network, for the Network \u2014 your name and photo are already there.',
         'ev_feat1_t':'Targeted reach','ev_feat1_d':'Reach specialists in extreme environment medicine',
         'ev_feat2_t':'Online in 48h','ev_feat2_d':'Quick review, immediate publication after approval',
         'ev_feat3_t':'Under your name','ev_feat3_d':'Your photo and profile appear on the event card',
@@ -1065,7 +1065,42 @@
       });
     }
 
-    /* ── Cookie banner ── */
+    /* ── Animazioni ingresso con IntersectionObserver ── */
+    (function() {
+      if (!('IntersectionObserver' in window)) {
+        // Fallback: rendi tutte visibili subito
+        document.querySelectorAll('.ev-card').forEach(function(c) {
+          c.style.opacity = '1';
+          c.style.transform = 'none';
+          c.style.animation = 'none';
+        });
+        return;
+      }
+      var cards = document.querySelectorAll('.ev-card');
+      // Resetta tutte a invisible prima dell'observer
+      cards.forEach(function(c) {
+        c.style.animation = 'none';
+        c.style.opacity = '0';
+        c.style.transform = 'translateX(-60px)';
+        c.style.transition = 'opacity .55s cubic-bezier(.22,.68,0,1.1), transform .55s cubic-bezier(.22,.68,0,1.1)';
+      });
+      var delay = 0;
+      var obs = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            var card = entry.target;
+            setTimeout(function() {
+              card.style.opacity = '1';
+              card.style.transform = 'translateX(0)';
+            }, delay);
+            delay += 100;
+            if (delay > 300) delay = 0;
+            obs.unobserve(card);
+          }
+        });
+      }, { threshold: 0.1 });
+      cards.forEach(function(c) { obs.observe(c); });
+    })();
     if (!localStorage.getItem('boyle_cookie_ok')) {
       var cb = document.getElementById('cookie-banner');
       if (cb) setTimeout(function() { cb.classList.add('visible'); }, 600);
