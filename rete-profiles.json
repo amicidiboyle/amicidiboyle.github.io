@@ -384,7 +384,7 @@
   },
   "felicia-vinciguerra": {
     "name": "Felicia Vinciguerra",
-    "bio": "Docente, Biologa, esperta in Astrobiologia con una forte passione per il mondo \"space\" che si traduce in aggiornamento costante e ricerca di nuove opportunità accademiche e lavorative",
+    "bio": "Docente e biologa con una forte passione per il mondo \"space\" che si traduce in aggiornamento costante e ricerca di nuove opportunità accademiche e lavorative",
     "linkedin": "https://www.linkedin.com/in/felicia-vinciguerra-853b4417a/",
     "researchgate": "",
     "scholar": "",
@@ -393,10 +393,10 @@
     "instagram": "",
     "website": "",
     "courses": "",
-    "speaker": false,
-    "podcast": false,
+    "speaker": true,
+    "podcast": true,
     "research": true,
-    "updated": "2026-04-17 11:51:47"
+    "updated": "2026-04-17 15:22:43"
   },
   "vincenzo-zanon": {
     "name": "Vincenzo Zanon",
