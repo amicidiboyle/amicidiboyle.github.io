@@ -397,5 +397,21 @@
     "podcast": false,
     "research": true,
     "updated": "2026-04-17 10:39:51"
+  },
+  "vincenzo-zanon": {
+    "name": "Vincenzo Zanon",
+    "bio": "",
+    "linkedin": "https://it.linkedin.com/in/vincenzozanon",
+    "researchgate": "",
+    "scholar": "",
+    "orcid": "",
+    "twitter": "",
+    "instagram": "",
+    "website": "",
+    "courses": "",
+    "speaker": false,
+    "podcast": false,
+    "research": false,
+    "updated": "2026-04-17 11:40:15"
   }
 }
