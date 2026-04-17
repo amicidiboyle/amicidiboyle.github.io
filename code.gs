@@ -1588,6 +1588,44 @@ function getMailPreview(nome, codice, tipo, testoHeroCustom, lang) {
 /*************************************************
  * WEB APP
  *************************************************/
+
+function savePublicProfile_(data) {
+  return withLock_(function() {
+    data = data || {};
+    var key = String(data.key || '').trim();
+    if (!key) throw new Error('Chiave profilo mancante');
+
+    var profFile = getReteProfiles_();
+    var profiles = profFile.items || {};
+    var existing = profiles[key] || {};
+
+    function toBool_(v) {
+      var s = String(v === undefined ? '' : v).toLowerCase().trim();
+      return s === 'true' || s === '1' || s === 'yes' || s === 'on';
+    }
+
+    profiles[key] = {
+      name: String(existing.name || data.name || key),
+      bio: String(data.bio || '').trim(),
+      linkedin: String(data.linkedin || '').trim(),
+      researchgate: String(data.researchgate || '').trim(),
+      scholar: String(data.scholar || '').trim(),
+      orcid: String(data.orcid || '').trim(),
+      twitter: String(data.twitter || '').trim(),
+      instagram: String(data.instagram || '').trim(),
+      website: String(data.website || '').trim(),
+      courses: String(data.courses || '').trim(),
+      speaker: toBool_(data.speaker),
+      podcast: toBool_(data.podcast),
+      research: toBool_(data.research),
+      updated: getNowString_()
+    };
+
+    saveReteProfiles_(profiles, profFile.sha);
+    return { ok: true, key: key };
+  });
+}
+
 function doGet() {
   return HtmlService.createTemplateFromFile('Admin')
     .evaluate()
@@ -1633,6 +1671,13 @@ function doPost(e) {
       Object.keys(e.parameter).forEach(function(k) {
         if (!data[k]) data[k] = e.parameter[k];
       });
+    }
+
+    if (String(data.action || '').trim() === 'save_profile') {
+      var profileResult = savePublicProfile_(data);
+      return ContentService
+        .createTextOutput(JSON.stringify(profileResult))
+        .setMimeType(ContentService.MimeType.JSON);
     }
 
     var result = receiveCandidate_(data);
