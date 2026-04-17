@@ -10,6 +10,9 @@
   <meta property="og:description" content="Corsi, congressi e iniziative segnalati dai membri della Rete di Boyle." />
   <meta property="og:image" content="https://amicidiboyle.github.io/assets/og-image-boyle.jpg" />
   <link rel="icon" href="assets/logo.png" type="image/png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;0,9..40,800;1,9..40,400&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="eventi.css" />
 </head>
 <body>
@@ -163,6 +166,13 @@
               </a>
             </div>
           </div>
+          <!-- Griglia poster mobile -->
+          <div class="ev-poster-grid" aria-hidden="true">
+            <div class="ev-poster-thumb" onclick="openLightbox('assets/corsi/thedayafter.png','The Day After')">
+              <img src="assets/corsi/thedayafter.png" alt="The Day After" loading="lazy" onerror="this.parentNode.classList.add('ev-poster-thumb--ph');this.style.display='none'" />
+              <div class="ev-poster-thumb__label">The Day After</div>
+            </div>
+          </div>
         </article>
 
         <div class="ev-ray" aria-hidden="true"></div>
@@ -245,6 +255,13 @@
               </a>
             </div>
           </div>
+          <!-- Griglia poster mobile -->
+          <div class="ev-poster-grid" aria-hidden="true">
+            <div class="ev-poster-thumb ev-poster-thumb--ph" onclick="openLightbox('','WSMH 2026')">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="rgba(167,139,250,.4)" stroke-width="1.2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+              <div class="ev-poster-thumb__label">WSMH 2026</div>
+            </div>
+          </div>
         </article>
 
         <div class="ev-ray" aria-hidden="true"></div>
@@ -297,6 +314,13 @@
               <a class="ev-btn ev-btn--green" href="https://www.psicologiasubacquea.it" target="_blank" rel="noopener">
                 <span data-i18n="ev_3_cta2">psicologiasubacquea.it</span>
               </a>
+            </div>
+          </div>
+          <!-- Griglia poster mobile -->
+          <div class="ev-poster-grid" aria-hidden="true">
+            <div class="ev-poster-thumb" onclick="openLightbox('assets/corsi/corso-psicologia-subacquea.jpg','Corso di Psicologia Subacquea')">
+              <img src="assets/corsi/corso-psicologia-subacquea.jpg" alt="Psicologia Subacquea" loading="lazy" onerror="this.parentNode.classList.add('ev-poster-thumb--ph');this.style.display='none'" />
+              <div class="ev-poster-thumb__label">Psicologia Subacquea</div>
             </div>
           </div>
         </article>
@@ -359,6 +383,13 @@
                   <span data-i18n="ev_4_cta">Programma PDF</span>
                 </a>
                 <a class="ev-btn ev-btn--ghost" href="https://www.simsi.it" target="_blank" rel="noopener">simsi.it</a>
+              </div>
+            </div>
+            <!-- Griglia poster mobile -->
+            <div class="ev-poster-grid" aria-hidden="true">
+              <div class="ev-poster-thumb" onclick="openLightbox('assets/corsi/locandina_simsi_cattolica.jpg','Convegno SIMSI 2026')">
+                <img src="assets/corsi/locandina_simsi_cattolica.jpg" alt="SIMSI 2026" loading="lazy" onerror="this.parentNode.classList.add('ev-poster-thumb--ph');this.style.display='none'" />
+                <div class="ev-poster-thumb__label">SIMSI 2026</div>
               </div>
             </div>
           </article>
@@ -559,6 +590,13 @@
         <button class="ev-thankyou__close" id="evThankyouClose" type="button" data-i18n="ev_ty_close">Chiudi</button>
       </div>
     </div>
+  </div>
+
+
+  <!-- LIGHTBOX mobile locandine -->
+  <div class="ev-lightbox" id="evLightbox" onclick="if(event.target===this)closeLightbox()" aria-hidden="true">
+    <button class="ev-lightbox__close" onclick="closeLightbox()" aria-label="Chiudi">✕</button>
+    <img class="ev-lightbox__img" id="evLightboxImg" src="" alt="" />
   </div>
 
   <!-- Cookie banner -->
@@ -1128,8 +1166,29 @@
       }, { threshold: 0.1 });
       cards.forEach(function(c) { obs.observe(c); });
     })();
+
+    /* ── Lightbox mobile ── */
+    function openLightbox(src, alt) {
+      if (!src) return;
+      var lb  = document.getElementById('evLightbox');
+      var img = document.getElementById('evLightboxImg');
+      if (!lb || !img) return;
+      img.src = src; img.alt = alt || '';
+      lb.classList.add('open');
+      lb.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeLightbox() {
+      var lb = document.getElementById('evLightbox');
+      if (!lb) return;
+      lb.classList.remove('open');
+      lb.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+    window.openLightbox  = openLightbox;
+    window.closeLightbox = closeLightbox;
+
     if (!localStorage.getItem('boyle_cookie_ok')) {
-      var cb = document.getElementById('cookie-banner');
       if (cb) setTimeout(function() { cb.classList.add('visible'); }, 600);
     }
     var cookieBtn = document.getElementById('cookie-accept');
