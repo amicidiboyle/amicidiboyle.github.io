@@ -713,6 +713,7 @@ main { position: relative; z-index: 1; }
   .brand__text em { display: block; font-size: .58rem; }
   .nav--desktop { display: none; }
   .nav-mobile-btn { display: flex; }
+  .lang-toggle:not(.lang-toggle--mobile) { display: none; }
   .header { position: sticky; top: 0; z-index: 200; }
   .ev-hero { min-height: 300px; }
   .ev-hero__content { padding: 32px 24px; }
