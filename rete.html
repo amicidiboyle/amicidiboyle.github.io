@@ -66,7 +66,7 @@
         <a href="index.html#ricerca" data-i18n="r_nav_ric">Ricerca</a>
         <a class="nav-active" href="rete.html" aria-current="page">Rete</a>
         <a href="podcast.html" data-i18n="r_nav_pod">Podcast</a>
-        <a href="#prossimo-evento" data-i18n="r_events_link">Eventi</a>
+        <a href="eventi.html" data-i18n="r_events_link">Eventi</a>
         <a href="index.html#contatti" data-i18n="r_nav_cont">Contatti</a>
       </nav>
       <button class="lang-toggle" id="langToggle" type="button" aria-label="Cambia lingua / Switch language">
@@ -81,7 +81,7 @@
         <a href="index.html#ricerca" data-i18n="r_nav_ric">Ricerca</a>
         <a href="rete.html" data-i18n="r_nav_rete">Rete</a>
         <a href="podcast.html" data-i18n="r_nav_pod">Podcast</a>
-        <a href="#prossimo-evento" data-i18n="r_events_link">Eventi</a>
+        <a href="eventi.html" data-i18n="r_events_link">Eventi</a>
         <a href="index.html#contatti" data-i18n="r_nav_cont">Contatti</a>
         <button id="langToggleMobileRete" type="button" class="lang-toggle lang-toggle--mobile" aria-label="Cambia lingua / Switch language"><span id="langCurrent_mob_rete">IT</span><span class="lang-sep"> · </span><span id="langOther_mob_rete">EN</span></button>
       </div>
@@ -195,7 +195,7 @@
           <div class="hero-cta-group">
             <span class="hero-cta-label" data-i18n="r_hero_cta_label3">Cosa c’è di nuovo?</span>
             <div class="hero-cta-row">
-              <a class="btn-eventi" href="#prossimo-evento">
+              <a class="btn-eventi" href="eventi.html">
                 <span data-i18n="r_events_link">Gli eventi della Rete</span>
               </a>
               <div class="hero-info-wrap">
@@ -2623,7 +2623,7 @@ if (!saved) {
         box-shadow:0 12px 40px rgba(0,0,0,.5);">
       <a href="#top" style="display:block;padding:10px 14px;color:rgba(168,238,255,.85);font-size:.82rem;font-weight:600;text-decoration:none;border-radius:10px;">↑ Inizio</a>
       <a href="#members" style="display:block;padding:10px 14px;color:rgba(168,238,255,.7);font-size:.82rem;font-weight:500;text-decoration:none;border-radius:10px;">👥 Membri</a>
-      <a href="#prossimo-evento" style="display:block;padding:10px 14px;color:rgba(168,238,255,.7);font-size:.82rem;font-weight:500;text-decoration:none;border-radius:10px;">🗓 Evento</a>
+      <a href="eventi.html" style="display:block;padding:10px 14px;color:rgba(168,238,255,.7);font-size:.82rem;font-weight:500;text-decoration:none;border-radius:10px;">🗓 Evento</a>
     </div>
   </div>
 
@@ -2769,6 +2769,12 @@ if (!saved) {
       });
     }
   })();
+  </script>
+  <!-- Redirect #prossimo-evento → eventi.html -->
+  <script>
+  if (window.location.hash === '#prossimo-evento') {
+    window.location.replace('eventi.html');
+  }
   </script>
 </body>
 </html>
