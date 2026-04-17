@@ -1,0 +1,1103 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+  <title>Eventi della Rete · Gli Amici di Boyle</title>
+  <meta name="description" content="Corsi, congressi e iniziative segnalati dai membri della Rete di Boyle. Medicina subacquea, iperbarica, aerospaziale e ambienti estremi." />
+  <meta name="theme-color" content="#031427" />
+  <meta property="og:title" content="Gli eventi della Rete · Gli Amici di Boyle" />
+  <meta property="og:description" content="Corsi, congressi e iniziative segnalati dai membri della Rete di Boyle." />
+  <meta property="og:image" content="https://amicidiboyle.github.io/assets/og-image-boyle.jpg" />
+  <link rel="icon" href="assets/logo.png" type="image/png" />
+  <link rel="stylesheet" href="eventi.css" />
+</head>
+<body>
+  <a class="skip" href="#contenuto" data-i18n="ev_skip">Vai al contenuto</a>
+
+  <!-- HEADER -->
+  <header class="header" role="banner" id="siteHeader">
+    <div class="container header__inner">
+      <a class="brand" href="index.html" aria-label="Gli Amici di Boyle — Home">
+        <img src="assets/logo.png" alt="Logo Gli Amici di Boyle" width="52" height="52" />
+        <span class="brand__text">
+          <strong>Gli Amici di Boyle</strong>
+          <em>Diving &amp; Hyperbaric Medicine · Research &amp; Education</em>
+        </span>
+      </a>
+      <nav class="nav--desktop" aria-label="Navigazione principale">
+        <a href="index.html"          data-i18n="ev_nav_home">Home</a>
+        <a href="index.html#visione"  data-i18n="ev_nav_vis">Visione</a>
+        <a href="index.html#ricerca"  data-i18n="ev_nav_ric">Ricerca</a>
+        <a href="rete.html"           data-i18n="ev_nav_rete">Rete</a>
+        <a href="podcast.html"        data-i18n="ev_nav_pod">Podcast</a>
+        <a href="eventi.html" class="nav-active" aria-current="page" data-i18n="ev_nav_ev">Eventi</a>
+        <a href="index.html#contatti" data-i18n="ev_nav_cont">Contatti</a>
+      </nav>
+      <button class="lang-toggle" id="langToggle" type="button" aria-label="Cambia lingua / Switch language">
+        <span id="langCurrent">IT</span><span class="lang-sep"> · </span><span id="langOther">EN</span>
+      </button>
+      <button class="nav-mobile-btn" id="navMobileBtn" aria-label="Apri menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="nav-mobile-panel" id="navMobilePanel" aria-hidden="true">
+        <a href="index.html"          data-i18n="ev_nav_home">Home</a>
+        <a href="index.html#visione"  data-i18n="ev_nav_vis">Visione</a>
+        <a href="index.html#ricerca"  data-i18n="ev_nav_ric">Ricerca</a>
+        <a href="rete.html"           data-i18n="ev_nav_rete">Rete</a>
+        <a href="podcast.html"        data-i18n="ev_nav_pod">Podcast</a>
+        <a href="eventi.html"         data-i18n="ev_nav_ev">Eventi</a>
+        <a href="index.html#contatti" data-i18n="ev_nav_cont">Contatti</a>
+        <button id="langToggleMobile" type="button" class="lang-toggle lang-toggle--mobile" aria-label="Cambia lingua">
+          <span id="langCurrentMob">IT</span><span class="lang-sep"> · </span><span id="langOtherMob">EN</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="contenuto">
+    <div class="container ev-page">
+
+      <!-- ── HERO ── -->
+      <section class="ev-hero" aria-label="Hero eventi">
+        <div class="ev-hero__bg"></div>
+        <div class="ev-hero__overlay"></div>
+        <div class="ev-hero__grid"></div>
+        <div class="ev-hero__scan"></div>
+
+        <!-- Radar -->
+        <div class="ev-radar" aria-hidden="true">
+          <div class="ev-ring"></div>
+          <div class="ev-ring"></div>
+          <div class="ev-ring"></div>
+          <div class="ev-ring"></div>
+          <div class="ev-radar__center"></div>
+          <div class="ev-dot ev-dot--1"></div>
+          <div class="ev-dot ev-dot--2"></div>
+          <div class="ev-dot ev-dot--3"></div>
+          <div class="ev-line ev-line--1"></div>
+          <div class="ev-line ev-line--2"></div>
+          <div class="ev-line ev-line--3"></div>
+          <div class="ev-dot-lbl ev-dot-lbl--1" data-i18n="ev_radar1">The Day After</div>
+          <div class="ev-dot-lbl ev-dot-lbl--2" data-i18n="ev_radar2">WSMH 2026</div>
+          <div class="ev-dot-lbl ev-dot-lbl--3" data-i18n="ev_radar3">Psicologia Sub.</div>
+        </div>
+
+        <div class="ev-hero__content">
+          <div class="ev-hero__tag">
+            <span class="ev-hero__blink"></span>
+            <span data-i18n="ev_hero_tag">Gli Amici di Boyle · Live</span>
+          </div>
+          <h1 data-i18n-html="ev_hero_title">Gli eventi<br>della <em>Rete</em></h1>
+          <p class="ev-hero__sub" data-i18n="ev_hero_sub">Corsi, congressi e iniziative segnalati dai membri del network. Dalla medicina subacquea alla medicina aerospaziale.</p>
+          <div class="ev-hero__counters">
+            <div class="ev-counter">
+              <div class="ev-counter__n" id="counterActive">3</div>
+              <div class="ev-counter__l" data-i18n="ev_cnt_active">eventi attivi</div>
+            </div>
+            <div class="ev-counter">
+              <div class="ev-counter__n">2</div>
+              <div class="ev-counter__l" data-i18n="ev_cnt_countries">paesi</div>
+            </div>
+            <div class="ev-counter">
+              <div class="ev-counter__n" data-i18n="ev_cnt_next">Mag</div>
+              <div class="ev-counter__l" data-i18n="ev_cnt_next_lbl">prossimo</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── TABS ── -->
+      <div class="ev-tabs" role="tablist" aria-label="Filtra eventi">
+        <button class="ev-tab active" data-filter="all"      data-i18n="ev_tab_all">Tutti (3)</button>
+        <button class="ev-tab"        data-filter="it"       data-i18n="ev_tab_it">Nazionali</button>
+        <button class="ev-tab"        data-filter="intl"     data-i18n="ev_tab_intl">Internazionali</button>
+        <button class="ev-tab"        data-filter="partner"  data-i18n="ev_tab_partner">Partner</button>
+      </div>
+
+      <!-- ── EVENTI ATTIVI ── -->
+      <div id="eventsContainer">
+
+        <div class="ev-month-lbl" data-i18n="ev_month_may">Maggio 2026</div>
+
+        <!-- CARD 1 — The Day After -->
+        <article class="ev-card ev-card--partner" data-categories="partner it" style="animation-delay:.08s">
+          <div class="ev-accent"></div>
+          <div class="ev-poster">
+            <img src="assets/corsi/thedayafter.png"
+                 onerror="this.style.display='none'"
+                 alt="The Day After — locandina" loading="lazy" />
+          </div>
+          <div class="ev-body">
+            <div class="ev-body__top">
+              <div class="ev-badges">
+                <span class="ev-badge ev-badge--partner" data-i18n="ev_badge_partner">Partner</span>
+                <span class="ev-badge ev-badge--it"      data-i18n="ev_badge_it">Nazionale</span>
+              </div>
+              <span class="ev-datechip" data-i18n="ev_1_date">6 Mag 2026</span>
+            </div>
+            <div class="ev-title" data-i18n="ev_1_title">The Day After</div>
+            <div class="ev-partner-line" data-i18n="ev_1_org">ITCC · Inside Trauma Critical Care</div>
+            <div class="ev-desc" data-i18n="ev_1_desc">Gestione del trauma maggiore oltre la fase acuta: continuità delle cure dall'ospedale al territorio. Corso ECM in collaborazione con gli Amici di Boyle.</div>
+            <div class="ev-meta">
+              <span class="ev-meta-item">
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                <span data-i18n="ev_1_meta">In presenza · ECM</span>
+              </span>
+            </div>
+            <div class="ev-proposer">
+              <div class="ev-proposer__photo">
+                <img src="assets/rete/erika-borotto.jpg"
+                     onerror="this.src='assets/logo.png'"
+                     alt="Erika Borotto" loading="lazy" />
+              </div>
+              <div>
+                <div class="ev-proposer__lbl" data-i18n="ev_proposed_by">Proposto da</div>
+                <div class="ev-proposer__name">Erika Borotto</div>
+              </div>
+            </div>
+            <div class="ev-actions">
+              <a class="ev-btn ev-btn--blue" href="assets/corsi/the_day_after_brochure.pdf" target="_blank" rel="noopener" download>
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                <span data-i18n="ev_1_cta">Scarica locandina</span>
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <div class="ev-ray" aria-hidden="true"></div>
+
+        <!-- CARD 2 — WSMH Hackathon -->
+        <article class="ev-card ev-card--intl" data-categories="intl" style="animation-delay:.2s">
+          <div class="ev-accent"></div>
+          <div class="ev-poster">
+            <div class="ev-poster__ph" style="background:linear-gradient(160deg,#0d0820,#100927)">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="rgba(167,139,250,.28)" stroke-width="1.2" aria-hidden="true"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+              <div class="ev-poster__ph-lbl">WSMH PY 2026</div>
+            </div>
+          </div>
+          <div class="ev-body">
+            <div class="ev-body__top">
+              <div class="ev-badges">
+                <span class="ev-badge ev-badge--intl" data-i18n="ev_badge_intl">Internazionale</span>
+              </div>
+              <span class="ev-datechip" data-i18n="ev_2_date">4–17 Mag 2026</span>
+            </div>
+            <div class="ev-title" data-i18n="ev_2_title">1st World Space Med Hackathon</div>
+            <div class="ev-partner-line" data-i18n="ev_2_org">Metasense · São Luís, Brasile · Virtuale</div>
+            <div class="ev-desc" data-i18n="ev_2_desc">Hackathon sulla medicina in microgravità: soluzioni per la salute spaziale con spin-off terrestre. Aperto a studenti delle professioni sanitarie. Team da 6 · 30h di certificazione.</div>
+
+            <!-- Sunto espandibile -->
+            <button class="ev-summary-toggle" id="wsmhToggle" type="button" aria-expanded="false" aria-controls="wsmhSummary">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+              <span data-i18n="ev_2_summary_btn">Leggi il regolamento in italiano</span>
+            </button>
+            <div class="ev-summary-box" id="wsmhSummary" aria-hidden="true">
+              <h4 data-i18n="ev_2_sum_title">Sintesi del regolamento ufficiale</h4>
+              <p data-i18n="ev_2_sum_p1"><strong>Periodo:</strong> 4–17 maggio 2026, formato interamente virtuale su Google Meet. Certificazione di 30 ore.</p>
+              <p data-i18n="ev_2_sum_p2"><strong>Chi può partecipare:</strong> studenti delle professioni sanitarie (Medicina, Infermieristica, Biomedicina, Fisioterapia, Farmacia, Nutrizione, Psicologia, Odontoiatria) iscritti a IES in Brasile o all'estero.</p>
+              <p data-i18n="ev_2_sum_p3"><strong>Team:</strong> 6 persone obbligatorie. Quota di iscrizione R$ 200 per team, versata via Sympla. Il team leader gestisce la registrazione.</p>
+              <p data-i18n="ev_2_sum_p4"><strong>Fasi:</strong> apertura (4 Mag) → capacitazioni (5–9 Mag) → sviluppo e mentoring (10–13 Mag) → consegna (14 Mag ore 17) → valutazione → Demoday finale (17 Mag, 14–20h).</p>
+              <p data-i18n="ev_2_sum_p5"><strong>Consegne:</strong> video pitch max 3 minuti + presentazione slides + documento scritto del progetto (tutti su template ufficiale).</p>
+              <p data-i18n="ev_2_sum_p6"><strong>Premiazione:</strong> Top 5 team. Il 1° posto riceve trofeo, certificato e accesso al Programma di Ricerca Metasense 2026. Tutti i partecipanti ricevono certificato e report di valutazione.</p>
+            </div>
+
+            <div class="ev-meta">
+              <span class="ev-meta-item">
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                <span data-i18n="ev_2_meta1">Google Meet · iscrizioni aperte</span>
+              </span>
+              <span class="ev-meta-item">
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                <span data-i18n="ev_2_meta2">R$ 200 / team</span>
+              </span>
+            </div>
+            <div class="ev-proposer">
+              <div class="ev-proposer__photo">
+                <img src="assets/rete/adriana-almeida.jpg"
+                     onerror="this.src='assets/logo.png'"
+                     alt="Adriana Almeida" loading="lazy" />
+              </div>
+              <div>
+                <div class="ev-proposer__lbl" data-i18n="ev_signaled_by">Segnalato da</div>
+                <div class="ev-proposer__name">Adriana Almeida</div>
+              </div>
+            </div>
+            <div class="ev-actions">
+              <a class="ev-btn ev-btn--violet" href="assets/corsi/REGULAMENTO_OFICIAL_1WSMH.pdf" target="_blank" rel="noopener" download>
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                <span data-i18n="ev_2_cta1">Regolamento PDF (PT)</span>
+              </a>
+              <a class="ev-btn ev-btn--violet" href="assets/corsi/WSMH_2026_sintesi_IT.pdf" target="_blank" rel="noopener" download>
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                <span data-i18n="ev_2_cta2">Sintesi IT</span>
+              </a>
+              <a class="ev-btn ev-btn--violet" href="https://www.sympla.com.br" target="_blank" rel="noopener">
+                <span data-i18n="ev_2_cta3">Iscriviti su Sympla →</span>
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <div class="ev-ray" aria-hidden="true"></div>
+
+        <!-- CARD 3 — Psicologia Subacquea -->
+        <article class="ev-card ev-card--member" data-categories="it member" style="animation-delay:.32s">
+          <div class="ev-accent"></div>
+          <div class="ev-poster">
+            <img src="assets/corsi/corso-psicologia-subacquea.jpg"
+                 onerror="this.style.display='none'"
+                 alt="Corso di Psicologia Subacquea — locandina" loading="lazy" />
+          </div>
+          <div class="ev-body">
+            <div class="ev-body__top">
+              <div class="ev-badges">
+                <span class="ev-badge ev-badge--member" data-i18n="ev_badge_member">Membro Rete</span>
+                <span class="ev-badge ev-badge--it"     data-i18n="ev_badge_it">Nazionale</span>
+              </div>
+              <span class="ev-datechip" data-i18n="ev_3_date">30–31 Mag 2026</span>
+            </div>
+            <div class="ev-title" data-i18n="ev_3_title">Corso di Psicologia Subacquea</div>
+            <div class="ev-partner-line" data-i18n="ev_3_org">Teorico-pratico · Isola d'Elba</div>
+            <div class="ev-desc" data-i18n="ev_3_desc">Dimensione psicologica dell'immersione: stress, ansia, panico e PTSD in ambiente subacqueo e iperbarico. Per psicologi, medici, istruttori e subacquei esperti.</div>
+            <div class="ev-meta">
+              <span class="ev-meta-item">
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                <span data-i18n="ev_3_meta">Isola d'Elba · In presenza</span>
+              </span>
+            </div>
+            <div class="ev-proposer">
+              <div class="ev-proposer__photo">
+                <img src="assets/rete/lidia-porri.jpg"
+                     onerror="this.src='assets/logo.png'"
+                     alt="Lidia Porri" loading="lazy" />
+              </div>
+              <div>
+                <div class="ev-proposer__lbl" data-i18n="ev_proposed_by">Proposto da</div>
+                <div class="ev-proposer__name">Lidia Porri</div>
+              </div>
+            </div>
+            <div class="ev-actions">
+              <a class="ev-btn ev-btn--green" href="assets/corsi/programma-corso-psicologia.pdf" target="_blank" rel="noopener" download>
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                <span data-i18n="ev_3_cta1">Programma PDF</span>
+              </a>
+              <a class="ev-btn ev-btn--green" href="https://www.psicologiasubacquea.it" target="_blank" rel="noopener">
+                <span data-i18n="ev_3_cta2">psicologiasubacquea.it</span>
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- PAST TOGGLE -->
+        <button class="ev-past-toggle" id="pastToggle" type="button" aria-expanded="false">
+          <span class="ev-toggle-line"></span>
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 8 12 12 14 14"/></svg>
+          <span data-i18n="ev_past_toggle">&nbsp;1 evento concluso · clicca per mostrare&nbsp;</span>
+          <span class="ev-toggle-line"></span>
+        </button>
+
+        <!-- EVENTI PASSATI (nascosti di default) -->
+        <div id="pastEvents" hidden>
+          <div class="ev-ray" aria-hidden="true"></div>
+
+          <!-- CARD PAST — SIMSI -->
+          <article class="ev-card ev-card--past past" data-categories="it" style="animation-delay:.08s">
+            <div class="ev-accent"></div>
+            <div class="ev-poster">
+              <img src="assets/corsi/locandina_simsi_cattolica.jpg"
+                   onerror="this.style.display='none'"
+                   alt="Convegno SIMSI 2026" loading="lazy" />
+            </div>
+            <div class="ev-body">
+              <div class="ev-body__top">
+                <div class="ev-badges">
+                  <span class="ev-badge ev-badge--past" data-i18n="ev_badge_past">Concluso</span>
+                  <span class="ev-badge ev-badge--it" style="opacity:.28" data-i18n="ev_badge_it">Nazionale</span>
+                </div>
+                <span class="ev-datechip" style="opacity:.35" data-i18n="ev_4_date">10–11 Apr 2026</span>
+              </div>
+              <div class="ev-title" data-i18n="ev_4_title">Convegno SIMSI 2026</div>
+              <div class="ev-partner-line" style="opacity:.4" data-i18n="ev_4_org">SIMSI · Cattolica (RN) · Waldorf Palace Hotel</div>
+              <div class="ev-desc" data-i18n="ev_4_desc">Convegno Nazionale della Società Italiana di Medicina Subacquea e Iperbarica. Appuntamento scientifico di riferimento per la comunità medica italiana.</div>
+              <div class="ev-proposer" style="opacity:.3">
+                <div class="ev-proposer__photo">
+                  <img src="assets/rete/andrea-galvani.jpg"
+                       onerror="this.src='assets/logo.png'"
+                       alt="Andrea Galvani" loading="lazy" />
+                </div>
+                <div>
+                  <div class="ev-proposer__lbl" data-i18n="ev_signaled_by">Segnalato da</div>
+                  <div class="ev-proposer__name">Andrea Galvani</div>
+                </div>
+              </div>
+              <div class="ev-actions">
+                <a class="ev-btn ev-btn--ghost" href="assets/corsi/programma_simsi_cattolica.pdf" target="_blank" rel="noopener" download style="opacity:.4">
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                  <span data-i18n="ev_4_cta">Programma PDF</span>
+                </a>
+                <a class="ev-btn ev-btn--ghost" href="https://www.simsi.it" target="_blank" rel="noopener" style="opacity:.4">simsi.it</a>
+              </div>
+            </div>
+          </article>
+        </div>
+
+      </div><!-- /eventsContainer -->
+
+      <!-- ── SEZIONE PROPONI ── -->
+      <section class="ev-propose" id="proponi" aria-label="Proponi un evento">
+        <div class="ev-propose__bg"></div>
+        <div class="ev-propose__overlay"></div>
+        <div class="ev-propose__glow"></div>
+        <div class="ev-propose__inner">
+          <div class="ev-propose__kicker">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <span data-i18n="ev_propose_kicker">Per i membri del network</span>
+          </div>
+          <h2 data-i18n="ev_propose_title">Hai qualcosa da condividere<br>con la Rete?</h2>
+          <p class="ev-propose__sub" data-i18n="ev_propose_sub">Un corso che stai organizzando, un congresso da segnalare, un'iniziativa legata agli ambienti estremi. Questa pagina è costruita dai membri, per i membri — il tuo nome e la tua foto ci sono già.</p>
+          <div class="ev-feats">
+            <div class="ev-feat">
+              <div class="ev-feat__icon">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(123,228,255,.7)" stroke-width="2" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87m-4-12a4 4 0 0 1 0 7.75"/></svg>
+              </div>
+              <div class="ev-feat__title" data-i18n="ev_feat1_t">Visibilità mirata</div>
+              <div class="ev-feat__desc"  data-i18n="ev_feat1_d">Raggiungi specialisti in medicina degli ambienti estremi</div>
+            </div>
+            <div class="ev-feat">
+              <div class="ev-feat__icon">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(123,228,255,.7)" stroke-width="2" aria-hidden="true"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+              </div>
+              <div class="ev-feat__title" data-i18n="ev_feat2_t">Online in 48h</div>
+              <div class="ev-feat__desc"  data-i18n="ev_feat2_d">Revisione rapida, pubblicazione immediata dopo approvazione</div>
+            </div>
+            <div class="ev-feat">
+              <div class="ev-feat__icon">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(123,228,255,.7)" stroke-width="2" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M6 20v-2a6 6 0 0 1 12 0v2"/></svg>
+              </div>
+              <div class="ev-feat__title" data-i18n="ev_feat3_t">Col tuo nome</div>
+              <div class="ev-feat__desc"  data-i18n="ev_feat3_d">La tua foto e profilo compaiono sulla card dell'evento</div>
+            </div>
+          </div>
+          <div class="ev-propose__cta">
+            <button class="ev-btn--main" id="proponiBtn" type="button">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+              <span data-i18n="ev_propose_cta">Proponi il tuo evento</span>
+            </button>
+            <span class="ev-lock">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              <span data-i18n="ev_propose_lock">Riservato ai membri con codice</span>
+            </span>
+          </div>
+        </div>
+      </section>
+
+    </div><!-- /container -->
+  </main>
+
+  <!-- ── FOOTER ── -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="container footer-grid">
+      <p class="footer-copy" data-i18n="ev_footer">© Gli Amici di Boyle · Medicina subacquea, iperbarica e ambienti estremi.</p>
+      <nav class="footer-links" aria-label="Link footer">
+        <a href="privacy.html"  data-i18n="ev_footer_privacy">Privacy</a>
+        <a href="cookie.html"   data-i18n="ev_footer_cookie">Cookie</a>
+        <a href="rete.html"     data-i18n="ev_nav_rete">Rete</a>
+        <a href="podcast.html"  data-i18n="ev_nav_pod">Podcast</a>
+      </nav>
+    </div>
+  </footer>
+
+  <!-- ACCESS WALL — proposta evento -->
+  <div class="ev-wall" id="evWall" aria-modal="true" role="dialog" aria-labelledby="evWallTitle">
+    <div class="ev-wall__box">
+      <h2 class="ev-wall__title" id="evWallTitle" data-i18n="ev_wall_title">Area riservata ai membri</h2>
+      <p class="ev-wall__desc" data-i18n="ev_wall_desc">Per proporre un evento sulla Rete di Boyle è necessario essere membri attivi. Inserisci il tuo codice di accesso.</p>
+      <input class="ev-wall__input" type="text" id="evWallCode"
+             placeholder="🔑 Codice membro" autocomplete="off"
+             data-i18n-placeholder="ev_wall_ph" />
+      <div class="ev-wall__err" id="evWallErr" role="alert"></div>
+      <button class="ev-wall__btn" id="evWallBtn" type="button" data-i18n="ev_wall_btn">Accedi</button>
+      <button class="ev-wall__close" id="evWallClose" type="button" data-i18n="ev_wall_close">Chiudi</button>
+      <a class="ev-wall__join" href="rete.html" data-i18n="ev_wall_join">Non sei ancora membro? → Candidati alla Rete</a>
+    </div>
+  </div>
+
+  <!-- MODAL — Form proposta evento -->
+  <div class="ev-modal" id="evModal" aria-modal="true" role="dialog" aria-labelledby="evModalTitle">
+    <div class="ev-modal__box">
+      <div class="ev-modal__header">
+        <h2 class="ev-modal__title" id="evModalTitle" data-i18n="ev_modal_title">Proponi il tuo evento</h2>
+        <button class="ev-modal__close" id="evModalClose" type="button" aria-label="Chiudi">✕</button>
+      </div>
+      <p class="ev-modal__desc" data-i18n="ev_modal_desc">Compila il form. Ti risponderemo entro 48 ore. Per file superiori ai limiti indicati puoi inviare tutto a <a href="mailto:eventi@amicidiboyle.it" style="color:#7be4ff">eventi@amicidiboyle.it</a>.</p>
+
+      <form id="evProposeForm" action="https://formspree.io/f/xpqkdjba" method="POST" enctype="multipart/form-data" novalidate>
+        <input type="hidden" name="_subject" value="Proposta evento — Rete di Boyle" />
+        <input type="hidden" name="codice_membro" id="hiddenCode" />
+
+        <div class="ev-form-group">
+          <label class="ev-form-label" for="evNome" data-i18n="ev_form_name">Nome e cognome *</label>
+          <input class="ev-form-input" type="text" id="evNome" name="nome" required autocomplete="name" />
+        </div>
+        <div class="ev-form-group">
+          <label class="ev-form-label" for="evEmail" data-i18n="ev_form_email">Email *</label>
+          <input class="ev-form-input" type="email" id="evEmail" name="email" required autocomplete="email" />
+        </div>
+        <div class="ev-form-group">
+          <label class="ev-form-label" for="evTitolo" data-i18n="ev_form_title">Titolo dell'evento *</label>
+          <input class="ev-form-input" type="text" id="evTitolo" name="titolo_evento" required />
+        </div>
+        <div class="ev-form-group">
+          <label class="ev-form-label" for="evData" data-i18n="ev_form_date">Data / periodo</label>
+          <input class="ev-form-input" type="text" id="evData" name="data_evento" placeholder="es. 15 giugno 2026" />
+        </div>
+        <div class="ev-form-group">
+          <label class="ev-form-label" for="evLuogo" data-i18n="ev_form_place">Luogo / modalità</label>
+          <input class="ev-form-input" type="text" id="evLuogo" name="luogo_evento" placeholder="es. Milano, in presenza / Online" />
+        </div>
+        <div class="ev-form-group">
+          <label class="ev-form-label" for="evTipo" data-i18n="ev_form_type">Tipo di evento</label>
+          <input class="ev-form-input" type="text" id="evTipo" name="tipo_evento" placeholder="es. Corso ECM, Congresso, Hackathon…" />
+        </div>
+        <div class="ev-form-group">
+          <label class="ev-form-label" for="evDesc" data-i18n="ev_form_desc">Descrizione breve *</label>
+          <textarea class="ev-form-textarea" id="evDesc" name="descrizione" required rows="4"></textarea>
+        </div>
+        <div class="ev-form-group">
+          <label class="ev-form-label" for="evLink" data-i18n="ev_form_link">Link esterno (sito evento, iscrizioni...)</label>
+          <input class="ev-form-input" type="url" id="evLink" name="link_esterno" placeholder="https://" />
+        </div>
+        <div class="ev-form-group">
+          <label class="ev-form-label" for="evPoster" data-i18n="ev_form_poster">Link locandina (Drive, Dropbox, WeTransfer...)</label>
+          <input class="ev-form-input" type="url" id="evPoster" name="link_locandina" placeholder="https://" />
+          <p class="ev-form-hint" data-i18n="ev_form_poster_hint">Per file pesanti usa anche eventi@amicidiboyle.it</p>
+        </div>
+        <div class="ev-form-group">
+          <label class="ev-form-label" for="evNote" data-i18n="ev_form_notes">Note aggiuntive</label>
+          <textarea class="ev-form-textarea" id="evNote" name="note" rows="2"></textarea>
+        </div>
+
+        <!-- Separatore upload -->
+        <div class="ev-form-divider">
+          <span data-i18n="ev_form_files_label">Allega i materiali</span>
+        </div>
+
+        <!-- Upload copertina -->
+        <div class="ev-form-group">
+          <label class="ev-form-label" for="evCover" data-i18n="ev_form_cover">Immagine di copertina</label>
+          <div class="ev-file-wrap" id="evCoverWrap">
+            <input class="ev-file-input" type="file" id="evCover" name="copertina"
+                   accept="image/jpeg,image/png,image/webp" />
+            <label class="ev-file-label" for="evCover">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+              <span class="ev-file-label-text" data-i18n="ev_form_cover_btn">Scegli immagine (JPG, PNG, WebP)</span>
+            </label>
+            <span class="ev-file-name" id="evCoverName" data-i18n="ev_form_no_file">Nessun file selezionato</span>
+          </div>
+          <p class="ev-form-hint" data-i18n="ev_form_cover_hint">Max 2 MB · JPG, PNG o WebP</p>
+          <p class="ev-form-err" id="evCoverErr" role="alert"></p>
+        </div>
+
+        <!-- Upload PDF -->
+        <div class="ev-form-group">
+          <label class="ev-form-label" for="evPdf" data-i18n="ev_form_pdf">Programma / brochure PDF</label>
+          <div class="ev-file-wrap" id="evPdfWrap">
+            <input class="ev-file-input" type="file" id="evPdf" name="programma_pdf"
+                   accept="application/pdf" />
+            <label class="ev-file-label" for="evPdf">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+              <span class="ev-file-label-text" data-i18n="ev_form_pdf_btn">Scegli PDF</span>
+            </label>
+            <span class="ev-file-name" id="evPdfName" data-i18n="ev_form_no_file">Nessun file selezionato</span>
+          </div>
+          <p class="ev-form-hint" data-i18n="ev_form_pdf_hint">Max 10 MB · Solo PDF · Per file più pesanti usa il campo link qui sotto</p>
+          <p class="ev-form-err" id="evPdfErr" role="alert"></p>
+        </div>
+
+        <!-- Link alternativo per file pesanti -->
+        <div class="ev-form-group">
+          <label class="ev-form-label" for="evPoster" data-i18n="ev_form_poster">Oppure: link ai materiali (Drive, Dropbox, WeTransfer...)</label>
+          <input class="ev-form-input" type="url" id="evPoster" name="link_materiali" placeholder="https://" />
+          <p class="ev-form-hint" data-i18n="ev_form_poster_hint">Usa questo campo se i file superano i limiti o preferisci condividere un link</p>
+        </div>
+
+        <button class="ev-form-submit" id="evSubmitBtn" type="submit" data-i18n="ev_form_submit">Invia proposta</button>
+        <div class="ev-form-status" id="evFormStatus" role="alert"></div>
+      </form>
+
+      <!-- THANK YOU — nascosto, mostrato dopo invio -->
+      <div class="ev-thankyou" id="evThankyou" hidden>
+        <div class="ev-thankyou__icon" aria-hidden="true">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#7be4ff" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg>
+        </div>
+        <h3 class="ev-thankyou__title" data-i18n="ev_ty_title">Proposta ricevuta!</h3>
+        <p class="ev-thankyou__msg" data-i18n="ev_ty_msg">Grazie per aver proposto il tuo evento alla Rete di Boyle. Il nostro team la valuterà e ti risponderà entro <strong>48 ore</strong> all'indirizzo che hai indicato.</p>
+        <p class="ev-thankyou__sub" data-i18n="ev_ty_sub">Se hai bisogno di aggiungere materiali o hai dimenticato qualcosa, scrivici a <a href="mailto:eventi@amicidiboyle.it">eventi@amicidiboyle.it</a>.</p>
+        <button class="ev-thankyou__close" id="evThankyouClose" type="button" data-i18n="ev_ty_close">Chiudi</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cookie banner -->
+  <div id="cookie-banner" role="region" aria-label="Cookie">
+    <p>Questo sito usa cookie tecnici e servizi di terze parti (Formspree, GitHub Pages).
+      <a href="cookie.html">Cookie Policy</a> &middot; <a href="privacy.html">Privacy</a></p>
+    <button id="cookie-accept">Accetta</button>
+  </div>
+
+  <!-- ── SCRIPTS ── -->
+  <script>
+  (function() {
+    'use strict';
+
+    /* ── i18n ── */
+    var T = {
+      it: {
+        'ev_skip':'Vai al contenuto',
+        'ev_nav_home':'Home','ev_nav_vis':'Visione','ev_nav_ric':'Ricerca',
+        'ev_nav_rete':'Rete','ev_nav_pod':'Podcast','ev_nav_ev':'Eventi','ev_nav_cont':'Contatti',
+        'ev_hero_tag':'Gli Amici di Boyle \u00b7 Live',
+        'ev_hero_title':'Gli eventi<br>della <em>Rete</em>',
+        'ev_hero_sub':'Corsi, congressi e iniziative segnalati dai membri del network. Dalla medicina subacquea alla medicina aerospaziale.',
+        'ev_cnt_active':'eventi attivi','ev_cnt_countries':'paesi',
+        'ev_cnt_next':'Mag','ev_cnt_next_lbl':'prossimo',
+        'ev_radar1':'The Day After','ev_radar2':'WSMH 2026','ev_radar3':'Psicologia Sub.',
+        'ev_tab_all':'Tutti (3)','ev_tab_it':'Nazionali','ev_tab_intl':'Internazionali','ev_tab_partner':'Partner',
+        'ev_month_may':'Maggio 2026',
+        'ev_badge_partner':'Partner','ev_badge_it':'Nazionale','ev_badge_intl':'Internazionale',
+        'ev_badge_member':'Membro Rete','ev_badge_past':'Concluso',
+        'ev_proposed_by':'Proposto da','ev_signaled_by':'Segnalato da',
+        'ev_1_date':'6 Mag 2026','ev_1_title':'The Day After',
+        'ev_1_org':'ITCC \u00b7 Inside Trauma Critical Care',
+        'ev_1_desc':'Gestione del trauma maggiore oltre la fase acuta: continuit\u00e0 delle cure dall\u2019ospedale al territorio. Corso ECM in collaborazione con gli Amici di Boyle.',
+        'ev_1_meta':'In presenza \u00b7 ECM','ev_1_cta':'Scarica locandina',
+        'ev_2_date':'4\u201317 Mag 2026','ev_2_title':'1st World Space Med Hackathon',
+        'ev_2_org':'Metasense \u00b7 S\u00e3o Lu\u00eds, Brasile \u00b7 Virtuale',
+        'ev_2_desc':'Hackathon sulla medicina in microgravit\u00e0: soluzioni per la salute spaziale con spin-off terrestre. Aperto a studenti delle professioni sanitarie. Team da 6 \u00b7 30h certificazione.',
+        'ev_2_summary_btn':'Leggi il regolamento in italiano',
+        'ev_2_sum_title':'Sintesi del regolamento ufficiale',
+        'ev_2_sum_p1':'<strong>Periodo:</strong> 4\u201317 maggio 2026, formato interamente virtuale su Google Meet. Certificazione di 30 ore.',
+        'ev_2_sum_p2':'<strong>Chi pu\u00f2 partecipare:</strong> studenti delle professioni sanitarie iscritti a IES in Brasile o all\u2019estero.',
+        'ev_2_sum_p3':'<strong>Team:</strong> 6 persone obbligatorie. Quota R$ 200 per team via Sympla.',
+        'ev_2_sum_p4':'<strong>Fasi:</strong> apertura (4 Mag) \u2192 capacitazioni (5\u20139) \u2192 sviluppo + mentoring (10\u201313) \u2192 consegna (14 Mag ore 17) \u2192 Demoday (17 Mag, 14\u201320h).',
+        'ev_2_sum_p5':'<strong>Consegne:</strong> video pitch max 3 min + slides + documento scritto (tutti su template ufficiale).',
+        'ev_2_sum_p6':'<strong>Premiazione:</strong> Top 5 team. Il 1\u00b0 posto accede al Programma di Ricerca Metasense 2026. Tutti ricevono certificato.',
+        'ev_2_meta1':'Google Meet \u00b7 iscrizioni aperte','ev_2_meta2':'R$ 200 / team',
+        'ev_2_cta1':'Regolamento PDF (PT)','ev_2_cta2':'Sintesi IT','ev_2_cta3':'Iscriviti su Sympla \u2192',
+        'ev_3_date':'30\u201331 Mag 2026','ev_3_title':'Corso di Psicologia Subacquea',
+        'ev_3_org':'Teorico-pratico \u00b7 Isola d\u2019Elba',
+        'ev_3_desc':'Dimensione psicologica dell\u2019immersione: stress, ansia, panico e PTSD in ambiente subacqueo e iperbarico. Per psicologi, medici, istruttori e subacquei esperti.',
+        'ev_3_meta':'Isola d\u2019Elba \u00b7 In presenza',
+        'ev_3_cta1':'Programma PDF','ev_3_cta2':'psicologiasubacquea.it',
+        'ev_past_toggle':'\u00a01 evento concluso \u00b7 clicca per mostrare\u00a0',
+        'ev_4_date':'10\u201311 Apr 2026','ev_4_title':'Convegno SIMSI 2026',
+        'ev_4_org':'SIMSI \u00b7 Cattolica (RN) \u00b7 Waldorf Palace Hotel',
+        'ev_4_desc':'Convegno Nazionale della Societ\u00e0 Italiana di Medicina Subacquea e Iperbarica.',
+        'ev_4_cta':'Programma PDF',
+        'ev_propose_kicker':'Per i membri del network',
+        'ev_propose_title':'Hai qualcosa da condividere\u00a0con la Rete?',
+        'ev_propose_sub':'Un corso che stai organizzando, un congresso da segnalare, un\u2019iniziativa legata agli ambienti estremi. Questa pagina \u00e8 costruita dai membri, per i membri \u2014 il tuo nome e la tua foto ci sono gi\u00e0.',
+        'ev_feat1_t':'Visibilit\u00e0 mirata','ev_feat1_d':'Raggiungi specialisti in medicina degli ambienti estremi',
+        'ev_feat2_t':'Online in 48h','ev_feat2_d':'Revisione rapida, pubblicazione immediata dopo approvazione',
+        'ev_feat3_t':'Col tuo nome','ev_feat3_d':'La tua foto e profilo compaiono sulla card dell\u2019evento',
+        'ev_propose_cta':'Proponi il tuo evento',
+        'ev_propose_lock':'Riservato ai membri con codice',
+        'ev_wall_title':'Area riservata ai membri',
+        'ev_wall_desc':'Per proporre un evento \u00e8 necessario essere membri attivi. Inserisci il tuo codice di accesso.',
+        'ev_wall_ph':'\ud83d\udd11 Codice membro',
+        'ev_wall_btn':'Accedi','ev_wall_close':'Chiudi',
+        'ev_wall_join':'Non sei ancora membro? \u2192 Candidati alla Rete',
+        'ev_modal_title':'Proponi il tuo evento',
+        'ev_modal_desc':'Compila il form. Ti risponderemo entro 48 ore. Per locandine e file pesanti, invia a eventi@amicidiboyle.it.',
+        'ev_form_name':'Nome e cognome *','ev_form_email':'Email *',
+        'ev_form_title':'Titolo dell\u2019evento *','ev_form_date':'Data / periodo',
+        'ev_form_place':'Luogo / modalit\u00e0','ev_form_type':'Tipo di evento',
+        'ev_form_desc':'Descrizione breve *','ev_form_link':'Link esterno',
+        'ev_form_poster':'Link locandina (Drive, Dropbox, WeTransfer...)',
+        'ev_form_poster_hint':'Per file pesanti usa anche eventi@amicidiboyle.it',
+        'ev_form_notes':'Note aggiuntive','ev_form_submit':'Invia proposta',
+        'ev_form_files_label':'Allega i materiali',
+        'ev_form_cover':'Immagine di copertina',
+        'ev_form_cover_btn':'Scegli immagine (JPG, PNG, WebP)',
+        'ev_form_cover_hint':'Max 2 MB \u00b7 JPG, PNG o WebP',
+        'ev_form_pdf':'Programma / brochure PDF',
+        'ev_form_pdf_btn':'Scegli PDF',
+        'ev_form_pdf_hint':'Max 10 MB \u00b7 Solo PDF \u00b7 Per file pi\u00f9 pesanti usa il campo link qui sotto',
+        'ev_form_no_file':'Nessun file selezionato',
+        'ev_form_poster':'Oppure: link ai materiali (Drive, Dropbox, WeTransfer...)',
+        'ev_form_poster_hint':'Usa questo campo se i file superano i limiti o preferisci un link',
+        'ev_ty_title':'Proposta ricevuta!',
+        'ev_ty_msg':'Grazie per aver proposto il tuo evento alla Rete di Boyle. Il nostro team la valuter\u00e0 e ti risponder\u00e0 entro <strong>48 ore</strong> all\u2019indirizzo che hai indicato.',
+        'ev_ty_sub':'Se hai bisogno di aggiungere materiali o hai dimenticato qualcosa, scrivici a <a href="mailto:eventi@amicidiboyle.it">eventi@amicidiboyle.it</a>.',
+        'ev_ty_close':'Chiudi',
+        'ev_footer':'\u00a9 Gli Amici di Boyle \u00b7 Medicina subacquea, iperbarica e ambienti estremi.',
+        'ev_footer_privacy':'Privacy','ev_footer_cookie':'Cookie'
+      },
+      en: {
+        'ev_skip':'Skip to content',
+        'ev_nav_home':'Home','ev_nav_vis':'Vision','ev_nav_ric':'Research',
+        'ev_nav_rete':'Network','ev_nav_pod':'Podcast','ev_nav_ev':'Events','ev_nav_cont':'Contact',
+        'ev_hero_tag':'Gli Amici di Boyle \u00b7 Live',
+        'ev_hero_title':'Network<br><em>events</em>',
+        'ev_hero_sub':'Courses, congresses and initiatives shared by network members. From underwater medicine to aerospace medicine.',
+        'ev_cnt_active':'active events','ev_cnt_countries':'countries',
+        'ev_cnt_next':'May','ev_cnt_next_lbl':'next up',
+        'ev_radar1':'The Day After','ev_radar2':'WSMH 2026','ev_radar3':'Underwater Psych.',
+        'ev_tab_all':'All (3)','ev_tab_it':'National','ev_tab_intl':'International','ev_tab_partner':'Partner',
+        'ev_month_may':'May 2026',
+        'ev_badge_partner':'Partner','ev_badge_it':'National','ev_badge_intl':'International',
+        'ev_badge_member':'Network member','ev_badge_past':'Past',
+        'ev_proposed_by':'Proposed by','ev_signaled_by':'Shared by',
+        'ev_1_date':'6 May 2026','ev_1_title':'The Day After',
+        'ev_1_org':'ITCC \u00b7 Inside Trauma Critical Care',
+        'ev_1_desc':'Management of major trauma beyond the acute phase: continuity of care from hospital to territory. ECM course in collaboration with Gli Amici di Boyle.',
+        'ev_1_meta':'In person \u00b7 ECM','ev_1_cta':'Download poster',
+        'ev_2_date':'4\u201317 May 2026','ev_2_title':'1st World Space Med Hackathon',
+        'ev_2_org':'Metasense \u00b7 S\u00e3o Lu\u00eds, Brazil \u00b7 Virtual',
+        'ev_2_desc':'Hackathon on medicine in microgravity: solutions for space health with terrestrial spin-off. Open to healthcare students. Teams of 6 \u00b7 30h certification.',
+        'ev_2_summary_btn':'Read the regulations in Italian',
+        'ev_2_sum_title':'Official regulations summary',
+        'ev_2_sum_p1':'<strong>Period:</strong> 4\u201317 May 2026, fully virtual on Google Meet. 30-hour certification.',
+        'ev_2_sum_p2':'<strong>Who can participate:</strong> healthcare students enrolled at HEIs in Brazil or abroad.',
+        'ev_2_sum_p3':'<strong>Teams:</strong> 6 members required. Entry fee R$ 200 per team via Sympla.',
+        'ev_2_sum_p4':'<strong>Phases:</strong> opening (4 May) \u2192 training (5\u20139) \u2192 development + mentoring (10\u201313) \u2192 submission (14 May, 5pm) \u2192 Demoday (17 May, 2\u20138pm).',
+        'ev_2_sum_p5':'<strong>Deliverables:</strong> max 3-min video pitch + slides + written project document (all on official template).',
+        'ev_2_sum_p6':'<strong>Awards:</strong> Top 5 teams. 1st place joins the Metasense 2026 Research Programme. All participants receive a certificate.',
+        'ev_2_meta1':'Google Meet \u00b7 registrations open','ev_2_meta2':'R$ 200 / team',
+        'ev_2_cta1':'Regulations PDF (PT)','ev_2_cta2':'Summary IT','ev_2_cta3':'Register on Sympla \u2192',
+        'ev_3_date':'30\u201331 May 2026','ev_3_title':'Underwater Psychology Course',
+        'ev_3_org':'Theory & Practice \u00b7 Elba Island',
+        'ev_3_desc':'Psychological dimension of diving: stress, anxiety, panic and PTSD in underwater and hyperbaric environments. For psychologists, physicians, instructors and experienced divers.',
+        'ev_3_meta':'Elba Island \u00b7 In person',
+        'ev_3_cta1':'Programme PDF','ev_3_cta2':'psicologiasubacquea.it',
+        'ev_past_toggle':'\u00a01 past event \u00b7 click to show\u00a0',
+        'ev_4_date':'10\u201311 Apr 2026','ev_4_title':'SIMSI Congress 2026',
+        'ev_4_org':'SIMSI \u00b7 Cattolica (RN) \u00b7 Waldorf Palace Hotel',
+        'ev_4_desc':'National Congress of the Italian Society of Underwater and Hyperbaric Medicine.',
+        'ev_4_cta':'Programme PDF',
+        'ev_propose_kicker':'For network members',
+        'ev_propose_title':'Have something to share\u00a0with the Network?',
+        'ev_propose_sub':'A course you are running, a congress worth sharing, an initiative linked to extreme environments. This page is built by members, for members \u2014 your name and photo are already there.',
+        'ev_feat1_t':'Targeted reach','ev_feat1_d':'Reach specialists in extreme environment medicine',
+        'ev_feat2_t':'Online in 48h','ev_feat2_d':'Quick review, immediate publication after approval',
+        'ev_feat3_t':'Under your name','ev_feat3_d':'Your photo and profile appear on the event card',
+        'ev_propose_cta':'Propose your event',
+        'ev_propose_lock':'Reserved for members with access code',
+        'ev_wall_title':'Members-only area',
+        'ev_wall_desc':'To propose an event you must be an active member. Enter your access code.',
+        'ev_wall_ph':'\ud83d\udd11 Member code',
+        'ev_wall_btn':'Access','ev_wall_close':'Close',
+        'ev_wall_join':'Not a member yet? \u2192 Apply to the Network',
+        'ev_modal_title':'Propose your event',
+        'ev_modal_desc':'Fill in the form. We will reply within 48 hours. For posters and large files, send to eventi@amicidiboyle.it.',
+        'ev_form_name':'Full name *','ev_form_email':'Email *',
+        'ev_form_title':'Event title *','ev_form_date':'Date / period',
+        'ev_form_place':'Venue / format','ev_form_type':'Event type',
+        'ev_form_desc':'Short description *','ev_form_link':'External link',
+        'ev_form_poster':'Poster link (Drive, Dropbox, WeTransfer...)',
+        'ev_form_poster_hint':'For large files also use eventi@amicidiboyle.it',
+        'ev_form_notes':'Additional notes','ev_form_submit':'Submit proposal',
+        'ev_form_files_label':'Attach materials',
+        'ev_form_cover':'Cover image',
+        'ev_form_cover_btn':'Choose image (JPG, PNG, WebP)',
+        'ev_form_cover_hint':'Max 2 MB \u00b7 JPG, PNG or WebP',
+        'ev_form_pdf':'Programme / brochure PDF',
+        'ev_form_pdf_btn':'Choose PDF',
+        'ev_form_pdf_hint':'Max 10 MB \u00b7 PDF only \u00b7 For larger files use the link field below',
+        'ev_form_no_file':'No file selected',
+        'ev_form_poster':'Or: link to materials (Drive, Dropbox, WeTransfer...)',
+        'ev_form_poster_hint':'Use this field if files exceed the limits or you prefer a link',
+        'ev_ty_title':'Proposal received!',
+        'ev_ty_msg':'Thank you for proposing your event to the Boyle Network. Our team will review it and reply within <strong>48 hours</strong> at the address you provided.',
+        'ev_ty_sub':'If you need to add materials or forgot something, write to us at <a href="mailto:eventi@amicidiboyle.it">eventi@amicidiboyle.it</a>.',
+        'ev_ty_close':'Close',
+        'ev_footer':'\u00a9 Gli Amici di Boyle \u00b7 Underwater, hyperbaric and extreme environment medicine.',
+        'ev_footer_privacy':'Privacy','ev_footer_cookie':'Cookie'
+      }
+    };
+
+    function getLang() {
+      try { return sessionStorage.getItem('boyle_lang') || 'it'; } catch(e) { return 'it'; }
+    }
+    function setLang(l) {
+      try { sessionStorage.setItem('boyle_lang', l); } catch(e) {}
+    }
+    function applyLang(l) {
+      var d = T[l] || T['it'];
+      document.querySelectorAll('[data-i18n]').forEach(function(el) {
+        var k = el.getAttribute('data-i18n');
+        if (d[k] !== undefined) el.textContent = d[k];
+      });
+      document.querySelectorAll('[data-i18n-html]').forEach(function(el) {
+        var k = el.getAttribute('data-i18n-html');
+        if (d[k] !== undefined) el.innerHTML = d[k];
+      });
+      document.querySelectorAll('[data-i18n-placeholder]').forEach(function(el) {
+        var k = el.getAttribute('data-i18n-placeholder');
+        if (d[k] !== undefined) el.placeholder = d[k];
+      });
+      // Summary box — usa innerHTML per i tag <strong>
+      ['ev_2_sum_p1','ev_2_sum_p2','ev_2_sum_p3','ev_2_sum_p4','ev_2_sum_p5','ev_2_sum_p6',
+       'ev_ty_msg','ev_ty_sub'].forEach(function(k) {
+        var els = document.querySelectorAll('[data-i18n="'+k+'"]');
+        els.forEach(function(el){ if(d[k]) el.innerHTML = d[k]; });
+      });
+      ['langCurrent','langCurrentMob'].forEach(function(id) {
+        var el = document.getElementById(id);
+        if (el) el.textContent = l === 'en' ? 'EN' : 'IT';
+      });
+      ['langOther','langOtherMob'].forEach(function(id) {
+        var el = document.getElementById(id);
+        if (el) el.textContent = l === 'en' ? 'IT' : 'EN';
+      });
+      document.documentElement.lang = l === 'en' ? 'en' : 'it';
+      setLang(l);
+    }
+
+    /* ── Header scroll ── */
+    var header = document.getElementById('siteHeader');
+    if (header) {
+      window.addEventListener('scroll', function() {
+        header.classList.toggle('scrolled', window.scrollY > 40);
+      }, { passive: true });
+    }
+
+    /* ── Mobile nav ── */
+    var navBtn   = document.getElementById('navMobileBtn');
+    var navPanel = document.getElementById('navMobilePanel');
+    if (navBtn && navPanel) {
+      navBtn.addEventListener('click', function() {
+        var open = navPanel.getAttribute('aria-hidden') === 'false';
+        navPanel.setAttribute('aria-hidden', open ? 'true' : 'false');
+        navBtn.setAttribute('aria-expanded', !open);
+        navBtn.classList.toggle('is-open', !open);
+      });
+      document.addEventListener('click', function(e) {
+        if (!navPanel.contains(e.target) && !navBtn.contains(e.target)) {
+          navPanel.setAttribute('aria-hidden', 'true');
+          navBtn.setAttribute('aria-expanded', 'false');
+          navBtn.classList.remove('is-open');
+        }
+      });
+    }
+
+    /* ── Lang toggle ── */
+    function toggleLang() {
+      applyLang(getLang() === 'it' ? 'en' : 'it');
+    }
+    ['langToggle','langToggleMobile'].forEach(function(id) {
+      var el = document.getElementById(id);
+      if (el) el.addEventListener('click', toggleLang);
+    });
+
+    /* ── Tab filter ── */
+    var tabs  = document.querySelectorAll('.ev-tab');
+    var cards = document.querySelectorAll('.ev-card:not(.past)');
+    tabs.forEach(function(tab) {
+      tab.addEventListener('click', function() {
+        tabs.forEach(function(t) { t.classList.remove('active'); });
+        tab.classList.add('active');
+        var filter = tab.getAttribute('data-filter');
+        cards.forEach(function(card) {
+          var cats = (card.getAttribute('data-categories') || '').split(' ');
+          var show = filter === 'all' || cats.indexOf(filter) !== -1;
+          card.style.display = show ? '' : 'none';
+          // Reset animation
+          if (show) {
+            card.style.animation = 'none';
+            card.offsetHeight; // reflow
+            card.style.animation = '';
+          }
+        });
+      });
+    });
+
+    /* ── Past toggle ── */
+    var pastToggle = document.getElementById('pastToggle');
+    var pastEvents = document.getElementById('pastEvents');
+    if (pastToggle && pastEvents) {
+      pastToggle.addEventListener('click', function() {
+        var isHidden = pastEvents.hasAttribute('hidden');
+        if (isHidden) {
+          pastEvents.removeAttribute('hidden');
+          pastToggle.setAttribute('aria-expanded', 'true');
+          // Trigger animation for past cards
+          pastEvents.querySelectorAll('.ev-card').forEach(function(c) {
+            c.style.animation = 'none';
+            c.offsetHeight;
+            c.style.animation = '';
+          });
+        } else {
+          pastEvents.setAttribute('hidden', '');
+          pastToggle.setAttribute('aria-expanded', 'false');
+        }
+      });
+    }
+
+    /* ── WSMH sunto toggle ── */
+    var wsmhToggle  = document.getElementById('wsmhToggle');
+    var wsmhSummary = document.getElementById('wsmhSummary');
+    if (wsmhToggle && wsmhSummary) {
+      wsmhToggle.addEventListener('click', function() {
+        var open = wsmhSummary.classList.contains('open');
+        wsmhSummary.classList.toggle('open', !open);
+        wsmhToggle.classList.toggle('open', !open);
+        wsmhToggle.setAttribute('aria-expanded', !open);
+        wsmhSummary.setAttribute('aria-hidden', open);
+      });
+    }
+
+    /* ── Access codes (stesso sistema di rete.html) ── */
+    var CODE_TO_KEY = {
+      'BOYLE-V666-ZERBI': 'silvio-zerbi',
+      'BOYLE-HM6Q-ZERBI': 'silvio-zerbi',
+      'BOYLE-WY8W-VINCIGUERRA': 'felicia-vinciguerra',
+      'BOYLE-5ZS4-ZANON': 'vincenzo-zanon',
+      'BOYLE-ZXTB-LANCIO': 'pre-lancio',
+      'BOYLE-XSYN-TEST': 'last-test',
+      'BOYLE-RDBF-49': 'prova-testh-9-49',
+      'BOYLE-4CJ2-PIPPA': 'pippo-pippa',
+      'BOYLE-ADMIN-2026': 'admin'
+    };
+    var DYNAMIC_CODES = {};
+    var ACCESS_KEY = 'boyle_member_unlocked';
+
+    fetch('boyle-access-codes.json?v=' + Date.now())
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        if (data && data.codes) {
+          Object.keys(data.codes).forEach(function(k) {
+            DYNAMIC_CODES[k.toUpperCase()] = String(data.codes[k] || '').trim();
+          });
+        }
+      })
+      .catch(function() {});
+
+    function isMemberUnlocked() {
+      return sessionStorage.getItem(ACCESS_KEY) === 'true';
+    }
+    function validateCode(raw) {
+      var nc = raw.trim().toUpperCase();
+      return !!(CODE_TO_KEY[nc] || DYNAMIC_CODES[nc]);
+    }
+
+    /* ── Access wall ── */
+    var evWall      = document.getElementById('evWall');
+    var evWallCode  = document.getElementById('evWallCode');
+    var evWallBtn   = document.getElementById('evWallBtn');
+    var evWallClose = document.getElementById('evWallClose');
+    var evWallErr   = document.getElementById('evWallErr');
+
+    function openWall() {
+      evWall.classList.add('is-open');
+      document.body.style.overflow = 'hidden';
+      setTimeout(function() { if (evWallCode) evWallCode.focus(); }, 80);
+    }
+    function closeWall() {
+      evWall.classList.remove('is-open');
+      document.body.style.overflow = '';
+      if (evWallErr) evWallErr.textContent = '';
+    }
+
+    if (evWallClose) evWallClose.addEventListener('click', closeWall);
+    if (evWall) evWall.addEventListener('click', function(e) {
+      if (e.target === evWall) closeWall();
+    });
+
+    if (evWallBtn) {
+      evWallBtn.addEventListener('click', function() {
+        var code = evWallCode ? evWallCode.value : '';
+        if (validateCode(code)) {
+          sessionStorage.setItem(ACCESS_KEY, 'true');
+          sessionStorage.setItem('boyle_access_code', code.trim().toUpperCase());
+          closeWall();
+          openProposeModal(code.trim().toUpperCase());
+        } else {
+          if (evWallErr) evWallErr.textContent = getLang() === 'en' ? 'Code not recognised. Check the welcome email.' : 'Codice non riconosciuto. Controlla la mail di benvenuto.';
+        }
+      });
+    }
+    if (evWallCode) {
+      evWallCode.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') evWallBtn && evWallBtn.click();
+      });
+    }
+
+    /* ── Propose modal ── */
+    var evModal      = document.getElementById('evModal');
+    var evModalClose = document.getElementById('evModalClose');
+    var evForm       = document.getElementById('evProposeForm');
+    var evStatus     = document.getElementById('evFormStatus');
+    var hiddenCode   = document.getElementById('hiddenCode');
+
+    function openProposeModal(code) {
+      if (hiddenCode) hiddenCode.value = code || sessionStorage.getItem('boyle_access_code') || '';
+      evModal.classList.add('is-open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeProposeModal() {
+      evModal.classList.remove('is-open');
+      document.body.style.overflow = '';
+    }
+
+    if (evModalClose) evModalClose.addEventListener('click', closeProposeModal);
+    if (evModal) evModal.addEventListener('click', function(e) {
+      if (e.target === evModal) closeProposeModal();
+    });
+
+    /* ── Proponi button ── */
+    var proponiBtn = document.getElementById('proponiBtn');
+    if (proponiBtn) {
+      proponiBtn.addEventListener('click', function() {
+        if (isMemberUnlocked()) {
+          openProposeModal();
+        } else {
+          openWall();
+        }
+      });
+    }
+
+    /* ── File upload — feedback nome file ── */
+    function initFileInput(inputId, nameId, wrapId, labelId, maxMB) {
+      var input = document.getElementById(inputId);
+      var nameEl = document.getElementById(nameId);
+      var label  = document.querySelector('label[for="' + inputId + '"]');
+      var errEl  = document.getElementById(inputId.replace('ev','ev') + 'Err');
+      // fix ID mapping
+      var errId  = inputId === 'evCover' ? 'evCoverErr' : 'evPdfErr';
+      errEl = document.getElementById(errId);
+      if (!input) return;
+      input.addEventListener('change', function() {
+        var file = input.files && input.files[0];
+        if (!file) {
+          if (nameEl) { nameEl.textContent = getLang() === 'en' ? 'No file selected' : 'Nessun file selezionato'; nameEl.classList.remove('has-file'); }
+          if (label)  label.classList.remove('has-file');
+          if (errEl)  errEl.textContent = '';
+          return;
+        }
+        var maxBytes = maxMB * 1024 * 1024;
+        if (file.size > maxBytes) {
+          if (errEl) errEl.textContent = getLang() === 'en'
+            ? 'File too large. Max ' + maxMB + ' MB.'
+            : 'File troppo grande. Massimo ' + maxMB + ' MB.';
+          input.value = '';
+          if (nameEl) { nameEl.textContent = getLang() === 'en' ? 'No file selected' : 'Nessun file selezionato'; nameEl.classList.remove('has-file'); }
+          if (label)  label.classList.remove('has-file');
+          return;
+        }
+        if (errEl)  errEl.textContent = '';
+        if (nameEl) { nameEl.textContent = file.name; nameEl.classList.add('has-file'); }
+        if (label)  label.classList.add('has-file');
+      });
+    }
+    initFileInput('evCover', 'evCoverName', 'evCoverWrap', 'evCoverLabel', 2);
+    initFileInput('evPdf',   'evPdfName',   'evPdfWrap',   'evPdfLabel',   10);
+
+    /* ── Form submit ── */
+    if (evForm) {
+      evForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        // Validazione file lato client
+        var coverInput = document.getElementById('evCover');
+        var pdfInput   = document.getElementById('evPdf');
+        var coverErr   = document.getElementById('evCoverErr');
+        var pdfErr     = document.getElementById('evPdfErr');
+        var hasErr = false;
+        if (coverInput && coverInput.files[0] && coverInput.files[0].size > 2 * 1024 * 1024) {
+          if (coverErr) coverErr.textContent = getLang() === 'en' ? 'Image too large. Max 2 MB.' : 'Immagine troppo grande. Max 2 MB.';
+          hasErr = true;
+        }
+        if (pdfInput && pdfInput.files[0] && pdfInput.files[0].size > 10 * 1024 * 1024) {
+          if (pdfErr) pdfErr.textContent = getLang() === 'en' ? 'PDF too large. Max 10 MB.' : 'PDF troppo grande. Max 10 MB.';
+          hasErr = true;
+        }
+        if (hasErr) return;
+
+        var btn = document.getElementById('evSubmitBtn');
+        if (btn) { btn.disabled = true; btn.textContent = getLang() === 'en' ? 'Sending…' : 'Invio in corso…'; }
+        if (evStatus) { evStatus.textContent = ''; evStatus.className = 'ev-form-status'; }
+
+        try {
+          var res = await fetch(evForm.action, {
+            method: 'POST',
+            body: new FormData(evForm),
+            headers: { 'Accept': 'application/json' }
+          });
+          if (res.ok) {
+            // Nascondi form, mostra thank you
+            evForm.style.display = 'none';
+            var ty = document.getElementById('evThankyou');
+            if (ty) {
+              ty.removeAttribute('hidden');
+              ty.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+            // Close button
+            var tyClose = document.getElementById('evThankyouClose');
+            if (tyClose) tyClose.addEventListener('click', function() {
+              closeProposeModal();
+              // Reset per eventuale riapertura
+              setTimeout(function() {
+                evForm.reset();
+                evForm.style.display = '';
+                if (ty) ty.setAttribute('hidden', '');
+                if (btn) { btn.disabled = false; btn.textContent = T[getLang()]['ev_form_submit'] || 'Invia proposta'; }
+                // Reset file labels
+                ['evCoverName','evPdfName'].forEach(function(id) {
+                  var el = document.getElementById(id);
+                  if (el) { el.textContent = T[getLang()]['ev_form_no_file'] || 'Nessun file selezionato'; el.classList.remove('has-file'); }
+                });
+                document.querySelectorAll('.ev-file-label').forEach(function(l) { l.classList.remove('has-file'); });
+              }, 300);
+            }, { once: true });
+          } else {
+            throw new Error('HTTP ' + res.status);
+          }
+        } catch(err) {
+          if (evStatus) {
+            evStatus.textContent = getLang() === 'en'
+              ? '✗ Error sending. Try again or write to eventi@amicidiboyle.it'
+              : '✗ Errore nell\'invio. Riprova o scrivi a eventi@amicidiboyle.it';
+            evStatus.className = 'ev-form-status error';
+          }
+          if (btn) { btn.disabled = false; btn.textContent = T[getLang()]['ev_form_submit'] || 'Invia proposta'; }
+        }
+      });
+    }
+
+    /* ── Cookie banner ── */
+    if (!localStorage.getItem('boyle_cookie_ok')) {
+      var cb = document.getElementById('cookie-banner');
+      if (cb) setTimeout(function() { cb.classList.add('visible'); }, 600);
+    }
+    var cookieBtn = document.getElementById('cookie-accept');
+    if (cookieBtn) cookieBtn.addEventListener('click', function() {
+      localStorage.setItem('boyle_cookie_ok', '1');
+      var cb = document.getElementById('cookie-banner');
+      if (cb) { cb.style.transition = 'transform .3s ease-in'; cb.style.transform = 'translateY(100%)'; }
+    });
+
+    /* ── Auto-detect past events by date ── */
+    var today = new Date();
+    today.setHours(0,0,0,0);
+    document.querySelectorAll('.ev-card[data-date]').forEach(function(card) {
+      var d = new Date(card.getAttribute('data-date'));
+      if (!isNaN(d) && d < today) {
+        card.classList.add('past');
+        card.classList.remove('ev-card--partner','ev-card--intl','ev-card--member');
+        card.classList.add('ev-card--past');
+      }
+    });
+
+    /* ── Init ── */
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', function() { applyLang(getLang()); });
+    } else {
+      applyLang(getLang());
+    }
+
+  })();
+  </script>
+
+</body>
+</html>
