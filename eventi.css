@@ -138,8 +138,8 @@ main { position: relative; z-index: 1; }
 /* Radar — centrato orizzontalmente nella metà destra */
 .ev-radar {
   position: absolute;
-  right: -20px; top: 50%; transform: translateY(-50%);
-  width: 360px; height: 360px; pointer-events: none;
+  right: 40px; top: 50%; transform: translateY(-50%);
+  width: 340px; height: 340px; pointer-events: none;
   overflow: hidden;
 }
 .ev-radar canvas {
