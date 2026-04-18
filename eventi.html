@@ -70,7 +70,7 @@
 
         <!-- Radar scanner -->
         <div class="ev-radar" aria-hidden="true">
-          <canvas id="evRadarCanvas" width="360" height="360"></canvas>
+          <canvas id="evRadarCanvas" width="340" height="340"></canvas>
           <div class="ev-dot-lbl ev-dot-lbl--1" id="evLbl0" data-i18n="ev_radar1">The Day After</div>
           <div class="ev-dot-lbl ev-dot-lbl--2" id="evLbl1" data-i18n="ev_radar2">WSMH 2026</div>
           <div class="ev-dot-lbl ev-dot-lbl--3" id="evLbl2" data-i18n="ev_radar3">Psicologia Sub.</div>
@@ -1163,7 +1163,7 @@
       var cv = document.getElementById('evRadarCanvas');
       if (!cv) return;
       var ctx = cv.getContext('2d');
-      var W=360, H=360, CX=180, CY=180, R=166;
+      var W=340, H=340, CX=170, CY=170, R=156;
       var SPEED = 0.008;
       var TRAIL = Math.PI * 0.65;
       var sweep = 0;
@@ -1311,4 +1311,3 @@
 
 </body>
 </html>
-
