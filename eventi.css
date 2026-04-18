@@ -138,8 +138,9 @@ main { position: relative; z-index: 1; }
 /* Radar — centrato orizzontalmente nella metà destra */
 .ev-radar {
   position: absolute;
-  right: 40px; top: 50%; transform: translateY(-50%);
-  width: 340px; height: 340px; pointer-events: none;
+  right: 0; left: 50%; top: 50%;
+  transform: translate(-15%, -50%);
+  width: 460px; height: 460px; pointer-events: none;
   overflow: hidden;
 }
 .ev-radar canvas {
@@ -149,9 +150,9 @@ main { position: relative; z-index: 1; }
   position: absolute; font-size: 10px; font-weight: 500; letter-spacing: .05em;
   white-space: nowrap; pointer-events: none; transition: opacity .35s;
 }
-.ev-dot-lbl--1 { top: 9%;  left: 58%; color: rgba(56,189,248,.75); }
-.ev-dot-lbl--2 { top: 72%; left: 50%; color: rgba(167,139,250,.75); }
-.ev-dot-lbl--3 { top: 31%; left: 75%; color: rgba(110,231,183,.75); }
+.ev-dot-lbl--1 { top: 11%; left: 55%; color: rgba(56,189,248,.75); }
+.ev-dot-lbl--2 { top: 70%; left: 48%; color: rgba(167,139,250,.75); }
+.ev-dot-lbl--3 { top: 33%; left: 71%; color: rgba(110,231,183,.75); }
 
 /* Hero content */
 .ev-hero__content {
