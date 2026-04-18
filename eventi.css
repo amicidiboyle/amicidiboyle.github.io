@@ -138,45 +138,20 @@ main { position: relative; z-index: 1; }
 /* Radar — centrato orizzontalmente nella metà destra */
 .ev-radar {
   position: absolute;
-  left: 50%; top: 50%; transform: translate(-10%, -50%);
-  width: 380px; height: 380px; pointer-events: none;
+  right: -20px; top: 50%; transform: translateY(-50%);
+  width: 360px; height: 360px; pointer-events: none;
+  overflow: hidden;
 }
-.ev-ring {
-  position: absolute; border-radius: 50%; border: 1px solid;
-  top: 50%; left: 50%; transform: translate(-50%,-50%);
+.ev-radar canvas {
+  position: absolute; top: 0; left: 0;
 }
-.ev-ring:nth-child(1) { width: 80px;  height: 80px;  border-color: rgba(123,228,255,.32); }
-.ev-ring:nth-child(2) { width: 150px; height: 150px; border-color: rgba(123,228,255,.2); }
-.ev-ring:nth-child(3) { width: 230px; height: 230px; border-color: rgba(123,228,255,.12); }
-.ev-ring:nth-child(4) { width: 340px; height: 340px; border-color: rgba(123,228,255,.06); }
-.ev-radar__center {
-  position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
-  width: 8px; height: 8px; border-radius: 50%;
-  background: #7be4ff;
-  box-shadow: 0 0 12px rgba(123,228,255,.9), 0 0 24px rgba(123,228,255,.4);
-}
-.ev-dot {
-  position: absolute; width: 9px; height: 9px; border-radius: 50%;
-  transform: translate(-50%,-50%);
-}
-.ev-dot--1 { top: 22%; left: 62%; background: #38bdf8; box-shadow: 0 0 10px rgba(56,189,248,.8); }
-.ev-dot--2 { top: 68%; left: 58%; background: #a78bfa; box-shadow: 0 0 10px rgba(167,139,250,.8); }
-.ev-dot--3 { top: 42%; left: 78%; background: #6ee7b7; box-shadow: 0 0 10px rgba(110,231,183,.8); }
-.ev-line {
-  position: absolute; top: 50%; left: 50%;
-  height: 1px; transform-origin: left center;
-  background: linear-gradient(90deg, rgba(123,228,255,.3), transparent);
-}
-.ev-line--1 { width: 90px;  transform: rotate(-54deg) translateY(-50%); }
-.ev-line--2 { width: 72px;  transform: rotate(34deg)  translateY(-50%); }
-.ev-line--3 { width: 108px; transform: rotate(-16deg) translateY(-50%); }
 .ev-dot-lbl {
   position: absolute; font-size: 10px; font-weight: 500; letter-spacing: .05em;
-  white-space: nowrap; pointer-events: none;
+  white-space: nowrap; pointer-events: none; transition: opacity .35s;
 }
-.ev-dot-lbl--1 { top: 13%;  left: 64%; color: rgba(56,189,248,.75); }
-.ev-dot-lbl--2 { top: 72%;  left: 54%; color: rgba(167,139,250,.75); }
-.ev-dot-lbl--3 { top: 34%;  left: 80%; color: rgba(110,231,183,.75); }
+.ev-dot-lbl--1 { top: 9%;  left: 58%; color: rgba(56,189,248,.75); }
+.ev-dot-lbl--2 { top: 72%; left: 50%; color: rgba(167,139,250,.75); }
+.ev-dot-lbl--3 { top: 31%; left: 75%; color: rgba(110,231,183,.75); }
 
 /* Hero content */
 .ev-hero__content {
