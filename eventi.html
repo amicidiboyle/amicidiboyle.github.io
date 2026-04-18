@@ -68,22 +68,12 @@
         <div class="ev-hero__grid"></div>
         <div class="ev-hero__scan"></div>
 
-        <!-- Radar -->
+        <!-- Radar scanner -->
         <div class="ev-radar" aria-hidden="true">
-          <div class="ev-ring"></div>
-          <div class="ev-ring"></div>
-          <div class="ev-ring"></div>
-          <div class="ev-ring"></div>
-          <div class="ev-radar__center"></div>
-          <div class="ev-dot ev-dot--1"></div>
-          <div class="ev-dot ev-dot--2"></div>
-          <div class="ev-dot ev-dot--3"></div>
-          <div class="ev-line ev-line--1"></div>
-          <div class="ev-line ev-line--2"></div>
-          <div class="ev-line ev-line--3"></div>
-          <div class="ev-dot-lbl ev-dot-lbl--1" data-i18n="ev_radar1">The Day After</div>
-          <div class="ev-dot-lbl ev-dot-lbl--2" data-i18n="ev_radar2">WSMH 2026</div>
-          <div class="ev-dot-lbl ev-dot-lbl--3" data-i18n="ev_radar3">Psicologia Sub.</div>
+          <canvas id="evRadarCanvas" width="360" height="360"></canvas>
+          <div class="ev-dot-lbl ev-dot-lbl--1" id="evLbl0" data-i18n="ev_radar1">The Day After</div>
+          <div class="ev-dot-lbl ev-dot-lbl--2" id="evLbl1" data-i18n="ev_radar2">WSMH 2026</div>
+          <div class="ev-dot-lbl ev-dot-lbl--3" id="evLbl2" data-i18n="ev_radar3">Psicologia Sub.</div>
         </div>
 
         <div class="ev-hero__content">
@@ -1167,6 +1157,105 @@
       cards.forEach(function(c) { obs.observe(c); });
     })();
 
+
+    /* ── Radar scanner ── */
+    (function() {
+      var cv = document.getElementById('evRadarCanvas');
+      if (!cv) return;
+      var ctx = cv.getContext('2d');
+      var W=360, H=360, CX=180, CY=180, R=166;
+      var SPEED = 0.008;
+      var TRAIL = Math.PI * 0.65;
+      var sweep = 0;
+      var litUntil = [0, 0, 0];
+
+      var EVS = [
+        {a:-0.9,  rf:0.52, col:'#38bdf8', i:0},
+        {a: 0.6,  rf:0.72, col:'#a78bfa', i:1},
+        {a:-0.28, rf:0.86, col:'#6ee7b7', i:2}
+      ];
+
+      function px(a, rf) {
+        return { x: CX + Math.cos(a)*rf*R, y: CY + Math.sin(a)*rf*R };
+      }
+      function angDiff(a, b) {
+        var d = ((a-b) % (Math.PI*2) + Math.PI*2) % (Math.PI*2);
+        return d > Math.PI ? d - Math.PI*2 : d;
+      }
+
+      function frame(now) {
+        ctx.clearRect(0, 0, W, H);
+        ctx.save();
+        ctx.beginPath(); ctx.arc(CX,CY,R,0,Math.PI*2); ctx.clip();
+
+        /* sfondo */
+        ctx.fillStyle = 'rgba(2,10,26,.45)';
+        ctx.fillRect(0,0,W,H);
+
+        /* rings */
+        [0.28, 0.5, 0.72, 0.96].forEach(function(f) {
+          ctx.beginPath(); ctx.arc(CX,CY,f*R,0,Math.PI*2);
+          ctx.strokeStyle = f < 0.5 ? 'rgba(123,228,255,.2)' : 'rgba(123,228,255,.1)';
+          ctx.lineWidth = 0.5; ctx.stroke();
+        });
+
+        /* crosshair */
+        ctx.strokeStyle = 'rgba(123,228,255,.08)'; ctx.lineWidth = 0.5;
+        ctx.beginPath(); ctx.moveTo(CX,CY-R); ctx.lineTo(CX,CY+R); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(CX-R,CY); ctx.lineTo(CX+R,CY); ctx.stroke();
+
+        /* scia sweep */
+        for (var i=0; i<80; i++) {
+          var t = i/80;
+          var a1 = sweep - TRAIL*t;
+          var a2 = sweep - TRAIL*(t + 1/80);
+          ctx.beginPath(); ctx.moveTo(CX,CY);
+          ctx.arc(CX,CY,R,a2,a1); ctx.closePath();
+          ctx.fillStyle = 'rgba(79,209,255,' + ((1-t)*0.14).toFixed(3) + ')';
+          ctx.fill();
+        }
+
+        /* linea sweep */
+        ctx.beginPath(); ctx.moveTo(CX,CY);
+        ctx.lineTo(CX+Math.cos(sweep)*R, CY+Math.sin(sweep)*R);
+        ctx.strokeStyle = 'rgba(123,228,255,.6)'; ctx.lineWidth = 1.5; ctx.stroke();
+
+        /* centro */
+        ctx.beginPath(); ctx.arc(CX,CY,4,0,Math.PI*2);
+        ctx.fillStyle = '#7be4ff'; ctx.fill();
+
+        /* eventi */
+        EVS.forEach(function(e) {
+          var p = px(e.a, e.rf);
+          var d = angDiff(sweep, e.a);
+          if (d >= 0 && d < 0.07) litUntil[e.i] = now + 3200;
+          var lit = litUntil[e.i] > now;
+
+          /* label */
+          var lb = document.getElementById('evLbl'+e.i);
+          if (lb) lb.style.opacity = lit ? '1' : '0.4';
+
+          /* glow */
+          if (lit) {
+            var g = ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,18);
+            g.addColorStop(0, e.col+'88'); g.addColorStop(1, e.col+'00');
+            ctx.beginPath(); ctx.arc(p.x,p.y,18,0,Math.PI*2);
+            ctx.fillStyle = g; ctx.fill();
+          }
+
+          /* dot */
+          ctx.beginPath(); ctx.arc(p.x,p.y, lit?5.5:3, 0,Math.PI*2);
+          ctx.fillStyle = lit ? e.col : e.col+'55'; ctx.fill();
+        });
+
+        ctx.restore();
+        sweep += SPEED;
+        if (sweep > Math.PI*2) sweep -= Math.PI*2;
+        requestAnimationFrame(frame);
+      }
+      requestAnimationFrame(frame);
+    })();
+
     /* ── Lightbox mobile ── */
     function openLightbox(src, alt) {
       if (!src) return;
@@ -1222,3 +1311,4 @@
 
 </body>
 </html>
+
