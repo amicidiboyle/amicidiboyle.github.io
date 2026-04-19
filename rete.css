@@ -187,12 +187,11 @@ a { color: inherit; text-decoration: none; }
   padding: 22px 18px 18px;
   display: flex; flex-direction: column; align-items: center; text-align: center;
   /* Animazione entrata */
-  will-change: transform, opacity;
-  opacity: 0; transform: scale(.96);
-  transition: opacity .65s cubic-bezier(.4,0,.2,1), transform .65s cubic-bezier(.4,0,.2,1),
-              border-color .25s, box-shadow .25s;
+  will-change: transform, opacity, box-shadow;
+  opacity: 0; transform: scale(.95);
+  transition: border-color .25s, box-shadow .25s;
 }
-.member-card.is-visible { opacity: 1; transform: scale(1); }
+.member-card.is-visible { opacity: 1; transform: scale(1); box-shadow: none; }
 
 /* ── Profilo completo: bordo verde + linea luminosa in cima ── */
 .member-card--complete {
@@ -1053,24 +1052,30 @@ a { color: inherit; text-decoration: none; }
     inset -2px 0 0 rgba(0,0,0,.18) !important;
 }
 
-/* ── Animazione entrata: fade + zoom ── */
+/* ── Animazione entrata: bioluminescenza ── */
 @keyframes cardEnterLeft {
-  0%   { opacity:0; transform:scale(.96); }
-  100% { opacity:1; transform:scale(1); }
+  0%   { opacity:0; transform:scale(.95); box-shadow:0 0 0 0 rgba(123,228,255,0); }
+  30%  { opacity:1; transform:scale(1.02); box-shadow:0 0 28px 4px rgba(123,228,255,.22), 0 0 60px 8px rgba(123,228,255,.08); }
+  65%  { transform:scale(.996); box-shadow:0 0 14px 2px rgba(123,228,255,.1); }
+  100% { opacity:1; transform:scale(1); box-shadow:0 0 0 0 rgba(123,228,255,0); }
 }
 @keyframes cardEnterRight {
-  0%   { opacity:0; transform:scale(.96); }
-  100% { opacity:1; transform:scale(1); }
+  0%   { opacity:0; transform:scale(.95); box-shadow:0 0 0 0 rgba(123,228,255,0); }
+  30%  { opacity:1; transform:scale(1.02); box-shadow:0 0 28px 4px rgba(123,228,255,.22), 0 0 60px 8px rgba(123,228,255,.08); }
+  65%  { transform:scale(.996); box-shadow:0 0 14px 2px rgba(123,228,255,.1); }
+  100% { opacity:1; transform:scale(1); box-shadow:0 0 0 0 rgba(123,228,255,0); }
 }
 @keyframes cardEnterUp {
-  0%   { opacity:0; transform:scale(.96); }
-  100% { opacity:1; transform:scale(1); }
+  0%   { opacity:0; transform:scale(.95); box-shadow:0 0 0 0 rgba(123,228,255,0); }
+  30%  { opacity:1; transform:scale(1.02); box-shadow:0 0 28px 4px rgba(123,228,255,.22), 0 0 60px 8px rgba(123,228,255,.08); }
+  65%  { transform:scale(.996); box-shadow:0 0 14px 2px rgba(123,228,255,.1); }
+  100% { opacity:1; transform:scale(1); box-shadow:0 0 0 0 rgba(123,228,255,0); }
 }
 
 /* Collisione: sinistra/centro/destra alternati */
-.member-card:nth-child(3n+1).is-visible { animation: cardEnterLeft  .65s cubic-bezier(.4,0,.2,1) both; }
-.member-card:nth-child(3n+2).is-visible { animation: cardEnterUp    .65s cubic-bezier(.4,0,.2,1) both; }
-.member-card:nth-child(3n+3).is-visible { animation: cardEnterRight .65s cubic-bezier(.4,0,.2,1) both; }
+.member-card:nth-child(3n+1).is-visible { animation: cardEnterLeft  .85s cubic-bezier(.4,0,.2,1) both; }
+.member-card:nth-child(3n+2).is-visible { animation: cardEnterUp    .85s cubic-bezier(.4,0,.2,1) both; }
+.member-card:nth-child(3n+3).is-visible { animation: cardEnterRight .85s cubic-bezier(.4,0,.2,1) both; }
 
 /* Stagger progressivo */
 .member-card:nth-child(1){animation-delay:.00s} .member-card:nth-child(2){animation-delay:.10s}
@@ -3242,8 +3247,10 @@ a { color: inherit; text-decoration: none; }
    ════════════════════════════════════════════════════════ */
 
 @keyframes cardEnterMobile {
-  0%   { opacity: 0; transform: scale(.96); }
-  100% { opacity: 1; transform: scale(1); }
+  0%   { opacity:0; transform:scale(.95); box-shadow:0 0 0 0 rgba(123,228,255,0); }
+  30%  { opacity:1; transform:scale(1.02); box-shadow:0 0 22px 3px rgba(123,228,255,.18); }
+  65%  { transform:scale(.997); box-shadow:0 0 10px 1px rgba(123,228,255,.08); }
+  100% { opacity:1; transform:scale(1); box-shadow:0 0 0 0 rgba(123,228,255,0); }
 }
 
 @keyframes cardGlowPulse {
@@ -3255,10 +3262,7 @@ a { color: inherit; text-decoration: none; }
   /* Stato iniziale card mobile */
   .member-card {
     opacity: 0;
-    transform: scale(.96);
-    transition:
-      opacity  .6s cubic-bezier(.4,0,.2,1),
-      transform .6s cubic-bezier(.4,0,.2,1);
+    transform: scale(.95);
   }
   .member-card.is-visible {
     opacity: 1;
