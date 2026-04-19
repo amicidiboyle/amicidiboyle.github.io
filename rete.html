@@ -1109,20 +1109,29 @@
   /* ── Scroll reveal ── */
   function initReveal() {
     var cardCounter = 0;
-    var CARD_STAGGER = 240; /* ms tra una member-card e la successiva */
+    var CARD_STAGGER = 150; /* ms tra una card e la successiva */
 
     function triggerEl(el) {
       var isCard = el.classList.contains('member-card');
       var delay = isCard ? cardCounter * CARD_STAGGER : +(el.dataset.delay || 0);
       if (isCard) {
-        /* assegna il delay come CSS custom property — usato dallo shimmer ::after */
-        el.style.animationDelay = delay + 'ms';
         cardCounter++;
+        /* shimmer: inietta un div dedicato che non interferisce con ::after esistente */
+        setTimeout(function() {
+          el.classList.add('is-visible');
+          var shimmer = document.createElement('div');
+          shimmer.className = 'card-shimmer';
+          el.appendChild(shimmer);
+          setTimeout(function() {
+            if (shimmer.parentNode) shimmer.parentNode.removeChild(shimmer);
+          }, 700);
+        }, delay);
+        return;
       }
       setTimeout(function() { el.classList.add('is-visible'); }, delay);
     }
 
-    const obs = new IntersectionObserver(function(entries) {
+    var obs = new IntersectionObserver(function(entries) {
       entries
         .filter(function(e) { return e.isIntersecting; })
         .sort(function(a,b) { return a.boundingClientRect.top - b.boundingClientRect.top; })
@@ -1132,10 +1141,9 @@
         });
     }, { threshold: 0.04, rootMargin: '0px 0px -20px 0px' });
 
-    const els = document.querySelectorAll('.reveal');
+    var els = document.querySelectorAll('.reveal');
     els.forEach(function(el) { obs.observe(el); });
 
-    /* Triggera subito chi è già visibile al caricamento */
     requestAnimationFrame(function() { requestAnimationFrame(function() {
       Array.from(els)
         .filter(function(el) {
