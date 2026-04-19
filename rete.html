@@ -1108,24 +1108,54 @@
 
   /* ── Scroll reveal ── */
   function initReveal() {
+    var cardCounter = 0;
+    var CARD_STAGGER = 180; /* ms tra una member-card e la successiva */
+
     const obs = new IntersectionObserver(entries => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          setTimeout(() => e.target.classList.add('is-visible'), +(e.target.dataset.delay||0));
-          obs.unobserve(e.target);
+      /* Ordina per posizione verticale — evita che batch casuali rompano la sequenza */
+      const visible = entries
+        .filter(e => e.isIntersecting)
+        .sort((a,b) => a.boundingClientRect.top - b.boundingClientRect.top);
+
+      visible.forEach(e => {
+        const el = e.target;
+        const isCard = el.classList.contains('member-card');
+        let delay;
+        if (isCard) {
+          delay = cardCounter * CARD_STAGGER;
+          cardCounter++;
+          /* reset counter dopo pausa scroll — riprende dal prossimo gruppo */
+        } else {
+          delay = +(el.dataset.delay || 0);
         }
+        setTimeout(() => el.classList.add('is-visible'), delay);
+        obs.unobserve(el);
       });
-    }, { threshold: 0.01, rootMargin: '0px 0px 0px 0px' });
-    // Prima osserva, poi dopo due frame triggera subito chi è già visibile
+    }, { threshold: 0.04, rootMargin: '0px 0px -20px 0px' });
+
     const els = document.querySelectorAll('.reveal');
     els.forEach(el => obs.observe(el));
+
+    /* Triggera subito le card già visibili al caricamento */
     requestAnimationFrame(() => requestAnimationFrame(() => {
-      els.forEach(el => {
-        const r = el.getBoundingClientRect();
-        if (r.top < window.innerHeight && r.bottom > 0) {
-          setTimeout(() => el.classList.add('is-visible'), +(el.dataset.delay||0));
-          obs.unobserve(el);
+      const inView = Array.from(els)
+        .filter(el => {
+          const r = el.getBoundingClientRect();
+          return r.top < window.innerHeight && r.bottom > 0;
+        })
+        .sort((a,b) => a.getBoundingClientRect().top - b.getBoundingClientRect().top);
+
+      inView.forEach(el => {
+        const isCard = el.classList.contains('member-card');
+        let delay;
+        if (isCard) {
+          delay = cardCounter * CARD_STAGGER;
+          cardCounter++;
+        } else {
+          delay = +(el.dataset.delay || 0);
         }
+        setTimeout(() => el.classList.add('is-visible'), delay);
+        obs.unobserve(el);
       });
     }));
   }
