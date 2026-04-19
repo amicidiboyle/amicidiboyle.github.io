@@ -1109,55 +1109,47 @@
   /* ── Scroll reveal ── */
   function initReveal() {
     var cardCounter = 0;
-    var CARD_STAGGER = 180; /* ms tra una member-card e la successiva */
+    var CARD_STAGGER = 240; /* ms tra una member-card e la successiva */
 
-    const obs = new IntersectionObserver(entries => {
-      /* Ordina per posizione verticale — evita che batch casuali rompano la sequenza */
-      const visible = entries
-        .filter(e => e.isIntersecting)
-        .sort((a,b) => a.boundingClientRect.top - b.boundingClientRect.top);
+    function triggerEl(el) {
+      var isCard = el.classList.contains('member-card');
+      var delay = isCard ? cardCounter * CARD_STAGGER : +(el.dataset.delay || 0);
+      if (isCard) {
+        /* assegna il delay come CSS custom property — usato dallo shimmer ::after */
+        el.style.animationDelay = delay + 'ms';
+        cardCounter++;
+      }
+      setTimeout(function() { el.classList.add('is-visible'); }, delay);
+    }
 
-      visible.forEach(e => {
-        const el = e.target;
-        const isCard = el.classList.contains('member-card');
-        let delay;
-        if (isCard) {
-          delay = cardCounter * CARD_STAGGER;
-          cardCounter++;
-          /* reset counter dopo pausa scroll — riprende dal prossimo gruppo */
-        } else {
-          delay = +(el.dataset.delay || 0);
-        }
-        setTimeout(() => el.classList.add('is-visible'), delay);
-        obs.unobserve(el);
-      });
+    const obs = new IntersectionObserver(function(entries) {
+      entries
+        .filter(function(e) { return e.isIntersecting; })
+        .sort(function(a,b) { return a.boundingClientRect.top - b.boundingClientRect.top; })
+        .forEach(function(e) {
+          triggerEl(e.target);
+          obs.unobserve(e.target);
+        });
     }, { threshold: 0.04, rootMargin: '0px 0px -20px 0px' });
 
     const els = document.querySelectorAll('.reveal');
-    els.forEach(el => obs.observe(el));
+    els.forEach(function(el) { obs.observe(el); });
 
-    /* Triggera subito le card già visibili al caricamento */
-    requestAnimationFrame(() => requestAnimationFrame(() => {
-      const inView = Array.from(els)
-        .filter(el => {
-          const r = el.getBoundingClientRect();
+    /* Triggera subito chi è già visibile al caricamento */
+    requestAnimationFrame(function() { requestAnimationFrame(function() {
+      Array.from(els)
+        .filter(function(el) {
+          var r = el.getBoundingClientRect();
           return r.top < window.innerHeight && r.bottom > 0;
         })
-        .sort((a,b) => a.getBoundingClientRect().top - b.getBoundingClientRect().top);
-
-      inView.forEach(el => {
-        const isCard = el.classList.contains('member-card');
-        let delay;
-        if (isCard) {
-          delay = cardCounter * CARD_STAGGER;
-          cardCounter++;
-        } else {
-          delay = +(el.dataset.delay || 0);
-        }
-        setTimeout(() => el.classList.add('is-visible'), delay);
-        obs.unobserve(el);
-      });
-    }));
+        .sort(function(a,b) {
+          return a.getBoundingClientRect().top - b.getBoundingClientRect().top;
+        })
+        .forEach(function(el) {
+          triggerEl(el);
+          obs.unobserve(el);
+        });
+    }); });
   }
 
   /* ── SYNAPSE CANVAS: rete neurale immersiva su tutta la pagina ── */
