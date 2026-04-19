@@ -1109,22 +1109,24 @@
   /* ── Scroll reveal ── */
   function initReveal() {
     var cardCounter = 0;
-    var CARD_STAGGER = 150; /* ms tra una card e la successiva */
+    var CARD_STAGGER = 120; /* ms tra una card e la successiva */
 
     function triggerEl(el) {
       var isCard = el.classList.contains('member-card');
       var delay = isCard ? cardCounter * CARD_STAGGER : +(el.dataset.delay || 0);
       if (isCard) {
         cardCounter++;
-        /* shimmer: inietta un div dedicato che non interferisce con ::after esistente */
         setTimeout(function() {
           el.classList.add('is-visible');
-          var shimmer = document.createElement('div');
-          shimmer.className = 'card-shimmer';
-          el.appendChild(shimmer);
+          /* shimmer appare al picco del glow (~35% di .7s = 245ms dopo il reveal) */
           setTimeout(function() {
-            if (shimmer.parentNode) shimmer.parentNode.removeChild(shimmer);
-          }, 700);
+            var shimmer = document.createElement('div');
+            shimmer.className = 'card-shimmer';
+            el.appendChild(shimmer);
+            setTimeout(function() {
+              if (shimmer.parentNode) shimmer.parentNode.removeChild(shimmer);
+            }, 600);
+          }, 200);
         }, delay);
         return;
       }
