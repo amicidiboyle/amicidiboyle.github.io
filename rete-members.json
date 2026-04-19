@@ -338,5 +338,17 @@
       "diving",
       "Space"
     ]
+  },
+  {
+    "name": "Elena Gamarra",
+    "role": "Endocrinologo, Ricercatrice EOC. Focus: Diabetologia e Diving, Educazione Terapeutica",
+    "img": "elena-gamarra.jpg",
+    "city": "Lugano, CH",
+    "linkedin": "https://www.linkedin.com/in/elena-gamarra-3388b79ah",
+    "email": "elena.gamarra@eoc.ch",
+    "tags": [
+      "Diabetologia",
+      "Diving"
+    ]
   }
 ]
