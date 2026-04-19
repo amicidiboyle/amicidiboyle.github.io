@@ -1109,7 +1109,7 @@
   /* ── Scroll reveal ── */
   function initReveal() {
     var cardCounter = 0;
-    var CARD_STAGGER = 120; /* ms tra una card e la successiva */
+    var CARD_STAGGER = 110; /* ms tra una card e la successiva */
 
     function triggerEl(el) {
       var isCard = el.classList.contains('member-card');
@@ -1141,7 +1141,7 @@
           triggerEl(e.target);
           obs.unobserve(e.target);
         });
-    }, { threshold: 0.04, rootMargin: '0px 0px -20px 0px' });
+    }, { threshold: 0.01, rootMargin: '0px 0px 80px 0px' });
 
     var els = document.querySelectorAll('.reveal');
     els.forEach(function(el) { obs.observe(el); });
