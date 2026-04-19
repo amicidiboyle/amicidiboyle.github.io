@@ -1053,58 +1053,68 @@ a { color: inherit; text-decoration: none; }
     inset -2px 0 0 rgba(0,0,0,.18) !important;
 }
 
-/* ── Animazione entrata: reveal cinematico + shimmer ── */
-@keyframes cardReveal {
-  0%   { opacity:0; transform:translateY(22px) scale(.93); box-shadow:0 0 0 0 rgba(123,228,255,0); }
-  25%  { opacity:1; transform:translateY(-4px) scale(1.025); box-shadow:0 0 40px 6px rgba(123,228,255,.28), 0 0 80px 12px rgba(123,228,255,.10); }
-  55%  { transform:translateY(1px) scale(.998); box-shadow:0 0 18px 3px rgba(123,228,255,.12); }
-  100% { opacity:1; transform:translateY(0) scale(1); box-shadow:0 0 0 0 rgba(123,228,255,0); }
-}
-@keyframes cardShimmerReveal {
-  0%   { left:-80%; opacity:1; }
-  100% { left:140%; opacity:1; }
-}
+/* ── Animazione entrata card: emersione + bioluminescenza ── */
 @keyframes cardEnterLeft {
-  0%   { opacity:0; transform:translateY(22px) scale(.93); box-shadow:0 0 0 0 rgba(123,228,255,0); }
-  25%  { opacity:1; transform:translateY(-4px) scale(1.025); box-shadow:0 0 40px 6px rgba(123,228,255,.28), 0 0 80px 14px rgba(123,228,255,.10); }
-  55%  { transform:translateY(1px) scale(.998); box-shadow:0 0 18px 3px rgba(123,228,255,.1); }
-  100% { opacity:1; transform:translateY(0) scale(1); box-shadow:0 0 0 0 rgba(123,228,255,0); }
+  0%   { opacity:0; transform:translateY(28px) scale(.92);
+         box-shadow: 0 0 0 0 rgba(123,228,255,0), inset 0 0 0 1px rgba(123,228,255,0); }
+  20%  { opacity:.6; }
+  35%  { opacity:1; transform:translateY(-5px) scale(1.03);
+         box-shadow: 0 0 50px 8px rgba(123,228,255,.32), 0 0 100px 16px rgba(80,180,255,.12),
+                     inset 0 0 0 1px rgba(123,228,255,.5); }
+  60%  { transform:translateY(2px) scale(.997);
+         box-shadow: 0 0 20px 3px rgba(123,228,255,.12), inset 0 0 0 1px rgba(123,228,255,.2); }
+  100% { opacity:1; transform:translateY(0) scale(1);
+         box-shadow: 0 0 0 0 rgba(123,228,255,0), inset 0 0 0 1px rgba(123,228,255,0); }
 }
 @keyframes cardEnterRight {
-  0%   { opacity:0; transform:translateY(22px) scale(.93); box-shadow:0 0 0 0 rgba(123,228,255,0); }
-  25%  { opacity:1; transform:translateY(-4px) scale(1.025); box-shadow:0 0 40px 6px rgba(123,228,255,.28), 0 0 80px 14px rgba(123,228,255,.10); }
-  55%  { transform:translateY(1px) scale(.998); box-shadow:0 0 18px 3px rgba(123,228,255,.1); }
-  100% { opacity:1; transform:translateY(0) scale(1); box-shadow:0 0 0 0 rgba(123,228,255,0); }
+  0%   { opacity:0; transform:translateY(28px) scale(.92);
+         box-shadow: 0 0 0 0 rgba(123,228,255,0), inset 0 0 0 1px rgba(123,228,255,0); }
+  20%  { opacity:.6; }
+  35%  { opacity:1; transform:translateY(-5px) scale(1.03);
+         box-shadow: 0 0 50px 8px rgba(123,228,255,.32), 0 0 100px 16px rgba(80,180,255,.12),
+                     inset 0 0 0 1px rgba(123,228,255,.5); }
+  60%  { transform:translateY(2px) scale(.997);
+         box-shadow: 0 0 20px 3px rgba(123,228,255,.12), inset 0 0 0 1px rgba(123,228,255,.2); }
+  100% { opacity:1; transform:translateY(0) scale(1);
+         box-shadow: 0 0 0 0 rgba(123,228,255,0), inset 0 0 0 1px rgba(123,228,255,0); }
 }
 @keyframes cardEnterUp {
-  0%   { opacity:0; transform:translateY(22px) scale(.93); box-shadow:0 0 0 0 rgba(123,228,255,0); }
-  25%  { opacity:1; transform:translateY(-4px) scale(1.025); box-shadow:0 0 40px 6px rgba(123,228,255,.28), 0 0 80px 14px rgba(123,228,255,.10); }
-  55%  { transform:translateY(1px) scale(.998); box-shadow:0 0 18px 3px rgba(123,228,255,.1); }
-  100% { opacity:1; transform:translateY(0) scale(1); box-shadow:0 0 0 0 rgba(123,228,255,0); }
+  0%   { opacity:0; transform:translateY(28px) scale(.92);
+         box-shadow: 0 0 0 0 rgba(123,228,255,0), inset 0 0 0 1px rgba(123,228,255,0); }
+  20%  { opacity:.6; }
+  35%  { opacity:1; transform:translateY(-5px) scale(1.03);
+         box-shadow: 0 0 50px 8px rgba(123,228,255,.32), 0 0 100px 16px rgba(80,180,255,.12),
+                     inset 0 0 0 1px rgba(123,228,255,.5); }
+  60%  { transform:translateY(2px) scale(.997);
+         box-shadow: 0 0 20px 3px rgba(123,228,255,.12), inset 0 0 0 1px rgba(123,228,255,.2); }
+  100% { opacity:1; transform:translateY(0) scale(1);
+         box-shadow: 0 0 0 0 rgba(123,228,255,0), inset 0 0 0 1px rgba(123,228,255,0); }
 }
 
-/* Collisione: sinistra/centro/destra alternati */
-.member-card:nth-child(3n+1).is-visible { animation: cardEnterLeft  .75s cubic-bezier(.22,1,.36,1) both; }
-.member-card:nth-child(3n+2).is-visible { animation: cardEnterUp    .75s cubic-bezier(.22,1,.36,1) both; }
-.member-card:nth-child(3n+3).is-visible { animation: cardEnterRight .75s cubic-bezier(.22,1,.36,1) both; }
-
-/* shimmer iniettato via JS */
+/* shimmer lineare iniettato via JS */
+@keyframes cardShimmerReveal {
+  0%   { transform: translateX(-120%) skewX(-14deg); }
+  100% { transform: translateX(280%) skewX(-14deg); }
+}
 .card-shimmer {
-  position: absolute; top: 0; left: -80%;
-  width: 55%; height: 100%;
-  background: linear-gradient(105deg, transparent 0%, rgba(123,228,255,.05) 38%, rgba(123,228,255,.2) 50%, rgba(123,228,255,.05) 62%, transparent 100%);
-  transform: skewX(-14deg);
+  position: absolute; inset: 0;
+  width: 45%; top: 0; bottom: 0;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(123,228,255,.04) 30%,
+    rgba(123,228,255,.22) 50%,
+    rgba(123,228,255,.04) 70%,
+    transparent 100%);
   pointer-events: none; z-index: 10;
-  animation: cardShimmerReveal .6s cubic-bezier(.4,0,.2,1) forwards;
+  animation: cardShimmerReveal .55s cubic-bezier(.4,0,.2,1) forwards;
 }
+
+.member-card:nth-child(3n+1).is-visible { animation: cardEnterLeft  .7s cubic-bezier(.22,1,.36,1) both; }
+.member-card:nth-child(3n+2).is-visible { animation: cardEnterUp    .7s cubic-bezier(.22,1,.36,1) both; }
+.member-card:nth-child(3n+3).is-visible { animation: cardEnterRight .7s cubic-bezier(.22,1,.36,1) both; }
 
 /* Stagger progressivo */
-/* stagger gestito da JS */
-.member-card:nth-child(11){animation-delay:.12s} .member-card:nth-child(12){animation-delay:.22s}
-.member-card:nth-child(13){animation-delay:.05s} .member-card:nth-child(14){animation-delay:.15s}
-.member-card:nth-child(15){animation-delay:.25s}
-
-/* brand-copy */
+/* stagger gestito da JS *//* brand-copy */
 
 
 
