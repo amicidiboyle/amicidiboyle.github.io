@@ -188,11 +188,11 @@ a { color: inherit; text-decoration: none; }
   display: flex; flex-direction: column; align-items: center; text-align: center;
   /* Animazione entrata */
   will-change: transform, opacity;
-  opacity: 0; transform: translateY(28px);
-  transition: opacity .65s ease, transform .65s cubic-bezier(.22,.68,0,1.2),
+  opacity: 0; transform: scale(.96);
+  transition: opacity .65s cubic-bezier(.4,0,.2,1), transform .65s cubic-bezier(.4,0,.2,1),
               border-color .25s, box-shadow .25s;
 }
-.member-card.is-visible { opacity: 1; transform: none; }
+.member-card.is-visible { opacity: 1; transform: scale(1); }
 
 /* ── Profilo completo: bordo verde + linea luminosa in cima ── */
 .member-card--complete {
@@ -1053,30 +1053,24 @@ a { color: inherit; text-decoration: none; }
     inset -2px 0 0 rgba(0,0,0,.18) !important;
 }
 
-/* ── Animazione lingotto: collisione laterale ── */
+/* ── Animazione entrata: fade + zoom ── */
 @keyframes cardEnterLeft {
-  0%   { opacity:0; transform:perspective(900px) rotateY(-28deg) translateX(-65px) translateY(32px) scale(.88); filter:blur(3px); }
-  55%  { opacity:1; transform:perspective(900px) rotateY(7deg) translateX(10px) translateY(-5px) scale(1.03); filter:blur(0); }
-  78%  { transform:perspective(900px) rotateY(-3deg) translateX(-4px) translateY(2px) scale(.99); }
-  100% { transform:perspective(1000px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) translateY(0) scale(1); }
+  0%   { opacity:0; transform:scale(.96); }
+  100% { opacity:1; transform:scale(1); }
 }
 @keyframes cardEnterRight {
-  0%   { opacity:0; transform:perspective(900px) rotateY(28deg) translateX(65px) translateY(32px) scale(.88); filter:blur(3px); }
-  55%  { opacity:1; transform:perspective(900px) rotateY(-7deg) translateX(-10px) translateY(-5px) scale(1.03); filter:blur(0); }
-  78%  { transform:perspective(900px) rotateY(3deg) translateX(4px) translateY(2px) scale(.99); }
-  100% { transform:perspective(1000px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) translateY(0) scale(1); }
+  0%   { opacity:0; transform:scale(.96); }
+  100% { opacity:1; transform:scale(1); }
 }
 @keyframes cardEnterUp {
-  0%   { opacity:0; transform:perspective(900px) rotateX(22deg) translateY(62px) scale(.88); filter:blur(3px); }
-  60%  { opacity:1; transform:perspective(900px) rotateX(-5deg) translateY(-7px) scale(1.03); filter:blur(0); }
-  82%  { transform:perspective(900px) rotateX(2deg) translateY(3px) scale(.99); }
-  100% { transform:perspective(1000px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) translateY(0) scale(1); }
+  0%   { opacity:0; transform:scale(.96); }
+  100% { opacity:1; transform:scale(1); }
 }
 
 /* Collisione: sinistra/centro/destra alternati */
-.member-card:nth-child(3n+1).is-visible { animation: cardEnterLeft  .92s cubic-bezier(.22,.68,0,1.08) both; }
-.member-card:nth-child(3n+2).is-visible { animation: cardEnterUp    .92s cubic-bezier(.22,.68,0,1.08) both; }
-.member-card:nth-child(3n+3).is-visible { animation: cardEnterRight .92s cubic-bezier(.22,.68,0,1.08) both; }
+.member-card:nth-child(3n+1).is-visible { animation: cardEnterLeft  .65s cubic-bezier(.4,0,.2,1) both; }
+.member-card:nth-child(3n+2).is-visible { animation: cardEnterUp    .65s cubic-bezier(.4,0,.2,1) both; }
+.member-card:nth-child(3n+3).is-visible { animation: cardEnterRight .65s cubic-bezier(.4,0,.2,1) both; }
 
 /* Stagger progressivo */
 .member-card:nth-child(1){animation-delay:.00s} .member-card:nth-child(2){animation-delay:.10s}
@@ -3248,9 +3242,8 @@ a { color: inherit; text-decoration: none; }
    ════════════════════════════════════════════════════════ */
 
 @keyframes cardEnterMobile {
-  0%   { opacity: 0; transform: translateY(44px) scale(.93); filter: blur(5px); }
-  55%  { opacity: 1; transform: translateY(-5px) scale(1.02); filter: blur(0); }
-  100% { opacity: 1; transform: translateY(0)    scale(1);    filter: blur(0); }
+  0%   { opacity: 0; transform: scale(.96); }
+  100% { opacity: 1; transform: scale(1); }
 }
 
 @keyframes cardGlowPulse {
@@ -3262,12 +3255,10 @@ a { color: inherit; text-decoration: none; }
   /* Stato iniziale card mobile */
   .member-card {
     opacity: 0;
-    transform: translateY(36px) scale(.95);
-    filter: blur(3px);
+    transform: scale(.96);
     transition:
-      opacity  .55s ease,
-      transform .55s cubic-bezier(.22,.68,0,1.22),
-      filter   .4s  ease;
+      opacity  .6s cubic-bezier(.4,0,.2,1),
+      transform .6s cubic-bezier(.4,0,.2,1);
   }
   .member-card.is-visible {
     opacity: 1;
