@@ -1336,7 +1336,6 @@
       'andrea-fabbro': 'FRIEND-ZBI5-FABBRO',
       'andrea-neville-cracchiolo': 'FRIEND-C2DV-CRACCHIO',
       'vincenzo-zanon': 'BOYLE-5ZS4-ZANON',
-      'elena-gamarra': 'BOYLE-75XV-GAMARRA',
   };
   const VALID_CODES = {
     'simona-damiano':         'BOYLE-K7X2-DAMIANO',
@@ -1877,10 +1876,12 @@
       });
       if (linksWrap) linksWrap.style.display = linksEl.children.length ? '' : 'none';
       const availEl=document.getElementById('pm-avail');
+      const availWrap=document.getElementById('pm-avail-wrap');
       availEl.innerHTML='';
       if(p.speaker) availEl.innerHTML+='<span class="avail-badge avail-badge--speaker">📢 Disponibile come relatore</span>';
       if(p.podcast) availEl.innerHTML+='<span class="avail-badge avail-badge--podcast">🎙 Disponibile per il podcast</span>';
       if(p.research) availEl.innerHTML+='<span class="avail-badge avail-badge--research">🔬 Aperto a collaborazioni</span>';
+      if(availWrap) availWrap.style.display = availEl.innerHTML ? '' : 'none';
       // Tags from member card
       const tagsEl=document.getElementById('pm-tags');
       if(tagsEl){
