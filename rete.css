@@ -1073,16 +1073,14 @@ a { color: inherit; text-decoration: none; }
 .member-card:nth-child(3n+2).is-visible { animation: cardEnterUp    .75s cubic-bezier(.22,1,.36,1) both; }
 .member-card:nth-child(3n+3).is-visible { animation: cardEnterRight .75s cubic-bezier(.22,1,.36,1) both; }
 
-/* shimmer al reveal */
-.member-card.is-visible::after {
-  content: '';
+/* shimmer iniettato via JS */
+.card-shimmer {
   position: absolute; top: 0; left: -80%;
-  width: 60%; height: 100%;
-  background: linear-gradient(105deg, transparent 0%, rgba(123,228,255,.06) 40%, rgba(123,228,255,.18) 50%, rgba(123,228,255,.06) 60%, transparent 100%);
-  transform: skewX(-15deg);
-  animation: cardShimmerReveal .55s cubic-bezier(.4,0,.2,1) forwards;
-  animation-delay: inherit;
+  width: 55%; height: 100%;
+  background: linear-gradient(105deg, transparent 0%, rgba(123,228,255,.05) 38%, rgba(123,228,255,.2) 50%, rgba(123,228,255,.05) 62%, transparent 100%);
+  transform: skewX(-14deg);
   pointer-events: none; z-index: 10;
+  animation: cardShimmerReveal .6s cubic-bezier(.4,0,.2,1) forwards;
 }
 
 /* Stagger progressivo */
