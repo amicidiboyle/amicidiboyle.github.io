@@ -2176,18 +2176,18 @@ a { color: inherit; text-decoration: none; }
 /* Campi input */
 .edit-field { margin-bottom: 12px; }
 .edit-field label {
-  display: block; font-size: .72rem; font-weight: 600;
-  color: rgba(180,210,240,0.65); margin-bottom: 5px;
-  letter-spacing: .04em;
+  display: block; font-size: .72rem; font-weight: 700;
+  color: rgba(190,225,255,0.88); margin-bottom: 5px;
+  letter-spacing: .05em; text-transform: uppercase;
 }
-.edit-field__hint { font-weight: 400; opacity: .6; margin-left: 4px; }
+.edit-field__hint { font-weight: 400; opacity: .55; margin-left: 4px; text-transform: none; }
 
 .edit-field textarea,
 .edit-field input[type="url"] {
   width: 100%; padding: 10px 14px;
-  background: rgba(4,18,48,0.7);
-  border: 1px solid rgba(100,200,255,0.16);
-  border-radius: 10px; color: #d0e8ff;
+  background: rgba(6,22,58,0.85);
+  border: 1px solid rgba(123,200,255,0.28);
+  border-radius: 10px; color: #e0f0ff;
   font-size: .83rem; font-family: inherit;
   transition: border-color .2s, box-shadow .2s;
   outline: none;
@@ -2195,31 +2195,85 @@ a { color: inherit; text-decoration: none; }
 .edit-field textarea { resize: vertical; min-height: 80px; }
 .edit-field textarea:focus,
 .edit-field input[type="url"]:focus {
-  border-color: rgba(100,200,255,0.4);
-  box-shadow: 0 0 0 3px rgba(100,200,255,0.08);
+  border-color: rgba(123,228,255,0.6);
+  box-shadow: 0 0 0 3px rgba(123,228,255,0.1);
+  background: rgba(8,28,72,0.9);
 }
 
 .edit-field__input-wrap {
   display: flex; align-items: center;
-  background: rgba(4,18,48,0.7);
-  border: 1px solid rgba(100,200,255,0.16);
+  background: rgba(6,22,58,0.85);
+  border: 1px solid rgba(123,200,255,0.28);
   border-radius: 10px; overflow: hidden;
   transition: border-color .2s, box-shadow .2s;
 }
 .edit-field__input-wrap:focus-within {
-  border-color: rgba(100,200,255,0.4);
-  box-shadow: 0 0 0 3px rgba(100,200,255,0.08);
+  border-color: rgba(123,228,255,0.6);
+  box-shadow: 0 0 0 3px rgba(123,228,255,0.1);
 }
+
+/* Prefix colorato per piattaforma */
 .edit-field__prefix {
   padding: 10px 12px;
-  font-size: .7rem; font-weight: 800; letter-spacing: .06em;
-  color: rgba(125,211,252,0.5); border-right: 1px solid rgba(100,200,255,0.1);
-  flex-shrink: 0; min-width: 34px; text-align: center;
+  font-size: .68rem; font-weight: 900; letter-spacing: .06em;
+  border-right: 1px solid rgba(123,200,255,0.18);
+  flex-shrink: 0; min-width: 38px; text-align: center;
+  color: rgba(123,228,255,0.9);
 }
+/* LinkedIn */
+.edit-field__input-wrap[data-platform="linkedin"] .edit-field__prefix {
+  color: #60a8fb; background: rgba(10,102,194,.18);
+  border-right-color: rgba(10,102,194,.3);
+}
+.edit-field__input-wrap[data-platform="linkedin"] {
+  border-color: rgba(10,102,194,.35);
+}
+.edit-field__input-wrap[data-platform="linkedin"]:focus-within {
+  border-color: rgba(10,102,194,.7);
+  box-shadow: 0 0 0 3px rgba(10,102,194,.1);
+}
+/* ResearchGate */
+.edit-field__input-wrap[data-platform="researchgate"] .edit-field__prefix {
+  color: #3ddba8; background: rgba(0,204,136,.15);
+  border-right-color: rgba(0,204,136,.25);
+}
+.edit-field__input-wrap[data-platform="researchgate"] {
+  border-color: rgba(0,204,136,.3);
+}
+/* Google Scholar */
+.edit-field__input-wrap[data-platform="scholar"] .edit-field__prefix {
+  color: #89b4ff; background: rgba(66,133,244,.15);
+  border-right-color: rgba(66,133,244,.25);
+}
+.edit-field__input-wrap[data-platform="scholar"] {
+  border-color: rgba(66,133,244,.3);
+}
+/* ORCID */
+.edit-field__input-wrap[data-platform="orcid"] .edit-field__prefix {
+  color: #b8e04a; background: rgba(166,206,57,.12);
+  border-right-color: rgba(166,206,57,.22);
+}
+.edit-field__input-wrap[data-platform="orcid"] {
+  border-color: rgba(166,206,57,.28);
+}
+/* Twitter/X */
+.edit-field__input-wrap[data-platform="twitter"] .edit-field__prefix {
+  color: #c8d4e0; background: rgba(180,200,220,.08);
+  border-right-color: rgba(180,200,220,.15);
+}
+/* Instagram */
+.edit-field__input-wrap[data-platform="instagram"] .edit-field__prefix {
+  color: #f0a0cc; background: rgba(225,100,180,.1);
+  border-right-color: rgba(225,100,180,.2);
+}
+.edit-field__input-wrap[data-platform="instagram"] {
+  border-color: rgba(225,100,180,.25);
+}
+
 .edit-field__input-wrap input {
   border: none; background: transparent;
   padding: 10px 12px; width: 100%;
-  color: #d0e8ff; font-size: .83rem; font-family: inherit;
+  color: #e0f0ff; font-size: .83rem; font-family: inherit;
   outline: none;
 }
 
