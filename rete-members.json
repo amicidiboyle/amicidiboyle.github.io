@@ -350,5 +350,16 @@
       "Diabetologia",
       "Diving"
     ]
+  },
+  {
+    "name": "Marco Malpieri",
+    "role": "Tecnico Iperbarico. Centro Iperbarico Grande Ospedale Metropolitano di Niguarda. Istruttore pesca in apnea. Focus: Medicina Iperbarica",
+    "img": "marco-malpieri.jpg",
+    "city": "MIlano, IT",
+    "linkedin": "https://www.linkedin.com/in/marco-malpieri-041797123/",
+    "email": "malpo22@gmail.com",
+    "tags": [
+      "Iperbarica"
+    ]
   }
 ]
