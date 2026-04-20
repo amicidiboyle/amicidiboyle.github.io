@@ -473,9 +473,9 @@
     "instagram": "",
     "website": "",
     "courses": "",
-    "speaker": true,
+    "speaker": false,
     "podcast": false,
-    "research": true,
-    "updated": "2026-04-20 19:16:53"
+    "research": false,
+    "updated": "2026-04-20 19:17:10"
   }
 }
