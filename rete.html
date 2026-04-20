@@ -779,28 +779,28 @@
         <div class="edit-fields-grid">
           <div class="edit-field">
             <label>LinkedIn</label>
-            <div class="edit-field__input-wrap">
+            <div class="edit-field__input-wrap" data-platform="linkedin">
               <span class="edit-field__prefix">in</span>
               <input type="url" id="ef-linkedin" placeholder="linkedin.com/in/..." />
             </div>
           </div>
           <div class="edit-field">
             <label data-i18n="r_edit_rg">ResearchGate</label>
-            <div class="edit-field__input-wrap">
+            <div class="edit-field__input-wrap" data-platform="researchgate">
               <span class="edit-field__prefix">RG</span>
               <input type="url" id="ef-researchgate" placeholder="researchgate.net/profile/..." />
             </div>
           </div>
           <div class="edit-field">
             <label data-i18n="r_edit_scholar">Google Scholar</label>
-            <div class="edit-field__input-wrap">
+            <div class="edit-field__input-wrap" data-platform="scholar">
               <span class="edit-field__prefix">GS</span>
               <input type="url" id="ef-scholar" placeholder="scholar.google.com/..." />
             </div>
           </div>
           <div class="edit-field">
             <label>ORCID</label>
-            <div class="edit-field__input-wrap">
+            <div class="edit-field__input-wrap" data-platform="orcid">
               <span class="edit-field__prefix">ID</span>
               <input type="url" id="ef-orcid" placeholder="orcid.org/0000-..." />
             </div>
@@ -821,14 +821,14 @@
           </div>
           <div class="edit-field">
             <label>X / Twitter</label>
-            <div class="edit-field__input-wrap">
+            <div class="edit-field__input-wrap" data-platform="twitter">
               <span class="edit-field__prefix">𝕏</span>
               <input type="url" id="ef-twitter" placeholder="x.com/..." />
             </div>
           </div>
           <div class="edit-field">
             <label>Instagram</label>
-            <div class="edit-field__input-wrap">
+            <div class="edit-field__input-wrap" data-platform="instagram">
               <span class="edit-field__prefix">◎</span>
               <input type="url" id="ef-instagram" placeholder="instagram.com/..." />
             </div>
@@ -2082,8 +2082,7 @@
               });
               if (!res.ok) continue;
               const file   = await res.json();
-              const fresh  = JSON.parse(atob(file.content.replace(/
-/g, '')));
+              const fresh  = JSON.parse(atob(file.content.replace(/\n/g, '')));
               const p      = fresh[currentKey] || {};
 
               /* Confronto robusto — converte speaker/podcast/research in booleano
