@@ -461,5 +461,21 @@
     "podcast": false,
     "research": true,
     "updated": "2026-04-20 09:43:26"
+  },
+  "marco-malpieri": {
+    "name": "Marco Malpieri",
+    "bio": "",
+    "linkedin": "https://www.linkedin.com/in/marco-malpieri-041797123/",
+    "researchgate": "",
+    "scholar": "",
+    "orcid": "",
+    "twitter": "",
+    "instagram": "",
+    "website": "",
+    "courses": "",
+    "speaker": false,
+    "podcast": false,
+    "research": false,
+    "updated": "2026-04-20 18:29:54"
   }
 }
