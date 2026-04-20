@@ -1,0 +1,171 @@
+/* ════════════════════════════════════════════════════════
+   rete-extra.css — sovrascritture colori e stile
+   NON modifica layout, animazioni o logica JS
+   ════════════════════════════════════════════════════════ */
+
+/* ── Label sezioni profilo (Disponibilità, Link Professionali) ── */
+.profile-section-label {
+  color: rgba(123,228,255,.88) !important;
+}
+
+/* ── Badge disponibilità ── */
+.avail-badge--speaker {
+  background: rgba(123,228,255,.12) !important;
+  border: 1px solid rgba(123,228,255,.38) !important;
+  color: #7ce8ff !important;
+  font-weight: 700 !important;
+}
+.avail-badge--podcast {
+  background: rgba(196,176,255,.12) !important;
+  border: 1px solid rgba(196,176,255,.38) !important;
+  color: #c4b0ff !important;
+  font-weight: 700 !important;
+}
+.avail-badge--research {
+  background: rgba(77,255,214,.1) !important;
+  border: 1px solid rgba(77,255,214,.35) !important;
+  color: #4dffd6 !important;
+  font-weight: 700 !important;
+}
+
+/* ── Link pill nel profilo ── */
+.profile-link-pill {
+  background: rgba(14,40,90,.75) !important;
+  border: 1px solid rgba(123,200,255,.32) !important;
+  color: rgba(200,230,255,.92) !important;
+  transition: background .2s, border-color .2s, box-shadow .2s !important;
+}
+.profile-link-pill:hover {
+  background: rgba(20,60,140,.85) !important;
+  border-color: rgba(123,228,255,.65) !important;
+  color: #b8e4ff !important;
+  box-shadow: 0 4px 18px rgba(0,150,255,.18) !important;
+}
+
+/* LinkedIn */
+.profile-link-pill[href*="linkedin"] {
+  border-color: rgba(10,102,194,.5) !important;
+  color: #7ab8f5 !important;
+  background: rgba(10,102,194,.13) !important;
+}
+.profile-link-pill[href*="linkedin"]:hover {
+  background: rgba(10,102,194,.24) !important;
+  border-color: rgba(10,102,194,.8) !important;
+  box-shadow: 0 4px 16px rgba(10,102,194,.22) !important;
+}
+/* ResearchGate */
+.profile-link-pill[href*="researchgate"] {
+  border-color: rgba(0,204,136,.42) !important;
+  color: #4dedb8 !important;
+  background: rgba(0,204,136,.1) !important;
+}
+.profile-link-pill[href*="researchgate"]:hover {
+  background: rgba(0,204,136,.2) !important;
+  border-color: rgba(0,204,136,.72) !important;
+  box-shadow: 0 4px 16px rgba(0,204,136,.18) !important;
+}
+/* ORCID */
+.profile-link-pill[href*="orcid"] {
+  border-color: rgba(166,206,57,.4) !important;
+  color: #c8e85a !important;
+  background: rgba(166,206,57,.08) !important;
+}
+.profile-link-pill[href*="orcid"]:hover {
+  background: rgba(166,206,57,.16) !important;
+  border-color: rgba(166,206,57,.68) !important;
+  box-shadow: 0 4px 16px rgba(166,206,57,.15) !important;
+}
+/* Google Scholar */
+.profile-link-pill[href*="scholar"] {
+  border-color: rgba(66,133,244,.42) !important;
+  color: #89b4ff !important;
+  background: rgba(66,133,244,.1) !important;
+}
+/* Instagram */
+.profile-link-pill[href*="instagram"] {
+  border-color: rgba(225,105,185,.38) !important;
+  color: #f0a0d0 !important;
+  background: rgba(225,105,185,.08) !important;
+}
+/* Twitter/X */
+.profile-link-pill[href*="twitter"],
+.profile-link-pill[href*="x.com"] {
+  border-color: rgba(180,200,220,.3) !important;
+  color: #c8d8e8 !important;
+}
+
+/* ── Form modifica profilo — label e campi ── */
+.edit-field label {
+  color: rgba(190,225,255,.9) !important;
+  font-weight: 700 !important;
+}
+
+/* Input wrap base */
+.edit-field__input-wrap {
+  background: rgba(6,22,58,.85) !important;
+  border: 1px solid rgba(123,200,255,.28) !important;
+}
+.edit-field__input-wrap:focus-within {
+  border-color: rgba(123,228,255,.62) !important;
+  box-shadow: 0 0 0 3px rgba(123,228,255,.1) !important;
+}
+/* Prefix badge base */
+.edit-field__prefix {
+  color: rgba(123,228,255,.88) !important;
+  border-right-color: rgba(123,200,255,.2) !important;
+}
+
+/* LinkedIn */
+.edit-field__input-wrap:has(#ef-linkedin) {
+  border-color: rgba(10,102,194,.38) !important;
+}
+.edit-field__input-wrap:has(#ef-linkedin) .edit-field__prefix {
+  color: #60a8fb !important;
+  background: rgba(10,102,194,.16) !important;
+  border-right-color: rgba(10,102,194,.28) !important;
+}
+.edit-field__input-wrap:has(#ef-linkedin):focus-within {
+  border-color: rgba(10,102,194,.72) !important;
+  box-shadow: 0 0 0 3px rgba(10,102,194,.1) !important;
+}
+/* ResearchGate */
+.edit-field__input-wrap:has(#ef-researchgate) {
+  border-color: rgba(0,204,136,.32) !important;
+}
+.edit-field__input-wrap:has(#ef-researchgate) .edit-field__prefix {
+  color: #3ddba8 !important;
+  background: rgba(0,204,136,.14) !important;
+  border-right-color: rgba(0,204,136,.24) !important;
+}
+/* Google Scholar */
+.edit-field__input-wrap:has(#ef-scholar) {
+  border-color: rgba(66,133,244,.32) !important;
+}
+.edit-field__input-wrap:has(#ef-scholar) .edit-field__prefix {
+  color: #89b4ff !important;
+  background: rgba(66,133,244,.14) !important;
+  border-right-color: rgba(66,133,244,.24) !important;
+}
+/* ORCID */
+.edit-field__input-wrap:has(#ef-orcid) {
+  border-color: rgba(166,206,57,.3) !important;
+}
+.edit-field__input-wrap:has(#ef-orcid) .edit-field__prefix {
+  color: #b8e04a !important;
+  background: rgba(166,206,57,.11) !important;
+  border-right-color: rgba(166,206,57,.22) !important;
+}
+/* Twitter/X */
+.edit-field__input-wrap:has(#ef-twitter) .edit-field__prefix {
+  color: #c8d4e0 !important;
+  background: rgba(180,200,220,.07) !important;
+}
+/* Instagram */
+.edit-field__input-wrap:has(#ef-instagram) {
+  border-color: rgba(225,100,180,.28) !important;
+}
+.edit-field__input-wrap:has(#ef-instagram) .edit-field__prefix {
+  color: #f0a0cc !important;
+  background: rgba(225,100,180,.1) !important;
+  border-right-color: rgba(225,100,180,.2) !important;
+}
