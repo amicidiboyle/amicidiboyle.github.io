@@ -1336,7 +1336,6 @@
       'andrea-fabbro': 'FRIEND-ZBI5-FABBRO',
       'andrea-neville-cracchiolo': 'FRIEND-C2DV-CRACCHIO',
       'vincenzo-zanon': 'BOYLE-5ZS4-ZANON',
-      'marco-malpieri': 'BOYLE-LGN4-MALPIERI',
   };
   const VALID_CODES = {
     'simona-damiano':         'BOYLE-K7X2-DAMIANO',
@@ -1810,7 +1809,32 @@
     if (!force && profilesCache) return profilesCache;
     try {
       const r = await fetch(PROFILES_URL+'?v='+Date.now());
-      if (r.ok) { profilesCache = await r.json(); window._profiles = profilesCache; return profilesCache; }
+      if (r.ok) {
+        const remote = await r.json();
+        /* Applica eventuali override da sessionStorage — dati salvati di recente
+           non ancora propagati su GitHub CDN */
+        try {
+          for (let i = 0; i < sessionStorage.length; i++) {
+            const ssKey = sessionStorage.key(i);
+            if (ssKey && ssKey.startsWith('boyle_profile_')) {
+              const memberKey = ssKey.replace('boyle_profile_', '');
+              const override  = JSON.parse(sessionStorage.getItem(ssKey));
+              const remoteTs  = remote[memberKey] && remote[memberKey].updated;
+              const localTs   = override.updated;
+              /* Usa l'override solo se più recente o assente in remote */
+              if (!remoteTs || localTs >= remoteTs) {
+                remote[memberKey] = { ...(remote[memberKey]||{}), ...override };
+              } else {
+                /* GitHub è già aggiornato — rimuovi sessionStorage */
+                sessionStorage.removeItem(ssKey);
+              }
+            }
+          }
+        } catch(e) {}
+        profilesCache = remote;
+        window._profiles = profilesCache;
+        return profilesCache;
+      }
     } catch(e) {}
     return {};
   }
@@ -1978,116 +2002,120 @@
     document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeModal(); });
     submit?.addEventListener('click', async ()=>{
       if(!currentKey) return;
-      submit.disabled=true;
+      submit.disabled = true;
       if(status){ status.textContent='Salvataggio...'; status.className='edit-status'; }
+
+      /* Leggi i valori dal form — booleani reali */
       const payload = {
-        action:'save_profile',
-        key: currentKey,
-        name: currentKey,
-        bio: document.getElementById('ef-bio').value.trim(),
-        linkedin: document.getElementById('ef-linkedin').value.trim(),
-        researchgate: document.getElementById('ef-researchgate').value.trim(),
-        scholar: document.getElementById('ef-scholar').value.trim(),
-        orcid: document.getElementById('ef-orcid').value.trim(),
-        twitter: document.getElementById('ef-twitter').value.trim(),
-        instagram: document.getElementById('ef-instagram').value.trim(),
-        website: document.getElementById('ef-website').value.trim(),
-        courses: document.getElementById('ef-courses').value.trim(),
-        speaker: document.getElementById('ef-speaker').checked ? 'true' : 'false',
-        podcast: document.getElementById('ef-podcast').checked ? 'true' : 'false',
-        research: document.getElementById('ef-research').checked ? 'true' : 'false'
+        action:      'save_profile',
+        key:         currentKey,
+        name:        currentKey,
+        bio:         document.getElementById('ef-bio').value.trim(),
+        linkedin:    document.getElementById('ef-linkedin').value.trim(),
+        researchgate:document.getElementById('ef-researchgate').value.trim(),
+        scholar:     document.getElementById('ef-scholar').value.trim(),
+        orcid:       document.getElementById('ef-orcid').value.trim(),
+        twitter:     document.getElementById('ef-twitter').value.trim(),
+        instagram:   document.getElementById('ef-instagram').value.trim(),
+        website:     document.getElementById('ef-website').value.trim(),
+        courses:     document.getElementById('ef-courses').value.trim(),
+        speaker:     document.getElementById('ef-speaker').checked ? 'true' : 'false',
+        podcast:     document.getElementById('ef-podcast').checked ? 'true' : 'false',
+        research:    document.getElementById('ef-research').checked ? 'true' : 'false'
       };
+
+      /* Aggiorna subito la cache locale con valori booleani corretti
+         così il reload immediato mostra già i dati giusti */
+      const localProfile = {
+        name:        payload.name,
+        bio:         payload.bio,
+        linkedin:    payload.linkedin,
+        researchgate:payload.researchgate,
+        scholar:     payload.scholar,
+        orcid:       payload.orcid,
+        twitter:     payload.twitter,
+        instagram:   payload.instagram,
+        website:     payload.website,
+        courses:     payload.courses,
+        speaker:     payload.speaker === 'true',
+        podcast:     payload.podcast === 'true',
+        research:    payload.research === 'true',
+        updated:     new Date().toISOString().split('T')[0]
+      };
+
+      /* Aggiorna cache in memoria immediatamente */
+      if (!profilesCache) profilesCache = {};
+      if (!window._profiles) window._profiles = {};
+      profilesCache[currentKey] = { ...(profilesCache[currentKey]||{}), ...localProfile };
+      window._profiles[currentKey] = profilesCache[currentKey];
+
+      /* Persisti in sessionStorage come backup anti-reload */
       try {
-        await fetch(PROFILE_SAVE_WEBAPP,{
-          method:'POST',
-          mode:'no-cors',
-          headers:{'Content-Type':'application/x-www-form-urlencoded;charset=UTF-8'},
-          body:new URLSearchParams(payload).toString()
+        const ssKey = 'boyle_profile_' + currentKey;
+        sessionStorage.setItem(ssKey, JSON.stringify(localProfile));
+      } catch(e) {}
+
+      try {
+        /* Manda al Apps Script — no-cors, quindi non possiamo leggere la risposta */
+        await fetch(PROFILE_SAVE_WEBAPP, {
+          method:  'POST',
+          mode:    'no-cors',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
+          body:    new URLSearchParams(payload).toString()
         });
 
-       const expected = {
-  bio: payload.bio, linkedin: payload.linkedin, researchgate: payload.researchgate,
-  scholar: payload.scholar, orcid: payload.orcid, twitter: payload.twitter,
-  instagram: payload.instagram, website: payload.website, courses: payload.courses,
-  speaker: payload.speaker === 'true', podcast: payload.podcast === 'true', research: payload.research === 'true'
-};
+        /* Mostra successo subito — non aspettare GitHub CDN (può richiedere minuti) */
+        if(status){ status.textContent='✓ Profilo salvato!'; status.className='edit-status ok'; }
+        colorProfileIcons(profilesCache);
 
-let saved = false;
-for(let i=0;i<8;i++){
-  await new Promise(r=>setTimeout(r, 1500));
+        /* Verifica in background senza bloccare l'UX — max 10 tentativi × 3s = 30s */
+        (async function verifyInBackground() {
+          for (let i = 0; i < 10; i++) {
+            await new Promise(r => setTimeout(r, 3000));
+            try {
+              const res = await fetch(GH_API + '?t=' + Date.now(), {
+                headers: {
+                  'Authorization': 'Bearer ' + GH_TOKEN,
+                  'Accept':        'application/vnd.github+json',
+                  'Cache-Control': 'no-cache'
+                }
+              });
+              if (!res.ok) continue;
+              const file   = await res.json();
+              const fresh  = JSON.parse(atob(file.content.replace(/
+/g, '')));
+              const p      = fresh[currentKey] || {};
 
-  const verifyRes = await fetch(GH_API, {
-    headers: {
-      'Authorization': 'Bearer ' + GH_TOKEN,
-      'Accept': 'application/vnd.github+json'
-    }
-  });
+              /* Confronto robusto — converte speaker/podcast/research in booleano
+                 sia se arriva come stringa 'true'/'false' che come boolean */
+              function toBool(v) { return v === true || v === 'true' || v === '1'; }
 
-  if (!verifyRes.ok) continue;
+              const match =
+                (p.bio||'')         === payload.bio &&
+                toBool(p.speaker)   === (payload.speaker  === 'true') &&
+                toBool(p.podcast)   === (payload.podcast  === 'true') &&
+                toBool(p.research)  === (payload.research === 'true');
 
-  const verifyFile = await verifyRes.json();
-  const fresh = JSON.parse(atob(verifyFile.content.replace(/\n/g, '')));
-  const p = fresh[currentKey] || {};
+              if (match) {
+                /* Aggiorna cache con dati freschi da GitHub */
+                profilesCache = fresh;
+                window._profiles = fresh;
+                colorProfileIcons(fresh);
+                /* Rimuovi sessionStorage — non serve più */
+                try { sessionStorage.removeItem('boyle_profile_' + currentKey); } catch(e) {}
+                break;
+              }
+            } catch(e) { /* ignora errori di rete nel background */ }
+          }
+        })();
 
-  const ok =
-    (p.bio||'') === expected.bio &&
-    (p.linkedin||'') === expected.linkedin &&
-    (p.researchgate||'') === expected.researchgate &&
-    (p.scholar||'') === expected.scholar &&
-    (p.orcid||'') === expected.orcid &&
-    (p.twitter||'') === expected.twitter &&
-    (p.instagram||'') === expected.instagram &&
-    (p.website||'') === expected.website &&
-    (p.courses||'') === expected.courses &&
-    (!!p.speaker) === expected.speaker &&
-    (!!p.podcast) === expected.podcast &&
-    (!!p.research) === expected.research;
+        setTimeout(closeModal, 1200);
 
-  if (ok) {
-    profilesCache = fresh;
-    window._profiles = fresh;
-    colorProfileIcons(fresh);
-    if (status) {
-      status.textContent = '✓ Profilo salvato!';
-      status.className = 'edit-status ok';
-    }
-    saved = true;
-    setTimeout(closeModal, 1200);
-    break;
-  }
-}
-
-if (!saved) {
-  const localProfiles = (profilesCache && typeof profilesCache === 'object') ? profilesCache : {};
-  localProfiles[currentKey] = {
-    ...(localProfiles[currentKey] || {}),
-    name: currentKey,
-    bio: payload.bio,
-    linkedin: payload.linkedin,
-    researchgate: payload.researchgate,
-    scholar: payload.scholar,
-    orcid: payload.orcid,
-    twitter: payload.twitter,
-    instagram: payload.instagram,
-    website: payload.website,
-    courses: payload.courses,
-    speaker: payload.speaker === 'true',
-    podcast: payload.podcast === 'true',
-    research: payload.research === 'true',
-    updated: new Date().toISOString().split('T')[0]
-  };
-  profilesCache = localProfiles;
-  window._profiles = localProfiles;
-  colorProfileIcons(localProfiles);
-  if (status) {
-    status.textContent = '✓ Profilo salvato!';
-    status.className = 'edit-status ok';
-  }
-  setTimeout(closeModal, 1200);
-}
       } catch(err) {
         if(status){ status.textContent='✗ '+err.message; status.className='edit-status err'; }
-      } finally { submit.disabled=false; }
+      } finally {
+        submit.disabled = false;
+      }
     });
   }
 
