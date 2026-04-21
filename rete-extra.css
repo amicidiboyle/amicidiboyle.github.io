@@ -193,3 +193,40 @@
 .edit-field__input-wrap:has(#ef-twitter) .edit-field__prefix { color: #c8d4e0 !important; background: rgba(180,200,220,.07) !important; }
 .edit-field__input-wrap:has(#ef-instagram) { border-color: rgba(225,100,180,.28) !important; }
 .edit-field__input-wrap:has(#ef-instagram) .edit-field__prefix { color: #f0a0cc !important; background: rgba(225,100,180,.1) !important; border-right-color: rgba(225,100,180,.2) !important; }
+
+/* ── MOBILE ── */
+@media (max-width: 768px) {
+
+  /* Hover card disabilitato su touch — evita stati stuck */
+  .member-card:hover {
+    transform: none !important;
+    border-color: rgba(123,228,255,.22) !important;
+    box-shadow: 0 0 0 1px rgba(124,243,255,.03) inset, 0 0 22px rgba(124,243,255,.05) !important;
+  }
+
+  /* Pill link — leggermente più grandi per touch target */
+  .profile-link-pill {
+    padding: 8px 14px !important;
+    font-size: 13px !important;
+  }
+  .profile-link-pill__icon {
+    width: 22px !important; height: 22px !important;
+  }
+
+  /* Checkbox disponibilità — più alte per touch */
+  .edit-checkbox {
+    padding: 13px 14px !important;
+    font-size: .88rem !important;
+  }
+
+  /* Tag — leggermente più grandi */
+  .member-tag {
+    font-size: .65rem !important;
+    padding: 4px 10px !important;
+  }
+
+  /* Label sezioni — invariate, già ok */
+  .profile-section-label {
+    font-size: .68rem !important;
+  }
+}
