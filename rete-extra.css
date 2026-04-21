@@ -1,34 +1,141 @@
 /* ════════════════════════════════════════════════════════
-   rete-extra.css — sovrascritture colori e stile
-   NON modifica layout, animazioni o logica JS
+   rete-extra.css — sovrascritture visive
+   Non tocca layout, JS o struttura HTML
    ════════════════════════════════════════════════════════ */
 
-/* ── Label sezioni profilo (Disponibilità, Link Professionali) ── */
+/* ── 1. Animazione card — fluida, senza scatti ── */
+@keyframes cardEnterLeft {
+  0%   { opacity:0; transform:translateY(24px) scale(.94); }
+  100% { opacity:1; transform:translateY(0) scale(1); }
+}
+@keyframes cardEnterRight {
+  0%   { opacity:0; transform:translateY(24px) scale(.94); }
+  100% { opacity:1; transform:translateY(0) scale(1); }
+}
+@keyframes cardEnterUp {
+  0%   { opacity:0; transform:translateY(24px) scale(.94); }
+  100% { opacity:1; transform:translateY(0) scale(1); }
+}
+
+.member-card:nth-child(3n+1).is-visible { animation: cardEnterLeft  .75s cubic-bezier(.16,1,.3,1) both !important; }
+.member-card:nth-child(3n+2).is-visible { animation: cardEnterUp    .75s cubic-bezier(.16,1,.3,1) both !important; }
+.member-card:nth-child(3n+3).is-visible { animation: cardEnterRight .75s cubic-bezier(.16,1,.3,1) both !important; }
+
+@media (max-width: 768px) {
+  .member-card:nth-child(3n+1).is-visible,
+  .member-card:nth-child(3n+2).is-visible,
+  .member-card:nth-child(3n+3).is-visible {
+    animation: cardEnterLeft .65s cubic-bezier(.16,1,.3,1) both !important;
+  }
+}
+
+/* ── 2. Hover card — glow più pronunciato ── */
+.member-card:hover {
+  border-color: rgba(123,228,255,.45) !important;
+  box-shadow:
+    0 0 0 1px rgba(123,243,255,.08) inset,
+    0 0 32px rgba(123,243,255,.14),
+    0 8px 40px rgba(0,100,200,.18) !important;
+  transform: translateY(-3px) !important;
+  transition: border-color .22s, box-shadow .22s, transform .22s !important;
+}
+
+/* ── 3. Tags specialità — colori per area tematica ── */
+/* Default — medicina subacquea / diving */
+.member-tag { transition: box-shadow .2s, background .2s !important; }
+
+.member-tag[data-tag*="diving"],
+.member-tag[data-tag*="subacquea"],
+.member-tag[data-tag*="underwater"] {
+  --tag-color: #38bdf8 !important;
+}
+.member-tag[data-tag*="iperbarica"],
+.member-tag[data-tag*="hyperbaric"] {
+  --tag-color: #7be4ff !important;
+}
+.member-tag[data-tag*="aerospaziale"],
+.member-tag[data-tag*="aerospace"],
+.member-tag[data-tag*="spazio"],
+.member-tag[data-tag*="space"] {
+  --tag-color: #a78bfa !important;
+}
+.member-tag[data-tag*="emergenza"],
+.member-tag[data-tag*="emergency"],
+.member-tag[data-tag*="trauma"],
+.member-tag[data-tag*="urgenza"] {
+  --tag-color: #f87171 !important;
+}
+.member-tag[data-tag*="ricerca"],
+.member-tag[data-tag*="research"] {
+  --tag-color: #4dffd6 !important;
+}
+.member-tag[data-tag*="militare"],
+.member-tag[data-tag*="military"] {
+  --tag-color: #86efac !important;
+}
+.member-tag[data-tag*="psicologia"],
+.member-tag[data-tag*="psychology"] {
+  --tag-color: #f0abfc !important;
+}
+.member-card:hover .member-tag {
+  background: color-mix(in srgb, var(--tag-color, #7be4ff) 18%, transparent) !important;
+  box-shadow: 0 0 12px color-mix(in srgb, var(--tag-color, #7be4ff) 40%, transparent) !important;
+}
+
+/* ── 4. Checkbox disponibilità — colori per tipo ── */
+.edit-checkbox:has(#ef-speaker) {
+  border-color: rgba(123,228,255,.28) !important;
+  background: rgba(123,228,255,.06) !important;
+}
+.edit-checkbox:has(#ef-speaker):hover {
+  border-color: rgba(123,228,255,.55) !important;
+  background: rgba(123,228,255,.12) !important;
+}
+.edit-checkbox:has(#ef-speaker) input { accent-color: #7be4ff !important; }
+
+.edit-checkbox:has(#ef-podcast) {
+  border-color: rgba(196,176,255,.28) !important;
+  background: rgba(196,176,255,.06) !important;
+}
+.edit-checkbox:has(#ef-podcast):hover {
+  border-color: rgba(196,176,255,.55) !important;
+  background: rgba(196,176,255,.12) !important;
+}
+.edit-checkbox:has(#ef-podcast) input { accent-color: #c4b0ff !important; }
+
+.edit-checkbox:has(#ef-research) {
+  border-color: rgba(77,255,214,.24) !important;
+  background: rgba(77,255,214,.05) !important;
+}
+.edit-checkbox:has(#ef-research):hover {
+  border-color: rgba(77,255,214,.5) !important;
+  background: rgba(77,255,214,.1) !important;
+}
+.edit-checkbox:has(#ef-research) input { accent-color: #4dffd6 !important; }
+
+/* ── 5. Label sezioni profilo ── */
 .profile-section-label {
   color: rgba(123,228,255,.88) !important;
 }
 
-/* ── Badge disponibilità ── */
+/* ── 6. Badge disponibilità nel profilo ── */
 .avail-badge--speaker {
   background: rgba(123,228,255,.12) !important;
   border: 1px solid rgba(123,228,255,.38) !important;
-  color: #7ce8ff !important;
-  font-weight: 700 !important;
+  color: #7ce8ff !important; font-weight: 700 !important;
 }
 .avail-badge--podcast {
   background: rgba(196,176,255,.12) !important;
   border: 1px solid rgba(196,176,255,.38) !important;
-  color: #c4b0ff !important;
-  font-weight: 700 !important;
+  color: #c4b0ff !important; font-weight: 700 !important;
 }
 .avail-badge--research {
   background: rgba(77,255,214,.1) !important;
   border: 1px solid rgba(77,255,214,.35) !important;
-  color: #4dffd6 !important;
-  font-weight: 700 !important;
+  color: #4dffd6 !important; font-weight: 700 !important;
 }
 
-/* ── Link pill nel profilo — variante A ── */
+/* ── 7. Link pill nel profilo — variante A ── */
 .profile-link-pill {
   display: inline-flex; align-items: center; gap: 8px;
   padding: 7px 14px; border-radius: 999px;
@@ -39,150 +146,50 @@
   transition: filter .15s !important;
 }
 .profile-link-pill:hover { filter: brightness(1.2) !important; box-shadow: none !important; }
-
-/* Badge icona dentro ogni pill */
 .profile-link-pill__icon {
   display: inline-flex; align-items: center; justify-content: center;
   width: 20px; height: 20px; border-radius: 50%;
-  font-size: 9px; font-weight: 900; letter-spacing: .04em;
+  font-size: 9px; font-weight: 900;
   flex-shrink: 0; opacity: 1 !important;
   background: rgba(123,200,255,.15); color: rgba(180,225,255,.9);
 }
-
-/* LinkedIn */
 .profile-link-pill[href*="linkedin"] {
-  background: rgba(10,102,194,.12) !important;
-  border-color: rgba(10,102,194,.45) !important;
-  color: #7ab8f5 !important;
+  background: rgba(10,102,194,.12) !important; border-color: rgba(10,102,194,.45) !important; color: #7ab8f5 !important;
 }
-.profile-link-pill[href*="linkedin"] .profile-link-pill__icon {
-  background: rgba(10,102,194,.25) !important; color: #90c4ff !important;
-}
-
-/* ResearchGate */
+.profile-link-pill[href*="linkedin"] .profile-link-pill__icon { background: rgba(10,102,194,.25) !important; color: #90c4ff !important; }
 .profile-link-pill[href*="researchgate"] {
-  background: rgba(0,168,120,.1) !important;
-  border-color: rgba(0,168,120,.4) !important;
-  color: #3ddba8 !important;
+  background: rgba(0,168,120,.1) !important; border-color: rgba(0,168,120,.4) !important; color: #3ddba8 !important;
 }
-.profile-link-pill[href*="researchgate"] .profile-link-pill__icon {
-  background: rgba(0,168,120,.22) !important; color: #5aecc0 !important;
-}
-
-/* Google Scholar */
+.profile-link-pill[href*="researchgate"] .profile-link-pill__icon { background: rgba(0,168,120,.22) !important; color: #5aecc0 !important; }
 .profile-link-pill[href*="scholar"] {
-  background: rgba(66,133,244,.1) !important;
-  border-color: rgba(66,133,244,.38) !important;
-  color: #89b4ff !important;
+  background: rgba(66,133,244,.1) !important; border-color: rgba(66,133,244,.38) !important; color: #89b4ff !important;
 }
-.profile-link-pill[href*="scholar"] .profile-link-pill__icon {
-  background: rgba(66,133,244,.22) !important; color: #9fc0ff !important;
-}
-
-/* ORCID */
+.profile-link-pill[href*="scholar"] .profile-link-pill__icon { background: rgba(66,133,244,.22) !important; color: #9fc0ff !important; }
 .profile-link-pill[href*="orcid"] {
-  background: rgba(166,206,57,.08) !important;
-  border-color: rgba(166,206,57,.35) !important;
-  color: #c2dd50 !important;
+  background: rgba(166,206,57,.08) !important; border-color: rgba(166,206,57,.35) !important; color: #c2dd50 !important;
 }
-.profile-link-pill[href*="orcid"] .profile-link-pill__icon {
-  background: rgba(166,206,57,.18) !important; color: #d0e870 !important;
+.profile-link-pill[href*="orcid"] .profile-link-pill__icon { background: rgba(166,206,57,.18) !important; color: #d0e870 !important; }
+.profile-link-pill[href*="twitter"], .profile-link-pill[href*="x.com"] {
+  background: rgba(180,200,220,.06) !important; border-color: rgba(180,200,220,.22) !important; color: #b8cce0 !important;
 }
-
-/* Twitter/X */
-.profile-link-pill[href*="twitter"],
-.profile-link-pill[href*="x.com"] {
-  background: rgba(180,200,220,.06) !important;
-  border-color: rgba(180,200,220,.22) !important;
-  color: #b8cce0 !important;
-}
-.profile-link-pill[href*="twitter"] .profile-link-pill__icon,
-.profile-link-pill[href*="x.com"] .profile-link-pill__icon {
-  background: rgba(180,200,220,.12) !important; color: #ccdaeb !important;
-}
-
-/* Instagram */
 .profile-link-pill[href*="instagram"] {
-  background: rgba(225,100,180,.08) !important;
-  border-color: rgba(225,100,180,.32) !important;
-  color: #f0a0cc !important;
+  background: rgba(225,100,180,.08) !important; border-color: rgba(225,100,180,.32) !important; color: #f0a0cc !important;
 }
-.profile-link-pill[href*="instagram"] .profile-link-pill__icon {
-  background: rgba(225,100,180,.18) !important; color: #f8b8da !important;
-}
+.profile-link-pill[href*="instagram"] .profile-link-pill__icon { background: rgba(225,100,180,.18) !important; color: #f8b8da !important; }
 
-/* ── Form modifica profilo — label e campi ── */
-.edit-field label {
-  color: rgba(190,225,255,.9) !important;
-  font-weight: 700 !important;
-}
-
-/* Input wrap base */
-.edit-field__input-wrap {
-  background: rgba(6,22,58,.85) !important;
-  border: 1px solid rgba(123,200,255,.28) !important;
-}
-.edit-field__input-wrap:focus-within {
-  border-color: rgba(123,228,255,.62) !important;
-  box-shadow: 0 0 0 3px rgba(123,228,255,.1) !important;
-}
-/* Prefix badge base */
-.edit-field__prefix {
-  color: rgba(123,228,255,.88) !important;
-  border-right-color: rgba(123,200,255,.2) !important;
-}
-
-/* LinkedIn */
-.edit-field__input-wrap:has(#ef-linkedin) {
-  border-color: rgba(10,102,194,.38) !important;
-}
-.edit-field__input-wrap:has(#ef-linkedin) .edit-field__prefix {
-  color: #60a8fb !important;
-  background: rgba(10,102,194,.16) !important;
-  border-right-color: rgba(10,102,194,.28) !important;
-}
-.edit-field__input-wrap:has(#ef-linkedin):focus-within {
-  border-color: rgba(10,102,194,.72) !important;
-  box-shadow: 0 0 0 3px rgba(10,102,194,.1) !important;
-}
-/* ResearchGate */
-.edit-field__input-wrap:has(#ef-researchgate) {
-  border-color: rgba(0,204,136,.32) !important;
-}
-.edit-field__input-wrap:has(#ef-researchgate) .edit-field__prefix {
-  color: #3ddba8 !important;
-  background: rgba(0,204,136,.14) !important;
-  border-right-color: rgba(0,204,136,.24) !important;
-}
-/* Google Scholar */
-.edit-field__input-wrap:has(#ef-scholar) {
-  border-color: rgba(66,133,244,.32) !important;
-}
-.edit-field__input-wrap:has(#ef-scholar) .edit-field__prefix {
-  color: #89b4ff !important;
-  background: rgba(66,133,244,.14) !important;
-  border-right-color: rgba(66,133,244,.24) !important;
-}
-/* ORCID */
-.edit-field__input-wrap:has(#ef-orcid) {
-  border-color: rgba(166,206,57,.3) !important;
-}
-.edit-field__input-wrap:has(#ef-orcid) .edit-field__prefix {
-  color: #b8e04a !important;
-  background: rgba(166,206,57,.11) !important;
-  border-right-color: rgba(166,206,57,.22) !important;
-}
-/* Twitter/X */
-.edit-field__input-wrap:has(#ef-twitter) .edit-field__prefix {
-  color: #c8d4e0 !important;
-  background: rgba(180,200,220,.07) !important;
-}
-/* Instagram */
-.edit-field__input-wrap:has(#ef-instagram) {
-  border-color: rgba(225,100,180,.28) !important;
-}
-.edit-field__input-wrap:has(#ef-instagram) .edit-field__prefix {
-  color: #f0a0cc !important;
-  background: rgba(225,100,180,.1) !important;
-  border-right-color: rgba(225,100,180,.2) !important;
-}
+/* ── 8. Form — label e input wrap ── */
+.edit-field label { color: rgba(190,225,255,.9) !important; font-weight: 700 !important; }
+.edit-field__input-wrap { background: rgba(6,22,58,.85) !important; border: 1px solid rgba(123,200,255,.28) !important; }
+.edit-field__input-wrap:focus-within { border-color: rgba(123,228,255,.62) !important; box-shadow: 0 0 0 3px rgba(123,228,255,.1) !important; }
+.edit-field__prefix { color: rgba(123,228,255,.88) !important; border-right-color: rgba(123,200,255,.2) !important; }
+.edit-field__input-wrap:has(#ef-linkedin) { border-color: rgba(10,102,194,.38) !important; }
+.edit-field__input-wrap:has(#ef-linkedin) .edit-field__prefix { color: #60a8fb !important; background: rgba(10,102,194,.16) !important; border-right-color: rgba(10,102,194,.28) !important; }
+.edit-field__input-wrap:has(#ef-researchgate) { border-color: rgba(0,204,136,.32) !important; }
+.edit-field__input-wrap:has(#ef-researchgate) .edit-field__prefix { color: #3ddba8 !important; background: rgba(0,204,136,.14) !important; border-right-color: rgba(0,204,136,.24) !important; }
+.edit-field__input-wrap:has(#ef-scholar) { border-color: rgba(66,133,244,.32) !important; }
+.edit-field__input-wrap:has(#ef-scholar) .edit-field__prefix { color: #89b4ff !important; background: rgba(66,133,244,.14) !important; border-right-color: rgba(66,133,244,.24) !important; }
+.edit-field__input-wrap:has(#ef-orcid) { border-color: rgba(166,206,57,.3) !important; }
+.edit-field__input-wrap:has(#ef-orcid) .edit-field__prefix { color: #b8e04a !important; background: rgba(166,206,57,.11) !important; border-right-color: rgba(166,206,57,.22) !important; }
+.edit-field__input-wrap:has(#ef-twitter) .edit-field__prefix { color: #c8d4e0 !important; background: rgba(180,200,220,.07) !important; }
+.edit-field__input-wrap:has(#ef-instagram) { border-color: rgba(225,100,180,.28) !important; }
+.edit-field__input-wrap:has(#ef-instagram) .edit-field__prefix { color: #f0a0cc !important; background: rgba(225,100,180,.1) !important; border-right-color: rgba(225,100,180,.2) !important; }
