@@ -372,15 +372,15 @@
     "linkedin": "https://www.linkedin.com/in/balzanialessandro/",
     "researchgate": "",
     "scholar": "",
-    "orcid": "",
+    "orcid": "https://orcid.org/0000-0002-8672-1997",
     "twitter": "",
     "instagram": "",
     "website": "",
     "courses": "",
-    "speaker": false,
+    "speaker": true,
     "podcast": false,
-    "research": false,
-    "updated": "2026-04-17 11:54:57"
+    "research": true,
+    "updated": "2026-04-22 21:35:12"
   },
   "felicia-vinciguerra": {
     "name": "Felicia Vinciguerra",
