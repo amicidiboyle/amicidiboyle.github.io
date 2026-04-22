@@ -282,18 +282,18 @@
 /* ── Bio box — sfondo e bordo uniformi ── */
 .profile-bio-box,
 .profile-modal .profile-bio-box {
-  background: rgba(4,18,52,.55) !important;
-  border: 1px solid rgba(80,160,255,.14) !important;
-  border-left: 3px solid rgba(123,228,255,.4) !important;
+  background: rgba(10,30,70,.7) !important;
+  border: 1px solid rgba(100,180,255,.2) !important;
+  border-left: 3px solid rgba(123,228,255,.55) !important;
   border-radius: 12px !important;
-  padding: 16px 18px !important;
+  padding: 18px 20px !important;
   margin-bottom: 16px !important;
 }
 .profile-bio-box p,
 .profile-modal .profile-bio-box p {
-  font-size: .84rem !important;
-  line-height: 1.8 !important;
-  color: rgba(200,228,255,.78) !important;
+  font-size: .88rem !important;
+  line-height: 1.85 !important;
+  color: rgba(220,240,255,.92) !important;
   font-style: italic !important;
   margin: 0 !important;
 }
