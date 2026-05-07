@@ -374,5 +374,17 @@
       "Intelligenza artificiale",
       "Droni"
     ]
+  },
+  {
+    "name": "Marco Filippi",
+    "role": "Analista di Medical Intelligence & SME CBRNE, TACMED e SAR. CTM - E (counter terrorism medicine europe). Focus: Medical intelligence - SAR - CBRNE - TCCC/TECC",
+    "img": "marco-filippi.jpg",
+    "city": "Sesto Calende, IT",
+    "linkedin": "https://www.linkedin.com/in/marco-filippi-sme",
+    "email": "sutdio.filippi@icloud.com",
+    "tags": [
+      "Medical Intelligence",
+      "SAR"
+    ]
   }
 ]
