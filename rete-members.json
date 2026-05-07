@@ -361,5 +361,18 @@
     "tags": [
       "Iperbarica"
     ]
+  },
+  {
+    "name": "Andrea Fabbro",
+    "role": "Ingegnere elettronico con professionalità nell'ambito dei droni e dell'intelligenza artificiale.  Focus: Neuroscienze, ingegneria applicata all'ambito sanitario, telemedicina e intelligenza artificiale",
+    "img": "andrea-fabbro.jpg",
+    "city": "Venezia. It",
+    "linkedin": "https://www.linkedin.com/in/andreafabbro/",
+    "email": "a.fabbro@gmail.com",
+    "tags": [
+      "Neuroscienze",
+      "Intelligenza artificiale",
+      "Droni"
+    ]
   }
 ]
