@@ -387,5 +387,18 @@
       "SAR",
       "Medicina Umanitaria"
     ]
+  },
+  {
+    "name": "Matteo Placci",
+    "role": "Ex Ufficiale Medico delle Forze Speciali,Specializzando in Anestesia e Rianimazione. Master in Medicina Subacquea ed Iperbaric. Master in Medicina di Montagna. Focus: Medicina degli ambienti ostili",
+    "img": "matteo-placci.jpg",
+    "city": "Bologna",
+    "linkedin": "https://www.linkedin.com/in/matteo-placci",
+    "email": "placci.matteo@gmail.com",
+    "tags": [
+      "Ambienti Estremi",
+      "Subacquea",
+      "Montagna"
+    ]
   }
 ]
