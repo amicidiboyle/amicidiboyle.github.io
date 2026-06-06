@@ -71,9 +71,9 @@
         <!-- Radar scanner -->
         <div class="ev-radar" aria-hidden="true">
           <canvas id="evRadarCanvas" width="460" height="460"></canvas>
-          <div class="ev-dot-lbl ev-dot-lbl--1" id="evLbl0" data-i18n="ev_radar1">The Day After</div>
-          <div class="ev-dot-lbl ev-dot-lbl--2" id="evLbl1" data-i18n="ev_radar2">WSMH 2026</div>
-          <div class="ev-dot-lbl ev-dot-lbl--3" id="evLbl2" data-i18n="ev_radar3">Psicologia Sub.</div>
+          <div class="ev-dot-lbl ev-dot-lbl--1" id="evLbl0" data-i18n="ev_radar1">EUBS 2026</div>
+          <div class="ev-dot-lbl ev-dot-lbl--2" id="evLbl1" data-i18n="ev_radar2">Ginevra</div>
+          <div class="ev-dot-lbl ev-dot-lbl--3" id="evLbl2" data-i18n="ev_radar3">Set 2026</div>
         </div>
 
         <div class="ev-hero__content">
@@ -85,7 +85,7 @@
           <p class="ev-hero__sub" data-i18n="ev_hero_sub">Corsi, congressi e iniziative segnalati dai membri del network. Dalla medicina subacquea alla medicina aerospaziale.</p>
           <div class="ev-hero__counters">
             <div class="ev-counter">
-              <div class="ev-counter__n" id="counterActive">3</div>
+              <div class="ev-counter__n" id="counterActive">1</div>
               <div class="ev-counter__l" data-i18n="ev_cnt_active">eventi attivi</div>
             </div>
             <div class="ev-counter">
@@ -93,7 +93,7 @@
               <div class="ev-counter__l" data-i18n="ev_cnt_countries">paesi</div>
             </div>
             <div class="ev-counter">
-              <div class="ev-counter__n" data-i18n="ev_cnt_next">Mag</div>
+              <div class="ev-counter__n" data-i18n="ev_cnt_next">Set</div>
               <div class="ev-counter__l" data-i18n="ev_cnt_next_lbl">prossimo</div>
             </div>
           </div>
@@ -111,10 +111,10 @@
       <!-- ── EVENTI ATTIVI ── -->
       <div id="eventsContainer">
 
-        <div class="ev-month-lbl" data-i18n="ev_month_may">Maggio 2026</div>
+        <div class="ev-month-lbl">Settembre 2026</div>
 
-        <!-- CARD 1 — The Day After -->
-        <article class="ev-card ev-card--partner" data-categories="partner it" style="animation-delay:.08s">
+        <!-- CARD PAST — The Day After -->
+        <article class="ev-card ev-card--past past" data-categories="partner it" data-date="2026-05-06" style="animation-delay:.16s">
           <div class="ev-accent"></div>
           <div class="ev-poster">
             <img src="assets/corsi/thedayafter.png"
@@ -124,6 +124,7 @@
           <div class="ev-body">
             <div class="ev-body__top">
               <div class="ev-badges">
+                <span class="ev-badge ev-badge--past" data-i18n="ev_badge_past">Concluso</span>
                 <span class="ev-badge ev-badge--partner" data-i18n="ev_badge_partner">Partner</span>
                 <span class="ev-badge ev-badge--it"      data-i18n="ev_badge_it">Nazionale</span>
               </div>
@@ -167,8 +168,8 @@
 
         <div class="ev-ray" aria-hidden="true"></div>
 
-        <!-- CARD 2 — WSMH Hackathon -->
-        <article class="ev-card ev-card--intl" data-categories="intl" style="animation-delay:.2s">
+        <!-- CARD PAST — WSMH 2026 -->
+        <article class="ev-card ev-card--past past" data-categories="intl" data-date="2026-05-04" style="animation-delay:.24s">
           <div class="ev-accent"></div>
           <div class="ev-poster">
             <div class="ev-poster__ph" style="background:linear-gradient(160deg,#0d0820,#100927)">
@@ -179,6 +180,7 @@
           <div class="ev-body">
             <div class="ev-body__top">
               <div class="ev-badges">
+                <span class="ev-badge ev-badge--past" data-i18n="ev_badge_past">Concluso</span>
                 <span class="ev-badge ev-badge--intl" data-i18n="ev_badge_intl">Internazionale</span>
               </div>
               <span class="ev-datechip" data-i18n="ev_2_date">4–17 Mag 2026</span>
@@ -256,8 +258,8 @@
 
         <div class="ev-ray" aria-hidden="true"></div>
 
-        <!-- CARD 3 — Psicologia Subacquea -->
-        <article class="ev-card ev-card--member" data-categories="it member" style="animation-delay:.32s">
+        <!-- CARD PAST — Psicologia Subacquea -->
+        <article class="ev-card ev-card--past past" data-categories="it member" data-date="2026-05-30" style="animation-delay:.32s">
           <div class="ev-accent"></div>
           <div class="ev-poster">
             <img src="assets/corsi/corso-psicologia-subacquea.jpg"
@@ -267,6 +269,7 @@
           <div class="ev-body">
             <div class="ev-body__top">
               <div class="ev-badges">
+                <span class="ev-badge ev-badge--past" data-i18n="ev_badge_past">Concluso</span>
                 <span class="ev-badge ev-badge--member" data-i18n="ev_badge_member">Membro Rete</span>
                 <span class="ev-badge ev-badge--it"     data-i18n="ev_badge_it">Nazionale</span>
               </div>
@@ -316,10 +319,60 @@
         </article>
 
         <!-- PAST TOGGLE -->
-        <button class="ev-past-toggle" id="pastToggle" type="button" aria-expanded="true">
+        <!-- CARD 1 — EUBS 2026 Ginevra -->
+        <article class="ev-card ev-card--intl" data-categories="intl" data-date="2026-09-14" style="animation-delay:.08s">
+          <div class="ev-accent"></div>
+          <div class="ev-poster">
+            <img src="https://eubs2026.com/wp-content/uploads/2025/09/banniere-EUBS-ECHM.png"
+                 onerror="this.style.display='none'"
+                 alt="EUBS 2026 — 50th Congress Geneva" loading="lazy" />
+          </div>
+          <div class="ev-body">
+            <div class="ev-body__top">
+              <div class="ev-badges">
+                <span class="ev-badge ev-badge--intl" data-i18n="ev_badge_intl">Internazionale</span>
+              </div>
+              <span class="ev-datechip">14–18 Set 2026</span>
+            </div>
+            <div class="ev-title">50th EUBS Congress — Ginevra 2026</div>
+            <div class="ev-partner-line">European Underwater and Baromedical Society · ECHM Consensus Conference</div>
+            <div class="ev-desc">Il 50° Congresso Europeo di Medicina Subacquea e Iperbarica. Include la Consensus Conference ECHM sulle indicazioni all'ossigenoterapia iperbarica. Oltre 400 specialisti da 5 continenti. Geneva International Conference Centre (CICG).</div>
+            <div class="ev-meta">
+              <span class="ev-meta-item">
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+                <span>14–18 Set 2026</span>
+              </span>
+              <span class="ev-meta-item">
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                <span>Ginevra, Svizzera · CICG</span>
+              </span>
+              <span class="ev-meta-item">
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                <span>Congresso · In presenza</span>
+              </span>
+            </div>
+            <div class="ev-actions">
+              <a class="ev-btn ev-btn--primary" href="https://eubs2026.com" target="_blank" rel="noopener">
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                Sito ufficiale
+              </a>
+              <a class="ev-btn ev-btn--ghost" href="https://eubs2026.com/registration/" target="_blank" rel="noopener">Registrazione</a>
+            </div>
+          </div>
+          <!-- Griglia poster mobile -->
+          <div class="ev-poster-grid" aria-hidden="true">
+            <div class="ev-poster-thumb" onclick="openLightbox('https://eubs2026.com/wp-content/uploads/2025/09/banniere-EUBS-ECHM.png','EUBS 2026')">
+              <img src="https://eubs2026.com/wp-content/uploads/2025/09/banniere-EUBS-ECHM.png" alt="EUBS 2026" loading="lazy" onerror="this.parentNode.classList.add('ev-poster-thumb--ph');this.style.display='none'" />
+              <div class="ev-poster-thumb__label">EUBS 2026</div>
+            </div>
+          </div>
+        </article>
+
+        <div class="ev-ray" aria-hidden="true"></div>
+                <button class="ev-past-toggle" id="pastToggle" type="button" aria-expanded="true">
           <span class="ev-toggle-line"></span>
           <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 8 12 12 14 14"/></svg>
-          <span data-i18n="ev_past_toggle">&nbsp;1 evento concluso&nbsp;</span>
+          <span data-i18n="ev_past_toggle">&nbsp;4 eventi conclusi&nbsp;</span>
           <span class="ev-toggle-line"></span>
         </button>
 
@@ -611,10 +664,10 @@
         'ev_hero_title':'Gli eventi<br>della <em>Rete</em>',
         'ev_hero_sub':'Corsi, congressi e iniziative segnalati dai membri del network. Dalla medicina subacquea alla medicina aerospaziale.',
         'ev_cnt_active':'eventi attivi','ev_cnt_countries':'paesi',
-        'ev_cnt_next':'Mag','ev_cnt_next_lbl':'prossimo',
+        'ev_cnt_next':'Set','ev_cnt_next_lbl':'prossimo',
         'ev_radar1':'The Day After','ev_radar2':'WSMH 2026','ev_radar3':'Psicologia Sub.',
         'ev_tab_all':'Tutti (3)','ev_tab_it':'Nazionali','ev_tab_intl':'Internazionali','ev_tab_partner':'Partner',
-        'ev_month_may':'Maggio 2026',
+        'ev_month_may':'Settembre 2026',
         'ev_badge_partner':'Partner','ev_badge_it':'Nazionale','ev_badge_intl':'Internazionale',
         'ev_badge_member':'Membro Rete','ev_badge_past':'Concluso',
         'ev_proposed_by':'Proposto da','ev_signaled_by':'Segnalato da',
