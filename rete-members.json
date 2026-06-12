@@ -400,5 +400,17 @@
       "Subacquea",
       "Montagna"
     ]
+  },
+  {
+    "name": "angelo martellotti",
+    "role": "Università Degli Studi di Perugia. Specializzando in Anestesia e Rianimazione. Operatore TCCC. Operatore TEC. Focus: Medicina militare",
+    "img": "angelo-martellotti.jpg",
+    "city": "Perugia",
+    "linkedin": "https://www.linkedin.com/in/angelo-martellotti-b6b0642b4/",
+    "email": "angelo.martellotti@specializzandi.unipg.it",
+    "tags": [
+      "Medicina militare",
+      "Ambienti estremi"
+    ]
   }
 ]
