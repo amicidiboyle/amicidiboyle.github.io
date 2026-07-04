@@ -1292,6 +1292,47 @@ body::after {
 .timeline span { color: var(--muted); font-size: .92rem; line-height: 1.55; padding-top: 6px; }
 .timeline li:last-child span { color: var(--text); }
 
+/* ── Timeline espandibile ── */
+.tl-extra-hidden { display: none; }
+.tl-open { display: block !important; }
+#tl-extra.tl-open .timeline li {
+  animation: tlFadeIn .35s ease both;
+}
+#tl-extra.tl-open .timeline li:nth-child(1)  { animation-delay: .03s; }
+#tl-extra.tl-open .timeline li:nth-child(2)  { animation-delay: .06s; }
+#tl-extra.tl-open .timeline li:nth-child(3)  { animation-delay: .09s; }
+#tl-extra.tl-open .timeline li:nth-child(4)  { animation-delay: .12s; }
+#tl-extra.tl-open .timeline li:nth-child(5)  { animation-delay: .15s; }
+#tl-extra.tl-open .timeline li:nth-child(6)  { animation-delay: .18s; }
+#tl-extra.tl-open .timeline li:nth-child(7)  { animation-delay: .21s; }
+#tl-extra.tl-open .timeline li:nth-child(8)  { animation-delay: .24s; }
+#tl-extra.tl-open .timeline li:nth-child(9)  { animation-delay: .27s; }
+#tl-extra.tl-open .timeline li:nth-child(10) { animation-delay: .30s; }
+#tl-extra.tl-open .timeline li:nth-child(11) { animation-delay: .33s; }
+#tl-extra.tl-open .timeline li:nth-child(12) { animation-delay: .36s; }
+#tl-extra.tl-open .timeline li:nth-child(13) { animation-delay: .39s; }
+#tl-extra.tl-open .timeline li:nth-child(14) { animation-delay: .42s; }
+#tl-extra.tl-open .timeline li:nth-child(15) { animation-delay: .45s; }
+@keyframes tlFadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Polo Droni — mobile fix ── */
+@media (max-width: 768px) {
+  #polo-droni .two-col-grid {
+    grid-template-columns: 1fr !important;
+    gap: 24px !important;
+  }
+  #polo-droni .two-col-grid > div:last-child {
+    justify-content: flex-start !important;
+  }
+  #polo-droni .two-col-grid img {
+    width: 120px !important;
+    max-width: 120px !important;
+  }
+}
+
 /* TIMELINE MOBILE: linea verticale + puntini, NO overlap con le scritte */
 @media (max-width: 768px) {
   .timeline-card::before, .timeline-card::after { display: none; } /* Nascondi glow sul mobile */
