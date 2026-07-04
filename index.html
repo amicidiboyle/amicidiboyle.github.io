@@ -191,13 +191,47 @@
           </div>
         </div>
         <div class="glass-card timeline-card reveal reveal-right">
-          <p class="section-kicker" data-i18n="tl_kicker">Timeline</p>
-          <ol class="timeline">
-            <li><strong>2023</strong><span data-i18n="tl_2023">Nasce il progetto e prende forma l’identità scientifica.</span></li>
-            <li><strong>2024</strong><span data-i18n="tl_2024">Si consolidano collaborazioni, didattica e divulgazione.</span></li>
-            <li><strong>2025</strong><span data-i18n="tl_2025">Crescono rete, podcast, materiali formativi e progetti editoriali. 30+ membri · 6 paesi · 27+ episodi podcast. ADE Medicina Iperbarica e Subacquea e ADE Medicina Aerospaziale all’Università dell’Insubria. Tre pubblicazioni su riviste internazionali peer-reviewed.</span></li>
-            <li><strong>2026</strong><span data-i18n="tl_2026">Pubblicazione su <em>Diving and Hyperbaric Medicine</em>. Economia dello Spazio Magazine e Economia del Mare Magazine. Docenza alla Scuola Superiore Sant’Anna di Pisa. Membri del Comitato Scientifico del Polo Nazionale Droni. Network &gt;100 professionisti. Collaborazioni con istituzioni militari e operative.</span></li>
-          </ol>
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">
+            <p class="section-kicker" data-i18n="tl_kicker" style="margin:0;">Timeline</p>
+            <button id="tl-btn" onclick="(function(){
+              var s=document.getElementById('tl-short');
+              var e=document.getElementById('tl-extra');
+              var a=document.getElementById('tl-arrow');
+              var lbl=document.getElementById('tl-label');
+              var open=!e.classList.contains('tl-open');
+              if(open){s.style.display='none';e.classList.add('tl-open');lbl.textContent='Chiudi';a.style.transform='rotate(180deg)';}else{s.style.display='';e.classList.remove('tl-open');lbl.textContent='Timeline completa';a.style.transform='';}  
+            })()" style="display:inline-flex;align-items:center;gap:5px;padding:4px 12px;border-radius:999px;cursor:pointer;background:rgba(0,100,255,.15);border:1px solid rgba(0,160,255,.5);color:rgba(80,180,255,.9);font-size:10px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;box-shadow:0 0 10px rgba(0,120,255,.3);transition:all .2s;">
+              <span id="tl-label">Timeline completa</span>
+              <span id="tl-arrow" style="font-size:9px;transition:transform .4s;display:inline-block;">&#9660;</span>
+            </button>
+          </div>
+          <div id="tl-short">
+            <ol class="timeline">
+              <li><strong>2023</strong><span data-i18n="tl_2023">Nasce il progetto e prende forma l’identità scientifica.</span></li>
+              <li><strong>2024</strong><span data-i18n="tl_2024">Si consolidano collaborazioni, didattica e divulgazione.</span></li>
+              <li><strong>2025</strong><span data-i18n="tl_2025">Crescono rete, podcast, materiali formativi e progetti editoriali.</span></li>
+              <li><strong>2026</strong><span data-i18n="tl_2026">Membri del Comitato Scientifico del Polo Nazionale Droni.</span></li>
+            </ol>
+          </div>
+          <div id="tl-extra" class="tl-extra-hidden">
+            <ol class="timeline">
+              <li><strong>2023</strong><span>Nasce il progetto e prende forma l’identità scientifica.</span></li>
+              <li><strong>2024</strong><span>Si consolidano collaborazioni, didattica e divulgazione.</span></li>
+              <li><strong>2025</strong><span>Crescono rete, podcast, materiali formativi e progetti editoriali.</span></li>
+              <li><strong>2025</strong><span>30+ membri · 6 paesi · 27+ episodi podcast</span></li>
+              <li><strong>2025</strong><span>ADE Medicina Iperbarica e Subacquea — Università dell’Insubria</span></li>
+              <li><strong>2025</strong><span>ADE Medicina Aerospaziale — Università dell’Insubria</span></li>
+              <li><strong>2025</strong><span>HyperCare — corso di medicina iperbarica</span></li>
+              <li><strong>2025</strong><span>Tre pubblicazioni su riviste internazionali peer-reviewed</span></li>
+              <li><strong>2026</strong><span>Pubblicazione su <em>Diving and Hyperbaric Medicine</em></span></li>
+              <li><strong>2026</strong><span>&laquo;Il costo invisibile del respiro&raquo; — Economia dello Spazio Magazine</span></li>
+              <li><strong>2026</strong><span>&laquo;Adattamenti fisiologici umani in ambienti estremi&raquo; — Economia del Mare Magazine</span></li>
+              <li><strong>2026</strong><span>Docenza Medicina Spaziale · Scuola Superiore Sant’Anna di Pisa</span></li>
+              <li><strong>2026</strong><span>Network &gt;100 professionisti in ambienti estremi</span></li>
+              <li><strong>2026</strong><span>Collaborazioni con istituzioni militari e operative</span></li>
+              <li><strong>2026</strong><span>Membri Comitato Scientifico POLO NAZIONALE DRONI</span></li>
+            </ol>
+          </div>
         </div>
       </div>
     </section>
@@ -354,7 +388,7 @@
           <div style="flex-shrink:0;display:flex;align-items:center;justify-content:center;">
             <a href="https://www.polonazionaledroni.com/" target="_blank" rel="noopener">
               <img src="assets/logodroni.jpg" alt="Polo Nazionale Droni" loading="lazy" decoding="async"
-                   style="width:180px;max-width:180px;border-radius:12px;opacity:.9;transition:opacity .2s;"
+                   style="width:140px;max-width:140px;border-radius:12px;opacity:.9;transition:opacity .2s;"
                    onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='.9'"
                    onerror="this.style.display='none'" />
             </a>
