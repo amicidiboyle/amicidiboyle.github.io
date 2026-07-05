@@ -552,3 +552,175 @@ a   { color: inherit; text-decoration: none; }
   .pod-contact-modal__box { padding: 24px 18px 20px; }
   .pod-contact-modal__row { grid-template-columns: 1fr; }
 }
+
+/* ═══════════════════════════════════════════════════
+   MIGLIORAMENTI LAYOUT — aggiunti su podcast.css v3
+   ═══════════════════════════════════════════════════ */
+
+/* ── Card episodio — più respiro e gerarchia visiva ── */
+.epCard {
+  padding: 16px 18px;
+  border-radius: 16px;
+  gap: 18px;
+  background: rgba(5,16,42,.45);
+  border: 1px solid rgba(120,210,255,.08) !important;
+  transition: background .22s, border-color .22s, transform .18s, box-shadow .22s;
+}
+.epCard:hover {
+  background: rgba(10,28,70,.65) !important;
+  border-color: rgba(123,228,255,.18) !important;
+  transform: translateX(5px);
+  box-shadow: 0 4px 24px rgba(0,80,200,.12);
+}
+
+/* Episodio più recente — bordo sinistro evidenziato */
+.season--s3 .season__body .epCard:first-child {
+  border-left: 3px solid var(--s3) !important;
+  background: rgba(196,176,255,.06) !important;
+}
+.season--s1 .season__body .epCard:first-child {
+  border-left: 3px solid var(--s1) !important;
+}
+.season--s2 .season__body .epCard:first-child {
+  border-left: 3px solid var(--s2) !important;
+}
+
+/* ── Titolo episodio — più leggibile ── */
+.epTitle {
+  font-size: 1rem !important;
+  font-weight: 600 !important;
+  letter-spacing: -.01em;
+  line-height: 1.35;
+  margin-bottom: 5px !important;
+}
+
+/* ── Descrizione — più respiro ── */
+.epDesc {
+  font-size: .84rem !important;
+  line-height: 1.55 !important;
+  color: rgba(200,225,255,.62) !important;
+}
+
+/* ── Badge EP — più visibili ── */
+.epBadge {
+  padding: 5px 11px !important;
+  font-size: .68rem !important;
+  font-weight: 800 !important;
+  letter-spacing: .12em !important;
+  border-radius: 999px;
+  flex-shrink: 0;
+  align-self: flex-start;
+  margin-top: 2px;
+}
+
+/* ── Pulsante Ascolta — più prominente ── */
+.epPlayBtn {
+  padding: 8px 16px !important;
+  font-size: .82rem !important;
+  font-weight: 700 !important;
+  border-radius: 999px !important;
+  background: rgba(123,228,255,.12) !important;
+  border: 1px solid rgba(123,228,255,.28) !important;
+  color: #a8eeff !important;
+  gap: 7px !important;
+  letter-spacing: .02em;
+  transition: background .2s, transform .15s, box-shadow .2s !important;
+}
+.epPlayBtn:hover {
+  background: rgba(123,228,255,.22) !important;
+  box-shadow: 0 0 14px rgba(123,228,255,.2);
+  transform: scale(1.05) !important;
+}
+
+/* ── Pulsante Spotify — colore verde Spotify ── */
+.epBtn {
+  padding: 7px 14px !important;
+  font-size: .8rem !important;
+  font-weight: 700 !important;
+  border-radius: 999px !important;
+  background: rgba(30,215,96,.08) !important;
+  border: 1px solid rgba(30,215,96,.22) !important;
+  color: #1ed760 !important;
+  letter-spacing: .02em;
+  transition: background .2s, transform .15s !important;
+}
+.epBtn:hover {
+  background: rgba(30,215,96,.18) !important;
+  transform: scale(1.05) !important;
+}
+
+/* ── Season body — più spazio tra episodi ── */
+.season__body {
+  padding: 6px 18px 20px !important;
+  gap: 8px !important;
+}
+
+/* ── Season header — hover più visibile ── */
+.season__summary {
+  padding: 24px 26px !important;
+}
+.season__summary:hover {
+  background: rgba(123,228,255,.04) !important;
+}
+
+/* ── Season tag — più grande ── */
+.season__tag {
+  width: 46px !important;
+  height: 46px !important;
+  font-size: .78rem !important;
+  font-weight: 800 !important;
+  border-radius: 14px !important;
+}
+
+/* ── QuickNav pills — più pronunciate ── */
+.podQuickNav__link {
+  padding: 9px 20px !important;
+  font-size: .84rem !important;
+  font-weight: 700 !important;
+  letter-spacing: .04em !important;
+  border-radius: 999px !important;
+}
+.podQuickNav__link:hover {
+  filter: brightness(1.25);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0,0,0,.2);
+}
+
+/* ── Player hero — più respiro ── */
+.podPlayer__inner {
+  padding: 36px !important;
+  border-radius: 24px !important;
+  border: 1px solid rgba(123,228,255,.2) !important;
+  box-shadow: 0 24px 60px rgba(0,0,0,.5), 0 0 40px rgba(100,180,255,.06) !important;
+}
+.podPlayer__title {
+  letter-spacing: -.05em !important;
+  line-height: 1.15 !important;
+  margin-bottom: 12px !important;
+}
+.podPlayer__badge {
+  font-size: .7rem !important;
+  padding: 5px 14px !important;
+  margin-bottom: 14px !important;
+}
+
+/* ── Stats bar — bordi più visibili ── */
+.podStats {
+  border: 1px solid rgba(123,228,255,.2) !important;
+  box-shadow: 0 4px 20px rgba(0,0,0,.2);
+}
+.podStat__n {
+  font-size: 1.65rem !important;
+}
+
+/* ── Mobile ── */
+@media (max-width: 768px) {
+  .epCard { padding: 14px 14px !important; gap: 12px !important; }
+  .epTitle { font-size: .94rem !important; }
+  .epDesc { display: none; }
+  .epPlayBtn { padding: 7px 13px !important; font-size: .78rem !important; }
+  .epBtn { padding: 6px 11px !important; font-size: .75rem !important; }
+  .season__summary { padding: 18px 16px !important; }
+  .season__body { padding: 4px 10px 14px !important; }
+  .podPlayer__inner { padding: 22px !important; }
+}
