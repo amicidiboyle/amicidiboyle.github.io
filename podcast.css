@@ -724,3 +724,218 @@ a   { color: inherit; text-decoration: none; }
   .season__body { padding: 4px 10px 14px !important; }
   .podPlayer__inner { padding: 22px !important; }
 }
+
+/* ═══════════════════════════════════════
+   30 SECONDI SOTTO PRESSIONE — Recorder
+   ═══════════════════════════════════════ */
+.podRecorder {
+  padding: 0 0 48px;
+}
+.podRecorder__inner {
+  background: #020b1a;
+  border: 1px solid rgba(196,176,255,.22);
+  border-radius: 20px;
+  padding: 28px 32px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 32px;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+.podRecorder__inner::before {
+  content: '';
+  position: absolute;
+  top: -60px; left: 50%; transform: translateX(-50%);
+  width: 280px; height: 160px;
+  background: radial-gradient(ellipse, rgba(196,176,255,.14), transparent 70%);
+  pointer-events: none; filter: blur(18px);
+}
+
+/* Tag */
+.podRecorder__tag {
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 4px 12px; border-radius: 999px;
+  background: rgba(196,176,255,.1); border: 1px solid rgba(196,176,255,.22);
+  font-size: .65rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase;
+  color: rgba(196,176,255,.78); margin-bottom: 10px;
+}
+.podRecorder__dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: #c4b0ff; box-shadow: 0 0 8px #c4b0ff;
+  animation: recDotBlink 2s ease-in-out infinite; flex-shrink: 0;
+}
+@keyframes recDotBlink { 0%,100%{opacity:.3;transform:scale(.8)} 50%{opacity:1;transform:scale(1)} }
+
+/* Testi */
+.podRecorder__title {
+  font-size: 1.25rem; font-weight: 800; color: #edf7ff;
+  letter-spacing: -.03em; margin-bottom: 8px; line-height: 1.2;
+}
+.podRecorder__title span { color: #c4b0ff; }
+.podRecorder__sub {
+  font-size: .82rem; color: rgba(200,225,255,.5); line-height: 1.65;
+}
+.podRecorder__sub em { color: rgba(196,176,255,.65); font-style: italic; }
+
+/* Right — microfono e waveform */
+.podRecorder__right {
+  display: flex; flex-direction: column; align-items: center; gap: 10px;
+  min-width: 190px; position: relative; z-index: 1;
+}
+.podRecorder__wave {
+  height: 44px;
+  background: rgba(5,12,36,.7);
+  border: 1px solid rgba(123,228,255,.1);
+  border-radius: 10px;
+  display: flex; align-items: center; gap: 2px;
+  padding: 0 12px; overflow: hidden; position: relative; width: 100%;
+}
+.podRecorder__wave-idle {
+  position: absolute; font-size: 11px; color: rgba(200,225,255,.3);
+  width: 100%; text-align: center; pointer-events: none; letter-spacing: .1em;
+}
+.recBar {
+  width: 2.5px; border-radius: 2px;
+  background: rgba(196,176,255,.2); transition: height .06s ease; flex-shrink: 0;
+}
+.recBar.active { background: linear-gradient(180deg, #c4b0ff, rgba(196,176,255,.4)); }
+
+.podRecorder__mic-row {
+  display: flex; align-items: center; gap: 12px; width: 100%;
+}
+.podRecorder__rings {
+  position: relative; width: 52px; height: 52px;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.podRecorder__ring {
+  position: absolute; border-radius: 50%;
+  border: 1px solid rgba(196,176,255,.15);
+  animation: recRingExpand 2.5s ease-out infinite;
+}
+.podRecorder__ring:nth-child(2) { animation-delay: .8s; }
+.podRecorder__ring:nth-child(3) { animation-delay: 1.6s; }
+@keyframes recRingExpand {
+  0%   { width:36px; height:36px; opacity:.7; border-color:rgba(196,176,255,.3); }
+  100% { width:58px; height:58px; opacity:0;  border-color:rgba(196,176,255,0); }
+}
+.podRecorder__ring.rec { animation: recRingRec 1s ease-out infinite; }
+.podRecorder__ring.rec:nth-child(2) { animation-delay:.33s; }
+.podRecorder__ring.rec:nth-child(3) { animation-delay:.66s; }
+@keyframes recRingRec {
+  0%   { width:36px; height:36px; opacity:.8; border-color:rgba(255,80,80,.5); }
+  100% { width:60px; height:60px; opacity:0;  border-color:rgba(255,80,80,0); }
+}
+
+.podRecorder__btn-mic {
+  width: 48px; height: 48px; border-radius: 50%;
+  background: linear-gradient(145deg, rgba(196,176,255,.22), rgba(196,176,255,.06));
+  border: 2px solid rgba(196,176,255,.45);
+  color: #c4b0ff; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  position: relative; z-index: 2;
+  box-shadow: 0 0 20px rgba(196,176,255,.12);
+  transition: all .22s;
+}
+.podRecorder__btn-mic:hover {
+  background: rgba(196,176,255,.28);
+  box-shadow: 0 0 32px rgba(196,176,255,.28); transform: scale(1.06);
+}
+.podRecorder__btn-mic.rec {
+  background: rgba(255,80,80,.15);
+  border-color: rgba(255,100,100,.55); color: #ff6b6b;
+  box-shadow: 0 0 28px rgba(255,80,80,.2);
+}
+
+.podRecorder__timer {
+  font-family: 'Courier New', monospace;
+  font-size: 1.1rem; font-weight: 700; color: #a8eeff;
+  letter-spacing: .06em; flex: 1; text-align: center;
+  text-shadow: 0 0 14px rgba(123,228,255,.3); transition: color .3s;
+}
+.podRecorder__timer.urgent { color: #ff9966; text-shadow: 0 0 14px rgba(255,120,60,.4); }
+
+.podRecorder__progress-track {
+  height: 3px; background: rgba(123,228,255,.08);
+  border-radius: 2px; overflow: hidden; width: 100%;
+}
+.podRecorder__progress-fill {
+  height: 100%; width: 0%; border-radius: 2px;
+  background: linear-gradient(90deg, #c4b0ff, #a8eeff);
+  box-shadow: 0 0 6px rgba(196,176,255,.4); transition: width .5s linear;
+}
+.podRecorder__progress-fill.urgent {
+  background: linear-gradient(90deg, #ff8866, #ffb347);
+}
+
+.podRecorder__btn-stop {
+  display: none; align-items: center; gap: 6px;
+  padding: 6px 16px; border-radius: 999px;
+  background: rgba(255,100,100,.1); border: 1px solid rgba(255,100,100,.25);
+  color: rgba(255,120,100,.8); font-size: .75rem; font-weight: 600;
+  cursor: pointer; transition: all .2s; letter-spacing: .04em;
+}
+.podRecorder__btn-stop.visible { display: flex; }
+.podRecorder__btn-stop:hover { background: rgba(255,100,100,.2); }
+
+/* Form */
+.podRecorder__form {
+  margin-top: 20px; padding: 20px 24px;
+  background: rgba(5,12,36,.6); border: 1px solid rgba(123,228,255,.1);
+  border-radius: 14px;
+}
+.podRecorder__preview { margin-bottom: 14px; }
+.podRecorder__preview-label {
+  font-size: .68rem; color: rgba(196,176,255,.55);
+  letter-spacing: .12em; text-transform: uppercase; margin-bottom: 7px;
+}
+.podRecorder__preview audio { width: 100%; height: 28px; }
+.podRecorder__fields { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
+.podRecorder__field label {
+  font-size: .68rem; color: rgba(200,225,255,.5);
+  letter-spacing: .1em; text-transform: uppercase; display: block; margin-bottom: 5px;
+}
+.podRecorder__field label span { color: #ff6b6b; }
+.podRecorder__field input {
+  width: 100%; background: rgba(5,12,36,.8);
+  border: 1px solid rgba(123,228,255,.13); border-radius: 10px;
+  padding: 10px 13px; color: #edf7ff; font-size: .88rem; outline: none;
+  transition: border-color .2s, box-shadow .2s; font-family: inherit;
+}
+.podRecorder__field input:focus {
+  border-color: rgba(196,176,255,.4);
+  box-shadow: 0 0 0 3px rgba(196,176,255,.08);
+}
+.podRecorder__field input::placeholder { color: rgba(200,225,255,.22); }
+.podRecorder__field input.rec-error { border-color: rgba(255,100,100,.4); }
+
+.podRecorder__btn-send {
+  width: 100%; padding: 13px; border-radius: 12px;
+  background: linear-gradient(135deg, rgba(196,176,255,.18), rgba(123,228,255,.08));
+  border: 1px solid rgba(196,176,255,.3); color: #c4b0ff;
+  font-size: .88rem; font-weight: 700; letter-spacing: .04em;
+  cursor: pointer; transition: all .22s;
+  display: flex; align-items: center; justify-content: center; gap: 9px;
+  font-family: inherit;
+}
+.podRecorder__btn-send:hover:not(:disabled) {
+  background: rgba(196,176,255,.26);
+  box-shadow: 0 0 24px rgba(196,176,255,.15); transform: translateY(-1px);
+}
+.podRecorder__btn-send:disabled { opacity: .35; cursor: default; }
+
+.podRecorder__status {
+  font-size: .78rem; color: rgba(200,225,255,.45);
+  text-align: center; margin-top: 10px; min-height: 18px;
+}
+.podRecorder__status.ok  { color: #1ed760; }
+.podRecorder__status.err { color: #ff6b6b; }
+
+/* Mobile */
+@media (max-width: 768px) {
+  .podRecorder__inner {
+    grid-template-columns: 1fr; gap: 20px; padding: 22px 18px;
+  }
+  .podRecorder__right { width: 100%; }
+  .podRecorder__fields { grid-template-columns: 1fr; }
+}
