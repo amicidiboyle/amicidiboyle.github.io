@@ -939,3 +939,13 @@ a   { color: inherit; text-decoration: none; }
   .podRecorder__right { width: 100%; }
   .podRecorder__fields { grid-template-columns: 1fr; }
 }
+
+/* ── Gradiente testo "Pressione" nel titolo hero ── */
+.podTitle__grad {
+  background: linear-gradient(135deg, #a8eeff 0%, #c4b0ff 60%, #7be4ff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+  display: inline-block;
+}
