@@ -108,6 +108,79 @@
       </div>
     </section>
 
+    <!-- 30 SECONDI SOTTO PRESSIONE -->
+    <section class="podRecorder">
+      <div class="container">
+        <div class="podRecorder__inner reveal">
+          <div class="podRecorder__left">
+            <div class="podRecorder__tag">
+              <span class="podRecorder__dot"></span>
+              Lascia un messaggio
+            </div>
+            <h3 class="podRecorder__title">30 secondi <span>Sotto Pressione</span></h3>
+            <p class="podRecorder__sub">
+              Registra una domanda o un'idea per Luigi.<br>
+              Commenta gli episodi del podcast,<br>
+              <em>non trattenere il fiato.</em>
+            </p>
+          </div>
+          <div class="podRecorder__right">
+            <div class="podRecorder__wave" id="recWave">
+              <span class="podRecorder__wave-idle" id="recWaveIdle">· · · · · · ·</span>
+            </div>
+            <div class="podRecorder__mic-row">
+              <div class="podRecorder__rings">
+                <div class="podRecorder__ring"></div>
+                <div class="podRecorder__ring"></div>
+                <div class="podRecorder__ring"></div>
+                <button class="podRecorder__btn-mic" id="recBtnMic" title="Inizia a registrare" aria-label="Registra messaggio vocale">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="22" height="22" aria-hidden="true">
+                    <rect x="9" y="2" width="6" height="12" rx="3"/>
+                    <path d="M5 10a7 7 0 0 0 14 0"/>
+                    <line x1="12" y1="19" x2="12" y2="22"/>
+                    <line x1="8" y1="22" x2="16" y2="22"/>
+                  </svg>
+                </button>
+              </div>
+              <div class="podRecorder__timer" id="recTimer">00:30</div>
+            </div>
+            <div class="podRecorder__progress-track">
+              <div class="podRecorder__progress-fill" id="recProgress"></div>
+            </div>
+            <button class="podRecorder__btn-stop" id="recBtnStop">⬛ Ferma</button>
+          </div>
+        </div>
+
+        <!-- Preview + Form — visibili dopo registrazione -->
+        <div class="podRecorder__form" id="recForm" style="display:none;">
+          <div class="podRecorder__preview" id="recPreview">
+            <div class="podRecorder__preview-label">▶ Ascolta prima di inviare</div>
+            <audio id="recAudio" controls></audio>
+          </div>
+          <div class="podRecorder__fields">
+            <div class="podRecorder__field">
+              <label for="recName">Nome e cognome <span>*</span></label>
+              <input type="text" id="recName" placeholder="Il tuo nome" autocomplete="name" />
+            </div>
+            <div class="podRecorder__field">
+              <label for="recEmail">Email <span>*</span></label>
+              <input type="email" id="recEmail" placeholder="La tua email" autocomplete="email" />
+            </div>
+          </div>
+          <button class="podRecorder__btn-send" id="recBtnSend">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="16" height="16" aria-hidden="true">
+              <rect x="9" y="2" width="6" height="12" rx="3"/>
+              <path d="M5 10a7 7 0 0 0 14 0"/>
+              <line x1="12" y1="19" x2="12" y2="22"/>
+              <line x1="8" y1="22" x2="16" y2="22"/>
+            </svg>
+            Invia messaggio a Luigi
+          </button>
+          <div class="podRecorder__status" id="recStatus"></div>
+        </div>
+      </div>
+    </section>
+
     <!-- EPISODI -->
     <section class="podSection" id="episodi">
       <div class="container">
@@ -602,6 +675,158 @@
         }).catch(function(){});
       });
     }
+  })();
+  </script>
+  <script>
+  /* ── 30 secondi Sotto Pressione — Recorder ── */
+  (function(){
+    var WEBAPP_URL = 'https://script.google.com/macros/s/AKfycbzkLpU9T8mo3mknAMUUMbk643y_Nx6VwJUehXPy2oywcruRbxjiMpaUpT86_Hp14leE/exec';
+    var MAX_SEC = 30, BAR_COUNT = 28;
+    var recording = false, chunks = [], audioBlob, elapsed = 0, timerInterval, mediaRecorder;
+
+    var wave    = document.getElementById('recWave');
+    var waveIdle= document.getElementById('recWaveIdle');
+    var timer   = document.getElementById('recTimer');
+    var progress= document.getElementById('recProgress');
+    var btnMic  = document.getElementById('recBtnMic');
+    var btnStop = document.getElementById('recBtnStop');
+    var form    = document.getElementById('recForm');
+    var audio   = document.getElementById('recAudio');
+    var btnSend = document.getElementById('recBtnSend');
+    var status  = document.getElementById('recStatus');
+    var nameIn  = document.getElementById('recName');
+    var emailIn = document.getElementById('recEmail');
+    var rings   = document.querySelectorAll('.podRecorder__ring');
+
+    if (!btnMic) return;
+
+    /* Barre waveform */
+    var bars = [];
+    for (var i = 0; i < BAR_COUNT; i++) {
+      var b = document.createElement('div');
+      b.className = 'recBar';
+      b.style.height = '4px';
+      wave.appendChild(b);
+      bars.push(b);
+    }
+
+    function pad(n){ return n < 10 ? '0'+n : n; }
+
+    function tickTimer(){
+      elapsed++;
+      var rem = MAX_SEC - elapsed;
+      var pct = (elapsed / MAX_SEC) * 100;
+      timer.textContent = '00:' + pad(rem);
+      progress.style.width = pct + '%';
+      if (rem <= 10){ timer.classList.add('urgent'); progress.classList.add('urgent'); }
+      if (elapsed >= MAX_SEC) stopRec();
+    }
+
+    function animBars(analyser){
+      if (!recording){ bars.forEach(function(b){ b.style.height='4px'; b.classList.remove('active'); }); return; }
+      var data = new Uint8Array(analyser.frequencyBinCount);
+      analyser.getByteFrequencyData(data);
+      bars.forEach(function(b, i){
+        var val = data[Math.floor(i * data.length / BAR_COUNT)];
+        var h = Math.max(3, Math.min(38, val * 0.38));
+        b.style.height = h + 'px';
+        b.classList.toggle('active', val > 15);
+      });
+      requestAnimationFrame(function(){ animBars(analyser); });
+    }
+
+    btnMic.addEventListener('click', function(){
+      if (recording) return;
+      navigator.mediaDevices.getUserMedia({audio: true}).then(function(stream){
+        recording = true; chunks = []; elapsed = 0; audioBlob = null;
+        waveIdle.style.display = 'none';
+        btnMic.classList.add('rec');
+        btnStop.classList.add('visible');
+        rings.forEach(function(r){ r.classList.add('rec'); });
+        form.style.display = 'none';
+        timer.classList.remove('urgent');
+        progress.classList.remove('urgent');
+        progress.style.width = '0%';
+        status.textContent = ''; status.className = 'podRecorder__status';
+        timerInterval = setInterval(tickTimer, 1000);
+
+        var ctx = new (window.AudioContext || window.webkitAudioContext)();
+        var src = ctx.createMediaStreamSource(stream);
+        var analyser = ctx.createAnalyser();
+        analyser.fftSize = 64;
+        src.connect(analyser);
+        animBars(analyser);
+
+        var mime = MediaRecorder.isTypeSupported('audio/webm;codecs=opus') ? 'audio/webm;codecs=opus' : 'audio/webm';
+        mediaRecorder = new MediaRecorder(stream, {mimeType: mime});
+        mediaRecorder.ondataavailable = function(e){ if (e.data.size > 0) chunks.push(e.data); };
+        mediaRecorder.onstop = function(){
+          audioBlob = new Blob(chunks, {type: 'audio/webm'});
+          audio.src = URL.createObjectURL(audioBlob);
+          form.style.display = 'block';
+          stream.getTracks().forEach(function(t){ t.stop(); });
+        };
+        mediaRecorder.start();
+      }).catch(function(){
+        status.textContent = 'Microfono non disponibile o accesso negato.';
+        status.className = 'podRecorder__status err';
+      });
+    });
+
+    function stopRec(){
+      if (!recording) return;
+      recording = false;
+      clearInterval(timerInterval);
+      btnMic.classList.remove('rec');
+      btnStop.classList.remove('visible');
+      rings.forEach(function(r){ r.classList.remove('rec'); });
+      waveIdle.style.display = '';
+      waveIdle.textContent = '✓';
+      timer.textContent = '00:00';
+      if (mediaRecorder && mediaRecorder.state !== 'inactive') mediaRecorder.stop();
+    }
+
+    btnStop.addEventListener('click', stopRec);
+
+    function validEmail(e){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e); }
+
+    btnSend.addEventListener('click', function(){
+      if (!audioBlob) return;
+      var name  = nameIn.value.trim();
+      var email = emailIn.value.trim();
+      nameIn.classList.remove('rec-error');
+      emailIn.classList.remove('rec-error');
+      if (!name)              { nameIn.classList.add('rec-error');  nameIn.focus();  return; }
+      if (!validEmail(email)) { emailIn.classList.add('rec-error'); emailIn.focus(); return; }
+
+      btnSend.disabled = true;
+      status.textContent = 'Invio in corso...';
+      status.className = 'podRecorder__status';
+
+      var reader = new FileReader();
+      reader.onload = function(){
+        fetch(WEBAPP_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({
+            name:  name,
+            email: email,
+            audio: reader.result,
+            mime:  'audio/webm'
+          })
+        }).then(function(){
+          status.textContent = '✓ Messaggio inviato! Luigi lo ascolterà presto.';
+          status.className = 'podRecorder__status ok';
+          btnSend.disabled = false;
+        }).catch(function(){
+          status.textContent = '✗ Errore di rete. Riprova.';
+          status.className = 'podRecorder__status err';
+          btnSend.disabled = false;
+        });
+      };
+      reader.readAsDataURL(audioBlob);
+    });
   })();
   </script>
 </body>
