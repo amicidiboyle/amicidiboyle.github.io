@@ -412,5 +412,18 @@
       "Medicina militare",
       "Ambienti estremi"
     ]
+  },
+  {
+    "name": "Francesco Baggio",
+    "role": "Anestesista, Ospedale di Circolo, Trauma Center Varese. Focus: Medicina Spaziale, biotecnologie",
+    "img": "francesco-baggio.jpg",
+    "city": "Varese, IT",
+    "linkedin": "https://www.linkedin.com/in/francesco-baggio-a91606420?utm_source=share_via&utm_content=profile&utm_medium=member_android",
+    "email": "francesco.baggio2@gmail.com",
+    "tags": [
+      "spazio",
+      "farmacologia",
+      "fisiologia"
+    ]
   }
 ]
