@@ -32,9 +32,33 @@
 
 html, body { margin: 0; padding: 0; }
 .boylebot-page, .boylebot-page * , .boylebot-page *::before, .boylebot-page *::after { box-sizing: border-box; }
+
+/* ── SFONDO OCEANO — identico al resto di amicidiboyle.it ──
+   Fisso su tutta la pagina (html::before/::after, non body, per non
+   entrare in conflitto con gli pseudo-elementi decorativi qui sotto
+   che vivono su .boylebot-page = body). L'aurora/griglia esistente
+   resta sopra, semi-trasparente, come velo aggiuntivo. */
+html::before {
+  content: "";
+  position: fixed; inset: 0; z-index: -4;
+  background: url("assets/ocean-desktop.jpg") center top / cover no-repeat;
+}
+html::after {
+  content: "";
+  position: fixed; inset: 0; z-index: -3;
+  background:
+    radial-gradient(ellipse 80% 40% at 50% 0%, rgba(0,80,180,.22), transparent 60%),
+    radial-gradient(ellipse at 0% 50%, rgba(0,40,120,.18), transparent 45%),
+    radial-gradient(ellipse at 100% 80%, rgba(0,30,100,.15), transparent 40%),
+    linear-gradient(180deg, rgba(2,10,24,.45) 0%, rgba(2,10,24,.25) 40%, rgba(2,10,24,.6) 100%);
+}
+@media (max-width: 768px) {
+  html::before { background: url("assets/ocean-mobile.jpg") center top / cover no-repeat; }
+}
+
 .boylebot-page {
   font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  color: var(--bb-text); background: var(--bb-bg);
+  color: var(--bb-text); background: transparent;
   position: relative; isolation: isolate; overflow-x: clip;
   margin: 0;
 }
@@ -52,7 +76,7 @@ html, body { margin: 0; padding: 0; }
     radial-gradient(ellipse 65% 45% at 8% 20%, rgba(0,110,200,.26), transparent 58%),
     radial-gradient(ellipse 60% 45% at 95% 55%, rgba(120,90,220,.2), transparent 58%),
     radial-gradient(ellipse 70% 50% at 30% 92%, rgba(0,90,180,.24), transparent 60%),
-    linear-gradient(180deg, var(--bb-bg) 0%, var(--bb-bg-2) 45%, var(--bb-bg) 75%, var(--bb-bg-2) 100%);
+    linear-gradient(180deg, rgba(3,15,31,.72) 0%, rgba(7,28,54,.72) 45%, rgba(3,15,31,.82) 75%, rgba(7,28,54,.88) 100%);
 }
 .boylebot-page::after {
   content: "";
@@ -67,12 +91,6 @@ html, body { margin: 0; padding: 0; }
   -webkit-mask-image: linear-gradient(180deg, rgba(0,0,0,.9), rgba(0,0,0,.5) 40%, rgba(0,0,0,.9));
   mask-image: linear-gradient(180deg, rgba(0,0,0,.9), rgba(0,0,0,.5) 40%, rgba(0,0,0,.9));
   opacity: .3;
-}
-
-.bb-preview-bar {
-  text-align: center; padding: 8px 16px; font-size: .72rem;
-  background: rgba(0,0,0,.35); border-bottom: 1px solid var(--bb-border); color: var(--bb-soft);
-  position: relative; z-index: 5;
 }
 
 /* ── LOGO: si disegna da solo al caricamento ── */

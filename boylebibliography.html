@@ -25,21 +25,11 @@
 <meta name="twitter:title" content="Boyle Bibliography · Gli Amici di Boyle" />
 <meta name="twitter:description" content="Bibliografia in stile Vancouver su medicina degli ambienti estremi, recuperata in tempo reale da PubMed e OpenAlex." />
 <!--
-  NOTA PER L'INTEGRAZIONE NEL SITO
-  ─────────────────────────────────
-  Per inserire Boyle Bibliography in www.amicidiboyle.it:
-  1) copia tutto il contenuto di <main id="boylebot"> dentro il tuo index.html,
-     subito dopo l'header e il ticker già esistenti sul sito (qui sono inclusi
-     identici solo per l'anteprima standalone: se la pagina reale ha già il suo
-     header, rimuovi il blocco <header class="site-header">...</header> e
-     <div class="ticker">...</div> qui sotto, sono duplicati).
-  2) collega boylebibliography.css nell'head al posto del blocco <style> qui sotto
-     (oppure lascialo inline, funziona comunque).
-  3) lo <script> in fondo funziona offline, senza rete e senza backend.
-  Le classi specifiche di Boyle Bibliography sono namespaced "bb-"; l'header usa le
-  classi originali del sito (.site-header, .brand, .site-nav, ...) così, se
-  la pagina carica anche styles.css del sito, non ci sono conflitti.
-  La riga in cima (bb-preview-bar) è solo per l'anteprima standalone.
+  Pagina standalone di www.amicidiboyle.it. L'header e il ticker qui sotto
+  sono copie identiche di quelle del sito principale (styles.css), mantenute
+  in sync manualmente. Le classi specifiche di Boyle Bibliography sono
+  namespaced "bb-", così non ci sono conflitti se in futuro questa pagina
+  dovesse caricare anche styles.css del sito.
 -->
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='40' fill='none' stroke='%237be4ff' stroke-width='8'/%3E%3Cpath d='M 29 71 C 29.33 69.33, 30.17 64.2, 31 61 C 31.83 57.8, 32.67 54.76, 34 51.8 C 35.33 48.84, 36.83 45.81, 39 43.24 C 41.17 40.67, 43.33 38.4, 47 36.36 C 50.67 34.32, 57 32.23, 61 31 C 65 29.77, 69.33 29.33, 71 29' fill='none' stroke='%23a8eeff' stroke-width='8' stroke-linecap='round'/%3E%3Ccircle cx='71' cy='29' r='6.5' fill='%23a8eeff'/%3E%3C/svg%3E" />
 <link rel="stylesheet" href="boylebibliography.css" />
@@ -60,8 +50,6 @@
       <circle class="bb-logo-node" cx="71" cy="29" r="5.2" />
     </symbol>
   </svg>
-
-  <div class="bb-preview-bar">Anteprima standalone — rimuovi questa riga quando integri la pagina nel sito</div>
 
   <header class="site-header">
     <div class="container nav-wrap">
