@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Boyle Bibliography · Gli Amici di Boyle</title>
+<meta name="description" content="Boyle Bibliography: scrivi un argomento di medicina degli ambienti estremi, in italiano o inglese, ricevi la bibliografia in stile Vancouver da PubMed e OpenAlex in tempo reale — nessuna citazione inventata. Un progetto degli Amici di Boyle." />
+<!--
+  NOTA PER L'INTEGRAZIONE NEL SITO
+  ─────────────────────────────────
+  Per inserire Boyle Bibliography in www.amicidiboyle.it:
+  1) copia tutto il contenuto di <main id="boylebot"> dentro il tuo index.html,
+     subito dopo l'header e il ticker già esistenti sul sito (qui sono inclusi
+     identici solo per l'anteprima standalone: se la pagina reale ha già il suo
+     header, rimuovi il blocco <header class="site-header">...</header> e
+     <div class="ticker">...</div> qui sotto, sono duplicati).
+  2) collega boylebibliography.css nell'head al posto del blocco <style> qui sotto
+     (oppure lascialo inline, funziona comunque).
+  3) lo <script> in fondo funziona offline, senza rete e senza backend.
+  Le classi specifiche di Boyle Bibliography sono namespaced "bb-"; l'header usa le
+  classi originali del sito (.site-header, .brand, .site-nav, ...) così, se
+  la pagina carica anche styles.css del sito, non ci sono conflitti.
+  La riga in cima (bb-preview-bar) è solo per l'anteprima standalone.
+-->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='40' fill='none' stroke='%237be4ff' stroke-width='8'/%3E%3Cpath d='M 29 71 C 29.33 69.33, 30.17 64.2, 31 61 C 31.83 57.8, 32.67 54.76, 34 51.8 C 35.33 48.84, 36.83 45.81, 39 43.24 C 41.17 40.67, 43.33 38.4, 47 36.36 C 50.67 34.32, 57 32.23, 61 31 C 65 29.77, 69.33 29.33, 71 29' fill='none' stroke='%23a8eeff' stroke-width='8' stroke-linecap='round'/%3E%3Ccircle cx='71' cy='29' r='6.5' fill='%23a8eeff'/%3E%3C/svg%3E" />
+<link rel="stylesheet" href="boylebibliography.css" />
+</head>
+<body class="boylebot-page">
+
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="bb-logo-mark" viewBox="0 0 100 100">
+      <circle class="bb-logo-ring" cx="50" cy="50" r="40" stroke-width="6" />
+      <path class="bb-logo-curve" pathLength="1" fill="none" stroke-width="6.5" stroke-linecap="round"
+        d="M 29 71
+           C 29.33 69.33, 30.17 64.2, 31 61
+           C 31.83 57.8, 32.67 54.76, 34 51.8
+           C 35.33 48.84, 36.83 45.81, 39 43.24
+           C 41.17 40.67, 43.33 38.4, 47 36.36
+           C 50.67 34.32, 57 32.23, 61 31
+           C 65 29.77, 69.33 29.33, 71 29" />
+      <circle class="bb-logo-node" cx="71" cy="29" r="5.2" />
+    </symbol>
+  </svg>
+
+  <div class="bb-preview-bar">Anteprima standalone — rimuovi questa riga quando integri la pagina nel sito</div>
+
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a class="brand" href="index.html" aria-label="Gli Amici di Boyle Home">
+        <img src="assets/logo.png" alt="Logo Gli Amici di Boyle" width="56" height="56" onerror="this.style.display='none'" />
+        <span class="brand-copy">
+          <strong>Gli Amici di Boyle</strong>
+          <em>Diving &amp; Hyperbaric Medicine · Research &amp; Education</em>
+          <em class="brand-sub">Human Performance &amp; Safety in Extreme Environments</em>
+        </span>
+      </a>
+
+      <input id="nav-toggle" class="nav-toggle" type="checkbox" aria-label="Apri menu" />
+      <label class="nav-burger" for="nav-toggle"><span></span><span></span><span></span></label>
+
+      <nav class="site-nav" aria-label="Navigazione principale">
+        <a href="index.html#home">Home</a>
+        <a href="index.html#visione">Visione</a>
+        <div class="nav-dropdown" id="navDropdown">
+          <button class="nav-dropdown-btn" aria-expanded="false" aria-controls="navDropdownPanel">Attività</button>
+          <div class="nav-dropdown-panel" id="navDropdownPanel" role="menu">
+            <a href="index.html#attivita">Aree</a>
+            <a href="index.html#ricerca">Ricerca</a>
+            <a href="index.html#formazione">Formazione</a>
+            <a href="index.html#contenuti">Contenuti</a>
+          </div>
+        </div>
+        <a href="index.html#fondatori">Fondatori</a>
+        <a href="rete.html">Rete</a>
+        <a href="podcast.html">Podcast</a>
+        <a href="eventi.html">Eventi</a>
+        <a href="index.html#partner">Partner</a>
+        <a href="index.html#contatti">Contatti</a>
+        <button id="langToggleMobileIndex" type="button" class="lang-toggle lang-toggle--mobile lang-toggle--nav" aria-label="Cambia lingua / Switch language"><span class="lang-it">IT</span><span class="lang-sep"> · </span><span class="lang-en">EN</span></button>
+      </nav>
+      <button class="lang-toggle" id="langToggle" type="button" aria-label="Cambia lingua / Switch language" title="Cambia lingua di Boyle Bibliography">
+        <span class="lang-it">IT</span><span class="lang-sep"> · </span><span class="lang-en">EN</span>
+      </button>
+    </div>
+  </header>
+  <div class="ticker">
+    <div class="ticker-track" aria-hidden="true">
+      <span>AEROSPACE</span><span class="ticker-dot">·</span><span>EDUCATION</span><span class="ticker-dot">·</span><span>RESEARCH</span><span class="ticker-dot">·</span><span>PRESSURE</span><span class="ticker-dot">·</span><span>SAFETY</span><span class="ticker-dot">·</span><span>HYPERBARIC</span><span class="ticker-dot">·</span><span>DIVING</span><span class="ticker-dot">·</span><span>HUMAN PERFORMANCE</span><span class="ticker-dot">·</span>
+      <span>AEROSPACE</span><span class="ticker-dot">·</span><span>EDUCATION</span><span class="ticker-dot">·</span><span>RESEARCH</span><span class="ticker-dot">·</span><span>PRESSURE</span><span class="ticker-dot">·</span><span>SAFETY</span><span class="ticker-dot">·</span><span>HYPERBARIC</span><span class="ticker-dot">·</span><span>DIVING</span><span class="ticker-dot">·</span><span>HUMAN PERFORMANCE</span><span class="ticker-dot">·</span>
+    </div>
+  </div>
+
+  <main id="boylebot">
+
+    <!-- HERO -->
+    <section class="bb-hero">
+      <div class="bb-container bb-hero-inner">
+        <div class="bb-hero-title-row">
+          <span class="bb-hero-logo"><svg><use href="#bb-logo-mark"></use></svg></span>
+          <div class="bb-hero-title-text">
+            <p class="bb-kicker" data-i18n="kicker">Amici di Boyle · Progetto sperimentale</p>
+            <h1><span class="bb-h-abisso">Boyle</span><br><span class="bb-h-spazio">Bibliography</span></h1>
+            <p class="bb-hero-sub" data-i18n="heroSub">
+              <strong>Boyle Bibliography</strong> fa una cosa sola: scrivi un argomento di medicina degli
+              ambienti estremi, in italiano o in inglese, e ricevi la bibliografia in stile Vancouver —
+              recuperata in tempo reale da PubMed e OpenAlex, con link verificabile a ogni voce. Non genera
+              testo, non inventa citazioni: cerca in librerie vere e te le restituisce nel formato che userai davvero.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BOYLEBOT BIBLIOGRAPHY: ricerca live su PubMed + OpenAlex -->
+    <section class="bb-section bb-section-alt" id="bb-bibliography">
+      <div class="bb-container">
+        <div class="bb-biblio">
+
+          <div class="bb-biblio-main">
+            <form class="bb-ask" id="bbBiblioForm">
+              <div class="bb-ask-row">
+                <input type="text" id="bbBiblioInput" placeholder="Scrivi un argomento, in italiano o inglese…" data-i18n-placeholder="searchPlaceholder" aria-label="Cerca la bibliografia su PubMed e OpenAlex" data-i18n-aria="searchAria" autofocus />
+                <button class="bb-ask-btn" type="submit" aria-label="Cerca">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                </button>
+              </div>
+            </form>
+
+            <div class="bb-constellation-wrap bb-reveal">
+              <div class="bb-constellation" id="bbConstellation">
+                <svg viewBox="0 0 400 400" role="img" aria-label="Sei domini collegati da un'unica legge fisica">
+                  <defs>
+                    <linearGradient id="bbLineGrad" gradientUnits="userSpaceOnUse" x1="80" y1="80" x2="320" y2="320">
+                      <stop offset="0%" stop-color="#7be4ff" stop-opacity=".7"/>
+                      <stop offset="100%" stop-color="#b48bff" stop-opacity=".5"/>
+                    </linearGradient>
+                  </defs>
+                  <path class="bb-cline" pathLength="1" d="M200 200 L200 70"/>
+                  <path class="bb-cline" pathLength="1" d="M200 200 L312.6 135" style="transition-delay:.05s"/>
+                  <path class="bb-cline" pathLength="1" d="M200 200 L312.6 265" style="transition-delay:.1s"/>
+                  <path class="bb-cline" pathLength="1" d="M200 200 L200 330" style="transition-delay:.15s"/>
+                  <path class="bb-cline" pathLength="1" d="M200 200 L87.4 265" style="transition-delay:.2s"/>
+                  <path class="bb-cline" pathLength="1" d="M200 200 L87.4 135" style="transition-delay:.25s"/>
+
+                  <circle class="bb-ccore" cx="200" cy="200" r="42" fill="rgba(123,228,255,.07)" stroke="#7be4ff" stroke-width="2"/>
+                  <text class="bb-ccore-label" x="200" y="197" text-anchor="middle">P·V</text>
+                  <text class="bb-ccore-label" x="200" y="213" text-anchor="middle" font-size="11" fill="#a8eeff" font-weight="600">= k</text>
+
+                  <circle class="bb-cnode" style="transition-delay:.3s" cx="200" cy="70" r="7" fill="#a8eeff"/>
+                  <text class="bb-clabel" data-i18n="domSub" style="transition-delay:.3s" x="200" y="48" text-anchor="middle">Subacquea</text>
+
+                  <circle class="bb-cnode" style="transition-delay:.38s" cx="312.6" cy="135" r="7" fill="#a8eeff"/>
+                  <text class="bb-clabel" data-i18n="domIper" style="transition-delay:.38s" x="326" y="124" text-anchor="start">Iperbarica</text>
+
+                  <circle class="bb-cnode" style="transition-delay:.46s" cx="312.6" cy="265" r="7" fill="#a8eeff"/>
+                  <text class="bb-clabel" data-i18n="domTrauma" style="transition-delay:.46s" x="326" y="280" text-anchor="start">Trauma</text>
+
+                  <circle class="bb-cnode" style="transition-delay:.54s" cx="200" cy="330" r="7" fill="#a8eeff"/>
+                  <text class="bb-clabel" data-i18n="domSic" style="transition-delay:.54s" x="200" y="356" text-anchor="middle">Sicurezza</text>
+
+                  <circle class="bb-cnode" style="transition-delay:.62s" cx="87.4" cy="265" r="7" fill="#a8eeff"/>
+                  <text class="bb-clabel" data-i18n="domAero" style="transition-delay:.62s" x="74" y="280" text-anchor="end">Aerospazio</text>
+
+                  <circle class="bb-cnode" style="transition-delay:.7s" cx="87.4" cy="135" r="7" fill="#a8eeff"/>
+                  <text class="bb-clabel" data-i18n="domFis" style="transition-delay:.7s" x="74" y="124" text-anchor="end">Fisiologia</text>
+                </svg>
+              </div>
+            </div>
+            <div class="bb-chips-row bb-reveal">
+              <span class="bb-value-chip" data-i18n="chip1">Fonti verificate</span>
+              <span class="bb-value-chip" data-i18n="chip2">Perimetro scientifico definito</span>
+              <span class="bb-value-chip" data-i18n="chip3">Limiti dichiarati quando servono</span>
+            </div>
+
+            <p class="bb-trust-badge">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>
+              <span data-i18n="trustBadge">Dati reali da PubMed e OpenAlex, in tempo reale.</span>
+            </p>
+
+            <div class="bb-examples" id="bbBiblioExamples">
+              <span data-i18n="examplesLabel">Prova:</span>
+              <button type="button" data-q="malattia da decompressione">malattia da decompressione</button>
+              <button type="button" data-q="hyperbaric oxygen wound healing">hyperbaric oxygen wound healing</button>
+              <button type="button" data-q="G-LOC unconsciousness pilots">G-LOC unconsciousness pilots</button>
+              <button type="button" data-q="osteonecrosi da immersione">osteonecrosi da immersione</button>
+            </div>
+
+            <p class="bb-biblio-status" id="bbBiblioStatus" aria-live="polite"></p>
+            <ol class="bb-biblio-results" id="bbBiblioResults"></ol>
+          </div>
+
+          <aside class="bb-biblio-rules bb-biblio-rules--left bb-reveal">
+            <div class="bb-rule bb-rule--1">
+              <span class="bb-rule-num">01</span>
+              <h3 data-i18n="rule1Title">Italiano o inglese</h3>
+              <p data-i18n="rule1Desc">I termini più comuni del settore vengono tradotti in automatico per la ricerca scientifica.</p>
+              <p class="bb-rule-example"><span class="bb-rule-good" data-i18n="rule1Example">malattia da decompressione</span></p>
+            </div>
+
+            <div class="bb-rule bb-rule--2">
+              <span class="bb-rule-num">02</span>
+              <h3 data-i18n="rule2Title">Sii specifico</h3>
+              <p data-i18n="rule2Desc">Due o tre parole mirate. Un singolo termine generico restituisce migliaia di risultati non utili.</p>
+              <p class="bb-rule-example">
+                <span class="bb-rule-good">diving fitness cardiac</span>
+                <span class="bb-rule-bad" data-i18n="rule2Bad">pressione</span>
+              </p>
+            </div>
+          </aside>
+
+          <aside class="bb-biblio-rules bb-biblio-rules--right bb-reveal">
+            <div class="bb-rule bb-rule--3">
+              <span class="bb-rule-num">03</span>
+              <h3 data-i18n="rule3Title">Due fonti, fonti vere</h3>
+              <p data-i18n="rule3Desc">Ogni voce arriva in tempo reale da PubMed e OpenAlex, con link diretto verificabile — mai scritta da un'intelligenza artificiale.</p>
+            </div>
+
+            <div class="bb-rule bb-rule--4">
+              <span class="bb-rule-num">04</span>
+              <h3 data-i18n="rule4Title">Vancouver, pronto da incollare</h3>
+              <p data-i18n="rule4Desc">Il formato bibliografico standard delle riviste biomediche, numerato e conforme.</p>
+            </div>
+          </aside>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <p class="bb-footer" data-i18n="footer">
+    Un progetto degli <a href="index.html">Amici di Boyle</a> · Ricerca ed educazione — non sostituisce il giudizio clinico.
+  </p>
+
+<script>
+(function () {
+  "use strict";
+
+  /* ── Header sito: ombra allo scroll + dropdown "Attività" su mobile ── */
+  (function () {
+    var hdr = document.querySelector(".site-header");
+    if (hdr) {
+      var onScroll = function () { hdr.classList.toggle("scrolled", window.scrollY > 40); };
+      window.addEventListener("scroll", onScroll, { passive: true });
+      onScroll();
+    }
+    var btn = document.querySelector(".nav-dropdown-btn");
+    var dropdown = document.getElementById("navDropdown");
+    if (btn && dropdown) {
+      btn.addEventListener("click", function (e) {
+        e.stopPropagation();
+        var open = btn.getAttribute("aria-expanded") === "true";
+        btn.setAttribute("aria-expanded", String(!open));
+        dropdown.classList.toggle("is-open", !open);
+      });
+      document.addEventListener("click", function () {
+        btn.setAttribute("aria-expanded", "false");
+        dropdown.classList.remove("is-open");
+      });
+    }
+    var toggle = document.getElementById("nav-toggle");
+    if (toggle) {
+      document.querySelectorAll(".site-nav > a").forEach(function (a) {
+        a.addEventListener("click", function () { toggle.checked = false; });
+      });
+    }
+  })();
+
+  /* ────────────────────────────────────────────────────────────
+     LINGUA — IT/EN solo per i contenuti propri di Boyle Bibliography.
+     La nav del sito (Home, Visione, ...) resta invariata: punta a
+     pagine che vivono altrove e che questo file non traduce.
+     ──────────────────────────────────────────────────────────── */
+  var currentLang = "it";
+  var I18N = {
+    it: {
+      kicker: "Amici di Boyle · Progetto sperimentale",
+      heroSub: "<strong>Boyle Bibliography</strong> fa una cosa sola: scrivi un argomento di medicina degli " +
+        "ambienti estremi, in italiano o in inglese, e ricevi la bibliografia in stile Vancouver — " +
+        "recuperata in tempo reale da PubMed e OpenAlex, con link verificabile a ogni voce. Non genera " +
+        "testo, non inventa citazioni: cerca in librerie vere e te le restituisce nel formato che userai davvero.",
+      rule1Title: "Italiano o inglese",
+      rule1Desc: "I termini più comuni del settore vengono tradotti in automatico per la ricerca scientifica.",
+      rule1Example: "malattia da decompressione",
+      rule2Title: "Sii specifico",
+      rule2Desc: "Due o tre parole mirate. Un singolo termine generico restituisce migliaia di risultati non utili.",
+      rule2Bad: "pressione",
+      rule3Title: "Due fonti, fonti vere",
+      rule3Desc: "Ogni voce arriva in tempo reale da PubMed e OpenAlex, con link diretto verificabile — mai scritta da un'intelligenza artificiale.",
+      rule4Title: "Vancouver, pronto da incollare",
+      rule4Desc: "Il formato bibliografico standard delle riviste biomediche, numerato e conforme.",
+      chip1: "Fonti verificate",
+      chip2: "Perimetro scientifico definito",
+      chip3: "Limiti dichiarati quando servono",
+      trustBadge: "Dati reali da PubMed e OpenAlex, in tempo reale.",
+      examplesLabel: "Prova:",
+      searchPlaceholder: "Scrivi un argomento, in italiano o inglese…",
+      searchAria: "Cerca la bibliografia su PubMed e OpenAlex",
+      footer: "Un progetto degli <a href=\"index.html\">Amici di Boyle</a> · Ricerca ed educazione — non sostituisce il giudizio clinico.",
+      domSub: "Subacquea", domIper: "Iperbarica", domTrauma: "Trauma",
+      domSic: "Sicurezza", domAero: "Aerospazio", domFis: "Fisiologia",
+      searching: "Ricerca su PubMed e OpenAlex in corso…",
+      results: function (total, n) { return total + " risultati su PubMed e OpenAlex · le " + n + " voci più rilevanti, in stile Vancouver:"; },
+      noResults: function (q) { return 'Nessun risultato per "' + q + '". Prova un termine più specifico, in italiano o in inglese.'; },
+      error: "Non riesco a contattare PubMed/OpenAlex in questo momento (connessione assente o servizio non raggiungibile). Riprova tra poco.",
+      copy: "Copia", copied: "Copiato", copyFailed: "Copia manualmente",
+      copyAll: "Copia tutte le citazioni", copiedAll: "Bibliografia copiata"
+    },
+    en: {
+      kicker: "Amici di Boyle · Experimental project",
+      heroSub: "<strong>Boyle Bibliography</strong> does one thing: write a topic in extreme environment " +
+        "medicine, in Italian or English, and get the bibliography in Vancouver style — retrieved live " +
+        "from PubMed and OpenAlex, with a verifiable link on every entry. It doesn't generate text or " +
+        "invent citations: it searches real libraries and gives it back in the format you'll actually use.",
+      rule1Title: "Italian or English",
+      rule1Desc: "The most common terms in the field are automatically translated for the scientific search.",
+      rule1Example: "decompression sickness",
+      rule2Title: "Be specific",
+      rule2Desc: "Two or three focused words. A single generic term returns thousands of unhelpful results.",
+      rule2Bad: "pressure",
+      rule3Title: "Two sources, real sources",
+      rule3Desc: "Every entry comes live from PubMed and OpenAlex, with a direct verifiable link — never written by an AI.",
+      rule4Title: "Vancouver, ready to paste",
+      rule4Desc: "The standard bibliographic format used in biomedical journals, numbered and compliant.",
+      chip1: "Verified sources",
+      chip2: "Defined scientific scope",
+      chip3: "Limits stated when relevant",
+      trustBadge: "Real data from PubMed and OpenAlex, live.",
+      examplesLabel: "Try:",
+      searchPlaceholder: "Write a topic, in Italian or English…",
+      searchAria: "Search the bibliography on PubMed and OpenAlex",
+      footer: "A project by <a href=\"index.html\">Amici di Boyle</a> · Research and education — does not replace clinical judgment.",
+      domSub: "Diving", domIper: "Hyperbaric", domTrauma: "Trauma",
+      domSic: "Safety", domAero: "Aerospace", domFis: "Physiology",
+      searching: "Searching PubMed and OpenAlex…",
+      results: function (total, n) { return total + " results on PubMed and OpenAlex · the " + n + " most relevant entries, in Vancouver style:"; },
+      noResults: function (q) { return 'No results for "' + q + '". Try a more specific term, in Italian or English.'; },
+      error: "Can't reach PubMed/OpenAlex right now (no connection or service unavailable). Please try again shortly.",
+      copy: "Copy", copied: "Copied", copyFailed: "Copy manually",
+      copyAll: "Copy all citations", copiedAll: "Bibliography copied"
+    }
+  };
+
+  function applyLang(lang) {
+    currentLang = lang;
+    var dict = I18N[lang];
+    document.documentElement.lang = lang;
+
+    document.querySelectorAll("[data-i18n]").forEach(function (el) {
+      var key = el.getAttribute("data-i18n");
+      if (!(key in dict)) return;
+      if (el.tagName === "text" || el.tagName === "tspan" || el.namespaceURI === "http://www.w3.org/2000/svg") {
+        el.textContent = dict[key];
+      } else {
+        el.innerHTML = dict[key];
+      }
+    });
+    document.querySelectorAll("[data-i18n-placeholder]").forEach(function (el) {
+      var key = el.getAttribute("data-i18n-placeholder");
+      if (key in dict) el.placeholder = dict[key];
+    });
+    document.querySelectorAll("[data-i18n-aria]").forEach(function (el) {
+      var key = el.getAttribute("data-i18n-aria");
+      if (key in dict) el.setAttribute("aria-label", dict[key]);
+    });
+
+    document.querySelectorAll(".lang-toggle").forEach(function (btn) {
+      btn.querySelector(".lang-it").classList.toggle("is-active", lang === "it");
+      btn.querySelector(".lang-en").classList.toggle("is-active", lang === "en");
+    });
+  }
+
+  (function () {
+    var toggles = [document.getElementById("langToggle"), document.getElementById("langToggleMobileIndex")];
+    toggles.forEach(function (btn) {
+      if (!btn) return;
+      btn.addEventListener("click", function () {
+        applyLang(currentLang === "it" ? "en" : "it");
+      });
+    });
+    applyLang("it");
+  })();
+
+  /* ────────────────────────────────────────────────────────────
+     BOYLEBOT BIBLIOGRAPHY — ricerca dal vivo su PubMed + OpenAlex
+     Nessun backend: entrambe le API rispondono direttamente alle
+     chiamate fetch() dal browser. Nessuna citazione è generata o
+     inventata: ogni voce arriva da un vero record bibliografico.
+     ──────────────────────────────────────────────────────────── */
+  var EUTILS = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/";
+  var OPENALEX = "https://api.openalex.org/works";
+
+  /* piccolo glossario italiano→inglese: copre i termini più comuni
+     dei sei domini di Boyle Bibliography, non è una traduzione completa.
+     Le frasi più lunghe vengono provate prima delle singole parole. */
+  var IT_EN_GLOSSARY = [
+    ["malattia da decompressione", "decompression sickness"],
+    ["ossigenoterapia iperbarica", "hyperbaric oxygen therapy"],
+    ["camera iperbarica", "hyperbaric chamber"],
+    ["embolia gassosa arteriosa", "arterial gas embolism"],
+    ["embolia gassosa", "gas embolism"],
+    ["narcosi da azoto", "nitrogen narcosis"],
+    ["osteonecrosi da immersione", "dysbaric osteonecrosis"],
+    ["osteonecrosi", "osteonecrosis"],
+    ["alta quota", "high altitude"],
+    ["forze g", "g-force"],
+    ["perdita di coscienza", "loss of consciousness"],
+    ["volo spaziale", "spaceflight"],
+    ["fattori umani", "human factors"],
+    ["pronto soccorso", "emergency"],
+    ["idoneità al volo", "fitness to fly"],
+    ["idoneità subacquea", "fitness to dive"],
+    ["guarigione delle ferite", "wound healing"],
+    ["trasporto critico", "critical care transport"],
+    ["medicina aerospaziale", "aerospace medicine"],
+    ["medicina subacquea", "diving medicine"],
+    ["medicina iperbarica", "hyperbaric medicine"],
+    ["subacqueo", "diver"],
+    ["subacquea", "diving"],
+    ["immersione", "diving"],
+    ["iperbarico", "hyperbaric"],
+    ["iperbarica", "hyperbaric"],
+    ["decompressione", "decompression"],
+    ["barotrauma", "barotrauma"],
+    ["microgravità", "microgravity"],
+    ["ipossia", "hypoxia"],
+    ["ipotermia", "hypothermia"],
+    ["congelamento", "frostbite"],
+    ["annegamento", "drowning"],
+    ["apnea", "breath-hold diving"],
+    ["politrauma", "polytrauma"],
+    ["trauma", "trauma"],
+    ["rianimazione", "resuscitation"],
+    ["sicurezza", "safety"],
+    ["checklist", "checklist"],
+    ["accelerazione", "acceleration"],
+    ["cardiaco", "cardiac"],
+    ["cardiaca", "cardiac"],
+    ["polmonare", "pulmonary"],
+    ["polmone", "lung"],
+    ["pressione", "pressure"],
+    ["quota", "altitude"],
+    ["spazio", "space"],
+    ["astronauta", "astronaut"],
+    ["pilota", "pilot"],
+    ["gas", "gas"]
+  ];
+
+  function translateQuery(raw) {
+    var text = " " + raw.toLowerCase() + " ";
+    IT_EN_GLOSSARY.forEach(function (pair) {
+      var it = pair[0], en = pair[1];
+      var re = new RegExp("(^|\\s)" + it.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + "(\\s|$)", "gi");
+      text = text.replace(re, function (m, pre, post) { return pre + en + post; });
+    });
+    return text.trim();
+  }
+
+  function vancouverAuthors(names) {
+    if (names.length > 6) return names.slice(0, 6).join(", ") + ", et al";
+    return names.join(", ");
+  }
+
+  /* ── PubMed: esearch + esummary ── */
+  function searchPubMed(query) {
+    var url = EUTILS + "esearch.fcgi?db=pubmed&retmode=json&retmax=5&sort=relevance&term=" + encodeURIComponent(query);
+    return fetch(url).then(function (res) {
+      if (!res.ok) throw new Error("esearch");
+      return res.json();
+    }).then(function (data) {
+      var ids = (data.esearchresult && data.esearchresult.idlist) || [];
+      var total = (data.esearchresult && data.esearchresult.count) || 0;
+      if (!ids.length) return { source: "PubMed", total: 0, items: [] };
+      return fetch(EUTILS + "esummary.fcgi?db=pubmed&retmode=json&id=" + ids.join(","))
+        .then(function (res) {
+          if (!res.ok) throw new Error("esummary");
+          return res.json();
+        })
+        .then(function (summary) {
+          var items = ids.map(function (id) {
+            var a = summary.result && summary.result[id];
+            if (!a) return null;
+            var authors = vancouverAuthors((a.authors || []).map(function (x) { return x.name; }).filter(Boolean));
+            var title = (a.title || "").replace(/\.$/, "");
+            var journal = a.source || "";
+            var year = (a.pubdate || "").split(" ")[0];
+            var vol = a.volume || "", issue = a.issue ? "(" + a.issue + ")" : "", pages = a.pages ? ":" + a.pages : "";
+            var doiEntry = (a.articleids || []).filter(function (x) { return x.idtype === "doi"; })[0];
+            var link = doiEntry && doiEntry.value ? "https://doi.org/" + doiEntry.value : "https://pubmed.ncbi.nlm.nih.gov/" + a.uid + "/";
+            var linkLabel = doiEntry && doiEntry.value ? "DOI" : "PubMed";
+            var tail = [year, vol + issue + pages].filter(Boolean).join(";");
+            return {
+              text: [authors, title, journal].filter(Boolean).join(". ") + (tail ? ". " + tail + "." : "."),
+              link: link, linkLabel: linkLabel, source: "PubMed"
+            };
+          }).filter(Boolean);
+          return { source: "PubMed", total: total, items: items };
+        });
+    }).catch(function () {
+      return { source: "PubMed", total: 0, items: [], error: true };
+    });
+  }
+
+  /* ── OpenAlex: copertura multidisciplinare (ingegneria aerospaziale,
+     human factors, sicurezza) che PubMed da solo non indicizza ── */
+  function openAlexAuthorName(fullName) {
+    var parts = (fullName || "").trim().split(/\s+/);
+    if (parts.length < 2) return fullName || "";
+    var last = parts[parts.length - 1];
+    var initials = parts.slice(0, -1).map(function (p) { return p.charAt(0).toUpperCase(); }).join("");
+    return last + " " + initials;
+  }
+
+  function searchOpenAlex(query) {
+    var url = OPENALEX + "?search=" + encodeURIComponent(query) +
+      "&per-page=5&select=id,doi,title,authorships,primary_location,publication_year,biblio";
+    return fetch(url).then(function (res) {
+      if (!res.ok) throw new Error("openalex");
+      return res.json();
+    }).then(function (data) {
+      var total = (data.meta && data.meta.count) || 0;
+      var items = (data.results || []).map(function (w) {
+        var names = (w.authorships || []).map(function (x) { return openAlexAuthorName(x.author && x.author.display_name); }).filter(Boolean);
+        var authors = vancouverAuthors(names);
+        var title = (w.title || "").replace(/\.$/, "");
+        var journal = w.primary_location && w.primary_location.source ? w.primary_location.source.display_name : "";
+        var year = w.publication_year || "";
+        var b = w.biblio || {};
+        var pages = (b.first_page && b.last_page) ? ":" + b.first_page + "-" + b.last_page : "";
+        var vol = b.volume || "", issue = b.issue ? "(" + b.issue + ")" : "";
+        var link = w.doi || (w.id || "");
+        var tail = [year, vol + issue + pages].filter(Boolean).join(";");
+        return {
+          text: [authors, title, journal].filter(Boolean).join(". ") + (tail ? ". " + tail + "." : "."),
+          link: link, linkLabel: "OpenAlex", source: "OpenAlex"
+        };
+      });
+      return { source: "OpenAlex", total: total, items: items };
+    }).catch(function () {
+      return { source: "OpenAlex", total: 0, items: [], error: true };
+    });
+  }
+
+  var biblioForm = document.getElementById("bbBiblioForm");
+  var biblioInput = document.getElementById("bbBiblioInput");
+  var biblioStatus = document.getElementById("bbBiblioStatus");
+  var biblioResults = document.getElementById("bbBiblioResults");
+  var biblioExamples = document.getElementById("bbBiblioExamples");
+
+  function setStatus(text) { biblioStatus.textContent = text; }
+
+  /* copia negli appunti con fallback per contesti senza Clipboard API */
+  function copyTextFallback(text) {
+    return new Promise(function (resolve, reject) {
+      var ta = document.createElement("textarea");
+      ta.value = text;
+      ta.style.position = "fixed";
+      ta.style.opacity = "0";
+      document.body.appendChild(ta);
+      ta.focus(); ta.select();
+      try {
+        document.execCommand("copy");
+        resolve();
+      } catch (e) {
+        reject(e);
+      } finally {
+        document.body.removeChild(ta);
+      }
+    });
+  }
+
+  /* prova prima la Clipboard API moderna; se fallisce per qualsiasi motivo
+     (focus del documento, permessi, browser datato) ripiega sul metodo
+     con textarea, così il tasto non resta mai senza risposta */
+  function copyText(text) {
+    if (navigator.clipboard && window.isSecureContext) {
+      return navigator.clipboard.writeText(text).catch(function () {
+        return copyTextFallback(text);
+      });
+    }
+    return copyTextFallback(text);
+  }
+
+  function flashCopied(btn, doneLabel, idleLabel) {
+    btn.textContent = doneLabel;
+    btn.classList.add("is-copied");
+    setTimeout(function () {
+      btn.textContent = idleLabel;
+      btn.classList.remove("is-copied");
+    }, 1600);
+  }
+
+  function renderItem(v) {
+    var li = document.createElement("li");
+    li.className = "bb-biblio-item";
+    var wrap = document.createElement("div");
+    var tag = document.createElement("span");
+    tag.className = "bb-biblio-source bb-biblio-source--" + v.source.toLowerCase();
+    tag.textContent = v.source;
+    var p = document.createElement("p");
+    p.textContent = v.text;
+    wrap.appendChild(tag);
+    wrap.appendChild(p);
+
+    var actions = document.createElement("div");
+    actions.className = "bb-biblio-actions";
+
+    var copyBtn = document.createElement("button");
+    copyBtn.type = "button";
+    copyBtn.className = "bb-biblio-copy";
+    copyBtn.textContent = I18N[currentLang].copy;
+    copyBtn.addEventListener("click", function () {
+      copyText(v.text).then(function () {
+        flashCopied(copyBtn, I18N[currentLang].copied, I18N[currentLang].copy);
+      }).catch(function () {
+        flashCopied(copyBtn, I18N[currentLang].copyFailed, I18N[currentLang].copy);
+      });
+    });
+
+    var a = document.createElement("a");
+    a.href = v.link; a.target = "_blank"; a.rel = "noopener";
+    a.textContent = v.linkLabel + " →";
+
+    actions.appendChild(copyBtn);
+    actions.appendChild(a);
+    li.appendChild(wrap);
+    li.appendChild(actions);
+    return li;
+  }
+
+  function renderCopyAll(items) {
+    var old = document.getElementById("bbCopyAll");
+    if (old) old.remove();
+    var btn = document.createElement("button");
+    btn.type = "button";
+    btn.id = "bbCopyAll";
+    btn.className = "bb-biblio-copy-all";
+    btn.textContent = I18N[currentLang].copyAll;
+    btn.addEventListener("click", function () {
+      var numbered = items.map(function (v, i) { return (i + 1) + ". " + v.text; }).join("\n\n");
+      copyText(numbered).then(function () {
+        flashCopied(btn, I18N[currentLang].copiedAll, I18N[currentLang].copyAll);
+      }).catch(function () {
+        flashCopied(btn, I18N[currentLang].copyFailed, I18N[currentLang].copyAll);
+      });
+    });
+    biblioResults.parentNode.insertBefore(btn, biblioResults);
+  }
+
+  /* estrae il DOI normalizzato da un link doi.org, per riconoscere lo
+     stesso lavoro indicizzato sia su PubMed sia su OpenAlex */
+  function doiKey(item) {
+    var m = /doi\.org\/(.+)$/i.exec(item.link || "");
+    return m ? decodeURIComponent(m[1]).toLowerCase().replace(/\/+$/, "") : null;
+  }
+
+  function dedupeItems(items) {
+    var seen = Object.create(null);
+    return items.filter(function (item) {
+      var key = doiKey(item);
+      if (!key) return true; // nessun DOI: non possiamo confrontarlo, lo teniamo
+      if (seen[key]) return false;
+      seen[key] = true;
+      return true;
+    });
+  }
+
+  function clearCopyAll() {
+    var old = document.getElementById("bbCopyAll");
+    if (old) old.remove();
+  }
+
+  function searchBibliography(rawQuery) {
+    biblioResults.innerHTML = "";
+    clearCopyAll();
+    setStatus(I18N[currentLang].searching);
+    var query = translateQuery(rawQuery);
+
+    Promise.all([searchPubMed(query), searchOpenAlex(query)]).then(function (results) {
+      var allItems = [];
+      var totalFound = 0;
+      var failedSources = [];
+      results.forEach(function (r) {
+        allItems = allItems.concat(r.items);
+        totalFound += r.items.length;
+        if (r.error) failedSources.push(r.source);
+      });
+      allItems = dedupeItems(allItems);
+      if (!allItems.length) {
+        setStatus(I18N[currentLang].noResults(rawQuery));
+        return;
+      }
+      var note = failedSources.length ? " (" + failedSources.join(" / ") + (currentLang === "en" ? " unavailable right now)" : " non raggiungibile in questo momento)") : "";
+      setStatus(I18N[currentLang].results(totalFound, allItems.length) + note);
+      allItems.forEach(function (v) { biblioResults.appendChild(renderItem(v)); });
+      renderCopyAll(allItems);
+    });
+  }
+
+  if (biblioForm) {
+    biblioForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var q = biblioInput.value.trim();
+      if (q) searchBibliography(q);
+    });
+    biblioExamples.querySelectorAll("button[data-q]").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        biblioInput.value = btn.getAttribute("data-q");
+        searchBibliography(biblioInput.value);
+      });
+    });
+  }
+
+  /* reveal on scroll: testo + costellazione */
+  var revealEls = document.querySelectorAll(".bb-reveal");
+  var constellation = document.getElementById("bbConstellation");
+  var toObserve = Array.prototype.slice.call(revealEls);
+  if (constellation) toObserve.push(constellation);
+
+  if ("IntersectionObserver" in window && toObserve.length) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("bb-visible");
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.2 });
+    toObserve.forEach(function (el) { io.observe(el); });
+  } else {
+    toObserve.forEach(function (el) { el.classList.add("bb-visible"); });
+  }
+})();
+</script>
+</body>
+</html>
