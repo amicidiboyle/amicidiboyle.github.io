@@ -1,6 +1,15 @@
 <!doctype html>
 <html lang="it">
 <head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-T39LRQMK7Y"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-T39LRQMK7Y');
+</script>
+
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Gli Amici di Boyle · Research & Education</title>
@@ -21,6 +30,21 @@
 <body>
   <canvas id="dust-canvas" aria-hidden="true" style="position:fixed;inset:0;z-index:-2;pointer-events:none;width:100%;height:100%;"></canvas>
   <a class="skip-link" href="#contenuto">Vai al contenuto</a>
+
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="bb-logo-mark" viewBox="0 0 100 100">
+      <circle class="bb-logo-ring" cx="50" cy="50" r="40" stroke-width="6" />
+      <path class="bb-logo-curve" pathLength="1" fill="none" stroke-width="6.5" stroke-linecap="round"
+        d="M 29 71
+           C 29.33 69.33, 30.17 64.2, 31 61
+           C 31.83 57.8, 32.67 54.76, 34 51.8
+           C 35.33 48.84, 36.83 45.81, 39 43.24
+           C 41.17 40.67, 43.33 38.4, 47 36.36
+           C 50.67 34.32, 57 32.23, 61 31
+           C 65 29.77, 69.33 29.33, 71 29" />
+      <circle class="bb-logo-node" cx="71" cy="29" r="5.2" />
+    </symbol>
+  </svg>
 
   <header class="site-header">
     <div class="container nav-wrap">
@@ -46,6 +70,7 @@
             <a href="#ricerca">Ricerca</a>
             <a href="#formazione">Formazione</a>
             <a href="#contenuti">Contenuti</a>
+            <a href="boylebibliography.html">Bibliografia <span class="nav-badge-new">Nuovo</span></a>
           </div>
         </div>
         <a href="#fondatori">Fondatori</a>
@@ -99,7 +124,7 @@
               <span data-i18n="stat_fondatori">Fondatori</span>
             </div>
             <div class="hero-stat">
-              <strong class="stat-num">27+</strong>
+              <strong class="stat-num">33+</strong>
               <span data-i18n="stat_episodi">Episodi podcast</span>
             </div>
             <div class="hero-stat">
@@ -442,6 +467,22 @@
                     </div>
           </article>
         </div>
+      </div>
+    </section>
+
+    <section class="section alt-section" id="boyle-bibliography">
+      <div class="container">
+        <article class="glass-card bb-spotlight reveal">
+          <div class="bb-spotlight-logo" aria-hidden="true">
+            <svg viewBox="0 0 100 100"><use href="#bb-logo-mark"></use></svg>
+          </div>
+          <div class="bb-spotlight-body">
+            <p class="section-kicker" data-i18n-html="bb_spot_kicker">Boyle Bibliography <span class="nav-badge-new">Nuovo</span></p>
+            <h2 data-i18n="bb_spot_title">Bibliografia scientifica in stile Vancouver, in tempo reale</h2>
+            <p data-i18n="bb_spot_desc">Scrivi un argomento di medicina degli ambienti estremi, in italiano o in inglese: cerca su PubMed e OpenAlex e restituisce citazioni vere e verificabili, pronte da incollare. Nessun testo generato, nessuna fonte inventata.</p>
+            <a class="btn btn-primary" href="boylebibliography.html" data-i18n="bb_spot_cta">Prova Boyle Bibliography</a>
+          </div>
+        </article>
       </div>
     </section>
 
@@ -1465,6 +1506,11 @@
         'cont_art_k':'Articoli','cont_art_title':'Dall’abisso allo spazio',
         'cont_art_p':'Pubblicazioni divulgative e contributi scientifici legati alla medicina subacquea, iperbarica e agli ambienti estremi.',
         'cont_art_cta':'Leggi gli articoli',
+        // Boyle Bibliography spotlight
+        'bb_spot_kicker':'Boyle Bibliography <span class="nav-badge-new">Nuovo</span>',
+        'bb_spot_title':'Bibliografia scientifica in stile Vancouver, in tempo reale',
+        'bb_spot_desc':'Scrivi un argomento di medicina degli ambienti estremi, in italiano o in inglese: cerca su PubMed e OpenAlex e restituisce citazioni vere e verificabili, pronte da incollare. Nessun testo generato, nessuna fonte inventata.',
+        'bb_spot_cta':'Prova Boyle Bibliography',
         // Evento
         'ev_kicker':'Prossimo evento','ev_h2':'Inside Trauma',
         'ev_lead':'Un corso del partner Inside Trauma dedicato alla gestione integrata del paziente traumatizzato, con approccio pratico e multidisciplinare.',
@@ -1648,6 +1694,11 @@
         'cont_art_k':'Articles','cont_art_title':'From the deep to space',
         'cont_art_p':'Outreach publications and scientific contributions related to underwater, hyperbaric medicine and extreme environments.',
         'cont_art_cta':'Read articles',
+        // Boyle Bibliography spotlight
+        'bb_spot_kicker':'Boyle Bibliography <span class="nav-badge-new">New</span>',
+        'bb_spot_title':'Vancouver-style scientific bibliography, in real time',
+        'bb_spot_desc':'Write a topic in extreme environment medicine, in Italian or English: it searches PubMed and OpenAlex and returns real, verifiable citations, ready to paste. No generated text, no invented sources.',
+        'bb_spot_cta':'Try Boyle Bibliography',
         // Evento
         'ev_kicker':'Next event','ev_h2':'Inside Trauma',
         'ev_lead':'A course by partner Inside Trauma dedicated to integrated management of the trauma patient, with a practical and multidisciplinary approach.',

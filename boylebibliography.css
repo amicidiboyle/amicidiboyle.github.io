@@ -134,6 +134,12 @@ html, body { margin: 0; padding: 0; }
 .nav-dropdown:hover .nav-dropdown-panel { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); }
 .nav-dropdown-panel a { padding: 8px 12px; border-radius: 9px; display: block; color: var(--muted); font-size: .85rem; transition: background .15s, color .15s; }
 .nav-dropdown-panel a:hover { background: rgba(123,228,255,.09); color: var(--text); }
+.nav-badge-new {
+  display: inline-block; margin-left: 6px; padding: 1px 7px;
+  font-size: .6rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase;
+  color: #041b33; background: linear-gradient(120deg, var(--cyan-2), var(--cyan));
+  border-radius: 999px; vertical-align: middle;
+}
 .nav-dropdown.is-open .nav-dropdown-panel { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); }
 
 .nav-toggle { display: none; }
