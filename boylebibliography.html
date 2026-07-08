@@ -313,7 +313,8 @@
       noResults: function (q) { return 'Nessun risultato per "' + q + '". Prova un termine più specifico, in italiano o in inglese.'; },
       error: "Non riesco a contattare PubMed/OpenAlex in questo momento (connessione assente o servizio non raggiungibile). Riprova tra poco.",
       copy: "Copia", copied: "Copiato", copyFailed: "Copia manualmente",
-      copyAll: "Copia tutte le citazioni", copiedAll: "Bibliografia copiata"
+      copyAll: "Copia tutte le citazioni", copiedAll: "Bibliografia copiata",
+      pdfOpen: "PDF", pdfPaywall: "A pagamento"
     },
     en: {
       kicker: "Amici di Boyle · Experimental project",
@@ -346,7 +347,8 @@
       noResults: function (q) { return 'No results for "' + q + '". Try a more specific term, in Italian or English.'; },
       error: "Can't reach PubMed/OpenAlex right now (no connection or service unavailable). Please try again shortly.",
       copy: "Copy", copied: "Copied", copyFailed: "Copy manually",
-      copyAll: "Copy all citations", copiedAll: "Bibliography copied"
+      copyAll: "Copy all citations", copiedAll: "Bibliography copied",
+      pdfOpen: "PDF", pdfPaywall: "Paywalled"
     }
   };
 
@@ -398,6 +400,8 @@
      ──────────────────────────────────────────────────────────── */
   var EUTILS = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/";
   var OPENALEX = "https://api.openalex.org/works";
+  var UNPAYWALL = "https://api.unpaywall.org/v2/";
+  var UNPAYWALL_EMAIL = "info@amicidiboyle.it";
 
   /* piccolo glossario italiano→inglese: copre i termini più comuni
      dei sei domini di Boyle Bibliography, non è una traduzione completa.
@@ -495,19 +499,41 @@
             var year = (a.pubdate || "").split(" ")[0];
             var vol = a.volume || "", issue = a.issue ? "(" + a.issue + ")" : "", pages = a.pages ? ":" + a.pages : "";
             var doiEntry = (a.articleids || []).filter(function (x) { return x.idtype === "doi"; })[0];
-            var link = doiEntry && doiEntry.value ? "https://doi.org/" + doiEntry.value : "https://pubmed.ncbi.nlm.nih.gov/" + a.uid + "/";
-            var linkLabel = doiEntry && doiEntry.value ? "DOI" : "PubMed";
+            var doi = doiEntry && doiEntry.value ? doiEntry.value : "";
+            var link = doi ? "https://doi.org/" + doi : "https://pubmed.ncbi.nlm.nih.gov/" + a.uid + "/";
+            var linkLabel = doi ? "DOI" : "PubMed";
             var tail = [year, vol + issue + pages].filter(Boolean).join(";");
             return {
               text: [authors, title, journal].filter(Boolean).join(". ") + (tail ? ". " + tail + "." : "."),
-              link: link, linkLabel: linkLabel, source: "PubMed"
+              link: link, linkLabel: linkLabel, source: "PubMed", doi: doi
             };
           }).filter(Boolean);
-          return { source: "PubMed", total: total, items: items };
+          return enrichWithOpenAccess(items).then(function (enriched) {
+            return { source: "PubMed", total: total, items: enriched };
+          });
         });
     }).catch(function () {
       return { source: "PubMed", total: 0, items: [], error: true };
     });
+  }
+
+  /* PubMed non indica lo stato open access: lo chiediamo a Unpaywall,
+     un DOI alla volta ma in parallelo, solo per le voci che hanno un DOI.
+     Se la chiamata fallisce o manca il DOI, la voce resta "a pagamento"
+     (mostra comunque il link di riferimento, solo senza il PDF diretto). */
+  function enrichWithOpenAccess(items) {
+    return Promise.all(items.map(function (v) {
+      if (!v.doi) { v.isOa = false; v.oaUrl = null; return v; }
+      return fetch(UNPAYWALL + encodeURIComponent(v.doi) + "?email=" + UNPAYWALL_EMAIL)
+        .then(function (res) { return res.ok ? res.json() : null; })
+        .then(function (data) {
+          var loc = data && data.best_oa_location;
+          v.isOa = !!(data && data.is_oa);
+          v.oaUrl = (loc && (loc.url_for_pdf || loc.url)) || null;
+          return v;
+        })
+        .catch(function () { v.isOa = false; v.oaUrl = null; return v; });
+    }));
   }
 
   /* ── OpenAlex: copertura multidisciplinare (ingegneria aerospaziale,
@@ -522,7 +548,7 @@
 
   function searchOpenAlex(query) {
     var url = OPENALEX + "?search=" + encodeURIComponent(query) +
-      "&per-page=5&select=id,doi,title,authorships,primary_location,publication_year,biblio";
+      "&per-page=5&select=id,doi,title,authorships,primary_location,publication_year,biblio,open_access,best_oa_location";
     return fetch(url).then(function (res) {
       if (!res.ok) throw new Error("openalex");
       return res.json();
@@ -539,9 +565,12 @@
         var vol = b.volume || "", issue = b.issue ? "(" + b.issue + ")" : "";
         var link = w.doi || (w.id || "");
         var tail = [year, vol + issue + pages].filter(Boolean).join(";");
+        var oa = w.open_access || {};
+        var oaUrl = (w.best_oa_location && w.best_oa_location.pdf_url) || oa.oa_url || null;
         return {
           text: [authors, title, journal].filter(Boolean).join(". ") + (tail ? ". " + tail + "." : "."),
-          link: link, linkLabel: "OpenAlex", source: "OpenAlex"
+          link: link, linkLabel: "OpenAlex", source: "OpenAlex",
+          isOa: !!oa.is_oa, oaUrl: oaUrl
         };
       });
       return { source: "OpenAlex", total: total, items: items };
@@ -626,12 +655,20 @@
       });
     });
 
-    var a = document.createElement("a");
-    a.href = v.link; a.target = "_blank"; a.rel = "noopener";
-    a.textContent = v.linkLabel + " →";
+    var link = document.createElement("a");
+    link.target = "_blank"; link.rel = "noopener";
+    if (v.isOa && v.oaUrl) {
+      link.href = v.oaUrl;
+      link.className = "bb-biblio-pdf bb-biblio-pdf--oa";
+      link.textContent = I18N[currentLang].pdfOpen + " ↓";
+    } else {
+      link.href = v.link;
+      link.className = "bb-biblio-pdf bb-biblio-pdf--paywall";
+      link.textContent = I18N[currentLang].pdfPaywall + " · " + v.linkLabel + " →";
+    }
 
     actions.appendChild(copyBtn);
-    actions.appendChild(a);
+    actions.appendChild(link);
     li.appendChild(wrap);
     li.appendChild(actions);
     return li;

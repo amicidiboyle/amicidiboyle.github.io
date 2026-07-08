@@ -390,6 +390,19 @@ html::after {
 .bb-biblio-copy:hover { background: rgba(123,228,255,.12); color: var(--bb-text); border-color: var(--bb-border-hi); }
 .bb-biblio-copy.is-copied { background: rgba(123,228,255,.18); color: var(--bb-cyan-2); border-color: var(--bb-border-hi); }
 
+/* verde = accesso libero al PDF (via OpenAlex/Unpaywall), rosso = a
+   pagamento (porta comunque al riferimento bibliografico). Selettori
+   "a.bb-biblio-pdf--*" per pareggiare la specificità di ".bb-biblio-item a"
+   qui sopra e vincere per ordine di cascata, non solo per classe. */
+.bb-biblio-pdf {
+  font-size: .74rem; font-weight: 700; letter-spacing: .02em; white-space: nowrap;
+  border-radius: 8px; padding: 4px 10px; transition: background .15s, color .15s, border-color .15s;
+}
+a.bb-biblio-pdf--oa { background: rgba(61,255,192,.1); border: 1px solid rgba(61,255,192,.4); color: #3dffc0; }
+a.bb-biblio-pdf--oa:hover { background: rgba(61,255,192,.18); border-color: rgba(61,255,192,.6); }
+a.bb-biblio-pdf--paywall { background: rgba(255,90,106,.08); border: 1px solid rgba(255,90,106,.32); color: #ff8a95; }
+a.bb-biblio-pdf--paywall:hover { background: rgba(255,90,106,.15); border-color: rgba(255,90,106,.5); }
+
 .bb-biblio-copy-all {
   display: inline-flex; align-items: center; gap: 6px; margin-top: 16px;
   font-size: .82rem; font-weight: 600; color: var(--bb-cyan-2);
