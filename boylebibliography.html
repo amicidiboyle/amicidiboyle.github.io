@@ -5,6 +5,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Boyle Bibliography · Gli Amici di Boyle</title>
 <meta name="description" content="Boyle Bibliography: scrivi un argomento di medicina degli ambienti estremi, in italiano o inglese, ricevi la bibliografia in stile Vancouver da PubMed e OpenAlex in tempo reale — nessuna citazione inventata. Un progetto degli Amici di Boyle." />
+<link rel="canonical" href="https://www.amicidiboyle.it/boylebibliography.html" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://www.amicidiboyle.it/boylebibliography.html" />
+<meta property="og:title" content="Boyle Bibliography · Gli Amici di Boyle" />
+<meta property="og:description" content="Scrivi un argomento di medicina degli ambienti estremi, in italiano o inglese, e ricevi la bibliografia in stile Vancouver — recuperata in tempo reale da PubMed e OpenAlex, con link verificabile a ogni voce." />
+<meta property="og:image" content="https://www.amicidiboyle.it/assets/logo.png" />
+<meta property="og:locale" content="it_IT" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Boyle Bibliography · Gli Amici di Boyle" />
+<meta name="twitter:description" content="Bibliografia in stile Vancouver su medicina degli ambienti estremi, recuperata in tempo reale da PubMed e OpenAlex." />
 <!--
   NOTA PER L'INTEGRAZIONE NEL SITO
   ─────────────────────────────────
@@ -671,13 +681,21 @@
     if (old) old.remove();
   }
 
+  /* se l'utente lancia una nuova ricerca prima che la precedente sia
+     arrivata, la risposta "vecchia" va ignorata invece di mescolarsi
+     con quella nuova: ogni ricerca porta un numero progressivo e solo
+     l'ultima in ordine di partenza può scrivere i risultati. */
+  var searchRequestId = 0;
+
   function searchBibliography(rawQuery) {
+    var requestId = ++searchRequestId;
     biblioResults.innerHTML = "";
     clearCopyAll();
     setStatus(I18N[currentLang].searching);
     var query = translateQuery(rawQuery);
 
     Promise.all([searchPubMed(query), searchOpenAlex(query)]).then(function (results) {
+      if (requestId !== searchRequestId) return;
       var allItems = [];
       var totalFound = 0;
       var failedSources = [];
