@@ -255,9 +255,9 @@ html::after {
   background: linear-gradient(120deg, var(--bb-cyan-2) 10%, var(--bb-violet) 90%);
   -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
 }
-.bb-hero-sub {
+p.bb-hero-sub {
   font-size: clamp(1.02rem, 2vw, 1.24rem); color: var(--bb-muted);
-  margin: 22px 0 0; line-height: 1.6;
+  margin: 34px 0 0; line-height: 1.6;
 }
 
 @media (max-width: 640px) {
@@ -290,8 +290,8 @@ html::after {
 .bb-ask-btn:hover { transform: scale(1.06); }
 .bb-ask-btn:active { transform: scale(.95); }
 
-.bb-trust-badge {
-  margin-top: 26px; font-size: .78rem; color: var(--bb-soft); display: flex;
+p.bb-trust-badge {
+  margin-top: 38px; font-size: .78rem; color: var(--bb-soft); display: flex;
   align-items: center; justify-content: center; gap: 7px;
 }
 .bb-trust-badge svg { color: var(--bb-cyan-2); flex-shrink: 0; }
@@ -305,6 +305,16 @@ html::after {
   border-bottom: 1px solid transparent;
 }
 .bb-examples button:hover { color: var(--bb-cyan-2); border-bottom-color: var(--bb-cyan-2); }
+
+p.bb-biblio-legend {
+  margin-top: 18px; display: flex; flex-wrap: wrap; justify-content: center; align-items: center;
+  gap: 6px 8px; font-size: .74rem; color: var(--bb-soft);
+}
+.bb-legend-dot {
+  display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 2px;
+}
+.bb-legend-dot--oa { background: #3dffc0; box-shadow: 0 0 6px rgba(61,255,192,.6); }
+.bb-legend-dot--paywall { background: #ff8a95; box-shadow: 0 0 6px rgba(255,138,149,.5); margin-left: 10px; }
 
 
 /* ── BOYLEBOT BIBLIOGRAPHY ── */

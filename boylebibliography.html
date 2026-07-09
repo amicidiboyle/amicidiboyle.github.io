@@ -75,7 +75,7 @@
             <a href="index.html#ricerca">Ricerca</a>
             <a href="index.html#formazione">Formazione</a>
             <a href="index.html#contenuti">Contenuti</a>
-            <a href="boylebibliography.html" aria-current="page">Bibliografia <span class="nav-badge-new">Nuovo</span></a>
+            <a href="boylebibliography.html" aria-current="page">Bibliography <span class="nav-badge-new">Nuovo</span></a>
           </div>
         </div>
         <a href="index.html#fondatori">Fondatori</a>
@@ -128,7 +128,7 @@
           <div class="bb-biblio-main">
             <form class="bb-ask" id="bbBiblioForm">
               <div class="bb-ask-row">
-                <input type="text" id="bbBiblioInput" placeholder="Scrivi un argomento, in italiano o inglese…" data-i18n-placeholder="searchPlaceholder" aria-label="Cerca la bibliografia su PubMed e OpenAlex" data-i18n-aria="searchAria" autofocus />
+                <input type="text" id="bbBiblioInput" placeholder="Cosa cerchiamo oggi?" data-i18n-placeholder="searchPlaceholder" aria-label="Cerca la bibliografia su PubMed e OpenAlex" data-i18n-aria="searchAria" autofocus />
                 <button class="bb-ask-btn" type="submit" aria-label="Cerca">
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
                 </button>
@@ -193,6 +193,11 @@
               <button type="button" data-q="G-LOC unconsciousness pilots">G-LOC unconsciousness pilots</button>
               <button type="button" data-q="osteonecrosi da immersione">osteonecrosi da immersione</button>
             </div>
+
+            <p class="bb-biblio-legend">
+              <span class="bb-legend-dot bb-legend-dot--oa"></span><span data-i18n="legendOa">accesso libero: PDF scaricabile subito</span>
+              <span class="bb-legend-dot bb-legend-dot--paywall"></span><span data-i18n="legendPaywall">a pagamento: link alla fonte per abstract e acquisto</span>
+            </p>
 
             <p class="bb-biblio-status" id="bbBiblioStatus" aria-live="polite"></p>
             <ol class="bb-biblio-results" id="bbBiblioResults"></ol>
@@ -303,7 +308,9 @@
       chip3: "Limiti dichiarati quando servono",
       trustBadge: "Dati reali da PubMed e OpenAlex, in tempo reale.",
       examplesLabel: "Prova:",
-      searchPlaceholder: "Scrivi un argomento, in italiano o inglese…",
+      legendOa: "accesso libero: PDF scaricabile subito",
+      legendPaywall: "a pagamento: link alla fonte per abstract e acquisto",
+      searchPlaceholder: "Cosa cerchiamo oggi?",
       searchAria: "Cerca la bibliografia su PubMed e OpenAlex",
       footer: "Un progetto degli <a href=\"index.html\">Amici di Boyle</a> · Ricerca ed educazione — non sostituisce il giudizio clinico.",
       domSub: "Subacquea", domIper: "Iperbarica", domTrauma: "Trauma",
@@ -337,7 +344,9 @@
       chip3: "Limits stated when relevant",
       trustBadge: "Real data from PubMed and OpenAlex, live.",
       examplesLabel: "Try:",
-      searchPlaceholder: "Write a topic, in Italian or English…",
+      legendOa: "open access: PDF downloadable right away",
+      legendPaywall: "paywalled: link to the source for abstract and purchase",
+      searchPlaceholder: "What are we searching for today?",
       searchAria: "Search the bibliography on PubMed and OpenAlex",
       footer: "A project by <a href=\"index.html\">Amici di Boyle</a> · Research and education — does not replace clinical judgment.",
       domSub: "Diving", domIper: "Hyperbaric", domTrauma: "Trauma",
