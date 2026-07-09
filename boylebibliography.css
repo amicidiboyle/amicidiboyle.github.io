@@ -42,6 +42,7 @@ html::before {
   content: "";
   position: fixed; inset: 0; z-index: -4;
   background: url("assets/ocean-desktop.jpg") center top / cover no-repeat;
+  transform: translateZ(0); backface-visibility: hidden;
 }
 html::after {
   content: "";
@@ -51,6 +52,7 @@ html::after {
     radial-gradient(ellipse at 0% 50%, rgba(0,40,120,.18), transparent 45%),
     radial-gradient(ellipse at 100% 80%, rgba(0,30,100,.15), transparent 40%),
     linear-gradient(180deg, rgba(2,10,24,.45) 0%, rgba(2,10,24,.25) 40%, rgba(2,10,24,.6) 100%);
+  transform: translateZ(0); backface-visibility: hidden;
 }
 @media (max-width: 768px) {
   html::before { background: url("assets/ocean-mobile.jpg") center top / cover no-repeat; }

@@ -45,10 +45,15 @@ h1,h2,h3,h4 { line-height: 1.08; }
    body::before = immagine fissa
    body::after  = overlay scuro per profondità
    --------------------------------------------------------- */
+/* transform+backface-visibility forzano la promozione a livello GPU già al
+   caricamento invece che al primo scroll: senza, Safari/Chrome mobile
+   ridisegnano lo sfondo fisso proprio quando la barra indirizzi si nasconde,
+   causando lo scatto visibile al primo scroll. */
 body::before {
   content: "";
   position: fixed; inset: 0; z-index: -3;
   background: url("assets/ocean-desktop.jpg") center top / cover no-repeat;
+  transform: translateZ(0); backface-visibility: hidden;
 }
 body::after {
   content: "";
@@ -58,6 +63,7 @@ body::after {
     radial-gradient(ellipse at 0% 50%, rgba(0,40,120,.18), transparent 45%),
     radial-gradient(ellipse at 100% 80%, rgba(0,30,100,.15), transparent 40%),
     linear-gradient(180deg, rgba(2,10,24,.45) 0%, rgba(2,10,24,.25) 40%, rgba(2,10,24,.6) 100%);
+  transform: translateZ(0); backface-visibility: hidden;
 }
 
 /* ── LAYOUT ── */
@@ -97,9 +103,9 @@ body::after {
    --------------------------------------------------------- */
 .reveal, .reveal-left, .reveal-right {
   opacity: 0;
-  transform: translateX(-44px);
-  transition: opacity .7s cubic-bezier(.25,.46,.45,.94),
-              transform .7s cubic-bezier(.22,.68,0,1.1);
+  transform: translateX(-30px);
+  transition: opacity .55s cubic-bezier(.25,.46,.45,.94),
+              transform .55s cubic-bezier(.22,.68,0,1.1);
   will-change: opacity, transform;
 }
 .reveal.is-visible,
@@ -1512,29 +1518,29 @@ body::after {
 /* Base: tutto da sinistra con fade */
 .reveal, .reveal-left, .reveal-right {
   opacity: 0;
-  transform: translateX(-44px);
-  transition: opacity .7s cubic-bezier(.25,.46,.45,.94), transform .7s cubic-bezier(.22,.68,0,1.1);
+  transform: translateX(-30px);
+  transition: opacity .55s cubic-bezier(.25,.46,.45,.94), transform .55s cubic-bezier(.22,.68,0,1.1);
   will-change: opacity, transform;
 }
 .reveal.is-visible, .reveal-left.is-visible, .reveal-right.is-visible {
   opacity: 1; transform: none;
 }
 /* Varianti direzione */
-.reveal-right        { transform: translateX(44px); }
+.reveal-right        { transform: translateX(30px); }
 /* Sezioni specifiche */
-#visione .reveal-right  { transform: translateX(44px); }
-#rete-home .reveal-right { transform: translateX(44px); }
-#eventi .reveal-right   { transform: translateX(44px); }
+#visione .reveal-right  { transform: translateX(30px); }
+#rete-home .reveal-right { transform: translateX(30px); }
+#eventi .reveal-right   { transform: translateX(30px); }
 /* Ricerca: alternato sx/dx */
-#ricerca .research-showcase-grid > *:nth-child(odd)  { transform: translateX(-40px); opacity: 0; transition: opacity .7s ease, transform .7s cubic-bezier(.22,.68,0,1.15); }
-#ricerca .research-showcase-grid > *:nth-child(even) { transform: translateX(40px);  opacity: 0; transition: opacity .7s .08s ease, transform .7s .08s cubic-bezier(.22,.68,0,1.15); }
+#ricerca .research-showcase-grid > *:nth-child(odd)  { transform: translateX(-28px); opacity: 0; transition: opacity .55s ease, transform .55s cubic-bezier(.22,.68,0,1.15); }
+#ricerca .research-showcase-grid > *:nth-child(even) { transform: translateX(28px);  opacity: 0; transition: opacity .55s .08s ease, transform .55s .08s cubic-bezier(.22,.68,0,1.15); }
 #ricerca .research-showcase-grid > *:nth-child(3)    { transition-delay: .04s; }
 #ricerca .research-showcase-grid > *:nth-child(4)    { transition-delay: .12s; }
 #ricerca .research-showcase-grid > *.is-visible      { transform: none; opacity: 1; }
 /* Contatti: ventaglio */
-#contatti .contact-grid-visible > *:nth-child(1) { transform: translateX(-40px) translateY(16px); opacity: 0; transition: opacity .68s ease, transform .68s cubic-bezier(.22,.68,0,1.15); }
-#contatti .contact-grid-visible > *:nth-child(2) { transform: translateY(30px);                   opacity: 0; transition: opacity .68s .1s ease, transform .68s .1s cubic-bezier(.22,.68,0,1.15); }
-#contatti .contact-grid-visible > *:nth-child(3) { transform: translateX(40px) translateY(16px);  opacity: 0; transition: opacity .68s .2s ease, transform .68s .2s cubic-bezier(.22,.68,0,1.15); }
+#contatti .contact-grid-visible > *:nth-child(1) { transform: translateX(-28px) translateY(12px); opacity: 0; transition: opacity .55s ease, transform .55s cubic-bezier(.22,.68,0,1.15); }
+#contatti .contact-grid-visible > *:nth-child(2) { transform: translateY(22px);                   opacity: 0; transition: opacity .55s .1s ease, transform .55s .1s cubic-bezier(.22,.68,0,1.15); }
+#contatti .contact-grid-visible > *:nth-child(3) { transform: translateX(28px) translateY(12px);  opacity: 0; transition: opacity .55s .2s ease, transform .55s .2s cubic-bezier(.22,.68,0,1.15); }
 #contatti .contact-grid-visible > *.is-visible   { transform: none; opacity: 1; }
 /* Mobile: solo translateY (no overflow orizzontale) */
 @media (max-width: 768px) {
