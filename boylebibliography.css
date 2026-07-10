@@ -416,7 +416,7 @@ a.bb-biblio-pdf--paywall { background: rgba(255,90,106,.08); border: 1px solid r
 a.bb-biblio-pdf--paywall:hover { background: rgba(255,90,106,.15); border-color: rgba(255,90,106,.5); }
 
 .bb-biblio-copy-all {
-  display: inline-flex; align-items: center; gap: 6px; margin-top: 16px;
+  display: inline-flex; align-items: center; gap: 6px;
   font-size: .82rem; font-weight: 600; color: var(--bb-cyan-2);
   background: rgba(123,228,255,.08); border: 1px solid var(--bb-border-hi); border-radius: 999px;
   padding: 8px 16px; cursor: pointer; transition: background .15s, transform .15s;
@@ -424,10 +424,60 @@ a.bb-biblio-pdf--paywall:hover { background: rgba(255,90,106,.15); border-color:
 .bb-biblio-copy-all:hover { background: rgba(123,228,255,.16); transform: translateY(-1px); }
 .bb-biblio-copy-all.is-copied { background: rgba(123,228,255,.24); }
 
+.bb-copyall-row { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-top: 16px; }
+.bb-export-btn {
+  font-size: .78rem; font-weight: 600; color: var(--bb-muted);
+  background: rgba(123,228,255,.05); border: 1px solid var(--bb-border); border-radius: 999px;
+  padding: 7px 14px; cursor: pointer; transition: background .15s, color .15s, border-color .15s;
+}
+.bb-export-btn:hover { background: rgba(123,228,255,.12); color: var(--bb-text); border-color: var(--bb-border-hi); }
+
+/* pulsante "+ Aggiungi" / "✓ Aggiunta" per il carrello */
+.bb-biblio-basket-btn {
+  font-size: .74rem; font-weight: 600; letter-spacing: .02em; white-space: nowrap;
+  background: rgba(180,139,255,.07); border: 1px solid rgba(180,139,255,.3); color: var(--bb-violet);
+  border-radius: 8px; padding: 4px 10px; cursor: pointer; transition: background .15s, color .15s, border-color .15s;
+}
+.bb-biblio-basket-btn:hover { background: rgba(180,139,255,.15); border-color: rgba(180,139,255,.5); }
+.bb-biblio-basket-btn.is-added { background: rgba(180,139,255,.22); color: var(--bb-cyan-2); border-color: rgba(180,139,255,.5); }
+
+/* barra fissa in basso: appare quando il carrello ha almeno una voce */
+.bb-basket-bar {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 90;
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 12px 24px; background: rgba(4,14,32,.96); backdrop-filter: blur(18px);
+  border-top: 1px solid var(--bb-border-hi); box-shadow: 0 -12px 40px rgba(0,0,0,.4);
+}
+.bb-basket-count { font-size: .88rem; color: var(--bb-text); }
+.bb-basket-count strong { color: var(--bb-cyan-2); font-size: 1.05rem; }
+.bb-basket-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.bb-basket-actions button {
+  font-size: .78rem; font-weight: 600; white-space: nowrap;
+  background: rgba(123,228,255,.08); border: 1px solid var(--bb-border-hi); color: var(--bb-cyan-2);
+  border-radius: 999px; padding: 7px 14px; cursor: pointer; transition: background .15s, transform .15s;
+}
+.bb-basket-actions button:hover { background: rgba(123,228,255,.16); transform: translateY(-1px); }
+#bbBasketClear { color: var(--bb-muted) !important; border-color: var(--bb-border) !important; background: rgba(255,90,106,.06) !important; }
+#bbBasketClear:hover { background: rgba(255,90,106,.14) !important; color: #ff8a95 !important; }
+
+/* filtro anno nel form di ricerca */
+.bb-year-filter {
+  display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap;
+  margin-top: 12px; font-size: .82rem; color: var(--bb-muted);
+}
+.bb-year-filter input {
+  width: 84px; background: rgba(6,20,46,.5); border: 1px solid var(--bb-border); border-radius: 8px;
+  color: var(--bb-text); padding: 6px 10px; font-size: .85rem; text-align: center;
+}
+.bb-year-filter input:focus { outline: none; border-color: var(--bb-border-hi); }
+.bb-year-hint { color: var(--bb-soft); font-size: .74rem; }
+
 @keyframes bbFadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
 @media (max-width: 560px) {
   .bb-biblio-item { flex-direction: column; gap: 8px; }
-  .bb-biblio-actions { flex-direction: row; align-items: center; width: 100%; justify-content: space-between; }
+  .bb-biblio-actions { flex-direction: row; align-items: center; width: 100%; justify-content: space-between; flex-wrap: wrap; }
+  .bb-basket-bar { flex-direction: column; align-items: stretch; padding: 12px 16px; }
+  .bb-basket-actions { justify-content: space-between; }
 }
 
 /* ── SEZIONI ── */

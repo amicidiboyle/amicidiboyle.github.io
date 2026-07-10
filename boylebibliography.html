@@ -133,6 +133,13 @@
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
                 </button>
               </div>
+              <div class="bb-year-filter">
+                <label for="bbYearFrom" data-i18n="yearFromLabel">Dal</label>
+                <input type="number" id="bbYearFrom" inputmode="numeric" placeholder="es. 2015" min="1900" max="2100" />
+                <label for="bbYearTo" data-i18n="yearToLabel">al</label>
+                <input type="number" id="bbYearTo" inputmode="numeric" placeholder="es. 2026" min="1900" max="2100" />
+                <span class="bb-year-hint" data-i18n="yearHint">(facoltativo)</span>
+              </div>
             </form>
 
             <div class="bb-constellation-wrap bb-reveal">
@@ -242,6 +249,16 @@
 
   </main>
 
+  <div class="bb-basket-bar" id="bbBasketBar" hidden>
+    <span class="bb-basket-count"><strong id="bbBasketCount">0</strong> <span data-i18n="basketLabel">voci in bibliografia</span></span>
+    <div class="bb-basket-actions">
+      <button type="button" id="bbBasketCopy" data-i18n="basketCopy">Copia tutte</button>
+      <button type="button" id="bbBasketBibtex">BibTeX</button>
+      <button type="button" id="bbBasketRis">RIS</button>
+      <button type="button" id="bbBasketClear" data-i18n="basketClear">Svuota</button>
+    </div>
+  </div>
+
   <p class="bb-footer" data-i18n="footer">
     Un progetto degli <a href="index.html">Amici di Boyle</a> · Ricerca ed educazione — non sostituisce il giudizio clinico.
   </p>
@@ -321,7 +338,11 @@
       error: "Non riesco a contattare PubMed/OpenAlex in questo momento (connessione assente o servizio non raggiungibile). Riprova tra poco.",
       copy: "Copia", copied: "Copiato", copyFailed: "Copia manualmente",
       copyAll: "Copia tutte le citazioni", copiedAll: "Bibliografia copiata",
-      pdfOpen: "PDF", pdfPaywall: "A pagamento"
+      pdfOpen: "PDF", pdfPaywall: "A pagamento",
+      yearFromLabel: "Dal", yearToLabel: "al", yearHint: "(facoltativo)",
+      basketAdd: "+ Aggiungi", basketRemove: "✓ Aggiunta",
+      basketLabel: "voci in bibliografia", basketCopy: "Copia tutte",
+      basketClear: "Svuota"
     },
     en: {
       kicker: "Amici di Boyle · Experimental project",
@@ -357,7 +378,11 @@
       error: "Can't reach PubMed/OpenAlex right now (no connection or service unavailable). Please try again shortly.",
       copy: "Copy", copied: "Copied", copyFailed: "Copy manually",
       copyAll: "Copy all citations", copiedAll: "Bibliography copied",
-      pdfOpen: "PDF", pdfPaywall: "Paywalled"
+      pdfOpen: "PDF", pdfPaywall: "Paywalled",
+      yearFromLabel: "From", yearToLabel: "to", yearHint: "(optional)",
+      basketAdd: "+ Add", basketRemove: "✓ Added",
+      basketLabel: "in your bibliography", basketCopy: "Copy all",
+      basketClear: "Clear"
     }
   };
 
@@ -484,8 +509,11 @@
   }
 
   /* ── PubMed: esearch + esummary ── */
-  function searchPubMed(query) {
+  function searchPubMed(query, yearFrom, yearTo) {
     var url = EUTILS + "esearch.fcgi?db=pubmed&retmode=json&retmax=5&sort=relevance&term=" + encodeURIComponent(query);
+    if (yearFrom || yearTo) {
+      url += "&datetype=pdat&mindate=" + (yearFrom || "1900") + "&maxdate=" + (yearTo || new Date().getFullYear());
+    }
     return fetch(url).then(function (res) {
       if (!res.ok) throw new Error("esearch");
       return res.json();
@@ -502,19 +530,22 @@
           var items = ids.map(function (id) {
             var a = summary.result && summary.result[id];
             if (!a) return null;
-            var authors = vancouverAuthors((a.authors || []).map(function (x) { return x.name; }).filter(Boolean));
+            var names = (a.authors || []).map(function (x) { return x.name; }).filter(Boolean);
+            var authors = vancouverAuthors(names);
             var title = (a.title || "").replace(/\.$/, "");
             var journal = a.source || "";
             var year = (a.pubdate || "").split(" ")[0];
-            var vol = a.volume || "", issue = a.issue ? "(" + a.issue + ")" : "", pages = a.pages ? ":" + a.pages : "";
+            var vol = a.volume || "", issue = a.issue || "", pagesRaw = a.pages || "";
             var doiEntry = (a.articleids || []).filter(function (x) { return x.idtype === "doi"; })[0];
             var doi = doiEntry && doiEntry.value ? doiEntry.value : "";
             var link = doi ? "https://doi.org/" + doi : "https://pubmed.ncbi.nlm.nih.gov/" + a.uid + "/";
             var linkLabel = doi ? "DOI" : "PubMed";
-            var tail = [year, vol + issue + pages].filter(Boolean).join(";");
+            var tail = [year, vol + (issue ? "(" + issue + ")" : "") + (pagesRaw ? ":" + pagesRaw : "")].filter(Boolean).join(";");
             return {
               text: [authors, title, journal].filter(Boolean).join(". ") + (tail ? ". " + tail + "." : "."),
-              link: link, linkLabel: linkLabel, source: "PubMed", doi: doi
+              link: link, linkLabel: linkLabel, source: "PubMed", doi: doi,
+              names: names, title: title, journal: journal, year: year,
+              vol: vol, issue: issue, pages: pagesRaw
             };
           }).filter(Boolean);
           return enrichWithOpenAccess(items).then(function (enriched) {
@@ -555,9 +586,12 @@
     return last + " " + initials;
   }
 
-  function searchOpenAlex(query) {
+  function searchOpenAlex(query, yearFrom, yearTo) {
     var url = OPENALEX + "?search=" + encodeURIComponent(query) +
       "&per-page=5&select=id,doi,title,authorships,primary_location,publication_year,biblio,open_access,best_oa_location";
+    if (yearFrom || yearTo) {
+      url += "&filter=publication_year:" + (yearFrom || "1900") + "-" + (yearTo || new Date().getFullYear());
+    }
     return fetch(url).then(function (res) {
       if (!res.ok) throw new Error("openalex");
       return res.json();
@@ -570,16 +604,19 @@
         var journal = w.primary_location && w.primary_location.source ? w.primary_location.source.display_name : "";
         var year = w.publication_year || "";
         var b = w.biblio || {};
-        var pages = (b.first_page && b.last_page) ? ":" + b.first_page + "-" + b.last_page : "";
-        var vol = b.volume || "", issue = b.issue ? "(" + b.issue + ")" : "";
+        var pagesRaw = (b.first_page && b.last_page) ? (b.first_page + "-" + b.last_page) : "";
+        var vol = b.volume || "", issue = b.issue || "";
         var link = w.doi || (w.id || "");
-        var tail = [year, vol + issue + pages].filter(Boolean).join(";");
+        var tail = [year, vol + (issue ? "(" + issue + ")" : "") + (pagesRaw ? ":" + pagesRaw : "")].filter(Boolean).join(";");
         var oa = w.open_access || {};
         var oaUrl = (w.best_oa_location && w.best_oa_location.pdf_url) || oa.oa_url || null;
         return {
           text: [authors, title, journal].filter(Boolean).join(". ") + (tail ? ". " + tail + "." : "."),
           link: link, linkLabel: "OpenAlex", source: "OpenAlex",
-          isOa: !!oa.is_oa, oaUrl: oaUrl
+          isOa: !!oa.is_oa, oaUrl: oaUrl,
+          names: names, title: title, journal: journal, year: year,
+          vol: vol, issue: issue, pages: pagesRaw,
+          doi: (w.doi || "").replace(/^https?:\/\/doi\.org\//i, "")
         };
       });
       return { source: "OpenAlex", total: total, items: items };
@@ -676,7 +713,22 @@
       link.textContent = I18N[currentLang].pdfPaywall + " · " + v.linkLabel + " →";
     }
 
+    var basketBtn = document.createElement("button");
+    basketBtn.type = "button";
+    basketBtn.className = "bb-biblio-basket-btn";
+    function paintBasketBtn() {
+      var added = isInBasket(v);
+      basketBtn.classList.toggle("is-added", added);
+      basketBtn.textContent = added ? I18N[currentLang].basketRemove : I18N[currentLang].basketAdd;
+    }
+    paintBasketBtn();
+    basketBtn.addEventListener("click", function () {
+      if (isInBasket(v)) removeFromBasket(v); else addToBasket(v);
+      paintBasketBtn();
+    });
+
     actions.appendChild(copyBtn);
+    actions.appendChild(basketBtn);
     actions.appendChild(link);
     li.appendChild(wrap);
     li.appendChild(actions);
@@ -684,11 +736,14 @@
   }
 
   function renderCopyAll(items) {
-    var old = document.getElementById("bbCopyAll");
+    var old = document.getElementById("bbCopyAllRow");
     if (old) old.remove();
+    var row = document.createElement("div");
+    row.id = "bbCopyAllRow";
+    row.className = "bb-copyall-row";
+
     var btn = document.createElement("button");
     btn.type = "button";
-    btn.id = "bbCopyAll";
     btn.className = "bb-biblio-copy-all";
     btn.textContent = I18N[currentLang].copyAll;
     btn.addEventListener("click", function () {
@@ -699,7 +754,27 @@
         flashCopied(btn, I18N[currentLang].copyFailed, I18N[currentLang].copyAll);
       });
     });
-    biblioResults.parentNode.insertBefore(btn, biblioResults);
+
+    var bibtexBtn = document.createElement("button");
+    bibtexBtn.type = "button";
+    bibtexBtn.className = "bb-export-btn";
+    bibtexBtn.textContent = "BibTeX";
+    bibtexBtn.addEventListener("click", function () {
+      downloadTextFile("boyle-bibliography.bib", "application/x-bibtex", itemsToBibtex(items));
+    });
+
+    var risBtn = document.createElement("button");
+    risBtn.type = "button";
+    risBtn.className = "bb-export-btn";
+    risBtn.textContent = "RIS";
+    risBtn.addEventListener("click", function () {
+      downloadTextFile("boyle-bibliography.ris", "application/x-research-info-systems", itemsToRis(items));
+    });
+
+    row.appendChild(btn);
+    row.appendChild(bibtexBtn);
+    row.appendChild(risBtn);
+    biblioResults.parentNode.insertBefore(row, biblioResults);
   }
 
   /* estrae il DOI normalizzato da un link doi.org, per riconoscere lo
@@ -721,8 +796,141 @@
   }
 
   function clearCopyAll() {
-    var old = document.getElementById("bbCopyAll");
+    var old = document.getElementById("bbCopyAllRow");
     if (old) old.remove();
+  }
+
+  /* ── BibTeX / RIS: i nomi arrivano già come "Cognome INIZIALI" (da
+     PubMed e da openAlexAuthorName), l'ultimo token è sempre le iniziali */
+  function splitAuthorName(n) {
+    var parts = (n || "").trim().split(/\s+/);
+    var initials = parts.length > 1 ? parts.pop() : "";
+    return { last: parts.join(" "), initials: initials };
+  }
+  function dottedInitials(initials) {
+    return initials ? initials.split("").join(".") + "." : "";
+  }
+  function bibtexEscape(s) { return (s || "").replace(/[{}]/g, ""); }
+
+  function itemToBibtex(item, idx) {
+    var firstLast = item.names && item.names[0] ? splitAuthorName(item.names[0]).last.replace(/[^a-zA-Z]/g, "") : "";
+    var key = (firstLast || "ref") + (item.year || "") + idx;
+    var authors = (item.names || []).map(function (n) {
+      var s = splitAuthorName(n);
+      return s.last + (s.initials ? ", " + dottedInitials(s.initials) : "");
+    }).join(" and ");
+    var fields = [];
+    if (authors) fields.push("  author  = {" + bibtexEscape(authors) + "}");
+    if (item.title) fields.push("  title   = {" + bibtexEscape(item.title) + "}");
+    if (item.journal) fields.push("  journal = {" + bibtexEscape(item.journal) + "}");
+    if (item.year) fields.push("  year    = {" + item.year + "}");
+    if (item.vol) fields.push("  volume  = {" + item.vol + "}");
+    if (item.issue) fields.push("  number  = {" + item.issue + "}");
+    if (item.pages) fields.push("  pages   = {" + item.pages + "}");
+    if (item.doi) fields.push("  doi     = {" + item.doi + "}");
+    fields.push("  url     = {" + item.link + "}");
+    return "@article{" + key + ",\n" + fields.join(",\n") + "\n}";
+  }
+
+  function itemToRis(item) {
+    var lines = ["TY  - JOUR"];
+    (item.names || []).forEach(function (n) {
+      var s = splitAuthorName(n);
+      lines.push("AU  - " + s.last + (s.initials ? ", " + dottedInitials(s.initials) : ""));
+    });
+    if (item.title) lines.push("TI  - " + item.title);
+    if (item.journal) lines.push("JO  - " + item.journal);
+    if (item.year) lines.push("PY  - " + item.year);
+    if (item.vol) lines.push("VL  - " + item.vol);
+    if (item.issue) lines.push("IS  - " + item.issue);
+    if (item.pages) {
+      var pp = String(item.pages).split("-");
+      if (pp[0]) lines.push("SP  - " + pp[0]);
+      if (pp[1]) lines.push("EP  - " + pp[1]);
+    }
+    if (item.doi) lines.push("DO  - " + item.doi);
+    if (item.link) lines.push("UR  - " + item.link);
+    lines.push("ER  - ");
+    return lines.join("\n");
+  }
+
+  function itemsToBibtex(items) { return items.map(itemToBibtex).join("\n\n"); }
+  function itemsToRis(items) { return items.map(itemToRis).join("\n\n"); }
+
+  function downloadTextFile(filename, mime, text) {
+    var blob = new Blob([text], { type: mime });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement("a");
+    a.href = url; a.download = filename;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+  }
+
+  /* ── Carrello: accumula citazioni scelte tra ricerche diverse, persiste
+     nel browser (localStorage) così sopravvive anche a un refresh ── */
+  var BASKET_STORAGE_KEY = "bbBasketV1";
+  var basket = loadBasket();
+
+  function loadBasket() {
+    try {
+      var raw = localStorage.getItem(BASKET_STORAGE_KEY);
+      return raw ? JSON.parse(raw) : [];
+    } catch (e) { return []; }
+  }
+  function saveBasket() {
+    try { localStorage.setItem(BASKET_STORAGE_KEY, JSON.stringify(basket)); } catch (e) { /* storage non disponibile: il carrello resta solo in memoria per questa sessione */ }
+  }
+  function basketItemKey(item) { return doiKey(item) || item.link; }
+  function isInBasket(item) {
+    var key = basketItemKey(item);
+    return basket.some(function (b) { return basketItemKey(b) === key; });
+  }
+  function addToBasket(item) {
+    if (isInBasket(item)) return;
+    basket.push(item);
+    saveBasket();
+    renderBasketBar();
+  }
+  function removeFromBasket(item) {
+    var key = basketItemKey(item);
+    basket = basket.filter(function (b) { return basketItemKey(b) !== key; });
+    saveBasket();
+    renderBasketBar();
+  }
+
+  var basketBar = document.getElementById("bbBasketBar");
+  var basketCountEl = document.getElementById("bbBasketCount");
+  function renderBasketBar() {
+    if (!basketBar) return;
+    basketBar.hidden = basket.length === 0;
+    if (basketCountEl) basketCountEl.textContent = basket.length;
+  }
+  if (basketBar) {
+    document.getElementById("bbBasketCopy").addEventListener("click", function (e) {
+      var btn = e.currentTarget;
+      var numbered = basket.map(function (v, i) { return (i + 1) + ". " + v.text; }).join("\n\n");
+      copyText(numbered).then(function () {
+        flashCopied(btn, I18N[currentLang].copiedAll, I18N[currentLang].basketCopy);
+      }).catch(function () {
+        flashCopied(btn, I18N[currentLang].copyFailed, I18N[currentLang].basketCopy);
+      });
+    });
+    document.getElementById("bbBasketBibtex").addEventListener("click", function () {
+      downloadTextFile("boyle-bibliography.bib", "application/x-bibtex", itemsToBibtex(basket));
+    });
+    document.getElementById("bbBasketRis").addEventListener("click", function () {
+      downloadTextFile("boyle-bibliography.ris", "application/x-research-info-systems", itemsToRis(basket));
+    });
+    document.getElementById("bbBasketClear").addEventListener("click", function () {
+      basket = [];
+      saveBasket();
+      renderBasketBar();
+      document.querySelectorAll(".bb-biblio-basket-btn.is-added").forEach(function (btn) {
+        btn.classList.remove("is-added");
+        btn.textContent = I18N[currentLang].basketAdd;
+      });
+    });
+    renderBasketBar();
   }
 
   /* se l'utente lancia una nuova ricerca prima che la precedente sia
@@ -731,14 +939,19 @@
      l'ultima in ordine di partenza può scrivere i risultati. */
   var searchRequestId = 0;
 
+  var yearFromInput = document.getElementById("bbYearFrom");
+  var yearToInput = document.getElementById("bbYearTo");
+
   function searchBibliography(rawQuery) {
     var requestId = ++searchRequestId;
     biblioResults.innerHTML = "";
     clearCopyAll();
     setStatus(I18N[currentLang].searching);
     var query = translateQuery(rawQuery);
+    var yearFrom = (yearFromInput && yearFromInput.value) ? yearFromInput.value.trim() : "";
+    var yearTo = (yearToInput && yearToInput.value) ? yearToInput.value.trim() : "";
 
-    Promise.all([searchPubMed(query), searchOpenAlex(query)]).then(function (results) {
+    Promise.all([searchPubMed(query, yearFrom, yearTo), searchOpenAlex(query, yearFrom, yearTo)]).then(function (results) {
       if (requestId !== searchRequestId) return;
       var allItems = [];
       var totalFound = 0;
