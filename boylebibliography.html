@@ -109,13 +109,8 @@
             <p class="bb-kicker" data-i18n="kicker">Amici di Boyle · Progetto sperimentale</p>
             <h1><span class="bb-h-abisso">Boyle</span><br><span class="bb-h-spazio">Bibliography</span></h1>
             <p class="bb-hero-sub" data-i18n="heroSub">
-              <strong>Boyle Bibliography</strong> è un modo nuovo di fare ricerca bibliografica. Non un
-              chatbot, non un motore di ricerca come gli altri. Scrivi un argomento di medicina degli
-              ambienti estremi ed otterrai l'accuratezza di PubMed e OpenAlex — solo citazioni vere in
-              stile Vancouver, con link verificabile a ogni voce, mai un testo generato né una fonte
-              inventata. Filtra per anno, scarica subito il PDF quando l'articolo è ad accesso libero,
-              accumula i risultati di più ricerche diverse in un'unica bibliografia ed esportala in
-              BibTeX o RIS.
+              <strong>Boyle Bibliography</strong> non è solo un modo nuovo di fare ricerca bibliografica,
+              è il più intelligente, ed è gratis.
             </p>
           </div>
           <span class="bb-hero-logo-spacer" aria-hidden="true"></span>
@@ -213,15 +208,15 @@
             <ol class="bb-biblio-results" id="bbBiblioResults"></ol>
           </div>
 
-          <aside class="bb-biblio-rules bb-biblio-rules--left bb-reveal">
-            <div class="bb-rule bb-rule--1">
+          <aside class="bb-biblio-rules bb-biblio-rules--left">
+            <div class="bb-rule bb-rule--1 bb-reveal" style="transition-delay:0s">
               <span class="bb-rule-num">01</span>
               <h3 data-i18n="rule1Title">Italiano o inglese</h3>
               <p data-i18n="rule1Desc">I termini più comuni del settore vengono tradotti in automatico per la ricerca scientifica.</p>
               <p class="bb-rule-example"><span class="bb-rule-good" data-i18n="rule1Example">malattia da decompressione</span></p>
             </div>
 
-            <div class="bb-rule bb-rule--2">
+            <div class="bb-rule bb-rule--2 bb-reveal" style="transition-delay:.1s">
               <span class="bb-rule-num">02</span>
               <h3 data-i18n="rule2Title">Sii specifico</h3>
               <p data-i18n="rule2Desc">Due o tre parole mirate. Un singolo termine generico restituisce migliaia di risultati non utili.</p>
@@ -230,19 +225,42 @@
                 <span class="bb-rule-bad" data-i18n="rule2Bad">pressione</span>
               </p>
             </div>
+
+            <div class="bb-rule bb-rule--5 bb-reveal" style="transition-delay:.2s">
+              <span class="bb-rule-num">05</span>
+              <h3 data-i18n="rule5Title">Filtra per anno</h3>
+              <p data-i18n="rule5Desc">Restringi la ricerca a un intervallo di anni: solo la letteratura più recente, o quella storica che ti serve.</p>
+            </div>
           </aside>
 
-          <aside class="bb-biblio-rules bb-biblio-rules--right bb-reveal">
-            <div class="bb-rule bb-rule--3">
+          <aside class="bb-biblio-rules bb-biblio-rules--right">
+            <div class="bb-rule bb-rule--3 bb-reveal" style="transition-delay:0s">
               <span class="bb-rule-num">03</span>
               <h3 data-i18n="rule3Title">Due fonti, fonti vere</h3>
-              <p data-i18n="rule3Desc">Ogni voce arriva in tempo reale da PubMed e OpenAlex, con link diretto verificabile — mai scritta da un'intelligenza artificiale.</p>
+              <ul class="bb-rule-list">
+                <li data-i18n="rule3Item1">PubMed e OpenAlex, in tempo reale</li>
+                <li data-i18n="rule3Item2">Link verificabile a ogni voce</li>
+                <li data-i18n="rule3Item3">Mai scritta da un'intelligenza artificiale</li>
+              </ul>
             </div>
 
-            <div class="bb-rule bb-rule--4">
+            <div class="bb-rule bb-rule--4 bb-reveal" style="transition-delay:.1s">
               <span class="bb-rule-num">04</span>
               <h3 data-i18n="rule4Title">Vancouver, BibTeX o RIS</h3>
-              <p data-i18n="rule4Desc">Copia pronta da incollare, oppure esporta per Zotero, Mendeley ed EndNote.</p>
+              <ul class="bb-rule-list">
+                <li data-i18n="rule4Item1">Vancouver, pronta da incollare</li>
+                <li data-i18n="rule4Item2">BibTeX per Zotero e Mendeley</li>
+                <li data-i18n="rule4Item3">RIS per EndNote</li>
+              </ul>
+            </div>
+
+            <div class="bb-rule bb-rule--6 bb-reveal" style="transition-delay:.2s">
+              <span class="bb-rule-num">06</span>
+              <h3 data-i18n="rule6Title">La tua bibliografia</h3>
+              <ul class="bb-rule-list">
+                <li data-i18n="rule6Item1">Accumula più ricerche in un'unica lista</li>
+                <li data-i18n="rule6Item2">Scarica subito il PDF se è ad accesso libero</li>
+              </ul>
             </div>
           </aside>
 
@@ -312,12 +330,8 @@
   var I18N = {
     it: {
       kicker: "Amici di Boyle · Progetto sperimentale",
-      heroSub: "<strong>Boyle Bibliography</strong> è un modo nuovo di fare ricerca bibliografica. " +
-        "Non un chatbot, non un motore di ricerca come gli altri. Scrivi un argomento di medicina " +
-        "degli ambienti estremi ed otterrai l'accuratezza di PubMed e OpenAlex — solo citazioni vere " +
-        "in stile Vancouver, con link verificabile a ogni voce, mai un testo generato né una fonte " +
-        "inventata. Filtra per anno, scarica subito il PDF quando l'articolo è ad accesso libero, " +
-        "accumula i risultati di più ricerche diverse in un'unica bibliografia ed esportala in BibTeX o RIS.",
+      heroSub: "<strong>Boyle Bibliography</strong> non è solo un modo nuovo di fare ricerca " +
+        "bibliografica, è il più intelligente, ed è gratis.",
       rule1Title: "Italiano o inglese",
       rule1Desc: "I termini più comuni del settore vengono tradotti in automatico per la ricerca scientifica.",
       rule1Example: "malattia da decompressione",
@@ -325,9 +339,18 @@
       rule2Desc: "Due o tre parole mirate. Un singolo termine generico restituisce migliaia di risultati non utili.",
       rule2Bad: "pressione",
       rule3Title: "Due fonti, fonti vere",
-      rule3Desc: "Ogni voce arriva in tempo reale da PubMed e OpenAlex, con link diretto verificabile — mai scritta da un'intelligenza artificiale.",
+      rule3Item1: "PubMed e OpenAlex, in tempo reale",
+      rule3Item2: "Link verificabile a ogni voce",
+      rule3Item3: "Mai scritta da un'intelligenza artificiale",
       rule4Title: "Vancouver, BibTeX o RIS",
-      rule4Desc: "Copia pronta da incollare, oppure esporta per Zotero, Mendeley ed EndNote.",
+      rule4Item1: "Vancouver, pronta da incollare",
+      rule4Item2: "BibTeX per Zotero e Mendeley",
+      rule4Item3: "RIS per EndNote",
+      rule5Title: "Filtra per anno",
+      rule5Desc: "Restringi la ricerca a un intervallo di anni: solo la letteratura più recente, o quella storica che ti serve.",
+      rule6Title: "La tua bibliografia",
+      rule6Item1: "Accumula più ricerche in un'unica lista",
+      rule6Item2: "Scarica subito il PDF se è ad accesso libero",
       chip1: "Fonti verificate",
       chip2: "Perimetro scientifico definito",
       chip3: "Limiti dichiarati quando servono",
@@ -357,12 +380,8 @@
     },
     en: {
       kicker: "Amici di Boyle · Experimental project",
-      heroSub: "<strong>Boyle Bibliography</strong> is a new way to do bibliographic research. " +
-        "Not a chatbot, not a search engine like the others. Write a topic in extreme environment " +
-        "medicine and you'll get the accuracy of PubMed and OpenAlex — only real citations in " +
-        "Vancouver style, with a verifiable link on every entry, never generated text or an invented " +
-        "source. Filter by year, download the PDF right away when an article is open access, combine " +
-        "results from different searches into a single bibliography, and export it as BibTeX or RIS.",
+      heroSub: "<strong>Boyle Bibliography</strong> isn't just a new way to do bibliographic " +
+        "research, it's the smartest one, and it's free.",
       rule1Title: "Italian or English",
       rule1Desc: "The most common terms in the field are automatically translated for the scientific search.",
       rule1Example: "decompression sickness",
@@ -370,9 +389,18 @@
       rule2Desc: "Two or three focused words. A single generic term returns thousands of unhelpful results.",
       rule2Bad: "pressure",
       rule3Title: "Two sources, real sources",
-      rule3Desc: "Every entry comes live from PubMed and OpenAlex, with a direct verifiable link — never written by an AI.",
+      rule3Item1: "PubMed and OpenAlex, live",
+      rule3Item2: "Verifiable link on every entry",
+      rule3Item3: "Never written by an AI",
       rule4Title: "Vancouver, BibTeX or RIS",
-      rule4Desc: "Copy ready to paste, or export for Zotero, Mendeley and EndNote.",
+      rule4Item1: "Vancouver, ready to paste",
+      rule4Item2: "BibTeX for Zotero and Mendeley",
+      rule4Item3: "RIS for EndNote",
+      rule5Title: "Filter by year",
+      rule5Desc: "Narrow the search to a year range: only the most recent literature, or the historical one you need.",
+      rule6Title: "Your bibliography",
+      rule6Item1: "Combine multiple searches into one list",
+      rule6Item2: "Download the PDF right away if open access",
       chip1: "Verified sources",
       chip2: "Defined scientific scope",
       chip3: "Limits stated when relevant",

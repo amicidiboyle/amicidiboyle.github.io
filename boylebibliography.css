@@ -344,24 +344,40 @@ p.bb-biblio-legend {
 }
 @media (max-width: 1100px) { .bb-biblio-rules { position: static; } }
 .bb-rule {
-  background: var(--bb-glass); border: 1px solid var(--bb-border); border-left: 3px solid var(--bb-cyan);
+  background: var(--bb-glass); border: 1px solid var(--bb-border); border-left: 3px solid var(--rule-glow, var(--bb-cyan));
   border-radius: 14px; padding: 16px 18px;
+  box-shadow: -6px 0 22px -14px var(--rule-glow, transparent), 0 0 0 1px rgba(255,255,255,.02) inset;
+  transition: box-shadow .25s ease, transform .25s ease;
 }
+.bb-rule:hover { box-shadow: -6px 0 28px -10px var(--rule-glow, transparent); transform: translateX(2px); }
 .bb-rule-num {
   display: block; font-size: .7rem; font-weight: 700; letter-spacing: .1em;
   color: var(--bb-cyan-2); margin-bottom: 6px;
 }
-/* un tono di ciano distinto per ciascun riquadro */
-.bb-rule--1 { border-left-color: #7be4ff; }
+/* un colore ed un bagliore distinti per ciascun riquadro */
+.bb-rule--1 { --rule-glow: #7be4ff; }
 .bb-rule--1 .bb-rule-num, .bb-rule--1 h3 { color: #7be4ff; }
-.bb-rule--2 { border-left-color: #4fd8c4; }
+.bb-rule--2 { --rule-glow: #4fd8c4; }
 .bb-rule--2 .bb-rule-num, .bb-rule--2 h3 { color: #4fd8c4; }
-.bb-rule--3 { border-left-color: #a8eeff; }
+.bb-rule--3 { --rule-glow: #a8eeff; }
 .bb-rule--3 .bb-rule-num, .bb-rule--3 h3 { color: #a8eeff; }
-.bb-rule--4 { border-left-color: #4fa8ff; }
+.bb-rule--4 { --rule-glow: #4fa8ff; }
 .bb-rule--4 .bb-rule-num, .bb-rule--4 h3 { color: #4fa8ff; }
+.bb-rule--5 { --rule-glow: #b48bff; }
+.bb-rule--5 .bb-rule-num, .bb-rule--5 h3 { color: #b48bff; }
+.bb-rule--6 { --rule-glow: #ffb84d; }
+.bb-rule--6 .bb-rule-num, .bb-rule--6 h3 { color: #ffb84d; }
 .bb-rule h3 { font-size: .94rem; margin: 0 0 6px; letter-spacing: -.01em; }
 .bb-rule p { font-size: .84rem; color: var(--bb-muted); line-height: 1.5; margin: 0; }
+.bb-rule-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 5px; }
+.bb-rule-list li {
+  font-size: .82rem; color: var(--bb-muted); line-height: 1.4;
+  padding-left: 15px; position: relative;
+}
+.bb-rule-list li::before {
+  content: ""; position: absolute; left: 0; top: .55em;
+  width: 5px; height: 5px; border-radius: 50%; background: var(--rule-glow, var(--bb-cyan-2));
+}
 .bb-rule-example { margin-top: 8px; display: flex; flex-wrap: wrap; gap: 6px; }
 .bb-rule-good, .bb-rule-bad {
   display: inline-flex; font-size: .78rem; padding: 4px 9px; border-radius: 7px; font-style: normal;
