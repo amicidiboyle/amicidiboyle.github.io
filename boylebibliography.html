@@ -124,6 +124,11 @@
         <div class="bb-biblio">
 
           <div class="bb-biblio-main">
+            <div class="bb-mode-toggle" id="bbModeToggle" role="tablist">
+              <button type="button" class="bb-mode-btn is-active" data-mode="topic" data-i18n="modeTopic" role="tab" aria-selected="true">Argomento</button>
+              <button type="button" class="bb-mode-btn" data-mode="author" data-i18n="modeAuthor" role="tab" aria-selected="false">Autore</button>
+            </div>
+            <p class="bb-author-hint" id="bbAuthorHint" data-i18n="authorHint" hidden>Su PubMed la ricerca per nome non distingue sempre autori omonimi; su OpenAlex sì, grazie a un identificativo univoco.</p>
             <form class="bb-ask" id="bbBiblioForm">
               <div class="bb-ask-row">
                 <input type="text" id="bbBiblioInput" placeholder="Cosa cerchiamo oggi?" data-i18n-placeholder="searchPlaceholder" aria-label="Cerca la bibliografia su PubMed e OpenAlex" data-i18n-aria="searchAria" autofocus />
@@ -360,6 +365,10 @@
       legendPaywall: "a pagamento: link alla fonte per abstract e acquisto",
       searchPlaceholder: "Cosa cerchiamo oggi?",
       searchAria: "Cerca la bibliografia su PubMed e OpenAlex",
+      modeTopic: "Argomento", modeAuthor: "Autore",
+      authorPlaceholder: "Nome e cognome dell'autore",
+      authorAria: "Cerca tutte le pubblicazioni di un autore su PubMed e OpenAlex",
+      authorHint: "Su PubMed la ricerca per nome non distingue sempre autori omonimi; su OpenAlex sì, grazie a un identificativo univoco.",
       footer: "Un progetto degli <a href=\"index.html\">Amici di Boyle</a> · Ricerca ed educazione — non sostituisce il giudizio clinico.",
       domSub: "Subacquea", domIper: "Iperbarica", domTrauma: "Trauma",
       domSic: "Sicurezza", domAero: "Aerospazio", domFis: "Fisiologia",
@@ -410,6 +419,10 @@
       legendPaywall: "paywalled: link to the source for abstract and purchase",
       searchPlaceholder: "What are we searching for today?",
       searchAria: "Search the bibliography on PubMed and OpenAlex",
+      modeTopic: "Topic", modeAuthor: "Author",
+      authorPlaceholder: "Author's first and last name",
+      authorAria: "Search all publications by an author on PubMed and OpenAlex",
+      authorHint: "On PubMed, name search doesn't always tell apart authors who share a name; on OpenAlex it does, thanks to a unique identifier.",
       footer: "A project by <a href=\"index.html\">Amici di Boyle</a> · Research and education — does not replace clinical judgment.",
       domSub: "Diving", domIper: "Hyperbaric", domTrauma: "Trauma",
       domSic: "Safety", domAero: "Aerospace", domFis: "Physiology",
@@ -553,6 +566,27 @@
   }
 
   /* ── PubMed: esearch + esummary ── */
+  function mapPubMedArticle(a) {
+    if (!a) return null;
+    var names = (a.authors || []).map(function (x) { return x.name; }).filter(Boolean);
+    var authors = vancouverAuthors(names);
+    var title = (a.title || "").replace(/\.$/, "");
+    var journal = a.source || "";
+    var year = (a.pubdate || "").split(" ")[0];
+    var vol = a.volume || "", issue = a.issue || "", pagesRaw = a.pages || "";
+    var doiEntry = (a.articleids || []).filter(function (x) { return x.idtype === "doi"; })[0];
+    var doi = doiEntry && doiEntry.value ? doiEntry.value : "";
+    var link = doi ? "https://doi.org/" + doi : "https://pubmed.ncbi.nlm.nih.gov/" + a.uid + "/";
+    var linkLabel = doi ? "DOI" : "PubMed";
+    var tail = [year, vol + (issue ? "(" + issue + ")" : "") + (pagesRaw ? ":" + pagesRaw : "")].filter(Boolean).join(";");
+    return {
+      text: [authors, title, journal].filter(Boolean).join(". ") + (tail ? ". " + tail + "." : "."),
+      link: link, linkLabel: linkLabel, source: "PubMed", doi: doi,
+      names: names, title: title, journal: journal, year: year,
+      vol: vol, issue: issue, pages: pagesRaw
+    };
+  }
+
   function searchPubMed(query, yearFrom, yearTo) {
     var url = EUTILS + "esearch.fcgi?db=pubmed&retmode=json&retmax=5&sort=relevance&term=" + encodeURIComponent(query);
     if (yearFrom || yearTo) {
@@ -571,27 +605,7 @@
           return res.json();
         })
         .then(function (summary) {
-          var items = ids.map(function (id) {
-            var a = summary.result && summary.result[id];
-            if (!a) return null;
-            var names = (a.authors || []).map(function (x) { return x.name; }).filter(Boolean);
-            var authors = vancouverAuthors(names);
-            var title = (a.title || "").replace(/\.$/, "");
-            var journal = a.source || "";
-            var year = (a.pubdate || "").split(" ")[0];
-            var vol = a.volume || "", issue = a.issue || "", pagesRaw = a.pages || "";
-            var doiEntry = (a.articleids || []).filter(function (x) { return x.idtype === "doi"; })[0];
-            var doi = doiEntry && doiEntry.value ? doiEntry.value : "";
-            var link = doi ? "https://doi.org/" + doi : "https://pubmed.ncbi.nlm.nih.gov/" + a.uid + "/";
-            var linkLabel = doi ? "DOI" : "PubMed";
-            var tail = [year, vol + (issue ? "(" + issue + ")" : "") + (pagesRaw ? ":" + pagesRaw : "")].filter(Boolean).join(";");
-            return {
-              text: [authors, title, journal].filter(Boolean).join(". ") + (tail ? ". " + tail + "." : "."),
-              link: link, linkLabel: linkLabel, source: "PubMed", doi: doi,
-              names: names, title: title, journal: journal, year: year,
-              vol: vol, issue: issue, pages: pagesRaw
-            };
-          }).filter(Boolean);
+          var items = ids.map(function (id) { return mapPubMedArticle(summary.result && summary.result[id]); }).filter(Boolean);
           return enrichWithOpenAccess(items).then(function (enriched) {
             return { source: "PubMed", total: total, items: enriched };
           });
@@ -630,9 +644,33 @@
     return last + " " + initials;
   }
 
+  var OPENALEX_SELECT = "id,doi,title,authorships,primary_location,publication_year,biblio,open_access,best_oa_location";
+
+  function mapOpenAlexWork(w) {
+    var names = (w.authorships || []).map(function (x) { return openAlexAuthorName(x.author && x.author.display_name); }).filter(Boolean);
+    var authors = vancouverAuthors(names);
+    var title = (w.title || "").replace(/\.$/, "");
+    var journal = w.primary_location && w.primary_location.source ? w.primary_location.source.display_name : "";
+    var year = w.publication_year || "";
+    var b = w.biblio || {};
+    var pagesRaw = (b.first_page && b.last_page) ? (b.first_page + "-" + b.last_page) : "";
+    var vol = b.volume || "", issue = b.issue || "";
+    var link = w.doi || (w.id || "");
+    var tail = [year, vol + (issue ? "(" + issue + ")" : "") + (pagesRaw ? ":" + pagesRaw : "")].filter(Boolean).join(";");
+    var oa = w.open_access || {};
+    var oaUrl = (w.best_oa_location && w.best_oa_location.pdf_url) || oa.oa_url || null;
+    return {
+      text: [authors, title, journal].filter(Boolean).join(". ") + (tail ? ". " + tail + "." : "."),
+      link: link, linkLabel: "OpenAlex", source: "OpenAlex",
+      isOa: !!oa.is_oa, oaUrl: oaUrl,
+      names: names, title: title, journal: journal, year: year,
+      vol: vol, issue: issue, pages: pagesRaw,
+      doi: (w.doi || "").replace(/^https?:\/\/doi\.org\//i, "")
+    };
+  }
+
   function searchOpenAlex(query, yearFrom, yearTo) {
-    var url = OPENALEX + "?search=" + encodeURIComponent(query) +
-      "&per-page=5&select=id,doi,title,authorships,primary_location,publication_year,biblio,open_access,best_oa_location";
+    var url = OPENALEX + "?search=" + encodeURIComponent(query) + "&per-page=5&select=" + OPENALEX_SELECT;
     if (yearFrom || yearTo) {
       url += "&filter=publication_year:" + (yearFrom || "1900") + "-" + (yearTo || new Date().getFullYear());
     }
@@ -641,29 +679,67 @@
       return res.json();
     }).then(function (data) {
       var total = (data.meta && data.meta.count) || 0;
-      var items = (data.results || []).map(function (w) {
-        var names = (w.authorships || []).map(function (x) { return openAlexAuthorName(x.author && x.author.display_name); }).filter(Boolean);
-        var authors = vancouverAuthors(names);
-        var title = (w.title || "").replace(/\.$/, "");
-        var journal = w.primary_location && w.primary_location.source ? w.primary_location.source.display_name : "";
-        var year = w.publication_year || "";
-        var b = w.biblio || {};
-        var pagesRaw = (b.first_page && b.last_page) ? (b.first_page + "-" + b.last_page) : "";
-        var vol = b.volume || "", issue = b.issue || "";
-        var link = w.doi || (w.id || "");
-        var tail = [year, vol + (issue ? "(" + issue + ")" : "") + (pagesRaw ? ":" + pagesRaw : "")].filter(Boolean).join(";");
-        var oa = w.open_access || {};
-        var oaUrl = (w.best_oa_location && w.best_oa_location.pdf_url) || oa.oa_url || null;
-        return {
-          text: [authors, title, journal].filter(Boolean).join(". ") + (tail ? ". " + tail + "." : "."),
-          link: link, linkLabel: "OpenAlex", source: "OpenAlex",
-          isOa: !!oa.is_oa, oaUrl: oaUrl,
-          names: names, title: title, journal: journal, year: year,
-          vol: vol, issue: issue, pages: pagesRaw,
-          doi: (w.doi || "").replace(/^https?:\/\/doi\.org\//i, "")
-        };
-      });
+      var items = (data.results || []).map(mapOpenAlexWork);
       return { source: "OpenAlex", total: total, items: items };
+    }).catch(function () {
+      return { source: "OpenAlex", total: 0, items: [], error: true };
+    });
+  }
+
+  /* ── Ricerca per autore: PubMed usa il tag [Author] direttamente sul
+     nome; OpenAlex prima disambigua l'autore (endpoint /authors) e poi
+     ne recupera le opere per id — più preciso di una ricerca testuale,
+     perché non si confonde con omonimi che scrivono di tutt'altro. */
+  function searchPubMedByAuthor(name, yearFrom, yearTo) {
+    var term = encodeURIComponent(name.trim()) + "%5BAuthor%5D";
+    var url = EUTILS + "esearch.fcgi?db=pubmed&retmode=json&retmax=8&sort=pub+date&term=" + term;
+    if (yearFrom || yearTo) {
+      url += "&datetype=pdat&mindate=" + (yearFrom || "1900") + "&maxdate=" + (yearTo || new Date().getFullYear());
+    }
+    return fetch(url).then(function (res) {
+      if (!res.ok) throw new Error("esearch");
+      return res.json();
+    }).then(function (data) {
+      var ids = (data.esearchresult && data.esearchresult.idlist) || [];
+      var total = (data.esearchresult && data.esearchresult.count) || 0;
+      if (!ids.length) return { source: "PubMed", total: 0, items: [] };
+      return fetch(EUTILS + "esummary.fcgi?db=pubmed&retmode=json&id=" + ids.join(","))
+        .then(function (res) {
+          if (!res.ok) throw new Error("esummary");
+          return res.json();
+        })
+        .then(function (summary) {
+          var items = ids.map(function (id) { return mapPubMedArticle(summary.result && summary.result[id]); }).filter(Boolean);
+          return enrichWithOpenAccess(items).then(function (enriched) {
+            return { source: "PubMed", total: total, items: enriched };
+          });
+        });
+    }).catch(function () {
+      return { source: "PubMed", total: 0, items: [], error: true };
+    });
+  }
+
+  function searchOpenAlexByAuthor(name, yearFrom, yearTo) {
+    var authorUrl = "https://api.openalex.org/authors?search=" + encodeURIComponent(name.trim()) + "&per-page=1&select=id,display_name";
+    return fetch(authorUrl).then(function (res) {
+      if (!res.ok) throw new Error("openalex-author");
+      return res.json();
+    }).then(function (data) {
+      var match = data.results && data.results[0];
+      if (!match) return { source: "OpenAlex", total: 0, items: [] };
+      var filter = "author.id:" + encodeURIComponent(match.id.replace("https://openalex.org/", ""));
+      if (yearFrom || yearTo) {
+        filter += ",publication_year:" + (yearFrom || "1900") + "-" + (yearTo || new Date().getFullYear());
+      }
+      var url = OPENALEX + "?filter=" + filter + "&sort=publication_date:desc&per-page=8&select=" + OPENALEX_SELECT;
+      return fetch(url).then(function (res) {
+        if (!res.ok) throw new Error("openalex");
+        return res.json();
+      }).then(function (data2) {
+        var total = (data2.meta && data2.meta.count) || 0;
+        var items = (data2.results || []).map(mapOpenAlexWork);
+        return { source: "OpenAlex", total: total, items: items };
+      });
     }).catch(function () {
       return { source: "OpenAlex", total: 0, items: [], error: true };
     });
@@ -998,17 +1074,22 @@
     window.scrollTo({ top: top, behavior: "smooth" });
   }
 
+  var searchMode = "topic";
+
   function searchBibliography(rawQuery) {
     var requestId = ++searchRequestId;
     biblioResults.innerHTML = "";
     clearCopyAll();
     setStatus(I18N[currentLang].searching);
     if (biblioSubmitBtn) biblioSubmitBtn.classList.add("is-loading");
-    var query = translateQuery(rawQuery);
     var yearFrom = (yearFromInput && yearFromInput.value) ? yearFromInput.value.trim() : "";
     var yearTo = (yearToInput && yearToInput.value) ? yearToInput.value.trim() : "";
 
-    Promise.all([searchPubMed(query, yearFrom, yearTo), searchOpenAlex(query, yearFrom, yearTo)]).then(function (results) {
+    var searchPromise = searchMode === "author"
+      ? Promise.all([searchPubMedByAuthor(rawQuery, yearFrom, yearTo), searchOpenAlexByAuthor(rawQuery, yearFrom, yearTo)])
+      : Promise.all([searchPubMed(translateQuery(rawQuery), yearFrom, yearTo), searchOpenAlex(translateQuery(rawQuery), yearFrom, yearTo)]);
+
+    searchPromise.then(function (results) {
       if (requestId !== searchRequestId) return;
       if (biblioSubmitBtn) biblioSubmitBtn.classList.remove("is-loading");
       var allItems = [];
@@ -1043,6 +1124,30 @@
       btn.addEventListener("click", function () {
         biblioInput.value = btn.getAttribute("data-q");
         searchBibliography(biblioInput.value);
+      });
+    });
+  }
+
+  /* passaggio tra "cerca per argomento" e "cerca per autore": cambia
+     solo cosa fa la ricerca e il testo del campo, il resto (rendering,
+     carrello, esportazione) resta identico */
+  var modeToggle = document.getElementById("bbModeToggle");
+  var authorHint = document.getElementById("bbAuthorHint");
+  if (modeToggle) {
+    modeToggle.querySelectorAll(".bb-mode-btn").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        searchMode = btn.getAttribute("data-mode");
+        modeToggle.querySelectorAll(".bb-mode-btn").forEach(function (b) {
+          var active = b === btn;
+          b.classList.toggle("is-active", active);
+          b.setAttribute("aria-selected", String(active));
+        });
+        var dict = I18N[currentLang];
+        biblioInput.placeholder = searchMode === "author" ? dict.authorPlaceholder : dict.searchPlaceholder;
+        biblioInput.setAttribute("aria-label", searchMode === "author" ? dict.authorAria : dict.searchAria);
+        biblioInput.value = "";
+        biblioInput.focus();
+        if (authorHint) authorHint.hidden = searchMode !== "author";
       });
     });
   }
