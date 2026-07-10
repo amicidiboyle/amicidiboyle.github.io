@@ -128,7 +128,7 @@
               <button type="button" class="bb-mode-btn is-active" data-mode="topic" data-i18n="modeTopic" role="tab" aria-selected="true">Argomento</button>
               <button type="button" class="bb-mode-btn" data-mode="author" data-i18n="modeAuthor" role="tab" aria-selected="false">Autore</button>
             </div>
-            <p class="bb-author-hint" id="bbAuthorHint" data-i18n="authorHint" hidden>Su PubMed la ricerca per nome non distingue sempre autori omonimi; su OpenAlex sì, grazie a un identificativo univoco.</p>
+            <p class="bb-author-hint" id="bbAuthorHint" data-i18n="authorHint" hidden>Attenzione ai nomi comuni: su PubMed potresti trovare anche autori omonimi, mentre OpenAlex li riconosce singolarmente grazie a un identificativo univoco.</p>
             <form class="bb-ask" id="bbBiblioForm">
               <div class="bb-ask-row">
                 <input type="text" id="bbBiblioInput" placeholder="Cosa cerchiamo oggi?" data-i18n-placeholder="searchPlaceholder" aria-label="Cerca la bibliografia su PubMed e OpenAlex" data-i18n-aria="searchAria" autofocus />
@@ -204,10 +204,10 @@
               <button type="button" data-q="osteonecrosi da immersione">osteonecrosi da immersione</button>
             </div>
 
-            <p class="bb-biblio-legend">
-              <span class="bb-legend-dot bb-legend-dot--oa"></span><span data-i18n="legendOa">accesso libero: PDF scaricabile subito</span>
-              <span class="bb-legend-dot bb-legend-dot--paywall"></span><span data-i18n="legendPaywall">a pagamento: link alla fonte per abstract e acquisto</span>
-            </p>
+            <div class="bb-biblio-legend">
+              <span class="bb-legend-item"><span class="bb-legend-dot bb-legend-dot--oa"></span><span data-i18n="legendOa">accesso libero: PDF scaricabile subito</span></span>
+              <span class="bb-legend-item"><span class="bb-legend-dot bb-legend-dot--paywall"></span><span data-i18n="legendPaywall">a pagamento: link alla fonte per abstract e acquisto</span></span>
+            </div>
 
             <p class="bb-biblio-status" id="bbBiblioStatus" aria-live="polite"></p>
             <ol class="bb-biblio-results" id="bbBiblioResults"></ol>
@@ -287,6 +287,8 @@
       <button type="button" id="bbBasketCopy" data-i18n="basketCopy">Copia tutte</button>
       <button type="button" id="bbBasketBibtex">BibTeX</button>
       <button type="button" id="bbBasketRis">RIS</button>
+      <button type="button" id="bbBasketTxt">TXT</button>
+      <button type="button" id="bbBasketDoc">Word</button>
       <button type="button" id="bbBasketClear" data-i18n="basketClear">Svuota</button>
     </div>
   </div>
@@ -372,7 +374,7 @@
       modeTopic: "Argomento", modeAuthor: "Autore",
       authorPlaceholder: "Nome e cognome dell'autore",
       authorAria: "Cerca tutte le pubblicazioni di un autore su PubMed e OpenAlex",
-      authorHint: "Su PubMed la ricerca per nome non distingue sempre autori omonimi; su OpenAlex sì, grazie a un identificativo univoco.",
+      authorHint: "Attenzione ai nomi comuni: su PubMed potresti trovare anche autori omonimi, mentre OpenAlex li riconosce singolarmente grazie a un identificativo univoco.",
       footer: "Un progetto degli <a href=\"index.html\">Amici di Boyle</a> · Ricerca ed educazione — non sostituisce il giudizio clinico.",
       domSub: "Subacquea", domIper: "Iperbarica", domTrauma: "Trauma",
       domSic: "Sicurezza", domAero: "Aerospazio", domFis: "Fisiologia",
@@ -428,7 +430,7 @@
       modeTopic: "Topic", modeAuthor: "Author",
       authorPlaceholder: "Author's first and last name",
       authorAria: "Search all publications by an author on PubMed and OpenAlex",
-      authorHint: "On PubMed, name search doesn't always tell apart authors who share a name; on OpenAlex it does, thanks to a unique identifier.",
+      authorHint: "Watch out for common names: PubMed may also show namesakes, while OpenAlex tells authors apart thanks to a unique identifier.",
       footer: "A project by <a href=\"index.html\">Amici di Boyle</a> · Research and education — does not replace clinical judgment.",
       domSub: "Diving", domIper: "Hyperbaric", domTrauma: "Trauma",
       domSic: "Safety", domAero: "Aerospace", domFis: "Physiology",
@@ -854,13 +856,24 @@
 
   /* tooltip con l'abstract al passaggio del mouse: un solo elemento
      riusato per tutte le voci, riposizionato ogni volta, per non creare
-     decine di popup nascosti nel DOM */
+     decine di popup nascosti nel DOM. La chiusura ha un piccolo ritardo
+     e viene annullata se il mouse entra nel tooltip stesso, così si può
+     spostare il cursore dentro per leggere fino in fondo o scorrere. */
   var abstractTip = null;
+  var abstractHideTimer = null;
+  function scheduleHideAbstractTip() {
+    clearTimeout(abstractHideTimer);
+    abstractHideTimer = setTimeout(function () {
+      if (abstractTip) abstractTip.classList.remove("is-visible");
+    }, 220);
+  }
   function getAbstractTip() {
     if (!abstractTip) {
       abstractTip = document.createElement("div");
       abstractTip.className = "bb-abstract-tip";
       abstractTip.setAttribute("role", "tooltip");
+      abstractTip.addEventListener("mouseenter", function () { clearTimeout(abstractHideTimer); });
+      abstractTip.addEventListener("mouseleave", scheduleHideAbstractTip);
       document.body.appendChild(abstractTip);
     }
     return abstractTip;
@@ -875,9 +888,10 @@
     tip.style.left = left + "px";
   }
   function wireAbstractHover(el, v) {
-    var timer = null;
+    var showTimer = null;
     el.addEventListener("mouseenter", function () {
-      timer = setTimeout(function () {
+      clearTimeout(abstractHideTimer);
+      showTimer = setTimeout(function () {
         var tip = getAbstractTip();
         tip.textContent = v.abstract
           ? v.abstract
@@ -887,8 +901,8 @@
       }, 280);
     });
     el.addEventListener("mouseleave", function () {
-      clearTimeout(timer);
-      if (abstractTip) abstractTip.classList.remove("is-visible");
+      clearTimeout(showTimer);
+      scheduleHideAbstractTip();
     });
   }
 
@@ -997,26 +1011,29 @@
       });
     });
 
-    var bibtexBtn = document.createElement("button");
-    bibtexBtn.type = "button";
-    bibtexBtn.className = "bb-export-btn";
-    bibtexBtn.textContent = "BibTeX";
-    bibtexBtn.addEventListener("click", function () {
-      downloadTextFile("boyle-bibliography.bib", "application/x-bibtex", itemsToBibtex(items));
-    });
-
-    var risBtn = document.createElement("button");
-    risBtn.type = "button";
-    risBtn.className = "bb-export-btn";
-    risBtn.textContent = "RIS";
-    risBtn.addEventListener("click", function () {
-      downloadTextFile("boyle-bibliography.ris", "application/x-research-info-systems", itemsToRis(items));
-    });
-
     row.appendChild(btn);
-    row.appendChild(bibtexBtn);
-    row.appendChild(risBtn);
+    row.appendChild(createExportButton("BibTeX", function () {
+      downloadTextFile("boyle-bibliography.bib", "application/x-bibtex", itemsToBibtex(items));
+    }));
+    row.appendChild(createExportButton("RIS", function () {
+      downloadTextFile("boyle-bibliography.ris", "application/x-research-info-systems", itemsToRis(items));
+    }));
+    row.appendChild(createExportButton("TXT", function () {
+      downloadTextFile("boyle-bibliography.txt", "text/plain", itemsToPlainText(items));
+    }));
+    row.appendChild(createExportButton("Word", function () {
+      downloadTextFile("boyle-bibliography.doc", "application/msword", itemsToWordDoc(items));
+    }));
     biblioResults.parentNode.insertBefore(row, biblioResults);
+  }
+
+  function createExportButton(label, onClick) {
+    var btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "bb-export-btn";
+    btn.textContent = label;
+    btn.addEventListener("click", onClick);
+    return btn;
   }
 
   /* estrae il DOI normalizzato da un link doi.org, per riconoscere lo
@@ -1098,6 +1115,24 @@
 
   function itemsToBibtex(items) { return items.map(itemToBibtex).join("\n\n"); }
   function itemsToRis(items) { return items.map(itemToRis).join("\n\n"); }
+  function itemsToPlainText(items) { return items.map(function (v, i) { return (i + 1) + ". " + v.text; }).join("\n\n"); }
+
+  function escapeHtml(s) {
+    return (s || "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+  }
+  /* ".doc" leggibile da Word: non è un vero .docx (che richiede un file
+     zip con XML interno, poco pratico senza librerie), ma un HTML con i
+     namespace di Word — Word lo apre e lo formatta correttamente come
+     documento vero e proprio, è la tecnica standard per questo scopo */
+  function itemsToWordDoc(items) {
+    var body = items.map(function (v, i) {
+      return "<p style='margin:0 0 12pt;'>" + (i + 1) + ". " + escapeHtml(v.text) + "</p>";
+    }).join("\n");
+    return "<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>" +
+      "<head><meta charset='utf-8'><title>Boyle Bibliography</title></head>" +
+      "<body style='font-family:Calibri,Arial,sans-serif;font-size:11pt;'>" +
+      "<h2>Boyle Bibliography</h2>" + body + "</body></html>";
+  }
 
   function downloadTextFile(filename, mime, text) {
     var blob = new Blob([text], { type: mime });
@@ -1162,6 +1197,12 @@
     });
     document.getElementById("bbBasketRis").addEventListener("click", function () {
       downloadTextFile("boyle-bibliography.ris", "application/x-research-info-systems", itemsToRis(basket));
+    });
+    document.getElementById("bbBasketTxt").addEventListener("click", function () {
+      downloadTextFile("boyle-bibliography.txt", "text/plain", itemsToPlainText(basket));
+    });
+    document.getElementById("bbBasketDoc").addEventListener("click", function () {
+      downloadTextFile("boyle-bibliography.doc", "application/msword", itemsToWordDoc(basket));
     });
     document.getElementById("bbBasketClear").addEventListener("click", function () {
       basket = [];
