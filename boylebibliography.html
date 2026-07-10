@@ -109,11 +109,13 @@
             <p class="bb-kicker" data-i18n="kicker">Amici di Boyle · Progetto sperimentale</p>
             <h1><span class="bb-h-abisso">Boyle</span><br><span class="bb-h-spazio">Bibliography</span></h1>
             <p class="bb-hero-sub" data-i18n="heroSub">
-              Non un chatbot, non un motore di ricerca come gli altri: <strong>Boyle Bibliography</strong>
-              è un modo nuovo di fare ricerca bibliografica. Scrivi un argomento di medicina degli ambienti
-              estremi, in italiano o in inglese, e ottieni solo citazioni vere in stile Vancouver — mai un
-              testo generato, mai una fonte inventata. Accumula i risultati di più ricerche, filtra per anno,
-              esporta tutto in BibTeX o RIS.
+              <strong>Boyle Bibliography</strong> è un modo nuovo di fare ricerca bibliografica. Non un
+              chatbot, non un motore di ricerca come gli altri. Scrivi un argomento di medicina degli
+              ambienti estremi ed otterrai l'accuratezza di PubMed e OpenAlex — solo citazioni vere in
+              stile Vancouver, con link verificabile a ogni voce, mai un testo generato né una fonte
+              inventata. Filtra per anno, scarica subito il PDF quando l'articolo è ad accesso libero,
+              accumula i risultati di più ricerche diverse in un'unica bibliografia ed esportala in
+              BibTeX o RIS.
             </p>
           </div>
           <span class="bb-hero-logo-spacer" aria-hidden="true"></span>
@@ -310,11 +312,12 @@
   var I18N = {
     it: {
       kicker: "Amici di Boyle · Progetto sperimentale",
-      heroSub: "Non un chatbot, non un motore di ricerca come gli altri: <strong>Boyle Bibliography</strong> " +
-        "è un modo nuovo di fare ricerca bibliografica. Scrivi un argomento di medicina degli ambienti " +
-        "estremi, in italiano o in inglese, e ottieni solo citazioni vere in stile Vancouver — mai un " +
-        "testo generato, mai una fonte inventata. Accumula i risultati di più ricerche, filtra per anno, " +
-        "esporta tutto in BibTeX o RIS.",
+      heroSub: "<strong>Boyle Bibliography</strong> è un modo nuovo di fare ricerca bibliografica. " +
+        "Non un chatbot, non un motore di ricerca come gli altri. Scrivi un argomento di medicina " +
+        "degli ambienti estremi ed otterrai l'accuratezza di PubMed e OpenAlex — solo citazioni vere " +
+        "in stile Vancouver, con link verificabile a ogni voce, mai un testo generato né una fonte " +
+        "inventata. Filtra per anno, scarica subito il PDF quando l'articolo è ad accesso libero, " +
+        "accumula i risultati di più ricerche diverse in un'unica bibliografia ed esportala in BibTeX o RIS.",
       rule1Title: "Italiano o inglese",
       rule1Desc: "I termini più comuni del settore vengono tradotti in automatico per la ricerca scientifica.",
       rule1Example: "malattia da decompressione",
@@ -354,11 +357,12 @@
     },
     en: {
       kicker: "Amici di Boyle · Experimental project",
-      heroSub: "Not a chatbot, not a search engine like the others: <strong>Boyle Bibliography</strong> " +
-        "is a new way to do bibliographic research. Write a topic in extreme environment medicine, in " +
-        "Italian or English, and get only real citations in Vancouver style — never generated text, " +
-        "never an invented source. Combine results from multiple searches, filter by year, export " +
-        "everything as BibTeX or RIS.",
+      heroSub: "<strong>Boyle Bibliography</strong> is a new way to do bibliographic research. " +
+        "Not a chatbot, not a search engine like the others. Write a topic in extreme environment " +
+        "medicine and you'll get the accuracy of PubMed and OpenAlex — only real citations in " +
+        "Vancouver style, with a verifiable link on every entry, never generated text or an invented " +
+        "source. Filter by year, download the PDF right away when an article is open access, combine " +
+        "results from different searches into a single bibliography, and export it as BibTeX or RIS.",
       rule1Title: "Italian or English",
       rule1Desc: "The most common terms in the field are automatically translated for the scientific search.",
       rule1Example: "decompression sickness",
@@ -642,6 +646,7 @@
   var biblioStatus = document.getElementById("bbBiblioStatus");
   var biblioResults = document.getElementById("bbBiblioResults");
   var biblioExamples = document.getElementById("bbBiblioExamples");
+  var biblioSubmitBtn = biblioForm ? biblioForm.querySelector(".bb-ask-btn") : null;
 
   function setStatus(text) { biblioStatus.textContent = text; }
 
@@ -955,17 +960,29 @@
   var yearFromInput = document.getElementById("bbYearFrom");
   var yearToInput = document.getElementById("bbYearTo");
 
+  /* porta lo stato/risultati in vista: senza, dopo il click su "cerca"
+     non si capisce se è successo qualcosa finché non si scrolla a mano
+     (i risultati stanno più in basso, sotto la costellazione) */
+  function scrollStatusIntoView() {
+    var headerEl = document.querySelector(".site-header");
+    var offset = (headerEl ? headerEl.offsetHeight : 0) + 16;
+    var top = biblioStatus.getBoundingClientRect().top + window.scrollY - offset;
+    window.scrollTo({ top: top, behavior: "smooth" });
+  }
+
   function searchBibliography(rawQuery) {
     var requestId = ++searchRequestId;
     biblioResults.innerHTML = "";
     clearCopyAll();
     setStatus(I18N[currentLang].searching);
+    if (biblioSubmitBtn) biblioSubmitBtn.classList.add("is-loading");
     var query = translateQuery(rawQuery);
     var yearFrom = (yearFromInput && yearFromInput.value) ? yearFromInput.value.trim() : "";
     var yearTo = (yearToInput && yearToInput.value) ? yearToInput.value.trim() : "";
 
     Promise.all([searchPubMed(query, yearFrom, yearTo), searchOpenAlex(query, yearFrom, yearTo)]).then(function (results) {
       if (requestId !== searchRequestId) return;
+      if (biblioSubmitBtn) biblioSubmitBtn.classList.remove("is-loading");
       var allItems = [];
       var totalFound = 0;
       var failedSources = [];
@@ -977,12 +994,14 @@
       allItems = dedupeItems(allItems);
       if (!allItems.length) {
         setStatus(I18N[currentLang].noResults(rawQuery));
+        scrollStatusIntoView();
         return;
       }
       var note = failedSources.length ? " (" + failedSources.join(" / ") + (currentLang === "en" ? " unavailable right now)" : " non raggiungibile in questo momento)") : "";
       setStatus(I18N[currentLang].results(totalFound, allItems.length) + note);
       allItems.forEach(function (v) { biblioResults.appendChild(renderItem(v)); });
       renderCopyAll(allItems);
+      scrollStatusIntoView();
     });
   }
 

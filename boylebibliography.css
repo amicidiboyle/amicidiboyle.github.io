@@ -291,6 +291,9 @@ p.bb-hero-sub {
 }
 .bb-ask-btn:hover { transform: scale(1.06); }
 .bb-ask-btn:active { transform: scale(.95); }
+.bb-ask-btn.is-loading { cursor: wait; }
+.bb-ask-btn.is-loading svg { animation: bbSpin .8s linear infinite; }
+@keyframes bbSpin { to { transform: rotate(360deg); } }
 
 p.bb-trust-badge {
   margin-top: 38px; font-size: .78rem; color: var(--bb-soft); display: flex;
