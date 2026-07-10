@@ -426,6 +426,25 @@ p.bb-biblio-legend {
 }
 .bb-biblio-item a:hover { text-decoration: underline; }
 
+/* nome dell'autore cercato, evidenziato dentro la citazione */
+.bb-author-mark {
+  background: rgba(180,139,255,.28); color: var(--bb-cyan-2);
+  padding: 0 3px; border-radius: 4px; font-style: normal;
+}
+
+/* anteprima abstract al passaggio del mouse */
+.bb-abstract-tip {
+  position: absolute; z-index: 300; max-width: 420px; max-height: 260px; overflow-y: auto;
+  background: rgba(4,14,32,.97); backdrop-filter: blur(18px); border: 1px solid var(--bb-border-hi);
+  border-radius: 12px; padding: 14px 16px; font-size: .82rem; line-height: 1.55; color: var(--bb-text);
+  box-shadow: 0 20px 50px rgba(0,0,0,.5);
+  opacity: 0; visibility: hidden; transform: translateY(4px);
+  transition: opacity .15s ease, transform .15s ease, visibility .15s;
+  pointer-events: none;
+}
+.bb-abstract-tip.is-visible { opacity: 1; visibility: visible; transform: none; }
+@media (max-width: 700px) { .bb-abstract-tip { display: none; } }
+
 .bb-biblio-actions {
   display: flex; flex-direction: column; align-items: flex-end; gap: 8px; flex-shrink: 0;
 }

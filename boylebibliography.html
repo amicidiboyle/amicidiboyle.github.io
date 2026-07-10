@@ -379,6 +379,7 @@
       copy: "Copia", copied: "Copiato", copyFailed: "Copia manualmente",
       copyAll: "Copia tutte le citazioni", copiedAll: "Bibliografia copiata",
       pdfOpen: "PDF", pdfPaywall: "A pagamento",
+      noAbstract: "Abstract non disponibile per questa voce.",
       yearFromLabel: "Dal", yearToLabel: "al", yearHint: "(facoltativo)",
       basketAdd: "+ Aggiungi", basketRemove: "✓ Aggiunta",
       basketAddHint: "Aggiungi questa citazione alla tua bibliografia: puoi raccoglierne da più ricerche diverse ed esportarle tutte insieme quando hai finito.",
@@ -433,6 +434,7 @@
       copy: "Copy", copied: "Copied", copyFailed: "Copy manually",
       copyAll: "Copy all citations", copiedAll: "Bibliography copied",
       pdfOpen: "PDF", pdfPaywall: "Paywalled",
+      noAbstract: "No abstract available for this entry.",
       yearFromLabel: "From", yearToLabel: "to", yearHint: "(optional)",
       basketAdd: "+ Add", basketRemove: "✓ Added",
       basketAddHint: "Add this citation to your bibliography: collect entries from different searches and export them all together when you're done.",
@@ -583,8 +585,37 @@
       text: [authors, title, journal].filter(Boolean).join(". ") + (tail ? ". " + tail + "." : "."),
       link: link, linkLabel: linkLabel, source: "PubMed", doi: doi,
       names: names, title: title, journal: journal, year: year,
-      vol: vol, issue: issue, pages: pagesRaw
+      vol: vol, issue: issue, pages: pagesRaw, pmid: a.uid, abstract: ""
     };
+  }
+
+  /* PubMed non dà l'abstract nella stessa chiamata dei risultati: lo
+     recupera in un'unica richiesta batch (efetch, XML) per tutti i PMID
+     della pagina corrente, così l'anteprima al passaggio del mouse è
+     già pronta senza una richiesta per ogni singolo articolo. */
+  function fetchPubMedAbstracts(items) {
+    var byPmid = {};
+    items.forEach(function (v) { if (v.pmid) byPmid[v.pmid] = v; });
+    var pmids = Object.keys(byPmid);
+    if (!pmids.length) return Promise.resolve();
+    var url = EUTILS + "efetch.fcgi?db=pubmed&retmode=xml&rettype=abstract&id=" + pmids.join(",");
+    return fetch(url).then(function (res) { return res.ok ? res.text() : null; }).then(function (xmlText) {
+      if (!xmlText) return;
+      var doc = new DOMParser().parseFromString(xmlText, "text/xml");
+      var articles = doc.getElementsByTagName("PubmedArticle");
+      for (var i = 0; i < articles.length; i++) {
+        var pmidEl = articles[i].getElementsByTagName("PMID")[0];
+        var pmid = pmidEl ? pmidEl.textContent : null;
+        if (!pmid || !byPmid[pmid]) continue;
+        var parts = articles[i].getElementsByTagName("AbstractText");
+        var text = [];
+        for (var j = 0; j < parts.length; j++) {
+          var label = parts[j].getAttribute("Label");
+          text.push((label ? label + ": " : "") + parts[j].textContent);
+        }
+        byPmid[pmid].abstract = text.join(" ");
+      }
+    }).catch(function () { /* niente abstract, non blocca il resto */ });
   }
 
   function searchPubMed(query, yearFrom, yearTo) {
@@ -644,7 +675,27 @@
     return last + " " + initials;
   }
 
-  var OPENALEX_SELECT = "id,doi,title,authorships,primary_location,publication_year,biblio,open_access,best_oa_location";
+  var OPENALEX_SELECT = "id,doi,title,authorships,primary_location,publication_year,biblio,open_access,best_oa_location,abstract_inverted_index";
+
+  /* OpenAlex non dà l'abstract come testo semplice ma come "indice
+     invertito": {parola: [posizioni]}. Si ricostruisce mettendo ogni
+     parola alla sua posizione originale. */
+  function reconstructAbstract(invertedIndex) {
+    if (!invertedIndex) return "";
+    var maxPos = 0;
+    Object.keys(invertedIndex).forEach(function (word) {
+      invertedIndex[word].forEach(function (p) { if (p > maxPos) maxPos = p; });
+    });
+    var words = new Array(maxPos + 1);
+    Object.keys(invertedIndex).forEach(function (word) {
+      invertedIndex[word].forEach(function (p) { words[p] = word; });
+    });
+    /* alcuni editori includono tag HTML letterali dentro le singole parole
+       dell'abstract (es. "<h3>Background</h3>"): li togliamo, il tooltip
+       mostra solo testo (mai innerHTML) quindi altrimenti resterebbero
+       visibili come simboli invece che essere interpretati. */
+    return words.filter(Boolean).join(" ").replace(/<\/?[a-z][^>]*>/gi, "").replace(/\s{2,}/g, " ").trim();
+  }
 
   function mapOpenAlexWork(w) {
     var names = (w.authorships || []).map(function (x) { return openAlexAuthorName(x.author && x.author.display_name); }).filter(Boolean);
@@ -665,7 +716,8 @@
       isOa: !!oa.is_oa, oaUrl: oaUrl,
       names: names, title: title, journal: journal, year: year,
       vol: vol, issue: issue, pages: pagesRaw,
-      doi: (w.doi || "").replace(/^https?:\/\/doi\.org\//i, "")
+      doi: (w.doi || "").replace(/^https?:\/\/doi\.org\//i, ""),
+      abstract: reconstructAbstract(w.abstract_inverted_index)
     };
   }
 
@@ -692,7 +744,7 @@
      perché non si confonde con omonimi che scrivono di tutt'altro. */
   function searchPubMedByAuthor(name, yearFrom, yearTo) {
     var term = encodeURIComponent(name.trim()) + "%5BAuthor%5D";
-    var url = EUTILS + "esearch.fcgi?db=pubmed&retmode=json&retmax=8&sort=pub+date&term=" + term;
+    var url = EUTILS + "esearch.fcgi?db=pubmed&retmode=json&retmax=150&sort=pub+date&term=" + term;
     if (yearFrom || yearTo) {
       url += "&datetype=pdat&mindate=" + (yearFrom || "1900") + "&maxdate=" + (yearTo || new Date().getFullYear());
     }
@@ -731,7 +783,7 @@
       if (yearFrom || yearTo) {
         filter += ",publication_year:" + (yearFrom || "1900") + "-" + (yearTo || new Date().getFullYear());
       }
-      var url = OPENALEX + "?filter=" + filter + "&sort=publication_date:desc&per-page=8&select=" + OPENALEX_SELECT;
+      var url = OPENALEX + "?filter=" + filter + "&sort=publication_date:desc&per-page=150&select=" + OPENALEX_SELECT;
       return fetch(url).then(function (res) {
         if (!res.ok) throw new Error("openalex");
         return res.json();
@@ -795,7 +847,65 @@
     }, 1600);
   }
 
-  function renderItem(v) {
+  /* tooltip con l'abstract al passaggio del mouse: un solo elemento
+     riusato per tutte le voci, riposizionato ogni volta, per non creare
+     decine di popup nascosti nel DOM */
+  var abstractTip = null;
+  function getAbstractTip() {
+    if (!abstractTip) {
+      abstractTip = document.createElement("div");
+      abstractTip.className = "bb-abstract-tip";
+      abstractTip.setAttribute("role", "tooltip");
+      document.body.appendChild(abstractTip);
+    }
+    return abstractTip;
+  }
+  function positionAbstractTip(tip, anchorEl) {
+    var r = anchorEl.getBoundingClientRect();
+    var top = r.bottom + window.scrollY + 8;
+    var left = r.left + window.scrollX;
+    var maxLeft = window.scrollX + document.documentElement.clientWidth - tip.offsetWidth - 12;
+    if (left > maxLeft) left = Math.max(12, maxLeft);
+    tip.style.top = top + "px";
+    tip.style.left = left + "px";
+  }
+  function wireAbstractHover(el, v) {
+    var timer = null;
+    el.addEventListener("mouseenter", function () {
+      timer = setTimeout(function () {
+        var tip = getAbstractTip();
+        tip.textContent = v.abstract
+          ? v.abstract
+          : I18N[currentLang].noAbstract;
+        tip.classList.add("is-visible");
+        positionAbstractTip(tip, el);
+      }, 280);
+    });
+    el.addEventListener("mouseleave", function () {
+      clearTimeout(timer);
+      if (abstractTip) abstractTip.classList.remove("is-visible");
+    });
+  }
+
+  /* evidenzia ogni occorrenza di "needle" dentro "text", usando solo nodi
+     di testo veri (mai innerHTML): needle arriva da un campo scritto
+     dall'utente, va trattato come dato, non come HTML */
+  function appendHighlighted(container, text, needle) {
+    var lower = text.toLowerCase();
+    var needleLower = needle.toLowerCase();
+    var idx = 0, pos;
+    while ((pos = lower.indexOf(needleLower, idx)) !== -1) {
+      if (pos > idx) container.appendChild(document.createTextNode(text.slice(idx, pos)));
+      var mark = document.createElement("mark");
+      mark.className = "bb-author-mark";
+      mark.textContent = text.slice(pos, pos + needle.length);
+      container.appendChild(mark);
+      idx = pos + needle.length;
+    }
+    if (idx < text.length) container.appendChild(document.createTextNode(text.slice(idx)));
+  }
+
+  function renderItem(v, highlightName) {
     var li = document.createElement("li");
     li.className = "bb-biblio-item";
     var wrap = document.createElement("div");
@@ -803,7 +913,11 @@
     tag.className = "bb-biblio-source bb-biblio-source--" + v.source.toLowerCase();
     tag.textContent = v.source;
     var p = document.createElement("p");
-    p.textContent = v.text;
+    if (highlightName) {
+      appendHighlighted(p, v.text, highlightName);
+    } else {
+      p.textContent = v.text;
+    }
     wrap.appendChild(tag);
     wrap.appendChild(p);
 
@@ -854,6 +968,7 @@
     actions.appendChild(link);
     li.appendChild(wrap);
     li.appendChild(actions);
+    wireAbstractHover(li, v);
     return li;
   }
 
@@ -1108,9 +1223,18 @@
       }
       var note = failedSources.length ? " (" + failedSources.join(" / ") + (currentLang === "en" ? " unavailable right now)" : " non raggiungibile in questo momento)") : "";
       setStatus(I18N[currentLang].results(totalFound, allItems.length) + note);
-      allItems.forEach(function (v) { biblioResults.appendChild(renderItem(v)); });
+      var highlightName = null;
+      if (searchMode === "author") {
+        var parts = rawQuery.trim().split(/\s+/);
+        highlightName = parts.length > 1 ? parts[parts.length - 1] : rawQuery.trim();
+      }
+      allItems.forEach(function (v) { biblioResults.appendChild(renderItem(v, highlightName)); });
       renderCopyAll(allItems);
       scrollStatusIntoView();
+      /* abstract PubMed in un'unica richiesta in background: non blocca
+         la comparsa dei risultati, sarà pronto per quando l'utente passa
+         il mouse sopra una voce */
+      fetchPubMedAbstracts(allItems.filter(function (v) { return v.source === "PubMed"; }));
     });
   }
 
