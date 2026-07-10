@@ -448,8 +448,10 @@ a.bb-biblio-pdf--paywall:hover { background: rgba(255,90,106,.15); border-color:
   padding: 12px 24px; background: rgba(4,14,32,.96); backdrop-filter: blur(18px);
   border-top: 1px solid var(--bb-border-hi); box-shadow: 0 -12px 40px rgba(0,0,0,.4);
 }
-.bb-basket-count { font-size: .88rem; color: var(--bb-text); }
+.bb-basket-count { font-size: .88rem; color: var(--bb-text); display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
 .bb-basket-count strong { color: var(--bb-cyan-2); font-size: 1.05rem; }
+.bb-basket-hint { font-size: .74rem; color: var(--bb-soft); font-weight: 400; }
+@media (max-width: 700px) { .bb-basket-hint { flex-basis: 100%; } }
 .bb-basket-actions { display: flex; flex-wrap: wrap; gap: 8px; }
 .bb-basket-actions button {
   font-size: .78rem; font-weight: 600; white-space: nowrap;

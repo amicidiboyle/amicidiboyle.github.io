@@ -109,11 +109,11 @@
             <p class="bb-kicker" data-i18n="kicker">Amici di Boyle · Progetto sperimentale</p>
             <h1><span class="bb-h-abisso">Boyle</span><br><span class="bb-h-spazio">Bibliography</span></h1>
             <p class="bb-hero-sub" data-i18n="heroSub">
-              <strong>Boyle Bibliography</strong> cerca la letteratura scientifica sulla medicina degli
-              ambienti estremi, in italiano o in inglese, e restituisce citazioni vere in stile Vancouver —
-              recuperate in tempo reale da PubMed e OpenAlex, con link verificabile a ogni voce. Costruisci
-              la tua bibliografia accumulando i risultati di più ricerche ed esportala in BibTeX o RIS.
-              Non genera testo, non inventa citazioni.
+              Non un chatbot, non un motore di ricerca come gli altri: <strong>Boyle Bibliography</strong>
+              è un modo nuovo di fare ricerca bibliografica. Scrivi un argomento di medicina degli ambienti
+              estremi, in italiano o in inglese, e ottieni solo citazioni vere in stile Vancouver — mai un
+              testo generato, mai una fonte inventata. Accumula i risultati di più ricerche, filtra per anno,
+              esporta tutto in BibTeX o RIS.
             </p>
           </div>
           <span class="bb-hero-logo-spacer" aria-hidden="true"></span>
@@ -251,7 +251,10 @@
   </main>
 
   <div class="bb-basket-bar" id="bbBasketBar" hidden>
-    <span class="bb-basket-count"><strong id="bbBasketCount">0</strong> <span data-i18n="basketLabel">voci in bibliografia</span></span>
+    <span class="bb-basket-count">
+      <strong id="bbBasketCount">0</strong> <span data-i18n="basketLabel">voci in bibliografia</span>
+      <span class="bb-basket-hint" data-i18n="basketHint">Raccogli citazioni da ricerche diverse, poi esportale insieme</span>
+    </span>
     <div class="bb-basket-actions">
       <button type="button" id="bbBasketCopy" data-i18n="basketCopy">Copia tutte</button>
       <button type="button" id="bbBasketBibtex">BibTeX</button>
@@ -307,11 +310,11 @@
   var I18N = {
     it: {
       kicker: "Amici di Boyle · Progetto sperimentale",
-      heroSub: "<strong>Boyle Bibliography</strong> cerca la letteratura scientifica sulla medicina degli " +
-        "ambienti estremi, in italiano o in inglese, e restituisce citazioni vere in stile Vancouver — " +
-        "recuperate in tempo reale da PubMed e OpenAlex, con link verificabile a ogni voce. Costruisci la " +
-        "tua bibliografia accumulando i risultati di più ricerche ed esportala in BibTeX o RIS. Non genera " +
-        "testo, non inventa citazioni.",
+      heroSub: "Non un chatbot, non un motore di ricerca come gli altri: <strong>Boyle Bibliography</strong> " +
+        "è un modo nuovo di fare ricerca bibliografica. Scrivi un argomento di medicina degli ambienti " +
+        "estremi, in italiano o in inglese, e ottieni solo citazioni vere in stile Vancouver — mai un " +
+        "testo generato, mai una fonte inventata. Accumula i risultati di più ricerche, filtra per anno, " +
+        "esporta tutto in BibTeX o RIS.",
       rule1Title: "Italiano o inglese",
       rule1Desc: "I termini più comuni del settore vengono tradotti in automatico per la ricerca scientifica.",
       rule1Example: "malattia da decompressione",
@@ -343,16 +346,19 @@
       pdfOpen: "PDF", pdfPaywall: "A pagamento",
       yearFromLabel: "Dal", yearToLabel: "al", yearHint: "(facoltativo)",
       basketAdd: "+ Aggiungi", basketRemove: "✓ Aggiunta",
+      basketAddHint: "Aggiungi questa citazione alla tua bibliografia: puoi raccoglierne da più ricerche diverse ed esportarle tutte insieme quando hai finito.",
+      basketRemoveHint: "Rimuovi questa citazione dalla tua bibliografia.",
       basketLabel: "voci in bibliografia", basketCopy: "Copia tutte",
+      basketHint: "Raccogli citazioni da ricerche diverse, poi esportale insieme",
       basketClear: "Svuota"
     },
     en: {
       kicker: "Amici di Boyle · Experimental project",
-      heroSub: "<strong>Boyle Bibliography</strong> searches the scientific literature on extreme " +
-        "environment medicine, in Italian or English, and returns real citations in Vancouver style — " +
-        "retrieved live from PubMed and OpenAlex, with a verifiable link on every entry. Build your " +
-        "bibliography by combining results from multiple searches and export it as BibTeX or RIS. " +
-        "It doesn't generate text or invent citations.",
+      heroSub: "Not a chatbot, not a search engine like the others: <strong>Boyle Bibliography</strong> " +
+        "is a new way to do bibliographic research. Write a topic in extreme environment medicine, in " +
+        "Italian or English, and get only real citations in Vancouver style — never generated text, " +
+        "never an invented source. Combine results from multiple searches, filter by year, export " +
+        "everything as BibTeX or RIS.",
       rule1Title: "Italian or English",
       rule1Desc: "The most common terms in the field are automatically translated for the scientific search.",
       rule1Example: "decompression sickness",
@@ -384,7 +390,10 @@
       pdfOpen: "PDF", pdfPaywall: "Paywalled",
       yearFromLabel: "From", yearToLabel: "to", yearHint: "(optional)",
       basketAdd: "+ Add", basketRemove: "✓ Added",
+      basketAddHint: "Add this citation to your bibliography: collect entries from different searches and export them all together when you're done.",
+      basketRemoveHint: "Remove this citation from your bibliography.",
       basketLabel: "in your bibliography", basketCopy: "Copy all",
+      basketHint: "Collect citations from different searches, then export them together",
       basketClear: "Clear"
     }
   };
@@ -723,6 +732,7 @@
       var added = isInBasket(v);
       basketBtn.classList.toggle("is-added", added);
       basketBtn.textContent = added ? I18N[currentLang].basketRemove : I18N[currentLang].basketAdd;
+      basketBtn.title = added ? I18N[currentLang].basketRemoveHint : I18N[currentLang].basketAddHint;
     }
     paintBasketBtn();
     basketBtn.addEventListener("click", function () {
