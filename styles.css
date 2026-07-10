@@ -2060,14 +2060,18 @@ body:hover #cursor-bubble { opacity: 1; }
   .founder-card:hover { transform: translateY(-3px) !important; }
   .founder-card > img { width: 80px; height: 80px; }
 
-  /* Animazioni entrata: translateY (no translateX su mobile) */
-  .reveal, .reveal-left, .reveal-right { transform: translateY(22px); }
+  /* Animazioni entrata: da sinistra anche su mobile, come su desktop.
+     Il vecchio problema di scroll orizzontale veniva dal clip sulle
+     sezioni (rimosso sopra, "FIX ROOT"), non dal translateX in sé:
+     con overflow-x:hidden solo sul body è sicuro riportarlo, con una
+     distanza più contenuta adatta a schermi stretti. */
+  .reveal, .reveal-left, .reveal-right { transform: translateX(-22px); }
   .reveal.is-visible, .reveal-left.is-visible, .reveal-right.is-visible { transform: none; }
   #ricerca .research-showcase-grid > *:nth-child(odd),
-  #ricerca .research-showcase-grid > *:nth-child(even) { transform: translateY(22px); }
+  #ricerca .research-showcase-grid > *:nth-child(even) { transform: translateX(-22px); }
   #contatti .contact-grid-visible > *:nth-child(1),
   #contatti .contact-grid-visible > *:nth-child(2),
-  #contatti .contact-grid-visible > *:nth-child(3) { transform: translateY(22px); }
+  #contatti .contact-grid-visible > *:nth-child(3) { transform: translateX(-22px); }
 
   /* Dialog */
   .dialog { max-width: calc(100% - 16px) !important; }
@@ -2508,11 +2512,11 @@ html, body { overflow-x: hidden; }
     margin-bottom: 14px !important;
   }
 
-  /* ── 5. ANIMAZIONI D'INGRESSO più accattivanti ── */
-  /* Base: fade + slide su Y, più veloce e con spring */
+  /* ── 5. ANIMAZIONI D'INGRESSO ── */
+  /* Base: fade + slide da sinistra, con spring */
   .reveal, .reveal-left, .reveal-right {
     opacity: 0 !important;
-    transform: translateY(30px) !important;
+    transform: translateX(-22px) !important;
     transition:
       opacity .55s cubic-bezier(.25,.46,.45,.94),
       transform .55s cubic-bezier(.22,.68,0,1.25) !important;
@@ -2524,10 +2528,10 @@ html, body { overflow-x: hidden; }
     transform: none !important;
   }
 
-  /* Info cards: zoom in leggero */
+  /* Info cards: zoom leggero, anche loro da sinistra */
   .info-card {
     opacity: 0;
-    transform: translateY(20px) scale(.97);
+    transform: translateX(-20px) scale(.97);
     transition:
       opacity .5s cubic-bezier(.25,.46,.45,.94),
       transform .5s cubic-bezier(.22,.68,0,1.2) !important;
@@ -2537,25 +2541,26 @@ html, body { overflow-x: hidden; }
     transform: none !important;
   }
 
-  /* Research cards: alternato sx/dx su mobile (Y perché no overflow) */
+  /* Da sinistra anche qui (era su Y per un vecchio problema di overflow,
+     già risolto a monte col clip rimosso dalle sezioni — vedi "FIX ROOT") */
   #ricerca .research-showcase-grid > *:nth-child(odd),
   #ricerca .research-showcase-grid > *:nth-child(even) {
-    transform: translateY(24px) !important;
+    transform: translateX(-22px) !important;
   }
   #ricerca .research-showcase-grid > *.is-visible {
     transform: none !important;
     opacity: 1 !important;
   }
 
-  /* Contatti: ventaglio su Y */
-  #contatti .contact-grid-visible > *:nth-child(1) { transform: translateY(28px) !important; transition-delay: 0s !important; }
-  #contatti .contact-grid-visible > *:nth-child(2) { transform: translateY(28px) !important; transition-delay: .08s !important; }
-  #contatti .contact-grid-visible > *:nth-child(3) { transform: translateY(28px) !important; transition-delay: .16s !important; }
+  /* Contatti: da sinistra */
+  #contatti .contact-grid-visible > *:nth-child(1) { transform: translateX(-22px) !important; transition-delay: 0s !important; }
+  #contatti .contact-grid-visible > *:nth-child(2) { transform: translateX(-22px) !important; transition-delay: .08s !important; }
+  #contatti .contact-grid-visible > *:nth-child(3) { transform: translateX(-22px) !important; transition-delay: .16s !important; }
   #contatti .contact-grid-visible > *.is-visible   { transform: none !important; opacity: 1 !important; }
 
-  /* Fondatori: slide su Y con stagger */
+  /* Fondatori: da sinistra con stagger */
   #fondatori .founders-grid .founder-card {
-    transform: translateY(28px) !important;
+    transform: translateX(-22px) !important;
     opacity: 0 !important;
   }
   #fondatori .founders-grid .founder-card.is-visible {
@@ -2563,10 +2568,10 @@ html, body { overflow-x: hidden; }
     opacity: 1 !important;
   }
 
-  /* Activity cards: pop con scale */
+  /* Activity cards: pop con scale, da sinistra */
   .activity-card {
     opacity: 0;
-    transform: translateY(20px) scale(.95);
+    transform: translateX(-20px) scale(.95);
     transition:
       opacity .5s cubic-bezier(.25,.46,.45,.94),
       transform .5s cubic-bezier(.22,.68,0,1.3) !important;
@@ -2576,9 +2581,9 @@ html, body { overflow-x: hidden; }
     transform: none !important;
   }
 
-  /* Section heading: slide su X corto */
+  /* Section heading: slide da sinistra, corto */
   .section-heading.reveal {
-    transform: translateY(16px) !important;
+    transform: translateX(-16px) !important;
   }
   .section-heading.is-visible {
     transform: none !important;
