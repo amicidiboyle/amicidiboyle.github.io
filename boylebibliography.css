@@ -262,11 +262,6 @@ p.bb-hero-sub {
   font-size: clamp(1.02rem, 2vw, 1.24rem); color: var(--bb-muted);
   margin: 34px 0 0; line-height: 1.6;
 }
-.bb-hero-explore {
-  display: inline-block; margin-top: 4px; font-weight: 700; white-space: nowrap;
-  color: var(--bb-cyan-2); border-bottom: 1px solid transparent; transition: border-color .15s;
-}
-.bb-hero-explore:hover { border-bottom-color: var(--bb-cyan-2); }
 .bb-hero-smart { color: var(--bb-cyan-2); }
 
 @media (max-width: 640px) {
