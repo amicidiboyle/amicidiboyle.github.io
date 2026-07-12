@@ -30,6 +30,7 @@
   --glass: rgba(8,26,52,.62); --shadow: 0 20px 55px rgba(0,0,0,.38); --max-w: 1180px;
 }
 
+html { scroll-behavior: smooth; }
 html, body { margin: 0; padding: 0; }
 .boylebot-page, .boylebot-page * , .boylebot-page *::before, .boylebot-page *::after { box-sizing: border-box; }
 
@@ -261,6 +262,11 @@ p.bb-hero-sub {
   font-size: clamp(1.02rem, 2vw, 1.24rem); color: var(--bb-muted);
   margin: 34px 0 0; line-height: 1.6;
 }
+.bb-hero-explore {
+  display: inline-block; margin-top: 4px; font-weight: 700; white-space: nowrap;
+  color: var(--bb-cyan-2); border-bottom: 1px solid transparent; transition: border-color .15s;
+}
+.bb-hero-explore:hover { border-bottom-color: var(--bb-cyan-2); }
 
 @media (max-width: 640px) {
   .bb-hero-title-row { flex-direction: column; text-align: center; gap: 18px; }
@@ -411,6 +417,12 @@ p.bb-trust-badge {
 .bb-biblio-status {
   margin-top: 26px; font-size: .86rem; color: var(--bb-muted); min-height: 1.2em; text-align: left;
 }
+.bb-compare-link {
+  display: inline-flex; align-items: center; gap: 6px; margin-top: 8px;
+  font-size: .76rem; font-weight: 600; color: var(--bb-soft);
+  border-bottom: 1px solid transparent; transition: color .15s, border-color .15s;
+}
+.bb-compare-link:hover { color: var(--bb-cyan-2); border-bottom-color: var(--bb-cyan-2); }
 .bb-biblio-results { list-style: none; margin: 14px 0 0; padding: 0; display: grid; gap: 10px; text-align: left; }
 .bb-biblio-item {
   background: var(--bb-glass); border: 1px solid var(--bb-border); border-radius: 14px;
