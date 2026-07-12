@@ -532,6 +532,27 @@ a.bb-biblio-pdf--paywall:hover { background: rgba(255,90,106,.15); border-color:
 #bbBasketClear { color: var(--bb-muted) !important; border-color: var(--bb-border) !important; background: rgba(255,90,106,.06) !important; }
 #bbBasketClear:hover { background: rgba(255,90,106,.14) !important; color: #ff8a95 !important; }
 
+/* menu a tendina "Esporta": raggruppa i formati in un solo pulsante,
+   così sulla barra mobile ne restano solo 3 invece di 6 e non si accavallano */
+.bb-export-menu { position: relative; }
+#bbExportToggle { display: inline-flex; align-items: center; gap: 6px; }
+#bbExportToggle svg { transition: transform .15s; }
+#bbExportToggle[aria-expanded="true"] svg { transform: rotate(180deg); }
+.bb-export-dropdown {
+  position: absolute; bottom: calc(100% + 10px); right: 0; z-index: 95;
+  display: flex; flex-direction: column; gap: 4px; min-width: 150px;
+  background: rgba(8,20,44,.98); backdrop-filter: blur(18px);
+  border: 1px solid var(--bb-border-hi); border-radius: 12px; padding: 6px;
+  box-shadow: 0 12px 34px rgba(0,0,0,.45);
+}
+.bb-export-dropdown button {
+  width: 100%; text-align: left; white-space: nowrap;
+  font-size: .78rem; font-weight: 600;
+  background: transparent; border: none; color: var(--bb-cyan-2);
+  border-radius: 8px; padding: 8px 10px; cursor: pointer; transition: background .15s;
+}
+.bb-export-dropdown button:hover { background: rgba(123,228,255,.12); }
+
 /* filtro anno nel form di ricerca */
 .bb-year-filter {
   display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap;
