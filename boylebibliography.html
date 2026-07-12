@@ -130,7 +130,7 @@
               <button type="button" class="bb-mode-btn is-active" data-mode="topic" data-i18n="modeTopic" role="tab" aria-selected="true">Argomento</button>
               <button type="button" class="bb-mode-btn" data-mode="author" data-i18n="modeAuthor" role="tab" aria-selected="false">Autore</button>
             </div>
-            <p class="bb-author-hint" id="bbAuthorHint" data-i18n="authorHint" hidden>Attenzione ai nomi comuni: su PubMed potresti trovare anche autori omonimi, mentre OpenAlex li riconosce singolarmente grazie a un identificativo univoco.</p>
+            <p class="bb-author-hint" id="bbAuthorHint" data-i18n="authorHint" hidden>Attenzione: con nomi comuni, i risultati da PubMed potrebbero includere anche omonimi.</p>
             <form class="bb-ask" id="bbBiblioForm">
               <div class="bb-ask-row">
                 <input type="text" id="bbBiblioInput" placeholder="Cosa cerchiamo oggi?" data-i18n-placeholder="searchPlaceholder" aria-label="Cerca la bibliografia su PubMed e OpenAlex" data-i18n-aria="searchAria" autofocus />
@@ -243,6 +243,7 @@
               <ul class="bb-rule-list">
                 <li data-i18n="rule5Item1">Restringi per anno di pubblicazione</li>
                 <li data-i18n="rule5Item2">Passa il mouse su una voce per leggere l'abstract</li>
+                <li data-i18n="rule5Item3">Confronta i risultati su PubMed con un click</li>
               </ul>
             </div>
           </aside>
@@ -260,11 +261,12 @@
 
             <div class="bb-rule bb-rule--4 bb-reveal" style="transition-delay:.1s">
               <span class="bb-rule-num">04</span>
-              <h3 data-i18n="rule4Title">Vancouver, BibTeX o RIS</h3>
+              <h3 data-i18n="rule4Title">Vancouver, BibTeX, RIS o Word</h3>
               <ul class="bb-rule-list">
                 <li data-i18n="rule4Item1">Vancouver, pronta da incollare</li>
                 <li data-i18n="rule4Item2">BibTeX per Zotero e Mendeley</li>
                 <li data-i18n="rule4Item3">RIS per EndNote</li>
+                <li data-i18n="rule4Item4">TXT o Word, per un file pronto all'uso</li>
               </ul>
             </div>
 
@@ -367,13 +369,15 @@
       rule3Item1: "PubMed e OpenAlex, in tempo reale",
       rule3Item2: "Cerca anche per autore: tutte le sue pubblicazioni, nome evidenziato",
       rule3Item3: "Mai scritta da un'intelligenza artificiale",
-      rule4Title: "Vancouver, BibTeX o RIS",
+      rule4Title: "Vancouver, BibTeX, RIS o Word",
       rule4Item1: "Vancouver, pronta da incollare",
       rule4Item2: "BibTeX per Zotero e Mendeley",
       rule4Item3: "RIS per EndNote",
+      rule4Item4: "TXT o Word, per un file pronto all'uso",
       rule5Title: "Filtra ed esplora",
       rule5Item1: "Restringi per anno di pubblicazione",
       rule5Item2: "Passa il mouse su una voce per leggere l'abstract",
+      rule5Item3: "Confronta i risultati su PubMed con un click",
       rule6Title: "La tua bibliografia",
       rule6Item1: "Accumula più ricerche in un'unica lista",
       rule6Item2: "Scarica subito il PDF se è ad accesso libero",
@@ -389,7 +393,7 @@
       modeTopic: "Argomento", modeAuthor: "Autore",
       authorPlaceholder: "Nome e cognome dell'autore",
       authorAria: "Cerca tutte le pubblicazioni di un autore su PubMed e OpenAlex",
-      authorHint: "Attenzione ai nomi comuni: su PubMed potresti trovare anche autori omonimi, mentre OpenAlex li riconosce singolarmente grazie a un identificativo univoco.",
+      authorHint: "Attenzione: con nomi comuni, i risultati da PubMed potrebbero includere anche omonimi.",
       footer: "Un progetto degli <a href=\"index.html\">Amici di Boyle</a> · Ricerca ed educazione — non sostituisce il giudizio clinico.",
       domSub: "Subacquea", domIper: "Iperbarica", domTrauma: "Trauma",
       domSic: "Sicurezza", domAero: "Aerospazio", domFis: "Fisiologia",
@@ -425,12 +429,14 @@
       rule3Item1: "PubMed and OpenAlex, live",
       rule3Item2: "Search by author too: every one of their papers, name highlighted",
       rule3Item3: "Never written by an AI",
-      rule4Title: "Vancouver, BibTeX or RIS",
+      rule4Title: "Vancouver, BibTeX, RIS or Word",
       rule4Item1: "Vancouver, ready to paste",
       rule4Item2: "BibTeX for Zotero and Mendeley",
       rule4Item3: "RIS for EndNote",
+      rule4Item4: "TXT or Word, ready to use",
       rule5Title: "Filter and explore",
       rule5Item1: "Narrow by publication year",
+      rule5Item3: "Cross-check results on PubMed with one click",
       rule5Item2: "Hover over an entry to read the abstract",
       rule6Title: "Your bibliography",
       rule6Item1: "Combine multiple searches into one list",
@@ -447,7 +453,7 @@
       modeTopic: "Topic", modeAuthor: "Author",
       authorPlaceholder: "Author's first and last name",
       authorAria: "Search all publications by an author on PubMed and OpenAlex",
-      authorHint: "Watch out for common names: PubMed may also show namesakes, while OpenAlex tells authors apart thanks to a unique identifier.",
+      authorHint: "Heads up: with common names, PubMed results may include namesakes.",
       footer: "A project by <a href=\"index.html\">Amici di Boyle</a> · Research and education — does not replace clinical judgment.",
       domSub: "Diving", domIper: "Hyperbaric", domTrauma: "Trauma",
       domSic: "Safety", domAero: "Aerospace", domFis: "Physiology",
