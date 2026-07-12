@@ -267,6 +267,7 @@ p.bb-hero-sub {
   color: var(--bb-cyan-2); border-bottom: 1px solid transparent; transition: border-color .15s;
 }
 .bb-hero-explore:hover { border-bottom-color: var(--bb-cyan-2); }
+.bb-hero-smart { color: var(--bb-cyan-2); }
 
 @media (max-width: 640px) {
   .bb-hero-title-row { flex-direction: column; text-align: center; gap: 18px; }
@@ -538,6 +539,7 @@ a.bb-biblio-pdf--paywall:hover { background: rgba(255,90,106,.15); border-color:
 #bbExportToggle { display: inline-flex; align-items: center; gap: 6px; }
 #bbExportToggle svg { transition: transform .15s; }
 #bbExportToggle[aria-expanded="true"] svg { transform: rotate(180deg); }
+.bb-export-dropdown[hidden] { display: none; }
 .bb-export-dropdown {
   position: absolute; bottom: calc(100% + 10px); right: 0; z-index: 95;
   display: flex; flex-direction: column; gap: 4px; min-width: 150px;
