@@ -82,9 +82,9 @@
         <!-- Radar scanner -->
         <div class="ev-radar" aria-hidden="true">
           <canvas id="evRadarCanvas" width="460" height="460"></canvas>
-          <div class="ev-dot-lbl ev-dot-lbl--1" id="evLbl0" data-i18n="ev_radar1">EUBS 2026</div>
-          <div class="ev-dot-lbl ev-dot-lbl--2" id="evLbl1" data-i18n="ev_radar2">Ginevra</div>
-          <div class="ev-dot-lbl ev-dot-lbl--3" id="evLbl2" data-i18n="ev_radar3">Set 2026</div>
+          <div class="ev-dot-lbl ev-dot-lbl--1" id="evLbl0" data-i18n="ev_radar1">Luna e Medicina · 25 Lug</div>
+          <div class="ev-dot-lbl ev-dot-lbl--2" id="evLbl1" data-i18n="ev_radar2">Psicologia Sub. · 30–31 Ago</div>
+          <div class="ev-dot-lbl ev-dot-lbl--3" id="evLbl2" data-i18n="ev_radar3">EUBS 2026 · Set</div>
         </div>
 
         <div class="ev-hero__content">
@@ -104,7 +104,7 @@
               <div class="ev-counter__l" data-i18n="ev_cnt_countries">paesi</div>
             </div>
             <div class="ev-counter">
-              <div class="ev-counter__n" data-i18n="ev_cnt_next">Set</div>
+              <div class="ev-counter__n" data-i18n="ev_cnt_next">Lug</div>
               <div class="ev-counter__l" data-i18n="ev_cnt_next_lbl">prossimo</div>
             </div>
           </div>
@@ -785,8 +785,8 @@
         'ev_hero_title':'Gli eventi<br>della <em>Rete</em>',
         'ev_hero_sub':'Corsi, congressi e iniziative segnalati dai membri del network. Dalla medicina subacquea alla medicina aerospaziale.',
         'ev_cnt_active':'eventi attivi','ev_cnt_countries':'paesi',
-        'ev_cnt_next':'Set','ev_cnt_next_lbl':'prossimo',
-        'ev_radar1':'The Day After','ev_radar2':'WSMH 2026','ev_radar3':'Psicologia Sub.',
+        'ev_cnt_next':'Lug','ev_cnt_next_lbl':'prossimo',
+        'ev_radar1':'Luna e Medicina · 25 Lug','ev_radar2':'Psicologia Sub. · 30–31 Ago','ev_radar3':'EUBS 2026 · Set',
         'ev_tab_all':'Tutti (3)','ev_tab_it':'Nazionali','ev_tab_intl':'Internazionali','ev_tab_partner':'Partner',
         'ev_month_may':'Settembre 2026',
         'ev_badge_partner':'Partner','ev_badge_it':'Nazionale','ev_badge_intl':'Internazionale',
@@ -876,8 +876,8 @@
         'ev_hero_title':'Network<br><em>events</em>',
         'ev_hero_sub':'Courses, congresses and initiatives shared by network members. From underwater medicine to aerospace medicine.',
         'ev_cnt_active':'active events','ev_cnt_countries':'countries',
-        'ev_cnt_next':'May','ev_cnt_next_lbl':'next up',
-        'ev_radar1':'The Day After','ev_radar2':'WSMH 2026','ev_radar3':'Underwater Psych.',
+        'ev_cnt_next':'Jul','ev_cnt_next_lbl':'next up',
+        'ev_radar1':'Luna e Medicina · Jul 25','ev_radar2':'Underwater Psych. · Aug 30–31','ev_radar3':'EUBS 2026 · Sep',
         'ev_tab_all':'All (3)','ev_tab_it':'National','ev_tab_intl':'International','ev_tab_partner':'Partner',
         'ev_month_may':'May 2026',
         'ev_badge_partner':'Partner','ev_badge_it':'National','ev_badge_intl':'International',
@@ -1350,6 +1350,24 @@
       cards.forEach(function(c) { obs.observe(c); });
     })();
 
+    /* ── Ingresso sezione "Proponi il tuo evento" ── */
+    (function() {
+      var el = document.querySelector('.ev-propose');
+      if (!el || !('IntersectionObserver' in window)) return;
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(28px) scale(.98)';
+      el.style.transition = 'opacity .7s cubic-bezier(.22,.68,0,1.1), transform .7s cubic-bezier(.22,.68,0,1.1)';
+      var obs2 = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'none';
+            obs2.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.15 });
+      obs2.observe(el);
+    })();
 
     /* ── Radar scanner ── */
     (function() {
@@ -1361,6 +1379,8 @@
       var TRAIL = Math.PI * 0.65;
       var sweep = 0;
       var litUntil = [0, 0, 0];
+      var pingStart = [0, 0, 0];
+      var PING_MS = 900, PING_MAXR = 22;
 
       var EVS = [
         {a:-0.9,  rf:0.52, col:'#38bdf8', i:0},
@@ -1421,12 +1441,21 @@
         EVS.forEach(function(e) {
           var p = px(e.a, e.rf);
           var d = angDiff(sweep, e.a);
-          if (d >= 0 && d < 0.07) litUntil[e.i] = now + 3200;
+          if (d >= 0 && d < 0.07) { litUntil[e.i] = now + 3200; pingStart[e.i] = now; }
           var lit = litUntil[e.i] > now;
 
           /* label */
           var lb = document.getElementById('evLbl'+e.i);
           if (lb) lb.style.opacity = lit ? '1' : '0.4';
+
+          /* anello "ping" che si espande e sfuma: il contatto rilevato dal sonar */
+          var pingT = (now - pingStart[e.i]) / PING_MS;
+          if (pingT >= 0 && pingT < 1) {
+            var pr = pingT * PING_MAXR;
+            ctx.beginPath(); ctx.arc(p.x, p.y, pr, 0, Math.PI*2);
+            ctx.strokeStyle = e.col + Math.round((1 - pingT) * 170).toString(16).padStart(2, '0');
+            ctx.lineWidth = 1.4; ctx.stroke();
+          }
 
           /* glow */
           if (lit) {

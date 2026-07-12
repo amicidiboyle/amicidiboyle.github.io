@@ -154,6 +154,24 @@ main { position: relative; z-index: 1; }
 .ev-dot-lbl--2 { top: 70%; left: 48%; color: rgba(167,139,250,.75); }
 .ev-dot-lbl--3 { top: 33%; left: 71%; color: rgba(110,231,183,.75); }
 
+/* Ingresso della hero: dissolvenza + salita, un elemento dopo l'altro */
+@keyframes evFadeUp {
+  0%   { opacity: 0; transform: translateY(18px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+.ev-hero__tag, .ev-hero h1, .ev-hero__sub, .ev-hero__counters, .ev-tabs {
+  opacity: 0;
+  animation: evFadeUp .6s cubic-bezier(.22,.68,0,1.1) forwards;
+}
+.ev-hero__tag       { animation-delay: .05s; }
+.ev-hero h1          { animation-delay: .15s; }
+.ev-hero__sub         { animation-delay: .28s; }
+.ev-hero__counters     { animation-delay: .4s; }
+.ev-tabs                { animation-delay: .5s; }
+@media (prefers-reduced-motion: reduce) {
+  .ev-hero__tag, .ev-hero h1, .ev-hero__sub, .ev-hero__counters, .ev-tabs { opacity: 1; animation: none; }
+}
+
 /* Hero content */
 .ev-hero__content {
   position: relative; z-index: 2;
@@ -421,7 +439,8 @@ main { position: relative; z-index: 1; }
 .ev-propose {
   position: relative; overflow: hidden;
   border-radius: 20px; margin-top: 20px;
-  border: 1px solid rgba(123,228,255,.11);
+  border: 1px solid rgba(123,228,255,.32);
+  box-shadow: 0 0 0 1px rgba(123,228,255,.06), 0 30px 70px -20px rgba(20,140,255,.22);
 }
 .ev-propose__bg {
   position: absolute; inset: 0;
@@ -469,11 +488,12 @@ main { position: relative; z-index: 1; }
 .ev-propose__cta { display: flex; align-items: center; gap: 15px; flex-wrap: wrap; }
 .ev-btn--main {
   display: inline-flex; align-items: center; gap: 8px;
-  padding: 11px 24px; border-radius: 10px; font-size: 13px; font-weight: 500;
-  background: rgba(123,228,255,.1); border: 1px solid rgba(123,228,255,.3);
-  color: #7be4ff; cursor: pointer; transition: all .15s;
+  padding: 13px 28px; border-radius: 10px; font-size: 13.5px; font-weight: 600;
+  background: linear-gradient(135deg, #7be4ff, #4fa8ff); border: 1px solid rgba(123,228,255,.6);
+  color: #021830; cursor: pointer; transition: transform .15s, box-shadow .15s;
+  box-shadow: 0 8px 26px rgba(100,200,255,.28);
 }
-.ev-btn--main:hover { background: rgba(123,228,255,.16); border-color: rgba(123,228,255,.5); }
+.ev-btn--main:hover { transform: translateY(-1px); box-shadow: 0 12px 32px rgba(100,200,255,.4); }
 .ev-lock {
   font-size: 11px; color: rgba(128,178,220,.28);
   display: flex; align-items: center; gap: 5px;
