@@ -283,9 +283,10 @@ p.bb-hero-sub {
 .bb-mode-btn:hover { color: var(--bb-text); }
 .bb-mode-btn.is-active { background: linear-gradient(135deg, #7be4ff, #52a0ff); color: #021830; }
 .bb-author-hint {
-  text-align: center; font-size: .76rem; color: var(--bb-soft); max-width: 480px;
-  margin: 0 auto 14px; line-height: 1.5;
+  text-align: center; font-size: .76rem; color: var(--bb-soft); max-width: 620px;
+  margin: 0 auto 14px; line-height: 1.5; white-space: nowrap;
 }
+@media (max-width: 650px) { .bb-author-hint { white-space: normal; } }
 
 /* ask console */
 .bb-ask { width: min(620px, 100%); margin: 0 auto; }
