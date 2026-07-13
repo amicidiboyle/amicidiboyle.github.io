@@ -405,6 +405,7 @@
       copyAll: "Copia tutte le citazioni", copiedAll: "Bibliografia copiata",
       pdfOpen: "PDF", pdfPaywall: "A pagamento",
       noAbstract: "Abstract non disponibile per questa voce.",
+      abstractToggle: "Abstract",
       compareLink: "Verifica questa ricerca direttamente su PubMed →",
       yearFromLabel: "Dal", yearToLabel: "al", yearHint: "(facoltativo)",
       basketAdd: "+ Aggiungi", basketRemove: "✓ Aggiunta",
@@ -465,6 +466,7 @@
       copyAll: "Copy all citations", copiedAll: "Bibliography copied",
       pdfOpen: "PDF", pdfPaywall: "Paywalled",
       noAbstract: "No abstract available for this entry.",
+      abstractToggle: "Abstract",
       compareLink: "Check this search directly on PubMed →",
       yearFromLabel: "From", yearToLabel: "to", yearHint: "(optional)",
       basketAdd: "+ Add", basketRemove: "✓ Added",
@@ -1006,12 +1008,31 @@
       paintBasketBtn();
     });
 
+    var abstractBtn = document.createElement("button");
+    abstractBtn.type = "button";
+    abstractBtn.className = "bb-biblio-abstract-btn";
+    abstractBtn.textContent = I18N[currentLang].abstractToggle;
+    var abstractPanel = document.createElement("p");
+    abstractPanel.className = "bb-abstract-inline";
+    abstractPanel.hidden = true;
+    abstractBtn.addEventListener("click", function () {
+      var open = abstractPanel.hidden;
+      if (open) abstractPanel.textContent = v.abstract || I18N[currentLang].noAbstract;
+      abstractPanel.hidden = !open;
+      abstractBtn.classList.toggle("is-open", open);
+    });
+
     actions.appendChild(copyBtn);
+    actions.appendChild(abstractBtn);
     actions.appendChild(basketBtn);
     actions.appendChild(link);
-    li.appendChild(wrap);
-    li.appendChild(actions);
-    wireAbstractHover(li, v);
+    var topRow = document.createElement("div");
+    topRow.className = "bb-biblio-toprow";
+    topRow.appendChild(wrap);
+    topRow.appendChild(actions);
+    li.appendChild(topRow);
+    li.appendChild(abstractPanel);
+    wireAbstractHover(topRow, v);
     return li;
   }
 

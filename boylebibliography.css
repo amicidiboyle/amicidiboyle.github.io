@@ -423,9 +423,10 @@ p.bb-trust-badge {
 .bb-biblio-results { list-style: none; margin: 14px 0 0; padding: 0; display: grid; gap: 10px; text-align: left; }
 .bb-biblio-item {
   background: var(--bb-glass); border: 1px solid var(--bb-border); border-radius: 14px;
-  padding: 16px 18px; display: flex; align-items: flex-start; justify-content: space-between; gap: 16px;
+  padding: 16px 18px; display: flex; flex-direction: column; gap: 10px;
   animation: bbFadeIn .35s ease both;
 }
+.bb-biblio-toprow { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; }
 .bb-biblio-item p { font-size: .89rem; color: var(--bb-text); line-height: 1.55; margin: 0; }
 .bb-biblio-source {
   display: inline-block; font-size: .66rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
@@ -468,6 +469,22 @@ p.bb-trust-badge {
 }
 .bb-biblio-copy:hover { background: rgba(123,228,255,.12); color: var(--bb-text); border-color: var(--bb-border-hi); }
 .bb-biblio-copy.is-copied { background: rgba(123,228,255,.18); color: var(--bb-cyan-2); border-color: var(--bb-border-hi); }
+
+/* pulsante abstract: alternativa cliccabile al tooltip al passaggio del
+   mouse, indispensabile su mobile dove non esiste l'hover */
+.bb-biblio-abstract-btn {
+  font-size: .74rem; font-weight: 600; letter-spacing: .02em; white-space: nowrap;
+  background: rgba(123,228,255,.06); border: 1px solid var(--bb-border); color: var(--bb-muted);
+  border-radius: 8px; padding: 4px 10px; cursor: pointer; transition: background .15s, color .15s, border-color .15s;
+}
+.bb-biblio-abstract-btn:hover { background: rgba(123,228,255,.12); color: var(--bb-text); border-color: var(--bb-border-hi); }
+.bb-biblio-abstract-btn.is-open { background: rgba(123,228,255,.18); color: var(--bb-cyan-2); border-color: var(--bb-border-hi); }
+.bb-abstract-inline {
+  padding: 12px 14px;
+  background: rgba(6,20,46,.5); border: 1px solid var(--bb-border); border-radius: 10px;
+  font-size: .82rem; line-height: 1.55; color: var(--bb-text);
+  animation: bbFadeIn .2s ease both;
+}
 
 /* verde = accesso libero al PDF (via OpenAlex/Unpaywall), rosso = a
    pagamento (porta comunque al riferimento bibliografico). Selettori
@@ -565,7 +582,7 @@ a.bb-biblio-pdf--paywall:hover { background: rgba(255,90,106,.15); border-color:
 
 @keyframes bbFadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
 @media (max-width: 560px) {
-  .bb-biblio-item { flex-direction: column; gap: 8px; }
+  .bb-biblio-toprow { flex-direction: column; gap: 8px; }
   .bb-biblio-actions { flex-direction: row; align-items: center; width: 100%; justify-content: space-between; flex-wrap: wrap; }
   .bb-basket-bar { flex-direction: column; align-items: stretch; padding: 12px 16px; }
   .bb-basket-actions { justify-content: space-between; }
