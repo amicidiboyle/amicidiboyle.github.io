@@ -879,7 +879,7 @@
     return last + " " + initials;
   }
 
-  var OPENALEX_SELECT = "id,doi,title,authorships,primary_location,publication_year,biblio,open_access,best_oa_location,abstract_inverted_index";
+  var OPENALEX_SELECT = "id,doi,title,authorships,primary_location,publication_year,biblio,open_access,best_oa_location,abstract_inverted_index,corresponding_author_ids";
 
   /* OpenAlex non dà l'abstract come testo semplice ma come "indice
      invertito": {parola: [posizioni]}. Si ricostruisce mettendo ogni
@@ -905,17 +905,24 @@
      raw_affiliation_strings (testo libero fornito dall'editore). Se
      l'autore con quell'email è segnato is_corresponding, la confidenza
      è alta; altrimenti resta bassa. Mai fabbricata dal nome/dominio. */
-  function emailFromOpenAlexAuthorships(authorships) {
+  function emailFromOpenAlexAuthorships(authorships, correspondingIds) {
     if (!authorships) return null;
     var fallback = null;
     for (var i = 0; i < authorships.length; i++) {
       var au = authorships[i];
       var affs = au.raw_affiliation_strings || [];
+      /* "alta confidenza" solo se DUE segnali concordano: il flag
+         per-autore is_corresponding E l'id dell'autore compare anche
+         nell'elenco corresponding_author_ids del lavoro. Un solo
+         segnale non basta a dire con certezza che è lui/lei */
+      var authorId = au.author && au.author.id;
+      var confirmedCorresponding = !!au.is_corresponding &&
+        !!authorId && (correspondingIds || []).indexOf(authorId) !== -1;
       for (var j = 0; j < affs.length; j++) {
         var email = extractEmailFromText(affs[j]);
         if (!email) continue;
         var lastName = ((au.author && au.author.display_name) || "").trim().split(/\s+/).pop();
-        if (au.is_corresponding) return { email: email, confidence: "high", lastName: lastName };
+        if (confirmedCorresponding) return { email: email, confidence: "high", lastName: lastName };
         if (!fallback) fallback = { email: email, confidence: "low", lastName: lastName };
       }
     }
@@ -935,7 +942,7 @@
     var tail = [year, vol + (issue ? "(" + issue + ")" : "") + (pagesRaw ? ":" + pagesRaw : "")].filter(Boolean).join(";");
     var oa = w.open_access || {};
     var oaUrl = (w.best_oa_location && w.best_oa_location.pdf_url) || oa.oa_url || null;
-    var emailInfo = emailFromOpenAlexAuthorships(w.authorships);
+    var emailInfo = emailFromOpenAlexAuthorships(w.authorships, w.corresponding_author_ids);
     return {
       text: [authors, title, journal].filter(Boolean).join(". ") + (tail ? ". " + tail + "." : "."),
       link: link, linkLabel: "OpenAlex", source: "OpenAlex",
