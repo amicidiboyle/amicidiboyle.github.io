@@ -277,8 +277,8 @@ p.bb-hero-sub {
 .bb-fields-row { display: flex; align-items: flex-end; gap: 10px; }
 .bb-field { flex: 1; display: flex; flex-direction: column; gap: 6px; min-width: 0; text-align: left; }
 .bb-field label {
-  font-size: .74rem; font-weight: 700; letter-spacing: .03em; text-transform: uppercase;
-  color: var(--bb-soft); padding-left: 4px;
+  font-size: .8rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase;
+  color: var(--bb-cyan-2); padding-left: 4px; text-shadow: 0 0 12px rgba(123,228,255,.35);
 }
 .bb-field input {
   background: rgba(6,20,46,.62); border: 1px solid var(--bb-border-hi); border-radius: 14px;
@@ -320,7 +320,6 @@ p.bb-hero-sub {
   background: rgba(255,90,106,.1); border: 1px solid rgba(255,90,106,.3);
   border-radius: 999px; padding: 6px 14px;
 }
-.bb-field-error::before { content: "⚠"; font-size: .82rem; }
 .bb-year-filter input.has-error { border-color: #ff5a6a; }
 
 /* filtro tipo pubblicazione: compatto, chiuso di default */
@@ -528,7 +527,10 @@ p.bb-trust-badge {
 .bb-biblio-copy.is-copied { background: rgba(123,228,255,.18); color: var(--bb-cyan-2); border-color: var(--bb-border-hi); }
 
 /* pulsante abstract: alternativa cliccabile al tooltip al passaggio del
-   mouse, indispensabile su mobile dove non esiste l'hover */
+   mouse, indispensabile su mobile dove non esiste l'hover — su desktop
+   il tooltip al passaggio del mouse basta da solo, il pulsante sarebbe
+   ridondante */
+@media (min-width: 701px) { .bb-biblio-abstract-btn { display: none; } }
 .bb-biblio-abstract-btn {
   font-size: .74rem; font-weight: 600; letter-spacing: .02em; white-space: nowrap;
   background: rgba(123,228,255,.06); border: 1px solid var(--bb-border); color: var(--bb-muted);

@@ -130,11 +130,11 @@
               <div class="bb-fields-row">
                 <div class="bb-field">
                   <label for="bbAuthorInput" data-i18n="fieldAuthorLabel">Autore</label>
-                  <input type="text" id="bbAuthorInput" data-i18n-placeholder="authorFieldPlaceholder" placeholder="Cognome e iniziali, es. Landoni G" aria-label="Cerca per autore" data-i18n-aria="authorFieldAria" />
+                  <input type="text" id="bbAuthorInput" data-i18n-placeholder="authorFieldPlaceholder" placeholder="Chi stiamo cercando?" aria-label="Cerca per autore" data-i18n-aria="authorFieldAria" />
                 </div>
                 <div class="bb-field">
                   <label for="bbTopicInput" data-i18n="fieldTopicLabel">Argomento</label>
-                  <input type="text" id="bbTopicInput" data-i18n-placeholder="topicFieldPlaceholder" placeholder="Es. amino acids, decompression sickness" aria-label="Cerca per argomento" data-i18n-aria="topicFieldAria" autofocus />
+                  <input type="text" id="bbTopicInput" data-i18n-placeholder="topicFieldPlaceholder" placeholder="Cosa cerchiamo?" aria-label="Cerca per argomento" data-i18n-aria="topicFieldAria" autofocus />
                 </div>
                 <button class="bb-ask-btn" type="submit" aria-label="Cerca" data-i18n-aria="searchBtnAria">
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
@@ -153,7 +153,11 @@
               <p class="bb-field-error" id="bbYearError" hidden aria-live="assertive"></p>
 
               <details class="bb-pubtype-filter" id="bbPubTypeFilter">
-                <summary data-i18n="pubTypeSummary">Tipo di pubblicazione <span class="bb-pubtype-count" id="bbPubTypeCount"></span></summary>
+                <summary>
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
+                  <span data-i18n="pubTypeSummary">Tipo di pubblicazione</span>
+                  <span class="bb-pubtype-count" id="bbPubTypeCount"></span>
+                </summary>
                 <div class="bb-pubtype-grid" id="bbPubTypeGrid" role="group" aria-label="Tipo di pubblicazione">
                   <label><input type="checkbox" value="Review" /> <span data-i18n="pt_review">Review</span></label>
                   <label><input type="checkbox" value="Systematic Review" /> <span data-i18n="pt_sr">Systematic Review</span></label>
@@ -315,7 +319,6 @@
               <ul class="bb-rule-list">
                 <li data-i18n="rule6Item1">Accumula più ricerche in un'unica lista</li>
                 <li data-i18n="rule6Item2">Scarica subito il PDF se è ad accesso libero</li>
-                <li data-i18n="rule6Item3">Se non lo è, scrivi all'autore per chiederne una copia</li>
               </ul>
             </div>
           </aside>
@@ -428,7 +431,6 @@
       rule6Title: "La tua bibliografia",
       rule6Item1: "Accumula più ricerche in un'unica lista",
       rule6Item2: "Scarica subito il PDF se è ad accesso libero",
-      rule6Item3: "Se non lo è, scrivi all'autore per chiederne una copia",
       chip1: "Fonti verificate",
       chip2: "Perimetro scientifico definito",
       chip3: "Limiti dichiarati quando servono",
@@ -437,9 +439,9 @@
       legendOa: "accesso libero: PDF scaricabile subito",
       legendPaywall: "a pagamento: link alla fonte per abstract e acquisto",
       fieldAuthorLabel: "Autore", fieldTopicLabel: "Argomento",
-      authorFieldPlaceholder: "Cognome e iniziali, es. Landoni G",
+      authorFieldPlaceholder: "Chi stiamo cercando?",
       authorFieldAria: "Cerca per autore",
-      topicFieldPlaceholder: "Es. amino acids, decompression sickness",
+      topicFieldPlaceholder: "Cosa cerchiamo?",
       topicFieldAria: "Cerca per argomento",
       searchBtnAria: "Cerca",
       fieldsHint: "Puoi cercare per autore, per argomento oppure combinarli.",
@@ -467,9 +469,7 @@
       pdfOpen: "PDF", pdfPaywall: "A pagamento",
       noAbstract: "Abstract non disponibile per questa voce.",
       abstractToggle: "Abstract",
-      emailRequestPdf: "Richiedi il PDF all'autore",
       emailWriteAuthor: "Scrivi all'autore",
-      emailLowConfidenceTip: "Indirizzo e-mail presente nei metadati bibliografici; il ruolo di corresponding author non è sempre identificabile.",
       compareLink: "Verifica questa ricerca direttamente su PubMed →",
       yearFromLabel: "Dal", yearToLabel: "al", yearHint: "(facoltativo)",
       basketAdd: "+ Aggiungi", basketRemove: "✓ Aggiunta",
@@ -513,7 +513,6 @@
       rule6Title: "Your bibliography",
       rule6Item1: "Combine multiple searches into one list",
       rule6Item2: "Download the PDF right away if open access",
-      rule6Item3: "If not, write to the author to ask for a copy",
       chip1: "Verified sources",
       chip2: "Defined scientific scope",
       chip3: "Limits stated when relevant",
@@ -522,9 +521,9 @@
       legendOa: "open access: PDF downloadable right away",
       legendPaywall: "paywalled: link to the source for abstract and purchase",
       fieldAuthorLabel: "Author", fieldTopicLabel: "Topic",
-      authorFieldPlaceholder: "Last name and initials, e.g. Landoni G",
+      authorFieldPlaceholder: "Who are we searching for?",
       authorFieldAria: "Search by author",
-      topicFieldPlaceholder: "E.g. amino acids, decompression sickness",
+      topicFieldPlaceholder: "What are we searching for?",
       topicFieldAria: "Search by topic",
       searchBtnAria: "Search",
       fieldsHint: "You can search by author, by topic, or combine both.",
@@ -552,9 +551,7 @@
       pdfOpen: "PDF", pdfPaywall: "Paywalled",
       noAbstract: "No abstract available for this entry.",
       abstractToggle: "Abstract",
-      emailRequestPdf: "Request the PDF from the author",
       emailWriteAuthor: "Write to the author",
-      emailLowConfidenceTip: "Email address found in the bibliographic metadata; the corresponding-author role isn't always identifiable.",
       compareLink: "Check this search directly on PubMed →",
       yearFromLabel: "From", yearToLabel: "to", yearHint: "(optional)",
       basketAdd: "+ Add", basketRemove: "✓ Added",
@@ -768,7 +765,7 @@
       link: link, linkLabel: linkLabel, source: "PubMed", doi: doi,
       names: names, title: title, journal: journal, year: year,
       vol: vol, issue: issue, pages: pagesRaw, pmid: a.uid, abstract: "",
-      authorEmail: null, authorEmailConfidence: null, authorEmailLastName: null
+      authorEmail: null, authorEmailLastName: null
     };
   }
 
@@ -812,7 +809,6 @@
           if (email) {
             var lastNameEl = authorNodes[k].getElementsByTagName("LastName")[0];
             byPmid[pmid].authorEmail = email;
-            byPmid[pmid].authorEmailConfidence = "low";
             byPmid[pmid].authorEmailLastName = lastNameEl ? lastNameEl.textContent : "";
             break;
           }
@@ -879,7 +875,7 @@
     return last + " " + initials;
   }
 
-  var OPENALEX_SELECT = "id,doi,title,authorships,primary_location,publication_year,biblio,open_access,best_oa_location,abstract_inverted_index,corresponding_author_ids";
+  var OPENALEX_SELECT = "id,doi,title,authorships,primary_location,publication_year,biblio,open_access,best_oa_location,abstract_inverted_index";
 
   /* OpenAlex non dà l'abstract come testo semplice ma come "indice
      invertito": {parola: [posizioni]}. Si ricostruisce mettendo ogni
@@ -902,28 +898,22 @@
   }
 
   /* email dagli autori OpenAlex: solo se compare per davvero dentro
-     raw_affiliation_strings (testo libero fornito dall'editore). Se
-     l'autore con quell'email è segnato is_corresponding, la confidenza
-     è alta; altrimenti resta bassa. Mai fabbricata dal nome/dominio. */
-  function emailFromOpenAlexAuthorships(authorships, correspondingIds) {
+     raw_affiliation_strings (testo libero fornito dall'editore), mai
+     fabbricata dal nome o dal dominio dell'istituzione. Se compaiono
+     più autori con email, si preferisce quello segnato come
+     corresponding, ma il pulsante resta lo stesso in ogni caso. */
+  function emailFromOpenAlexAuthorships(authorships) {
     if (!authorships) return null;
     var fallback = null;
     for (var i = 0; i < authorships.length; i++) {
       var au = authorships[i];
       var affs = au.raw_affiliation_strings || [];
-      /* "alta confidenza" solo se DUE segnali concordano: il flag
-         per-autore is_corresponding E l'id dell'autore compare anche
-         nell'elenco corresponding_author_ids del lavoro. Un solo
-         segnale non basta a dire con certezza che è lui/lei */
-      var authorId = au.author && au.author.id;
-      var confirmedCorresponding = !!au.is_corresponding &&
-        !!authorId && (correspondingIds || []).indexOf(authorId) !== -1;
       for (var j = 0; j < affs.length; j++) {
         var email = extractEmailFromText(affs[j]);
         if (!email) continue;
         var lastName = ((au.author && au.author.display_name) || "").trim().split(/\s+/).pop();
-        if (confirmedCorresponding) return { email: email, confidence: "high", lastName: lastName };
-        if (!fallback) fallback = { email: email, confidence: "low", lastName: lastName };
+        if (au.is_corresponding) return { email: email, lastName: lastName };
+        if (!fallback) fallback = { email: email, lastName: lastName };
       }
     }
     return fallback;
@@ -942,7 +932,7 @@
     var tail = [year, vol + (issue ? "(" + issue + ")" : "") + (pagesRaw ? ":" + pagesRaw : "")].filter(Boolean).join(";");
     var oa = w.open_access || {};
     var oaUrl = (w.best_oa_location && w.best_oa_location.pdf_url) || oa.oa_url || null;
-    var emailInfo = emailFromOpenAlexAuthorships(w.authorships, w.corresponding_author_ids);
+    var emailInfo = emailFromOpenAlexAuthorships(w.authorships);
     return {
       text: [authors, title, journal].filter(Boolean).join(". ") + (tail ? ". " + tail + "." : "."),
       link: link, linkLabel: "OpenAlex", source: "OpenAlex",
@@ -952,7 +942,6 @@
       doi: (w.doi || "").replace(/^https?:\/\/doi\.org\//i, ""),
       abstract: reconstructAbstract(w.abstract_inverted_index),
       authorEmail: emailInfo ? emailInfo.email : null,
-      authorEmailConfidence: emailInfo ? emailInfo.confidence : null,
       authorEmailLastName: emailInfo ? emailInfo.lastName : null
     };
   }
@@ -1242,8 +1231,8 @@
     });
 
     /* pulsante email: solo se un indirizzo è realmente presente nei
-       metadati (mai dedotto). Due varianti in base alla certezza del
-       ruolo di corresponding author (punti 40-43) */
+       metadati (mai dedotto): un solo pulsante, "scrivi all'autore",
+       niente promesse su cosa risponderà */
     var emailBtn = document.createElement("a");
     emailBtn.className = "bb-biblio-email-btn";
     emailBtn.hidden = true;
@@ -1251,14 +1240,7 @@
       if (!v.authorEmail) { emailBtn.hidden = true; return; }
       emailBtn.hidden = false;
       emailBtn.href = buildMailto(v.authorEmail, v.title, v.authorEmailLastName);
-      if (v.authorEmailConfidence === "high") {
-        emailBtn.textContent = I18N[currentLang].emailRequestPdf;
-        emailBtn.title = "";
-        emailBtn.removeAttribute("data-tooltip");
-      } else {
-        emailBtn.textContent = I18N[currentLang].emailWriteAuthor;
-        emailBtn.title = I18N[currentLang].emailLowConfidenceTip;
-      }
+      emailBtn.textContent = I18N[currentLang].emailWriteAuthor;
     }
     paintEmailBtn();
     v._paintEmailBtn = paintEmailBtn;
