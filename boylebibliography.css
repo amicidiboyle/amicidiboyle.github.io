@@ -271,40 +271,36 @@ p.bb-hero-sub {
   .bb-hero-title-text .bb-kicker { justify-content: center; }
 }
 
-/* selettore modalità: argomento o autore */
-.bb-mode-toggle {
-  display: flex; justify-content: center; gap: 6px; margin: 0 auto 14px; width: fit-content;
-  background: rgba(6,20,46,.5); border: 1px solid var(--bb-border); border-radius: 999px; padding: 4px;
+/* ask console: due campi (Autore, Argomento) sempre visibili, affiancati
+   su desktop e impilati su mobile, più il pulsante di ricerca */
+.bb-ask { width: min(680px, 100%); margin: 0 auto; }
+.bb-fields-row { display: flex; align-items: flex-end; gap: 10px; }
+.bb-field { flex: 1; display: flex; flex-direction: column; gap: 6px; min-width: 0; text-align: left; }
+.bb-field label {
+  font-size: .74rem; font-weight: 700; letter-spacing: .03em; text-transform: uppercase;
+  color: var(--bb-soft); padding-left: 4px;
 }
-.bb-mode-btn {
-  font-size: .82rem; font-weight: 600; color: var(--bb-muted); background: none; border: none;
-  border-radius: 999px; padding: 7px 18px; cursor: pointer; transition: background .18s, color .18s;
-}
-.bb-mode-btn:hover { color: var(--bb-text); }
-.bb-mode-btn.is-active { background: linear-gradient(135deg, #7be4ff, #52a0ff); color: #021830; }
-.bb-author-hint {
-  text-align: center; font-size: .76rem; color: var(--bb-soft); max-width: 620px;
-  margin: 0 auto 14px; line-height: 1.5; white-space: nowrap;
-}
-@media (max-width: 650px) { .bb-author-hint { white-space: normal; } }
-
-/* ask console */
-.bb-ask { width: min(620px, 100%); margin: 0 auto; }
-.bb-ask-row {
-  display: flex; align-items: center; gap: 8px; padding: 5px 7px 5px 24px;
-  border-radius: 999px; background: rgba(6,20,46,.62); border: 1px solid var(--bb-border-hi);
+.bb-field input {
+  background: rgba(6,20,46,.62); border: 1px solid var(--bb-border-hi); border-radius: 14px;
+  color: var(--bb-text); font-size: 1rem; height: 52px; min-width: 0; padding: 0 16px;
   box-shadow: 0 0 0 5px rgba(123,228,255,.05), 0 20px 50px rgba(0,0,0,.35);
   transition: box-shadow .2s, border-color .2s;
 }
-.bb-ask-row:focus-within { box-shadow: 0 0 0 6px rgba(123,228,255,.1), 0 20px 50px rgba(0,0,0,.4); }
-.bb-ask-row input {
-  flex: 1; background: none; border: none; color: var(--bb-text); font-size: 1.04rem;
-  height: 56px; min-width: 0;
+.bb-field input:focus {
+  outline: 2px solid transparent; border-color: var(--bb-cyan-2);
+  box-shadow: 0 0 0 6px rgba(123,228,255,.1), 0 20px 50px rgba(0,0,0,.4);
 }
-.bb-ask-row input:focus { outline: none; }
-.bb-ask-row input::placeholder { color: var(--bb-soft); }
+.bb-field input::placeholder { color: var(--bb-soft); }
+.bb-fields-hint {
+  text-align: center; font-size: .78rem; color: var(--bb-soft);
+  margin: 12px 0 0; line-height: 1.5;
+}
+.bb-author-hint {
+  text-align: center; font-size: .76rem; color: var(--bb-soft); max-width: 620px;
+  margin: 8px auto 0; line-height: 1.5;
+}
 .bb-ask-btn {
-  width: 46px; height: 46px; border-radius: 50%; flex-shrink: 0; border: none; cursor: pointer;
+  width: 52px; height: 52px; border-radius: 50%; flex-shrink: 0; border: none; cursor: pointer;
   background: linear-gradient(135deg, #7be4ff, #52a0ff); color: #021830;
   display: flex; align-items: center; justify-content: center; transition: transform .15s ease;
 }
@@ -313,6 +309,55 @@ p.bb-hero-sub {
 .bb-ask-btn.is-loading { cursor: wait; }
 .bb-ask-btn.is-loading svg { animation: bbSpin .8s linear infinite; }
 @keyframes bbSpin { to { transform: rotate(360deg); } }
+@media (max-width: 640px) {
+  .bb-fields-row { flex-direction: column; align-items: stretch; }
+  .bb-ask-btn { width: 100%; height: 48px; border-radius: 12px; }
+}
+
+.bb-field-error {
+  text-align: center; font-size: .8rem; color: #ff8a95; margin: 10px 0 0;
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+}
+.bb-field-error::before { content: "⚠"; }
+.bb-year-filter input.has-error { border-color: #ff5a6a; }
+
+/* filtro tipo pubblicazione: compatto, chiuso di default */
+.bb-pubtype-filter { margin-top: 14px; text-align: left; }
+.bb-pubtype-filter summary {
+  cursor: pointer; font-size: .82rem; font-weight: 600; color: var(--bb-soft);
+  list-style: none; display: inline-flex; align-items: center; gap: 6px;
+  padding: 6px 2px; user-select: none;
+}
+.bb-pubtype-filter summary::-webkit-details-marker { display: none; }
+.bb-pubtype-filter summary::before {
+  content: "▸"; font-size: .7rem; color: var(--bb-cyan-2); transition: transform .15s;
+}
+.bb-pubtype-filter[open] summary::before { transform: rotate(90deg); }
+.bb-pubtype-filter summary:hover { color: var(--bb-text); }
+.bb-pubtype-count {
+  background: rgba(123,228,255,.14); color: var(--bb-cyan-2); font-weight: 700;
+  border-radius: 999px; padding: 1px 8px; font-size: .72rem;
+}
+.bb-pubtype-count:empty { display: none; }
+.bb-pubtype-grid {
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px 16px;
+  margin: 10px 0 0; padding: 12px 14px; background: rgba(6,20,46,.4);
+  border: 1px solid var(--bb-border); border-radius: 12px;
+}
+@media (max-width: 480px) { .bb-pubtype-grid { grid-template-columns: 1fr; } }
+.bb-pubtype-grid label {
+  display: flex; align-items: center; gap: 8px; font-size: .82rem; color: var(--bb-text);
+  cursor: pointer; padding: 3px 0;
+}
+.bb-pubtype-grid input[type="checkbox"] {
+  width: 16px; height: 16px; accent-color: var(--bb-cyan-2); cursor: pointer; flex-shrink: 0;
+}
+.bb-pubtype-reset {
+  margin-top: 10px; font-size: .76rem; font-weight: 600; color: var(--bb-soft);
+  background: none; border: 1px solid var(--bb-border); border-radius: 999px;
+  padding: 5px 12px; cursor: pointer; transition: color .15s, border-color .15s;
+}
+.bb-pubtype-reset:hover { color: var(--bb-text); border-color: var(--bb-border-hi); }
 
 p.bb-trust-badge {
   margin-top: 38px; font-size: .78rem; color: var(--bb-soft); display: flex;
@@ -390,6 +435,10 @@ p.bb-trust-badge {
 .bb-rule--5 .bb-rule-num, .bb-rule--5 h3 { color: #b48bff; }
 .bb-rule--6 { --rule-glow: #ffb84d; }
 .bb-rule--6 .bb-rule-num, .bb-rule--6 h3 { color: #ffb84d; }
+.bb-rule--4b { --rule-glow: #6ee7b7; }
+.bb-rule--4b .bb-rule-num, .bb-rule--4b h3 { color: #6ee7b7; }
+.bb-rule--7 { --rule-glow: #ff7bb8; }
+.bb-rule--7 .bb-rule-num, .bb-rule--7 h3 { color: #ff7bb8; }
 .bb-rule h3 { font-size: .94rem; margin: 0 0 6px; letter-spacing: -.01em; }
 .bb-rule p { font-size: .84rem; color: var(--bb-muted); line-height: 1.5; margin: 0; }
 .bb-rule-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 5px; }
@@ -421,6 +470,13 @@ p.bb-trust-badge {
 }
 .bb-compare-link:hover { color: var(--bb-cyan-2); border-bottom-color: var(--bb-cyan-2); }
 .bb-biblio-results { list-style: none; margin: 14px 0 0; padding: 0; display: grid; gap: 10px; text-align: left; }
+.bb-load-more {
+  display: block; margin: 16px auto 0; font-size: .84rem; font-weight: 600;
+  color: var(--bb-cyan-2); background: rgba(123,228,255,.08); border: 1px solid var(--bb-border-hi);
+  border-radius: 999px; padding: 9px 22px; cursor: pointer; transition: background .15s, transform .15s;
+}
+.bb-load-more:hover { background: rgba(123,228,255,.16); transform: translateY(-1px); }
+.bb-load-more:disabled { opacity: .5; cursor: wait; }
 .bb-biblio-item {
   background: var(--bb-glass); border: 1px solid var(--bb-border); border-radius: 14px;
   padding: 16px 18px; display: flex; flex-direction: column; gap: 10px;
@@ -485,6 +541,15 @@ p.bb-trust-badge {
   font-size: .82rem; line-height: 1.55; color: var(--bb-text);
   animation: bbFadeIn .2s ease both;
 }
+
+/* pulsante per scrivere all'autore: mostrato solo se un'email è
+   realmente presente nei metadati (mai per default) */
+.bb-biblio-email-btn {
+  font-size: .74rem; font-weight: 600; letter-spacing: .02em; white-space: nowrap;
+  background: rgba(180,139,255,.08); border: 1px solid rgba(180,139,255,.32); color: #c7aeff;
+  border-radius: 8px; padding: 4px 10px; cursor: pointer; transition: background .15s, border-color .15s;
+}
+.bb-biblio-email-btn:hover { background: rgba(180,139,255,.16); border-color: rgba(180,139,255,.5); }
 
 /* verde = accesso libero al PDF (via OpenAlex/Unpaywall), rosso = a
    pagamento (porta comunque al riferimento bibliografico). Selettori

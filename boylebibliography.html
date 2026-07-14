@@ -126,18 +126,23 @@
         <div class="bb-biblio">
 
           <div class="bb-biblio-main">
-            <div class="bb-mode-toggle" id="bbModeToggle" role="tablist">
-              <button type="button" class="bb-mode-btn is-active" data-mode="topic" data-i18n="modeTopic" role="tab" aria-selected="true">Argomento</button>
-              <button type="button" class="bb-mode-btn" data-mode="author" data-i18n="modeAuthor" role="tab" aria-selected="false">Autore</button>
-            </div>
-            <p class="bb-author-hint" id="bbAuthorHint" data-i18n="authorHint" hidden>Attenzione: con nomi comuni, i risultati da PubMed potrebbero includere anche omonimi.</p>
             <form class="bb-ask" id="bbBiblioForm">
-              <div class="bb-ask-row">
-                <input type="text" id="bbBiblioInput" placeholder="Cosa cerchiamo oggi?" data-i18n-placeholder="searchPlaceholder" aria-label="Cerca la bibliografia su PubMed e OpenAlex" data-i18n-aria="searchAria" autofocus />
-                <button class="bb-ask-btn" type="submit" aria-label="Cerca">
+              <div class="bb-fields-row">
+                <div class="bb-field">
+                  <label for="bbAuthorInput" data-i18n="fieldAuthorLabel">Autore</label>
+                  <input type="text" id="bbAuthorInput" data-i18n-placeholder="authorFieldPlaceholder" placeholder="Cognome e iniziali, es. Landoni G" aria-label="Cerca per autore" data-i18n-aria="authorFieldAria" />
+                </div>
+                <div class="bb-field">
+                  <label for="bbTopicInput" data-i18n="fieldTopicLabel">Argomento</label>
+                  <input type="text" id="bbTopicInput" data-i18n-placeholder="topicFieldPlaceholder" placeholder="Es. amino acids, decompression sickness" aria-label="Cerca per argomento" data-i18n-aria="topicFieldAria" autofocus />
+                </div>
+                <button class="bb-ask-btn" type="submit" aria-label="Cerca" data-i18n-aria="searchBtnAria">
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
                 </button>
               </div>
+              <p class="bb-fields-hint" data-i18n="fieldsHint">Puoi cercare per autore, per argomento oppure combinarli.</p>
+              <p class="bb-author-hint" id="bbAuthorHint" data-i18n="authorHint" hidden>Con nomi comuni, PubMed può includere pubblicazioni di autori omonimi. Aggiungere le iniziali o un argomento aiuta a restringere la ricerca.</p>
+
               <div class="bb-year-filter">
                 <label for="bbYearFrom" data-i18n="yearFromLabel">Dal</label>
                 <input type="number" id="bbYearFrom" inputmode="numeric" placeholder="es. 2015" min="1900" max="2100" />
@@ -145,6 +150,20 @@
                 <input type="number" id="bbYearTo" inputmode="numeric" placeholder="es. 2026" min="1900" max="2100" />
                 <span class="bb-year-hint" data-i18n="yearHint">(facoltativo)</span>
               </div>
+              <p class="bb-field-error" id="bbYearError" hidden aria-live="assertive"></p>
+
+              <details class="bb-pubtype-filter" id="bbPubTypeFilter">
+                <summary data-i18n="pubTypeSummary">Tipo di pubblicazione <span class="bb-pubtype-count" id="bbPubTypeCount"></span></summary>
+                <div class="bb-pubtype-grid" id="bbPubTypeGrid" role="group" aria-label="Tipo di pubblicazione">
+                  <label><input type="checkbox" value="Review" /> <span data-i18n="pt_review">Review</span></label>
+                  <label><input type="checkbox" value="Systematic Review" /> <span data-i18n="pt_sr">Systematic Review</span></label>
+                  <label><input type="checkbox" value="Meta-Analysis" /> <span data-i18n="pt_ma">Meta-Analysis</span></label>
+                  <label><input type="checkbox" value="Randomized Controlled Trial" /> <span data-i18n="pt_rct">Randomized Controlled Trial</span></label>
+                  <label><input type="checkbox" value="Observational Study" /> <span data-i18n="pt_os">Observational Study</span></label>
+                  <label><input type="checkbox" value="Guideline" /> <span data-i18n="pt_gl">Guideline</span></label>
+                </div>
+                <button type="button" class="bb-pubtype-reset" id="bbPubTypeClear" data-i18n="pubTypeClear" hidden>Azzera filtri</button>
+              </details>
             </form>
 
             <div class="bb-constellation-wrap bb-reveal">
@@ -217,6 +236,7 @@
               <span data-i18n="compareLink">Verifica questa ricerca direttamente su PubMed →</span>
             </a>
             <ol class="bb-biblio-results" id="bbBiblioResults"></ol>
+            <button type="button" class="bb-load-more" id="bbLoadMore" hidden data-i18n="loadMore">Carica altri</button>
           </div>
 
           <aside class="bb-biblio-rules bb-biblio-rules--left" id="bbFeatures">
@@ -237,30 +257,49 @@
               </p>
             </div>
 
-            <div class="bb-rule bb-rule--5 bb-reveal" style="transition-delay:.2s">
-              <span class="bb-rule-num">05</span>
-              <h3 data-i18n="rule5Title">Filtra ed esplora</h3>
+            <div class="bb-rule bb-rule--3 bb-reveal" style="transition-delay:.2s">
+              <span class="bb-rule-num">03</span>
+              <h3 data-i18n="rule3Title">Autore, argomento o entrambi</h3>
               <ul class="bb-rule-list">
-                <li data-i18n="rule5Item1">Restringi per anno di pubblicazione</li>
-                <li data-i18n="rule5Item2">Passa il mouse su una voce per leggere l'abstract</li>
-                <li data-i18n="rule5Item3">Confronta i risultati su PubMed con un click</li>
+                <li data-i18n="rule3Item1">Cerca per cognome e iniziali, es. "Landoni G"</li>
+                <li data-i18n="rule3Item2">Cerca per argomento, o combina i due campi insieme</li>
+                <li data-i18n="rule3Item3">Mai confuso con autori omonimi, grazie al tag ufficiale di PubMed</li>
+              </ul>
+            </div>
+
+            <div class="bb-rule bb-rule--7 bb-reveal" style="transition-delay:.3s">
+              <span class="bb-rule-num">04</span>
+              <h3 data-i18n="rule7Title">Filtra per tipo di studio e anno</h3>
+              <ul class="bb-rule-list">
+                <li data-i18n="rule7Item1">Review, RCT, meta-analisi e altri tipi, anche insieme</li>
+                <li data-i18n="rule7Item2">Restringi per anno di pubblicazione</li>
+                <li data-i18n="rule7Item3">Ogni filtro corregge la ricerca vera, non solo ciò che vedi</li>
               </ul>
             </div>
           </aside>
 
           <aside class="bb-biblio-rules bb-biblio-rules--right">
-            <div class="bb-rule bb-rule--3 bb-reveal" style="transition-delay:0s">
-              <span class="bb-rule-num">03</span>
-              <h3 data-i18n="rule3Title">Argomento o autore</h3>
+            <div class="bb-rule bb-rule--4b bb-reveal" style="transition-delay:0s">
+              <span class="bb-rule-num">05</span>
+              <h3 data-i18n="rule4bTitle">PubMed e OpenAlex, mai inventata</h3>
               <ul class="bb-rule-list">
-                <li data-i18n="rule3Item1">PubMed e OpenAlex, in tempo reale</li>
-                <li data-i18n="rule3Item2">Cerca anche per autore: tutte le sue pubblicazioni, nome evidenziato</li>
-                <li data-i18n="rule3Item3">Mai scritta da un'intelligenza artificiale</li>
+                <li data-i18n="rule4bItem1">Dati reali, recuperati in tempo reale</li>
+                <li data-i18n="rule4bItem2">Nessuna voce doppia tra le due fonti</li>
+                <li data-i18n="rule4bItem3">Mai scritta da un'intelligenza artificiale</li>
               </ul>
             </div>
 
-            <div class="bb-rule bb-rule--4 bb-reveal" style="transition-delay:.1s">
-              <span class="bb-rule-num">04</span>
+            <div class="bb-rule bb-rule--5 bb-reveal" style="transition-delay:.1s">
+              <span class="bb-rule-num">06</span>
+              <h3 data-i18n="rule5Title">Leggi tutto, senza aprire nulla</h3>
+              <ul class="bb-rule-list">
+                <li data-i18n="rule5Item2">Passa il mouse sull'abstract, o toccalo da smartphone</li>
+                <li data-i18n="rule5Item3">Confronta i risultati su PubMed con un click</li>
+              </ul>
+            </div>
+
+            <div class="bb-rule bb-rule--4 bb-reveal" style="transition-delay:.2s">
+              <span class="bb-rule-num">07</span>
               <h3 data-i18n="rule4Title">Vancouver, BibTeX, RIS o Word</h3>
               <ul class="bb-rule-list">
                 <li data-i18n="rule4Item1">Vancouver, pronta da incollare</li>
@@ -270,12 +309,13 @@
               </ul>
             </div>
 
-            <div class="bb-rule bb-rule--6 bb-reveal" style="transition-delay:.2s">
-              <span class="bb-rule-num">06</span>
+            <div class="bb-rule bb-rule--6 bb-reveal" style="transition-delay:.3s">
+              <span class="bb-rule-num">08</span>
               <h3 data-i18n="rule6Title">La tua bibliografia</h3>
               <ul class="bb-rule-list">
                 <li data-i18n="rule6Item1">Accumula più ricerche in un'unica lista</li>
                 <li data-i18n="rule6Item2">Scarica subito il PDF se è ad accesso libero</li>
+                <li data-i18n="rule6Item3">Se non lo è, scrivi all'autore per chiederne una copia</li>
               </ul>
             </div>
           </aside>
@@ -365,22 +405,30 @@
       rule2Title: "Sii specifico",
       rule2Desc: "Due o tre parole mirate. Un singolo termine generico restituisce migliaia di risultati non utili.",
       rule2Bad: "pressione",
-      rule3Title: "Argomento o autore",
-      rule3Item1: "PubMed e OpenAlex, in tempo reale",
-      rule3Item2: "Cerca anche per autore: tutte le sue pubblicazioni, nome evidenziato",
-      rule3Item3: "Mai scritta da un'intelligenza artificiale",
+      rule3Title: "Autore, argomento o entrambi",
+      rule3Item1: "Cerca per cognome e iniziali, es. \"Landoni G\"",
+      rule3Item2: "Cerca per argomento, o combina i due campi insieme",
+      rule3Item3: "Mai confuso con autori omonimi, grazie al tag ufficiale di PubMed",
+      rule4bTitle: "PubMed e OpenAlex, mai inventata",
+      rule4bItem1: "Dati reali, recuperati in tempo reale",
+      rule4bItem2: "Nessuna voce doppia tra le due fonti",
+      rule4bItem3: "Mai scritta da un'intelligenza artificiale",
+      rule7Title: "Filtra per tipo di studio e anno",
+      rule7Item1: "Review, RCT, meta-analisi e altri tipi, anche insieme",
+      rule7Item2: "Restringi per anno di pubblicazione",
+      rule7Item3: "Ogni filtro corregge la ricerca vera, non solo ciò che vedi",
       rule4Title: "Vancouver, BibTeX, RIS o Word",
       rule4Item1: "Vancouver, pronta da incollare",
       rule4Item2: "BibTeX per Zotero e Mendeley",
       rule4Item3: "RIS per EndNote",
       rule4Item4: "TXT o Word, per un file pronto all'uso",
-      rule5Title: "Filtra ed esplora",
-      rule5Item1: "Restringi per anno di pubblicazione",
-      rule5Item2: "Passa il mouse su una voce per leggere l'abstract",
+      rule5Title: "Leggi tutto, senza aprire nulla",
+      rule5Item2: "Passa il mouse sull'abstract, o toccalo da smartphone",
       rule5Item3: "Confronta i risultati su PubMed con un click",
       rule6Title: "La tua bibliografia",
       rule6Item1: "Accumula più ricerche in un'unica lista",
       rule6Item2: "Scarica subito il PDF se è ad accesso libero",
+      rule6Item3: "Se non lo è, scrivi all'autore per chiederne una copia",
       chip1: "Fonti verificate",
       chip2: "Perimetro scientifico definito",
       chip3: "Limiti dichiarati quando servono",
@@ -388,24 +436,40 @@
       examplesLabel: "Prova:",
       legendOa: "accesso libero: PDF scaricabile subito",
       legendPaywall: "a pagamento: link alla fonte per abstract e acquisto",
-      searchPlaceholder: "Cosa cerchiamo oggi?",
-      searchAria: "Cerca la bibliografia su PubMed e OpenAlex",
-      modeTopic: "Argomento", modeAuthor: "Autore",
-      authorPlaceholder: "Nome e cognome dell'autore",
-      authorAria: "Cerca tutte le pubblicazioni di un autore su PubMed e OpenAlex",
-      authorHint: "Attenzione: con nomi comuni, i risultati da PubMed potrebbero includere anche omonimi.",
+      fieldAuthorLabel: "Autore", fieldTopicLabel: "Argomento",
+      authorFieldPlaceholder: "Cognome e iniziali, es. Landoni G",
+      authorFieldAria: "Cerca per autore",
+      topicFieldPlaceholder: "Es. amino acids, decompression sickness",
+      topicFieldAria: "Cerca per argomento",
+      searchBtnAria: "Cerca",
+      fieldsHint: "Puoi cercare per autore, per argomento oppure combinarli.",
+      authorHint: "Con nomi comuni, PubMed può includere pubblicazioni di autori omonimi. Aggiungere le iniziali o un argomento aiuta a restringere la ricerca.",
+      pubTypeSummary: "Tipo di pubblicazione",
+      pt_review: "Review", pt_sr: "Systematic Review", pt_ma: "Meta-Analysis",
+      pt_rct: "Randomized Controlled Trial", pt_os: "Observational Study", pt_gl: "Guideline",
+      pubTypeClear: "Azzera filtri",
+      yearErrorNumber: "L'anno deve essere un numero.",
+      yearErrorRange: "Inserisci un anno tra il 1900 e l'anno prossimo.",
+      yearErrorOrder: "L'anno \"Dal\" non può essere successivo a \"Al\".",
+      emptyFieldsError: "Scrivi un autore, un argomento o entrambi.",
+      loadMore: "Carica altri",
       footer: "Un progetto degli <a href=\"index.html\">Amici di Boyle</a> · Ricerca ed educazione — non sostituisce il giudizio clinico.",
       domSub: "Subacquea", domIper: "Iperbarica", domTrauma: "Trauma",
       domSic: "Sicurezza", domAero: "Aerospazio", domFis: "Fisiologia",
       searching: "Ricerca su PubMed e OpenAlex in corso…",
-      results: function (total, n) { return total + " risultati su PubMed e OpenAlex · le " + n + " voci più rilevanti, in stile Vancouver:"; },
+      results: function (total, n) { return total + " risultati su PubMed e OpenAlex · le " + n + " voci mostrate finora, in stile Vancouver:"; },
       noResults: function (q) { return 'Nessun risultato per "' + q + '". Prova un termine più specifico, in italiano o in inglese.'; },
       error: "Non riesco a contattare PubMed/OpenAlex in questo momento (connessione assente o servizio non raggiungibile). Riprova tra poco.",
+      networkError: "Errore di rete: non riesco a completare la ricerca. Controlla la connessione e riprova.",
+      sourceUnavailable: function (source) { return source + " non raggiungibile in questo momento"; },
       copy: "Copia", copied: "Copiato", copyFailed: "Copia manualmente",
       copyAll: "Copia tutte le citazioni", copiedAll: "Bibliografia copiata",
       pdfOpen: "PDF", pdfPaywall: "A pagamento",
       noAbstract: "Abstract non disponibile per questa voce.",
       abstractToggle: "Abstract",
+      emailRequestPdf: "Richiedi il PDF all'autore",
+      emailWriteAuthor: "Scrivi all'autore",
+      emailLowConfidenceTip: "Indirizzo e-mail presente nei metadati bibliografici; il ruolo di corresponding author non è sempre identificabile.",
       compareLink: "Verifica questa ricerca direttamente su PubMed →",
       yearFromLabel: "Dal", yearToLabel: "al", yearHint: "(facoltativo)",
       basketAdd: "+ Aggiungi", basketRemove: "✓ Aggiunta",
@@ -426,22 +490,30 @@
       rule2Title: "Be specific",
       rule2Desc: "Two or three focused words. A single generic term returns thousands of unhelpful results.",
       rule2Bad: "pressure",
-      rule3Title: "Topic or author",
-      rule3Item1: "PubMed and OpenAlex, live",
-      rule3Item2: "Search by author too: every one of their papers, name highlighted",
-      rule3Item3: "Never written by an AI",
+      rule3Title: "Author, topic, or both",
+      rule3Item1: "Search by last name and initials, e.g. \"Landoni G\"",
+      rule3Item2: "Search by topic, or combine both fields together",
+      rule3Item3: "Never confused with namesakes, thanks to PubMed's official tag",
+      rule4bTitle: "PubMed and OpenAlex, never invented",
+      rule4bItem1: "Real data, fetched in real time",
+      rule4bItem2: "No duplicate entries between the two sources",
+      rule4bItem3: "Never written by an AI",
+      rule7Title: "Filter by study type and year",
+      rule7Item1: "Review, RCT, meta-analysis and others, even combined",
+      rule7Item2: "Narrow by publication year",
+      rule7Item3: "Every filter corrects the real search, not just what you see",
       rule4Title: "Vancouver, BibTeX, RIS or Word",
       rule4Item1: "Vancouver, ready to paste",
       rule4Item2: "BibTeX for Zotero and Mendeley",
       rule4Item3: "RIS for EndNote",
       rule4Item4: "TXT or Word, ready to use",
-      rule5Title: "Filter and explore",
-      rule5Item1: "Narrow by publication year",
+      rule5Title: "Read it all without opening anything",
+      rule5Item2: "Hover over the abstract, or tap it on your phone",
       rule5Item3: "Cross-check results on PubMed with one click",
-      rule5Item2: "Hover over an entry to read the abstract",
       rule6Title: "Your bibliography",
       rule6Item1: "Combine multiple searches into one list",
       rule6Item2: "Download the PDF right away if open access",
+      rule6Item3: "If not, write to the author to ask for a copy",
       chip1: "Verified sources",
       chip2: "Defined scientific scope",
       chip3: "Limits stated when relevant",
@@ -449,24 +521,40 @@
       examplesLabel: "Try:",
       legendOa: "open access: PDF downloadable right away",
       legendPaywall: "paywalled: link to the source for abstract and purchase",
-      searchPlaceholder: "What are we searching for today?",
-      searchAria: "Search the bibliography on PubMed and OpenAlex",
-      modeTopic: "Topic", modeAuthor: "Author",
-      authorPlaceholder: "Author's first and last name",
-      authorAria: "Search all publications by an author on PubMed and OpenAlex",
-      authorHint: "Heads up: with common names, PubMed results may include namesakes.",
+      fieldAuthorLabel: "Author", fieldTopicLabel: "Topic",
+      authorFieldPlaceholder: "Last name and initials, e.g. Landoni G",
+      authorFieldAria: "Search by author",
+      topicFieldPlaceholder: "E.g. amino acids, decompression sickness",
+      topicFieldAria: "Search by topic",
+      searchBtnAria: "Search",
+      fieldsHint: "You can search by author, by topic, or combine both.",
+      authorHint: "With common names, PubMed may include publications by different authors sharing the same name. Adding initials or a topic helps narrow the search.",
+      pubTypeSummary: "Publication type",
+      pt_review: "Review", pt_sr: "Systematic Review", pt_ma: "Meta-Analysis",
+      pt_rct: "Randomized Controlled Trial", pt_os: "Observational Study", pt_gl: "Guideline",
+      pubTypeClear: "Clear filters",
+      yearErrorNumber: "The year must be a number.",
+      yearErrorRange: "Enter a year between 1900 and next year.",
+      yearErrorOrder: "The \"From\" year cannot be later than \"To\".",
+      emptyFieldsError: "Enter an author, a topic, or both.",
+      loadMore: "Load more",
       footer: "A project by <a href=\"index.html\">Amici di Boyle</a> · Research and education — does not replace clinical judgment.",
       domSub: "Diving", domIper: "Hyperbaric", domTrauma: "Trauma",
       domSic: "Safety", domAero: "Aerospace", domFis: "Physiology",
       searching: "Searching PubMed and OpenAlex…",
-      results: function (total, n) { return total + " results on PubMed and OpenAlex · the " + n + " most relevant entries, in Vancouver style:"; },
+      results: function (total, n) { return total + " results on PubMed and OpenAlex · " + n + " entries shown so far, in Vancouver style:"; },
       noResults: function (q) { return 'No results for "' + q + '". Try a more specific term, in Italian or English.'; },
       error: "Can't reach PubMed/OpenAlex right now (no connection or service unavailable). Please try again shortly.",
+      networkError: "Network error: couldn't complete the search. Check your connection and try again.",
+      sourceUnavailable: function (source) { return source + " unavailable right now"; },
       copy: "Copy", copied: "Copied", copyFailed: "Copy manually",
       copyAll: "Copy all citations", copiedAll: "Bibliography copied",
       pdfOpen: "PDF", pdfPaywall: "Paywalled",
       noAbstract: "No abstract available for this entry.",
       abstractToggle: "Abstract",
+      emailRequestPdf: "Request the PDF from the author",
+      emailWriteAuthor: "Write to the author",
+      emailLowConfidenceTip: "Email address found in the bibliographic metadata; the corresponding-author role isn't always identifiable.",
       compareLink: "Check this search directly on PubMed →",
       yearFromLabel: "From", yearToLabel: "to", yearHint: "(optional)",
       basketAdd: "+ Add", basketRemove: "✓ Added",
@@ -600,6 +688,67 @@
     return names.join(", ");
   }
 
+  var PAGE_SIZE = 10;
+
+  /* ── normalizzazione autore e costruzione query: prudente, non inventa
+     nulla che l'utente non abbia scritto (spazi multipli collassati,
+     iniziali lasciate come scritte, nessuna inversione nome/cognome,
+     nessuna alterazione di cognomi composti) ── */
+  function normalizeAuthorName(raw) {
+    return (raw || "").trim().replace(/\s+/g, " ");
+  }
+  function buildAuthorTermPubMed(nameRaw) {
+    var n = normalizeAuthorName(nameRaw);
+    return n ? n + "[au]" : "";
+  }
+  function buildPubTypeClausePubMed(types) {
+    if (!types || !types.length) return "";
+    var parts = types.map(function (t) {
+      return t.indexOf(" ") > -1 ? "\"" + t + "\"[pt]" : t + "[pt]";
+    });
+    return parts.length > 1 ? "(" + parts.join(" OR ") + ")" : parts[0];
+  }
+  /* unica funzione che costruisce la query PubMed: usata sia per la
+     ricerca reale sia per il link "verifica su PubMed", così le due
+     restano sempre identiche */
+  function buildPubMedTerm(authorRaw, topicRaw, pubTypes) {
+    var authorPart = buildAuthorTermPubMed(authorRaw);
+    var topicPart = (topicRaw || "").trim() ? translateQuery(topicRaw) : "";
+    var core = [authorPart, topicPart].filter(Boolean).join(" AND ");
+    var ptClause = buildPubTypeClausePubMed(pubTypes);
+    if (!ptClause) return core;
+    return core ? core + " AND " + ptClause : ptClause;
+  }
+  /* OpenAlex: filter=author.id (se risolto) combinato con search=argomento;
+     i tipi di pubblicazione PubMed (RCT, Guideline...) non hanno un
+     equivalente affidabile nella tassonomia di OpenAlex, quindi qui non
+     vengono applicati — limite dichiarato, non un'approssimazione silenziosa */
+  function buildOpenAlexTopicTerm(topicRaw) {
+    return (topicRaw || "").trim() ? translateQuery(topicRaw) : "";
+  }
+
+  /* ── email dell'autore: usata solo se realmente presente nei metadati,
+     mai dedotta dal nome o dal dominio dell'istituzione ── */
+  var EMAIL_RE = /[\w.+-]+@[\w-]+\.[\w.-]+/;
+  function extractEmailFromText(text) {
+    var m = EMAIL_RE.exec(text || "");
+    return m ? m[0] : null;
+  }
+  /* il destinatario nel mailto: NON va incapsulato in encodeURIComponent
+     (romperebbe la @); solo oggetto e corpo vanno codificati, questo
+     gestisce correttamente spazi, accenti, virgolette, apostrofi,
+     ampersand e titoli lunghi */
+  function buildMailto(email, title, lastName) {
+    var subject = "Request for a copy of your article: " + title;
+    var body = "Dear Dr. " + (lastName || "") + ",\n\n" +
+      "I am interested in your article:\n\n" +
+      "“" + title + "”\n\n" +
+      "Unfortunately, I do not currently have access to the full text. Would you be willing to share a personal copy for research and educational purposes?\n\n" +
+      "Thank you for your time.\n\n" +
+      "Kind regards,";
+    return "mailto:" + email + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
+  }
+
   /* ── PubMed: esearch + esummary ── */
   function mapPubMedArticle(a) {
     if (!a) return null;
@@ -618,14 +767,18 @@
       text: [authors, title, journal].filter(Boolean).join(". ") + (tail ? ". " + tail + "." : "."),
       link: link, linkLabel: linkLabel, source: "PubMed", doi: doi,
       names: names, title: title, journal: journal, year: year,
-      vol: vol, issue: issue, pages: pagesRaw, pmid: a.uid, abstract: ""
+      vol: vol, issue: issue, pages: pagesRaw, pmid: a.uid, abstract: "",
+      authorEmail: null, authorEmailConfidence: null, authorEmailLastName: null
     };
   }
 
-  /* PubMed non dà l'abstract nella stessa chiamata dei risultati: lo
-     recupera in un'unica richiesta batch (efetch, XML) per tutti i PMID
-     della pagina corrente, così l'anteprima al passaggio del mouse è
-     già pronta senza una richiesta per ogni singolo articolo. */
+  /* PubMed non dà l'abstract né l'affiliazione (dove a volte compare
+     un'email) nella stessa chiamata dei risultati: li recupera in
+     un'unica richiesta batch (efetch, XML) per tutti i PMID della
+     pagina corrente, così l'anteprima al passaggio del mouse è già
+     pronta senza una richiesta per ogni singolo articolo. L'email,
+     quando presente, non indica con certezza il corresponding author
+     (PubMed non lo dichiara esplicitamente): confidenza sempre "bassa". */
   function fetchPubMedAbstracts(items) {
     var byPmid = {};
     items.forEach(function (v) { if (v.pmid) byPmid[v.pmid] = v; });
@@ -647,12 +800,30 @@
           text.push((label ? label + ": " : "") + parts[j].textContent);
         }
         byPmid[pmid].abstract = text.join(" ");
+
+        var authorNodes = articles[i].getElementsByTagName("Author");
+        for (var k = 0; k < authorNodes.length; k++) {
+          var affNodes = authorNodes[k].getElementsByTagName("Affiliation");
+          var email = null;
+          for (var m = 0; m < affNodes.length; m++) {
+            email = extractEmailFromText(affNodes[m].textContent);
+            if (email) break;
+          }
+          if (email) {
+            var lastNameEl = authorNodes[k].getElementsByTagName("LastName")[0];
+            byPmid[pmid].authorEmail = email;
+            byPmid[pmid].authorEmailConfidence = "low";
+            byPmid[pmid].authorEmailLastName = lastNameEl ? lastNameEl.textContent : "";
+            break;
+          }
+        }
       }
-    }).catch(function () { /* niente abstract, non blocca il resto */ });
+    }).catch(function () { /* niente abstract/email, non blocca il resto */ });
   }
 
-  function searchPubMed(query, yearFrom, yearTo) {
-    var url = EUTILS + "esearch.fcgi?db=pubmed&retmode=json&retmax=5&sort=relevance&term=" + encodeURIComponent(query);
+  function searchPubMed(term, yearFrom, yearTo, retstart) {
+    var url = EUTILS + "esearch.fcgi?db=pubmed&retmode=json&retmax=" + PAGE_SIZE +
+      "&retstart=" + (retstart || 0) + "&sort=relevance&term=" + encodeURIComponent(term);
     if (yearFrom || yearTo) {
       url += "&datetype=pdat&mindate=" + (yearFrom || "1900") + "&maxdate=" + (yearTo || new Date().getFullYear());
     }
@@ -661,8 +832,8 @@
       return res.json();
     }).then(function (data) {
       var ids = (data.esearchresult && data.esearchresult.idlist) || [];
-      var total = (data.esearchresult && data.esearchresult.count) || 0;
-      if (!ids.length) return { source: "PubMed", total: 0, items: [] };
+      var total = parseInt((data.esearchresult && data.esearchresult.count) || "0", 10);
+      if (!ids.length) return { source: "PubMed", total: total, items: [] };
       return fetch(EUTILS + "esummary.fcgi?db=pubmed&retmode=json&id=" + ids.join(","))
         .then(function (res) {
           if (!res.ok) throw new Error("esummary");
@@ -730,6 +901,27 @@
     return words.filter(Boolean).join(" ").replace(/<\/?[a-z][^>]*>/gi, "").replace(/\s{2,}/g, " ").trim();
   }
 
+  /* email dagli autori OpenAlex: solo se compare per davvero dentro
+     raw_affiliation_strings (testo libero fornito dall'editore). Se
+     l'autore con quell'email è segnato is_corresponding, la confidenza
+     è alta; altrimenti resta bassa. Mai fabbricata dal nome/dominio. */
+  function emailFromOpenAlexAuthorships(authorships) {
+    if (!authorships) return null;
+    var fallback = null;
+    for (var i = 0; i < authorships.length; i++) {
+      var au = authorships[i];
+      var affs = au.raw_affiliation_strings || [];
+      for (var j = 0; j < affs.length; j++) {
+        var email = extractEmailFromText(affs[j]);
+        if (!email) continue;
+        var lastName = ((au.author && au.author.display_name) || "").trim().split(/\s+/).pop();
+        if (au.is_corresponding) return { email: email, confidence: "high", lastName: lastName };
+        if (!fallback) fallback = { email: email, confidence: "low", lastName: lastName };
+      }
+    }
+    return fallback;
+  }
+
   function mapOpenAlexWork(w) {
     var names = (w.authorships || []).map(function (x) { return openAlexAuthorName(x.author && x.author.display_name); }).filter(Boolean);
     var authors = vancouverAuthors(names);
@@ -743,6 +935,7 @@
     var tail = [year, vol + (issue ? "(" + issue + ")" : "") + (pagesRaw ? ":" + pagesRaw : "")].filter(Boolean).join(";");
     var oa = w.open_access || {};
     var oaUrl = (w.best_oa_location && w.best_oa_location.pdf_url) || oa.oa_url || null;
+    var emailInfo = emailFromOpenAlexAuthorships(w.authorships);
     return {
       text: [authors, title, journal].filter(Boolean).join(". ") + (tail ? ". " + tail + "." : "."),
       link: link, linkLabel: "OpenAlex", source: "OpenAlex",
@@ -750,12 +943,16 @@
       names: names, title: title, journal: journal, year: year,
       vol: vol, issue: issue, pages: pagesRaw,
       doi: (w.doi || "").replace(/^https?:\/\/doi\.org\//i, ""),
-      abstract: reconstructAbstract(w.abstract_inverted_index)
+      abstract: reconstructAbstract(w.abstract_inverted_index),
+      authorEmail: emailInfo ? emailInfo.email : null,
+      authorEmailConfidence: emailInfo ? emailInfo.confidence : null,
+      authorEmailLastName: emailInfo ? emailInfo.lastName : null
     };
   }
 
-  function searchOpenAlex(query, yearFrom, yearTo) {
-    var url = OPENALEX + "?search=" + encodeURIComponent(query) + "&per-page=5&select=" + OPENALEX_SELECT;
+  function searchOpenAlex(term, yearFrom, yearTo, page) {
+    var url = OPENALEX + "?search=" + encodeURIComponent(term) + "&per-page=" + PAGE_SIZE +
+      "&page=" + (page || 1) + "&select=" + OPENALEX_SELECT;
     if (yearFrom || yearTo) {
       url += "&filter=publication_year:" + (yearFrom || "1900") + "-" + (yearTo || new Date().getFullYear());
     }
@@ -771,41 +968,13 @@
     });
   }
 
-  /* ── Ricerca per autore: PubMed usa il tag [Author] direttamente sul
-     nome; OpenAlex prima disambigua l'autore (endpoint /authors) e poi
-     ne recupera le opere per id — più preciso di una ricerca testuale,
-     perché non si confonde con omonimi che scrivono di tutt'altro. */
-  function searchPubMedByAuthor(name, yearFrom, yearTo) {
-    var term = encodeURIComponent(name.trim()) + "%5BAuthor%5D";
-    var url = EUTILS + "esearch.fcgi?db=pubmed&retmode=json&retmax=150&sort=pub+date&term=" + term;
-    if (yearFrom || yearTo) {
-      url += "&datetype=pdat&mindate=" + (yearFrom || "1900") + "&maxdate=" + (yearTo || new Date().getFullYear());
-    }
-    return fetch(url).then(function (res) {
-      if (!res.ok) throw new Error("esearch");
-      return res.json();
-    }).then(function (data) {
-      var ids = (data.esearchresult && data.esearchresult.idlist) || [];
-      var total = (data.esearchresult && data.esearchresult.count) || 0;
-      if (!ids.length) return { source: "PubMed", total: 0, items: [] };
-      return fetch(EUTILS + "esummary.fcgi?db=pubmed&retmode=json&id=" + ids.join(","))
-        .then(function (res) {
-          if (!res.ok) throw new Error("esummary");
-          return res.json();
-        })
-        .then(function (summary) {
-          var items = ids.map(function (id) { return mapPubMedArticle(summary.result && summary.result[id]); }).filter(Boolean);
-          return enrichWithOpenAccess(items).then(function (enriched) {
-            return { source: "PubMed", total: total, items: enriched };
-          });
-        });
-    }).catch(function () {
-      return { source: "PubMed", total: 0, items: [], error: true };
-    });
-  }
-
-  function searchOpenAlexByAuthor(name, yearFrom, yearTo) {
-    var authorUrl = "https://api.openalex.org/authors?search=" + encodeURIComponent(name.trim()) + "&per-page=1&select=id,display_name";
+  /* Ricerca OpenAlex per autore (con o senza argomento insieme): prima
+     disambigua l'autore (endpoint /authors) e poi ne recupera le opere
+     per id — più preciso di una ricerca testuale, perché non si
+     confonde con omonimi che scrivono di tutt'altro. Se è presente
+     anche un argomento, lo combina con "search=" sullo stesso filtro. */
+  function searchOpenAlexByAuthor(name, topicRaw, yearFrom, yearTo, page) {
+    var authorUrl = "https://api.openalex.org/authors?search=" + encodeURIComponent(normalizeAuthorName(name)) + "&per-page=1&select=id,display_name";
     return fetch(authorUrl).then(function (res) {
       if (!res.ok) throw new Error("openalex-author");
       return res.json();
@@ -816,7 +985,11 @@
       if (yearFrom || yearTo) {
         filter += ",publication_year:" + (yearFrom || "1900") + "-" + (yearTo || new Date().getFullYear());
       }
-      var url = OPENALEX + "?filter=" + filter + "&sort=publication_date:desc&per-page=150&select=" + OPENALEX_SELECT;
+      var topicTerm = buildOpenAlexTopicTerm(topicRaw);
+      var url = OPENALEX + "?filter=" + filter +
+        (topicTerm ? "&search=" + encodeURIComponent(topicTerm) : "") +
+        "&sort=" + (topicTerm ? "relevance_score:desc" : "publication_date:desc") +
+        "&per-page=" + PAGE_SIZE + "&page=" + (page || 1) + "&select=" + OPENALEX_SELECT;
       return fetch(url).then(function (res) {
         if (!res.ok) throw new Error("openalex");
         return res.json();
@@ -831,11 +1004,50 @@
   }
 
   var biblioForm = document.getElementById("bbBiblioForm");
-  var biblioInput = document.getElementById("bbBiblioInput");
+  var authorInput = document.getElementById("bbAuthorInput");
+  var topicInput = document.getElementById("bbTopicInput");
   var biblioStatus = document.getElementById("bbBiblioStatus");
   var biblioResults = document.getElementById("bbBiblioResults");
   var biblioExamples = document.getElementById("bbBiblioExamples");
   var biblioSubmitBtn = biblioForm ? biblioForm.querySelector(".bb-ask-btn") : null;
+  var authorHint = document.getElementById("bbAuthorHint");
+  var pubTypeGrid = document.getElementById("bbPubTypeGrid");
+  var pubTypeCountEl = document.getElementById("bbPubTypeCount");
+  var pubTypeClearBtn = document.getElementById("bbPubTypeClear");
+
+  function selectedPubTypes() {
+    if (!pubTypeGrid) return [];
+    return Array.prototype.slice.call(pubTypeGrid.querySelectorAll("input[type=checkbox]:checked")).map(function (cb) { return cb.value; });
+  }
+  function updatePubTypeCount() {
+    var n = selectedPubTypes().length;
+    if (pubTypeCountEl) pubTypeCountEl.textContent = n ? n : "";
+    if (pubTypeClearBtn) pubTypeClearBtn.hidden = n === 0;
+  }
+  if (pubTypeGrid) {
+    pubTypeGrid.addEventListener("change", updatePubTypeCount);
+  }
+  if (pubTypeClearBtn) {
+    pubTypeClearBtn.addEventListener("click", function () {
+      pubTypeGrid.querySelectorAll("input[type=checkbox]").forEach(function (cb) { cb.checked = false; });
+      updatePubTypeCount();
+    });
+  }
+
+  /* validazione degli anni: numerico, in un intervallo ragionevole, e
+     "dal" non successivo ad "al" */
+  var yearErrorEl = document.getElementById("bbYearError");
+  var CURRENT_YEAR = new Date().getFullYear();
+  function validateYearRange(fromVal, toVal) {
+    var from = fromVal ? parseInt(fromVal, 10) : null;
+    var to = toVal ? parseInt(toVal, 10) : null;
+    if (fromVal && (isNaN(from) || String(from) !== String(fromVal).trim())) return I18N[currentLang].yearErrorNumber;
+    if (toVal && (isNaN(to) || String(to) !== String(toVal).trim())) return I18N[currentLang].yearErrorNumber;
+    if (from !== null && (from < 1900 || from > CURRENT_YEAR + 1)) return I18N[currentLang].yearErrorRange;
+    if (to !== null && (to < 1900 || to > CURRENT_YEAR + 1)) return I18N[currentLang].yearErrorRange;
+    if (from !== null && to !== null && from > to) return I18N[currentLang].yearErrorOrder;
+    return null;
+  }
 
   function setStatus(text) { biblioStatus.textContent = text; }
 
@@ -1022,9 +1234,32 @@
       abstractBtn.classList.toggle("is-open", open);
     });
 
+    /* pulsante email: solo se un indirizzo è realmente presente nei
+       metadati (mai dedotto). Due varianti in base alla certezza del
+       ruolo di corresponding author (punti 40-43) */
+    var emailBtn = document.createElement("a");
+    emailBtn.className = "bb-biblio-email-btn";
+    emailBtn.hidden = true;
+    function paintEmailBtn() {
+      if (!v.authorEmail) { emailBtn.hidden = true; return; }
+      emailBtn.hidden = false;
+      emailBtn.href = buildMailto(v.authorEmail, v.title, v.authorEmailLastName);
+      if (v.authorEmailConfidence === "high") {
+        emailBtn.textContent = I18N[currentLang].emailRequestPdf;
+        emailBtn.title = "";
+        emailBtn.removeAttribute("data-tooltip");
+      } else {
+        emailBtn.textContent = I18N[currentLang].emailWriteAuthor;
+        emailBtn.title = I18N[currentLang].emailLowConfidenceTip;
+      }
+    }
+    paintEmailBtn();
+    v._paintEmailBtn = paintEmailBtn;
+
     actions.appendChild(copyBtn);
     actions.appendChild(abstractBtn);
     actions.appendChild(basketBtn);
+    actions.appendChild(emailBtn);
     actions.appendChild(link);
     var topRow = document.createElement("div");
     topRow.className = "bb-biblio-toprow";
@@ -1083,18 +1318,40 @@
 
   /* estrae il DOI normalizzato da un link doi.org, per riconoscere lo
      stesso lavoro indicizzato sia su PubMed sia su OpenAlex */
-  function doiKey(item) {
-    var m = /doi\.org\/(.+)$/i.exec(item.link || "");
-    return m ? decodeURIComponent(m[1]).toLowerCase().replace(/\/+$/, "") : null;
+  /* stessa voce trovata sia su PubMed sia su OpenAlex: si confronta prima
+     per PMID (il più affidabile, solo PubMed ce l'ha), poi per DOI, e solo
+     se mancano entrambi per titolo normalizzato (minuscolo, punteggiatura
+     e spazi ridotti) — mai scartata una voce valida solo perché priva di
+     riscontro nell'altra fonte (punto 21: si scarta solo se è un vero
+     duplicato, non semplicemente perché OpenAlex non la conosce) */
+  function normalizedTitleKey(item) {
+    /* NFD + rimozione dei segni diacritici prima di scartare i caratteri
+       non alfanumerici: senza, un accento reso in modo diverso dalle due
+       fonti (es. "né" vs "ne'") romperebbe il confronto invece di farlo */
+    var t = (item.title || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
+    return t.replace(/[^a-z0-9]+/g, " ").trim();
   }
-
   function dedupeItems(items) {
-    var seen = Object.create(null);
+    var seenPmid = Object.create(null);
+    var seenDoi = Object.create(null);
+    var seenTitle = Object.create(null);
     return items.filter(function (item) {
-      var key = doiKey(item);
-      if (!key) return true; // nessun DOI: non possiamo confrontarlo, lo teniamo
-      if (seen[key]) return false;
-      seen[key] = true;
+      var pmid = item.pmid || null;
+      var doi = (item.doi || "").toLowerCase().replace(/\/+$/, "") || null;
+      /* PMID e DOI sono controllati insieme, non in rami alternativi:
+         una voce PubMed (con pmid) e una voce OpenAlex dello stesso
+         articolo (senza pmid, ma con lo stesso doi) devono comunque
+         incontrarsi sulla chiave DOI condivisa per essere riconosciute
+         come duplicate */
+      if (pmid && seenPmid[pmid]) return false;
+      if (doi && seenDoi[doi]) return false;
+      if (!pmid && !doi) {
+        var titleKey = normalizedTitleKey(item);
+        if (titleKey && seenTitle[titleKey]) return false;
+        if (titleKey) seenTitle[titleKey] = true;
+      }
+      if (pmid) seenPmid[pmid] = true;
+      if (doi) seenDoi[doi] = true;
       return true;
     });
   }
@@ -1323,94 +1580,141 @@
     compareLink.hidden = false;
   }
 
-  var searchMode = "topic";
+  /* stato della ricerca corrente: serve per "Carica altri" (retstart su
+     PubMed, page su OpenAlex) e per capire quando non ci sono più
+     risultati da aggiungere */
+  var currentSearchState = null;
+  var loadMoreBtn = document.getElementById("bbLoadMore");
 
-  function searchBibliography(rawQuery) {
+  function sourceErrorMessage(failedSources) {
+    if (!failedSources.length) return "";
+    var dict = I18N[currentLang];
+    return " (" + failedSources.map(function (s) { return dict.sourceUnavailable(s); }).join(" / ") + ")";
+  }
+
+  function updateLoadMoreVisibility() {
+    if (!loadMoreBtn || !currentSearchState) return;
+    var pubmedHasMore = currentSearchState.pubmedShown < currentSearchState.pubmedTotal;
+    var openalexHasMore = currentSearchState.openalexPage * PAGE_SIZE < currentSearchState.openalexTotal;
+    loadMoreBtn.hidden = !(pubmedHasMore || openalexHasMore);
+  }
+
+  function runSearch(authorRaw, topicRaw, yearFrom, yearTo, pubTypes, append) {
     var requestId = ++searchRequestId;
-    biblioResults.innerHTML = "";
-    clearCopyAll();
+    if (!append) {
+      biblioResults.innerHTML = "";
+      clearCopyAll();
+    }
     setStatus(I18N[currentLang].searching);
     if (biblioSubmitBtn) biblioSubmitBtn.classList.add("is-loading");
-    var yearFrom = (yearFromInput && yearFromInput.value) ? yearFromInput.value.trim() : "";
-    var yearTo = (yearToInput && yearToInput.value) ? yearToInput.value.trim() : "";
+    if (loadMoreBtn) loadMoreBtn.disabled = true;
 
-    var pubmedTerm = searchMode === "author" ? rawQuery.trim() + "[Author]" : translateQuery(rawQuery);
+    var pubmedTerm = buildPubMedTerm(authorRaw, topicRaw, pubTypes);
     updateCompareLink(pubmedTerm, yearFrom, yearTo);
 
-    var searchPromise = searchMode === "author"
-      ? Promise.all([searchPubMedByAuthor(rawQuery, yearFrom, yearTo), searchOpenAlexByAuthor(rawQuery, yearFrom, yearTo)])
-      : Promise.all([searchPubMed(translateQuery(rawQuery), yearFrom, yearTo), searchOpenAlex(translateQuery(rawQuery), yearFrom, yearTo)]);
+    var pubmedRetstart = append ? currentSearchState.pubmedShown : 0;
+    var openalexPage = append ? currentSearchState.openalexPage + 1 : 1;
 
-    searchPromise.then(function (results) {
+    var pubmedPromise = pubmedTerm
+      ? searchPubMed(pubmedTerm, yearFrom, yearTo, pubmedRetstart)
+      : Promise.resolve({ source: "PubMed", total: 0, items: [] });
+
+    var openalexPromise;
+    if (authorRaw && authorRaw.trim()) {
+      openalexPromise = searchOpenAlexByAuthor(authorRaw, topicRaw, yearFrom, yearTo, openalexPage);
+    } else if (topicRaw && topicRaw.trim()) {
+      openalexPromise = searchOpenAlex(buildOpenAlexTopicTerm(topicRaw), yearFrom, yearTo, openalexPage);
+    } else {
+      openalexPromise = Promise.resolve({ source: "OpenAlex", total: 0, items: [] });
+    }
+
+    Promise.all([pubmedPromise, openalexPromise]).then(function (results) {
       if (requestId !== searchRequestId) return;
       if (biblioSubmitBtn) biblioSubmitBtn.classList.remove("is-loading");
-      var allItems = [];
-      var totalFound = 0;
-      var failedSources = [];
-      results.forEach(function (r) {
-        allItems = allItems.concat(r.items);
-        totalFound += r.items.length;
-        if (r.error) failedSources.push(r.source);
-      });
-      allItems = dedupeItems(allItems);
-      if (!allItems.length) {
-        setStatus(I18N[currentLang].noResults(rawQuery));
+      if (loadMoreBtn) loadMoreBtn.disabled = false;
+
+      var pubmedResult = results[0], openalexResult = results[1];
+      var failedSources = results.filter(function (r) { return r.error; }).map(function (r) { return r.source; });
+      var newItems = pubmedResult.items.concat(openalexResult.items);
+
+      var priorCount = append && currentSearchState ? currentSearchState.allItems.length : 0;
+      if (!append) {
+        currentSearchState = { authorRaw: authorRaw, topicRaw: topicRaw, yearFrom: yearFrom, yearTo: yearTo, pubTypes: pubTypes, allItems: [], pubmedShown: 0 };
+      }
+      currentSearchState.pubmedShown += pubmedResult.items.length;
+      currentSearchState.pubmedTotal = pubmedResult.total;
+      currentSearchState.openalexPage = openalexPage;
+      currentSearchState.openalexTotal = openalexResult.total;
+
+      var deduped = dedupeItems(currentSearchState.allItems.concat(newItems));
+      currentSearchState.allItems = deduped;
+      var newlyAdded = deduped.slice(priorCount);
+
+      if (!deduped.length) {
+        setStatus(I18N[currentLang].noResults(authorRaw || topicRaw || ""));
+        if (loadMoreBtn) loadMoreBtn.hidden = true;
         scrollStatusIntoView();
         return;
       }
-      var note = failedSources.length ? " (" + failedSources.join(" / ") + (currentLang === "en" ? " unavailable right now)" : " non raggiungibile in questo momento)") : "";
-      setStatus(I18N[currentLang].results(totalFound, allItems.length) + note);
-      var highlightName = null;
-      if (searchMode === "author") {
-        var parts = rawQuery.trim().split(/\s+/);
-        highlightName = parts.length > 1 ? parts[parts.length - 1] : rawQuery.trim();
-      }
-      allItems.forEach(function (v) { biblioResults.appendChild(renderItem(v, highlightName)); });
-      renderCopyAll(allItems);
-      scrollStatusIntoView();
-      /* abstract PubMed in un'unica richiesta in background: non blocca
-         la comparsa dei risultati, sarà pronto per quando l'utente passa
-         il mouse sopra una voce */
-      fetchPubMedAbstracts(allItems.filter(function (v) { return v.source === "PubMed"; }));
+
+      var realTotal = currentSearchState.pubmedTotal + currentSearchState.openalexTotal;
+      setStatus(I18N[currentLang].results(realTotal, deduped.length) + sourceErrorMessage(failedSources));
+      updateLoadMoreVisibility();
+
+      var highlightName = authorRaw && authorRaw.trim() ? normalizeAuthorName(authorRaw).split(/\s+/)[0] : null;
+      newlyAdded.forEach(function (v) { biblioResults.appendChild(renderItem(v, highlightName)); });
+      renderCopyAll(deduped);
+      if (!append) scrollStatusIntoView();
+      /* abstract + email PubMed in un'unica richiesta in background: non
+         blocca la comparsa dei risultati */
+      var newPubMedItems = newlyAdded.filter(function (v) { return v.source === "PubMed"; });
+      fetchPubMedAbstracts(newPubMedItems).then(function () {
+        newPubMedItems.forEach(function (v) { if (v._paintEmailBtn) v._paintEmailBtn(); });
+      });
+    }).catch(function () {
+      if (requestId !== searchRequestId) return;
+      if (biblioSubmitBtn) biblioSubmitBtn.classList.remove("is-loading");
+      if (loadMoreBtn) loadMoreBtn.disabled = false;
+      setStatus(I18N[currentLang].networkError);
     });
+  }
+
+  function triggerSearch(append) {
+    var authorRaw = authorInput ? authorInput.value.trim() : "";
+    var topicRaw = topicInput ? topicInput.value.trim() : "";
+    if (!authorRaw && !topicRaw) {
+      setStatus(I18N[currentLang].emptyFieldsError);
+      return;
+    }
+    var yearFrom = (yearFromInput && yearFromInput.value) ? yearFromInput.value.trim() : "";
+    var yearTo = (yearToInput && yearToInput.value) ? yearToInput.value.trim() : "";
+    var yearError = validateYearRange(yearFrom, yearTo);
+    if (yearErrorEl) {
+      yearErrorEl.hidden = !yearError;
+      yearErrorEl.textContent = yearError || "";
+    }
+    if (yearFromInput) yearFromInput.classList.toggle("has-error", !!yearError);
+    if (yearToInput) yearToInput.classList.toggle("has-error", !!yearError);
+    if (yearError) { if (yearFromInput) yearFromInput.focus(); return; }
+    if (authorHint) authorHint.hidden = !authorRaw;
+    runSearch(authorRaw, topicRaw, yearFrom, yearTo, selectedPubTypes(), append);
   }
 
   if (biblioForm) {
     biblioForm.addEventListener("submit", function (e) {
       e.preventDefault();
-      var q = biblioInput.value.trim();
-      if (q) searchBibliography(q);
+      triggerSearch(false);
     });
     biblioExamples.querySelectorAll("button[data-q]").forEach(function (btn) {
       btn.addEventListener("click", function () {
-        biblioInput.value = btn.getAttribute("data-q");
-        searchBibliography(biblioInput.value);
+        if (authorInput) authorInput.value = "";
+        topicInput.value = btn.getAttribute("data-q");
+        triggerSearch(false);
       });
     });
   }
-
-  /* passaggio tra "cerca per argomento" e "cerca per autore": cambia
-     solo cosa fa la ricerca e il testo del campo, il resto (rendering,
-     carrello, esportazione) resta identico */
-  var modeToggle = document.getElementById("bbModeToggle");
-  var authorHint = document.getElementById("bbAuthorHint");
-  if (modeToggle) {
-    modeToggle.querySelectorAll(".bb-mode-btn").forEach(function (btn) {
-      btn.addEventListener("click", function () {
-        searchMode = btn.getAttribute("data-mode");
-        modeToggle.querySelectorAll(".bb-mode-btn").forEach(function (b) {
-          var active = b === btn;
-          b.classList.toggle("is-active", active);
-          b.setAttribute("aria-selected", String(active));
-        });
-        var dict = I18N[currentLang];
-        biblioInput.placeholder = searchMode === "author" ? dict.authorPlaceholder : dict.searchPlaceholder;
-        biblioInput.setAttribute("aria-label", searchMode === "author" ? dict.authorAria : dict.searchAria);
-        biblioInput.value = "";
-        biblioInput.focus();
-        if (authorHint) authorHint.hidden = searchMode !== "author";
-      });
-    });
+  if (loadMoreBtn) {
+    loadMoreBtn.addEventListener("click", function () { triggerSearch(true); });
   }
 
   /* reveal on scroll: testo + costellazione */
