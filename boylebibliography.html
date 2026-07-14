@@ -261,7 +261,7 @@
               <span class="bb-rule-num">03</span>
               <h3 data-i18n="rule3Title">Autore, argomento o entrambi</h3>
               <ul class="bb-rule-list">
-                <li data-i18n="rule3Item1">Cerca per cognome e iniziali, es. "Landoni G"</li>
+                <li data-i18n="rule3Item1">Cerca per cognome e iniziali</li>
                 <li data-i18n="rule3Item2">Cerca per argomento, o combina i due campi insieme</li>
                 <li data-i18n="rule3Item3">Mai confuso con autori omonimi, grazie al tag ufficiale di PubMed</li>
               </ul>
@@ -406,7 +406,7 @@
       rule2Desc: "Due o tre parole mirate. Un singolo termine generico restituisce migliaia di risultati non utili.",
       rule2Bad: "pressione",
       rule3Title: "Autore, argomento o entrambi",
-      rule3Item1: "Cerca per cognome e iniziali, es. \"Landoni G\"",
+      rule3Item1: "Cerca per cognome e iniziali",
       rule3Item2: "Cerca per argomento, o combina i due campi insieme",
       rule3Item3: "Mai confuso con autori omonimi, grazie al tag ufficiale di PubMed",
       rule4bTitle: "PubMed e OpenAlex, mai inventata",
@@ -491,7 +491,7 @@
       rule2Desc: "Two or three focused words. A single generic term returns thousands of unhelpful results.",
       rule2Bad: "pressure",
       rule3Title: "Author, topic, or both",
-      rule3Item1: "Search by last name and initials, e.g. \"Landoni G\"",
+      rule3Item1: "Search by last name and initials",
       rule3Item2: "Search by topic, or combine both fields together",
       rule3Item3: "Never confused with namesakes, thanks to PubMed's official tag",
       rule4bTitle: "PubMed and OpenAlex, never invented",
@@ -1555,6 +1555,24 @@
   var yearFromInput = document.getElementById("bbYearFrom");
   var yearToInput = document.getElementById("bbYearTo");
 
+  /* rivalida a ogni modifica, non solo al submit: altrimenti l'avviso
+     resta visibile anche dopo che l'utente ha corretto il valore,
+     finché non preme di nuovo "cerca" — sembra bloccato */
+  function refreshYearValidation() {
+    var yearFrom = yearFromInput && yearFromInput.value ? yearFromInput.value.trim() : "";
+    var yearTo = yearToInput && yearToInput.value ? yearToInput.value.trim() : "";
+    var yearError = validateYearRange(yearFrom, yearTo);
+    if (yearErrorEl) {
+      yearErrorEl.hidden = !yearError;
+      yearErrorEl.textContent = yearError || "";
+    }
+    if (yearFromInput) yearFromInput.classList.toggle("has-error", !!yearError);
+    if (yearToInput) yearToInput.classList.toggle("has-error", !!yearError);
+    return !yearError;
+  }
+  if (yearFromInput) yearFromInput.addEventListener("input", refreshYearValidation);
+  if (yearToInput) yearToInput.addEventListener("input", refreshYearValidation);
+
   /* porta lo stato/risultati in vista: senza, dopo il click su "cerca"
      non si capisce se è successo qualcosa finché non si scrolla a mano
      (i risultati stanno più in basso, sotto la costellazione) */
@@ -1688,14 +1706,7 @@
     }
     var yearFrom = (yearFromInput && yearFromInput.value) ? yearFromInput.value.trim() : "";
     var yearTo = (yearToInput && yearToInput.value) ? yearToInput.value.trim() : "";
-    var yearError = validateYearRange(yearFrom, yearTo);
-    if (yearErrorEl) {
-      yearErrorEl.hidden = !yearError;
-      yearErrorEl.textContent = yearError || "";
-    }
-    if (yearFromInput) yearFromInput.classList.toggle("has-error", !!yearError);
-    if (yearToInput) yearToInput.classList.toggle("has-error", !!yearError);
-    if (yearError) { if (yearFromInput) yearFromInput.focus(); return; }
+    if (!refreshYearValidation()) { if (yearFromInput) yearFromInput.focus(); return; }
     if (authorHint) authorHint.hidden = !authorRaw;
     runSearch(authorRaw, topicRaw, yearFrom, yearTo, selectedPubTypes(), append);
   }

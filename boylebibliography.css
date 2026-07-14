@@ -315,10 +315,12 @@ p.bb-hero-sub {
 }
 
 .bb-field-error {
-  text-align: center; font-size: .8rem; color: #ff8a95; margin: 10px 0 0;
-  display: flex; align-items: center; justify-content: center; gap: 6px;
+  font-size: .78rem; font-weight: 600; color: #ff8a95; margin: 10px auto 0; width: fit-content;
+  display: flex; align-items: center; justify-content: center; gap: 7px;
+  background: rgba(255,90,106,.1); border: 1px solid rgba(255,90,106,.3);
+  border-radius: 999px; padding: 6px 14px;
 }
-.bb-field-error::before { content: "⚠"; }
+.bb-field-error::before { content: "⚠"; font-size: .82rem; }
 .bb-year-filter input.has-error { border-color: #ff5a6a; }
 
 /* filtro tipo pubblicazione: compatto, chiuso di default */
@@ -408,9 +410,8 @@ p.bb-trust-badge {
 }
 
 .bb-biblio-rules {
-  display: grid; gap: 14px; position: sticky; top: 90px; text-align: left;
+  display: grid; gap: 14px; text-align: left;
 }
-@media (max-width: 1100px) { .bb-biblio-rules { position: static; } }
 .bb-rule {
   background: var(--bb-glass); border: 1px solid var(--bb-border); border-left: 3px solid var(--rule-glow, var(--bb-cyan));
   border-radius: 14px; padding: 16px 18px;
