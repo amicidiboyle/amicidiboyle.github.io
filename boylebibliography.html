@@ -167,6 +167,7 @@
                   <label><input type="checkbox" value="Guideline" /> <span data-i18n="pt_gl">Guideline</span></label>
                 </div>
                 <button type="button" class="bb-pubtype-reset" id="bbPubTypeClear" data-i18n="pubTypeClear" hidden>Azzera filtri</button>
+                <p class="bb-pubtype-note" id="bbPubTypeNote" data-i18n="pubTypeNote" hidden>Con questo filtro attivo la ricerca usa solo PubMed, che riconosce questi tipi di pubblicazione.</p>
               </details>
             </form>
 
@@ -450,6 +451,7 @@
       pt_review: "Review", pt_sr: "Systematic Review", pt_ma: "Meta-Analysis",
       pt_rct: "Randomized Controlled Trial", pt_os: "Observational Study", pt_gl: "Guideline",
       pubTypeClear: "Azzera filtri",
+      pubTypeNote: "Con questo filtro attivo la ricerca usa solo PubMed, che riconosce questi tipi di pubblicazione.",
       yearErrorNumber: "L'anno deve essere un numero.",
       yearErrorRange: "Inserisci un anno tra il 1900 e l'anno prossimo.",
       yearErrorOrder: "L'anno \"Dal\" non può essere successivo a \"Al\".",
@@ -532,6 +534,7 @@
       pt_review: "Review", pt_sr: "Systematic Review", pt_ma: "Meta-Analysis",
       pt_rct: "Randomized Controlled Trial", pt_os: "Observational Study", pt_gl: "Guideline",
       pubTypeClear: "Clear filters",
+      pubTypeNote: "With this filter active, search uses PubMed only, since it's the source that recognizes these publication types.",
       yearErrorNumber: "The year must be a number.",
       yearErrorRange: "Enter a year between 1900 and next year.",
       yearErrorOrder: "The \"From\" year cannot be later than \"To\".",
@@ -736,11 +739,10 @@
      gestisce correttamente spazi, accenti, virgolette, apostrofi,
      ampersand e titoli lunghi */
   function buildMailto(email, title, lastName) {
-    var subject = "Request for a copy of your article: " + title;
+    var subject = "Your article: " + title;
     var body = "Dear Dr. " + (lastName || "") + ",\n\n" +
       "I am interested in your article:\n\n" +
       "“" + title + "”\n\n" +
-      "Unfortunately, I do not currently have access to the full text. Would you be willing to share a personal copy for research and educational purposes?\n\n" +
       "Thank you for your time.\n\n" +
       "Kind regards,";
     return "mailto:" + email + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
@@ -1015,10 +1017,12 @@
     if (!pubTypeGrid) return [];
     return Array.prototype.slice.call(pubTypeGrid.querySelectorAll("input[type=checkbox]:checked")).map(function (cb) { return cb.value; });
   }
+  var pubTypeNoteEl = document.getElementById("bbPubTypeNote");
   function updatePubTypeCount() {
     var n = selectedPubTypes().length;
     if (pubTypeCountEl) pubTypeCountEl.textContent = n ? n : "";
     if (pubTypeClearBtn) pubTypeClearBtn.hidden = n === 0;
+    if (pubTypeNoteEl) pubTypeNoteEl.hidden = n === 0;
   }
   if (pubTypeGrid) {
     pubTypeGrid.addEventListener("change", updatePubTypeCount);
@@ -1626,8 +1630,15 @@
       ? searchPubMed(pubmedTerm, yearFrom, yearTo, pubmedRetstart)
       : Promise.resolve({ source: "PubMed", total: 0, items: [] });
 
+    /* OpenAlex non ha un equivalente affidabile dei tipi di pubblicazione
+       PubMed (RCT, Guideline...): mescolare risultati OpenAlex mai filtrati
+       con risultati PubMed filtrati dava l'impressione che il filtro non
+       funzionasse. Con un filtro attivo la ricerca resta solo su PubMed,
+       che lo applica davvero. */
     var openalexPromise;
-    if (authorRaw && authorRaw.trim()) {
+    if (pubTypes && pubTypes.length) {
+      openalexPromise = Promise.resolve({ source: "OpenAlex", total: 0, items: [] });
+    } else if (authorRaw && authorRaw.trim()) {
       openalexPromise = searchOpenAlexByAuthor(authorRaw, topicRaw, yearFrom, yearTo, openalexPage);
     } else if (topicRaw && topicRaw.trim()) {
       openalexPromise = searchOpenAlex(buildOpenAlexTopicTerm(topicRaw), yearFrom, yearTo, openalexPage);
@@ -1643,8 +1654,6 @@
       var pubmedResult = results[0], openalexResult = results[1];
       var failedSources = results.filter(function (r) { return r.error; }).map(function (r) { return r.source; });
       var newItems = pubmedResult.items.concat(openalexResult.items);
-
-      var priorCount = append && currentSearchState ? currentSearchState.allItems.length : 0;
       if (!append) {
         currentSearchState = { authorRaw: authorRaw, topicRaw: topicRaw, yearFrom: yearFrom, yearTo: yearTo, pubTypes: pubTypes, allItems: [], pubmedShown: 0 };
       }
@@ -1654,8 +1663,11 @@
       currentSearchState.openalexTotal = openalexResult.total;
 
       var deduped = dedupeItems(currentSearchState.allItems.concat(newItems));
+      /* più recenti prima: confronta l'anno come numero, le voci senza
+         anno riconoscibile finiscono in fondo invece di rompere l'ordine */
+      deduped.sort(function (a, b) { return (parseInt(b.year, 10) || 0) - (parseInt(a.year, 10) || 0); });
       currentSearchState.allItems = deduped;
-      var newlyAdded = deduped.slice(priorCount);
+      var newlyAdded = deduped.filter(function (v) { return newItems.indexOf(v) !== -1; });
 
       if (!deduped.length) {
         setStatus(I18N[currentLang].noResults(authorRaw || topicRaw || ""));
@@ -1668,8 +1680,12 @@
       setStatus(I18N[currentLang].results(realTotal, deduped.length) + sourceErrorMessage(failedSources));
       updateLoadMoreVisibility();
 
+      /* si ridisegna l'intera lista (non solo le nuove voci in coda):
+         con l'ordine cronologico, una voce appena caricata può dover
+         comparire in mezzo alle altre, non solo in fondo */
       var highlightName = authorRaw && authorRaw.trim() ? normalizeAuthorName(authorRaw).split(/\s+/)[0] : null;
-      newlyAdded.forEach(function (v) { biblioResults.appendChild(renderItem(v, highlightName)); });
+      biblioResults.innerHTML = "";
+      deduped.forEach(function (v) { biblioResults.appendChild(renderItem(v, highlightName)); });
       renderCopyAll(deduped);
       if (!append) scrollStatusIntoView();
       /* abstract + email PubMed in un'unica richiesta in background: non

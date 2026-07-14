@@ -311,9 +311,10 @@ p.bb-hero-sub {
 @keyframes bbSpin { to { transform: rotate(360deg); } }
 @media (max-width: 640px) {
   .bb-fields-row { flex-direction: column; align-items: stretch; }
-  .bb-ask-btn { width: 100%; height: 48px; border-radius: 12px; }
+  .bb-ask-btn { align-self: center; margin-top: 4px; }
 }
 
+.bb-field-error[hidden] { display: none; }
 .bb-field-error {
   font-size: .78rem; font-weight: 600; color: #ff8a95; margin: 10px auto 0; width: fit-content;
   display: flex; align-items: center; justify-content: center; gap: 7px;
@@ -359,6 +360,8 @@ p.bb-hero-sub {
   padding: 5px 12px; cursor: pointer; transition: color .15s, border-color .15s;
 }
 .bb-pubtype-reset:hover { color: var(--bb-text); border-color: var(--bb-border-hi); }
+.bb-pubtype-note[hidden] { display: none; }
+.bb-pubtype-note { margin: 8px 0 0; font-size: .74rem; color: var(--bb-soft); line-height: 1.5; }
 
 p.bb-trust-badge {
   margin-top: 38px; font-size: .78rem; color: var(--bb-soft); display: flex;
@@ -463,6 +466,7 @@ p.bb-trust-badge {
 .bb-biblio-status {
   margin-top: 26px; font-size: .86rem; color: var(--bb-muted); min-height: 1.2em; text-align: left;
 }
+.bb-compare-link[hidden] { display: none; }
 .bb-compare-link {
   display: inline-flex; align-items: center; gap: 6px; margin-top: 8px;
   font-size: .76rem; font-weight: 600; color: var(--bb-soft);
@@ -470,6 +474,7 @@ p.bb-trust-badge {
 }
 .bb-compare-link:hover { color: var(--bb-cyan-2); border-bottom-color: var(--bb-cyan-2); }
 .bb-biblio-results { list-style: none; margin: 14px 0 0; padding: 0; display: grid; gap: 10px; text-align: left; }
+.bb-load-more[hidden] { display: none; }
 .bb-load-more {
   display: block; margin: 16px auto 0; font-size: .84rem; font-weight: 600;
   color: var(--bb-cyan-2); background: rgba(123,228,255,.08); border: 1px solid var(--bb-border-hi);
@@ -594,6 +599,7 @@ a.bb-biblio-pdf--paywall:hover { background: rgba(255,90,106,.15); border-color:
 .bb-biblio-basket-btn.is-added { background: rgba(180,139,255,.22); color: var(--bb-cyan-2); border-color: rgba(180,139,255,.5); }
 
 /* barra fissa in basso: appare quando il carrello ha almeno una voce */
+.bb-basket-bar[hidden] { display: none; }
 .bb-basket-bar {
   position: fixed; left: 0; right: 0; bottom: 0; z-index: 90;
   display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px;
