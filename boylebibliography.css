@@ -192,7 +192,8 @@ html::after {
   .brand em:first-of-type { display: block; font-size: .62rem; color: var(--soft); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .brand-sub { display: none; }
   .lang-toggle { display: none !important; }
-  .lang-toggle--mobile.lang-toggle--nav { display: flex; margin-top: 4px; padding: 8px 16px; font-size: .8rem; }
+  .site-nav .lang-toggle--mobile { display: flex !important; margin-top: 4px !important; padding: 8px 16px !important; font-size: .8rem !important; }
+  .nav-toggle:checked ~ .site-nav .lang-toggle--mobile { display: flex !important; }
 
   .nav-burger { display: inline-flex; flex-direction: column; justify-content: center; gap: 5px; width: 42px; height: 42px; flex-shrink: 0; border: 1px solid rgba(123,228,255,.18); border-radius: 11px; padding: 0 10px; background: rgba(6,20,44,.7); cursor: pointer; }
   .nav-burger span { display: block; height: 2px; background: var(--text); border-radius: 2px; }
