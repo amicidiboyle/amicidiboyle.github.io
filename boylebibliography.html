@@ -1459,7 +1459,7 @@
   function saveBasket() {
     try { localStorage.setItem(BASKET_STORAGE_KEY, JSON.stringify(basket)); } catch (e) { /* storage non disponibile: il carrello resta solo in memoria per questa sessione */ }
   }
-  function basketItemKey(item) { return doiKey(item) || item.link; }
+  function basketItemKey(item) { return (item.doi || "").toLowerCase().replace(/\/+$/, "") || item.link; }
   function isInBasket(item) {
     var key = basketItemKey(item);
     return basket.some(function (b) { return basketItemKey(b) === key; });
