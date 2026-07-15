@@ -778,10 +778,12 @@
   /* "Articoli simili": PubMed calcola già da sé un elenco di articoli
      correlati per ogni PMID (stesso algoritmo della pagina "Similar
      articles" sul sito ufficiale) — lo richiediamo così com'è, non lo
-     stimiamo noi. Il retmode=json di elink è risultato inaffidabile
-     nei test (errore interno lato NCBI), quindi si usa l'XML di default. */
+     stimiamo noi. Il retmode=json di elink è risultato inaffidabile nei
+     test (errore interno lato NCBI, e a volte anche l'XML arriva
+     troncato a metà): si riprova fino a 3 volte prima di arrendersi,
+     invece di segnare "nessun risultato" al primo intoppo di rete. */
   var SIMILAR_LIMIT = 5;
-  function fetchSimilarPubMed(pmid) {
+  function elinkSimilarIds(pmid) {
     var url = EUTILS + "elink.fcgi?dbfrom=pubmed&db=pubmed&id=" + encodeURIComponent(pmid) + "&cmd=neighbor";
     return fetch(url).then(function (res) {
       if (!res.ok) throw new Error("elink");
@@ -801,8 +803,20 @@
         }
         break;
       }
+      if (!ids.length) throw new Error("empty"); // probabile risposta troncata: si riprova
+      return ids;
+    });
+  }
+  function elinkSimilarIdsWithRetry(pmid, attemptsLeft) {
+    return elinkSimilarIds(pmid).catch(function (err) {
+      if (attemptsLeft <= 1) throw err;
+      return new Promise(function (resolve) { setTimeout(resolve, 500); })
+        .then(function () { return elinkSimilarIdsWithRetry(pmid, attemptsLeft - 1); });
+    });
+  }
+  function fetchSimilarPubMed(pmid) {
+    return elinkSimilarIdsWithRetry(pmid, 3).then(function (ids) {
       ids = ids.slice(0, SIMILAR_LIMIT);
-      if (!ids.length) return [];
       return fetch(EUTILS + "esummary.fcgi?db=pubmed&retmode=json&id=" + ids.join(","))
         .then(function (res) { return res.ok ? res.json() : null; })
         .then(function (summary) {
@@ -960,6 +974,77 @@
       }
     }
     return fallback;
+  }
+
+  /* ── controllo incrociato tra le due fonti: né PubMed né OpenAlex hanno
+     l'email per ogni articolo, ma non è mai la STESSA voce che manca in
+     entrambe — capita spesso che una fonte la scriva nell'affiliazione e
+     l'altra no. Prima di rinunciare, si controlla anche l'altra fonte per
+     lo stesso DOI, in un'unica richiesta per tutto il gruppo (non una per
+     articolo). Sempre e solo dati realmente presenti, mai dedotti. */
+  function crossCheckEmailFromOpenAlex(items) {
+    var candidates = items.filter(function (v) { return v.doi && !v.authorEmail; });
+    if (!candidates.length) return Promise.resolve();
+    var dois = candidates.map(function (v) { return encodeURIComponent(v.doi); });
+    var url = OPENALEX + "?filter=doi:" + dois.join("|") + "&per-page=" + candidates.length + "&select=doi,authorships";
+    return fetch(url).then(function (res) { return res.ok ? res.json() : null; }).then(function (data) {
+      if (!data) return;
+      var byDoi = {};
+      (data.results || []).forEach(function (w) {
+        var d = (w.doi || "").replace(/^https?:\/\/doi\.org\//i, "").toLowerCase();
+        if (d) byDoi[d] = w;
+      });
+      candidates.forEach(function (v) {
+        var w = byDoi[v.doi.toLowerCase()];
+        if (!w) return;
+        var info = emailFromOpenAlexAuthorships(w.authorships);
+        if (info) { v.authorEmail = info.email; v.authorEmailLastName = info.lastName; }
+      });
+    }).catch(function () { /* nessuna email in più, non blocca il resto */ });
+  }
+
+  function crossCheckEmailFromPubMed(items) {
+    var candidates = items.filter(function (v) { return v.doi && !v.authorEmail; });
+    if (!candidates.length) return Promise.resolve();
+    var byDoi = {};
+    candidates.forEach(function (v) { byDoi[v.doi.toLowerCase()] = v; });
+    var term = candidates.map(function (v) { return v.doi + "[doi]"; }).join(" OR ");
+    var esearchUrl = EUTILS + "esearch.fcgi?db=pubmed&retmode=json&retmax=" + candidates.length + "&term=" + encodeURIComponent(term);
+    return fetch(esearchUrl).then(function (res) { return res.ok ? res.json() : null; }).then(function (data) {
+      var ids = data && data.esearchresult && data.esearchresult.idlist || [];
+      if (!ids.length) return;
+      var efetchUrl = EUTILS + "efetch.fcgi?db=pubmed&retmode=xml&rettype=abstract&id=" + ids.join(",");
+      return fetch(efetchUrl).then(function (res) { return res.ok ? res.text() : null; }).then(function (xmlText) {
+        if (!xmlText) return;
+        var doc = new DOMParser().parseFromString(xmlText, "text/xml");
+        var articles = doc.getElementsByTagName("PubmedArticle");
+        for (var i = 0; i < articles.length; i++) {
+          var doiEl = null;
+          var idEls = articles[i].getElementsByTagName("ELocationID");
+          for (var k = 0; k < idEls.length; k++) {
+            if (idEls[k].getAttribute("EIdType") === "doi") { doiEl = idEls[k]; break; }
+          }
+          var doi = doiEl ? doiEl.textContent.toLowerCase() : null;
+          var target = doi ? byDoi[doi] : null;
+          if (!target) continue;
+          var authorNodes = articles[i].getElementsByTagName("Author");
+          for (var m = 0; m < authorNodes.length; m++) {
+            var affNodes = authorNodes[m].getElementsByTagName("Affiliation");
+            var email = null;
+            for (var n = 0; n < affNodes.length; n++) {
+              email = extractEmailFromText(affNodes[n].textContent);
+              if (email) break;
+            }
+            if (email) {
+              var lastNameEl = authorNodes[m].getElementsByTagName("LastName")[0];
+              target.authorEmail = email;
+              target.authorEmailLastName = lastNameEl ? lastNameEl.textContent : "";
+              break;
+            }
+          }
+        }
+      });
+    }).catch(function () { /* nessuna email in più, non blocca il resto */ });
   }
 
   function mapOpenAlexWork(w) {
@@ -1780,12 +1865,17 @@
       deduped.forEach(function (v) { biblioResults.appendChild(renderItem(v, highlightName)); });
       renderCopyAll(deduped);
       if (!append) scrollStatusIntoView();
-      /* abstract + email PubMed in un'unica richiesta in background: non
-         blocca la comparsa dei risultati */
+      /* abstract + email in un'unica richiesta in background per fonte,
+         poi controllo incrociato con l'altra fonte per chi è rimasto
+         senza email: non blocca la comparsa dei risultati */
       var newPubMedItems = newlyAdded.filter(function (v) { return v.source === "PubMed"; });
-      fetchPubMedAbstracts(newPubMedItems).then(function () {
-        newPubMedItems.forEach(function (v) { if (v._paintEmailBtn) v._paintEmailBtn(); });
-      });
+      var newOpenAlexItems = newlyAdded.filter(function (v) { return v.source === "OpenAlex"; });
+      fetchPubMedAbstracts(newPubMedItems)
+        .then(function () { return crossCheckEmailFromOpenAlex(newPubMedItems); })
+        .then(function () { return crossCheckEmailFromPubMed(newOpenAlexItems); })
+        .then(function () {
+          newlyAdded.forEach(function (v) { if (v._paintEmailBtn) v._paintEmailBtn(); });
+        });
     }).catch(function () {
       if (requestId !== searchRequestId) return;
       if (biblioSubmitBtn) biblioSubmitBtn.classList.remove("is-loading");
