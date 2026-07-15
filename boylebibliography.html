@@ -471,6 +471,8 @@
       pdfOpen: "PDF", pdfPaywall: "A pagamento",
       noAbstract: "Abstract non disponibile per questa voce.",
       abstractToggle: "Abstract",
+      similarToggle: "Simili", similarLoading: "Cerco articoli simili…",
+      similarNone: "Nessun articolo simile trovato su PubMed.",
       emailWriteAuthor: "Scrivi all'autore",
       compareLink: "Verifica questa ricerca direttamente su PubMed →",
       yearFromLabel: "Dal", yearToLabel: "al", yearHint: "(facoltativo)",
@@ -554,6 +556,8 @@
       pdfOpen: "PDF", pdfPaywall: "Paywalled",
       noAbstract: "No abstract available for this entry.",
       abstractToggle: "Abstract",
+      similarToggle: "Similar", similarLoading: "Looking for similar articles…",
+      similarNone: "No similar articles found on PubMed.",
       emailWriteAuthor: "Write to the author",
       compareLink: "Check this search directly on PubMed →",
       yearFromLabel: "From", yearToLabel: "to", yearHint: "(optional)",
@@ -769,6 +773,43 @@
       vol: vol, issue: issue, pages: pagesRaw, pmid: a.uid, abstract: "",
       authorEmail: null, authorEmailLastName: null
     };
+  }
+
+  /* "Articoli simili": PubMed calcola già da sé un elenco di articoli
+     correlati per ogni PMID (stesso algoritmo della pagina "Similar
+     articles" sul sito ufficiale) — lo richiediamo così com'è, non lo
+     stimiamo noi. Il retmode=json di elink è risultato inaffidabile
+     nei test (errore interno lato NCBI), quindi si usa l'XML di default. */
+  var SIMILAR_LIMIT = 5;
+  function fetchSimilarPubMed(pmid) {
+    var url = EUTILS + "elink.fcgi?dbfrom=pubmed&db=pubmed&id=" + encodeURIComponent(pmid) + "&cmd=neighbor";
+    return fetch(url).then(function (res) {
+      if (!res.ok) throw new Error("elink");
+      return res.text();
+    }).then(function (xmlText) {
+      var doc = new DOMParser().parseFromString(xmlText, "text/xml");
+      var linkSetDbs = doc.getElementsByTagName("LinkSetDb");
+      var ids = [];
+      for (var i = 0; i < linkSetDbs.length; i++) {
+        var nameEl = linkSetDbs[i].getElementsByTagName("LinkName")[0];
+        if (!nameEl || nameEl.textContent !== "pubmed_pubmed") continue;
+        var linkEls = linkSetDbs[i].getElementsByTagName("Link");
+        for (var j = 0; j < linkEls.length; j++) {
+          var idEl = linkEls[j].getElementsByTagName("Id")[0];
+          var id = idEl ? idEl.textContent : null;
+          if (id && id !== pmid) ids.push(id);
+        }
+        break;
+      }
+      ids = ids.slice(0, SIMILAR_LIMIT);
+      if (!ids.length) return [];
+      return fetch(EUTILS + "esummary.fcgi?db=pubmed&retmode=json&id=" + ids.join(","))
+        .then(function (res) { return res.ok ? res.json() : null; })
+        .then(function (summary) {
+          if (!summary) return [];
+          return ids.map(function (id) { return mapPubMedArticle(summary.result && summary.result[id]); }).filter(Boolean);
+        });
+    }).catch(function () { return []; });
   }
 
   /* PubMed non dà l'abstract né l'affiliazione (dove a volte compare
@@ -1181,10 +1222,28 @@
     var actions = document.createElement("div");
     actions.className = "bb-biblio-actions";
 
-    var copyBtn = document.createElement("button");
-    copyBtn.type = "button";
-    copyBtn.className = "bb-biblio-copy";
-    copyBtn.textContent = I18N[currentLang].copy;
+    /* pulsanti icona+testo coerenti: stessa struttura per tutti, così
+       si dispongono bene in griglia sia su mobile (due righe) sia
+       nella colonna verticale del desktop */
+    var ICONS = {
+      copy: '<path d="M9 9h10v10H9z"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/>',
+      abstract: '<path d="M4 4h16v16H4z"/><path d="M8 9h8M8 13h8M8 17h4"/>',
+      basket: '<path d="M12 21s-7-4.35-9.5-8.5C.5 8.5 2.5 5 6 5c2 0 3.5 1 4 2 1-1 2.5-2 4.5-2 3.5 0 5.5 3.5 3.5 7.5C19.5 16.65 12 21 12 21z"/>',
+      email: '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/>',
+      similar: '<circle cx="6" cy="6" r="3"/><circle cx="18" cy="18" r="3"/><path d="M8.5 8.5 15.5 15.5M6 9v3a2 2 0 0 0 2 2h2"/>',
+      pdf: '<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>'
+    };
+    function makeActionBtn(tag, iconKey, extraClass) {
+      var el = document.createElement(tag);
+      if (tag === "button") el.type = "button";
+      el.className = "bb-action-btn" + (extraClass ? " " + extraClass : "");
+      el.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + ICONS[iconKey] + '</svg><span class="bb-action-btn__label"></span>';
+      return el;
+    }
+    function setActionLabel(el, text) { el.querySelector(".bb-action-btn__label").textContent = text; }
+
+    var copyBtn = makeActionBtn("button", "copy");
+    setActionLabel(copyBtn, I18N[currentLang].copy);
     copyBtn.addEventListener("click", function () {
       copyText(v.text).then(function () {
         flashCopied(copyBtn, I18N[currentLang].copied, I18N[currentLang].copy);
@@ -1193,25 +1252,23 @@
       });
     });
 
-    var link = document.createElement("a");
+    var link = makeActionBtn("a", "pdf");
     link.target = "_blank"; link.rel = "noopener";
     if (v.isOa && v.oaUrl) {
       link.href = v.oaUrl;
-      link.className = "bb-biblio-pdf bb-biblio-pdf--oa";
-      link.textContent = I18N[currentLang].pdfOpen + " ↓";
+      link.classList.add("bb-biblio-pdf--oa");
+      setActionLabel(link, I18N[currentLang].pdfOpen);
     } else {
       link.href = v.link;
-      link.className = "bb-biblio-pdf bb-biblio-pdf--paywall";
-      link.textContent = I18N[currentLang].pdfPaywall + " · " + v.linkLabel + " →";
+      link.classList.add("bb-biblio-pdf--paywall");
+      setActionLabel(link, I18N[currentLang].pdfPaywall);
     }
 
-    var basketBtn = document.createElement("button");
-    basketBtn.type = "button";
-    basketBtn.className = "bb-biblio-basket-btn";
+    var basketBtn = makeActionBtn("button", "basket", "bb-biblio-basket-btn");
     function paintBasketBtn() {
       var added = isInBasket(v);
       basketBtn.classList.toggle("is-added", added);
-      basketBtn.textContent = added ? I18N[currentLang].basketRemove : I18N[currentLang].basketAdd;
+      setActionLabel(basketBtn, added ? I18N[currentLang].basketRemove : I18N[currentLang].basketAdd);
       basketBtn.title = added ? I18N[currentLang].basketRemoveHint : I18N[currentLang].basketAddHint;
     }
     paintBasketBtn();
@@ -1220,10 +1277,8 @@
       paintBasketBtn();
     });
 
-    var abstractBtn = document.createElement("button");
-    abstractBtn.type = "button";
-    abstractBtn.className = "bb-biblio-abstract-btn";
-    abstractBtn.textContent = I18N[currentLang].abstractToggle;
+    var abstractBtn = makeActionBtn("button", "abstract", "bb-biblio-abstract-btn");
+    setActionLabel(abstractBtn, I18N[currentLang].abstractToggle);
     var abstractPanel = document.createElement("p");
     abstractPanel.className = "bb-abstract-inline";
     abstractPanel.hidden = true;
@@ -1237,22 +1292,58 @@
     /* pulsante email: solo se un indirizzo è realmente presente nei
        metadati (mai dedotto): un solo pulsante, "scrivi all'autore",
        niente promesse su cosa risponderà */
-    var emailBtn = document.createElement("a");
-    emailBtn.className = "bb-biblio-email-btn";
+    var emailBtn = makeActionBtn("a", "email", "bb-biblio-email-btn");
     emailBtn.hidden = true;
     function paintEmailBtn() {
       if (!v.authorEmail) { emailBtn.hidden = true; return; }
       emailBtn.hidden = false;
       emailBtn.href = buildMailto(v.authorEmail, v.title, v.authorEmailLastName);
-      emailBtn.textContent = I18N[currentLang].emailWriteAuthor;
+      setActionLabel(emailBtn, I18N[currentLang].emailWriteAuthor);
     }
     paintEmailBtn();
     v._paintEmailBtn = paintEmailBtn;
+
+    /* "Articoli simili": solo per le voci PubMed (unica fonte con
+       questo calcolo già pronto); caricati al primo click, poi tenuti
+       in cache sull'oggetto stesso per non richiederli due volte */
+    var similarBtn = null, similarPanel = null;
+    if (v.source === "PubMed" && v.pmid) {
+      similarBtn = makeActionBtn("button", "similar", "bb-biblio-similar-btn");
+      setActionLabel(similarBtn, I18N[currentLang].similarToggle);
+      similarPanel = document.createElement("div");
+      similarPanel.className = "bb-similar-inline";
+      similarPanel.hidden = true;
+      similarBtn.addEventListener("click", function () {
+        var open = similarPanel.hidden;
+        similarPanel.hidden = !open;
+        similarBtn.classList.toggle("is-open", open);
+        if (open && !similarBtn.dataset.loaded) {
+          similarBtn.dataset.loaded = "1";
+          similarPanel.textContent = I18N[currentLang].similarLoading;
+          fetchSimilarPubMed(v.pmid).then(function (items) {
+            similarPanel.innerHTML = "";
+            if (!items.length) { similarPanel.textContent = I18N[currentLang].similarNone; return; }
+            var list = document.createElement("ul");
+            list.className = "bb-similar-list";
+            items.forEach(function (sv) {
+              var li2 = document.createElement("li");
+              var a2 = document.createElement("a");
+              a2.href = sv.link; a2.target = "_blank"; a2.rel = "noopener";
+              a2.textContent = sv.text;
+              li2.appendChild(a2);
+              list.appendChild(li2);
+            });
+            similarPanel.appendChild(list);
+          });
+        }
+      });
+    }
 
     actions.appendChild(copyBtn);
     actions.appendChild(abstractBtn);
     actions.appendChild(basketBtn);
     actions.appendChild(emailBtn);
+    if (similarBtn) actions.appendChild(similarBtn);
     actions.appendChild(link);
     var topRow = document.createElement("div");
     topRow.className = "bb-biblio-toprow";
@@ -1260,6 +1351,7 @@
     topRow.appendChild(actions);
     li.appendChild(topRow);
     li.appendChild(abstractPanel);
+    if (similarPanel) li.appendChild(similarPanel);
     wireAbstractHover(topRow, v);
     return li;
   }

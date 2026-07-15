@@ -521,29 +521,34 @@ p.bb-trust-badge {
 .bb-abstract-tip.is-visible { opacity: 1; visibility: visible; transform: none; pointer-events: auto; }
 @media (max-width: 700px) { .bb-abstract-tip { display: none; } }
 
+/* colonna di pulsanti su desktop, griglia a due colonne su schermi
+   stretti così anche con più pulsanti restano su due righe invece di
+   allungarsi in verticale */
 .bb-biblio-actions {
-  display: flex; flex-direction: column; align-items: flex-end; gap: 8px; flex-shrink: 0;
+  display: grid; grid-template-columns: repeat(2, auto); gap: 6px; justify-content: end; flex-shrink: 0;
 }
-.bb-biblio-copy {
-  font-size: .74rem; font-weight: 600; letter-spacing: .02em; white-space: nowrap;
+@media (max-width: 560px) {
+  .bb-biblio-actions { grid-template-columns: repeat(3, 1fr); width: 100%; justify-content: stretch; }
+}
+
+/* stile unico per tutti i pulsanti-azione (copia, abstract, carrello,
+   email, articoli simili, PDF): stessa struttura icona+testo, così si
+   allineano bene in griglia invece di avere altezze/larghezze diverse */
+.bb-action-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 5px; text-align: center;
+  font-size: .72rem; font-weight: 600; letter-spacing: .01em; line-height: 1.25;
   background: rgba(123,228,255,.06); border: 1px solid var(--bb-border); color: var(--bb-muted);
-  border-radius: 8px; padding: 4px 10px; cursor: pointer; transition: background .15s, color .15s, border-color .15s;
+  border-radius: 9px; padding: 7px 8px; cursor: pointer; transition: background .15s, color .15s, border-color .15s;
 }
-.bb-biblio-copy:hover { background: rgba(123,228,255,.12); color: var(--bb-text); border-color: var(--bb-border-hi); }
-.bb-biblio-copy.is-copied { background: rgba(123,228,255,.18); color: var(--bb-cyan-2); border-color: var(--bb-border-hi); }
+.bb-action-btn svg { flex-shrink: 0; }
+.bb-action-btn:hover { background: rgba(123,228,255,.12); color: var(--bb-text); border-color: var(--bb-border-hi); }
+.bb-action-btn.is-copied, .bb-action-btn.is-open { background: rgba(123,228,255,.18); color: var(--bb-cyan-2); border-color: var(--bb-border-hi); }
 
 /* pulsante abstract: alternativa cliccabile al tooltip al passaggio del
    mouse, indispensabile su mobile dove non esiste l'hover — su desktop
    il tooltip al passaggio del mouse basta da solo, il pulsante sarebbe
    ridondante */
 @media (min-width: 701px) { .bb-biblio-abstract-btn { display: none; } }
-.bb-biblio-abstract-btn {
-  font-size: .74rem; font-weight: 600; letter-spacing: .02em; white-space: nowrap;
-  background: rgba(123,228,255,.06); border: 1px solid var(--bb-border); color: var(--bb-muted);
-  border-radius: 8px; padding: 4px 10px; cursor: pointer; transition: background .15s, color .15s, border-color .15s;
-}
-.bb-biblio-abstract-btn:hover { background: rgba(123,228,255,.12); color: var(--bb-text); border-color: var(--bb-border-hi); }
-.bb-biblio-abstract-btn.is-open { background: rgba(123,228,255,.18); color: var(--bb-cyan-2); border-color: var(--bb-border-hi); }
 .bb-abstract-inline {
   padding: 12px 14px;
   background: rgba(6,20,46,.5); border: 1px solid var(--bb-border); border-radius: 10px;
@@ -553,24 +558,29 @@ p.bb-trust-badge {
 
 /* pulsante per scrivere all'autore: mostrato solo se un'email è
    realmente presente nei metadati (mai per default) */
-.bb-biblio-email-btn {
-  font-size: .74rem; font-weight: 600; letter-spacing: .02em; white-space: nowrap;
-  background: rgba(180,139,255,.08); border: 1px solid rgba(180,139,255,.32); color: #c7aeff;
-  border-radius: 8px; padding: 4px 10px; cursor: pointer; transition: background .15s, border-color .15s;
-}
+.bb-biblio-email-btn { background: rgba(180,139,255,.08); border-color: rgba(180,139,255,.32); color: #c7aeff; }
 .bb-biblio-email-btn:hover { background: rgba(180,139,255,.16); border-color: rgba(180,139,255,.5); }
+
+/* pulsante "Articoli simili": solo voci PubMed, calcolo già pronto */
+.bb-biblio-similar-btn { background: rgba(255,196,102,.08); border-color: rgba(255,196,102,.3); color: #ffd08a; }
+.bb-biblio-similar-btn:hover { background: rgba(255,196,102,.16); border-color: rgba(255,196,102,.5); }
+.bb-similar-inline {
+  padding: 12px 14px;
+  background: rgba(6,20,46,.5); border: 1px solid var(--bb-border); border-radius: 10px;
+  font-size: .82rem; line-height: 1.5; color: var(--bb-text);
+  animation: bbFadeIn .2s ease both;
+}
+.bb-similar-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.bb-similar-list a { color: var(--bb-cyan-2); text-decoration: none; }
+.bb-similar-list a:hover { text-decoration: underline; }
 
 /* verde = accesso libero al PDF (via OpenAlex/Unpaywall), rosso = a
    pagamento (porta comunque al riferimento bibliografico). Selettori
    "a.bb-biblio-pdf--*" per pareggiare la specificità di ".bb-biblio-item a"
    qui sopra e vincere per ordine di cascata, non solo per classe. */
-.bb-biblio-pdf {
-  font-size: .74rem; font-weight: 700; letter-spacing: .02em; white-space: nowrap;
-  border-radius: 8px; padding: 4px 10px; transition: background .15s, color .15s, border-color .15s;
-}
-a.bb-biblio-pdf--oa { background: rgba(61,255,192,.1); border: 1px solid rgba(61,255,192,.4); color: #3dffc0; }
+a.bb-biblio-pdf--oa { background: rgba(61,255,192,.1); border-color: rgba(61,255,192,.4); color: #3dffc0; }
 a.bb-biblio-pdf--oa:hover { background: rgba(61,255,192,.18); border-color: rgba(61,255,192,.6); }
-a.bb-biblio-pdf--paywall { background: rgba(255,90,106,.08); border: 1px solid rgba(255,90,106,.32); color: #ff8a95; }
+a.bb-biblio-pdf--paywall { background: rgba(255,90,106,.08); border-color: rgba(255,90,106,.32); color: #ff8a95; }
 a.bb-biblio-pdf--paywall:hover { background: rgba(255,90,106,.15); border-color: rgba(255,90,106,.5); }
 
 .bb-biblio-copy-all {
@@ -591,11 +601,7 @@ a.bb-biblio-pdf--paywall:hover { background: rgba(255,90,106,.15); border-color:
 .bb-export-btn:hover { background: rgba(123,228,255,.12); color: var(--bb-text); border-color: var(--bb-border-hi); }
 
 /* pulsante "+ Aggiungi" / "✓ Aggiunta" per il carrello */
-.bb-biblio-basket-btn {
-  font-size: .74rem; font-weight: 600; letter-spacing: .02em; white-space: nowrap;
-  background: rgba(180,139,255,.07); border: 1px solid rgba(180,139,255,.3); color: var(--bb-violet);
-  border-radius: 8px; padding: 4px 10px; cursor: pointer; transition: background .15s, color .15s, border-color .15s;
-}
+.bb-biblio-basket-btn { background: rgba(180,139,255,.07); border-color: rgba(180,139,255,.3); color: var(--bb-violet); }
 .bb-biblio-basket-btn:hover { background: rgba(180,139,255,.15); border-color: rgba(180,139,255,.5); }
 .bb-biblio-basket-btn.is-added { background: rgba(180,139,255,.22); color: var(--bb-cyan-2); border-color: rgba(180,139,255,.5); }
 
@@ -658,7 +664,6 @@ a.bb-biblio-pdf--paywall:hover { background: rgba(255,90,106,.15); border-color:
 @keyframes bbFadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
 @media (max-width: 560px) {
   .bb-biblio-toprow { flex-direction: column; gap: 8px; }
-  .bb-biblio-actions { flex-direction: row; align-items: center; width: 100%; justify-content: space-between; flex-wrap: wrap; }
   .bb-basket-bar { flex-direction: column; align-items: stretch; padding: 12px 16px; }
   .bb-basket-actions { justify-content: space-between; }
 }
