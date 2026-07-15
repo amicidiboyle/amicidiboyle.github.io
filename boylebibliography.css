@@ -486,9 +486,10 @@ p.bb-trust-badge {
 .bb-biblio-item {
   background: var(--bb-glass); border: 1px solid var(--bb-border); border-radius: 14px;
   padding: 16px 18px; display: flex; flex-direction: column; gap: 10px;
-  animation: bbFadeIn .35s ease both;
+  animation: bbFadeIn .35s ease both; min-width: 0; max-width: 100%; box-sizing: border-box;
 }
-.bb-biblio-toprow { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; }
+.bb-biblio-toprow { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; min-width: 0; }
+.bb-biblio-toprow > div:first-child { min-width: 0; }
 .bb-biblio-item p { font-size: .89rem; color: var(--bb-text); line-height: 1.55; margin: 0; }
 .bb-biblio-source {
   display: inline-block; font-size: .66rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
@@ -496,11 +497,10 @@ p.bb-trust-badge {
 }
 .bb-biblio-source--pubmed { background: rgba(123,228,255,.12); color: var(--bb-cyan-2); }
 .bb-biblio-source--openalex { background: rgba(180,139,255,.14); color: var(--bb-violet); }
-.bb-biblio-item a {
-  flex-shrink: 0; font-size: .82rem; font-weight: 600; color: var(--bb-cyan-2);
-  white-space: nowrap; margin-top: 2px;
-}
-.bb-biblio-item a:hover { text-decoration: underline; }
+/* la vecchia regola generica ".bb-biblio-item a" (font-size, nowrap
+   forzato...) è stata tolta: sovrascriveva i nuovi pulsanti icona+testo
+   (.bb-action-btn) e rompeva la griglia su mobile, spingendo l'elenco
+   fuori dal centro della pagina */
 
 /* nome dell'autore cercato, evidenziato dentro la citazione */
 .bb-author-mark {
@@ -525,7 +525,7 @@ p.bb-trust-badge {
    stretti così anche con più pulsanti restano su due righe invece di
    allungarsi in verticale */
 .bb-biblio-actions {
-  display: grid; grid-template-columns: repeat(2, auto); gap: 6px; justify-content: end; flex-shrink: 0;
+  display: grid; grid-template-columns: repeat(2, auto); gap: 6px; justify-content: end; flex-shrink: 0; min-width: 0;
 }
 @media (max-width: 560px) {
   .bb-biblio-actions { grid-template-columns: repeat(3, 1fr); width: 100%; justify-content: stretch; }
@@ -539,8 +539,10 @@ p.bb-trust-badge {
   font-size: .72rem; font-weight: 600; letter-spacing: .01em; line-height: 1.25;
   background: rgba(123,228,255,.06); border: 1px solid var(--bb-border); color: var(--bb-muted);
   border-radius: 9px; padding: 7px 8px; cursor: pointer; transition: background .15s, color .15s, border-color .15s;
+  min-width: 0; max-width: 100%; box-sizing: border-box;
 }
 .bb-action-btn svg { flex-shrink: 0; }
+.bb-action-btn__label { min-width: 0; overflow-wrap: break-word; }
 .bb-action-btn:hover { background: rgba(123,228,255,.12); color: var(--bb-text); border-color: var(--bb-border-hi); }
 .bb-action-btn.is-copied, .bb-action-btn.is-open { background: rgba(123,228,255,.18); color: var(--bb-cyan-2); border-color: var(--bb-border-hi); }
 
@@ -575,9 +577,7 @@ p.bb-trust-badge {
 .bb-similar-list a:hover { text-decoration: underline; }
 
 /* verde = accesso libero al PDF (via OpenAlex/Unpaywall), rosso = a
-   pagamento (porta comunque al riferimento bibliografico). Selettori
-   "a.bb-biblio-pdf--*" per pareggiare la specificità di ".bb-biblio-item a"
-   qui sopra e vincere per ordine di cascata, non solo per classe. */
+   pagamento (porta comunque al riferimento bibliografico). */
 a.bb-biblio-pdf--oa { background: rgba(61,255,192,.1); border-color: rgba(61,255,192,.4); color: #3dffc0; }
 a.bb-biblio-pdf--oa:hover { background: rgba(61,255,192,.18); border-color: rgba(61,255,192,.6); }
 a.bb-biblio-pdf--paywall { background: rgba(255,90,106,.08); border-color: rgba(255,90,106,.32); color: #ff8a95; }
