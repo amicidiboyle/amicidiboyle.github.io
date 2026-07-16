@@ -472,7 +472,8 @@
       noAbstract: "Abstract non disponibile per questa voce.",
       abstractToggle: "Abstract",
       similarToggle: "Simili", similarLoading: "Cerco articoli simili…",
-      similarNone: "Nessun articolo simile trovato su PubMed.",
+      similarNone: "Nessun articolo simile trovato su PubMed. Riprova tra poco.",
+      similarResults: function (title) { return "Articoli simili a: “" + title + "”"; },
       emailWriteAuthor: "Scrivi all'autore",
       compareLink: "Verifica questa ricerca direttamente su PubMed →",
       yearFromLabel: "Dal", yearToLabel: "al", yearHint: "(facoltativo)",
@@ -557,7 +558,8 @@
       noAbstract: "No abstract available for this entry.",
       abstractToggle: "Abstract",
       similarToggle: "Similar", similarLoading: "Looking for similar articles…",
-      similarNone: "No similar articles found on PubMed.",
+      similarNone: "No similar articles found on PubMed. Try again shortly.",
+      similarResults: function (title) { return "Articles similar to: “" + title + "”"; },
       emailWriteAuthor: "Write to the author",
       compareLink: "Check this search directly on PubMed →",
       yearFromLabel: "From", yearToLabel: "to", yearHint: "(optional)",
@@ -1388,39 +1390,16 @@
     paintEmailBtn();
     v._paintEmailBtn = paintEmailBtn;
 
-    /* "Articoli simili": solo per le voci PubMed (unica fonte con
-       questo calcolo già pronto); caricati al primo click, poi tenuti
-       in cache sull'oggetto stesso per non richiederli due volte */
-    var similarBtn = null, similarPanel = null;
+    /* "Articoli simili": solo per le voci PubMed (unica fonte con questo
+       calcolo già pronto). Non un pannellino accanto al risultato: il
+       click lancia una ricerca vera che ricarica l'elenco principale con
+       gli articoli correlati, trattati come risultati normali */
+    var similarBtn = null;
     if (v.source === "PubMed" && v.pmid) {
       similarBtn = makeActionBtn("button", "similar", "bb-biblio-similar-btn");
       setActionLabel(similarBtn, I18N[currentLang].similarToggle);
-      similarPanel = document.createElement("div");
-      similarPanel.className = "bb-similar-inline";
-      similarPanel.hidden = true;
       similarBtn.addEventListener("click", function () {
-        var open = similarPanel.hidden;
-        similarPanel.hidden = !open;
-        similarBtn.classList.toggle("is-open", open);
-        if (open && !similarBtn.dataset.loaded) {
-          similarBtn.dataset.loaded = "1";
-          similarPanel.textContent = I18N[currentLang].similarLoading;
-          fetchSimilarPubMed(v.pmid).then(function (items) {
-            similarPanel.innerHTML = "";
-            if (!items.length) { similarPanel.textContent = I18N[currentLang].similarNone; return; }
-            var list = document.createElement("ul");
-            list.className = "bb-similar-list";
-            items.forEach(function (sv) {
-              var li2 = document.createElement("li");
-              var a2 = document.createElement("a");
-              a2.href = sv.link; a2.target = "_blank"; a2.rel = "noopener";
-              a2.textContent = sv.text;
-              li2.appendChild(a2);
-              list.appendChild(li2);
-            });
-            similarPanel.appendChild(list);
-          });
-        }
+        showSimilarResults(v, similarBtn);
       });
     }
 
@@ -1436,7 +1415,6 @@
     topRow.appendChild(actions);
     li.appendChild(topRow);
     li.appendChild(abstractPanel);
-    if (similarPanel) li.appendChild(similarPanel);
     wireAbstractHover(topRow, v);
     return li;
   }
@@ -1785,6 +1763,45 @@
     var pubmedHasMore = currentSearchState.pubmedShown < currentSearchState.pubmedTotal;
     var openalexHasMore = currentSearchState.openalexPage * PAGE_SIZE < currentSearchState.openalexTotal;
     loadMoreBtn.hidden = !(pubmedHasMore || openalexHasMore);
+  }
+
+  /* "Articoli simili": non un pannellino accanto al risultato, ma una
+     ricerca vera che ricarica l'elenco principale — stesso trattamento
+     di un risultato normale (abstract, carrello, email, esportazione).
+     Non fa parte della paginazione "Carica altri", che qui non si applica. */
+  function showSimilarResults(sourceItem, triggerBtn) {
+    var requestId = ++searchRequestId;
+    if (triggerBtn) triggerBtn.classList.add("is-loading-similar");
+    setStatus(I18N[currentLang].similarLoading);
+    if (loadMoreBtn) loadMoreBtn.hidden = true;
+    currentSearchState = null;
+    if (compareLink) compareLink.hidden = true;
+
+    fetchSimilarPubMed(sourceItem.pmid).then(function (items) {
+      if (requestId !== searchRequestId) return;
+      if (triggerBtn) triggerBtn.classList.remove("is-loading-similar");
+      var deduped = dedupeItems(items);
+      biblioResults.innerHTML = "";
+      clearCopyAll();
+      if (!deduped.length) {
+        setStatus(I18N[currentLang].similarNone);
+        scrollStatusIntoView();
+        return;
+      }
+      setStatus(I18N[currentLang].similarResults(sourceItem.title));
+      deduped.forEach(function (v) { biblioResults.appendChild(renderItem(v, null)); });
+      renderCopyAll(deduped);
+      scrollStatusIntoView();
+      fetchPubMedAbstracts(deduped)
+        .then(function () { return crossCheckEmailFromOpenAlex(deduped); })
+        .then(function () {
+          deduped.forEach(function (v) { if (v._paintEmailBtn) v._paintEmailBtn(); });
+        });
+    }).catch(function () {
+      if (requestId !== searchRequestId) return;
+      if (triggerBtn) triggerBtn.classList.remove("is-loading-similar");
+      setStatus(I18N[currentLang].similarNone);
+    });
   }
 
   function runSearch(authorRaw, topicRaw, yearFrom, yearTo, pubTypes, append) {

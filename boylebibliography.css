@@ -251,7 +251,7 @@ html::after {
 .bb-hero-logo svg { width: 100%; height: 100%; display: block; overflow: visible; }
 .bb-hero-logo-spacer { visibility: hidden; }
 .bb-hero-title-text { text-align: center; width: min(640px, 100%); flex-shrink: 0; }
-.bb-hero-title-text .bb-kicker { justify-content: center; margin-bottom: 10px; }
+.bb-hero-title-text .bb-kicker { justify-content: center; margin-bottom: 26px; }
 
 .bb-hero h1 { font-size: clamp(2.4rem, 6.4vw, 4.6rem); letter-spacing: -.035em; margin: 0; }
 .bb-h-abisso { color: var(--bb-text); }
@@ -569,18 +569,13 @@ p.bb-trust-badge {
 .bb-biblio-email-btn { background: rgba(180,139,255,.08); border-color: rgba(180,139,255,.32); color: #c7aeff; }
 .bb-biblio-email-btn:hover { background: rgba(180,139,255,.16); border-color: rgba(180,139,255,.5); }
 
-/* pulsante "Articoli simili": solo voci PubMed, calcolo già pronto */
+/* pulsante "Articoli simili": solo voci PubMed, calcolo già pronto.
+   Il click ricarica l'elenco principale (non apre un pannello qui
+   accanto), quindi lo stato di caricamento sta sul pulsante stesso */
 .bb-biblio-similar-btn { background: rgba(255,196,102,.08); border-color: rgba(255,196,102,.3); color: #ffd08a; }
 .bb-biblio-similar-btn:hover { background: rgba(255,196,102,.16); border-color: rgba(255,196,102,.5); }
-.bb-similar-inline {
-  padding: 12px 14px;
-  background: rgba(6,20,46,.5); border: 1px solid var(--bb-border); border-radius: 10px;
-  font-size: .82rem; line-height: 1.5; color: var(--bb-text);
-  animation: bbFadeIn .2s ease both;
-}
-.bb-similar-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
-.bb-similar-list a { color: var(--bb-cyan-2); text-decoration: none; }
-.bb-similar-list a:hover { text-decoration: underline; }
+.bb-biblio-similar-btn.is-loading-similar { opacity: .6; cursor: wait; }
+.bb-biblio-similar-btn.is-loading-similar svg { animation: bbSpin .8s linear infinite; }
 
 /* verde = accesso libero al PDF (via OpenAlex/Unpaywall), rosso = a
    pagamento (porta comunque al riferimento bibliografico). */
