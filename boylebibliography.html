@@ -777,53 +777,31 @@
     };
   }
 
-  /* "Articoli simili": PubMed calcola già da sé un elenco di articoli
-     correlati per ogni PMID (stesso algoritmo della pagina "Similar
-     articles" sul sito ufficiale) — lo richiediamo così com'è, non lo
-     stimiamo noi. Il retmode=json di elink è risultato inaffidabile nei
-     test (errore interno lato NCBI, e a volte anche l'XML arriva
-     troncato a metà): si riprova fino a 3 volte prima di arrendersi,
-     invece di segnare "nessun risultato" al primo intoppo di rete. */
+  /* "Articoli simili": PubMed (elink) è risultato inaffidabile nei test
+     ripetuti — anche con tentativi automatici, a volte il server di NCBI
+     restituisce risposte troncate o errori interni. OpenAlex invece ha
+     già un campo "related_works" pronto per ogni opera, verificato con
+     dati reali, ed è la fonte che in tutta la sessione non ha mai dato
+     un solo problema di affidabilità: si usa quella, tramite il DOI
+     dell'articolo (funziona quindi sia per voci PubMed sia OpenAlex,
+     non solo PubMed come nel tentativo precedente). */
   var SIMILAR_LIMIT = 5;
-  function elinkSimilarIds(pmid) {
-    var url = EUTILS + "elink.fcgi?dbfrom=pubmed&db=pubmed&id=" + encodeURIComponent(pmid) + "&cmd=neighbor";
-    return fetch(url).then(function (res) {
-      if (!res.ok) throw new Error("elink");
-      return res.text();
-    }).then(function (xmlText) {
-      var doc = new DOMParser().parseFromString(xmlText, "text/xml");
-      var linkSetDbs = doc.getElementsByTagName("LinkSetDb");
-      var ids = [];
-      for (var i = 0; i < linkSetDbs.length; i++) {
-        var nameEl = linkSetDbs[i].getElementsByTagName("LinkName")[0];
-        if (!nameEl || nameEl.textContent !== "pubmed_pubmed") continue;
-        var linkEls = linkSetDbs[i].getElementsByTagName("Link");
-        for (var j = 0; j < linkEls.length; j++) {
-          var idEl = linkEls[j].getElementsByTagName("Id")[0];
-          var id = idEl ? idEl.textContent : null;
-          if (id && id !== pmid) ids.push(id);
-        }
-        break;
-      }
-      if (!ids.length) throw new Error("empty"); // probabile risposta troncata: si riprova
-      return ids;
-    });
-  }
-  function elinkSimilarIdsWithRetry(pmid, attemptsLeft) {
-    return elinkSimilarIds(pmid).catch(function (err) {
-      if (attemptsLeft <= 1) throw err;
-      return new Promise(function (resolve) { setTimeout(resolve, 500); })
-        .then(function () { return elinkSimilarIdsWithRetry(pmid, attemptsLeft - 1); });
-    });
-  }
-  function fetchSimilarPubMed(pmid) {
-    return elinkSimilarIdsWithRetry(pmid, 3).then(function (ids) {
-      ids = ids.slice(0, SIMILAR_LIMIT);
-      return fetch(EUTILS + "esummary.fcgi?db=pubmed&retmode=json&id=" + ids.join(","))
-        .then(function (res) { return res.ok ? res.json() : null; })
-        .then(function (summary) {
-          if (!summary) return [];
-          return ids.map(function (id) { return mapPubMedArticle(summary.result && summary.result[id]); }).filter(Boolean);
+  function fetchSimilarByDoi(doi) {
+    if (!doi) return Promise.resolve([]);
+    var lookupUrl = OPENALEX + "/https://doi.org/" + doi + "?select=related_works";
+    return fetch(lookupUrl).then(function (res) {
+      if (!res.ok) throw new Error("openalex-lookup");
+      return res.json();
+    }).then(function (work) {
+      var relatedIds = (work.related_works || []).map(function (u) {
+        return u.replace("https://openalex.org/", "");
+      }).slice(0, SIMILAR_LIMIT);
+      if (!relatedIds.length) return [];
+      var url = OPENALEX + "?filter=openalex_id:" + relatedIds.join("|") + "&per-page=" + relatedIds.length + "&select=" + OPENALEX_SELECT;
+      return fetch(url).then(function (res) { return res.ok ? res.json() : null; })
+        .then(function (data) {
+          if (!data) return [];
+          return (data.results || []).map(mapOpenAlexWork);
         });
     }).catch(function () { return []; });
   }
@@ -1390,12 +1368,14 @@
     paintEmailBtn();
     v._paintEmailBtn = paintEmailBtn;
 
-    /* "Articoli simili": solo per le voci PubMed (unica fonte con questo
-       calcolo già pronto). Non un pannellino accanto al risultato: il
-       click lancia una ricerca vera che ricarica l'elenco principale con
-       gli articoli correlati, trattati come risultati normali */
+    /* "Articoli simili": basato sul DOI, quindi disponibile sia per voci
+       PubMed sia OpenAlex (non solo PubMed come nel tentativo precedente,
+       che si appoggiava a un endpoint NCBI rivelatosi inaffidabile). Non
+       un pannellino accanto al risultato: il click lancia una ricerca
+       vera che ricarica l'elenco principale con gli articoli correlati,
+       trattati come risultati normali */
     var similarBtn = null;
-    if (v.source === "PubMed" && v.pmid) {
+    if (v.doi) {
       similarBtn = makeActionBtn("button", "similar", "bb-biblio-similar-btn");
       setActionLabel(similarBtn, I18N[currentLang].similarToggle);
       similarBtn.addEventListener("click", function () {
@@ -1415,7 +1395,10 @@
     topRow.appendChild(actions);
     li.appendChild(topRow);
     li.appendChild(abstractPanel);
-    wireAbstractHover(topRow, v);
+    /* agganciato solo al blocco di testo (titolo/citazione), non a tutta
+       la riga: altrimenti muovendo il mouse sui pulsanti (comunque
+       dentro la riga) l'anteprima restava aperta invece di sparire */
+    wireAbstractHover(wrap, v);
     return li;
   }
 
@@ -1777,7 +1760,7 @@
     currentSearchState = null;
     if (compareLink) compareLink.hidden = true;
 
-    fetchSimilarPubMed(sourceItem.pmid).then(function (items) {
+    fetchSimilarByDoi(sourceItem.doi).then(function (items) {
       if (requestId !== searchRequestId) return;
       if (triggerBtn) triggerBtn.classList.remove("is-loading-similar");
       var deduped = dedupeItems(items);
@@ -1792,11 +1775,12 @@
       deduped.forEach(function (v) { biblioResults.appendChild(renderItem(v, null)); });
       renderCopyAll(deduped);
       scrollStatusIntoView();
-      fetchPubMedAbstracts(deduped)
-        .then(function () { return crossCheckEmailFromOpenAlex(deduped); })
-        .then(function () {
-          deduped.forEach(function (v) { if (v._paintEmailBtn) v._paintEmailBtn(); });
-        });
+      /* i risultati arrivano da OpenAlex (che dà già abstract e link
+         open access senza bisogno di richieste in più): qui manca solo
+         l'eventuale email trovabile su PubMed per lo stesso DOI */
+      crossCheckEmailFromPubMed(deduped).then(function () {
+        deduped.forEach(function (v) { if (v._paintEmailBtn) v._paintEmailBtn(); });
+      });
     }).catch(function () {
       if (requestId !== searchRequestId) return;
       if (triggerBtn) triggerBtn.classList.remove("is-loading-similar");
