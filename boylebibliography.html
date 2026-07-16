@@ -620,6 +620,20 @@
      ──────────────────────────────────────────────────────────── */
   var EUTILS = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/";
   var OPENALEX = "https://api.openalex.org/works";
+
+  /* fetch() nativo non ha un timeout di default: se una richiesta resta
+     "appesa" (rete lenta, server che non risponde), la Promise non si
+     risolve né si rifiuta mai, e un pulsante che aspetta quel risultato
+     resta a girare all'infinito. Qui si forza un limite di tempo, dopo
+     il quale la richiesta si interrompe e si tratta come fallita —
+     così ogni azione ha sempre un esito, anche quando va male. */
+  function fetchWithTimeout(url, ms) {
+    var controller = ("AbortController" in window) ? new AbortController() : null;
+    var timer = setTimeout(function () { if (controller) controller.abort(); }, ms || 8000);
+    return fetch(url, controller ? { signal: controller.signal } : undefined)
+      .then(function (res) { clearTimeout(timer); return res; })
+      .catch(function (err) { clearTimeout(timer); throw err; });
+  }
   var UNPAYWALL = "https://api.unpaywall.org/v2/";
   var UNPAYWALL_EMAIL = "info@amicidiboyle.it";
 
@@ -788,20 +802,24 @@
   var SIMILAR_LIMIT = 5;
   function fetchSimilarByDoi(doi) {
     if (!doi) return Promise.resolve([]);
-    var lookupUrl = OPENALEX + "/https://doi.org/" + doi + "?select=related_works";
-    return fetch(lookupUrl).then(function (res) {
+    /* stesso stile di filtro già usato ovunque nel sito (mai un id messo
+       direttamente nel percorso dell'URL, sempre "?filter=..."), più
+       affidabile e testato di una forma di richiesta insolita */
+    var lookupUrl = OPENALEX + "?filter=doi:" + encodeURIComponent(doi) + "&select=related_works";
+    return fetchWithTimeout(lookupUrl, 8000).then(function (res) {
       if (!res.ok) throw new Error("openalex-lookup");
       return res.json();
-    }).then(function (work) {
-      var relatedIds = (work.related_works || []).map(function (u) {
+    }).then(function (data) {
+      var work = data.results && data.results[0];
+      var relatedIds = work ? (work.related_works || []).map(function (u) {
         return u.replace("https://openalex.org/", "");
-      }).slice(0, SIMILAR_LIMIT);
+      }).slice(0, SIMILAR_LIMIT) : [];
       if (!relatedIds.length) return [];
       var url = OPENALEX + "?filter=openalex_id:" + relatedIds.join("|") + "&per-page=" + relatedIds.length + "&select=" + OPENALEX_SELECT;
-      return fetch(url).then(function (res) { return res.ok ? res.json() : null; })
-        .then(function (data) {
-          if (!data) return [];
-          return (data.results || []).map(mapOpenAlexWork);
+      return fetchWithTimeout(url, 8000).then(function (res) { return res.ok ? res.json() : null; })
+        .then(function (data2) {
+          if (!data2) return [];
+          return (data2.results || []).map(mapOpenAlexWork);
         });
     }).catch(function () { return []; });
   }
@@ -1760,7 +1778,17 @@
     currentSearchState = null;
     if (compareLink) compareLink.hidden = true;
 
+    /* rete di sicurezza indipendente da fetchSimilarByDoi: qualunque cosa
+       succeda (anche un imprevisto non legato alla rete), il pulsante
+       non può restare a girare per sempre oltre questo limite */
+    var failsafe = setTimeout(function () {
+      if (requestId !== searchRequestId) return;
+      if (triggerBtn) triggerBtn.classList.remove("is-loading-similar");
+      setStatus(I18N[currentLang].similarNone);
+    }, 15000);
+
     fetchSimilarByDoi(sourceItem.doi).then(function (items) {
+      clearTimeout(failsafe);
       if (requestId !== searchRequestId) return;
       if (triggerBtn) triggerBtn.classList.remove("is-loading-similar");
       var deduped = dedupeItems(items);
@@ -1782,6 +1810,7 @@
         deduped.forEach(function (v) { if (v._paintEmailBtn) v._paintEmailBtn(); });
       });
     }).catch(function () {
+      clearTimeout(failsafe);
       if (requestId !== searchRequestId) return;
       if (triggerBtn) triggerBtn.classList.remove("is-loading-similar");
       setStatus(I18N[currentLang].similarNone);
