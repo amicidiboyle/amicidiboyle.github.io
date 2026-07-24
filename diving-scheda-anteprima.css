@@ -1,0 +1,107 @@
+/* ════════════════════════════════════════════════════════
+   diving-scheda-anteprima.css — confronto scheda base / completa
+   Eredita da diving-boyle.css: sfondo oceano, palette, header, .db-btn.
+   ════════════════════════════════════════════════════════ */
+
+.compare-hero { padding: 56px 0 40px; max-width: 760px; margin: 0 auto; text-align: center; }
+.compare-hero h1 { font-size: clamp(1.9rem, 4.5vw, 2.6rem); line-height: 1.15; margin-bottom: 16px; }
+.compare-hero > p { color: var(--muted); font-size: 1.02rem; margin-bottom: 10px; }
+.compare-hero__example { font-size: .86rem !important; color: var(--soft) !important; }
+.compare-hero__example b { color: var(--cyan-2); }
+
+.compare-grid {
+  display: grid; grid-template-columns: 1fr auto 1fr; gap: 20px; align-items: start;
+  padding-bottom: 60px;
+}
+@media (max-width: 900px) { .compare-grid { grid-template-columns: 1fr; } }
+
+.compare-arrow {
+  display: flex; align-items: center; justify-content: center; color: var(--cyan-2);
+  opacity: .6; padding-top: 70px;
+}
+@media (max-width: 900px) { .compare-arrow { transform: rotate(90deg); padding: 8px 0; } }
+
+.compare-col__label { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+.compare-col__step {
+  width: 30px; height: 30px; border-radius: 50%; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--dive-mono); font-weight: 700; font-size: .9rem;
+}
+.compare-col__step--base { background: var(--dive-amber-dim); border: 1px solid rgba(255,176,32,.4); color: var(--dive-amber); }
+.compare-col__step--complete { background: var(--dive-green-dim); border: 1px solid rgba(57,255,143,.4); color: var(--dive-green); }
+.compare-col__label strong { display: block; font-size: .98rem; }
+.compare-col__label span { display: block; font-size: .78rem; color: var(--soft); }
+
+/* ── card scheda diving (base e completa condividono la struttura) ── */
+.pcard {
+  background: var(--glass); border: 1px solid var(--border); border-radius: var(--radius);
+  overflow: hidden; backdrop-filter: blur(14px); box-shadow: var(--shadow-sm);
+  transition: border-color .3s, box-shadow .3s;
+}
+.pcard--base { opacity: .92; }
+.pcard--complete { border-color: rgba(57,255,143,.22); box-shadow: 0 0 30px rgba(57,255,143,.08), var(--shadow-sm); }
+
+.pcard__cover { height: 108px; position: relative; }
+.pcard__cover--base {
+  background: linear-gradient(135deg, rgba(120,140,160,.28), rgba(60,70,85,.18));
+}
+.pcard__cover--complete {
+  background:
+    radial-gradient(ellipse at 30% 20%, rgba(57,255,143,.22), transparent 55%),
+    radial-gradient(ellipse at 80% 80%, rgba(123,228,255,.2), transparent 55%),
+    linear-gradient(135deg, rgba(20,50,70,.6), rgba(10,30,50,.5));
+  display: flex; align-items: center; justify-content: center;
+}
+.pcard__cover-hint {
+  font-family: var(--dive-mono); font-size: .68rem; letter-spacing: .08em; text-transform: uppercase;
+  color: rgba(237,247,255,.4); border: 1px dashed rgba(237,247,255,.25); padding: 5px 12px; border-radius: 999px;
+}
+
+.pcard__body { padding: 22px 22px 24px; }
+.pcard__status-row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
+.pcard__status {
+  display: inline-flex; align-items: center; gap: 5px; font-family: var(--dive-mono); font-size: .68rem;
+  padding: 4px 10px; border-radius: 999px; margin-bottom: 10px;
+}
+.pcard__status--warn { color: var(--dive-amber); background: var(--dive-amber-dim); border: 1px solid rgba(255,176,32,.3); }
+.pcard__status--ok { color: var(--dive-green); background: var(--dive-green-dim); border: 1px solid rgba(57,255,143,.3); }
+.pcard__status--locked { color: var(--soft); background: rgba(237,247,255,.06); border: 1px solid var(--border); }
+
+.pcard__nome { font-size: 1.15rem; margin-bottom: 4px; }
+.pcard__loc { font-size: .84rem; color: var(--soft); font-family: var(--dive-mono); margin-bottom: 10px; }
+.pcard__rating { font-size: .86rem; color: var(--text); margin-bottom: 14px; }
+.pcard__rating b { color: var(--dive-amber); }
+.pcard__rating span { color: var(--soft); }
+
+.pcard__desc { font-size: .88rem; color: var(--muted); line-height: 1.6; margin-bottom: 16px; }
+
+.pcard__tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
+.pcard-tag {
+  --tag-color: var(--cyan);
+  font-size: .72rem; padding: 4px 10px; border-radius: 999px;
+  background: color-mix(in srgb, var(--tag-color) 14%, transparent);
+  border: 1px solid color-mix(in srgb, var(--tag-color) 35%, transparent);
+  color: var(--text);
+}
+.pcard-tag[data-tag="iperbarica"] { --tag-color: #ffb020; }
+.pcard-tag[data-tag="padi"], .pcard-tag[data-tag="ssi"] { --tag-color: #39ff8f; }
+.pcard-tag[data-tag="tecnici"] { --tag-color: #a78bfa; }
+.pcard-tag[data-tag="relitti"] { --tag-color: #7be4ff; }
+
+.pcard__gallery { display: grid; grid-template-columns: repeat(6, 1fr); gap: 5px; margin-bottom: 18px; }
+.pcard__ph {
+  aspect-ratio: 1; border-radius: 8px;
+  background: linear-gradient(135deg, rgba(123,228,255,.14), rgba(57,255,143,.08));
+  border: 1px solid var(--border);
+}
+.pcard__ph--more {
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--dive-mono); font-size: .7rem; color: var(--soft); background: rgba(8,26,52,.7);
+}
+
+.pcard__meta { display: grid; gap: 7px; margin-bottom: 18px; font-size: .84rem; }
+.pcard__meta-row { display: flex; gap: 8px; align-items: baseline; }
+.pcard__meta-row b { color: var(--soft); font-weight: 600; min-width: 78px; font-size: .7rem; text-transform: uppercase; letter-spacing: .04em; flex-shrink: 0; }
+.pcard__meta-row em { font-style: normal; color: var(--soft); font-size: .78rem; }
+
+.pcard__missing { font-size: .8rem; color: var(--soft); margin-bottom: 18px; line-height: 1.5; }

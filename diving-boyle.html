@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>DIVING-BOYLE · Gli Amici di Boyle — Anteprima</title>
+  <meta name="description" content="Il censimento scientifico dei diving center italiani, a cura degli Amici di Boyle." />
+  <link rel="icon" href="assets/logo.png" type="image/png" />
+  <link rel="stylesheet" href="diving-boyle.css" />
+</head>
+<body>
+
+  <!-- ═══ INTRO: gauge di profondità + bolle ═══ -->
+  <div id="intro-overlay">
+    <div class="intro-rays" aria-hidden="true">
+      <span class="intro-ray intro-ray--1"></span>
+      <span class="intro-ray intro-ray--2"></span>
+    </div>
+    <div class="intro-caustic" aria-hidden="true">
+      <span class="intro-caustic__blob intro-caustic__blob--1"></span>
+      <span class="intro-caustic__blob intro-caustic__blob--2"></span>
+    </div>
+    <div class="intro-bubbles" id="intro-bubbles" aria-hidden="true"></div>
+    <div class="intro-flash" id="intro-flash" aria-hidden="true"></div>
+    <button id="intro-skip" class="intro-skip">Salta ›</button>
+
+    <!-- Fase 1: globo strumentale che punta e zooma sull'Italia -->
+    <div class="intro-globe" id="intro-globe" aria-hidden="true">
+      <svg viewBox="0 0 240 240">
+        <circle class="intro-globe__sphere" cx="120" cy="120" r="86" />
+        <ellipse class="intro-globe__lat" cx="120" cy="120" rx="86" ry="28" />
+        <ellipse class="intro-globe__lat" cx="120" cy="120" rx="86" ry="55" />
+        <ellipse class="intro-globe__lon" cx="120" cy="120" rx="28" ry="86" />
+        <ellipse class="intro-globe__lon" cx="120" cy="120" rx="55" ry="86" />
+        <circle class="intro-globe__rim" cx="120" cy="120" r="86" />
+        <circle class="intro-globe__marker" cx="150" cy="100" r="3.4" />
+      </svg>
+    </div>
+    <div class="intro-title" id="intro-title" aria-hidden="true">
+      <span class="intro-title__word" id="intro-word-diving">DIVING-</span><span class="intro-title__word db-brand__boyle" id="intro-word-boyle">BOYLE</span>
+    </div>
+
+    <!-- Fase 2: gauge di profondità -->
+    <div class="intro-gauge" aria-hidden="true">
+      <span class="intro-gauge__glow" id="intro-glow"></span>
+      <span class="intro-gauge__scan"></span>
+      <svg viewBox="0 0 220 220">
+        <path d="M27.25,136.88 A87,87 0 1 1 192.75,136.88" fill="none" stroke="rgba(123,228,255,.18)" stroke-width="10" stroke-linecap="round" />
+        <path id="intro-arc-fg" d="M27.25,136.88 A87,87 0 1 1 192.75,136.88" fill="none" stroke="url(#diveGrad)" stroke-width="2" stroke-linecap="round" opacity=".7" />
+        <defs>
+          <linearGradient id="diveGrad" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#39ff8f" />
+            <stop offset="50%" stop-color="#7be4ff" />
+            <stop offset="100%" stop-color="#ffb020" />
+          </linearGradient>
+        </defs>
+        <line x1="19.7" y1="139.4" x2="35.8" y2="134.1" stroke="rgba(237,247,255,.4)" stroke-width="2" />
+        <line x1="33.1" y1="54.2" x2="46.9" y2="64.2" stroke="rgba(237,247,255,.4)" stroke-width="2" />
+        <line x1="110" y1="15" x2="110" y2="32" stroke="rgba(237,247,255,.4)" stroke-width="2" />
+        <line x1="186.9" y1="54.2" x2="173.1" y2="64.2" stroke="rgba(237,247,255,.4)" stroke-width="2" />
+        <line x1="200.3" y1="139.4" x2="184.2" y2="134.1" stroke="rgba(237,247,255,.4)" stroke-width="2" />
+        <g class="intro-gauge__needle">
+          <line x1="110" y1="110" x2="110" y2="28" stroke="#ffb020" stroke-width="3" stroke-linecap="round" />
+        </g>
+        <circle cx="110" cy="110" r="7" fill="#ffb020" />
+      </svg>
+    </div>
+    <div class="intro-readout">
+      <span id="intro-readout-m">0 m</span> · <span id="intro-readout-ata">1.0 ATA</span>
+      <small>Profondità operativa</small>
+    </div>
+  </div>
+
+  <!-- ═══ HEADER — identico a index.html: stesso markup, stesse classi ═══ -->
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a class="brand" href="index.html" aria-label="Gli Amici di Boyle Home">
+        <img src="assets/logo.png" alt="Logo Gli Amici di Boyle" width="56" height="56" />
+        <span class="brand-copy">
+          <strong>Gli Amici di Boyle</strong>
+          <em>Diving &amp; Hyperbaric Medicine · Research &amp; Education</em>
+          <em class="brand-sub">Human Performance &amp; Safety in Extreme Environments</em>
+        </span>
+      </a>
+
+      <input id="nav-toggle" class="nav-toggle" type="checkbox" aria-label="Apri menu" />
+      <label class="nav-burger" for="nav-toggle"><span></span><span></span><span></span></label>
+
+      <nav class="site-nav" aria-label="Navigazione principale">
+        <a href="index.html#home">Home</a>
+        <a href="index.html#visione">Visione</a>
+        <div class="nav-dropdown">
+          <button class="nav-dropdown-btn is-current" type="button">Attività</button>
+          <div class="nav-dropdown-panel">
+            <a href="index.html#attivita">Aree</a>
+            <a href="index.html#ricerca">Ricerca</a>
+            <a href="index.html#formazione">Formazione</a>
+            <a href="index.html#contenuti">Contenuti</a>
+            <a href="boylebibliography.html">Bibliography <span class="nav-badge-new">Nuovo</span></a>
+            <a href="diving-boyle.html" class="is-current">Diving-Boyle <span class="nav-badge-new">Nuovo</span></a>
+          </div>
+        </div>
+        <a href="index.html#fondatori">Fondatori</a>
+        <a href="rete.html">Rete</a>
+        <a href="podcast.html">Podcast</a>
+        <a href="eventi.html">Eventi</a>
+        <a href="index.html#contatti">Contatti</a>
+        <a class="lang-toggle lang-toggle--mobile" href="index.html"><span>IT</span><span class="lang-sep"> · </span><span>EN</span></a>
+      </nav>
+      <a class="lang-toggle" href="index.html" title="Cambia lingua / Switch language">
+        <span>IT</span><span class="lang-sep"> · </span><span>EN</span>
+      </a>
+    </div>
+  </header>
+  <div class="ticker">
+    <div class="ticker-track" aria-hidden="true">
+      <span>AEROSPACE</span><span class="ticker-dot">·</span><span>EDUCATION</span><span class="ticker-dot">·</span><span>RESEARCH</span><span class="ticker-dot">·</span><span>PRESSURE</span><span class="ticker-dot">·</span><span>SAFETY</span><span class="ticker-dot">·</span><span>HYPERBARIC</span><span class="ticker-dot">·</span><span>DIVING</span><span class="ticker-dot">·</span><span>HUMAN PERFORMANCE</span><span class="ticker-dot">·</span>
+      <span>AEROSPACE</span><span class="ticker-dot">·</span><span>EDUCATION</span><span class="ticker-dot">·</span><span>RESEARCH</span><span class="ticker-dot">·</span><span>PRESSURE</span><span class="ticker-dot">·</span><span>SAFETY</span><span class="ticker-dot">·</span><span>HYPERBARIC</span><span class="ticker-dot">·</span><span>DIVING</span><span class="ticker-dot">·</span><span>HUMAN PERFORMANCE</span><span class="ticker-dot">·</span>
+    </div>
+  </div>
+
+  <main>
+    <!-- ═══ HERO: bivio a due percorsi ═══ -->
+    <section class="db-hero container">
+      <div class="db-hero__gauge-bg" aria-hidden="true">
+        <svg viewBox="0 0 220 220">
+          <path d="M27.25,136.88 A87,87 0 1 1 192.75,136.88" fill="none" stroke="url(#heroGaugeGrad)" stroke-width="2.5" stroke-linecap="round" />
+          <circle cx="110" cy="110" r="105" fill="none" stroke="rgba(123,228,255,.5)" stroke-width="1" />
+          <defs>
+            <linearGradient id="heroGaugeGrad" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="#39ff8f" />
+              <stop offset="50%" stop-color="#7be4ff" />
+              <stop offset="100%" stop-color="#ffb020" />
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+      <div class="db-hero__intro">
+        <h1>DIVING-<span class="db-brand__boyle">BOYLE</span></h1>
+        <p>La mappa scientifica dei diving center italiani. Un censimento a cura di un'associazione di medicina subacquea e iperbarica — non una directory generica, non recensioni a pagamento.</p>
+      </div>
+
+      <div class="db-fork">
+        <div class="db-path db-path--explora" data-tilt>
+          <div class="db-path__glare" aria-hidden="true"></div>
+          <div class="db-path__sparks" aria-hidden="true"></div>
+          <span class="db-path__eyebrow">Sei un subacqueo?</span>
+          <h2>Trova il diving giusto, non il primo che capita.</h2>
+          <p>Filtra per regione, brevetti, tipo di immersione e servizi come la camera iperbarica. Dati verificati centro per centro, non recensioni anonime.</p>
+          <a class="db-btn db-btn-green db-btn--hero" href="#esplora">Esplora i diving →</a>
+        </div>
+        <div class="db-path db-path--registra" data-tilt>
+          <div class="db-path__glare" aria-hidden="true"></div>
+          <div class="db-path__sparks" aria-hidden="true"></div>
+          <span class="db-path__eyebrow">Gestisci un diving center?</span>
+          <h2>Fatti trovare da chi cerca sicurezza, non solo un'immersione.</h2>
+          <p>La tua scheda gestita da un'associazione di medicina subacquea e iperbarica, non da una directory generica — verificata da persone vere, non comprata.</p>
+          <a class="db-btn db-btn-amber db-btn--hero" href="#">Registra il tuo diving →</a>
+        </div>
+      </div>
+      <button class="db-fork__manage-link" id="manage-open-btn" type="button">Hai già una scheda? Accedi con il tuo codice →</button>
+    </section>
+
+    <!-- ═══ GESTISCI LA TUA SCHEDA — accesso con codice personale ═══ -->
+    <div class="manage-modal" id="manage-modal" aria-hidden="true">
+      <div class="manage-modal__backdrop" id="manage-modal-backdrop"></div>
+      <div class="manage-modal__panel" role="dialog" aria-modal="true" aria-labelledby="manage-gate-title">
+        <button class="dive-modal__close" id="manage-modal-close" type="button" aria-label="Chiudi">✕</button>
+
+        <div class="manage-gate" id="manage-gate">
+          <div class="manage-gate__icon">⚙</div>
+          <h3 id="manage-gate-title">Gestisci la tua scheda</h3>
+          <p>Inserisci il codice ricevuto via email quando la tua scheda è stata approvata — sblocchi la modifica in autonomia, come per la Rete di Boyle.</p>
+          <form id="manage-gate-form">
+            <input type="text" id="manage-code-input" class="manage-code-input" placeholder="DIVE-0000-NOME" autocomplete="off" spellcheck="false" />
+            <button type="submit" class="db-btn db-btn-amber db-btn-block">Sblocca la tua scheda →</button>
+          </form>
+          <p class="manage-gate__note">Anteprima: qui qualsiasi codice apre una scheda d'esempio, per farti vedere come funzionerà. Il controllo vero arriva col backend.</p>
+        </div>
+
+        <div class="manage-editor" id="manage-editor" hidden>
+          <span class="manage-editor__badge">✓ Codice riconosciuto</span>
+          <h3>Bentornato, <span id="manage-editor-nome">Blue Reef Diving</span></h3>
+
+          <div class="manage-editor__grid">
+            <form class="manage-form" id="manage-form">
+              <label><span>Nome del centro</span><input type="text" id="m-nome" value="Blue Reef Diving" /></label>
+              <div class="manage-form__row">
+                <label><span>Comune</span><input type="text" id="m-comune" value="Ustica" /></label>
+                <label><span>Regione</span><input type="text" id="m-regione" value="Sicilia" /></label>
+              </div>
+              <label><span>Descrizione breve</span><textarea id="m-desc" rows="3" maxlength="200">Immersioni nella riserva marina di Ustica, corsi PADI e uscite guidate su relitti e pareti.</textarea></label>
+              <div class="manage-form__row">
+                <label><span>Telefono</span><input type="text" id="m-telefono" value="091 844 9020" /></label>
+                <label><span>Sito web</span><input type="text" id="m-sito" value="www.bluereefustica.it" /></label>
+              </div>
+              <fieldset class="manage-form__flags">
+                <legend>Identità operativa</legend>
+                <label class="manage-flag"><input type="checkbox" id="m-flag-iperbarica" checked /> Camera iperbarica convenzionata</label>
+                <label class="manage-flag"><input type="checkbox" id="m-flag-padi" checked /> PADI 5 Star</label>
+                <label class="manage-flag"><input type="checkbox" id="m-flag-grotte" /> Immersioni in grotta</label>
+              </fieldset>
+              <button type="submit" class="db-btn db-btn-green db-btn-block">Salva modifiche →</button>
+              <p class="manage-form__note">Le modifiche vanno in revisione prima di essere pubblicate — stesso principio di tutto il sito, nessun aggiornamento automatico.</p>
+            </form>
+
+            <div class="manage-preview">
+              <span class="manage-preview__label">Così apparirà la tua scheda</span>
+              <article class="mp-card">
+                <div class="mp-card__top">
+                  <div class="mp-card__logo" id="mp-logo">BR</div>
+                  <div>
+                    <div class="mp-card__nome" id="mp-nome">Blue Reef Diving</div>
+                    <div class="mp-card__loc" id="mp-loc">Ustica · Sicilia</div>
+                  </div>
+                  <span class="mp-card__status">● Verificato</span>
+                </div>
+                <p class="mp-card__desc" id="mp-desc"></p>
+                <div class="mp-card__tags" id="mp-tags"></div>
+              </article>
+            </div>
+          </div>
+          <p class="manage-form__confirm" id="manage-form-confirm" hidden>✓ Modifiche registrate per la revisione. In questa anteprima non sono ancora collegate al backend reale.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="depth-scale depth-scale--divider">
+        <span class="depth-scale__label"><b>0 m</b> · 1 ATA</span>
+        <span class="depth-scale__rail">
+          <span class="depth-scale__fill" id="depth-fill"></span>
+          <span class="depth-scale__tick" style="left:25%">10 m</span>
+          <span class="depth-scale__tick" style="left:50%">20 m</span>
+          <span class="depth-scale__tick" style="left:75%">30 m</span>
+        </span>
+        <span class="depth-scale__label">40 m · <b>4 ATA</b> — limite ricreativo</span>
+      </div>
+    </div>
+
+    <!-- ═══ ESPLORA PER REGIONE — mappa reale, confini ISTAT ═══ -->
+    <section class="db-section container" id="esplora">
+      <div class="db-section-label">Esplora per regione</div>
+      <h2 id="map-heading">Oltre 770 diving individuati, posizionati sulla loro mappa reale.</h2>
+      <p>Clicca una regione per entrarci ed esplorare i diving individuati lì, ognuno nella sua posizione reale. Dati da una prima ricerca pubblica, non ancora confermati dal titolare — le schede definitive del sito saranno solo quelle verificate tramite il form di registrazione.</p>
+
+      <div class="real-map-wrap" id="real-map-wrap">
+        <button class="real-map-back" id="real-map-back" type="button" style="display:none;">← Tutte le regioni</button>
+        <svg id="real-map-svg" class="real-map-svg" viewBox="0 0 500 650" aria-hidden="true">
+          <g id="real-map-regions"></g>
+          <g id="real-map-pins"></g>
+        </svg>
+        <p class="real-map-hint" id="real-map-hint">Clicca una regione per esplorarla</p>
+      </div>
+      <p class="italy-map__legend">Confini ufficiali ISTAT (<a href="https://github.com/openpolis/geojson-italy" target="_blank" rel="noopener">openpolis/geojson-italy</a>, licenza CC-BY). Intensità del colore = numero di diving individuati nella regione — dati grezzi da ricerca pubblica, non ancora verificati.</p>
+    </section>
+
+    <!-- ═══ SCHEDA DIVING (aperta cliccando un pin) ═══ -->
+    <div class="dive-modal" id="dive-modal" aria-hidden="true">
+      <div class="dive-modal__backdrop" id="dive-modal-backdrop"></div>
+      <div class="dive-modal__panel" role="dialog" aria-modal="true" aria-labelledby="dive-modal-nome">
+        <button class="dive-modal__close" id="dive-modal-close" type="button" aria-label="Chiudi">✕</button>
+        <span class="dive-modal__status">● Non verificato</span>
+        <h3 id="dive-modal-nome"></h3>
+        <p class="dive-modal__loc" id="dive-modal-loc"></p>
+        <div class="dive-modal__meta" id="dive-modal-meta"></div>
+        <div class="dive-modal__actions" id="dive-modal-actions"></div>
+
+        <div class="dive-owner">
+          <button class="dive-owner__toggle" id="dive-owner-toggle" type="button">Sei il titolare di questo diving? →</button>
+          <form class="dive-owner-form" id="dive-owner-form" hidden>
+            <label>
+              <span>Cosa vuoi fare?</span>
+              <select id="dive-owner-type">
+                <option value="modifica">Modificare i dati di questa scheda</option>
+                <option value="rimuovi">Chiedere la rimozione dall'elenco</option>
+                <option value="foto">Aggiungere foto del centro</option>
+              </select>
+            </label>
+            <label>
+              <span>Descrivi cosa vuoi cambiare</span>
+              <textarea id="dive-owner-msg" rows="3" placeholder="Es: il telefono è cambiato, il nuovo è..."></textarea>
+            </label>
+            <label>
+              <span>La tua email</span>
+              <input type="email" id="dive-owner-email" placeholder="nome@diving.it" required />
+            </label>
+            <button type="submit" class="db-btn db-btn-amber db-btn-block">Invia richiesta</button>
+            <p class="dive-owner-form__note">Verificata manualmente da Amici di Boyle prima di qualsiasi modifica pubblica — nessun aggiornamento automatico.</p>
+          </form>
+          <p class="dive-owner-confirm" id="dive-owner-confirm" hidden>✓ Richiesta registrata. In questa anteprima non è ancora collegata a un modulo reale — arriverà con il backend (Apps Script + Sheet "Richieste_Modifica").</p>
+        </div>
+      </div>
+    </div>
+
+    <p class="db-preview-note">Anteprima: nome, indirizzo, telefono, sito e coordinate vengono da una ricerca su Google Maps, dati pubblici ma <b>non verificati</b> dal titolare. Nessuna di queste schede è "ufficiale" finché il centro non la rivendica tramite il form di registrazione — da lì in poi userà il flusso di richiesta modifica qui sopra.</p>
+  </main>
+
+  <!-- Motore animazioni: GSAP + ScrollTrigger, gratuiti anche per uso commerciale dal 2025.
+       Caricati via CDN, nessun build tool. Se falliscono a caricare, diving-boyle.js
+       degrada su un fallback CSS/JS puro (vedi hasGsap). -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/ScrollTrigger.min.js"></script>
+
+  <script src="diving-boyle.js"></script>
+  <script src="diving-boyle-map.js"></script>
+  <script src="diving-boyle-manage.js"></script>
+</body>
+</html>
