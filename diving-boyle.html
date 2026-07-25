@@ -241,15 +241,17 @@
     <!-- ═══ ESPLORA PER REGIONE — mappa reale, confini ISTAT ═══ -->
     <section class="db-section container" id="esplora">
       <div class="db-section-label">Esplora per regione</div>
-      <h2 id="map-heading">Oltre 770 diving individuati, posizionati sulla loro mappa reale.</h2>
+      <h2 id="map-heading">Ecco i diving italiani. Qui si impara ad esplorare la parte nascosta del mondo.</h2>
       <p>Clicca una regione per entrarci ed esplorare i diving individuati lì, ognuno nella sua posizione reale. Dati da una prima ricerca pubblica, non ancora confermati dal titolare — le schede definitive del sito saranno solo quelle verificate tramite il form di registrazione.</p>
 
       <div class="real-map-wrap" id="real-map-wrap">
-        <button class="real-map-back" id="real-map-back" type="button" style="display:none;">← Tutte le regioni</button>
-        <svg id="real-map-svg" class="real-map-svg" viewBox="0 0 500 650" aria-hidden="true">
-          <g id="real-map-regions"></g>
-          <g id="real-map-pins"></g>
-        </svg>
+        <div class="real-map-frame">
+          <button class="real-map-back" id="real-map-back" type="button" style="display:none;">← Tutte le regioni</button>
+          <svg id="real-map-svg" class="real-map-svg" viewBox="0 0 500 650" aria-hidden="true">
+            <g id="real-map-regions"></g>
+            <g id="real-map-pins"></g>
+          </svg>
+        </div>
         <p class="real-map-hint" id="real-map-hint">Clicca una regione per esplorarla</p>
       </div>
       <p class="italy-map__legend">Confini ufficiali ISTAT (<a href="https://github.com/openpolis/geojson-italy" target="_blank" rel="noopener">openpolis/geojson-italy</a>, licenza CC-BY). Intensità del colore = numero di diving individuati nella regione — dati grezzi da ricerca pubblica, non ancora verificati.</p>

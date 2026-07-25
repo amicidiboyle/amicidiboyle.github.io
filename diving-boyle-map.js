@@ -25,7 +25,6 @@
   var NATIONAL_VB = null;
   var currentVB = null;
   var mapData = null;
-  var totCountGlobal = 0;
   var divingData = null;
 
   if (!svg) return; // pagina senza mappa (safety, non dovrebbe succedere)
@@ -66,10 +65,8 @@
     var maxCount = 0;
     Object.keys(divingData).forEach(function (regione) {
       counts[regione] = divingData[regione].length;
-      totCountGlobal += counts[regione];
       if (counts[regione] > maxCount) maxCount = counts[regione];
     });
-    if (heading) heading.textContent = "Oltre " + totCountGlobal + " diving individuati, posizionati sulla loro mappa reale.";
 
     Object.keys(mapData.regioni).forEach(function (nome) {
       var r = mapData.regioni[nome];
@@ -123,7 +120,7 @@
     animateViewBox(NATIONAL_VB);
     backBtn.style.display = "none";
     hint.textContent = "Clicca una regione per esplorarla";
-    heading.textContent = "Oltre " + totCountGlobal + " diving individuati, posizionati sulla loro mappa reale.";
+    heading.textContent = "Ecco i diving italiani. Qui si impara ad esplorare la parte nascosta del mondo.";
   }
 
   function animateViewBox(target, onDone) {

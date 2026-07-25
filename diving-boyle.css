@@ -204,7 +204,7 @@ body::after {
   .site-nav > a {
     display: block; padding: 12px 16px; border-radius: 12px;
     font-size: .98rem; font-weight: 600; color: var(--text);
-    transition: background .15s, color .15s; text-align: center;
+    transition: background .15s, color .15s; text-align: right;
   }
   .site-nav > a:hover { background: rgba(123,228,255,.09); color: var(--cyan-2); }
   .lang-toggle { display: none; }
@@ -223,7 +223,7 @@ body::after {
     border: 1px solid rgba(123,228,255,.1); margin: 2px 0; overflow: hidden;
   }
   .nav-dropdown > .nav-dropdown-btn {
-    display: flex; width: 100%; align-items: center; justify-content: space-between;
+    display: flex; width: 100%; align-items: center; justify-content: flex-end; gap: 8px;
     padding: 12px 16px; font-size: .98rem; font-weight: 600; color: var(--cyan-2);
   }
   .nav-dropdown-panel {
@@ -231,7 +231,7 @@ body::after {
     opacity: 1; visibility: visible; background: transparent; border: 0; box-shadow: none;
     padding: 0 8px 8px 8px; border-top: 1px solid rgba(123,228,255,.08);
   }
-  .nav-dropdown-panel a { padding: 10px 14px; font-size: .92rem; }
+  .nav-dropdown-panel a { padding: 10px 14px; font-size: .92rem; text-align: right; }
 }
 
 /* ── SCALA PROFONDITÀ/PRESSIONE — elemento firma ricorrente ── */
@@ -538,11 +538,17 @@ body::after {
    mano), zoom per regione, pin sulla posizione geografica vera di ogni
    diving individuato. ── */
 .real-map-wrap {
-  position: relative; width: 100%; max-width: 520px; margin: 0 auto 10px;
+  width: 100%; max-width: 520px; margin: 0 auto 10px;
   background: var(--glass); border: 1px solid var(--border); border-radius: var(--radius);
   padding: 16px; backdrop-filter: blur(12px);
 }
-.real-map-svg { width: 100%; height: auto; display: block; overflow: visible; }
+/* Proporzioni fisse (uguali al viewBox nazionale 500x650): l'SVG riempie
+   sempre lo stesso spazio anche quando lo zoom su una regione cambia il
+   viewBox interno. Senza questo, cambiare regione cambiava l'altezza
+   della mappa e spostava la pagina proprio mentre si tocca lo schermo —
+   su mobile il tap successivo finiva altrove (un link del menu). */
+.real-map-frame { position: relative; aspect-ratio: 500 / 650; max-height: 70vh; margin: 0 auto; }
+.real-map-svg { width: 100%; height: 100%; display: block; overflow: visible; }
 .real-map-region {
   fill: color-mix(in srgb, var(--cyan) calc(var(--intensity, 0) * 55%), rgba(8,26,52,.55));
   stroke: rgba(123,228,255,.4); stroke-width: 0.6; cursor: pointer;
