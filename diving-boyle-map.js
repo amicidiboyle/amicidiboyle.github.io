@@ -13,6 +13,8 @@
   var modalBackdrop = document.getElementById("dive-modal-backdrop");
   var modalNome = document.getElementById("dive-modal-nome");
   var modalLoc = document.getElementById("dive-modal-loc");
+  var modalDesc = document.getElementById("dive-modal-desc");
+  var modalTags = document.getElementById("dive-modal-tags");
   var modalMeta = document.getElementById("dive-modal-meta");
   var modalActions = document.getElementById("dive-modal-actions");
   var ownerToggle = document.getElementById("dive-owner-toggle");
@@ -180,6 +182,17 @@
   function openCard(item) {
     modalNome.textContent = item.nome;
     modalLoc.textContent = (item.indirizzo ? item.indirizzo + " · " : "") + item.regione;
+
+    if (item.descrizione) {
+      modalDesc.textContent = item.descrizione;
+      modalDesc.hidden = false;
+    } else {
+      modalDesc.textContent = "";
+      modalDesc.hidden = true;
+    }
+    modalTags.innerHTML = (item.tags || [])
+      .map(function (t) { return '<span class="dive-modal__tag">' + escapeHtml(t) + "</span>"; })
+      .join("");
 
     var rows = [];
     if (item.categoria) rows.push(metaRow("Tipo", item.categoria));

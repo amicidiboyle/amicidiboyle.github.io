@@ -140,90 +140,17 @@
         <p>La mappa scientifica dei diving center italiani. Un censimento a cura di un'associazione di medicina subacquea e iperbarica — non una directory generica, non recensioni a pagamento.</p>
       </div>
 
-      <div class="db-fork">
+      <div class="db-fork db-fork--single">
         <div class="db-path db-path--explora" data-tilt>
           <div class="db-path__glare" aria-hidden="true"></div>
           <div class="db-path__sparks" aria-hidden="true"></div>
           <span class="db-path__eyebrow">Sei un subacqueo?</span>
           <h2>Trova il diving giusto, non il primo che capita.</h2>
-          <p>Filtra per regione, brevetti, tipo di immersione e servizi come la camera iperbarica. Dati verificati centro per centro, non recensioni anonime.</p>
+          <p>Un elenco dei centri diving italiani su mappa, ognuno nella sua posizione reale.</p>
           <a class="db-btn db-btn-green db-btn--hero" href="#esplora">Esplora i diving →</a>
         </div>
-        <div class="db-path db-path--registra" data-tilt>
-          <div class="db-path__glare" aria-hidden="true"></div>
-          <div class="db-path__sparks" aria-hidden="true"></div>
-          <span class="db-path__eyebrow">Gestisci un diving center?</span>
-          <h2>Fatti trovare da chi cerca sicurezza, non solo un'immersione.</h2>
-          <p>La tua scheda gestita da un'associazione di medicina subacquea e iperbarica, non da una directory generica — verificata da persone vere, non comprata.</p>
-          <a class="db-btn db-btn-amber db-btn--hero" href="#">Registra il tuo diving →</a>
-        </div>
       </div>
-      <button class="db-fork__manage-link" id="manage-open-btn" type="button">Hai già una scheda? Accedi con il tuo codice →</button>
     </section>
-
-    <!-- ═══ GESTISCI LA TUA SCHEDA — accesso con codice personale ═══ -->
-    <div class="manage-modal" id="manage-modal" aria-hidden="true">
-      <div class="manage-modal__backdrop" id="manage-modal-backdrop"></div>
-      <div class="manage-modal__panel" role="dialog" aria-modal="true" aria-labelledby="manage-gate-title">
-        <button class="dive-modal__close" id="manage-modal-close" type="button" aria-label="Chiudi">✕</button>
-
-        <div class="manage-gate" id="manage-gate">
-          <div class="manage-gate__icon">⚙</div>
-          <h3 id="manage-gate-title">Gestisci la tua scheda</h3>
-          <p>Inserisci il codice ricevuto via email quando la tua scheda è stata approvata — sblocchi la modifica in autonomia, come per la Rete di Boyle.</p>
-          <form id="manage-gate-form">
-            <input type="text" id="manage-code-input" class="manage-code-input" placeholder="DIVE-0000-NOME" autocomplete="off" spellcheck="false" />
-            <button type="submit" class="db-btn db-btn-amber db-btn-block">Sblocca la tua scheda →</button>
-          </form>
-          <p class="manage-gate__note">Anteprima: qui qualsiasi codice apre una scheda d'esempio, per farti vedere come funzionerà. Il controllo vero arriva col backend.</p>
-        </div>
-
-        <div class="manage-editor" id="manage-editor" hidden>
-          <span class="manage-editor__badge">✓ Codice riconosciuto</span>
-          <h3>Bentornato, <span id="manage-editor-nome">Blue Reef Diving</span></h3>
-
-          <div class="manage-editor__grid">
-            <form class="manage-form" id="manage-form">
-              <label><span>Nome del centro</span><input type="text" id="m-nome" value="Blue Reef Diving" /></label>
-              <div class="manage-form__row">
-                <label><span>Comune</span><input type="text" id="m-comune" value="Ustica" /></label>
-                <label><span>Regione</span><input type="text" id="m-regione" value="Sicilia" /></label>
-              </div>
-              <label><span>Descrizione breve</span><textarea id="m-desc" rows="3" maxlength="200">Immersioni nella riserva marina di Ustica, corsi PADI e uscite guidate su relitti e pareti.</textarea></label>
-              <div class="manage-form__row">
-                <label><span>Telefono</span><input type="text" id="m-telefono" value="091 844 9020" /></label>
-                <label><span>Sito web</span><input type="text" id="m-sito" value="www.bluereefustica.it" /></label>
-              </div>
-              <fieldset class="manage-form__flags">
-                <legend>Identità operativa</legend>
-                <label class="manage-flag"><input type="checkbox" id="m-flag-iperbarica" checked /> Camera iperbarica convenzionata</label>
-                <label class="manage-flag"><input type="checkbox" id="m-flag-padi" checked /> PADI 5 Star</label>
-                <label class="manage-flag"><input type="checkbox" id="m-flag-grotte" /> Immersioni in grotta</label>
-              </fieldset>
-              <button type="submit" class="db-btn db-btn-green db-btn-block">Salva modifiche →</button>
-              <p class="manage-form__note">Le modifiche vanno in revisione prima di essere pubblicate — stesso principio di tutto il sito, nessun aggiornamento automatico.</p>
-            </form>
-
-            <div class="manage-preview">
-              <span class="manage-preview__label">Così apparirà la tua scheda</span>
-              <article class="mp-card">
-                <div class="mp-card__top">
-                  <div class="mp-card__logo" id="mp-logo">BR</div>
-                  <div>
-                    <div class="mp-card__nome" id="mp-nome">Blue Reef Diving</div>
-                    <div class="mp-card__loc" id="mp-loc">Ustica · Sicilia</div>
-                  </div>
-                  <span class="mp-card__status">● Verificato</span>
-                </div>
-                <p class="mp-card__desc" id="mp-desc"></p>
-                <div class="mp-card__tags" id="mp-tags"></div>
-              </article>
-            </div>
-          </div>
-          <p class="manage-form__confirm" id="manage-form-confirm" hidden>✓ Modifiche registrate per la revisione. In questa anteprima non sono ancora collegate al backend reale.</p>
-        </div>
-      </div>
-    </div>
 
     <div class="container">
       <div class="depth-scale depth-scale--divider">
@@ -242,7 +169,7 @@
     <section class="db-section container" id="esplora">
       <div class="db-section-label">Esplora per regione</div>
       <h2 id="map-heading">Ecco i diving italiani. Qui si impara ad esplorare la parte nascosta del mondo.</h2>
-      <p>Clicca una regione per entrarci ed esplorare i diving individuati lì, ognuno nella sua posizione reale. Dati da una prima ricerca pubblica, non ancora confermati dal titolare — le schede definitive del sito saranno solo quelle verificate tramite il form di registrazione.</p>
+      <p>Clicca una regione per entrarci ed esplorare i diving individuati lì, ognuno nella sua posizione reale. Dati da una prima ricerca pubblica su fonti aperte, non confermati dai singoli centri.</p>
 
       <div class="real-map-wrap" id="real-map-wrap">
         <div class="real-map-frame">
@@ -265,6 +192,8 @@
         <span class="dive-modal__status">● Non verificato</span>
         <h3 id="dive-modal-nome"></h3>
         <p class="dive-modal__loc" id="dive-modal-loc"></p>
+        <p class="dive-modal__desc" id="dive-modal-desc" hidden></p>
+        <div class="dive-modal__tags" id="dive-modal-tags"></div>
         <div class="dive-modal__meta" id="dive-modal-meta"></div>
         <div class="dive-modal__actions" id="dive-modal-actions"></div>
 
@@ -295,7 +224,7 @@
       </div>
     </div>
 
-    <p class="db-preview-note">Anteprima: nome, indirizzo, telefono, sito e coordinate vengono da una ricerca su Google Maps, dati pubblici ma <b>non verificati</b> dal titolare. Nessuna di queste schede è "ufficiale" finché il centro non la rivendica tramite il form di registrazione — da lì in poi userà il flusso di richiesta modifica qui sopra.</p>
+    <p class="db-preview-note">Anteprima: nome, indirizzo, telefono, sito e coordinate vengono da una ricerca su Google Maps, dati pubblici ma <b>non verificati</b> dal titolare. Se gestisci uno di questi centri e vuoi segnalare una correzione o la rimozione, usa il modulo qui sopra.</p>
   </main>
 
   <!-- Motore animazioni: GSAP + ScrollTrigger, gratuiti anche per uso commerciale dal 2025.
@@ -306,6 +235,5 @@
 
   <script src="diving-boyle.js"></script>
   <script src="diving-boyle-map.js"></script>
-  <script src="diving-boyle-manage.js"></script>
 </body>
 </html>
