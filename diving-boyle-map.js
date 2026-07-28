@@ -11,6 +11,7 @@
   var modal = document.getElementById("dive-modal");
   var modalClose = document.getElementById("dive-modal-close");
   var modalBackdrop = document.getElementById("dive-modal-backdrop");
+  var modalAvatar = document.getElementById("dive-modal-avatar");
   var modalNome = document.getElementById("dive-modal-nome");
   var modalLoc = document.getElementById("dive-modal-loc");
   var modalDesc = document.getElementById("dive-modal-desc");
@@ -178,8 +179,20 @@
   function metaRow(label, value) {
     return '<div class="dive-modal__meta-row"><b>' + label + "</b><span>" + escapeHtml(value) + "</span></div>";
   }
+  function initials(nome) {
+    var words = String(nome).trim().split(/\s+/).filter(Boolean);
+    var chars = words.slice(0, 2).map(function (w) { return w.charAt(0).toUpperCase(); });
+    return chars.join("") || "?";
+  }
+  var TAG_GROUPS = {
+    PADI: "certificazione", SSI: "certificazione", CMAS: "certificazione",
+    GUE: "certificazione", SNSI: "certificazione",
+    "Barca propria": "servizio", "Noleggio attrezzatura": "servizio",
+    "Assistenza medica": "servizio", "Watersport": "servizio",
+  };
 
   function openCard(item) {
+    modalAvatar.textContent = initials(item.nome);
     modalNome.textContent = item.nome;
     modalLoc.textContent = (item.indirizzo ? item.indirizzo + " · " : "") + item.regione;
 
@@ -191,7 +204,10 @@
       modalDesc.hidden = true;
     }
     modalTags.innerHTML = (item.tags || [])
-      .map(function (t) { return '<span class="dive-modal__tag">' + escapeHtml(t) + "</span>"; })
+      .map(function (t) {
+        var group = TAG_GROUPS[t];
+        return '<span class="dive-modal__tag"' + (group ? ' data-group="' + group + '"' : "") + ">" + escapeHtml(t) + "</span>";
+      })
       .join("");
 
     var rows = [];

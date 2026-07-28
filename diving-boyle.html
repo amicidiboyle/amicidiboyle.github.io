@@ -188,10 +188,16 @@
     <div class="dive-modal" id="dive-modal" aria-hidden="true">
       <div class="dive-modal__backdrop" id="dive-modal-backdrop"></div>
       <div class="dive-modal__panel" role="dialog" aria-modal="true" aria-labelledby="dive-modal-nome">
+        <div class="dive-modal__band" aria-hidden="true"></div>
         <button class="dive-modal__close" id="dive-modal-close" type="button" aria-label="Chiudi">✕</button>
-        <span class="dive-modal__status">● Non verificato</span>
-        <h3 id="dive-modal-nome"></h3>
-        <p class="dive-modal__loc" id="dive-modal-loc"></p>
+        <div class="dive-modal__head">
+          <div class="dive-modal__avatar" id="dive-modal-avatar" aria-hidden="true"></div>
+          <div class="dive-modal__head-text">
+            <span class="dive-modal__status">● Non verificato</span>
+            <h3 id="dive-modal-nome"></h3>
+            <p class="dive-modal__loc" id="dive-modal-loc"></p>
+          </div>
+        </div>
         <p class="dive-modal__desc" id="dive-modal-desc" hidden></p>
         <div class="dive-modal__tags" id="dive-modal-tags"></div>
         <div class="dive-modal__meta" id="dive-modal-meta"></div>
