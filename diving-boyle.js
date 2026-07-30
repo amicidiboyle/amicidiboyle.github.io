@@ -211,4 +211,45 @@
     });
   }
 
+  /* ── Toggle mobile del dropdown "Attività" — stessa logica di
+     index.html: collassato di default, si apre solo al tap (classe
+     .is-open), non più "sempre aperto" come nella versione precedente. ── */
+  (function () {
+    var dropdown = document.querySelector(".nav-dropdown");
+    var btn = document.querySelector(".nav-dropdown-btn");
+    var panel = document.querySelector(".nav-dropdown-panel");
+    if (!dropdown || !btn || !panel) return;
+
+    btn.addEventListener("click", function (e) {
+      e.stopPropagation();
+      var open = dropdown.classList.contains("is-open");
+      dropdown.classList.toggle("is-open", !open);
+    });
+
+    document.addEventListener("click", function () {
+      dropdown.classList.remove("is-open");
+    });
+
+    panel.querySelectorAll("a").forEach(function (a) {
+      a.addEventListener("click", function () {
+        dropdown.classList.remove("is-open");
+        var toggle = document.getElementById("nav-toggle");
+        if (toggle) toggle.checked = false;
+      });
+    });
+
+    window.addEventListener("resize", function () {
+      if (window.innerWidth > 768) dropdown.classList.remove("is-open");
+    }, { passive: true });
+  })();
+
+  /* ── Chiudi il menu hamburger dopo il click su un link ── */
+  (function () {
+    var toggle = document.getElementById("nav-toggle");
+    if (!toggle) return;
+    document.querySelectorAll(".site-nav > a").forEach(function (a) {
+      a.addEventListener("click", function () { toggle.checked = false; });
+    });
+  })();
+
 })();

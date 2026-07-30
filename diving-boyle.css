@@ -35,14 +35,22 @@
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; }
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; overflow-x: hidden; max-width: 100vw; }
 body {
   font-family: Inter, ui-sans-serif, system-ui, -apple-system, sans-serif;
   color: var(--text);
   line-height: 1.6;
   background: #020e1c;
   overflow-x: hidden;
+  max-width: 100vw;
 }
+/* rete di sicurezza anti-scroll-orizzontale: senza min-width:0 un
+   flex/grid item con contenuto lungo (URL, titolo) puo' forzare tutta
+   la pagina piu' larga del viewport su mobile, e lo scroll laterale
+   che ne risulta resta "incastrato" finche' non si torna indietro
+   a mano — stesso bug gia' risolto una volta su styles.css. */
+* { min-width: 0; }
+main { overflow-x: clip; }
 img { max-width: 100%; display: block; }
 a { color: inherit; text-decoration: none; }
 button, input, textarea, select { font-family: inherit; }
@@ -117,7 +125,9 @@ body::after {
   opacity: 0; visibility: hidden;
   transition: opacity .18s, transform .18s, visibility .18s;
 }
-.nav-dropdown:hover .nav-dropdown-panel { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); }
+@media (min-width: 769px) {
+  .nav-dropdown:hover .nav-dropdown-panel { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); }
+}
 .nav-dropdown-panel a {
   padding: 8px 12px; border-radius: 9px; display: block;
   color: var(--muted); font-size: .85rem;
@@ -130,7 +140,9 @@ body::after {
   padding: 6px 8px; border-radius: 8px; transition: background .2s, color .2s;
 }
 .nav-dropdown > .nav-dropdown-btn::after { content: "▾"; font-size: .65rem; opacity: .7; transition: transform .22s; }
-.nav-dropdown:hover > .nav-dropdown-btn::after { transform: rotate(180deg); }
+@media (min-width: 769px) {
+  .nav-dropdown:hover > .nav-dropdown-btn::after { transform: rotate(180deg); }
+}
 .nav-dropdown > .nav-dropdown-btn:hover { color: var(--cyan-2); background: rgba(123,228,255,.07); }
 .nav-dropdown > .nav-dropdown-btn.is-current { color: var(--cyan-2); }
 
@@ -226,10 +238,21 @@ body::after {
     display: flex; width: 100%; align-items: center; justify-content: flex-end; gap: 8px;
     padding: 12px 16px; font-size: .98rem; font-weight: 600; color: var(--cyan-2);
   }
+  .nav-dropdown > .nav-dropdown-btn::after { transform: none; }
+  .nav-dropdown.is-open > .nav-dropdown-btn::after { transform: rotate(180deg); }
+  /* Collassato di default: si apre solo al tap (classe .is-open, vedi
+     diving-boyle.js), non sempre visibile come prima — stesso
+     comportamento della home, non un "sempre aperto" diverso. */
   .nav-dropdown-panel {
     position: static; transform: none; display: grid;
-    opacity: 1; visibility: visible; background: transparent; border: 0; box-shadow: none;
-    padding: 0 8px 8px 8px; border-top: 1px solid rgba(123,228,255,.08);
+    opacity: 0; visibility: hidden; max-height: 0; overflow: hidden;
+    background: transparent; border: 0; box-shadow: none;
+    padding: 0 8px; border-top: 0;
+    transition: opacity .22s, max-height .28s, visibility .22s;
+  }
+  .nav-dropdown.is-open .nav-dropdown-panel {
+    opacity: 1; visibility: visible; max-height: 400px;
+    padding: 4px 8px 8px 8px; border-top: 1px solid rgba(123,228,255,.08);
   }
   .nav-dropdown-panel a { padding: 10px 14px; font-size: .92rem; text-align: right; }
 }
@@ -653,6 +676,16 @@ body::after {
   background: rgba(8,26,56,.6); border: 1px solid var(--border); border-radius: 10px;
   padding: 9px 12px; color: var(--text); font-size: .86rem; font-family: inherit; resize: vertical;
 }
+/* Il popup nativo della select su Android/Chrome e' una UI di sistema
+   separata dal box: senza colore esplicito sulle <option> ignora lo
+   sfondo scuro del sito e mostra la lista bianca di default. */
+.dive-owner-form select {
+  appearance: none; -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 18 18' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M4 7l5 5 5-5' stroke='%237be4ff' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 12px center; background-size: 14px;
+  padding-right: 34px; cursor: pointer;
+}
+.dive-owner-form select option { background: #06142c; color: var(--text); }
 .dive-owner-form__note { font-size: .72rem; color: var(--soft); margin: 0; }
 .dive-owner-confirm { color: var(--dive-green); font-size: .86rem; margin-top: 12px; }
 .db-btn-block { width: 100%; }
