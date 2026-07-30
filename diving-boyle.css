@@ -547,6 +547,7 @@ body::after {
   color: var(--cyan-2); margin-bottom: 8px;
 }
 .db-section h2 { font-size: 1.7rem; margin-bottom: 6px; }
+#map-heading { text-align: center; }
 .db-section > p { color: var(--muted); margin-bottom: 28px; max-width: 640px; }
 
 /* ── mappa reale dell'Italia: confini ISTAT ufficiali (non disegnati a
@@ -671,21 +672,43 @@ body::after {
 .dive-owner__toggle { background: none; border: none; color: var(--cyan-2); font-size: .86rem; font-weight: 600; cursor: pointer; padding: 0; }
 .dive-owner-form { display: grid; gap: 12px; margin-top: 14px; }
 .dive-owner-form[hidden] { display: none; }
-.dive-owner-form label { display: grid; gap: 5px; font-size: .8rem; color: var(--muted); }
-.dive-owner-form select, .dive-owner-form textarea, .dive-owner-form input {
+.dive-owner-form label, .dive-owner-form__field { display: grid; gap: 5px; font-size: .8rem; color: var(--muted); }
+.dive-owner-form textarea, .dive-owner-form input {
   background: rgba(8,26,56,.6); border: 1px solid var(--border); border-radius: 10px;
   padding: 9px 12px; color: var(--text); font-size: .86rem; font-family: inherit; resize: vertical;
 }
-/* Il popup nativo della select su Android/Chrome e' una UI di sistema
-   separata dal box: senza colore esplicito sulle <option> ignora lo
-   sfondo scuro del sito e mostra la lista bianca di default. */
-.dive-owner-form select {
-  appearance: none; -webkit-appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 18 18' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M4 7l5 5 5-5' stroke='%237be4ff' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
-  background-repeat: no-repeat; background-position: right 12px center; background-size: 14px;
-  padding-right: 34px; cursor: pointer;
+
+/* ── menu a tendina custom: il <select> nativo su mobile apre una UI
+   di sistema che ignora il tema scuro del sito (lista bianca, non
+   restilizzabile via CSS in modo affidabile) — qui costruiamo lo
+   stesso controllo con markup nostro, piena coerenza visiva. Il
+   <select> reale resta nel DOM, nascosto, per il valore del form. ── */
+.db-select { position: relative; }
+.db-select__btn {
+  width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  background: rgba(8,26,56,.6); border: 1px solid var(--border); border-radius: 10px;
+  padding: 9px 12px; color: var(--text); font-size: .86rem; font-family: inherit;
+  cursor: pointer; text-align: left; transition: border-color .2s;
 }
-.dive-owner-form select option { background: #06142c; color: var(--text); }
+.db-select__btn::after {
+  content: ""; width: 14px; height: 14px; flex-shrink: 0;
+  background: url("data:image/svg+xml,%3Csvg viewBox='0 0 18 18' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M4 7l5 5 5-5' stroke='%237be4ff' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/contain no-repeat;
+  transition: transform .2s;
+}
+.db-select.is-open .db-select__btn::after { transform: rotate(180deg); }
+.db-select.is-open .db-select__btn { border-color: var(--cyan); }
+.db-select__panel {
+  position: absolute; z-index: 5; top: calc(100% + 6px); left: 0; right: 0;
+  list-style: none; padding: 6px; margin: 0;
+  background: #06142c; border: 1px solid var(--border-hi); border-radius: 12px;
+  box-shadow: var(--shadow); display: grid; gap: 2px;
+}
+.db-select__panel[hidden] { display: none; }
+.db-select__panel li {
+  padding: 9px 11px; border-radius: 8px; font-size: .86rem; color: var(--muted); cursor: pointer;
+  transition: background .15s, color .15s;
+}
+.db-select__panel li:hover, .db-select__panel li[aria-selected="true"] { background: rgba(123,228,255,.1); color: var(--text); }
 .dive-owner-form__note { font-size: .72rem; color: var(--soft); margin: 0; }
 .dive-owner-confirm { color: var(--dive-green); font-size: .86rem; margin-top: 12px; }
 .db-btn-block { width: 100%; }
@@ -700,4 +723,5 @@ body::after {
   max-width: var(--max-w); margin: 60px auto 40px; padding: 0 28px;
   font-size: .78rem; color: var(--soft); text-align: center;
 }
-.db-preview-note b { color: var(--dive-amber); }
+.db-preview-note a { color: var(--cyan-2); }
+.db-preview-note a:hover { text-decoration: underline; }

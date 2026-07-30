@@ -233,6 +233,7 @@
     ownerToggle.style.display = "";
     ownerEmail.value = "";
     ownerMsg.value = "";
+    resetOwnerTypeSelect();
 
     modal.classList.add("is-open");
     modal.setAttribute("aria-hidden", "false");
@@ -258,5 +259,52 @@
     e.preventDefault();
     ownerForm.hidden = true;
     ownerConfirm.hidden = false;
+  });
+
+  /* ── menu a tendina custom "Cosa vuoi fare?" — sostituisce il
+     <select> nativo (popup non restilizzabile su mobile) con un
+     controllo nostro; il <select> reale resta sincronizzato e
+     nascosto, per quando ci sara' un submit vero. ── */
+  var ownerTypeWrap = document.getElementById("dive-owner-type-select");
+  var ownerTypeSelect = document.getElementById("dive-owner-type");
+  var ownerTypeBtn = ownerTypeWrap.querySelector(".db-select__btn");
+  var ownerTypeValue = ownerTypeWrap.querySelector(".db-select__value");
+  var ownerTypePanel = ownerTypeWrap.querySelector(".db-select__panel");
+  var ownerTypeOptions = ownerTypeWrap.querySelectorAll(".db-select__panel li");
+
+  function resetOwnerTypeSelect() {
+    ownerTypeOptions.forEach(function (li, i) {
+      li.setAttribute("aria-selected", i === 0 ? "true" : "false");
+    });
+    ownerTypeValue.textContent = ownerTypeOptions[0].textContent;
+    ownerTypeSelect.value = ownerTypeOptions[0].dataset.value;
+    closeOwnerTypeSelect();
+  }
+  function closeOwnerTypeSelect() {
+    ownerTypeWrap.classList.remove("is-open");
+    ownerTypePanel.hidden = true;
+    ownerTypeBtn.setAttribute("aria-expanded", "false");
+  }
+
+  ownerTypeBtn.addEventListener("click", function (e) {
+    e.stopPropagation();
+    var open = ownerTypeWrap.classList.contains("is-open");
+    if (open) { closeOwnerTypeSelect(); return; }
+    ownerTypeWrap.classList.add("is-open");
+    ownerTypePanel.hidden = false;
+    ownerTypeBtn.setAttribute("aria-expanded", "true");
+  });
+  ownerTypeOptions.forEach(function (li) {
+    li.addEventListener("click", function () {
+      ownerTypeOptions.forEach(function (o) { o.setAttribute("aria-selected", "false"); });
+      li.setAttribute("aria-selected", "true");
+      ownerTypeValue.textContent = li.textContent;
+      ownerTypeSelect.value = li.dataset.value;
+      closeOwnerTypeSelect();
+    });
+  });
+  document.addEventListener("click", function () { closeOwnerTypeSelect(); });
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") closeOwnerTypeSelect();
   });
 })();
