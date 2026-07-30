@@ -29,6 +29,7 @@
   var currentVB = null;
   var mapData = null;
   var divingData = null;
+  var searchIndex = [];
 
   if (!svg) return; // pagina senza mappa (safety, non dovrebbe succedere)
 
@@ -87,6 +88,11 @@
     });
 
     backBtn.addEventListener("click", zoomToNational);
+
+    searchIndex = [];
+    Object.keys(divingData).forEach(function (regione) {
+      divingData[regione].forEach(function (item) { searchIndex.push(item); });
+    });
   }
 
   function selectRegion(nome) {
@@ -150,6 +156,16 @@
       var xy = projectPoint(item.lon, item.lat, p);
       var g = document.createElementNS("http://www.w3.org/2000/svg", "g");
       g.setAttribute("class", "real-map-pin");
+      /* area di tap invisibile, molto piu' grande del pallino visibile:
+         su mobile un target di 2-3px reali e' troppo piccolo per un dito,
+         qui allarghiamo solo la zona cliccabile (fill trasparente ma
+         comunque "hit-testabile"), non l'aspetto grafico. */
+      var hit = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+      hit.setAttribute("cx", xy[0]);
+      hit.setAttribute("cy", xy[1]);
+      hit.setAttribute("r", "6.5");
+      hit.setAttribute("fill", "transparent");
+      g.appendChild(hit);
       var c = document.createElementNS("http://www.w3.org/2000/svg", "circle");
       c.setAttribute("cx", xy[0]);
       c.setAttribute("cy", xy[1]);
@@ -307,4 +323,64 @@
   document.addEventListener("keydown", function (e) {
     if (e.key === "Escape") closeOwnerTypeSelect();
   });
+
+  /* ── RICERCA per nome/citta': apre la scheda diving direttamente,
+     senza passare dalla mappa (bottone "Trova il tuo diving") ── */
+  var searchOpenBtn = document.getElementById("search-open-btn");
+  var searchModal = document.getElementById("search-modal");
+  var searchModalClose = document.getElementById("search-modal-close");
+  var searchModalBackdrop = document.getElementById("search-modal-backdrop");
+  var searchInput = document.getElementById("search-input");
+  var searchResults = document.getElementById("search-results");
+
+  function openSearch() {
+    searchModal.classList.add("is-open");
+    searchModal.setAttribute("aria-hidden", "false");
+    searchInput.value = "";
+    renderSearchResults("");
+    setTimeout(function () { searchInput.focus(); }, 60);
+  }
+  function closeSearch() {
+    searchModal.classList.remove("is-open");
+    searchModal.setAttribute("aria-hidden", "true");
+  }
+  function renderSearchResults(query) {
+    var q = query.trim().toLowerCase();
+    if (q.length < 2) {
+      searchResults.innerHTML = '<p class="search-results__hint">Scrivi almeno 2 lettere per iniziare.</p>';
+      return;
+    }
+    var matches = searchIndex.filter(function (item) {
+      return (item.nome && item.nome.toLowerCase().indexOf(q) !== -1) ||
+             (item.indirizzo && item.indirizzo.toLowerCase().indexOf(q) !== -1) ||
+             (item.regione && item.regione.toLowerCase().indexOf(q) !== -1);
+    }).slice(0, 30);
+
+    if (!matches.length) {
+      searchResults.innerHTML = '<p class="search-results__empty">Nessun diving trovato per "' + escapeHtml(query.trim()) + '".</p>';
+      return;
+    }
+    searchResults.innerHTML = matches.map(function (item, i) {
+      return '<button type="button" class="search-result" data-idx="' + i + '">' +
+        '<div class="search-result__nome">' + escapeHtml(item.nome) + '</div>' +
+        '<div class="search-result__loc">' + escapeHtml((item.indirizzo ? item.indirizzo + " · " : "") + item.regione) + '</div>' +
+        '</button>';
+    }).join("");
+    searchResults.querySelectorAll(".search-result").forEach(function (btn, i) {
+      btn.addEventListener("click", function () {
+        closeSearch();
+        openCard(matches[i]);
+      });
+    });
+  }
+
+  if (searchOpenBtn) {
+    searchOpenBtn.addEventListener("click", openSearch);
+    searchModalClose.addEventListener("click", closeSearch);
+    searchModalBackdrop.addEventListener("click", closeSearch);
+    searchInput.addEventListener("input", function () { renderSearchResults(searchInput.value); });
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && searchModal.classList.contains("is-open")) closeSearch();
+    });
+  }
 })();

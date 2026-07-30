@@ -148,9 +148,22 @@
           <h2>Trova il diving giusto, non il primo che capita.</h2>
           <p>Un elenco dei centri diving italiani su mappa, ognuno nella sua posizione reale.</p>
           <a class="db-btn db-btn-green db-btn--hero" href="#esplora">Esplora i diving →</a>
+          <button class="db-btn db-btn-ghost" id="search-open-btn" type="button">Trova il tuo diving</button>
         </div>
       </div>
     </section>
+
+    <!-- ═══ RICERCA DIVING per nome/città ═══ -->
+    <div class="search-modal" id="search-modal" aria-hidden="true">
+      <div class="search-modal__backdrop" id="search-modal-backdrop"></div>
+      <div class="search-modal__panel" role="dialog" aria-modal="true" aria-labelledby="search-modal-title">
+        <button class="dive-modal__close" id="search-modal-close" type="button" aria-label="Chiudi">✕</button>
+        <h3 id="search-modal-title">Trova il tuo diving</h3>
+        <p class="search-modal__hint">Cerca per nome del centro o città — si apre subito la scheda, senza passare dalla mappa.</p>
+        <input type="text" id="search-input" class="search-input" placeholder="Es: Saracen, Ustica, Palermo…" autocomplete="off" />
+        <div class="search-results" id="search-results"></div>
+      </div>
+    </div>
 
     <div class="container">
       <div class="depth-scale depth-scale--divider">
@@ -161,7 +174,7 @@
           <span class="depth-scale__tick" style="left:50%">20 m</span>
           <span class="depth-scale__tick" style="left:75%">30 m</span>
         </span>
-        <span class="depth-scale__label">40 m · <b>4 ATA</b> — limite ricreativo</span>
+        <span class="depth-scale__label">40 m · <b>4 ATA</b></span>
       </div>
     </div>
 
@@ -169,7 +182,7 @@
     <section class="db-section container" id="esplora">
       <div class="db-section-label">Esplora per regione</div>
       <h2 id="map-heading">Ecco i diving italiani. Qui si impara ad esplorare la parte nascosta del mondo.</h2>
-      <p>Clicca una regione per entrarci ed esplorare i diving individuati lì, ognuno nella sua posizione reale.</p>
+      <p>Esplora i migliori diving italiani.</p>
 
       <div class="real-map-wrap" id="real-map-wrap">
         <div class="real-map-frame">

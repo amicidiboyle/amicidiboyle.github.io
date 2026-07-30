@@ -190,7 +190,7 @@ body::after {
   .brand { flex: 1; overflow: hidden; gap: 10px; }
   .brand img { width: 40px !important; height: 40px !important; }
   .brand strong { font-size: .88rem; }
-  .brand em { display: block; font-size: .64rem; overflow: hidden; text-overflow: ellipsis; }
+  .brand em { display: block; font-size: .64rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .brand-sub { display: none; }
 
   .nav-burger {
@@ -517,6 +517,10 @@ body::after {
   background: linear-gradient(135deg, rgba(255,190,80,.98), rgba(255,140,20,.92));
   color: #2a1400; box-shadow: 0 8px 26px rgba(255,176,32,.28);
 }
+.db-btn-ghost {
+  background: rgba(123,228,255,.07); border: 1px solid rgba(123,228,255,.3); color: var(--cyan-2);
+}
+.db-btn-ghost:hover { background: rgba(123,228,255,.14); border-color: rgba(123,228,255,.5); }
 
 /* ── CTA principali: sweep di luce continuo (stesso trucco di .btn-ghost
    sul resto del sito, non un effetto nuovo) + respiro del glow ── */
@@ -548,6 +552,7 @@ body::after {
 }
 .db-section h2 { font-size: 1.7rem; margin-bottom: 6px; }
 #map-heading { text-align: center; }
+#esplora > p { text-align: center; margin-left: auto; margin-right: auto; }
 .db-section > p { color: var(--muted); margin-bottom: 28px; max-width: 640px; }
 
 /* ── mappa reale dell'Italia: confini ISTAT ufficiali (non disegnati a
@@ -594,6 +599,44 @@ body::after {
 
 .italy-map__legend { font-size: .74rem; color: var(--soft); text-align: center; max-width: 520px; margin: 0 auto 28px; }
 .italy-map__legend b, .italy-map__legend a { color: var(--cyan-2); }
+
+/* ── RICERCA DIVING per nome/citta' ── */
+.search-modal {
+  position: fixed; inset: 0; z-index: 550;
+  display: flex; align-items: center; justify-content: center; padding: 20px;
+  opacity: 0; visibility: hidden; transition: opacity .25s, visibility .25s;
+}
+.search-modal.is-open { opacity: 1; visibility: visible; }
+.search-modal__backdrop { position: absolute; inset: 0; background: rgba(1,6,16,.78); backdrop-filter: blur(6px); }
+.search-modal__panel {
+  position: relative; z-index: 1; width: min(520px, 100%); max-height: 80vh;
+  display: flex; flex-direction: column;
+  background: rgba(6,20,44,.97); border: 1px solid var(--border-hi); border-radius: var(--radius);
+  padding: 28px; box-shadow: var(--shadow);
+  transform: translateY(12px) scale(.97); transition: transform .25s;
+}
+.search-modal.is-open .search-modal__panel { transform: translateY(0) scale(1); }
+.search-modal__panel h3 { font-size: 1.2rem; margin-bottom: 6px; padding-right: 30px; }
+.search-modal__hint { color: var(--soft); font-size: .84rem; margin-bottom: 16px; }
+.search-input {
+  width: 100%; background: rgba(8,26,56,.7); border: 1px solid var(--border); border-radius: 12px;
+  padding: 12px 16px; color: var(--text); font-size: .96rem; font-family: inherit;
+  transition: border-color .2s, box-shadow .2s; flex-shrink: 0;
+}
+.search-input:focus { outline: none; border-color: var(--cyan); box-shadow: 0 0 0 3px rgba(123,228,255,.12); }
+.search-results {
+  display: grid; gap: 4px; margin-top: 14px; overflow-y: auto; min-height: 40px;
+}
+.search-result {
+  display: block; width: 100%; text-align: left; background: none; border: none; cursor: pointer;
+  padding: 11px 12px; border-radius: 10px; color: var(--text); transition: background .15s;
+}
+.search-result:hover, .search-result:focus-visible { background: rgba(123,228,255,.08); outline: none; }
+.search-result__nome { font-size: .9rem; font-weight: 600; }
+.search-result__loc { font-size: .76rem; color: var(--soft); margin-top: 2px; }
+.search-results__empty, .search-results__hint {
+  color: var(--soft); font-size: .84rem; text-align: center; padding: 18px 8px;
+}
 
 /* ── SCHEDA DIVING (modal, si apre cliccando un pin) ── */
 .dive-modal {
