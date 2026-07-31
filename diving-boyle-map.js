@@ -159,26 +159,53 @@
      singola regione, due centri nella stessa cittadina/porto restano
      quasi sovrapposti anche zoomando sull'intera regione (lo zoom
      mostra tutta la regione, non arriva mai "dentro" una citta').
-     Raggruppamento greedy per prossimita', soglia proporzionale alla
-     larghezza della vista corrente cosi' si adatta ad ogni regione. ── */
-  function clusterPoints(pts, threshold) {
-    var used = new Array(pts.length).fill(false);
-    var clusters = [];
-    for (var i = 0; i < pts.length; i++) {
-      if (used[i]) continue;
-      var group = [pts[i]];
-      used[i] = true;
-      for (var j = i + 1; j < pts.length; j++) {
-        if (used[j]) continue;
-        var dx = pts[j].x - pts[i].x, dy = pts[j].y - pts[i].y;
-        if (Math.sqrt(dx * dx + dy * dy) < threshold) {
-          group.push(pts[j]);
-          used[j] = true;
+
+     I cerchi disegnati hanno raggio FISSO in unita' SVG (non cambiano
+     con lo zoom, come i pin singoli gia' facevano prima). Quindi anche
+     la distanza minima tra due cluster dev'essere un valore fisso nelle
+     stesse unita' — non proporzionale alla larghezza della vista, che
+     varia moltissimo da regione a regione (il bug segnalato: in regioni
+     "larghe" la soglia proporzionale diventava troppo piccola rispetto
+     al cerchio disegnato, e i cluster restavano comunque sovrapposti).
+
+     Fusione agglomerativa: ad ogni passo unisce la coppia di cluster
+     piu' vicina se sotto la soglia, ricalcola il centroide e ripete
+     finche' nessuna coppia rimasta e' troppo vicina — garantisce che i
+     cerchi finali non si tocchino mai, indipendentemente da eventuali
+     "catene" di punti ravvicinati. ── */
+  var CLUSTER_MIN_DIST = 11; // unita' SVG: piu' del doppio del raggio max (4.6) di un cluster
+
+  function clusterPoints(pts, minDist) {
+    var clusters = pts.map(function (pt) {
+      return { items: [pt.item], x: pt.x, y: pt.y, sumX: pt.x, sumY: pt.y, n: 1 };
+    });
+    var mergedSomething = true;
+    while (mergedSomething) {
+      mergedSomething = false;
+      var bestI = -1, bestJ = -1, bestD = Infinity;
+      for (var i = 0; i < clusters.length; i++) {
+        for (var j = i + 1; j < clusters.length; j++) {
+          var dx = clusters[i].x - clusters[j].x, dy = clusters[i].y - clusters[j].y;
+          var d = Math.sqrt(dx * dx + dy * dy);
+          if (d < minDist && d < bestD) { bestD = d; bestI = i; bestJ = j; }
         }
       }
-      clusters.push(group);
+      if (bestI !== -1) {
+        var a = clusters[bestI], b = clusters[bestJ];
+        var merged = {
+          items: a.items.concat(b.items),
+          sumX: a.sumX + b.sumX, sumY: a.sumY + b.sumY,
+          n: a.n + b.n,
+        };
+        merged.x = merged.sumX / merged.n;
+        merged.y = merged.sumY / merged.n;
+        clusters.splice(bestJ, 1);
+        clusters.splice(bestI, 1);
+        clusters.push(merged);
+        mergedSomething = true;
+      }
     }
-    return clusters;
+    return clusters.map(function (c) { return { items: c.items, x: c.x, y: c.y }; });
   }
 
   function renderPins(regione) {
@@ -192,12 +219,11 @@
       return { item: item, x: xy[0], y: xy[1] };
     });
 
-    var threshold = currentVB.w * 0.025;
-    var clusters = clusterPoints(pts, threshold);
+    var clusters = clusterPoints(pts, CLUSTER_MIN_DIST);
 
-    clusters.forEach(function (group) {
-      var cx = group.reduce(function (s, pt) { return s + pt.x; }, 0) / group.length;
-      var cy = group.reduce(function (s, pt) { return s + pt.y; }, 0) / group.length;
+    clusters.forEach(function (cluster) {
+      var cx = cluster.x, cy = cluster.y;
+      var count = cluster.items.length;
       var g = document.createElementNS(SVGNS, "g");
 
       /* area di tap invisibile, piu' grande del pallino/cluster visibile:
@@ -207,7 +233,7 @@
       hit.setAttribute("cy", cy);
       hit.setAttribute("class", "real-map-pin__hit");
 
-      if (group.length > 1) {
+      if (count > 1) {
         g.setAttribute("class", "real-map-pin real-map-pin--cluster");
         hit.setAttribute("r", "9");
         g.appendChild(hit);
@@ -221,10 +247,10 @@
         txt.setAttribute("x", cx);
         txt.setAttribute("y", cy);
         txt.setAttribute("class", "real-map-pin__cluster-count");
-        txt.setAttribute("font-size", group.length > 9 ? "4.4" : "5.2");
-        txt.textContent = group.length;
+        txt.setAttribute("font-size", count > 9 ? "4.4" : "5.2");
+        txt.textContent = count;
         g.appendChild(txt);
-        var clusterItems = group.map(function (pt) { return pt.item; });
+        var clusterItems = cluster.items;
         g.addEventListener("click", function (e) {
           e.stopPropagation();
           openCluster(clusterItems);
@@ -239,7 +265,7 @@
         c.setAttribute("r", "2.2");
         c.setAttribute("class", "real-map-pin__dot");
         g.appendChild(c);
-        var soloItem = group[0].item;
+        var soloItem = cluster.items[0];
         g.addEventListener("click", function (e) {
           e.stopPropagation();
           openCard(soloItem);
