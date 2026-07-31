@@ -257,6 +257,42 @@ body::after {
   .nav-dropdown-panel a { padding: 10px 14px; font-size: .92rem; text-align: right; }
 }
 
+/* ── Hamburger mobile: dropdown compatto proporzionato — copiato
+   identico dal blocco finale di styles.css (che a sua volta
+   sovrascrive con !important tutto quanto sopra): larghezza fissa
+   a colonna, non "quasi tutto lo schermo". Questo e' il vero
+   comportamento del sito reale, i due blocchi precedenti in questo
+   file sono superseduti su questo punto specifico. ── */
+@media (max-width: 768px) {
+  .site-nav {
+    width: 220px !important;
+    min-width: 0 !important;
+    right: 0 !important;
+    left: auto !important;
+    padding: 8px !important;
+    border-radius: 16px !important;
+  }
+  .site-nav > a {
+    padding: 10px 16px !important;
+    font-size: .95rem !important;
+    text-align: right !important;
+    border-radius: 10px !important;
+  }
+  .site-nav .nav-dropdown-btn {
+    padding: 10px 16px !important;
+    font-size: .95rem !important;
+    text-align: right !important;
+    width: 100% !important;
+  }
+  .site-nav .lang-toggle--mobile {
+    display: flex !important;
+    margin-top: 4px !important;
+    padding: 8px 16px !important;
+    font-size: .8rem !important;
+  }
+  .nav-toggle:checked ~ .site-nav .lang-toggle--mobile { display: flex !important; }
+}
+
 /* ── SCALA PROFONDITÀ/PRESSIONE — elemento firma ricorrente ── */
 .depth-scale {
   display: flex; align-items: center; gap: 0;
