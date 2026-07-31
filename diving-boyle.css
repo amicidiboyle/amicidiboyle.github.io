@@ -581,8 +581,22 @@ body::after {
 .real-map-region.is-dimmed { opacity: .15; pointer-events: none; }
 
 .real-map-pin { cursor: pointer; transform-box: fill-box; transform-origin: center; transition: transform .15s ease; }
-.real-map-pin circle { fill: var(--dive-amber); stroke: #2a1400; stroke-width: .4; filter: drop-shadow(0 0 3px rgba(255,176,32,.9)); }
+.real-map-pin__hit { fill: transparent; }
+.real-map-pin__dot { fill: var(--dive-amber); stroke: #2a1400; stroke-width: .4; filter: drop-shadow(0 0 3px rgba(255,176,32,.9)); }
 .real-map-pin:hover { transform: scale(1.8); }
+
+/* ── cluster: piu' diving troppo vicini per essere distinti a questo
+   livello di zoom vengono raggruppati in un unico indicatore col
+   conteggio (vedi renderPins in diving-boyle-map.js) ── */
+.real-map-pin--cluster .real-map-pin__cluster-circle {
+  fill: rgba(255,176,32,.94); stroke: #2a1400; stroke-width: .5;
+  filter: drop-shadow(0 0 4px rgba(255,176,32,.85));
+}
+.real-map-pin--cluster .real-map-pin__cluster-count {
+  fill: #2a1400; font-family: var(--dive-mono); font-weight: 700;
+  text-anchor: middle; dominant-baseline: central; pointer-events: none;
+}
+.real-map-pin--cluster:hover { transform: scale(1.35); }
 
 .real-map-back {
   position: absolute; top: 24px; left: 24px; z-index: 3;

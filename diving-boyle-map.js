@@ -153,34 +153,98 @@
     }
   }
 
+  var SVGNS = "http://www.w3.org/2000/svg";
+
+  /* ── raggruppa i diving troppo vicini in pixel-mappa: a livello di
+     singola regione, due centri nella stessa cittadina/porto restano
+     quasi sovrapposti anche zoomando sull'intera regione (lo zoom
+     mostra tutta la regione, non arriva mai "dentro" una citta').
+     Raggruppamento greedy per prossimita', soglia proporzionale alla
+     larghezza della vista corrente cosi' si adatta ad ogni regione. ── */
+  function clusterPoints(pts, threshold) {
+    var used = new Array(pts.length).fill(false);
+    var clusters = [];
+    for (var i = 0; i < pts.length; i++) {
+      if (used[i]) continue;
+      var group = [pts[i]];
+      used[i] = true;
+      for (var j = i + 1; j < pts.length; j++) {
+        if (used[j]) continue;
+        var dx = pts[j].x - pts[i].x, dy = pts[j].y - pts[i].y;
+        if (Math.sqrt(dx * dx + dy * dy) < threshold) {
+          group.push(pts[j]);
+          used[j] = true;
+        }
+      }
+      clusters.push(group);
+    }
+    return clusters;
+  }
+
   function renderPins(regione) {
     pinsG.innerHTML = "";
-    var items = divingData[regione] || [];
+    var items = (divingData[regione] || []).filter(function (it) {
+      return it.lat != null && it.lon != null;
+    });
     var p = mapData.proiezione;
-    items.forEach(function (item) {
-      if (item.lat == null || item.lon == null) return;
+    var pts = items.map(function (item) {
       var xy = projectPoint(item.lon, item.lat, p);
-      var g = document.createElementNS("http://www.w3.org/2000/svg", "g");
-      g.setAttribute("class", "real-map-pin");
-      /* area di tap invisibile, molto piu' grande del pallino visibile:
-         su mobile un target di 2-3px reali e' troppo piccolo per un dito,
-         qui allarghiamo solo la zona cliccabile (fill trasparente ma
-         comunque "hit-testabile"), non l'aspetto grafico. */
-      var hit = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-      hit.setAttribute("cx", xy[0]);
-      hit.setAttribute("cy", xy[1]);
-      hit.setAttribute("r", "6.5");
-      hit.setAttribute("fill", "transparent");
-      g.appendChild(hit);
-      var c = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-      c.setAttribute("cx", xy[0]);
-      c.setAttribute("cy", xy[1]);
-      c.setAttribute("r", "2.2");
-      g.appendChild(c);
-      g.addEventListener("click", function (e) {
-        e.stopPropagation();
-        openCard(item);
-      });
+      return { item: item, x: xy[0], y: xy[1] };
+    });
+
+    var threshold = currentVB.w * 0.025;
+    var clusters = clusterPoints(pts, threshold);
+
+    clusters.forEach(function (group) {
+      var cx = group.reduce(function (s, pt) { return s + pt.x; }, 0) / group.length;
+      var cy = group.reduce(function (s, pt) { return s + pt.y; }, 0) / group.length;
+      var g = document.createElementNS(SVGNS, "g");
+
+      /* area di tap invisibile, piu' grande del pallino/cluster visibile:
+         su mobile un target di 2-3px reali e' troppo piccolo per un dito. */
+      var hit = document.createElementNS(SVGNS, "circle");
+      hit.setAttribute("cx", cx);
+      hit.setAttribute("cy", cy);
+      hit.setAttribute("class", "real-map-pin__hit");
+
+      if (group.length > 1) {
+        g.setAttribute("class", "real-map-pin real-map-pin--cluster");
+        hit.setAttribute("r", "9");
+        g.appendChild(hit);
+        var cc = document.createElementNS(SVGNS, "circle");
+        cc.setAttribute("cx", cx);
+        cc.setAttribute("cy", cy);
+        cc.setAttribute("r", "4.6");
+        cc.setAttribute("class", "real-map-pin__cluster-circle");
+        g.appendChild(cc);
+        var txt = document.createElementNS(SVGNS, "text");
+        txt.setAttribute("x", cx);
+        txt.setAttribute("y", cy);
+        txt.setAttribute("class", "real-map-pin__cluster-count");
+        txt.setAttribute("font-size", group.length > 9 ? "4.4" : "5.2");
+        txt.textContent = group.length;
+        g.appendChild(txt);
+        var clusterItems = group.map(function (pt) { return pt.item; });
+        g.addEventListener("click", function (e) {
+          e.stopPropagation();
+          openCluster(clusterItems);
+        });
+      } else {
+        g.setAttribute("class", "real-map-pin");
+        hit.setAttribute("r", "6.5");
+        g.appendChild(hit);
+        var c = document.createElementNS(SVGNS, "circle");
+        c.setAttribute("cx", cx);
+        c.setAttribute("cy", cy);
+        c.setAttribute("r", "2.2");
+        c.setAttribute("class", "real-map-pin__dot");
+        g.appendChild(c);
+        var soloItem = group[0].item;
+        g.addEventListener("click", function (e) {
+          e.stopPropagation();
+          openCard(soloItem);
+        });
+      }
       pinsG.appendChild(g);
     });
 
@@ -417,4 +481,38 @@
       if (e.key === "Escape" && searchModal.classList.contains("is-open")) closeSearch();
     });
   }
+
+  /* ── CLUSTER: lista di scelta quando piu' pin sono raggruppati ── */
+  var clusterModal = document.getElementById("cluster-modal");
+  var clusterModalClose = document.getElementById("cluster-modal-close");
+  var clusterModalBackdrop = document.getElementById("cluster-modal-backdrop");
+  var clusterModalTitle = document.getElementById("cluster-modal-title");
+  var clusterResults = document.getElementById("cluster-results");
+
+  function openCluster(items) {
+    clusterModalTitle.textContent = items.length + " diving in quest'area";
+    clusterResults.innerHTML = items.map(function (item, i) {
+      return '<button type="button" class="search-result" data-idx="' + i + '">' +
+        '<div class="search-result__nome">' + escapeHtml(item.nome) + '</div>' +
+        '<div class="search-result__loc">' + escapeHtml((item.indirizzo ? item.indirizzo + " · " : "") + item.regione) + '</div>' +
+        '</button>';
+    }).join("");
+    clusterResults.querySelectorAll(".search-result").forEach(function (btn, i) {
+      btn.addEventListener("click", function () {
+        closeClusterModal();
+        openCard(items[i]);
+      });
+    });
+    clusterModal.classList.add("is-open");
+    clusterModal.setAttribute("aria-hidden", "false");
+  }
+  function closeClusterModal() {
+    clusterModal.classList.remove("is-open");
+    clusterModal.setAttribute("aria-hidden", "true");
+  }
+  clusterModalClose.addEventListener("click", closeClusterModal);
+  clusterModalBackdrop.addEventListener("click", closeClusterModal);
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && clusterModal.classList.contains("is-open")) closeClusterModal();
+  });
 })();

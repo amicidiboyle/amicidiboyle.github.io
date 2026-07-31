@@ -137,7 +137,7 @@
       </div>
       <div class="db-hero__intro">
         <h1>DIVING-<span class="db-brand__boyle">BOYLE</span></h1>
-        <p>La mappa scientifica dei diving center italiani. Un censimento a cura di un'associazione di medicina subacquea e iperbarica — non una directory generica, non recensioni a pagamento.</p>
+        <p>Dove si immerge l'Italia. Un censimento degli Amici di Boyle.</p>
       </div>
 
       <div class="db-fork db-fork--single">
@@ -162,6 +162,17 @@
         <p class="search-modal__hint">Cerca per nome del centro o città — si apre subito la scheda, senza passare dalla mappa.</p>
         <input type="text" id="search-input" class="search-input" placeholder="Es: Saracen, Ustica, Palermo…" autocomplete="off" />
         <div class="search-results" id="search-results"></div>
+      </div>
+    </div>
+
+    <!-- ═══ CLUSTER: piu' diving vicini raggruppati su un pin ═══ -->
+    <div class="search-modal" id="cluster-modal" aria-hidden="true">
+      <div class="search-modal__backdrop" id="cluster-modal-backdrop"></div>
+      <div class="search-modal__panel" role="dialog" aria-modal="true" aria-labelledby="cluster-modal-title">
+        <button class="dive-modal__close" id="cluster-modal-close" type="button" aria-label="Chiudi">✕</button>
+        <h3 id="cluster-modal-title">Diving in quest'area</h3>
+        <p class="search-modal__hint">Sono troppo vicini per stare su pin separati a questo livello di zoom — scegli quello che ti interessa.</p>
+        <div class="search-results" id="cluster-results"></div>
       </div>
     </div>
 
