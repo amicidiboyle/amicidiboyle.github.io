@@ -174,7 +174,7 @@
           <span class="depth-scale__tick" style="left:50%">20 m</span>
           <span class="depth-scale__tick" style="left:75%">30 m</span>
         </span>
-        <span class="depth-scale__label">40 m · <b>4 ATA</b></span>
+        <span class="depth-scale__label"><b>40 m</b></span>
       </div>
     </div>
 
@@ -218,7 +218,10 @@
 
         <div class="dive-owner">
           <button class="dive-owner__toggle" id="dive-owner-toggle" type="button">Sei il titolare di questo diving? →</button>
-          <form class="dive-owner-form" id="dive-owner-form" hidden>
+          <form class="dive-owner-form" id="dive-owner-form" hidden
+                action="https://formspree.io/f/mbdalowy" method="POST">
+            <input type="hidden" name="diving" id="dive-owner-diving-nome" value="" />
+            <input type="hidden" name="_subject" id="dive-owner-subject" value="" />
             <div class="dive-owner-form__field">
               <span id="dive-owner-type-label">Cosa vuoi fare?</span>
               <div class="db-select" id="dive-owner-type-select">
@@ -226,29 +229,28 @@
                   <span class="db-select__value">Modificare i dati di questa scheda</span>
                 </button>
                 <ul class="db-select__panel" role="listbox" tabindex="-1" hidden>
-                  <li role="option" data-value="modifica" aria-selected="true">Modificare i dati di questa scheda</li>
-                  <li role="option" data-value="rimuovi" aria-selected="false">Chiedere la rimozione dall'elenco</li>
-                  <li role="option" data-value="foto" aria-selected="false">Aggiungere foto del centro</li>
+                  <li role="option" data-value="Modificare i dati di questa scheda" aria-selected="true">Modificare i dati di questa scheda</li>
+                  <li role="option" data-value="Chiedere la rimozione dall'elenco" aria-selected="false">Chiedere la rimozione dall'elenco</li>
                 </ul>
-                <select id="dive-owner-type" hidden aria-hidden="true" tabindex="-1">
-                  <option value="modifica">Modificare i dati di questa scheda</option>
-                  <option value="rimuovi">Chiedere la rimozione dall'elenco</option>
-                  <option value="foto">Aggiungere foto del centro</option>
+                <select id="dive-owner-type" name="tipo_richiesta" hidden aria-hidden="true" tabindex="-1">
+                  <option value="Modificare i dati di questa scheda">Modificare i dati di questa scheda</option>
+                  <option value="Chiedere la rimozione dall'elenco">Chiedere la rimozione dall'elenco</option>
                 </select>
               </div>
             </div>
             <label>
               <span>Descrivi cosa vuoi cambiare</span>
-              <textarea id="dive-owner-msg" rows="3" placeholder="Es: il telefono è cambiato, il nuovo è..."></textarea>
+              <textarea id="dive-owner-msg" name="messaggio" rows="3" placeholder="Es: il telefono è cambiato, il nuovo è..." required></textarea>
             </label>
             <label>
               <span>La tua email</span>
-              <input type="email" id="dive-owner-email" placeholder="nome@diving.it" required />
+              <input type="email" id="dive-owner-email" name="email" placeholder="nome@diving.it" required />
             </label>
-            <button type="submit" class="db-btn db-btn-amber db-btn-block">Invia richiesta</button>
+            <button type="submit" class="db-btn db-btn-amber db-btn-block" id="dive-owner-submit">Invia richiesta</button>
             <p class="dive-owner-form__note">Verificata manualmente da Amici di Boyle prima di qualsiasi modifica pubblica — nessun aggiornamento automatico.</p>
           </form>
-          <p class="dive-owner-confirm" id="dive-owner-confirm" hidden>✓ Richiesta registrata. In questa anteprima non è ancora collegata a un modulo reale — arriverà con il backend (Apps Script + Sheet "Richieste_Modifica").</p>
+          <p class="dive-owner-confirm" id="dive-owner-confirm" hidden>✓ Richiesta inviata. Ti risponderemo il prima possibile.</p>
+          <p class="dive-owner-error" id="dive-owner-error" hidden>Non siamo riusciti a inviare la richiesta. Riprova, oppure scrivi direttamente a <a href="mailto:info@amicidiboyle.it">info@amicidiboyle.it</a>.</p>
         </div>
       </div>
     </div>

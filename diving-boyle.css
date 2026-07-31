@@ -754,6 +754,9 @@ body::after {
 .db-select__panel li:hover, .db-select__panel li[aria-selected="true"] { background: rgba(123,228,255,.1); color: var(--text); }
 .dive-owner-form__note { font-size: .72rem; color: var(--soft); margin: 0; }
 .dive-owner-confirm { color: var(--dive-green); font-size: .86rem; margin-top: 12px; }
+.dive-owner-error { color: var(--dive-amber); font-size: .86rem; margin-top: 12px; }
+.dive-owner-error a { color: inherit; text-decoration: underline; }
+.dive-owner-form button[disabled] { opacity: .6; cursor: default; }
 .db-btn-block { width: 100%; }
 
 @media (max-width: 640px) {

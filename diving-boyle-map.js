@@ -21,8 +21,12 @@
   var ownerToggle = document.getElementById("dive-owner-toggle");
   var ownerForm = document.getElementById("dive-owner-form");
   var ownerConfirm = document.getElementById("dive-owner-confirm");
+  var ownerError = document.getElementById("dive-owner-error");
+  var ownerSubmit = document.getElementById("dive-owner-submit");
   var ownerEmail = document.getElementById("dive-owner-email");
   var ownerMsg = document.getElementById("dive-owner-msg");
+  var ownerDivingNome = document.getElementById("dive-owner-diving-nome");
+  var ownerSubject = document.getElementById("dive-owner-subject");
 
   var hasGsap = typeof window.gsap !== "undefined";
   var NATIONAL_VB = null;
@@ -245,10 +249,14 @@
     modalActions.innerHTML = actions.join("");
 
     ownerForm.hidden = true;
+    ownerForm.reset();
     ownerConfirm.hidden = true;
+    ownerError.hidden = true;
     ownerToggle.style.display = "";
     ownerEmail.value = "";
     ownerMsg.value = "";
+    ownerDivingNome.value = item.nome;
+    ownerSubject.value = "Diving-Boyle · segnalazione su \"" + item.nome + "\"";
     resetOwnerTypeSelect();
 
     modal.classList.add("is-open");
@@ -273,8 +281,30 @@
 
   ownerForm.addEventListener("submit", function (e) {
     e.preventDefault();
-    ownerForm.hidden = true;
-    ownerConfirm.hidden = false;
+    ownerError.hidden = true;
+    ownerSubmit.disabled = true;
+    ownerSubmit.textContent = "Invio in corso…";
+
+    fetch(ownerForm.action, {
+      method: "POST",
+      body: new FormData(ownerForm),
+      headers: { Accept: "application/json" },
+    })
+      .then(function (res) {
+        if (res.ok) {
+          ownerForm.hidden = true;
+          ownerConfirm.hidden = false;
+        } else {
+          ownerError.hidden = false;
+        }
+      })
+      .catch(function () {
+        ownerError.hidden = false;
+      })
+      .then(function () {
+        ownerSubmit.disabled = false;
+        ownerSubmit.textContent = "Invia richiesta";
+      });
   });
 
   /* ── menu a tendina custom "Cosa vuoi fare?" — sostituisce il
