@@ -26,6 +26,8 @@
   var ownerEmail = document.getElementById("dive-owner-email");
   var ownerMsg = document.getElementById("dive-owner-msg");
   var ownerDivingNome = document.getElementById("dive-owner-diving-nome");
+  var ownerDivingRegione = document.getElementById("dive-owner-diving-regione");
+  var ownerDivingIndirizzo = document.getElementById("dive-owner-diving-indirizzo");
   var ownerSubject = document.getElementById("dive-owner-subject");
 
   var hasGsap = typeof window.gsap !== "undefined";
@@ -256,7 +258,9 @@
     ownerEmail.value = "";
     ownerMsg.value = "";
     ownerDivingNome.value = item.nome;
-    ownerSubject.value = "Diving-Boyle · segnalazione su \"" + item.nome + "\"";
+    ownerDivingRegione.value = item.regione || "";
+    ownerDivingIndirizzo.value = item.indirizzo || "";
+    ownerSubject.value = "Diving-Boyle · segnalazione su \"" + item.nome + "\" (" + item.regione + ")";
     resetOwnerTypeSelect();
 
     modal.classList.add("is-open");
