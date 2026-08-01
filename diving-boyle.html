@@ -22,7 +22,7 @@
     </div>
     <div class="intro-bubbles" id="intro-bubbles" aria-hidden="true"></div>
     <div class="intro-flash" id="intro-flash" aria-hidden="true"></div>
-    <button id="intro-skip" class="intro-skip">Salta ›</button>
+    <button id="intro-skip" class="intro-skip" data-i18n="intro_skip">Salta ›</button>
 
     <!-- Fase 1: globo strumentale che punta e zooma sull'Italia -->
     <div class="intro-globe" id="intro-globe" aria-hidden="true">
@@ -67,7 +67,7 @@
     </div>
     <div class="intro-readout">
       <span id="intro-readout-m">0 m</span> · <span id="intro-readout-ata">1.0 ATA</span>
-      <small>Profondità operativa</small>
+      <small data-i18n="intro_readout_label">Profondità operativa</small>
     </div>
   </div>
 
@@ -83,33 +83,35 @@
         </span>
       </a>
 
-      <input id="nav-toggle" class="nav-toggle" type="checkbox" aria-label="Apri menu" />
+      <input id="nav-toggle" class="nav-toggle" type="checkbox" data-i18n-aria-label="nav_open_menu" aria-label="Apri menu" />
       <label class="nav-burger" for="nav-toggle"><span></span><span></span><span></span></label>
 
       <nav class="site-nav" aria-label="Navigazione principale">
-        <a href="index.html#home">Home</a>
-        <a href="index.html#visione">Visione</a>
+        <a href="index.html#home" data-i18n="nav_home">Home</a>
+        <a href="index.html#visione" data-i18n="nav_vision">Visione</a>
         <div class="nav-dropdown">
-          <button class="nav-dropdown-btn is-current" type="button">Attività</button>
+          <button class="nav-dropdown-btn is-current" type="button" data-i18n="nav_activity">Attività</button>
           <div class="nav-dropdown-panel">
-            <a href="index.html#attivita">Aree</a>
-            <a href="index.html#ricerca">Ricerca</a>
-            <a href="index.html#formazione">Formazione</a>
-            <a href="index.html#contenuti">Contenuti</a>
-            <a href="boylebibliography.html">Bibliography <span class="nav-badge-new">Nuovo</span></a>
-            <a href="diving-boyle.html" class="is-current">Diving-Boyle <span class="nav-badge-new">Nuovo</span></a>
+            <a href="index.html#attivita" data-i18n="nav_areas">Aree</a>
+            <a href="index.html#ricerca" data-i18n="nav_research">Ricerca</a>
+            <a href="index.html#formazione" data-i18n="nav_training">Formazione</a>
+            <a href="index.html#contenuti" data-i18n="nav_content">Contenuti</a>
+            <a href="boylebibliography.html"><span data-i18n="nav_bibliography">Bibliography</span> <span class="nav-badge-new" data-i18n="nav_badge_new">Nuovo</span></a>
+            <a href="diving-boyle.html" class="is-current"><span data-i18n="nav_diving_boyle">Diving-Boyle</span> <span class="nav-badge-new" data-i18n="nav_badge_new">Nuovo</span></a>
           </div>
         </div>
-        <a href="index.html#fondatori">Fondatori</a>
-        <a href="rete.html">Rete</a>
-        <a href="podcast.html">Podcast</a>
-        <a href="eventi.html">Eventi</a>
-        <a href="index.html#contatti">Contatti</a>
-        <a class="lang-toggle lang-toggle--mobile" href="index.html"><span>IT</span><span class="lang-sep"> · </span><span>EN</span></a>
+        <a href="index.html#fondatori" data-i18n="nav_founders">Fondatori</a>
+        <a href="rete.html" data-i18n="nav_network">Rete</a>
+        <a href="podcast.html" data-i18n="nav_podcast">Podcast</a>
+        <a href="eventi.html" data-i18n="nav_events">Eventi</a>
+        <a href="index.html#contatti" data-i18n="nav_contact">Contatti</a>
+        <button type="button" class="lang-toggle lang-toggle--mobile" id="lang-toggle-mobile" title="Cambia lingua / Switch language">
+          <span data-lang-opt="it">IT</span><span class="lang-sep"> · </span><span data-lang-opt="en">EN</span>
+        </button>
       </nav>
-      <a class="lang-toggle" href="index.html" title="Cambia lingua / Switch language">
-        <span>IT</span><span class="lang-sep"> · </span><span>EN</span>
-      </a>
+      <button type="button" class="lang-toggle" id="lang-toggle-desktop" title="Cambia lingua / Switch language">
+        <span data-lang-opt="it">IT</span><span class="lang-sep"> · </span><span data-lang-opt="en">EN</span>
+      </button>
     </div>
   </header>
   <div class="ticker">
@@ -137,18 +139,18 @@
       </div>
       <div class="db-hero__intro">
         <h1>DIVING-<span class="db-brand__boyle">BOYLE</span></h1>
-        <p>Dove si immerge l'Italia. Un censimento degli Amici di Boyle.</p>
+        <p data-i18n="hero_intro">Dove si immerge l'Italia. Un censimento degli Amici di Boyle.</p>
       </div>
 
       <div class="db-fork db-fork--single">
         <div class="db-path db-path--explora" data-tilt>
           <div class="db-path__glare" aria-hidden="true"></div>
           <div class="db-path__sparks" aria-hidden="true"></div>
-          <span class="db-path__eyebrow">Sei un subacqueo o vorresti diventarlo?</span>
-          <h2>Trova il diving giusto, non il primo che capita.</h2>
-          <p>Un elenco dei centri diving italiani su mappa, ognuno nella sua posizione reale.</p>
-          <a class="db-btn db-btn-green db-btn--hero" href="#esplora">Esplora i diving →</a>
-          <button class="db-btn db-btn-ghost" id="search-open-btn" type="button">Trova il tuo diving</button>
+          <span class="db-path__eyebrow" data-i18n="fork_eyebrow">Sei un subacqueo o vorresti diventarlo?</span>
+          <h2 data-i18n="fork_h2">Trova il diving giusto, la tua porta al mondo sottomarino.</h2>
+          <p class="db-path__quote"><em data-i18n="fork_quote">«Il mare, una volta che ti ha incantato, ti tiene per sempre nella sua rete di meraviglia.»</em><br /><span class="db-path__quote-author">Jacques Yves Cousteau</span></p>
+          <a class="db-btn db-btn-green db-btn--hero" href="#esplora" data-i18n="btn_esplora">Esplora i diving →</a>
+          <button class="db-btn db-btn-ghost" id="search-open-btn" type="button" data-i18n="btn_trova">Trova il tuo diving</button>
         </div>
       </div>
     </section>
@@ -157,10 +159,10 @@
     <div class="search-modal" id="search-modal" aria-hidden="true">
       <div class="search-modal__backdrop" id="search-modal-backdrop"></div>
       <div class="search-modal__panel" role="dialog" aria-modal="true" aria-labelledby="search-modal-title">
-        <button class="dive-modal__close" id="search-modal-close" type="button" aria-label="Chiudi">✕</button>
-        <h3 id="search-modal-title">Trova il tuo diving</h3>
-        <p class="search-modal__hint">Cerca per nome del centro o città — si apre subito la scheda, senza passare dalla mappa.</p>
-        <input type="text" id="search-input" class="search-input" placeholder="Es: Saracen, Ustica, Palermo…" autocomplete="off" />
+        <button class="dive-modal__close" id="search-modal-close" type="button" data-i18n-aria-label="close" aria-label="Chiudi">✕</button>
+        <h3 id="search-modal-title" data-i18n="search_title">Trova il tuo diving</h3>
+        <p class="search-modal__hint" data-i18n="search_hint">Cerca per nome del centro o città — si apre subito la scheda, senza passare dalla mappa.</p>
+        <input type="text" id="search-input" class="search-input" data-i18n-placeholder="search_placeholder" placeholder="Es: Saracen, Ustica, Palermo…" autocomplete="off" />
         <div class="search-results" id="search-results"></div>
       </div>
     </div>
@@ -169,7 +171,7 @@
     <div class="search-modal" id="cluster-modal" aria-hidden="true">
       <div class="search-modal__backdrop" id="cluster-modal-backdrop"></div>
       <div class="search-modal__panel" role="dialog" aria-modal="true" aria-labelledby="cluster-modal-title">
-        <button class="dive-modal__close" id="cluster-modal-close" type="button" aria-label="Chiudi">✕</button>
+        <button class="dive-modal__close" id="cluster-modal-close" type="button" data-i18n-aria-label="close" aria-label="Chiudi">✕</button>
         <h3 id="cluster-modal-title">Diving in quest'area</h3>
         <div class="search-results" id="cluster-results"></div>
       </div>
@@ -190,21 +192,21 @@
 
     <!-- ═══ ESPLORA PER REGIONE — mappa reale, confini ISTAT ═══ -->
     <section class="db-section container" id="esplora">
-      <div class="db-section-label">Esplora per regione</div>
-      <h2 id="map-heading">Ecco i diving italiani. Qui si impara ad esplorare la parte nascosta del mondo.</h2>
-      <p>Trova i migliori diving italiani.</p>
+      <div class="db-section-label" data-i18n="esplora_label">Esplora per regione</div>
+      <h2 id="map-heading" data-i18n="map_heading_default">Ecco i diving italiani. Qui si impara ad esplorare la parte nascosta del mondo.</h2>
+      <p data-i18n="esplora_p">Trova i migliori diving italiani.</p>
 
       <div class="real-map-wrap" id="real-map-wrap">
         <div class="real-map-frame">
-          <button class="real-map-back" id="real-map-back" type="button" style="display:none;">← Tutte le regioni</button>
+          <button class="real-map-back" id="real-map-back" type="button" style="display:none;" data-i18n="map_back">← Tutte le regioni</button>
           <svg id="real-map-svg" class="real-map-svg" viewBox="0 0 500 650" aria-hidden="true">
             <g id="real-map-regions"></g>
             <g id="real-map-pins"></g>
           </svg>
         </div>
-        <p class="real-map-hint" id="real-map-hint">Clicca una regione per esplorarla</p>
+        <p class="real-map-hint" id="real-map-hint" data-i18n="map_hint_default">Clicca una regione per esplorarla</p>
       </div>
-      <p class="italy-map__legend">Confini ufficiali ISTAT (<a href="https://github.com/openpolis/geojson-italy" target="_blank" rel="noopener">openpolis/geojson-italy</a>, licenza CC-BY). Intensità del colore = numero di diving individuati nella regione — dati grezzi da ricerca pubblica, non ancora verificati.</p>
+      <p class="italy-map__legend" data-i18n-html="map_legend">Confini ufficiali ISTAT (<a href="https://github.com/openpolis/geojson-italy" target="_blank" rel="noopener">openpolis/geojson-italy</a>, licenza CC-BY). Intensità del colore = numero di diving individuati nella regione — dati grezzi da ricerca pubblica, non ancora verificati.</p>
     </section>
 
     <!-- ═══ SCHEDA DIVING (aperta cliccando un pin) ═══ -->
@@ -212,11 +214,11 @@
       <div class="dive-modal__backdrop" id="dive-modal-backdrop"></div>
       <div class="dive-modal__panel" role="dialog" aria-modal="true" aria-labelledby="dive-modal-nome">
         <div class="dive-modal__band" aria-hidden="true"></div>
-        <button class="dive-modal__close" id="dive-modal-close" type="button" aria-label="Chiudi">✕</button>
+        <button class="dive-modal__close" id="dive-modal-close" type="button" data-i18n-aria-label="close" aria-label="Chiudi">✕</button>
         <div class="dive-modal__head">
           <div class="dive-modal__avatar" id="dive-modal-avatar" aria-hidden="true"></div>
           <div class="dive-modal__head-text">
-            <span class="dive-modal__status">● Non verificato</span>
+            <span class="dive-modal__status" id="dive-modal-status" data-i18n="status_unverified">● Non verificato</span>
             <h3 id="dive-modal-nome"></h3>
             <p class="dive-modal__loc" id="dive-modal-loc"></p>
           </div>
@@ -227,7 +229,7 @@
         <div class="dive-modal__actions" id="dive-modal-actions"></div>
 
         <div class="dive-owner">
-          <button class="dive-owner__toggle" id="dive-owner-toggle" type="button">Sei il titolare di questo diving? →</button>
+          <button class="dive-owner__toggle" id="dive-owner-toggle" type="button" data-i18n="owner_toggle">Sei il titolare di questo diving? →</button>
           <form class="dive-owner-form" id="dive-owner-form" hidden
                 action="https://formspree.io/f/mbdalowy" method="POST">
             <input type="hidden" name="Diving segnalato" id="dive-owner-diving-nome" value="" />
@@ -235,14 +237,14 @@
             <input type="hidden" name="Indirizzo scheda" id="dive-owner-diving-indirizzo" value="" />
             <input type="hidden" name="_subject" id="dive-owner-subject" value="" />
             <div class="dive-owner-form__field">
-              <span id="dive-owner-type-label">Cosa vuoi fare?</span>
+              <span id="dive-owner-type-label" data-i18n="owner_type_label">Cosa vuoi fare?</span>
               <div class="db-select" id="dive-owner-type-select">
                 <button type="button" class="db-select__btn" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="dive-owner-type-label">
                   <span class="db-select__value">Modificare i dati di questa scheda</span>
                 </button>
                 <ul class="db-select__panel" role="listbox" tabindex="-1" hidden>
-                  <li role="option" data-value="Modificare i dati di questa scheda" aria-selected="true">Modificare i dati di questa scheda</li>
-                  <li role="option" data-value="Chiedere la rimozione dall'elenco" aria-selected="false">Chiedere la rimozione dall'elenco</li>
+                  <li role="option" data-submit-it="Modificare i dati di questa scheda" aria-selected="true" data-i18n="owner_type_modifica">Modificare i dati di questa scheda</li>
+                  <li role="option" data-submit-it="Chiedere la rimozione dall'elenco" aria-selected="false" data-i18n="owner_type_rimuovi">Chiedere la rimozione dall'elenco</li>
                 </ul>
                 <select id="dive-owner-type" name="tipo_richiesta" hidden aria-hidden="true" tabindex="-1">
                   <option value="Modificare i dati di questa scheda">Modificare i dati di questa scheda</option>
@@ -251,23 +253,23 @@
               </div>
             </div>
             <label>
-              <span>Descrivi cosa vuoi cambiare</span>
-              <textarea id="dive-owner-msg" name="messaggio" rows="3" placeholder="Es: il telefono è cambiato, il nuovo è..." required></textarea>
+              <span data-i18n="owner_msg_label">Descrivi cosa vuoi cambiare</span>
+              <textarea id="dive-owner-msg" name="messaggio" rows="3" data-i18n-placeholder="owner_msg_placeholder" placeholder="Es: il telefono è cambiato, il nuovo è..." required></textarea>
             </label>
             <label>
-              <span>La tua email</span>
+              <span data-i18n="owner_email_label">La tua email</span>
               <input type="email" id="dive-owner-email" name="email" placeholder="nome@diving.it" required />
             </label>
-            <button type="submit" class="db-btn db-btn-amber db-btn-block" id="dive-owner-submit">Invia richiesta</button>
-            <p class="dive-owner-form__note">Verificata manualmente da Amici di Boyle prima di qualsiasi modifica pubblica — nessun aggiornamento automatico.</p>
+            <button type="submit" class="db-btn db-btn-amber db-btn-block" id="dive-owner-submit" data-i18n="owner_submit">Invia richiesta</button>
+            <p class="dive-owner-form__note" data-i18n="owner_note">Verificata manualmente da Amici di Boyle prima di qualsiasi modifica pubblica — nessun aggiornamento automatico.</p>
           </form>
-          <p class="dive-owner-confirm" id="dive-owner-confirm" hidden>✓ Richiesta inviata. Ti risponderemo il prima possibile.</p>
-          <p class="dive-owner-error" id="dive-owner-error" hidden>Non siamo riusciti a inviare la richiesta. Riprova, oppure scrivi direttamente a <a href="mailto:info@amicidiboyle.it">info@amicidiboyle.it</a>.</p>
+          <p class="dive-owner-confirm" id="dive-owner-confirm" hidden data-i18n="owner_confirm">✓ Richiesta inviata. Ti risponderemo il prima possibile.</p>
+          <p class="dive-owner-error" id="dive-owner-error" hidden data-i18n-html="owner_error">Non siamo riusciti a inviare la richiesta. Riprova, oppure scrivi direttamente a <a href="mailto:info@amicidiboyle.it">info@amicidiboyle.it</a>.</p>
         </div>
       </div>
     </div>
 
-    <p class="db-preview-note">Se gestisci uno di questi centri e vuoi segnalare una correzione o la rimozione, scrivi a <a href="mailto:info@amicidiboyle.it">info@amicidiboyle.it</a>.</p>
+    <p class="db-preview-note" data-i18n-html="footer_note">Se gestisci uno di questi centri e vuoi segnalare una correzione o la rimozione, scrivi a <a href="mailto:info@amicidiboyle.it">info@amicidiboyle.it</a>.</p>
   </main>
 
   <!-- Motore animazioni: GSAP + ScrollTrigger, gratuiti anche per uso commerciale dal 2025.

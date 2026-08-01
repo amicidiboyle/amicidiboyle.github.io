@@ -62,7 +62,7 @@
       init();
     })
     .catch(function (err) {
-      if (hint) hint.textContent = "Mappa non disponibile al momento (serve un server, non apre da file locale).";
+      if (hint) hint.textContent = window.dbT ? window.dbT("map_error") : "Mappa non disponibile al momento (serve un server, non apre da file locale).";
       console.error("Errore caricamento dati mappa:", err);
     });
 
@@ -88,7 +88,7 @@
       path.style.setProperty("--intensity", intensity.toFixed(2));
       path.addEventListener("click", function () { selectRegion(nome); });
       var title = document.createElementNS("http://www.w3.org/2000/svg", "title");
-      title.textContent = nome + ": " + (counts[nome] || 0) + " diving individuati";
+      title.textContent = window.dbT("map_region_heading", { regione: window.dbRegionName(nome), n: counts[nome] || 0 });
       path.appendChild(title);
       regionsG.appendChild(path);
     });
@@ -99,6 +99,15 @@
     Object.keys(divingData).forEach(function (regione) {
       divingData[regione].forEach(function (item) { searchIndex.push(item); });
     });
+  }
+
+  var currentRegionNome = null; // per ri-tradurre intestazione/hint al cambio lingua
+
+  function updateRegionTexts(nome) {
+    var n = divingData[nome] ? divingData[nome].length : 0;
+    var regioneLabel = window.dbRegionName(nome);
+    hint.textContent = window.dbT("map_region_hint", { regione: regioneLabel, n: n });
+    heading.textContent = window.dbT("map_region_heading", { regione: regioneLabel, n: n });
   }
 
   function selectRegion(nome) {
@@ -121,10 +130,9 @@
     pinsG.innerHTML = "";
     animateViewBox(target, function () { renderPins(nome); });
 
-    var n = divingData[nome] ? divingData[nome].length : 0;
+    currentRegionNome = nome;
     backBtn.style.display = "";
-    hint.textContent = nome + " — " + n + " diving individuati. Clicca un pin per aprire la scheda.";
-    heading.textContent = nome + ": " + n + " diving individuati.";
+    updateRegionTexts(nome);
   }
 
   function zoomToNational() {
@@ -133,9 +141,10 @@
     });
     pinsG.innerHTML = "";
     animateViewBox(NATIONAL_VB);
+    currentRegionNome = null;
     backBtn.style.display = "none";
-    hint.textContent = "Clicca una regione per esplorarla";
-    heading.textContent = "Ecco i diving italiani. Qui si impara ad esplorare la parte nascosta del mondo.";
+    hint.textContent = window.dbT("map_hint_default");
+    heading.textContent = window.dbT("map_heading_default");
   }
 
   function animateViewBox(target, onDone) {
@@ -303,7 +312,35 @@
     "Assistenza medica": "servizio", "Watersport": "servizio",
   };
 
+  var currentModalItem = null;
+
+  /* separata da openCard: solo le parti che dipendono dalla LINGUA
+     (etichette UI), non dal contenuto del centro (nome/tag/descrizione
+     restano quelli, sono fatti reali, non testo di interfaccia). Cosi'
+     si puo' ri-tradurre una scheda gia' aperta senza resettare il form
+     di segnalazione se l'utente ci sta scrivendo dentro. */
+  function renderMetaAndActions(item) {
+    var rows = [];
+    if (item.categoria) rows.push(metaRow(window.dbT("meta_tipo"), item.categoria));
+    if (item.rating) {
+      rows.push(metaRow(window.dbT("meta_valutazione"), item.rating.toFixed(1) + " ★" + (item.recensioni ? window.dbT("meta_recensioni", { n: item.recensioni }) : "")));
+    }
+    if (item.telefono) rows.push(metaRow(window.dbT("meta_telefono"), item.telefono));
+    if (item.sito) rows.push(metaRow(window.dbT("meta_sito"), item.sito));
+    modalMeta.innerHTML = rows.join("");
+
+    var actions = [];
+    if (item.sito) {
+      actions.push('<a class="db-btn db-btn-secondary" href="' + escapeHtml(withProtocol(item.sito)) + '" target="_blank" rel="noopener">' + window.dbT("action_sito") + '</a>');
+    }
+    if (item.maps_url) {
+      actions.push('<a class="db-btn db-btn-secondary" href="' + escapeHtml(item.maps_url) + '" target="_blank" rel="noopener">' + window.dbT("action_maps") + '</a>');
+    }
+    modalActions.innerHTML = actions.join("");
+  }
+
   function openCard(item) {
+    currentModalItem = item;
     modalAvatar.textContent = initials(item.nome);
     modalNome.textContent = item.nome;
     modalLoc.textContent = (item.indirizzo ? item.indirizzo + " · " : "") + item.regione;
@@ -322,23 +359,7 @@
       })
       .join("");
 
-    var rows = [];
-    if (item.categoria) rows.push(metaRow("Tipo", item.categoria));
-    if (item.rating) {
-      rows.push(metaRow("Valutazione", item.rating.toFixed(1) + " ★" + (item.recensioni ? " (" + item.recensioni + " recensioni Google)" : "")));
-    }
-    if (item.telefono) rows.push(metaRow("Telefono", item.telefono));
-    if (item.sito) rows.push(metaRow("Sito", item.sito));
-    modalMeta.innerHTML = rows.join("");
-
-    var actions = [];
-    if (item.sito) {
-      actions.push('<a class="db-btn db-btn-secondary" href="' + escapeHtml(withProtocol(item.sito)) + '" target="_blank" rel="noopener">Vai al sito →</a>');
-    }
-    if (item.maps_url) {
-      actions.push('<a class="db-btn db-btn-secondary" href="' + escapeHtml(item.maps_url) + '" target="_blank" rel="noopener">Vedi su Google Maps →</a>');
-    }
-    modalActions.innerHTML = actions.join("");
+    renderMetaAndActions(item);
 
     ownerForm.hidden = true;
     ownerForm.reset();
@@ -377,7 +398,7 @@
     e.preventDefault();
     ownerError.hidden = true;
     ownerSubmit.disabled = true;
-    ownerSubmit.textContent = "Invio in corso…";
+    ownerSubmit.textContent = window.dbT("owner_submit_sending");
 
     fetch(ownerForm.action, {
       method: "POST",
@@ -397,7 +418,7 @@
       })
       .then(function () {
         ownerSubmit.disabled = false;
-        ownerSubmit.textContent = "Invia richiesta";
+        ownerSubmit.textContent = window.dbT("owner_submit");
       });
   });
 
@@ -411,13 +432,22 @@
   var ownerTypeValue = ownerTypeWrap.querySelector(".db-select__value");
   var ownerTypePanel = ownerTypeWrap.querySelector(".db-select__panel");
   var ownerTypeOptions = ownerTypeWrap.querySelectorAll(".db-select__panel li");
+  var selectedOwnerTypeLi = ownerTypeOptions[0];
 
+  /* il valore INVIATO a Formspree resta sempre in italiano (data-submit-it),
+     indipendentemente dalla lingua di visualizzazione — cosi' l'email che
+     arriva a chi legge le segnalazioni e' sempre leggibile allo stesso modo.
+     L'ETICHETTA mostrata invece segue la lingua corrente (li.textContent,
+     gia' tradotto da applyStaticI18n tramite il suo data-i18n). */
+  function selectOwnerType(li) {
+    ownerTypeOptions.forEach(function (o) { o.setAttribute("aria-selected", "false"); });
+    li.setAttribute("aria-selected", "true");
+    selectedOwnerTypeLi = li;
+    ownerTypeValue.textContent = li.textContent;
+    ownerTypeSelect.value = li.dataset.submitIt;
+  }
   function resetOwnerTypeSelect() {
-    ownerTypeOptions.forEach(function (li, i) {
-      li.setAttribute("aria-selected", i === 0 ? "true" : "false");
-    });
-    ownerTypeValue.textContent = ownerTypeOptions[0].textContent;
-    ownerTypeSelect.value = ownerTypeOptions[0].dataset.value;
+    selectOwnerType(ownerTypeOptions[0]);
     closeOwnerTypeSelect();
   }
   function closeOwnerTypeSelect() {
@@ -436,10 +466,7 @@
   });
   ownerTypeOptions.forEach(function (li) {
     li.addEventListener("click", function () {
-      ownerTypeOptions.forEach(function (o) { o.setAttribute("aria-selected", "false"); });
-      li.setAttribute("aria-selected", "true");
-      ownerTypeValue.textContent = li.textContent;
-      ownerTypeSelect.value = li.dataset.value;
+      selectOwnerType(li);
       closeOwnerTypeSelect();
     });
   });
@@ -447,6 +474,14 @@
   document.addEventListener("keydown", function (e) {
     if (e.key === "Escape") closeOwnerTypeSelect();
   });
+  /* al cambio lingua i data-i18n dei <li> vengono gia' aggiornati dal
+     motore i18n generico; qui basta ri-sincronizzare l'etichetta visibile
+     col <li> attualmente selezionato (non necessariamente il primo). */
+  if (window.dbOnLangChange) {
+    window.dbOnLangChange(function () {
+      ownerTypeValue.textContent = selectedOwnerTypeLi.textContent;
+    });
+  }
 
   /* ── RICERCA per nome/citta': apre la scheda diving direttamente,
      senza passare dalla mappa (bottone "Trova il tuo diving") ── */
@@ -471,7 +506,7 @@
   function renderSearchResults(query) {
     var q = query.trim().toLowerCase();
     if (q.length < 2) {
-      searchResults.innerHTML = '<p class="search-results__hint">Scrivi almeno 2 lettere per iniziare.</p>';
+      searchResults.innerHTML = '<p class="search-results__hint">' + window.dbT("search_min_chars") + '</p>';
       return;
     }
     var matches = searchIndex.filter(function (item) {
@@ -481,7 +516,7 @@
     }).slice(0, 30);
 
     if (!matches.length) {
-      searchResults.innerHTML = '<p class="search-results__empty">Nessun diving trovato per "' + escapeHtml(query.trim()) + '".</p>';
+      searchResults.innerHTML = '<p class="search-results__empty">' + window.dbT("search_no_results", { q: escapeHtml(query.trim()) }) + '</p>';
       return;
     }
     searchResults.innerHTML = matches.map(function (item, i) {
@@ -516,7 +551,7 @@
   var clusterResults = document.getElementById("cluster-results");
 
   function openCluster(items) {
-    clusterModalTitle.textContent = items.length + " diving in quest'area";
+    clusterModalTitle.textContent = window.dbT("cluster_title", { n: items.length });
     clusterResults.innerHTML = items.map(function (item, i) {
       return '<button type="button" class="search-result" data-idx="' + i + '">' +
         '<div class="search-result__nome">' + escapeHtml(item.nome) + '</div>' +
@@ -541,4 +576,22 @@
   document.addEventListener("keydown", function (e) {
     if (e.key === "Escape" && clusterModal.classList.contains("is-open")) closeClusterModal();
   });
+
+  /* ── ricaricare in inglese/italiano l'intestazione della mappa se una
+     regione e' gia' selezionata quando si cambia lingua (altrimenti
+     resterebbe nella lingua precedente finche' non si clicca altrove) ── */
+  if (window.dbOnLangChange) {
+    window.dbOnLangChange(function () {
+      if (currentRegionNome) {
+        updateRegionTexts(currentRegionNome);
+      } else if (heading && hint) {
+        hint.textContent = window.dbT("map_hint_default");
+        heading.textContent = window.dbT("map_heading_default");
+      }
+      if (searchInput && searchInput.value) renderSearchResults(searchInput.value);
+      if (currentModalItem && modal.classList.contains("is-open")) {
+        renderMetaAndActions(currentModalItem);
+      }
+    });
+  }
 })();

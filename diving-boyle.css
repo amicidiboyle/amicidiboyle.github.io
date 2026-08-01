@@ -158,13 +158,15 @@ body::after {
 
 .lang-toggle {
   display: inline-flex; align-items: center; gap: 3px;
-  padding: 5px 12px; border-radius: 999px;
+  padding: 5px 12px; border-radius: 999px; cursor: pointer;
   background: rgba(123,228,255,.07); border: 1px solid rgba(123,228,255,.22);
   color: rgba(237,247,255,.65); font-size: .74rem; font-weight: 700; letter-spacing: .1em;
   transition: background .2s, border-color .2s, color .2s;
   white-space: nowrap; line-height: 1; flex-shrink: 0;
 }
 .lang-toggle:hover { background: rgba(123,228,255,.15); border-color: rgba(123,228,255,.42); color: #a8eeff; }
+.lang-toggle [data-lang-opt] { opacity: .55; transition: opacity .2s, color .2s; }
+.lang-toggle [data-lang-opt].is-active { opacity: 1; color: var(--cyan-2); }
 .lang-toggle--mobile { display: none; }
 
 /* ── TICKER — identico a index.html ── */
@@ -535,6 +537,12 @@ body::after {
 .db-path--explora .db-path__eyebrow { color: var(--dive-green); }
 .db-path h2 { font-size: 1.4rem; line-height: 1.25; }
 .db-path p { color: var(--muted); font-size: .92rem; flex: 1; }
+.db-path__quote { line-height: 1.5; }
+.db-path__quote em { font-style: italic; }
+.db-path__quote-author {
+  display: inline-block; margin-top: 8px; font-family: var(--dive-mono);
+  font-size: .74rem; letter-spacing: .04em; color: var(--soft);
+}
 .db-path--explora:hover { border-color: rgba(57,255,143,.4); box-shadow: 0 0 28px rgba(57,255,143,.12); }
 
 .db-btn {
