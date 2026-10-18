@@ -134,7 +134,7 @@
     var webm = !!v.canPlayType('video/webm; codecs="vp9"');
     var src = mobile ? v.getAttribute(webm ? 'data-mobile-webm' : 'data-mobile')
                      : v.getAttribute(webm ? 'data-webm' : 'data-mp4');
-    v.src = src;
+    if (!v.getAttribute('src')) v.src = src; /* di solito gia' avviato dallo script in linea */
     v.muted = true;
     v.addEventListener('playing', function () {
       v.classList.add('is-on');
