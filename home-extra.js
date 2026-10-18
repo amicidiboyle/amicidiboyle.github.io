@@ -153,3 +153,20 @@
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start);
   else start();
 })();
+
+/* Ricerca: alone che segue il puntatore e animazioni attive solo con la sezione in vista */
+(function () {
+  var sec = document.getElementById('ricerca');
+  if (!sec) return;
+  sec.querySelectorAll('.rx-card').forEach(function (c) {
+    c.addEventListener('pointermove', function (e) {
+      var r = c.getBoundingClientRect();
+      c.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+      c.style.setProperty('--my', (e.clientY - r.top) + 'px');
+    });
+  });
+  if (!('IntersectionObserver' in window)) { sec.classList.add('rx-live'); return; }
+  new IntersectionObserver(function (es) {
+    es.forEach(function (e) { sec.classList.toggle('rx-live', e.isIntersecting); });
+  }, { rootMargin: '0px 0px -10% 0px' }).observe(sec);
+})();

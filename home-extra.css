@@ -493,3 +493,98 @@ html.hero-video-on .site-header { -webkit-backdrop-filter: none; backdrop-filter
   .info-card--link { flex-direction: row; }
   .info-card__go { padding-top: 8px; font-size: .84rem; }
 }
+
+/* ── 11. RICERCA: TRE FRONTI, OGNUNO CON LAVORI PUBBLICATI ──────────── */
+.rx-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; margin-top: 34px; }
+.rx-card {
+  --rx: #5cd6ff; --mx: 50%; --my: 0%;
+  position: relative; display: flex; flex-direction: column; overflow: hidden; isolation: isolate;
+  padding: 28px 26px 24px; border-radius: 22px; color: inherit; text-decoration: none;
+  border: 1px solid color-mix(in srgb, var(--rx) 22%, transparent);
+  transition: transform .35s cubic-bezier(.2,.7,.2,1), border-color .35s, box-shadow .35s;
+}
+.rx-card--space { --rx: #b9a6ff; }
+.rx-card--human { --rx: #4dffd6; }
+/* filo di luce in alto e alone che segue il puntatore */
+.rx-card::before {
+  content: ""; position: absolute; inset: 0 0 auto; height: 2px; z-index: 1;
+  background: linear-gradient(90deg, transparent, var(--rx), transparent);
+  opacity: .55; transform: scaleX(.35); transition: transform .5s, opacity .5s;
+}
+.rx-card::after {
+  content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background: radial-gradient(420px circle at var(--mx) var(--my), color-mix(in srgb, var(--rx) 16%, transparent), transparent 60%);
+  opacity: 0; transition: opacity .35s;
+}
+.rx-card:hover, .rx-card:focus-visible {
+  transform: translateY(-6px);
+  border-color: color-mix(in srgb, var(--rx) 55%, transparent);
+  box-shadow: 0 22px 50px -24px color-mix(in srgb, var(--rx) 60%, transparent);
+}
+.rx-card:hover::before, .rx-card:focus-visible::before { transform: scaleX(1); opacity: 1; }
+.rx-card:hover::after, .rx-card:focus-visible::after { opacity: 1; }
+.rx-card:focus-visible { outline: 2px solid var(--rx); outline-offset: 3px; }
+
+.rx-art { width: 108px; height: 72px; margin: 0 0 18px -4px; overflow: visible; }
+.rx-art * { fill: none; stroke: var(--rx); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.rx-k { margin: 0 0 8px; font-size: .72rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--rx); }
+.rx-card h3 { margin: 0 0 10px; font-size: clamp(1.25rem, 1.6vw, 1.5rem); line-height: 1.2; }
+.rx-p { margin: 0 0 18px; color: var(--muted, #b9c9dc); line-height: 1.6; }
+/* i lavori: testo semplice con un segno, non pillole che sembrano pulsanti */
+.rx-proof { list-style: none; margin: 0 0 20px; padding: 14px 0 0; border-top: 1px solid rgba(255,255,255,.08); display: grid; gap: 9px; }
+.rx-proof li { position: relative; padding-left: 18px; font-size: .88rem; line-height: 1.45; color: #d6e4f2; }
+.rx-proof li::before {
+  content: ""; position: absolute; left: 0; top: .5em; width: 8px; height: 8px; border-radius: 50%;
+  border: 1.5px solid var(--rx); box-shadow: 0 0 8px color-mix(in srgb, var(--rx) 60%, transparent);
+}
+.rx-go { display: inline-flex; align-items: center; gap: 8px; margin-top: auto; font-weight: 700; font-size: .92rem; color: var(--rx); }
+.rx-go span[aria-hidden] { transition: transform .25s cubic-bezier(.2,.7,.2,1); }
+.rx-card:hover .rx-go span[aria-hidden] { transform: translateX(6px); }
+
+/* disegno d'entrata: i tratti si tracciano quando la card entra in vista */
+.rx-art path, .rx-art ellipse, .rx-art rect { stroke-dasharray: 220; stroke-dashoffset: 220; transition: stroke-dashoffset 1.4s cubic-bezier(.4,0,.2,1) .2s; }
+.rx-card.is-visible .rx-art path, .rx-card.is-visible .rx-art ellipse, .rx-card.is-visible .rx-art rect { stroke-dashoffset: 0; }
+.rx-hub, .rx-planet { fill: var(--rx) !important; stroke: none !important; }
+.rx-bub { stroke-width: 1.4; opacity: 0; }
+.rx-diver { fill: var(--rx) !important; stroke: none !important; }
+.rx-card .rx-art path.rx-check { stroke-dasharray: 22 22; stroke-width: 2.6; }
+.rx-line { opacity: .45; }
+.rx-needle { transform-origin: 60px 66px; transform: rotate(-60deg); }
+
+/* movimento continuo, solo quando la sezione e' sullo schermo */
+.rx.rx-live .rx-needle { animation: rxNeedle 5s cubic-bezier(.45,0,.25,1) infinite; }
+.rx.rx-live .rx-bub { animation: rxBub 3.6s ease-in infinite; }
+.rx.rx-live .rx-bub.b2 { animation-delay: 1.2s; }
+.rx.rx-live .rx-bub.b3 { animation-delay: 2.3s; }
+.rx.rx-live .rx-diver { animation: rxRise 4.8s cubic-bezier(.5,0,.3,1) infinite; }
+.rx.rx-live .rx-orbit { animation: rxGlow 4.8s ease-in-out infinite; }
+.rx.rx-live .rx-check { animation: rxCheck 4.5s ease-out infinite; }
+.rx.rx-live .rx-check.c2 { animation-delay: .5s; }
+.rx.rx-live .rx-check.c3 { animation-delay: 1s; }
+.rx-card:hover .rx-art { filter: drop-shadow(0 0 6px color-mix(in srgb, var(--rx) 70%, transparent)); }
+
+@keyframes rxNeedle { 0%,100% { transform: rotate(-60deg); } 45%,60% { transform: rotate(48deg); } 70% { transform: rotate(40deg); } }
+@keyframes rxBub { 0% { opacity: 0; transform: translateY(0); } 15% { opacity: .9; } 100% { opacity: 0; transform: translateY(-62px); } }
+@keyframes rxRise { 0%,8% { transform: translateY(0); opacity: 1; } 60% { transform: translateY(-38px); opacity: 1; } 70%,100% { transform: translateY(-38px); opacity: 0; } }
+@keyframes rxGlow { 0%,50% { stroke-width: 2; } 62% { stroke-width: 3.4; } 80%,100% { stroke-width: 2; } }
+@keyframes rxCheck { 0%,10% { stroke-dashoffset: 22; } 25%,85% { stroke-dashoffset: 0; } 100% { stroke-dashoffset: 22; } }
+
+@media (max-width: 980px) {
+  .rx-grid { grid-template-columns: 1fr; gap: 16px; }
+  .rx-card { display: grid; grid-template-columns: 76px 1fr; column-gap: 16px; padding: 22px 20px; }
+  .rx-card > * { grid-column: 2; }
+  .rx-card > .rx-art { grid-column: 1; grid-row: 1 / span 3; width: 76px; height: 52px; margin: 2px 0 0; }
+  .rx-art * { stroke-width: 2.6; }
+  .rx-proof, .rx-go { grid-column: 1 / -1; }
+  .rx-card:hover { transform: none; }
+}
+@media (max-width: 480px) {
+  .rx-card { grid-template-columns: 56px 1fr; column-gap: 12px; }
+  .rx-card > .rx-art { width: 60px; height: 42px; }
+  .rx-p { font-size: .94rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .rx-art path, .rx-art ellipse, .rx-art rect { transition: none; stroke-dashoffset: 0; }
+  .rx.rx-live * { animation: none !important; }
+  .rx-needle { transform: rotate(30deg); }
+}

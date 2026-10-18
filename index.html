@@ -657,58 +657,72 @@
 
 
     
-    <section class="section alt-section" id="ricerca">
+    <section class="section alt-section rx" id="ricerca">
       <div class="container">
         <div class="section-heading reveal">
           <p class="section-kicker" data-i18n="ric_kicker">Ricerca</p>
-          <h2 id="ric-h2" data-i18n="ric_h2">Ricerca applicata, protocolli e strumenti operativi</h2>
-          <p class="section-lead" data-i18n="ric_sub">Dal razionale fisiologico alla pratica clinica e organizzativa, con strumenti pensati per chi lavora sul campo.</p>
+          <h2 id="ric-h2" data-i18n="ric_h2">Tre fronti, lavori pubblicati</h2>
+          <p class="section-lead" data-i18n="ric_sub">Non temi di principio: ogni fronte ha già prodotto articoli, capitoli o corsi che puoi aprire e leggere.</p>
         </div>
-        <div class="research-showcase-grid stagger">
-          <article class="glass-card research-card research-card--hyperbaric reveal">
-            <p class="micro-label" data-i18n="ric1_k">Hyperbaric · Metodi e protocolli</p>
-            <h3 data-i18n="ric1_h3">Ossigenoterapia iperbarica</h3>
-            <p data-i18n="ric1_p">Indicazioni, sicurezza, qualità e razionale fisiologico tradotti in protocolli leggibili e applicabili, con taglio concreto e utilizzabile.</p>
-            <div class="research-tags">
-              <span>Evidence-based</span>
-              <span>Procedure</span>
-              <span>Sicurezza</span>
-            </div>
-            <a class="btn btn-secondary" href="#contatti" data-i18n="ric1_cta">Collabora</a>
-          </article>
-          <article class="glass-card research-card research-card--aerospace reveal">
-            <p class="micro-label" data-i18n="ric2_k">Aerospace · Ambienti estremi</p>
-            <h3 data-i18n="ric2_h3">Dall’abisso allo spazio</h3>
-            <p data-i18n="ric2_p">Adattamenti fisiologici tra iperbarismo e microgravità: pressione, gas, performance e limiti operativi letti in una chiave davvero interdisciplinare.</p>
-            <div class="research-tags">
-              <span>Fisiologia</span>
-              <span>Performance</span>
-              <span>Scenario estremo</span>
-            </div>
-            <a class="btn btn-secondary" href="podcast.html">Podcast</a>
-          </article>
-          <article class="glass-card research-card research-card--human reveal">
-            <p class="micro-label" data-i18n="ric3_k">Human factors · Safety</p>
-            <h3 data-i18n="ric3_h3">Decision-making e checklist</h3>
-            <p data-i18n="ric3_p">Dalla rianimazione al soccorso avanzato: comunicazione, team-work, error management e strumenti utili per sistemi complessi.</p>
-            <div class="research-tags">
-              <span>Checklist</span>
-              <span>Team-work</span>
-              <span>Safety</span>
-            </div>
-            <a class="btn btn-secondary" href="#formazione">Corsi</a>
-          </article>
-          <article class="glass-card research-card research-card--didattica reveal">
-            <p class="micro-label" data-i18n="ric4_k">Lezioni e attività</p>
-            <h3 data-i18n="ric4_h3">Docenze, moduli e incontri</h3>
-            <p data-i18n="ric4_p">Disponibili per lezioni e corsi presso università, aziende e associazioni interessate alle applicazioni della medicina iperbarica e subacquea.</p>
-            <div class="research-tags">
-              <span>Università</span>
-              <span>Aziende</span>
-              <span>Associazioni</span>
-            </div>
-            <button class="btn btn-primary" type="button" data-open-dialog="incontroDialog" data-i18n="ric4_cta">Proponi un incontro</button>
-          </article>
+        <div class="rx-grid stagger">
+
+          <a class="glass-card rx-card rx-card--hyper reveal" href="#contenuti-articoli">
+            <svg class="rx-art" viewBox="0 0 120 80" aria-hidden="true">
+              <path class="rx-gauge" d="M20 66a40 40 0 0 1 80 0"/>
+              <path class="rx-ticks" d="M24 50l6 3M35 33l5 5M60 26v7M85 33l-5 5M96 50l-6 3"/>
+              <g class="rx-needle"><path d="M60 66L60 34"/></g>
+              <circle class="rx-hub" cx="60" cy="66" r="4"/>
+              <circle class="rx-bub b1" cx="14" cy="76" r="2.4"/><circle class="rx-bub b2" cx="104" cy="76" r="3"/><circle class="rx-bub b3" cx="110" cy="76" r="1.8"/>
+            </svg>
+            <p class="rx-k" data-i18n="ric1_k">Medicina subacquea e iperbarica</p>
+            <h3 data-i18n="ric1_h3">Sotto pressione, in clinica</h3>
+            <p class="rx-p" data-i18n="ric1_p">Ossigenoterapia iperbarica, idoneità all’immersione, cuore e subacquea: dal razionale fisiologico alle decisioni cliniche.</p>
+            <ul class="rx-proof">
+              <li data-i18n="ric1_l1">Scambi gassosi in immersione e in apnea · J Physiol 2026</li>
+              <li data-i18n="ric1_l2">Tornare a immergersi dopo ablazione per fibrillazione atriale · DHM 2026</li>
+              <li data-i18n="ric1_l3">Studio ITA-OTI sull’ossigenoterapia iperbarica in Italia · SIAARTI</li>
+            </ul>
+            <span class="rx-go"><span data-i18n="ric1_cta">Leggi le pubblicazioni</span> <span aria-hidden="true">→</span></span>
+          </a>
+
+          <a class="glass-card rx-card rx-card--space reveal" href="#contenuti-articoli">
+            <svg class="rx-art" viewBox="0 0 120 80" aria-hidden="true">
+              <path class="rx-sea" d="M4 64c10-5 18 5 28 0s18 5 28 0 18 5 28 0 18 5 28 0"/>
+              <ellipse class="rx-orbit" cx="60" cy="20" rx="34" ry="9"/>
+              <circle class="rx-planet" cx="60" cy="20" r="6"/>
+              <path class="rx-path" d="M60 62V32"/>
+              <circle class="rx-diver" cx="60" cy="62" r="3.2"/>
+            </svg>
+            <p class="rx-k" data-i18n="ric2_k">Ambienti estremi · Spazio</p>
+            <h3 data-i18n="ric2_h3">Dall’abisso a Marte</h3>
+            <p class="rx-p" data-i18n="ric2_p">Pressione, gas e microgravità letti con gli occhi di chi lavora in rianimazione e in camera iperbarica.</p>
+            <ul class="rx-proof">
+              <li data-i18n="ric2_l1">First Cut on Mars · IntechOpen 2026</li>
+              <li data-i18n="ric2_l2">Il costo invisibile del respiro · Economia dello Spazio</li>
+              <li data-i18n="ric2_l3">Dall’abisso allo spazio · Economia dello Spazio</li>
+            </ul>
+            <span class="rx-go"><span data-i18n="ric2_cta">Leggi le pubblicazioni</span> <span aria-hidden="true">→</span></span>
+          </a>
+
+          <a class="glass-card rx-card rx-card--human reveal" href="#formazione">
+            <svg class="rx-art" viewBox="0 0 120 80" aria-hidden="true">
+              <rect class="rx-board" x="30" y="8" width="60" height="66" rx="7"/>
+              <path class="rx-line" d="M56 26h24M56 42h24M56 58h18"/>
+              <path class="rx-check c1" d="M40 26l4 4 7-8"/>
+              <path class="rx-check c2" d="M40 42l4 4 7-8"/>
+              <path class="rx-check c3" d="M40 58l4 4 7-8"/>
+            </svg>
+            <p class="rx-k" data-i18n="ric3_k">Human factors · Safety</p>
+            <h3 data-i18n="ric3_h3">Decidere quando sbagliare costa</h3>
+            <p class="rx-p" data-i18n="ric3_p">Comunicazione, lavoro di squadra, checklist e gestione dell’errore, portati in aula e nelle esercitazioni sul campo.</p>
+            <ul class="rx-proof">
+              <li>HyperCare</li>
+              <li>Rescue in Difficult Environment</li>
+              <li>The Day After</li>
+            </ul>
+            <span class="rx-go"><span data-i18n="ric3_cta">Vai ai corsi</span> <span aria-hidden="true">→</span></span>
+          </a>
+
         </div>
       </div>
     </section>
@@ -1717,18 +1731,7 @@
         'cc3_title':'Entra nella Rete di Boyle','cc3_p':'La Rete di Boyle è internazionale e selettiva. Ogni membro ha una pagina personale visibile solo ai membri del network, dove poter condividere il proprio curriculum, le pubblicazioni e le iniziative scientifiche. I membri si scambiano contatti diretti e danno visibilità reciproca a corsi, ricerche e congressi. Tutto ciò che costruisci raggiunge l’intera community.','cc3_cta':'Candidati alla Rete',
         // Ricerca
         'ric_kicker':'Ricerca',
-        'ric_h2':'Ricerca applicata, protocolli e strumenti operativi',
-        'ric_sub':'Dal razionale fisiologico alla pratica clinica e organizzativa, con strumenti pensati per chi lavora sul campo.',
-        'ric1_k':'Hyperbaric · Metodi e protocolli','ric1_h3':'Ossigenoterapia iperbarica',
-        'ric1_p':'Indicazioni, sicurezza, qualità e razionale fisiologico tradotti in protocolli leggibili e applicabili, con taglio concreto e utilizzabile.',
-        'ric1_cta':'Collabora',
-        'ric2_k':'Aerospace · Ambienti estremi','ric2_h3':'Dall’abisso allo spazio',
-        'ric2_p':'Adattamenti fisiologici tra iperbarismo e microgravità: pressione, gas, performance e limiti operativi letti in una chiave davvero interdisciplinare.',
-        'ric3_k':'Human factors · Safety','ric3_h3':'Decision-making e checklist',
-        'ric3_p':'Dalla rianimazione al soccorso avanzato: comunicazione, team-work, error management e strumenti utili per sistemi complessi.',
-        'ric4_k':'Lezioni e attività','ric4_h3':'Docenze, moduli e incontri',
-        'ric4_p':'Disponibili per lezioni e corsi presso università, aziende e associazioni interessate alle applicazioni della medicina iperbarica e subacquea.',
-        'ric4_cta':'Proponi un incontro',
+        'ric_h2':'Tre fronti, lavori pubblicati',
         // Formazione
         'form_kicker':'Formazione',
         'form_h2':'Docenze, corsi e materiali didattici',
@@ -1905,18 +1908,19 @@
         'cc3_title':'Join the Boyle Network','cc3_p':'The Boyle Network is international and selective. Every member has a personal page, visible to all network members, where they can share their curriculum, publications and scientific initiatives. Members exchange direct contacts and promote each other’s courses, research and conferences. Everything you build reaches the entire community.','cc3_cta':'Apply to the Network',
         // Ricerca
         'ric_kicker':'Research',
-        'ric_h2':'Applied research, protocols and operational tools',
-        'ric_sub':'From physiological rationale to clinical and organisational practice, with tools designed for those who work in the field.',
-        'ric1_k':'Hyperbaric · Methods and protocols','ric1_h3':'Hyperbaric oxygen therapy',
-        'ric1_p':'Indications, safety, quality and physiological rationale translated into clear, applicable protocols with a concrete, practical focus.',
-        'ric1_cta':'Collaborate',
-        'ric2_k':'Aerospace · Extreme environments','ric2_h3':'From the deep to space',
-        'ric2_p':'Physiological adaptations between hyperbarics and microgravity: pressure, gas, performance and operational limits read from a truly interdisciplinary perspective.',
-        'ric3_k':'Human factors · Safety','ric3_h3':'Decision-making and checklists',
-        'ric3_p':'From resuscitation to advanced rescue: communication, teamwork, error management and useful tools for complex systems.',
-        'ric4_k':'Lectures and activities','ric4_h3':'Teaching, modules and events',
-        'ric4_p':'Available for lectures and courses at universities, companies and associations interested in hyperbaric and underwater medicine applications.',
-        'ric4_cta':'Propose an event',
+        'ric_h2':'Three fronts, published work',
+        'ric_sub':'Not statements of principle: each front has already produced articles, chapters or courses you can open and read.',
+        'ric1_k':'Diving and hyperbaric medicine','ric1_h3':'Under pressure, in the clinic',
+        'ric1_p':'Hyperbaric oxygen therapy, fitness to dive, the heart and diving: from physiological rationale to clinical decisions.',
+        'ric1_l1':'Gas exchange in SCUBA and breath-hold diving · J Physiol 2026','ric1_l2':'Returning to diving after ablation for atrial fibrillation · DHM 2026','ric1_l3':'ITA-OTI Study on hyperbaric oxygen therapy in Italy · SIAARTI',
+        'ric1_cta':'Read the publications',
+        'ric2_k':'Extreme environments · Space','ric2_h3':'From the deep to Mars',
+        'ric2_p':'Pressure, gases and microgravity seen through the eyes of those who work in intensive care and in the hyperbaric chamber.',
+        'ric2_l1':'First Cut on Mars · IntechOpen 2026','ric2_l2':'The invisible cost of breathing · Economia dello Spazio','ric2_l3':'From the deep to space · Economia dello Spazio',
+        'ric2_cta':'Read the publications',
+        'ric3_k':'Human factors · Safety','ric3_h3':'Deciding when mistakes are costly',
+        'ric3_p':'Communication, teamwork, checklists and error management, brought into the classroom and into field exercises.',
+        'ric3_cta':'Go to the courses',
         // Formazione
         'form_kicker':'Education',
         'form_h2':'Lectures, courses and teaching materials',
