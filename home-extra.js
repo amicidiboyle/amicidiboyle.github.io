@@ -153,13 +153,3 @@
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start);
   else start();
 })();
-
-/* Numero dei membri della Rete letto dal file dei profili, cosi' resta sempre aggiornato */
-(function () {
-  var el = document.getElementById('gateCount');
-  if (!el || !window.fetch) return;
-  fetch('rete-members.json', { cache: 'no-cache' })
-    .then(function (r) { return r.ok ? r.json() : null; })
-    .then(function (d) { if (d && d.length) el.textContent = d.length; })
-    .catch(function () {});
-})();
