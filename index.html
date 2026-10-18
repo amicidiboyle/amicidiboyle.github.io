@@ -15,10 +15,11 @@
   <title>Gli Amici di Boyle · Research & Education</title>
   <meta name="description" content="Gli Amici di Boyle: ricerca, formazione e rete professionale nella medicina subacquea, iperbarica e negli ambienti estremi." />
   <meta name="theme-color" content="#041b33" />
-  <link rel="preload" as="image" href="assets/ocean-desktop.jpg" />
+  <link rel="preload" as="image" href="assets/ocean-desktop.jpg" media="(min-width: 769px)" />
   <link rel="preload" as="image" href="assets/ocean-mobile.jpg" media="(max-width: 768px)" />
   <link rel="icon" href="assets/logo.png" type="image/png" />
   <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="home-extra.css" />
   <!-- Open Graph -->
   <meta property="og:type"        content="website" />
   <meta property="og:url"         content="https://www.amicidiboyle.it/" />
@@ -28,6 +29,69 @@
   <meta property="og:image:width"  content="1200" />
   <meta property="og:image:height" content="630" />
   <meta name="twitter:card"       content="summary_large_image" />
+  <!-- Dati strutturati (Google): organizzazione e prossimi eventi -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://www.amicidiboyle.it/#org",
+        "name": "Gli Amici di Boyle – Research & Education",
+        "url": "https://www.amicidiboyle.it/",
+        "logo": "https://www.amicidiboyle.it/assets/logo.png",
+        "email": "info@amicidiboyle.it",
+        "foundingDate": "2023"
+      },
+      {
+        "@type": "Event",
+        "name": "Il limite è la conoscenza. Decompressione, prevenzione e soccorso in immersione",
+        "startDate": "2026-11-07T15:00:00+01:00",
+        "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+        "eventStatus": "https://schema.org/EventScheduled",
+        "location": {
+          "@type": "Place",
+          "name": "Auditorium Luigi Durand De La Penne, ITTL Nautico San Giorgio",
+          "address": { "@type": "PostalAddress", "streetAddress": "Edificio Calata Darsena, Porto Antico", "addressLocality": "Genova", "addressCountry": "IT" }
+        },
+        "image": "https://www.amicidiboyle.it/assets/eventi/genova-limite-conoscenza-2026.jpg",
+        "organizer": { "@type": "Organization", "name": "FIAS – Federazione Italiana Attività Subacquee", "url": "https://www.fias.it/" },
+        "performer": { "@type": "Person", "name": "Silvio Zerbi" },
+        "isAccessibleForFree": true
+      },
+      {
+        "@type": "Event",
+        "name": "Medicina Subacquea ed Iperbarica: dalla fisiologia alla pratica clinica",
+        "startDate": "2026-11-27T13:45:00+01:00",
+        "endDate": "2026-11-27T18:30:00+01:00",
+        "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+        "eventStatus": "https://schema.org/EventScheduled",
+        "location": {
+          "@type": "Place",
+          "name": "Aula Magna, Collegio Cattaneo",
+          "address": { "@type": "PostalAddress", "streetAddress": "Via J.H. Dunant 7", "addressLocality": "Varese", "addressCountry": "IT" }
+        },
+        "image": "https://www.amicidiboyle.it/assets/eventi/varese-medicina-subacquea-iperbarica-2026.jpg",
+        "organizer": { "@type": "Organization", "name": "ASST Sette Laghi" },
+        "isAccessibleForFree": true
+      },
+      {
+        "@type": "Event",
+        "name": "Hypercare – Emergency Medicine Course",
+        "startDate": "2027-01-21T13:30:00+01:00",
+        "endDate": "2027-01-22T18:00:00+01:00",
+        "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+        "eventStatus": "https://schema.org/EventScheduled",
+        "location": {
+          "@type": "Place",
+          "name": "terraXcube, Eurac Research",
+          "address": { "@type": "PostalAddress", "addressLocality": "Bolzano", "addressCountry": "IT" }
+        },
+        "image": "https://www.amicidiboyle.it/assets/eventi/hypercare-2027.jpg"
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
   <canvas id="dust-canvas" aria-hidden="true" style="position:fixed;inset:0;z-index:-2;pointer-events:none;width:100%;height:100%;"></canvas>
@@ -105,7 +169,7 @@
       <div class="container">
         <div class="hero-content reveal">
           <span class="hero-eyebrow" data-i18n="hero_kicker">Medicina subacquea · Iperbarica · Aerospaziale · Safety</span>
-          <h1 id="hero-h1-el">Medicina degli<br><span class="accent">ambienti estremi</span></h1>
+          <h1 id="hero-h1-el" class="hero-title">Medicina degli<br><span class="accent">ambienti estremi</span></h1>
           <p class="hero-lead" data-i18n="hero_lead">Ricerca, formazione e rete professionale nella medicina degli ambienti estremi. Una rete multidisciplinare che unisce clinica, fisiologia, tecnologia e cultura della sicurezza.</p>
           <div class="hero-cta-row">
             <a class="btn btn-primary hero-btn-main" href="#visione">
@@ -127,7 +191,7 @@
               <span data-i18n="stat_fondatori">Fondatori</span>
             </div>
             <div class="hero-stat">
-              <strong class="stat-num">33+</strong>
+              <strong class="stat-num">40+</strong>
               <span data-i18n="stat_episodi">Episodi podcast</span>
             </div>
             <div class="hero-stat">
@@ -136,7 +200,7 @@
             </div>
             <div class="hero-stat-divider" aria-hidden="true"></div>
             <div class="hero-stat">
-              <strong class="stat-num">15.000+</strong>
+              <strong class="stat-num">500.000+</strong>
               <span data-i18n="stat_views">Visualizzazioni</span>
             </div>
             <div class="hero-stat hero-stat--infinity">
@@ -201,6 +265,97 @@
       </div>
     </section>
 
+    <section class="section appt-section" id="eventi">
+      <div class="container">
+        <div class="appt-head reveal">
+          <div class="section-heading">
+            <p class="section-kicker" data-i18n="appt_kicker">Prossimi appuntamenti</p>
+            <h2 data-i18n="appt_h2">Dove ci trovate</h2>
+            <p data-i18n="appt_sub">Convegni e corsi in cui gli Amici di Boyle portano ricerca, clinica e formazione sul campo.</p>
+          </div>
+          <a class="appt-all" href="eventi.html"><span data-i18n="appt_all">Tutti gli eventi</span> <span aria-hidden="true">→</span></a>
+        </div>
+
+        <div class="appt-grid stagger">
+
+          <article class="glass-card appt-card reveal" data-start="2026-11-07T15:00:00+01:00" data-end="2026-11-07T18:00:00+01:00">
+            <a class="appt-media" href="assets/eventi/genova-limite-conoscenza-2026.pdf" target="_blank" rel="noopener" aria-label="Locandina Il limite è la conoscenza (PDF)">
+              <img src="assets/eventi/genova-limite-conoscenza-2026.jpg" alt="Locandina del convegno Il limite è la conoscenza, Genova 7 novembre 2026" width="900" height="1273" loading="lazy" decoding="async" />
+              <span class="appt-date" aria-hidden="true"><b>07</b><span data-i18n="m_nov">Nov</span><em>2026</em></span>
+              <span class="appt-badge" data-i18n="appt1_badge">Ingresso gratuito</span>
+            </a>
+            <div class="appt-body">
+              <p class="appt-meta"><span class="appt-countdown" aria-live="polite"></span><span>Genova · FIAS</span></p>
+              <h3>Il limite è la conoscenza</h3>
+              <p class="appt-sub" data-i18n="appt1_sub">Decompressione, prevenzione e soccorso in immersione</p>
+              <ul class="appt-facts">
+                <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.1-7-11.5a7 7 0 0 1 14 0C19 14.9 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg><span>Auditorium «Luigi Durand De La Penne», ITTL Nautico San Giorgio, Porto Antico</span></li>
+                <li><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span data-i18n="appt1_when">Sabato 7 novembre · ore 15:00</span></li>
+                <li><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg><span><strong>Silvio Zerbi</strong> · «Il corpo sotto pressione»</span></li>
+              </ul>
+              <div class="appt-cta">
+                <a class="btn btn-primary" href="https://forms.gle/nLTnGaVitWznce368" target="_blank" rel="noopener" data-i18n="appt_register">Iscriviti</a>
+                <a class="btn btn-ghost" href="assets/eventi/genova-limite-conoscenza-2026.pdf" target="_blank" rel="noopener" data-i18n="appt_program">Programma</a>
+              </div>
+              <p class="appt-note" data-i18n="appt1_note">Iscrizione obbligatoria entro il 2 novembre.</p>
+            </div>
+          </article>
+
+          <article class="glass-card appt-card appt-card--home reveal" data-start="2026-11-27T13:45:00+01:00" data-end="2026-11-27T18:30:00+01:00">
+            <a class="appt-media" href="assets/eventi/varese-medicina-subacquea-iperbarica-2026.pdf" target="_blank" rel="noopener" aria-label="Locandina Medicina Subacquea ed Iperbarica (PDF)">
+              <img src="assets/eventi/varese-medicina-subacquea-iperbarica-2026-card.jpg" alt="Immagine dalla locandina del convegno Medicina Subacquea ed Iperbarica, Varese 27 novembre 2026" width="900" height="589" loading="lazy" decoding="async" style="object-position:62% center" />
+              <span class="appt-date" aria-hidden="true"><b>27</b><span data-i18n="m_nov">Nov</span><em>2026</em></span>
+              <span class="appt-badge appt-badge--ecm" data-i18n="appt2_badge">4 crediti ECM</span>
+            </a>
+            <div class="appt-body">
+              <p class="appt-meta"><span class="appt-countdown" aria-live="polite"></span><span>Varese · ASST Sette Laghi</span></p>
+              <h3>Medicina Subacquea ed Iperbarica</h3>
+              <p class="appt-sub" data-i18n="appt2_sub">Dalla fisiologia alla pratica clinica</p>
+              <ul class="appt-facts">
+                <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.1-7-11.5a7 7 0 0 1 14 0C19 14.9 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg><span>Aula Magna, Collegio Cattaneo · Via J.H. Dunant 7</span></li>
+                <li><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span data-i18n="appt2_when">Venerdì 27 novembre · 13:45–18:30</span></li>
+                <li><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg><span data-i18n-html="appt2_who">Presidenti <strong>Silvio Zerbi</strong> e <strong>Paolo Severgnini</strong> · con <strong>Vincenzo Benenati</strong></span></li>
+              </ul>
+              <div class="appt-cta">
+                <a class="btn btn-primary" href="https://formazione.sigmapaghe.com" target="_blank" rel="noopener" data-i18n="appt_register">Iscriviti</a>
+                <a class="btn btn-ghost" href="assets/eventi/varese-medicina-subacquea-iperbarica-2026.pdf" target="_blank" rel="noopener" data-i18n="appt_program">Programma</a>
+              </div>
+              <p class="appt-note" data-i18n="appt2_note">Gratuito · massimo 90 partecipanti · ID evento ECM 223241.1</p>
+            </div>
+          </article>
+
+          <article class="glass-card appt-card appt-card--alpine reveal" data-start="2027-01-21T13:30:00+01:00" data-end="2027-01-22T18:00:00+01:00">
+            <a class="appt-media" href="assets/eventi/hypercare-2027.pdf" target="_blank" rel="noopener" aria-label="Programma Hypercare 2027 (PDF)">
+              <img src="assets/eventi/hypercare-2027.jpg" alt="Locandina Hypercare Emergency Medicine Course, Bolzano 21-22 gennaio 2027" width="900" height="1382" loading="lazy" decoding="async" />
+              <span class="appt-date" aria-hidden="true"><b>21<i>–22</i></b><span data-i18n="m_gen">Gen</span><em>2027</em></span>
+              <span class="appt-badge appt-badge--save" data-i18n="appt3_badge">Save the date</span>
+            </a>
+            <div class="appt-body">
+              <p class="appt-meta"><span class="appt-countdown" aria-live="polite"></span><span>Bolzano · ITECC · Eurac Research</span></p>
+              <h3>Hypercare</h3>
+              <p class="appt-sub">Emergency Medicine Course</p>
+              <ul class="appt-facts">
+                <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.1-7-11.5a7 7 0 0 1 14 0C19 14.9 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg><span>terraXcube, Eurac Research</span></li>
+                <li><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span data-i18n="appt3_when">21–22 gennaio 2027 · teoria e simulazione</span></li>
+                <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 20l6-10 4 6 3-4 5 8z"/></svg><span data-i18n="appt3_topics">Ustioni, ipotermia e valanghe, malattie da decompressione</span></li>
+              </ul>
+              <div class="appt-cta">
+                <a class="btn btn-primary" href="assets/eventi/hypercare-2027.pdf" target="_blank" rel="noopener" data-i18n="appt_program_full">Programma</a>
+              </div>
+              <p class="appt-note" data-i18n="appt3_note">22 gennaio: giornata hands-on con sette stazioni di simulazione, due dedicate all’iperbarica.</p>
+            </div>
+          </article>
+
+        </div>
+        <div class="appt-dots" aria-hidden="true"><span class="is-on"></span><span></span><span></span></div>
+
+        <div class="appt-foot reveal">
+          <p data-i18n="ev_p2">Entrare nella Rete di Boyle significa anche poter dare visibilità a eventi e iniziative di qualità, quando condividono rigore, utilità e valore formativo.</p>
+          <button class="btn btn-secondary" type="button" data-open-dialog="incontroDialog" data-i18n="ev_cta2">Proponi un'attività</button>
+        </div>
+      </div>
+    </section>
+
     <section class="section" id="visione">
       <div class="container section-grid vision-layout">
         <div class="reveal reveal-left">
@@ -254,10 +409,13 @@
               <li><strong>2026</strong><span>Pubblicazione su <em>Diving and Hyperbaric Medicine</em></span></li>
               <li><strong>2026</strong><span>&laquo;Il costo invisibile del respiro&raquo; — Economia dello Spazio Magazine</span></li>
               <li><strong>2026</strong><span>&laquo;Adattamenti fisiologici umani in ambienti estremi&raquo; — Economia del Mare Magazine</span></li>
-              <li><strong>2026</strong><span>Docenza Medicina Spaziale · Scuola Superiore Sant’Anna di Pisa</span></li>
+              <li><strong>2026</strong><span>Intervento di Medicina Spaziale · Scuola Superiore Sant’Anna di Pisa</span></li>
               <li><strong>2026</strong><span>Network &gt;100 professionisti in ambienti estremi</span></li>
               <li><strong>2026</strong><span>Collaborazioni con istituzioni militari e operative</span></li>
               <li><strong>2026</strong><span>Membri Comitato Scientifico POLO NAZIONALE DRONI</span></li>
+              <li><strong>2026</strong><span>&laquo;First Cut on Mars&raquo; — capitolo open access IntechOpen</span></li>
+              <li><strong>2026</strong><span>Partnership con PHY Equipment</span></li>
+              <li><strong>2026</strong><span>Convegno «Medicina Subacquea ed Iperbarica» · Varese, presidenza scientifica</span></li>
             </ol>
           </div>
         </div>
@@ -273,28 +431,28 @@
         </div>
         <div class="cards-grid cards-grid-4 activity-grid-row stagger">
           <article class="glass-card activity-card activity-card--ricerca reveal">
-            <img class="activity-asset" src="assets/ricerca.png" alt="Icona Ricerca" loading="lazy" decoding="async" />
+            <img class="activity-asset" src="assets/ricerca.webp" alt="Icona Ricerca" loading="lazy" decoding="async" />
             <p class="micro-label" data-i18n="att1_k">Macroarea 01</p>
             <h3 data-i18n="att1_h3">Ricerca</h3>
             <p data-i18n="att1_p">Studi clinici, collaborazioni scientifiche, progetti di ricerca e protocolli applicati alla medicina iperbarica e subacquea.</p>
             <a class="text-link" href="#ricerca" data-i18n="att1_cta">Esplora la ricerca</a>
           </article>
           <article class="glass-card activity-card activity-card--formazione reveal">
-            <img class="activity-asset" src="assets/formazione.png" alt="Icona Formazione" loading="lazy" decoding="async" />
+            <img class="activity-asset" src="assets/formazione.webp" alt="Icona Formazione" loading="lazy" decoding="async" />
             <p class="micro-label" data-i18n="att2_k">Macroarea 02</p>
             <h3 data-i18n="att2_h3">Formazione</h3>
-            <p data-i18n="att2_p">Docenze universitarie, corsi, congressi, materiali didattici e attività costruite per chi lavora sul campo.</p>
+            <p data-i18n="att2_p">Didattica universitaria, corsi, congressi, materiali didattici e attività costruite per chi lavora sul campo.</p>
             <a class="text-link" href="#formazione" data-i18n="att2_cta">Vai alla formazione</a>
           </article>
           <article class="glass-card activity-card activity-card--pubblicazioni reveal">
-            <img class="activity-asset" src="assets/pubblicazioni.png" alt="Icona Pubblicazioni" loading="lazy" decoding="async" />
+            <img class="activity-asset" src="assets/pubblicazioni.webp" alt="Icona Pubblicazioni" loading="lazy" decoding="async" />
             <p class="micro-label" data-i18n="att3_k">Macroarea 03</p>
             <h3 data-i18n="att3_h3">Pubblicazioni</h3>
             <p data-i18n="att3_p">Articoli, case report, contributi editoriali e materiali scientifici utili a clinici, operatori e ricercatori.</p>
             <a class="text-link" href="#contenuti" data-i18n="att3_cta">Leggi le pubblicazioni</a>
           </article>
           <article class="glass-card activity-card activity-card--media reveal">
-            <img class="activity-asset" src="assets/media.png" alt="Icona Media" loading="lazy" decoding="async" />
+            <img class="activity-asset" src="assets/media.webp" alt="Icona Media" loading="lazy" decoding="async" />
             <p class="micro-label" data-i18n="att4_k">Macroarea 04</p>
             <h3 data-i18n="att4_h3">Media</h3>
             <p data-i18n="att4_p">Podcast, interviste e contenuti divulgativi che rendono accessibile la medicina degli ambienti estremi.</p>
@@ -316,29 +474,29 @@
             <div class="founder-topline"><span class="founder-role" data-i18n="fond_role_silvio">Fondatore</span><a class="linkedin-link linkedin-link--text" href="https://www.linkedin.com/in/silvio-zerbi/" aria-label="LinkedIn di Silvio Zerbi" target="_blank" rel="noopener">in</a></div>
             <img src="images/silvio.zerbi.jpg" alt="Silvio Zerbi" loading="lazy" />
             <h3>Dott. Silvio Zerbi</h3>
-            <p data-i18n="fond_desc_silvio">Anestesista Rianimatore, Intensivista, Medico Subacqueo ed Iperbarico, Medico Aeronautico ed Aerospaziale.</p>
+            <p data-i18n="fond_desc_silvio">Anestesista Rianimatore, Intensivista, Trauma Team Leader. Medico Subacqueo e Iperbarico, con formazione avanzata in Medicina Aeronautica e Spaziale.</p>
           </article>
           <article class="glass-card founder-card founder-card--3d founder-card--luigi reveal" data-delay="80">
             <div class="founder-topline"><span class="founder-role" data-i18n="fond_role_luigi">Direttore Ingegneria</span><a class="linkedin-link linkedin-link--text" href="https://www.linkedin.com/in/peppino601/" aria-label="LinkedIn di Luigi Tarsia" target="_blank" rel="noopener">in</a></div>
-            <img src="images/luigi.tarsia.jpg" alt="Luigi Tarsia" loading="lazy" />
+            <img src="images/luigi.tarsia.webp" alt="Luigi Tarsia" loading="lazy" />
             <h3>Ing. Luigi Tarsia</h3>
             <p data-i18n="fond_desc_luigi">Ingegnere Nucleare e Biomedico, Specialista in Medicina Subacquea e Iperbarica, Aeronautica ed Aerospaziale.</p>
           </article>
           <article class="glass-card founder-card founder-card--3d founder-card--vincenzo reveal" data-delay="160">
             <div class="founder-topline"><span class="founder-role" data-i18n="fond_role_vincenzo">Responsabile Area Iperbarica</span><a class="linkedin-link linkedin-link--text" href="https://www.linkedin.com/in/vincenzo-benenati-29a815130/" aria-label="LinkedIn di Vincenzo Benenati" target="_blank" rel="noopener">in</a></div>
-            <img src="images/vincenzo.benenati.jpg" alt="Vincenzo Benenati" loading="lazy" />
+            <img src="images/vincenzo.benenati.webp" alt="Vincenzo Benenati" loading="lazy" />
             <h3>Dott. Vincenzo Benenati</h3>
             <p data-i18n="fond_desc_vincenzo">Anestesista Rianimatore, Intensivista, Medico Iperbarico e Subacqueo.</p>
           </article>
           <article class="glass-card founder-card founder-card--3d founder-card--dario reveal" data-delay="240">
             <div class="founder-topline"><span class="founder-role" data-i18n="fond_role_dario">Responsabile Area Diving</span><a class="linkedin-link linkedin-link--text" href="https://www.linkedin.com/in/dario-nicosia87/" aria-label="LinkedIn di Dario Nicosia" target="_blank" rel="noopener">in</a></div>
-            <img src="images/dario.nicosia.jpg" alt="Dario Nicosia" loading="lazy" />
+            <img src="images/dario.nicosia.webp" alt="Dario Nicosia" loading="lazy" />
             <h3>Dott. Dario Nicosia</h3>
             <p data-i18n="fond_desc_dario">Anestesista Rianimatore, Medico Iperbarico e Subacqueo, Mass Gathering Expert. Gestisce il paziente critico in scenari operativi complessi, dall’emergenza territoriale agli ambienti estremi.</p>
           </article>
           <article class="glass-card founder-card founder-card--3d founder-card--matteo reveal" data-delay="320">
             <div class="founder-topline"><span class="founder-role" data-i18n="fond_role_matteo">Capo Ricercatore</span><a class="linkedin-link linkedin-link--text" href="https://www.linkedin.com/in/paganinimatteo/" aria-label="LinkedIn di Matteo Paganini" target="_blank" rel="noopener">in</a></div>
-            <img src="images/matteo.paganini.jpg" alt="Matteo Paganini" loading="lazy" />
+            <img src="images/matteo.paganini.webp" alt="Matteo Paganini" loading="lazy" />
             <h3>Dott. Matteo Paganini</h3>
             <p data-i18n="fond_desc_matteo">Ricercatore, Medico di Emergenza-Urgenza, PhD in Global Health, Humanitarian Aid and Disaster Medicine.</p>
           </article>
@@ -371,7 +529,7 @@
         </div>
         <div class="network-box glass-panel network-box--image reveal reveal-right" aria-label="Visualizzazione della rete di Boyle">
           <div class="network-visual-stage">
-            <img class="network-visual-image" src="assets/back_rete.png" alt="Visualizzazione della rete di Boyle" loading="lazy" decoding="async" onerror="this.style.display='none'" />
+            <img class="network-visual-image" src="assets/back_rete.jpg" alt="Visualizzazione della rete di Boyle" loading="lazy" decoding="async" onerror="this.style.display='none'" />
             <span class="signal-beam s1"></span>
             <span class="signal-beam s2"></span>
             <span class="signal-beam s3"></span>
@@ -455,8 +613,8 @@
             <img src="assets/lezioni/ADE_Medicina%20Subacquea.webp" alt="ADE Medicina Subacquea e Iperbarica" loading="lazy" decoding="async" />
           <div class="content-card-text">
             <p class="section-kicker" data-i18n="cont_lez_k">Lezioni</p>
-            <h3 data-i18n="cont_lez_title">Docenza universitaria e materiali didattici</h3>
-            <p data-i18n="cont_lez_p">Attività didattiche elettive e materiali di docenza universitaria presso l’Università degli Studi dell’Insubria.</p>
+            <h3 data-i18n="cont_lez_title">Didattica universitaria e materiali</h3>
+            <p data-i18n="cont_lez_p">Attività didattiche elettive e materiali didattici presso l’Università degli Studi dell’Insubria.</p>
             <a class="text-link" href="#formazione" data-i18n="cont_lez_cta">Apri le lezioni</a>
                     </div>
           </article>
@@ -489,31 +647,7 @@
       </div>
     </section>
 
-    <section class="section" id="eventi">
-      <div class="container event-grid">
-        <div class="reveal reveal-left">
-          <div class="section-heading">
-          <p class="section-kicker" data-i18n="ev_kicker">Prossimo evento</p>
-          <h2 data-i18n="ev_h2">Inside Trauma</h2>
-          </div>
-          <p class="section-lead" data-i18n="ev_lead">Un corso del partner Inside Trauma dedicato alla gestione integrata del paziente traumatizzato, con approccio pratico e multidisciplinare.</p>
-          <p data-i18n="ev_p2">Entrare nella Rete di Boyle significa anche poter dare visibilità a eventi e iniziative di qualità, quando condividono rigore, utilità e valore formativo.</p>
-          <div class="event-meta">
-            <span data-i18n="ev_meta1">Partner · Inside Trauma</span>
-            <span data-i18n="ev_meta2">Tipologia · Corso partner</span>
-          </div>
-          <div class="cta-row">
-            <a class="btn btn-primary" href="#partner" data-i18n="ev_cta1">Scopri i partner</a>
-            <button class="btn btn-secondary" type="button" data-open-dialog="incontroDialog" data-i18n="ev_cta2">Proponi un'attività</button>
-          </div>
-          <p class="event-partner-note" data-i18n="ev_partner_note" style="margin-top:14px;font-size:.86rem;opacity:.68;font-style:italic;">I siti partner possono pubblicare i propri eventi sia qui in home page che nella sezione eventi della Rete.</p>
-        </div>
-        <article class="glass-card poster-card reveal reveal-right">
-          <img src="assets/corsi/inside_trauma.jpg" alt="Locandina Inside Trauma" loading="lazy" decoding="async" onerror="this.style.display='none'" />
-          <a class="btn btn-ghost btn-block" href="assets/corsi/inside_trauma.pdf" target="_blank" rel="noopener" data-i18n="ev_download">Scarica il programma completo</a>
-        </article>
-      </div>
-    </section>
+
 
     
     <section class="section alt-section" id="ricerca">
@@ -577,7 +711,7 @@
       <div class="container">
         <div class="section-heading reveal">
           <p class="section-kicker" data-i18n="form_kicker">Formazione</p>
-          <h2 id="form-h2" data-i18n="form_h2">Docenze, corsi e materiali didattici</h2>
+          <h2 id="form-h2" data-i18n="form_h2">Didattica, corsi e materiali formativi</h2>
           <p class="section-lead" data-i18n="form_sub">Un archivio formativo organizzato con criteri editoriali chiari: programmi completi, locandine leggibili e materiali pensati per clinici, operatori e subacquei.</p>
         </div>
 
@@ -593,10 +727,10 @@
             <article class="glass-card course-poster-card">
               <img src="assets/corsi/Pisa_Spazio.jpg" alt="Le Radici dell'adattamento: uomini e piante nello Spazio" loading="lazy" decoding="async" onerror="this.style.display='none'" />
               <h4>Le Radici dell'adattamento: uomini e piante nello Spazio</h4>
-              <a class="btn btn-secondary btn-block" href="#" target="_blank" rel="noopener" data-i18n="form_download">Download programma completo</a>
+              <a class="btn btn-secondary btn-block" href="assets/corsi/Pisa_Spazio.jpg" target="_blank" rel="noopener" data-i18n="form_poster">Apri la locandina</a>
             </article>
             <article class="glass-card course-poster-card">
-              <img src="assets/corsi/thedayafter.png" alt="Locandina The Day After" loading="lazy" decoding="async" onerror="this.style.display='none'" />
+              <img src="assets/corsi/thedayafter.jpg" alt="Locandina The Day After" loading="lazy" decoding="async" onerror="this.style.display='none'" />
               <h4>The Day After</h4>
               <a class="btn btn-secondary btn-block" href="assets/corsi/the_day_after_brochure.pdf" target="_blank" rel="noopener" data-i18n="form_download">Download programma completo</a>
             </article>
@@ -625,7 +759,7 @@
 
         <div class="teaching-blocks reveal">
           <div class="section-heading section-heading--compact">
-            <p class="section-kicker" data-i18n="form_doc_k">Docenze universitarie</p>
+            <p class="section-kicker" data-i18n="form_doc_k">Didattica universitaria</p>
             <h3 data-i18n="form_doc_h3">Attività didattiche elettive</h3>
             <p data-i18n="form_doc_p">Moduli didattici tenuti presso il Corso di Laurea in Medicina e Chirurgia dell'Università degli Studi dell'Insubria, con materiali scaricabili e accesso alle locandine degli eventi.</p>
           </div>
@@ -642,7 +776,7 @@
                 </a>
                 <p class="section-kicker" data-i18n="tc_lez_k">Lezione</p>
               <h4 data-i18n="tc1_h4">ADE Medicina Subacquea &amp; Iperbarica</h4>
-              <p data-i18n="tc1_p">Attività didattica elettiva e materiali di docenza universitaria presso l’Università degli Studi dell’Insubria.</p>
+              <p data-i18n="tc1_p">Attività didattica elettiva e materiali didattici presso l’Università degli Studi dell’Insubria.</p>
               </div>
             </article>
             <article class="glass-card teaching-card">
@@ -657,7 +791,7 @@
                 </a>
                 <p class="section-kicker" data-i18n="tc_lez_k">Lezione</p>
               <h4 data-i18n="tc2_h4">ADE Medicina Spaziale</h4>
-              <p data-i18n="tc2_p">Docenza universitaria dedicata alla medicina spaziale e agli ambienti estremi, con approccio fisiologico e applicativo.</p>
+              <p data-i18n="tc2_p">Attività didattica elettiva dedicata alla medicina spaziale e agli ambienti estremi, con approccio fisiologico e applicativo.</p>
               </div>
             </article>
           </div>
@@ -674,6 +808,21 @@
           <p data-i18n="pub_sub">Lavori peer-reviewed, case report e contributi divulgativi sulla medicina subacquea, iperbarica e degli ambienti estremi. Accesso diretto ai PDF.</p>
         </div>
         <div class="section-grid split-2 articoli-grid">
+          <article class="glass-card feature-card pub-featured">
+            <a class="pub-featured__cover" href="https://www.intechopen.com/online-first/1266763" target="_blank" rel="noopener" aria-label="Apri il capitolo su IntechOpen">
+              <img src="assets/pubblicazioni/first-cut-on-mars-cover.jpg" alt="Copertina del volume IntechOpen Mars Exploration: Science, Vision and the Road Ahead" width="256" height="369" loading="lazy" decoding="async" />
+            </a>
+            <div class="pub-featured__body">
+              <p class="section-kicker"><span class="pub-badge" data-i18n="pubf_badge">Nuovo · Open Access</span> Capitolo di libro &middot; IntechOpen &middot; 2026</p>
+              <h3>Perspective Chapter: First Cut on Mars – Designing Surgical Capability for an Early Martian Outpost</h3>
+              <p class="pub-authors">Zerbi S, Tarsia L, Baggio F, Giacon TA. In: Cinelli I (ed.), <em>Mars Exploration – Science, Vision and the Road Ahead</em>.</p>
+              <p data-i18n="pubf_p">Un avamposto su Marte cancella tre certezze della medicina spaziale: l’evacuazione in tempo utile, il consulto esperto in tempo reale e il rifornimento su richiesta. Il capitolo si chiede quale capacità chirurgica un insediamento possa davvero sostenere e che cosa debba garantire l’habitat, dalla diagnostica all’anestesia fino all’assistenza post-operatoria, e propone uno strumento che classifica i rischi in escludibili, convertibili e irriducibili.</p>
+              <div class="pub-featured__cta">
+                <a class="btn btn-primary" href="https://www.intechopen.com/online-first/1266763" target="_blank" rel="noopener" data-i18n="pubf_cta">Leggi il capitolo</a>
+                <a class="pub-doi" href="https://doi.org/10.5772/intechopen.1018019" target="_blank" rel="noopener">doi: 10.5772/intechopen.1018019</a>
+              </div>
+            </div>
+          </article>
           <article class="glass-card feature-card">
             <img src="assets/pubblicazioni/diving1.jpg" alt="Diving and Hyperbaric Medicine Vol.56 N.2 2026" loading="lazy" decoding="async" onerror="this.style.display='none'" />
             <p class="section-kicker">Pubblicazione scientifica &middot; Diving and Hyperbaric Medicine &middot; Vol. 56 No. 2 &middot; 2026</p>
@@ -730,6 +879,13 @@
         </div>
         <div class="section-grid split-2 articoli-grid">
           <article class="glass-card feature-card">
+            <img src="assets/eventi/genova-limite-conoscenza-2026.jpg" alt="Locandina del convegno Il limite è la conoscenza" loading="lazy" decoding="async" />
+            <p class="section-kicker">Gazzetta della Spezia · Ottobre 2026</p>
+            <h3>«Il limite è la conoscenza», convegno dedicato alla medicina subacquea</h3>
+            <p>Il convegno FIAS di Genova su decompressione, prevenzione e soccorso: l’intervento di apertura è affidato a Silvio Zerbi, con gli Amici di Boyle tra i patrocinatori.</p>
+            <a class="text-link" href="https://gazzettadellaspezia.com/attualita/181714-il-limite-e-la-conoscenza-convegno-dedicato-alla-medicina-subacquea" target="_blank" rel="noopener">Leggi l'articolo</a>
+          </article>
+          <article class="glass-card feature-card">
             <img src="assets/pubblicazioni/varesenews.jpg" alt="VareseNews" loading="lazy" decoding="async" onerror="this.style.display='none'" />
             <p class="section-kicker">VareseNews · Maggio 2026</p>
             <h3>Silvio Zerbi, il medico rianimatore dell'ospedale di Varese che studia il corpo umano negli ambienti estremi</h3>
@@ -753,9 +909,9 @@
         <div class="section-heading reveal">
           <p class="section-kicker" data-i18n="part_kicker">Partner</p>
           <h2 id="part-h2" data-i18n="part_h2">Collaborazioni e realtà affini</h2>
-          <p data-i18n="part_sub">Realtà che condividono attenzione per formazione, trauma e ambienti estremi.</p>
+          <p data-i18n="part_sub">Realtà che condividono attenzione per formazione, ricerca, trauma e ambienti estremi.</p>
         </div>
-        <div class="section-grid split-3">
+        <div class="section-grid partner-grid">
           <article class="glass-card feature-card partner-feature">
             <img class="partner-logo" src="assets/itecc_logo.png" alt="Logo Inside Trauma" loading="lazy" decoding="async" />
             <h3>Inside Trauma</h3>
@@ -763,12 +919,18 @@
             <a class="btn btn-primary" href="https://www.insidetrauma.it/" target="_blank" rel="noopener" data-i18n="part1_cta">Visita il sito</a>
           </article>
           <article class="glass-card feature-card partner-feature">
-            <img class="partner-logo" src="assets/logo-simae.png" alt="Logo SIMAE" loading="lazy" decoding="async" />
+            <img class="partner-logo" src="assets/partner/simae-logo.png" alt="Logo SIMAE" loading="lazy" decoding="async" />
             <h3 data-i18n="part_simae_name">Società Italiana Medicina Ambienti Estremi</h3>
             <p data-i18n="part_simae_p">SIMAE è la prima società scientifica in Italia ad occuparsi della ricerca e della formazione in tutti gli ambienti impervi: dal soccorso in mare, alle patologie d'alta quota fino alle spedizioni su tutti i continenti e nelle aree in cui ci si trova ad operare con scarse risorse.</p>
             <a class="btn btn-primary" href="https://www.simae.it/" target="_blank" rel="noopener" data-i18n="part_simae_cta">Visita il sito</a>
           </article>
-          <article class="glass-card contact-card">
+          <article class="glass-card feature-card partner-feature partner-feature--phy">
+            <img class="partner-logo partner-logo--phy" src="assets/partner/phy-logo-white.png" alt="Logo PHY Equipment" width="392" height="194" loading="lazy" decoding="async" />
+            <h3>PHY Equipment</h3>
+            <p data-i18n="part_phy_p">Sistemi di protezione termica per ambienti estremi. Fondata da Andrea Murdock Alpini, esploratore e ricercatore subacqueo, sostiene ricerca ed esplorazione insieme a una rete di partner scientifici.</p>
+            <a class="btn btn-primary" href="https://www.phyequipment.com/partner" target="_blank" rel="noopener" data-i18n="part1_cta">Visita il sito</a>
+          </article>
+          <article class="glass-card contact-card partner-cta-card">
             <div class="energy-icon"></div>
             <h3 data-i18n="part2_h3">Proponi una collaborazione</h3>
             <p data-i18n="part2_p">Università, società scientifiche, corsi, congressi, iniziative editoriali e partner operativi: uno spazio aperto a collaborazioni qualificate.</p>
@@ -795,7 +957,7 @@
             </div>
             <h3 data-i18n="cc1_title">Contatto generale</h3>
             <p data-i18n="cc1_p">Per domande, progetti, richieste editoriali o informazioni generali.</p>
-            <p><strong>Email:</strong> <a href="/cdn-cgi/l/email-protection#dcb5b2bab39cbdb1b5bfb5b8b5beb3a5b0b9f2b5a8" style="color:var(--cyan-2);"><span class="__cf_email__" data-cfemail="eb82858d84ab8a868288828f82898492878ec5829f">[email&#160;protected]</span></a></p>
+            <p><strong>Email:</strong> <a href="mailto:info@amicidiboyle.it" style="color:var(--cyan-2);">info@amicidiboyle.it</a></p>
             <button class="btn btn-electric btn-block" type="button" data-open-dialog="contattiDialog" data-i18n="cc1_cta">Apri modulo contatti</button>
           </article>
           <article class="glass-card contact-card contact-card--rich contact-card--edu reveal" data-delay="100">
@@ -873,7 +1035,7 @@
           <button type="button" class="btn btn-ghost" data-close-dialog>Annulla</button>
         </div>
         <p class="form__status" id="statusGeneral" aria-live="polite"></p>
-        <p class="form__fineprint">Risponderemo entro 48 ore. In alternativa: <a href="/cdn-cgi/l/email-protection#d8b1b6beb798b9b5b1bbb1bcb1bab7a1b4bdf6b1ac"><span class="__cf_email__" data-cfemail="177e79717857767a7e747e737e75786e7b72397e63">[email&#160;protected]</span></a></p>
+        <p class="form__fineprint">Risponderemo entro 48 ore. In alternativa: <a href="mailto:info@amicidiboyle.it">info@amicidiboyle.it</a></p>
       </form>
     </div>
   </dialog>
@@ -903,7 +1065,7 @@
           <button type="button" class="btn btn-ghost" data-close-dialog>Annulla</button>
         </div>
         <p class="form__status" id="statusTeaching" aria-live="polite"></p>
-        <p class="form__fineprint">Valuteremo la richiesta e risponderemo entro 48 ore. In alternativa: <a href="/cdn-cgi/l/email-protection#aec7c0c8c1eecfc3c7cdc7cac7ccc1d7c2cb80c7da"><span class="__cf_email__" data-cfemail="86efe8e0e9c6e7ebefe5efe2efe4e9ffeae3a8eff2">[email&#160;protected]</span></a></p>
+        <p class="form__fineprint">Valuteremo la richiesta e risponderemo entro 48 ore. In alternativa: <a href="mailto:info@amicidiboyle.it">info@amicidiboyle.it</a></p>
       </form>
     </div>
   </dialog>
@@ -1321,11 +1483,13 @@
     </button>
     <div id="mobile-quicknav-panel" role="menu" aria-hidden="true">
       <a href="#home">↑ Inizio</a>
+      <a href="#eventi">Appuntamenti</a>
       <a href="#visione">Visione</a>
       <a href="#attivita">Aree</a>
       <a href="#fondatori">Fondatori</a>
       <a href="#rete-home">Rete</a>
       <a href="#contenuti">Contenuti</a>
+      <a href="#contenuti-articoli">Pubblicazioni</a>
       <a href="#ricerca">Ricerca</a>
       <a href="#formazione">Formazione</a>
       <a href="#partner">Partner</a>
@@ -1380,6 +1544,7 @@
   <nav id="desktop-quicknav" aria-label="Navigazione rapida" style="display:none">
     <ul>
       <li><a href="#home"       data-label="Home"       aria-label="Vai a Home"></a></li>
+      <li><a href="#eventi"     data-label="Appuntamenti" aria-label="Vai ad Appuntamenti"></a></li>
       <li><a href="#visione"    data-label="Visione"    aria-label="Vai a Visione"></a></li>
       <li><a href="#attivita"   data-label="Aree"       aria-label="Vai ad Aree"></a></li>
       <li><a href="#fondatori"  data-label="Fondatori"  aria-label="Vai a Fondatori"></a></li>
@@ -1790,7 +1955,52 @@
       
         'cc3_title':'Join the Boyle Network',
         'cc3_p':'The Network is international and selective. Every member has a public personal page — CV, publications, scientific initiatives — visible to professionals from 6 nations. Courses, research, congresses: everything you build reaches the entire community.',
-        'cc3_cta':'Apply to the Network',}
+        'cc3_cta':'Apply to the Network',
+        /* ── 2026-10 aggiornamento home ── */
+        'fond_desc_silvio':'Anaesthesiologist and intensivist, Trauma Team Leader. Diving and hyperbaric physician, with advanced training in aeronautical and space medicine.',
+        'fond_desc_luigi':'Nuclear and biomedical engineer, specialist in underwater and hyperbaric, aeronautical and aerospace medicine.',
+        'fond_desc_vincenzo':'Anaesthesiologist and intensivist, hyperbaric and diving physician.',
+        'fond_desc_matteo':'Researcher, emergency physician, PhD in Global Health, Humanitarian Aid and Disaster Medicine.',
+        'tl_2026':'Members of the Scientific Committee of the Polo Nazionale Droni.',
+        'vis_p2':'Amici di Boyle means extreme environments and emergency management in the most complex scenarios. Verifiable research, clear methods and continuous training, designed for those working in the field.',
+        'cc3_p':'Do you have a background in underwater, hyperbaric, aerospace or extreme environment medicine? Introduce yourself and we will assess your application to the Network.',
+        'att2_p':'University teaching, courses, congresses, educational materials and activities built for those working in the field.',
+        'cont_lez_title':'University teaching and materials',
+        'cont_lez_p':'Elective teaching activities and educational materials at the University of Insubria.',
+        'form_h2':'Teaching, courses and training materials',
+        'form_doc_k':'University teaching',
+        'tc1_p':'Elective teaching activity and educational materials at the University of Insubria.',
+        'tc2_p':'Elective teaching activity on space medicine and extreme environments, with a physiological and applied approach.',
+        'form_poster':'Open the poster',
+        'part_sub':'Organisations sharing a focus on education, research, trauma and extreme environments.',
+        'part_phy_p':'Thermal protection systems for extreme environments. Founded by Andrea Murdock Alpini, explorer and underwater researcher, it supports research and exploration together with a network of scientific partners.',
+        'appt_kicker':'Upcoming events',
+        'appt_h2':'Where to find us',
+        'appt_sub':'Conferences and courses where Gli Amici di Boyle bring research, clinical practice and field training.',
+        'appt_all':'All events',
+        'appt_register':'Register',
+        'appt_program':'Programme',
+        'appt_program_full':'Programme',
+        'm_nov':'Nov','m_gen':'Jan',
+        'appt1_badge':'Free entry',
+        'appt1_sub':'Decompression, prevention and rescue in diving',
+        'appt1_when':'Saturday 7 November · 3:00 pm',
+        'appt1_note':'Registration required by 2 November.',
+        'appt2_badge':'4 CME credits',
+        'appt2_sub':'From physiology to clinical practice',
+        'appt2_when':'Friday 27 November · 1:45–6:30 pm',
+        'appt2_who':'Chairs <strong>Silvio Zerbi</strong> and <strong>Paolo Severgnini</strong> · with <strong>Vincenzo Benenati</strong>',
+        'appt2_note':'Free · up to 90 participants · CME event ID 223241.1',
+        'appt3_badge':'Save the date',
+        'appt3_when':'21–22 January 2027 · theory and simulation',
+        'appt3_topics':'Burns, hypothermia and avalanches, decompression illness',
+        'appt3_note':'22 January: hands-on day with seven simulation stations, two dedicated to hyperbaric medicine.',
+        'ev_p2':'Joining the Boyle Network also means giving visibility to quality events and initiatives that share rigour, utility and educational value.',
+        'ev_cta2':'Propose an activity',
+        'pubf_badge':'New · Open Access',
+        'pubf_p':'An outpost on Mars removes three certainties of space medicine: timely evacuation, real-time expert advice and on-demand resupply. The chapter asks what surgical capability a settlement can realistically sustain and what the habitat must provide, from diagnostics and anaesthesia to post-operative care, and proposes a tool that sorts risks into excludable, convertible and irreducible.',
+        'pubf_cta':'Read the chapter',
+}
     };
 
     /* ── Apply translations ── */
@@ -1800,29 +2010,23 @@
       var dict = T[lang];
 
       /* Apply data-i18n attributes — plain text */
+      /* L'italiano scritto nell'HTML e' la fonte autorevole: viene memorizzato
+         al primo passaggio e ripristinato quando si torna in IT. Il dizionario
+         serve solo per l'inglese. */
       document.querySelectorAll('[data-i18n]').forEach(function(el) {
         var key = el.getAttribute('data-i18n');
-        if (dict[key] !== undefined) el.textContent = dict[key];
+        if (el.__boyleIt === undefined) el.__boyleIt = el.textContent;
+        if (lang === 'it') { el.textContent = el.__boyleIt; }
+        else if (dict[key] !== undefined) { el.textContent = dict[key]; }
       });
       document.querySelectorAll('[data-i18n-html]').forEach(function(el) {
         var key = el.getAttribute('data-i18n-html');
-        if (dict[key] !== undefined) el.innerHTML = dict[key];
+        if (el.__boyleItHtml === undefined) el.__boyleItHtml = el.innerHTML;
+        if (lang === 'it') { el.innerHTML = el.__boyleItHtml; }
+        else if (dict[key] !== undefined) { el.innerHTML = dict[key]; }
       });
-
-      /* Apply data-i18n-html attributes — HTML content (for bold/tags) */
-      document.querySelectorAll('[data-i18n-html]').forEach(function(el) {
-        var key = el.getAttribute('data-i18n-html');
-        if (dict[key] !== undefined) el.innerHTML = dict[key];
-      });
-      /* Special: hero h1 */
-      var h1el = document.getElementById('hero-h1-el');
-      if (h1el) {
-        if (lang === 'en') {
-          h1el.innerHTML = 'Medicine of<br><span class="accent">Extreme Environments</span>';
-        } else {
-          h1el.innerHTML = 'Medicina degli<br><span class="accent">ambienti estremi</span>';
-        }
-      }
+      /* Special: hero h1 (animato) */
+      if (window.boyleHeroTitle) window.boyleHeroTitle(lang);
 
       /* Apply nav links by text content matching */
       var navMap = {
@@ -1940,6 +2144,7 @@
     }
   })();
   </script>
+  <script src="home-extra.js" defer></script>
   <!-- Cookie banner -->
   <div id="cookie-banner" role="region" aria-label="Cookie">
     <p>Questo sito usa cookie tecnici e servizi di terze parti (Formspree, GitHub Pages).

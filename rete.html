@@ -328,7 +328,7 @@
             </span>
           </button>
           <button class="btn-ghost" id="publishWallJoin" style="min-height:44px;font-size:.88rem;margin-top:8px" data-i18n="r_ev_apply_cta">Candidati alla rete →</button>
-          <p class="email-wall__note">Problemi? Scrivi a <a href="/cdn-cgi/l/email-protection#0a63646c654a6b676369636e63686573666f24637e"><span class="__cf_email__" data-cfemail="e1888f878ea1808c8882888588838e988d84cf8895">[email&#160;protected]</span></a></p>
+          <p class="email-wall__note">Problemi? Scrivi a <a href="mailto:info@amicidiboyle.it">info@amicidiboyle.it</a></p>
         </div>
       </div>
     </div>
@@ -432,7 +432,7 @@
             <span class="btn-electric__inner">🔑 Sono già membro — inserisci il codice</span>
           </button>
           <button class="btn-ghost" id="emailWallJoin" style="min-height:44px;font-size:.88rem;margin-top:8px">Candidati alla rete →</button>
-          <p class="email-wall__note">Problemi? Scrivi a <a href="/cdn-cgi/l/email-protection#e48d8a828ba485898d878d808d868b9d8881ca8d90"><span class="__cf_email__" data-cfemail="f69f989099b6979b9f959f929f94998f9a93d89f82">[email&#160;protected]</span></a> per ottenere l'accesso completo.</p>
+          <p class="email-wall__note">Problemi? Scrivi a <a href="mailto:info@amicidiboyle.it">info@amicidiboyle.it</a> per ottenere l'accesso completo.</p>
         </div>
       </div>
     </div>
@@ -521,7 +521,7 @@
               <span data-i18n="rj_amici_b4">✓ Pubblica eventi di ambienti estremi</span>
               <span data-i18n="rj_amici_b5">✓ Newsletter della community</span>
               <span>✓ Accesso alla Biblioteca di Boyle <em style="opacity:.6;font-size:.85em">- in progress</em></span>
-              <span data-i18n="rj_amici_b6">✓ Scrivi a <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="ea83848c85aa8b878389838e83888593868fc4839e">[email&#160;protected]</a></span>
+              <span data-i18n="rj_amici_b6">✓ Scrivi a <a href="mailto:info@amicidiboyle.it">info@amicidiboyle.it</a></span>
             </div>
             <button class="btn-amici" id="open-amici-modal" type="button">
               <span data-i18n="rj_amici_cta">Curioso o appassionato? → Diventa Amico di Boyle</span>
@@ -664,7 +664,7 @@
         </div>
         <div class="amici-benefit-item">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-          <span>Scrivi direttamente a <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="b7ded9d1d8f7d6daded4ded3ded5d8cedbd299dec3">[email&#160;protected]</a></span>
+          <span>Scrivi direttamente a <a href="mailto:info@amicidiboyle.it">info@amicidiboyle.it</a></span>
         </div>
         <div class="amici-benefit-item amici-benefit-item--note">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
@@ -2598,7 +2598,30 @@
     wrap.style.display = 'block';
     wrap.style.opacity = '0';
     wrap.style.transition = 'opacity .3s';
-    wrap.style.pointerEvribute('aria-hidden', open ? 'true' : 'false');
+    wrap.style.pointerEvents = 'none';
+    var shown = false;
+    function closePanel(){
+      panel.style.display = 'none';
+      panel.setAttribute('aria-hidden','true');
+      btn.setAttribute('aria-expanded','false');
+      btn.style.transform = 'none';
+    }
+    window.addEventListener('scroll', function(){
+      var s = window.scrollY > 300;
+      if (s === shown) return;
+      shown = s;
+      wrap.style.opacity = s ? '1' : '0';
+      wrap.style.pointerEvents = s ? 'auto' : 'none';
+      if (!s) closePanel();
+    }, { passive: true });
+    document.addEventListener('click', function(e){
+      if (!wrap.contains(e.target)) closePanel();
+    });
+    btn.addEventListener('click', function(e){
+      e.stopPropagation();
+      var open = panel.style.display === 'block';
+      panel.style.display = open ? 'none' : 'block';
+      panel.setAttribute('aria-hidden', open ? 'true' : 'false');
       btn.setAttribute('aria-expanded', !open);
       btn.style.transform = open ? 'none' : 'rotate(90deg)';
     });
