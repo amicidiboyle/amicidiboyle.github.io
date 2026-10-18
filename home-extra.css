@@ -472,3 +472,24 @@ html.hero-video-on .site-header { -webkit-backdrop-filter: none; backdrop-filter
   .hero-intro .hero-cta-row .btn, .hero-intro .hero-cta-row .btn::after,
   .hero-intro .hero-cta-row .btn > svg, .hero-intro .hero-cta-row .btn > span { animation: none !important; }
 }
+
+/* ── 10. TRE PORTE D'INGRESSO SOTTO LA HERO (riquadri cliccabili) ─── */
+.info-card--link { display: flex; flex-direction: column; color: inherit; text-decoration: none; cursor: pointer; }
+.info-card--link:focus-visible { outline: 2px solid var(--cyan); outline-offset: 3px; }
+.info-card--link .info-card-body { display: flex; flex-direction: column; flex: 1; }
+.info-card--link h2 { margin-bottom: 8px; }
+.gate-count { color: #4dffd6; }
+.info-card__go {
+  display: inline-flex; align-items: center; gap: 8px; margin-top: auto; padding-top: 16px;
+  font-size: .9rem; font-weight: 700; color: var(--cyan-2);
+}
+.info-card__go span[aria-hidden] { transition: transform .25s cubic-bezier(.2,.7,.2,1); }
+.info-card--link:hover .info-card__go span[aria-hidden] { transform: translateX(5px); }
+.info-card--network .info-card__go { color: #4dffd6; }
+.info-card--content .info-card__go { color: #c9bfff; }
+#evidenza .split-3 { align-items: stretch; }
+#evidenza .info-card--link { height: 100%; }
+@media (max-width: 768px) {
+  .info-card--link { flex-direction: row; }
+  .info-card__go { padding-top: 8px; font-size: .84rem; }
+}
