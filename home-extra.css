@@ -345,3 +345,22 @@
 @media (prefers-reduced-motion: reduce) {
   .hero-video video { transition: none; }
 }
+
+/* ── 8. PARTNER: quattro realtà + invito a collaborare su tutta la riga ── */
+.partner-grid .partner-cta-card {
+  grid-column: 1 / -1; height: auto;
+  display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 8px 22px;
+}
+.partner-grid .partner-cta-card .energy-icon { grid-row: span 2; margin: 0; }
+.partner-grid .partner-cta-card h3 { margin: 0; }
+.partner-grid .partner-cta-card p { margin: 0; grid-column: 2; }
+.partner-grid .partner-cta-card .btn { grid-column: 3; grid-row: 1 / span 2; white-space: nowrap; }
+.partner-grid .partner-feature > img.partner-logo[src*="edges"] { padding: 14px 18px; }
+.partner-sublink { margin-top: 0; font-size: .88rem; }
+@media (max-width: 640px) {
+  .partner-grid .partner-cta-card { grid-template-columns: 1fr; }
+  .partner-grid .partner-cta-card .energy-icon,
+  .partner-grid .partner-cta-card p,
+  .partner-grid .partner-cta-card .btn { grid-column: 1; grid-row: auto; }
+  .partner-grid .partner-cta-card .btn { width: 100%; justify-content: center; }
+}
