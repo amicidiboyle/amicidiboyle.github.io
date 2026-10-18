@@ -317,28 +317,41 @@
 /* ── 7. VIDEO DI SFONDO NELLA HERO ────────────────────────────────── */
 .hero-video {
   position: absolute; inset: 0; z-index: -1; overflow: hidden; pointer-events: none;
-  background: #031024 url("assets/video/hero-poster.jpg") 50% 45% / cover no-repeat;
-  /* sfuma in basso e ai lati per fondersi con lo sfondo del sito */
-  -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 72%, transparent 100%);
-          mask-image: linear-gradient(180deg, #000 0%, #000 72%, transparent 100%);
+  background: #031024 url("assets/video/hero-poster.jpg?v=2") 50% 45% / cover no-repeat;
+}
+/* sfumatura verso il basso (al posto di una maschera, molto piu' leggera da disegnare) */
+.hero-video::before {
+  content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 34%; z-index: 1;
+  background: linear-gradient(180deg, rgba(3,14,32,0) 0%, rgba(3,14,32,.7) 60%, rgba(3,14,32,.96) 100%);
 }
 .hero-video video {
   position: absolute; inset: 0; width: 100%; height: 100%;
   object-fit: cover; object-position: 50% 45%;
   opacity: 0; transition: opacity 1.6s ease;
-  filter: saturate(1.15) brightness(1.35) contrast(1.08);
+  transform: translateZ(0); /* livello dedicato: niente ricalcoli inutili */
 }
 .hero-video video.is-on { opacity: 1; }
 /* velo per la leggibilita' del testo */
 .hero-video::after {
-  content: ""; position: absolute; inset: 0;
+  content: ""; position: absolute; inset: 0; z-index: 1;
   background:
     radial-gradient(ellipse 60% 45% at 50% 48%, rgba(2,10,24,.32), transparent 100%),
     linear-gradient(180deg, rgba(2,10,24,.25) 0%, transparent 30%, transparent 70%, rgba(2,10,24,.4) 100%);
 }
 /* con il video attivo il pulviscolo statico della hero si attenua */
-.hero.has-video .particles { opacity: .12; }
 .hero.has-video .hero-bg { background: none; }
+/* con il video in movimento gli strati animati e le sfocature "a vetro"
+   della hero si fermano: il browser non deve ricalcolarli a ogni fotogramma */
+.hero.has-video .particles,
+.hero.has-video .light-scattering { display: none; }
+.hero.has-video::before,
+.hero.has-video::after { animation: none; }
+.hero.has-video .hero-stats,
+.hero.has-video .hero-eyebrow {
+  -webkit-backdrop-filter: none; backdrop-filter: none;
+  background: rgba(5,18,42,.72);
+}
+html.hero-video-on .site-header { -webkit-backdrop-filter: none; backdrop-filter: none; background: rgba(4,20,52,.97); }
 @media (max-width: 768px) {
   .hero-video video { object-position: 38% 50%; }
 }

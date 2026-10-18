@@ -139,6 +139,7 @@
     v.addEventListener('playing', function () {
       v.classList.add('is-on');
       var hero = v.closest('.hero'); if (hero) hero.classList.add('has-video');
+      document.documentElement.classList.add('hero-video-on');
     }, { once: true });
     var p = v.play();
     if (p && p.catch) p.catch(function () { /* autoplay bloccato: resta il poster */ });
