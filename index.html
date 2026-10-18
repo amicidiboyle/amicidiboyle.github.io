@@ -164,10 +164,10 @@
   <main id="contenuto">
     <section class="hero" id="home">
       <div class="hero-video" aria-hidden="true">
-        <video id="heroVideo" muted loop playsinline preload="none" poster="assets/video/hero-poster.jpg?v=2"
-               data-webm="assets/video/hero-loop.webm?v=2" data-mp4="assets/video/hero-loop.mp4?v=2" data-mobile="assets/video/hero-loop-mobile.mp4?v=2" data-mobile-webm="assets/video/hero-loop-mobile.webm?v=2"></video>
+        <video id="heroVideo" muted loop playsinline preload="none" poster="assets/video/hero-poster.jpg?v=3"
+               data-webm="assets/video/hero-loop.webm?v=3" data-mp4="assets/video/hero-loop.mp4?v=3" data-mobile="assets/video/hero-loop-mobile.mp4?v=3" data-mobile-webm="assets/video/hero-loop-mobile.webm?v=3"></video>
       </div>
-      <script>(function(){try{var v=document.getElementById("heroVideo");if(!v)return;var c=navigator.connection||{};if((window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches)||c.saveData)return;var m=matchMedia("(max-width: 768px)").matches,w=!!v.canPlayType('video/webm; codecs="vp9"');v.src=v.getAttribute(m?(w?"data-mobile-webm":"data-mobile"):(w?"data-webm":"data-mp4"));v.preload="auto";v.load();}catch(e){}})();</script>
+      <script>(function(){try{if(!(window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches)){var h=document.getElementById("home");if(h)h.classList.add("hero-intro");}}catch(e){}})();(function(){try{var v=document.getElementById("heroVideo");if(!v)return;var c=navigator.connection||{};if((window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches)||c.saveData)return;var m=matchMedia("(max-width: 768px)").matches,w=!!v.canPlayType('video/webm; codecs="vp9"');v.src=v.getAttribute(m?(w?"data-mobile-webm":"data-mobile"):(w?"data-webm":"data-mp4"));v.preload="auto";v.load();}catch(e){}})();</script>
       <div class="hero-bg" aria-hidden="true"></div>
       <div class="light-scattering" aria-hidden="true"></div>
       <div class="particles" aria-hidden="true"></div>
