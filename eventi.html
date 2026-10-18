@@ -28,6 +28,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;0,9..40,800;1,9..40,400&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="eventi.css" />
+  <link rel="stylesheet" href="eventi-extra.css" />
 </head>
 <body>
   <a class="skip" href="#contenuto" data-i18n="ev_skip">Vai al contenuto</a>
@@ -89,9 +90,9 @@
         <!-- Radar scanner -->
         <div class="ev-radar" aria-hidden="true">
           <canvas id="evRadarCanvas" width="460" height="460"></canvas>
-          <div class="ev-dot-lbl ev-dot-lbl--1" id="evLbl0" data-i18n="ev_radar1">Luna e Medicina · 25 Lug</div>
-          <div class="ev-dot-lbl ev-dot-lbl--2" id="evLbl1" data-i18n="ev_radar2">Psicologia Sub. · 30–31 Ago</div>
-          <div class="ev-dot-lbl ev-dot-lbl--3" id="evLbl2" data-i18n="ev_radar3">Inside Trauma · 10 Set</div>
+          <div class="ev-dot-lbl ev-dot-lbl--1" id="evLbl0">Genova · 7 Nov</div>
+          <div class="ev-dot-lbl ev-dot-lbl--2" id="evLbl1">Varese · 27 Nov</div>
+          <div class="ev-dot-lbl ev-dot-lbl--3" id="evLbl2">Hypercare · 21 Gen</div>
         </div>
 
         <div class="ev-hero__content">
@@ -103,528 +104,183 @@
           <p class="ev-hero__sub" data-i18n="ev_hero_sub">Corsi, congressi e iniziative segnalati dai membri del network. Dalla medicina subacquea alla medicina aerospaziale.</p>
           <div class="ev-hero__counters">
             <div class="ev-counter">
-              <div class="ev-counter__n" id="counterActive">4</div>
-              <div class="ev-counter__l" data-i18n="ev_cnt_active">eventi attivi</div>
+              <div class="ev-counter__n" id="counterActive">3</div>
+              <div class="ev-counter__l" data-i18n="evx_cnt_up">in arrivo</div>
             </div>
             <div class="ev-counter">
-              <div class="ev-counter__n">2</div>
-              <div class="ev-counter__l" data-i18n="ev_cnt_countries">paesi</div>
+              <div class="ev-counter__n" id="counterCities">3</div>
+              <div class="ev-counter__l" data-i18n="evx_cnt_cities">città</div>
             </div>
             <div class="ev-counter">
-              <div class="ev-counter__n" data-i18n="ev_cnt_next">Lug</div>
+              <div class="ev-counter__n" id="counterNext">Nov</div>
               <div class="ev-counter__l" data-i18n="ev_cnt_next_lbl">prossimo</div>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- ── TABS ── -->
-      <div class="ev-tabs" role="tablist" aria-label="Filtra eventi">
-        <button class="ev-tab active" data-filter="all"      data-i18n="ev_tab_all">Tutti (3)</button>
-        <button class="ev-tab"        data-filter="it"       data-i18n="ev_tab_it">Nazionali</button>
-        <button class="ev-tab"        data-filter="intl"     data-i18n="ev_tab_intl">Internazionali</button>
-        <button class="ev-tab"        data-filter="partner"  data-i18n="ev_tab_partner">Partner</button>
-      </div>
-
-      <!-- ── EVENTI ATTIVI ── -->
-      <div id="eventsContainer">
-
-        <div class="ev-month-lbl">Prossimi eventi</div>
-
-        <article class="ev-card ev-card--member" data-categories="it member" data-date="2026-07-25" style="animation-delay:0.0s">
-          <div class="ev-accent"></div>
-          <div class="ev-poster">
-            <img src="assets/corsi/luna-e-medicina.jpg"
-                 onerror="this.style.display='none'"
-                 alt="Luna e Medicina — locandina" loading="lazy" />
-          </div>
-          <div class="ev-body">
-            <div class="ev-body__top">
-              <div class="ev-badges">
-                <span class="ev-badge ev-badge--member" data-i18n="ev_badge_member">Membro Rete</span>
-                <span class="ev-badge ev-badge--it" data-i18n="ev_badge_it">Nazionale</span>
-              </div>
-              <span class="ev-datechip" data-i18n="ev_5_date">25 Lug 2026</span>
-            </div>
-            <div class="ev-title" data-i18n="ev_5_title">Luna e Medicina</div>
-            <div class="ev-partner-line" data-i18n="ev_5_org">Centro per lo Studio e la Promozione delle Professioni Mediche · Duno (VA)</div>
-            <div class="ev-desc" data-i18n="ev_5_desc">Convegno multidisciplinare tra scienza, medicina e cultura lunare: mitologia greca, fisiologia dello spazio, salute mentale, medicina d'urgenza notturna e storia. A seguire cena, musica dal vivo, osservazione del cielo con l'Associazione Astrofili Ipazia e una lettura scenica di poesie a tema Luna.</div>
-            <div class="ev-meta">
-              <span class="ev-meta-item">
-                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
-                <span data-i18n="ev_5_date">25 Lug 2026</span>
-              </span>
-              <span class="ev-meta-item">
-                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                <span data-i18n="ev_5_meta">Duno (VA), P.zza del Santuario · In presenza</span>
-              </span>
-            </div>
-            <div class="ev-proposer">
-              <div class="ev-proposer__photo">
-                <img src="assets/rete/francesco-baggio.jpg"
-                     onerror="this.src='assets/logo.png'"
-                     alt="Francesco Baggio" loading="lazy" />
-              </div>
-              <div>
-                <div class="ev-proposer__lbl" data-i18n="ev_proposed_by">Proposto da</div>
-                <div class="ev-proposer__name">Francesco Baggio</div>
-              </div>
-            </div>
-            <div class="ev-actions">
-              <a class="ev-btn ev-btn--green" href="mailto:centrostudiduno@gmail.com">
-                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 4h16v16H4z"/><path d="M22 6l-10 7L2 6"/></svg>
-                <span data-i18n="ev_5_cta">Contatta gli organizzatori</span>
-              </a>
-            </div>
-          </div>
-          <!-- Griglia poster mobile -->
-          <div class="ev-poster-grid" aria-hidden="true">
-            <div class="ev-poster-thumb" onclick="openLightbox('assets/corsi/luna-e-medicina.jpg','Luna e Medicina')">
-              <img src="assets/corsi/luna-e-medicina.jpg" alt="Luna e Medicina" loading="lazy" onerror="this.parentNode.classList.add('ev-poster-thumb--ph');this.style.display='none'" />
-              <div class="ev-poster-thumb__label">Luna e Medicina</div>
-            </div>
-          </div>
-        </article>
-
-        <div class="ev-ray" aria-hidden="true"></div>
-
-        <article class="ev-card ev-card--member" data-categories="it member" data-date="2026-08-30" style="animation-delay:0.08s">
-          <div class="ev-accent"></div>
-          <div class="ev-poster">
-            <img src="assets/corsi/corso-psicologia-subacquea-2.jpg"
-                 onerror="this.style.display='none'"
-                 alt="Corso di Psicologia Subacquea, II Edizione — locandina" loading="lazy" />
-          </div>
-          <div class="ev-body">
-            <div class="ev-body__top">
-              <div class="ev-badges">
-                <span class="ev-badge ev-badge--member" data-i18n="ev_badge_member">Membro Rete</span>
-                <span class="ev-badge ev-badge--it" data-i18n="ev_badge_it">Nazionale</span>
-              </div>
-              <span class="ev-datechip" data-i18n="ev_6_date">30–31 Ago 2026</span>
-            </div>
-            <div class="ev-title" data-i18n="ev_6_title">Corso di Psicologia Subacquea — II Edizione</div>
-            <div class="ev-partner-line" data-i18n="ev_6_org">Con il patrocinio SIMSI · Isola d'Elba, Diving Sub Now</div>
-            <div class="ev-desc" data-i18n="ev_6_desc">Corso teorico-pratico per comprendere la mente sott'acqua e gestire stress, ansia e panico in immersione: due moduli teorici con la dott.ssa Lidia Porri e due esercitazioni in acqua (piscina e mare) con l'istruttore Antonio Guarini. Aperto a psicologi, medici subacquei e iperbarici, istruttori e subacquei di ogni livello. Max 12 partecipanti.</div>
-            <div class="ev-meta">
-              <span class="ev-meta-item">
-                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
-                <span data-i18n="ev_6_date">30–31 Ago 2026</span>
-              </span>
-              <span class="ev-meta-item">
-                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                <span data-i18n="ev_6_meta">Isola d'Elba · In presenza</span>
-              </span>
-            </div>
-            <div class="ev-proposer">
-              <div class="ev-proposer__photo">
-                <img src="assets/rete/lidia-porri.jpg"
-                     onerror="this.src='assets/logo.png'"
-                     alt="Lidia Porri" loading="lazy" />
-              </div>
-              <div>
-                <div class="ev-proposer__lbl" data-i18n="ev_proposed_by">Proposto da</div>
-                <div class="ev-proposer__name">Lidia Porri</div>
-              </div>
-            </div>
-            <div class="ev-actions">
-              <a class="ev-btn ev-btn--green" href="assets/corsi/programma-psicologia-subacquea-2.pdf" target="_blank" rel="noopener" download>
-                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                <span data-i18n="ev_6_cta1">Programma PDF</span>
-              </a>
-              <a class="ev-btn ev-btn--green" href="https://www.psicologiasubacquea.it" target="_blank" rel="noopener">
-                <span data-i18n="ev_6_cta2">psicologiasubacquea.it</span>
-              </a>
-            </div>
-          </div>
-          <!-- Griglia poster mobile -->
-          <div class="ev-poster-grid" aria-hidden="true">
-            <div class="ev-poster-thumb" onclick="openLightbox('assets/corsi/corso-psicologia-subacquea-2.jpg','Psicologia Subacquea II Edizione')">
-              <img src="assets/corsi/corso-psicologia-subacquea-2.jpg" alt="Psicologia Subacquea II Edizione" loading="lazy" onerror="this.parentNode.classList.add('ev-poster-thumb--ph');this.style.display='none'" />
-              <div class="ev-poster-thumb__label">Psicologia Subacquea II Ed.</div>
-            </div>
-          </div>
-        </article>
-
-        <article class="ev-card ev-card--partner" data-categories="partner it" data-date="2026-09-10" style="animation-delay:0.16s">
-          <div class="ev-accent"></div>
-          <div class="ev-poster">
-            <img src="assets/corsi/inside_trauma.jpg"
-                 onerror="this.style.display='none'"
-                 alt="Inside Trauma Care ON FIELD — locandina" loading="lazy" />
-          </div>
-          <div class="ev-body">
-            <div class="ev-body__top">
-              <div class="ev-badges">
-                <span class="ev-badge ev-badge--partner" data-i18n="ev_badge_partner">Partner</span>
-                <span class="ev-badge ev-badge--it" data-i18n="ev_badge_it">Nazionale</span>
-              </div>
-              <span class="ev-datechip" data-i18n="ev_7_date">10 Set 2026</span>
-            </div>
-            <div class="ev-title" data-i18n="ev_7_title">Inside Trauma Care — ON FIELD</div>
-            <div class="ev-partner-line" data-i18n="ev_7_org">ITECC · Inside Trauma Care · SoFraPa</div>
-            <div class="ev-desc" data-i18n="ev_7_desc">Full immersion trauma experience: simulazioni di scenari incidentali maggiori con manichini e simulati, corso Stop The Bleed con certificazione internazionale American College of Surgeons. Quattro squadre a confronto con scenari complessi, seguite da un tecnico esperto. Posti limitati.</div>
-            <div class="ev-meta">
-              <span class="ev-meta-item">
-                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
-                <span data-i18n="ev_7_meta1">10 Set 2026 · 08:15–18:30</span>
-              </span>
-              <span class="ev-meta-item">
-                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                <span data-i18n="ev_7_meta2">Bresso (MI) · In presenza</span>
-              </span>
-            </div>
-            <div class="ev-proposer">
-              <div class="ev-proposer__photo">
-                <img src="assets/rete/erika-borotto.jpg"
-                     onerror="this.src='assets/logo.png'"
-                     alt="Erika Borotto" loading="lazy" />
-              </div>
-              <div>
-                <div class="ev-proposer__lbl" data-i18n="ev_proposed_by">Proposto da</div>
-                <div class="ev-proposer__name">Erika Borotto</div>
-              </div>
-            </div>
-            <div class="ev-actions">
-              <a class="ev-btn ev-btn--blue" href="assets/corsi/inside_trauma.pdf" target="_blank" rel="noopener" download>
-                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                <span data-i18n="ev_7_cta1">Programma PDF</span>
-              </a>
-              <a class="ev-btn ev-btn--blue" href="https://www.insidetrauma.it" target="_blank" rel="noopener">
-                <span data-i18n="ev_7_cta2">insidetrauma.it</span>
-              </a>
-            </div>
-          </div>
-          <!-- Griglia poster mobile -->
-          <div class="ev-poster-grid" aria-hidden="true">
-            <div class="ev-poster-thumb" onclick="openLightbox('assets/corsi/inside_trauma.jpg','Inside Trauma Care ON FIELD')">
-              <img src="assets/corsi/inside_trauma.jpg" alt="Inside Trauma Care ON FIELD" loading="lazy" onerror="this.parentNode.classList.add('ev-poster-thumb--ph');this.style.display='none'" />
-              <div class="ev-poster-thumb__label">Inside Trauma Care</div>
-            </div>
-          </div>
-        </article>
-
-        <div class="ev-ray" aria-hidden="true"></div>
-
-        <article class="ev-card ev-card--intl" data-categories="intl" data-date="2026-09-14" style="animation-delay:0.24s">
-          <div class="ev-accent"></div>
-          <div class="ev-poster">
-            <img src="https://eubs2026.com/wp-content/uploads/2025/09/banniere-EUBS-ECHM.png"
-                 onerror="this.style.display='none'"
-                 alt="EUBS 2026 — 50th Congress Geneva" loading="lazy" />
-          </div>
-          <div class="ev-body">
-            <div class="ev-body__top">
-              <div class="ev-badges">
-                <span class="ev-badge ev-badge--intl" data-i18n="ev_badge_intl">Internazionale</span>
-              </div>
-              <span class="ev-datechip">14–18 Set 2026</span>
-            </div>
-            <div class="ev-title">50th EUBS Congress — Ginevra 2026</div>
-            <div class="ev-partner-line">European Underwater and Baromedical Society · ECHM Consensus Conference</div>
-            <div class="ev-desc">Il 50° Congresso Europeo di Medicina Subacquea e Iperbarica. Include la Consensus Conference ECHM sulle indicazioni all'ossigenoterapia iperbarica. Oltre 400 specialisti da 5 continenti. Geneva International Conference Centre (CICG).</div>
-            <div class="ev-meta">
-              <span class="ev-meta-item">
-                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
-                <span>14–18 Set 2026</span>
-              </span>
-              <span class="ev-meta-item">
-                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                <span>Ginevra, Svizzera · CICG</span>
-              </span>
-              <span class="ev-meta-item">
-                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                <span>Congresso · In presenza</span>
-              </span>
-            </div>
-            <div class="ev-actions">
-              <a class="ev-btn ev-btn--primary" href="https://eubs2026.com" target="_blank" rel="noopener">
-                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-                Sito ufficiale
-              </a>
-              <a class="ev-btn ev-btn--ghost" href="https://eubs2026.com/registration/" target="_blank" rel="noopener">Registrazione</a>
-            </div>
-          </div>
-          <!-- Griglia poster mobile -->
-          <div class="ev-poster-grid" aria-hidden="true">
-            <div class="ev-poster-thumb" onclick="openLightbox('https://eubs2026.com/wp-content/uploads/2025/09/banniere-EUBS-ECHM.png','EUBS 2026')">
-              <img src="https://eubs2026.com/wp-content/uploads/2025/09/banniere-EUBS-ECHM.png" alt="EUBS 2026" loading="lazy" onerror="this.parentNode.classList.add('ev-poster-thumb--ph');this.style.display='none'" />
-              <div class="ev-poster-thumb__label">EUBS 2026</div>
-            </div>
-          </div>
-        </article>
-
-        <div class="ev-ray" aria-hidden="true"></div>
-        <button class="ev-past-toggle" id="pastToggle" type="button" aria-expanded="true">
-          <span class="ev-toggle-line"></span>
-          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 8 12 12 14 14"/></svg>
-          <span data-i18n="ev_past_toggle">&nbsp;4 eventi conclusi&nbsp;</span>
-          <span class="ev-toggle-line"></span>
-        </button>
-
-        <div id="pastEvents">
-          <article class="ev-card ev-card--past past" data-categories="partner it" data-date="2026-05-06" style="animation-delay:0.0s">
-          <div class="ev-accent"></div>
-          <div class="ev-poster">
-            <img src="assets/corsi/thedayafter.png"
-                 onerror="this.style.display='none'"
-                 alt="The Day After — locandina" loading="lazy" />
-          </div>
-          <div class="ev-body">
-            <div class="ev-body__top">
-              <div class="ev-badges">
-                <span class="ev-badge ev-badge--past" data-i18n="ev_badge_past">Concluso</span>
-                <span class="ev-badge ev-badge--partner" data-i18n="ev_badge_partner">Partner</span>
-                <span class="ev-badge ev-badge--it"      data-i18n="ev_badge_it">Nazionale</span>
-              </div>
-              <span class="ev-datechip" data-i18n="ev_1_date">6 Mag 2026</span>
-            </div>
-            <div class="ev-title" data-i18n="ev_1_title">The Day After</div>
-            <div class="ev-partner-line" data-i18n="ev_1_org">ITCC · Inside Trauma Critical Care</div>
-            <div class="ev-desc" data-i18n="ev_1_desc">Gestione del trauma maggiore oltre la fase acuta: continuità delle cure dall'ospedale al territorio. Corso ECM in collaborazione con gli Amici di Boyle.</div>
-            <div class="ev-meta">
-              <span class="ev-meta-item">
-                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                <span data-i18n="ev_1_meta">In presenza · ECM</span>
-              </span>
-            </div>
-            <div class="ev-proposer">
-              <div class="ev-proposer__photo">
-                <img src="assets/rete/erika-borotto.jpg"
-                     onerror="this.src='assets/logo.png'"
-                     alt="Erika Borotto" loading="lazy" />
-              </div>
-              <div>
-                <div class="ev-proposer__lbl" data-i18n="ev_proposed_by">Proposto da</div>
-                <div class="ev-proposer__name">Erika Borotto</div>
-              </div>
-            </div>
-            <div class="ev-actions">
-              <a class="ev-btn ev-btn--blue" href="assets/corsi/the_day_after_brochure.pdf" target="_blank" rel="noopener" download>
-                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                <span data-i18n="ev_1_cta">Scarica locandina</span>
-              </a>
-            </div>
-          </div>
-          <!-- Griglia poster mobile -->
-          <div class="ev-poster-grid" aria-hidden="true">
-            <div class="ev-poster-thumb" onclick="openLightbox('assets/corsi/thedayafter.png','The Day After')">
-              <img src="assets/corsi/thedayafter.png" alt="The Day After" loading="lazy" onerror="this.parentNode.classList.add('ev-poster-thumb--ph');this.style.display='none'" />
-              <div class="ev-poster-thumb__label">The Day After</div>
-            </div>
-          </div>
-        </article>
-
-        <div class="ev-ray" aria-hidden="true"></div>
-
-        <article class="ev-card ev-card--past past" data-categories="intl" data-date="2026-05-04" style="animation-delay:0.08s">
-          <div class="ev-accent"></div>
-          <div class="ev-poster">
-            <div class="ev-poster__ph" style="background:linear-gradient(160deg,#0d0820,#100927)">
-              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="rgba(167,139,250,.28)" stroke-width="1.2" aria-hidden="true"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-              <div class="ev-poster__ph-lbl">WSMH PY 2026</div>
-            </div>
-          </div>
-          <div class="ev-body">
-            <div class="ev-body__top">
-              <div class="ev-badges">
-                <span class="ev-badge ev-badge--past" data-i18n="ev_badge_past">Concluso</span>
-                <span class="ev-badge ev-badge--intl" data-i18n="ev_badge_intl">Internazionale</span>
-              </div>
-              <span class="ev-datechip" data-i18n="ev_2_date">4–17 Mag 2026</span>
-            </div>
-            <div class="ev-title" data-i18n="ev_2_title">1st World Space Med Hackathon</div>
-            <div class="ev-partner-line" data-i18n="ev_2_org">Metasense · São Luís, Brasile · Virtuale</div>
-            <div class="ev-desc" data-i18n="ev_2_desc">Hackathon sulla medicina in microgravità: soluzioni per la salute spaziale con spin-off terrestre. Aperto a studenti delle professioni sanitarie. Team da 6 · 30h di certificazione.</div>
-
-            <!-- Sunto espandibile -->
-            <button class="ev-summary-toggle" id="wsmhToggle" type="button" aria-expanded="false" aria-controls="wsmhSummary">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
-              <span data-i18n="ev_2_summary_btn">Leggi il regolamento in italiano</span>
-            </button>
-            <div class="ev-summary-box" id="wsmhSummary" aria-hidden="true">
-              <h4 data-i18n="ev_2_sum_title">Sintesi del regolamento ufficiale</h4>
-              <p data-i18n="ev_2_sum_p1"><strong>Periodo:</strong> 4–17 maggio 2026, formato interamente virtuale su Google Meet. Certificazione di 30 ore.</p>
-              <p data-i18n="ev_2_sum_p2"><strong>Chi può partecipare:</strong> studenti delle professioni sanitarie (Medicina, Infermieristica, Biomedicina, Fisioterapia, Farmacia, Nutrizione, Psicologia, Odontoiatria) iscritti a IES in Brasile o all'estero.</p>
-              <p data-i18n="ev_2_sum_p3"><strong>Team:</strong> 6 persone obbligatorie. Quota di iscrizione R$ 200 per team, versata via Sympla. Il team leader gestisce la registrazione.</p>
-              <p data-i18n="ev_2_sum_p4"><strong>Fasi:</strong> apertura (4 Mag) → capacitazioni (5–9 Mag) → sviluppo e mentoring (10–13 Mag) → consegna (14 Mag ore 17) → valutazione → Demoday finale (17 Mag, 14–20h).</p>
-              <p data-i18n="ev_2_sum_p5"><strong>Consegne:</strong> video pitch max 3 minuti + presentazione slides + documento scritto del progetto (tutti su template ufficiale).</p>
-              <p data-i18n="ev_2_sum_p6"><strong>Premiazione:</strong> Top 5 team. Il 1° posto riceve trofeo, certificato e accesso al Programma di Ricerca Metasense 2026. Tutti i partecipanti ricevono certificato e report di valutazione.</p>
-            </div>
-
-            <div class="ev-meta">
-              <span class="ev-meta-item">
-                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
-                <span data-i18n="ev_2_date">4–17 Mag 2026</span>
-              </span>
-              <span class="ev-meta-item">
-                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                <span data-i18n="ev_2_meta1">Google Meet · Virtuale</span>
-              </span>
-              <span class="ev-meta-item">
-                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                <span data-i18n="ev_2_place">São Luís, Brasile</span>
-              </span>
-              <span class="ev-meta-item">
-                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-                <span data-i18n="ev_2_meta2">R$ 200 / team</span>
-              </span>
-            </div>
-            <div class="ev-proposer">
-              <div class="ev-proposer__photo">
-                <img src="assets/rete/adriana-almeida.jpg"
-                     onerror="this.src='assets/logo.png'"
-                     alt="Adriana Almeida" loading="lazy" />
-              </div>
-              <div>
-                <div class="ev-proposer__lbl" data-i18n="ev_signaled_by">Segnalato da</div>
-                <div class="ev-proposer__name">Adriana Almeida</div>
-              </div>
-            </div>
-            <div class="ev-actions">
-              <a class="ev-btn ev-btn--violet" href="assets/corsi/REGULAMENTO_OFICIAL_1WSMH.pdf" target="_blank" rel="noopener" download>
-                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                <span data-i18n="ev_2_cta1">Regolamento PDF (PT)</span>
-              </a>
-              <a class="ev-btn ev-btn--violet" href="assets/corsi/WSMH_2026_sintesi_IT.pdf" target="_blank" rel="noopener" download>
-                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                <span data-i18n="ev_2_cta2">Sintesi IT</span>
-              </a>
-              <a class="ev-btn ev-btn--violet" href="https://www.sympla.com.br" target="_blank" rel="noopener">
-                <span data-i18n="ev_2_cta3">Iscriviti su Sympla →</span>
-              </a>
-            </div>
-          </div>
-          <!-- Griglia poster mobile -->
-          <div class="ev-poster-grid" aria-hidden="true">
-            <div class="ev-poster-thumb ev-poster-thumb--ph" onclick="openLightbox('','WSMH 2026')">
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="rgba(167,139,250,.4)" stroke-width="1.2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-              <div class="ev-poster-thumb__label">WSMH 2026</div>
-            </div>
-          </div>
-        </article>
-
-        <div class="ev-ray" aria-hidden="true"></div>
-
-        <article class="ev-card ev-card--past past" data-categories="it member" data-date="2026-05-30" style="animation-delay:0.16s">
-          <div class="ev-accent"></div>
-          <div class="ev-poster">
-            <img src="assets/corsi/corso-psicologia-subacquea.jpg"
-                 onerror="this.style.display='none'"
-                 alt="Corso di Psicologia Subacquea — locandina" loading="lazy" />
-          </div>
-          <div class="ev-body">
-            <div class="ev-body__top">
-              <div class="ev-badges">
-                <span class="ev-badge ev-badge--past" data-i18n="ev_badge_past">Concluso</span>
-                <span class="ev-badge ev-badge--member" data-i18n="ev_badge_member">Membro Rete</span>
-                <span class="ev-badge ev-badge--it"     data-i18n="ev_badge_it">Nazionale</span>
-              </div>
-              <span class="ev-datechip" data-i18n="ev_3_date">30–31 Mag 2026</span>
-            </div>
-            <div class="ev-title" data-i18n="ev_3_title">Corso di Psicologia Subacquea</div>
-            <div class="ev-partner-line" data-i18n="ev_3_org">Teorico-pratico · Isola d'Elba</div>
-            <div class="ev-desc" data-i18n="ev_3_desc">Dimensione psicologica dell'immersione: stress, ansia, panico e PTSD in ambiente subacqueo e iperbarico. Per psicologi, medici, istruttori e subacquei esperti.</div>
-            <div class="ev-meta">
-              <span class="ev-meta-item">
-                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
-                <span data-i18n="ev_3_date">30–31 Mag 2026</span>
-              </span>
-              <span class="ev-meta-item">
-                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                <span data-i18n="ev_3_meta">Isola d'Elba · In presenza</span>
-              </span>
-            </div>
-            <div class="ev-proposer">
-              <div class="ev-proposer__photo">
-                <img src="assets/rete/lidia-porri.jpg"
-                     onerror="this.src='assets/logo.png'"
-                     alt="Lidia Porri" loading="lazy" />
-              </div>
-              <div>
-                <div class="ev-proposer__lbl" data-i18n="ev_proposed_by">Proposto da</div>
-                <div class="ev-proposer__name">Lidia Porri</div>
-              </div>
-            </div>
-            <div class="ev-actions">
-              <a class="ev-btn ev-btn--green" href="assets/corsi/programma-corso-psicologia.pdf" target="_blank" rel="noopener" download>
-                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                <span data-i18n="ev_3_cta1">Programma PDF</span>
-              </a>
-              <a class="ev-btn ev-btn--green" href="https://www.psicologiasubacquea.it" target="_blank" rel="noopener">
-                <span data-i18n="ev_3_cta2">psicologiasubacquea.it</span>
-              </a>
-            </div>
-          </div>
-          <!-- Griglia poster mobile -->
-          <div class="ev-poster-grid" aria-hidden="true">
-            <div class="ev-poster-thumb" onclick="openLightbox('assets/corsi/corso-psicologia-subacquea.jpg','Corso di Psicologia Subacquea')">
-              <img src="assets/corsi/corso-psicologia-subacquea.jpg" alt="Psicologia Subacquea" loading="lazy" onerror="this.parentNode.classList.add('ev-poster-thumb--ph');this.style.display='none'" />
-              <div class="ev-poster-thumb__label">Psicologia Subacquea</div>
-            </div>
-          </div>
-        </article>
-
-        <div class="ev-ray" aria-hidden="true"></div>
-
-        <article class="ev-card ev-card--past past" data-categories="it" data-date="2026-04-11" style="animation-delay:0.24s">
-            <div class="ev-accent"></div>
-            <div class="ev-poster">
-              <img src="assets/corsi/locandina_simsi_cattolica.jpg"
-                   onerror="this.style.display='none'"
-                   alt="Convegno SIMSI 2026" loading="lazy" />
-            </div>
-            <div class="ev-body">
-              <div class="ev-body__top">
-                <div class="ev-badges">
-                  <span class="ev-badge ev-badge--past" data-i18n="ev_badge_past">Concluso</span>
-                  <span class="ev-badge ev-badge--it" style="opacity:.35" data-i18n="ev_badge_it">Nazionale</span>
-                </div>
-                <span class="ev-datechip" data-i18n="ev_4_date">10–11 Apr 2026</span>
-              </div>
-              <div class="ev-title" data-i18n="ev_4_title">Convegno SIMSI 2026</div>
-              <div class="ev-partner-line" data-i18n="ev_4_org">SIMSI · Società Italiana Medicina Subacquea e Iperbarica</div>
-              <div class="ev-desc" data-i18n="ev_4_desc">Convegno Nazionale della Società Italiana di Medicina Subacquea e Iperbarica. Appuntamento scientifico di riferimento per la comunità medica italiana.</div>
-              <div class="ev-meta">
-                <span class="ev-meta-item">
-                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                  <span data-i18n="ev_4_place">Cattolica (RN) · Waldorf Palace Hotel</span>
-                </span>
-                <span class="ev-meta-item">
-                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
-                  <span data-i18n="ev_4_format">Congresso · In presenza</span>
-                </span>
-              </div>
-              <div class="ev-proposer">
-                <div class="ev-proposer__photo">
-                  <img src="assets/rete/andrea-galvani.jpg"
-                       onerror="this.src='assets/logo.png'"
-                       alt="Andrea Galvani" loading="lazy" />
-                </div>
-                <div>
-                  <div class="ev-proposer__lbl" data-i18n="ev_signaled_by">Segnalato da</div>
-                  <div class="ev-proposer__name">Andrea Galvani</div>
-                </div>
-              </div>
-              <div class="ev-actions">
-                <a class="ev-btn ev-btn--ghost" href="assets/corsi/programma_simsi_cattolica.pdf" target="_blank" rel="noopener" download>
-                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                  <span data-i18n="ev_4_cta">Programma PDF</span>
-                </a>
-                <a class="ev-btn ev-btn--ghost" href="https://www.simsi.it" target="_blank" rel="noopener">simsi.it</a>
-              </div>
-            </div>
-            <!-- Griglia poster mobile -->
-            <div class="ev-poster-grid" aria-hidden="true">
-              <div class="ev-poster-thumb" onclick="openLightbox('assets/corsi/locandina_simsi_cattolica.jpg','Convegno SIMSI 2026')">
-                <img src="assets/corsi/locandina_simsi_cattolica.jpg" alt="SIMSI 2026" loading="lazy" onerror="this.parentNode.classList.add('ev-poster-thumb--ph');this.style.display='none'" />
-                <div class="ev-poster-thumb__label">SIMSI 2026</div>
-              </div>
-            </div>
-          </article>
+      <!-- ── IN ARRIVO ── -->
+      <section class="evx-section" id="in-arrivo" aria-labelledby="evxUpTitle">
+        <div class="evx-head">
+          <p class="evx-kicker" data-i18n="evx_kicker">In arrivo</p>
+          <h2 id="evxUpTitle" data-i18n="evx_title">Prossimi appuntamenti</h2>
         </div>
 
-      </div><!-- /eventsContainer -->
+        <div class="evx-list" id="evxList">
+
+          <article class="evx-card" data-start="2026-11-07T15:00:00+01:00" data-end="2026-11-07T18:00:00+01:00"
+                   data-city="Genova" data-title="Il limite è la conoscenza" data-when="7 Nov 2026"
+                   data-place="Auditorium Luigi Durand De La Penne, ITTL Nautico San Giorgio, Porto Antico, Genova"
+                   data-pdf="assets/eventi/genova-limite-conoscenza-2026.pdf" data-poster="assets/eventi/genova-limite-conoscenza-2026.jpg">
+            <button class="evx-poster" type="button" onclick="openLightbox('assets/eventi/genova-limite-conoscenza-2026.jpg','Il limite è la conoscenza')" aria-label="Ingrandisci la locandina">
+              <img src="assets/eventi/genova-limite-conoscenza-2026.jpg" alt="Locandina Il limite è la conoscenza, Genova" width="900" height="1273" loading="lazy" decoding="async" />
+              <span class="evx-zoom" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></span>
+            </button>
+            <div class="evx-body">
+              <div class="evx-top">
+                <div class="evx-date" aria-hidden="true"><b>07</b><span data-i18n="evx_m_nov">Nov</span><em>2026</em></div>
+                <div class="evx-top-r">
+                  <span class="evx-countdown" aria-live="polite"></span>
+                  <div class="evx-badges">
+                    <span class="evx-badge evx-badge--free" data-i18n="evx_free">Gratuito</span>
+                    <span class="evx-badge" data-i18n="evx_patron">Patrocinio Amici di Boyle</span>
+                  </div>
+                </div>
+              </div>
+              <p class="evx-org">FIAS · Federazione Italiana Attività Subacquee</p>
+              <h3 class="evx-title">Il limite è la conoscenza</h3>
+              <p class="evx-sub" data-i18n="evx1_sub">Decompressione, prevenzione e soccorso in immersione</p>
+              <ul class="evx-facts">
+                <li><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span data-i18n="evx1_when">Sabato 7 novembre 2026 · dalle 15:00</span></li>
+                <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.1-7-11.5a7 7 0 0 1 14 0C19 14.9 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg><span>Auditorium «Luigi Durand De La Penne», ITTL Nautico San Giorgio · Porto Antico, Genova</span></li>
+                <li><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg><span data-i18n-html="evx1_who"><strong>Silvio Zerbi</strong>, «Il corpo sotto pressione» · con Andrea Murdock Alpini, Marco Mori, Giovanni Cappa</span></li>
+              </ul>
+              <div class="evx-cta">
+                <a class="evx-btn evx-btn--primary" href="https://forms.gle/nLTnGaVitWznce368" target="_blank" rel="noopener" data-i18n="evx_register">Iscriviti</a>
+                <a class="evx-btn" href="assets/eventi/genova-limite-conoscenza-2026.pdf" target="_blank" rel="noopener" data-i18n="evx_program">Programma</a>
+                <button class="evx-btn evx-btn--ghost evx-ics" type="button" data-i18n="evx_cal">+ Calendario</button>
+              </div>
+              <p class="evx-note" data-i18n="evx1_note">Iscrizione obbligatoria entro lunedì 2 novembre.</p>
+            </div>
+          </article>
+
+          <article class="evx-card" data-start="2026-11-27T13:45:00+01:00" data-end="2026-11-27T18:30:00+01:00"
+                   data-city="Varese" data-title="Medicina Subacquea ed Iperbarica: dalla fisiologia alla pratica clinica" data-when="27 Nov 2026"
+                   data-place="Aula Magna, Collegio Cattaneo, Via J.H. Dunant 7, Varese"
+                   data-pdf="assets/eventi/varese-medicina-subacquea-iperbarica-2026.pdf" data-poster="assets/eventi/varese-medicina-subacquea-iperbarica-2026.jpg">
+            <button class="evx-poster" type="button" onclick="openLightbox('assets/eventi/varese-medicina-subacquea-iperbarica-2026.jpg','Medicina Subacquea ed Iperbarica')" aria-label="Ingrandisci la locandina">
+              <img src="assets/eventi/varese-medicina-subacquea-iperbarica-2026.jpg" alt="Locandina Medicina Subacquea ed Iperbarica, Varese" width="878" height="1240" loading="lazy" decoding="async" />
+              <span class="evx-zoom" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></span>
+            </button>
+            <div class="evx-body">
+              <div class="evx-top">
+                <div class="evx-date" aria-hidden="true"><b>27</b><span data-i18n="evx_m_nov">Nov</span><em>2026</em></div>
+                <div class="evx-top-r">
+                  <span class="evx-countdown" aria-live="polite"></span>
+                  <div class="evx-badges">
+                    <span class="evx-badge evx-badge--ecm" data-i18n="evx_ecm">4 crediti ECM</span>
+                    <span class="evx-badge evx-badge--free" data-i18n="evx_free">Gratuito</span>
+                  </div>
+                </div>
+              </div>
+              <p class="evx-org">ASST Sette Laghi · S.S. Formazione</p>
+              <h3 class="evx-title">Medicina Subacquea ed Iperbarica</h3>
+              <p class="evx-sub" data-i18n="evx2_sub">Dalla fisiologia alla pratica clinica</p>
+              <ul class="evx-facts">
+                <li><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span data-i18n="evx2_when">Venerdì 27 novembre 2026 · 13:45–18:30</span></li>
+                <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.1-7-11.5a7 7 0 0 1 14 0C19 14.9 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg><span>Aula Magna, Collegio Cattaneo · Via J.H. Dunant 7, Varese</span></li>
+                <li><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg><span data-i18n-html="evx2_who">Presidenti <strong>Silvio Zerbi</strong> e <strong>Paolo Severgnini</strong> · relatori tra cui <strong>Vincenzo Benenati</strong>, Claudio Camponovo (DAN Europe), Carmela Graci, Andrea Moriondo</span></li>
+              </ul>
+              <div class="evx-cta">
+                <a class="evx-btn evx-btn--primary" href="https://formazione.sigmapaghe.com" target="_blank" rel="noopener" data-i18n="evx_register">Iscriviti</a>
+                <a class="evx-btn" href="assets/eventi/varese-medicina-subacquea-iperbarica-2026.pdf" target="_blank" rel="noopener" data-i18n="evx_program">Programma</a>
+                <button class="evx-btn evx-btn--ghost evx-ics" type="button" data-i18n="evx_cal">+ Calendario</button>
+              </div>
+              <p class="evx-note" data-i18n="evx2_note">Iscrizione sul portale della formazione, ID evento ECM 223241.1 · massimo 90 partecipanti · necessario un documento d’identità.</p>
+            </div>
+          </article>
+
+          <article class="evx-card" data-start="2027-01-21T13:30:00+01:00" data-end="2027-01-22T18:00:00+01:00"
+                   data-city="Bolzano" data-title="Hypercare · Emergency Medicine Course" data-when="21–22 Gen 2027"
+                   data-place="terraXcube, Eurac Research, Bolzano"
+                   data-pdf="assets/eventi/hypercare-2027.pdf" data-poster="assets/eventi/hypercare-2027.jpg">
+            <button class="evx-poster" type="button" onclick="openLightbox('assets/eventi/hypercare-2027.jpg','Hypercare 2027')" aria-label="Ingrandisci la locandina">
+              <img src="assets/eventi/hypercare-2027.jpg" alt="Locandina Hypercare Emergency Medicine Course, Bolzano" width="900" height="1382" loading="lazy" decoding="async" />
+              <span class="evx-zoom" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></span>
+            </button>
+            <div class="evx-body">
+              <div class="evx-top">
+                <div class="evx-date evx-date--range" aria-hidden="true"><b>21<i>–22</i></b><span data-i18n="evx_m_gen">Gen</span><em>2027</em></div>
+                <div class="evx-top-r">
+                  <span class="evx-countdown" aria-live="polite"></span>
+                  <div class="evx-badges">
+                    <span class="evx-badge evx-badge--save" data-i18n="evx_save">Save the date</span>
+                    <span class="evx-badge" data-i18n="evx_partner">Partner ITECC</span>
+                  </div>
+                </div>
+              </div>
+              <p class="evx-org">ITECC · Eurac Research</p>
+              <h3 class="evx-title">Hypercare</h3>
+              <p class="evx-sub" data-i18n="evx3_sub">Emergency Medicine Course · ustioni, ipotermia e valanghe, malattie da decompressione</p>
+              <ul class="evx-facts">
+                <li><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span data-i18n="evx3_when">21 gennaio: sessioni teoriche · 22 gennaio: hands-on e simulazione</span></li>
+                <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.1-7-11.5a7 7 0 0 1 14 0C19 14.9 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg><span>terraXcube, Eurac Research · Bolzano</span></li>
+                <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 20l6-10 4 6 3-4 5 8z"/></svg><span data-i18n="evx3_topics">Medicina di montagna, medicina iperbarica e subacquea, ustioni · sette stazioni pratiche, due dedicate all’iperbarica</span></li>
+              </ul>
+              <div class="evx-cta">
+                <a class="evx-btn evx-btn--primary" href="assets/eventi/hypercare-2027.pdf" target="_blank" rel="noopener" data-i18n="evx_program">Programma</a>
+                <button class="evx-btn evx-btn--ghost evx-ics" type="button" data-i18n="evx_cal">+ Calendario</button>
+              </div>
+              <p class="evx-note" data-i18n="evx3_note">Save the date: le modalità di iscrizione saranno pubblicate qui appena disponibili.</p>
+            </div>
+          </article>
+
+        </div>
+        <p class="evx-empty" id="evxEmpty" hidden data-i18n="evx_empty">Nessun evento in calendario al momento: torna a trovarci presto, oppure proponine uno tu.</p>
+      </section>
+
+      <!-- ── ARCHIVIO ── -->
+      <section class="evx-section evx-archive" id="archivio" aria-labelledby="evxArchTitle">
+        <div class="evx-head">
+          <p class="evx-kicker" data-i18n="evx_arch_kicker">Archivio</p>
+          <h2 id="evxArchTitle" data-i18n="evx_arch_title">Eventi conclusi</h2>
+        </div>
+        <div class="evx-grid" id="evxArchive">
+          <article class="evx-mini" data-date="2026-09-14">
+            <div class="evx-mini__media evx-mini__media--ph" aria-hidden="true"><span>EUBS</span></div>
+            <div class="evx-mini__body"><span class="evx-mini__date">14–18 Set 2026</span><h3>50th EUBS Congress</h3><p>Ginevra, Svizzera · CICG</p><div class="evx-mini__links"><a href="https://eubs2026.com" target="_blank" rel="noopener" data-i18n="evx_site">Sito</a></div></div>
+          </article>
+          <article class="evx-mini" data-date="2026-09-10">
+            <button class="evx-mini__media" type="button" onclick="openLightbox('assets/eventi/archivio/inside-trauma-on-field.jpg','Inside Trauma Care — ON FIELD')" aria-label="Ingrandisci la locandina"><img src="assets/eventi/archivio/inside-trauma-on-field.jpg" alt="Locandina Inside Trauma Care — ON FIELD" loading="lazy" decoding="async" /></button>
+            <div class="evx-mini__body"><span class="evx-mini__date">10 Set 2026</span><h3>Inside Trauma Care — ON FIELD</h3><p>Bresso (MI) · ITECC</p><div class="evx-mini__links"><a href="assets/corsi/inside_trauma.pdf" target="_blank" rel="noopener" data-i18n="evx_program">Programma</a></div></div>
+          </article>
+          <article class="evx-mini" data-date="2026-08-30">
+            <button class="evx-mini__media" type="button" onclick="openLightbox('assets/eventi/archivio/psicologia-subacquea-2.jpg','Corso di Psicologia Subacquea — II Edizione')" aria-label="Ingrandisci la locandina"><img src="assets/eventi/archivio/psicologia-subacquea-2.jpg" alt="Locandina Corso di Psicologia Subacquea — II Edizione" loading="lazy" decoding="async" /></button>
+            <div class="evx-mini__body"><span class="evx-mini__date">30–31 Ago 2026</span><h3>Corso di Psicologia Subacquea — II Edizione</h3><p>Isola d&#x27;Elba · Diving Sub Now</p><div class="evx-mini__links"><a href="assets/corsi/programma-psicologia-subacquea-2.pdf" target="_blank" rel="noopener" data-i18n="evx_program">Programma</a></div></div>
+          </article>
+          <article class="evx-mini" data-date="2026-07-25">
+            <button class="evx-mini__media" type="button" onclick="openLightbox('assets/eventi/archivio/luna-e-medicina.jpg','Luna e Medicina')" aria-label="Ingrandisci la locandina"><img src="assets/eventi/archivio/luna-e-medicina.jpg" alt="Locandina Luna e Medicina" loading="lazy" decoding="async" /></button>
+            <div class="evx-mini__body"><span class="evx-mini__date">25 Lug 2026</span><h3>Luna e Medicina</h3><p>Duno (VA)</p></div>
+          </article>
+          <article class="evx-mini" data-date="2026-05-30">
+            <button class="evx-mini__media" type="button" onclick="openLightbox('assets/eventi/archivio/psicologia-subacquea.jpg','Corso di Psicologia Subacquea')" aria-label="Ingrandisci la locandina"><img src="assets/eventi/archivio/psicologia-subacquea.jpg" alt="Locandina Corso di Psicologia Subacquea" loading="lazy" decoding="async" /></button>
+            <div class="evx-mini__body"><span class="evx-mini__date">30–31 Mag 2026</span><h3>Corso di Psicologia Subacquea</h3><p>Isola d&#x27;Elba</p><div class="evx-mini__links"><a href="assets/corsi/programma-corso-psicologia.pdf" target="_blank" rel="noopener" data-i18n="evx_program">Programma</a></div></div>
+          </article>
+          <article class="evx-mini" data-date="2026-05-06">
+            <button class="evx-mini__media" type="button" onclick="openLightbox('assets/eventi/archivio/the-day-after.jpg','The Day After')" aria-label="Ingrandisci la locandina"><img src="assets/eventi/archivio/the-day-after.jpg" alt="Locandina The Day After" loading="lazy" decoding="async" /></button>
+            <div class="evx-mini__body"><span class="evx-mini__date">6 Mag 2026</span><h3>The Day After</h3><p>ITCC · Inside Trauma Critical Care</p><div class="evx-mini__links"><a href="assets/corsi/the_day_after_brochure.pdf" target="_blank" rel="noopener" data-i18n="evx_program">Programma</a></div></div>
+          </article>
+          <article class="evx-mini" data-date="2026-05-04">
+            <div class="evx-mini__media evx-mini__media--ph" aria-hidden="true"><span>WSMH</span></div>
+            <div class="evx-mini__body"><span class="evx-mini__date">4–17 Mag 2026</span><h3>1st World Space Med Hackathon</h3><p>Online · São Luís, Brasile</p><div class="evx-mini__links"><a href="assets/corsi/WSMH_2026_sintesi_IT.pdf" target="_blank" rel="noopener" data-i18n="evx_summary">Sintesi</a></div></div>
+          </article>
+          <article class="evx-mini" data-date="2026-04-11">
+            <button class="evx-mini__media" type="button" onclick="openLightbox('assets/eventi/archivio/simsi-2026.jpg','Convegno SIMSI 2026')" aria-label="Ingrandisci la locandina"><img src="assets/eventi/archivio/simsi-2026.jpg" alt="Locandina Convegno SIMSI 2026" loading="lazy" decoding="async" /></button>
+            <div class="evx-mini__body"><span class="evx-mini__date">10–11 Apr 2026</span><h3>Convegno SIMSI 2026</h3><p>Cattolica (RN) · Waldorf Palace Hotel</p><div class="evx-mini__links"><a href="assets/corsi/programma_simsi_cattolica.pdf" target="_blank" rel="noopener" data-i18n="evx_program">Programma</a></div></div>
+          </article>
+        </div>
+      </section>
+
 
       <!-- ── SEZIONE PROPONI ── -->
       <section class="ev-propose" id="proponi" aria-label="Proponi un evento">
@@ -1036,7 +692,26 @@
         'ev_ty_sub':'If you need to add materials or forgot something, write to us at <a href="mailto:eventi@amicidiboyle.it">eventi@amicidiboyle.it</a>.',
         'ev_ty_close':'Close',
         'ev_footer':'\u00a9 Gli Amici di Boyle \u00b7 Underwater, hyperbaric and extreme environment medicine.',
-        'ev_footer_privacy':'Privacy','ev_footer_cookie':'Cookie'
+        'ev_footer_privacy':'Privacy','ev_footer_cookie':'Cookie',
+        'evx_cnt_up':'upcoming','evx_cnt_cities':'cities',
+        'evx_kicker':'Coming up','evx_title':'Upcoming events',
+        'evx_m_nov':'Nov','evx_m_gen':'Jan',
+        'evx_free':'Free','evx_patron':'Endorsed by Amici di Boyle','evx_ecm':'4 CME credits','evx_save':'Save the date','evx_partner':'ITECC partner',
+        'evx_register':'Register','evx_program':'Programme','evx_cal':'+ Calendar','evx_site':'Website','evx_summary':'Summary',
+        'evx1_sub':'Decompression, prevention and rescue in diving',
+        'evx1_when':'Saturday 7 November 2026 · from 3:00 pm',
+        'evx1_who':'<strong>Silvio Zerbi</strong>, «The body under pressure» · with Andrea Murdock Alpini, Marco Mori, Giovanni Cappa',
+        'evx1_note':'Registration required by Monday 2 November.',
+        'evx2_sub':'From physiology to clinical practice',
+        'evx2_when':'Friday 27 November 2026 · 1:45–6:30 pm',
+        'evx2_who':'Chairs <strong>Silvio Zerbi</strong> and <strong>Paolo Severgnini</strong> · speakers include <strong>Vincenzo Benenati</strong>, Claudio Camponovo (DAN Europe), Carmela Graci, Andrea Moriondo',
+        'evx2_note':'Registration on the training portal, CME event ID 223241.1 · up to 90 participants · ID document required.',
+        'evx3_sub':'Emergency Medicine Course · burns, hypothermia and avalanches, decompression illness',
+        'evx3_when':'21 January: lectures · 22 January: hands-on and simulation',
+        'evx3_topics':'Mountain medicine, hyperbaric and diving medicine, burns · seven hands-on stations, two on hyperbaric medicine',
+        'evx3_note':'Save the date: registration details will be published here as soon as they are available.',
+        'evx_empty':'No events scheduled right now: check back soon, or propose one yourself.',
+        'evx_arch_kicker':'Archive','evx_arch_title':'Past events'
       }
     };
 
@@ -1050,12 +725,17 @@
       var d = T[l] || T['it'];
       document.querySelectorAll('[data-i18n]').forEach(function(el) {
         var k = el.getAttribute('data-i18n');
-        if (d[k] !== undefined) el.textContent = d[k];
+        if (el.__boyleIt === undefined) el.__boyleIt = el.textContent;
+        if (l === 'it') el.textContent = el.__boyleIt;
+        else if (d[k] !== undefined) el.textContent = d[k];
       });
       document.querySelectorAll('[data-i18n-html]').forEach(function(el) {
         var k = el.getAttribute('data-i18n-html');
-        if (d[k] !== undefined) el.innerHTML = d[k];
+        if (el.__boyleItHtml === undefined) el.__boyleItHtml = el.innerHTML;
+        if (l === 'it') el.innerHTML = el.__boyleItHtml;
+        else if (d[k] !== undefined) el.innerHTML = d[k];
       });
+      if (window.boyleEventsLang) window.boyleEventsLang(l);
       document.querySelectorAll('[data-i18n-placeholder]').forEach(function(el) {
         var k = el.getAttribute('data-i18n-placeholder');
         if (d[k] !== undefined) el.placeholder = d[k];
@@ -1574,6 +1254,7 @@
     window.openLightbox  = openLightbox;
     window.closeLightbox = closeLightbox;
 
+    var cb = document.getElementById('cookie-banner');
     if (!localStorage.getItem('boyle_cookie_ok')) {
       if (cb) setTimeout(function() { cb.classList.add('visible'); }, 600);
     }
@@ -1606,5 +1287,6 @@
   })();
   </script>
 
+  <script src="eventi-extra.js" defer></script>
 </body>
 </html>
