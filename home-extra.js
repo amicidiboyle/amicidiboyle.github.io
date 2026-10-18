@@ -120,3 +120,35 @@
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
   else init();
 })();
+
+/* Video di sfondo della hero: caricato solo se ha senso farlo */
+(function () {
+  'use strict';
+  function start() {
+    var v = document.getElementById('heroVideo');
+    if (!v) return;
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var conn = navigator.connection || {};
+    if (reduce || conn.saveData || /(^|-)2g$/.test(conn.effectiveType || '')) return; /* resta l'immagine fissa */
+    var mobile = window.matchMedia('(max-width: 768px)').matches;
+    var webm = !!v.canPlayType('video/webm; codecs="vp9"');
+    var src = mobile ? v.getAttribute(webm ? 'data-mobile-webm' : 'data-mobile')
+                     : v.getAttribute(webm ? 'data-webm' : 'data-mp4');
+    v.src = src;
+    v.muted = true;
+    v.addEventListener('playing', function () {
+      v.classList.add('is-on');
+      var hero = v.closest('.hero'); if (hero) hero.classList.add('has-video');
+    }, { once: true });
+    var p = v.play();
+    if (p && p.catch) p.catch(function () { /* autoplay bloccato: resta il poster */ });
+    /* fuori schermo il video si ferma, per non consumare batteria */
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (es) {
+        es.forEach(function (e) { if (e.isIntersecting) { v.play().catch(function () {}); } else { v.pause(); } });
+      }, { threshold: 0.05 }).observe(v);
+    }
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start);
+  else start();
+})();

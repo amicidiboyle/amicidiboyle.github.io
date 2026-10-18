@@ -313,3 +313,35 @@
 @media (min-width: 1000px) {
   #dicono-di-noi .articoli-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
+
+/* ── 7. VIDEO DI SFONDO NELLA HERO ────────────────────────────────── */
+.hero-video {
+  position: absolute; inset: 0; z-index: -1; overflow: hidden; pointer-events: none;
+  background: #031024 url("assets/video/hero-poster.jpg") 50% 45% / cover no-repeat;
+  /* sfuma in basso e ai lati per fondersi con lo sfondo del sito */
+  -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 72%, transparent 100%);
+          mask-image: linear-gradient(180deg, #000 0%, #000 72%, transparent 100%);
+}
+.hero-video video {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; object-position: 50% 45%;
+  opacity: 0; transition: opacity 1.6s ease;
+  filter: saturate(1.15) brightness(1.35) contrast(1.08);
+}
+.hero-video video.is-on { opacity: 1; }
+/* velo per la leggibilita' del testo */
+.hero-video::after {
+  content: ""; position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 60% 45% at 50% 48%, rgba(2,10,24,.32), transparent 100%),
+    linear-gradient(180deg, rgba(2,10,24,.25) 0%, transparent 30%, transparent 70%, rgba(2,10,24,.4) 100%);
+}
+/* con il video attivo il pulviscolo statico della hero si attenua */
+.hero.has-video .particles { opacity: .12; }
+.hero.has-video .hero-bg { background: none; }
+@media (max-width: 768px) {
+  .hero-video video { object-position: 38% 50%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-video video { transition: none; }
+}
