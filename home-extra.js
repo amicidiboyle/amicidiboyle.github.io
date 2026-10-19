@@ -356,3 +356,18 @@
   /* al cambio lingua aggiorna subito il quadrante */
   document.addEventListener('click', function (e) { if (e.target.closest && e.target.closest('#langToggle')) setTimeout(readout, 50); });
 })();
+
+/* Card con entrata a rimbalzo: il ritardo a cascata gia' calcolato per le transizioni
+   viene riusato per l'animazione */
+(function () {
+  var sel = '.founders-grid > .founder-card, #evidenza .gx.reveal, .appt-grid > .appt-card.reveal, .course-poster-grid > .course-poster-card.reveal, #contatti .contact-grid-visible > *';
+  function apply() {
+    var groups = {};
+    document.querySelectorAll(sel).forEach(function (el) {
+      var key = el.parentNode && (el.parentNode.className || 'x');
+      var i = (groups[key] = (groups[key] || 0) + 1) - 1;
+      el.style.setProperty('--card-d', (Math.min(i, 6) * 0.09).toFixed(2) + 's');
+    });
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', apply); else apply();
+})();

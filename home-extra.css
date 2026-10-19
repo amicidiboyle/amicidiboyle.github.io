@@ -818,3 +818,44 @@ html.hero-video-on .site-header { -webkit-backdrop-filter: none; backdrop-filter
 @keyframes partnerSweepT { 0% { transform: translateX(0) skewX(-22deg); } 100% { transform: translateX(570%) skewX(-22deg); } }
 .energy-icon::after { box-shadow: 0 0 16px rgba(123,228,255,.18), inset 0 0 12px rgba(123,228,255,.06); animation: iconGlowO 3.4s ease-in-out infinite; }
 @keyframes iconGlowO { 0%, 100% { opacity: .25; } 50% { opacity: 1; } }
+
+/* ── 16. ENTRATE DELLE CARD: DA SINISTRA, CON RIMBALZO ─────────────────
+   Fondatori, porte sotto la hero, appuntamenti, corsi e contatti.
+   Le vecchie regole muovono "transform" (in parte con !important): qui si usano
+   le proprieta' separate translate/rotate, che non entrano in conflitto. */
+.founders-grid > .founder-card,
+#evidenza .gx.reveal,
+.appt-grid > .appt-card.reveal,
+.course-poster-grid > .course-poster-card.reveal,
+#contatti .contact-grid-visible > * {
+  translate: -80px 0;
+}
+.founders-grid > .founder-card:not(:hover),
+#evidenza .gx.reveal:not(:hover):not(.is-tilting),
+.appt-grid > .appt-card.reveal:not(:hover),
+.course-poster-grid > .course-poster-card.reveal:not(:hover) {
+  transform: none;
+}
+.founders-grid > .founder-card.is-visible,
+#evidenza .gx.reveal.is-visible,
+.appt-grid > .appt-card.reveal.is-visible,
+.course-poster-grid > .course-poster-card.reveal.is-visible,
+#contatti .contact-grid-visible > *.is-visible {
+  animation: cardIn .8s cubic-bezier(.2, .9, .3, 1) both;
+  animation-delay: var(--card-d, 0s);
+}
+/* fondatori: in piu' una leggera rotazione 3D, come carte che si girano verso chi guarda */
+.founders-grid > .founder-card.is-visible { animation-name: founderIn; animation-duration: .9s; }
+@keyframes founderIn {
+  0%   { translate: -90px 0; rotate: y 28deg; }
+  55%  { translate: 12px 0;  rotate: y -6deg; }
+  78%  { translate: -5px 0;  rotate: y 2deg; }
+  92%  { translate: 1.5px 0; rotate: y 0deg; }
+  100% { translate: 0 0;     rotate: y 0deg; }
+}
+.founders-grid > .founder-card > img { transition: transform .5s cubic-bezier(.2, .9, .3, 1), filter .3s; }
+.founders-grid > .founder-card:not(.is-visible) > img { transform: scale(.6); }
+@media (prefers-reduced-motion: reduce) {
+  .founders-grid > .founder-card, #evidenza .gx.reveal, .appt-grid > .appt-card.reveal,
+  .course-poster-grid > .course-poster-card.reveal, #contatti .contact-grid-visible > * { translate: none !important; animation: none !important; }
+}
