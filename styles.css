@@ -2923,6 +2923,17 @@ html, body { overflow-x: hidden; }
   }
 }
 
+/* ── Menu hamburger e menu flottante (mobile): voci allineate a destra ── */
+@media (max-width: 768px) {
+  .site-nav > a,
+  #mobile-quicknav-panel a { text-align: right !important; }
+  .site-nav .nav-dropdown-btn { justify-content: flex-end !important; gap: 8px; text-align: right !important; }
+  .site-nav .nav-dropdown-panel a { justify-content: flex-end; text-align: right; white-space: nowrap; }
+  .site-nav .nav-dropdown-panel a::before { order: 2; }
+  .site-nav .nav-dropdown-panel .nav-badge-new { flex-shrink: 0; overflow: visible; }
+  .site-nav .lang-toggle--mobile { justify-content: flex-end !important; }
+}
+
 /* ── Cookie banner ── */
 #cookie-banner {
   position: fixed; bottom: 0; left: 0; right: 0; z-index: 9999;
