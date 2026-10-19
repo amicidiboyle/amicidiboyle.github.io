@@ -1,44 +1,116 @@
-/* Gli Amici di Boyle · title-fx.css
-   Titoli di sezione: entrata rapida da sinistra con rivelazione progressiva.
-   Blocchi di contenuto ancora statici: comparsa breve e scalata. */
-.tfx-pre { opacity: 0; }
-.tfx-play {
-  /* entrata rapida da sinistra, con un piccolo rimbalzo all'arrivo */
-  animation: tfxLeft .62s cubic-bezier(.2, .9, .3, 1) both;
-}
-@keyframes tfxLeft {
-  0%   { opacity: 0; transform: translateX(-90px); clip-path: inset(-.3em 100% -.3em -.2em); }
-  55%  { opacity: 1; transform: translateX(10px); clip-path: inset(-.3em -12% -.3em -.2em); }
-  75%  { transform: translateX(-4px); }
-  90%  { transform: translateX(1.5px); }
-  100% { opacity: 1; transform: none; clip-path: inset(-.3em -12% -.3em -.2em); }
-}
-/* il sopratitolo arriva un attimo prima */
-.tfx-kick { opacity: 0; transform: translateX(-28px); transition: opacity .45s ease, transform .5s cubic-bezier(.16, .84, .3, 1); }
-.tfx-kick.tfx-kick-on { opacity: 1; transform: none; }
+/* Gli Amici di Boyle · sistema di movimento (title-fx.css)
+   Principio: poche cose si muovono, e si muovono bene.
+   - Titoli: le parole salgono da dietro una maschera (stile editoriale).
+   - Occhiello, barretta e sottotitolo: arrivano in sequenza, senza spostamenti vistosi.
+   - Card: dissolvenza con lieve salita, a cascata nella stessa riga.
+   - Immagini nelle card: si svelano dal basso con un leggero zoom che si assesta.
+   - Testi lunghi, moduli, menu, footer: fermi. Si legge meglio.
+   Curva unica per tutto il sito: expo-out. Nessun rimbalzo. */
 
-/* blocchi: card, paragrafi e pulsanti che prima comparivano di colpo */
-.efx { opacity: 0; translate: -70px 0; }
-.efx.efx-in {
-  opacity: 1;
-  animation: cardIn .75s cubic-bezier(.2, .9, .3, 1) both;
-  animation-delay: calc(var(--efx-i, 0) * 80ms);
-  transition: opacity .35s ease calc(var(--efx-i, 0) * 80ms);
-}
-/* card che arrivano da sinistra e si assestano con un rimbalzo */
-@keyframes cardIn {
-  0%   { translate: -70px 0; rotate: -1.5deg; }
-  58%  { translate: 12px 0; rotate: .5deg; }
-  78%  { translate: -5px 0; rotate: -.15deg; }
-  92%  { translate: 1.5px 0; rotate: 0deg; }
-  100% { translate: 0 0; rotate: 0deg; }
+:root {
+  --ms-ease: cubic-bezier(.16, 1, .3, 1);
+  --ms-soft: cubic-bezier(.33, 1, .68, 1);
 }
 
+/* ── 1. Le vecchie entrate (da sinistra, a mazzo di carte, a scatto) sono spente ───────
+   Il prefisso :root:not(#a#b) da' a queste regole la precedenza sulle regole storiche,
+   anche su quelle con !important e id. */
+:root:not(#ms_a#ms_b) :is(.reveal, .reveal-left, .reveal-right, .reveal-scale, .info-card, .activity-card,
+  .founder-card, .glass-card, .section-heading, .member-card, .content-card,
+  .research-showcase-grid > *, .contact-grid-visible > *):not(.is-visible) {
+  opacity: 1 !important;
+  transform: none !important;
+}
+:root:not(#ms_a#ms_b) :is(.founder-card, .member-card, .section-heading) {
+  animation: none !important;
+}
+
+/* ── 2. Titoli: parole che salgono da dietro una maschera ───────────────────────────── */
+.msw {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  /* margine per discendenti e accenti, compensato per non spostare l'impaginazione */
+  padding: .08em .05em .16em;
+  margin: -.08em -.05em -.16em;
+}
+.msi { display: inline-block; will-change: transform; }
+.ms-t-pre .msi { transform: translate3d(0, 112%, 0) rotate(2.5deg); transform-origin: 0 100%; }
+.ms-t-on .msi {
+  transform: none;
+  transition: transform 1s var(--ms-ease);
+  transition-delay: calc(var(--i, 0) * 45ms);
+}
+.ms-t-done .msw { overflow: visible; }
+.ms-t-done .msi { will-change: auto; }
+
+/* titolo intero (quando non si puo' dividere in parole) */
+.ms-whole-pre { clip-path: inset(0 0 100% 0); translate: 0 .35em; }
+.ms-whole-on { clip-path: inset(-.2em -.2em -.3em -.2em); translate: 0 0;
+  transition: clip-path 1s var(--ms-ease), translate 1s var(--ms-ease); }
+
+/* barretta sopra l'occhiello: si disegna da sinistra */
+.ms-bar-pre::before { transform: scaleX(0); transform-origin: 0 50%; }
+.ms-bar-on::before { transform: none; transition: transform .9s var(--ms-ease); }
+
+/* occhiello, sottotitolo e testi d'accompagnamento */
+:root:not(#ms_a#ms_b) .ms-f-pre { opacity: 0 !important; translate: 0 14px; }
+:root:not(#ms_a#ms_b) .ms-f-on {
+  opacity: 1 !important; translate: 0 0;
+  transition: opacity .8s var(--ms-soft), translate 1s var(--ms-ease) !important;
+  transition-delay: var(--ms-d, 0s) !important;
+}
+
+/* ── 3. Card ──────────────────────────────────────────────────────────────────────── */
+:root:not(#ms_a#ms_b) .ms-c-pre { opacity: 0 !important; translate: 0 34px; scale: .965; }
+:root:not(#ms_a#ms_b) .ms-c-on {
+  opacity: 1 !important; translate: 0 0; scale: 1;
+  transition: opacity .7s var(--ms-soft), translate 1.05s var(--ms-ease), scale 1.05s var(--ms-ease),
+              transform .35s ease, box-shadow .35s ease, border-color .35s ease !important;
+  transition-delay: var(--ms-d, 0s), var(--ms-d, 0s), var(--ms-d, 0s), 0s, 0s, 0s !important;
+}
+
+/* ── 4. Immagini nelle card: svelate dal basso, zoom che si assesta ─────────────────── */
+.ms-i-pre { clip-path: inset(100% 0 0 0); scale: 1.14; }
+.ms-i-on { clip-path: inset(0 0 0 0); scale: 1;
+  transition: clip-path 1.15s var(--ms-ease), scale 1.6s var(--ms-ease);
+  transition-delay: var(--ms-d, 0s); }
+/* ritratti tondi: si aprono dal centro */
+.ms-i-round.ms-i-pre { clip-path: circle(0% at 50% 50%); scale: 1.06; }
+.ms-i-round.ms-i-on { clip-path: circle(71% at 50% 50%); }
+
+/* ── 5. Numeri che contano ───────────────────────────────────────────────────────── */
+.ms-count { font-variant-numeric: tabular-nums; }
+
+/* ── 6. Avanzamento della pagina: una linea sottile in cima ─────────────────────────── */
+.ms-progress { display: none; }
+@supports (animation-timeline: scroll()) {
+  .ms-progress {
+    display: block; position: fixed; left: 0; top: 0; width: 100%; height: 2px; z-index: 10050;
+    pointer-events: none; transform-origin: 0 50%; transform: scaleX(0);
+    background: linear-gradient(90deg, #39e6c3, #7be4ff 45%, #4d8dff);
+    box-shadow: 0 0 10px rgba(123, 228, 255, .55);
+    animation: msProgress linear both; animation-timeline: scroll(root block);
+  }
+  @keyframes msProgress { to { transform: scaleX(1); } }
+}
+
+/* ── 7. Passaggio tra le pagine: dissolvenza morbida, il menu resta fermo ──────────── */
+@view-transition { navigation: auto; }
+header.site-header, header.header { view-transition-name: ms-nav; }
+::view-transition-old(root) { animation: msPageOut .22s cubic-bezier(.4, 0, 1, 1) both; }
+::view-transition-new(root) { animation: msPageIn .55s var(--ms-ease) both; }
+@keyframes msPageOut { to { opacity: 0; } }
+@keyframes msPageIn { from { opacity: 0; transform: translateY(14px); } }
+
+/* ── Chi preferisce meno movimento: tutto subito visibile ──────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
-  .tfx-pre, .tfx-kick, .efx { opacity: 1 !important; transform: none !important; translate: none !important; rotate: none !important; }
-  .efx-in { animation: none !important; }
-  .tfx-play { animation: none !important; }
+  @view-transition { navigation: none; }
+  .ms-t-pre .msi, .ms-whole-pre, .ms-i-pre { transform: none !important; clip-path: none !important; translate: none !important; scale: none !important; }
+  :root:not(#ms_a#ms_b) :is(.ms-f-pre, .ms-c-pre) { opacity: 1 !important; translate: none !important; scale: none !important; }
+  .ms-bar-pre::before { transform: none !important; }
+  .ms-progress { display: none !important; }
 }
 
-/* sezioni fuori dallo schermo: animazioni ferme (vedi motion.js) */
+/* le animazioni di sezioni fuori schermo restano in pausa (motion.js) */
 .is-offscreen, .is-offscreen *, .is-offscreen *::before, .is-offscreen *::after { animation-play-state: paused !important; }
