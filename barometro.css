@@ -1,0 +1,50 @@
+/* Gli Amici di Boyle · riquadro di iscrizione al Barometro di Boyle (barometro.css) */
+.bmx { padding: 72px 20px; position: relative; z-index: 1; }
+.bmx__panel {
+  max-width: 1120px; margin: 0 auto; box-sizing: border-box;
+  display: grid; grid-template-columns: 260px minmax(0, 1fr); gap: 48px; align-items: center;
+  padding: 44px 52px; border-radius: 28px;
+  background:
+    radial-gradient(120% 140% at 0% 0%, rgba(123, 228, 255, .14), transparent 55%),
+    linear-gradient(160deg, rgba(14, 32, 58, .92), rgba(6, 14, 28, .94));
+  border: 1px solid rgba(123, 228, 255, .22);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, .45), inset 0 1px 0 rgba(255, 255, 255, .06);
+  color: #E8EEF5;
+}
+.bmx__dial { width: 100%; max-width: 240px; justify-self: center; display: block; }
+.bmx__needle { transform-origin: 120px 120px; transform: rotate(-118deg); transition: transform 2.2s cubic-bezier(.16, 1, .3, 1) .2s; }
+.bmx.is-on .bmx__needle { transform: rotate(94deg); }
+.bmx__kicker { margin: 0 0 10px; font: 600 12px/1.2 ui-monospace, 'SFMono-Regular', Menlo, monospace; letter-spacing: .14em; text-transform: uppercase; color: #7BE4FF; }
+.bmx__title { margin: 0; font-size: clamp(30px, 4vw, 44px); line-height: 1.05; font-weight: 800; letter-spacing: -.02em; color: #fff; }
+.bmx__text { margin: 14px 0 0; max-width: 560px; font-size: 17px; line-height: 1.6; color: #B9C6D6; }
+.bmx__form { margin-top: 24px; display: flex; gap: 10px; flex-wrap: wrap; max-width: 560px; }
+.bmx__label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.bmx__input {
+  flex: 1 1 240px; min-width: 0; height: 54px; padding: 0 20px; box-sizing: border-box;
+  border-radius: 999px; border: 1px solid rgba(232, 238, 245, .28); background: rgba(3, 10, 20, .55);
+  color: #fff; font: inherit; font-size: 16px; outline: none; transition: border-color .2s, box-shadow .2s;
+}
+.bmx__input::placeholder { color: #8A9AAE; }
+.bmx__input:focus { border-color: #7BE4FF; box-shadow: 0 0 0 4px rgba(123, 228, 255, .18); }
+.bmx__btn {
+  height: 54px; padding: 0 28px; border: 0; border-radius: 999px; cursor: pointer;
+  background: linear-gradient(135deg, #7BE4FF, #4DA3FF); color: #04121F; font: inherit; font-size: 16px; font-weight: 700;
+  box-shadow: 0 10px 30px rgba(77, 163, 255, .35); transition: transform .2s, box-shadow .2s, opacity .2s;
+}
+.bmx__btn:hover { transform: translateY(-2px); box-shadow: 0 14px 34px rgba(77, 163, 255, .45); }
+.bmx__btn[disabled] { opacity: .6; cursor: default; transform: none; }
+.bmx__hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+.bmx__note { margin: 12px 0 0; font-size: 13px; line-height: 1.5; color: #8A9AAE; }
+.bmx__note a, .bmx__read { color: #7BE4FF; text-decoration: none; }
+.bmx__note a:hover, .bmx__read:hover { text-decoration: underline; }
+.bmx__read { display: inline-block; margin-top: 14px; font-size: 15px; font-weight: 600; }
+.bmx__msg { margin: 12px 0 0; font-size: 15px; font-weight: 600; min-height: 1px; }
+.bmx__msg.is-ok { color: #4DFFD6; }
+.bmx__msg.is-err { color: #FFB48A; }
+@media (max-width: 760px) {
+  .bmx { padding: 48px 16px; }
+  .bmx__panel { grid-template-columns: 1fr; gap: 24px; padding: 32px 22px; text-align: left; }
+  .bmx__dial { max-width: 170px; }
+  .bmx__btn { width: 100%; }
+}
+@media (prefers-reduced-motion: reduce) { .bmx__needle { transition: none; } }
