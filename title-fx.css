@@ -5,17 +5,17 @@
 .tfx-ch { display: inline-block; }
 .tfx-pre { visibility: hidden; }
 .tfx-play .tfx-ch {
-  opacity: 0; transform: translateY(.5em) scale(.94); filter: blur(10px);
+  opacity: 0; transform: translateY(.55em);
   animation: tfxRise .95s cubic-bezier(.2,.75,.25,1) forwards;
   animation-delay: calc(var(--i) * var(--tfx-step, 26ms) + 80ms);
 }
 .tfx-play .tfx-atom {
-  clip-path: inset(-.25em 100% -.25em 0); filter: blur(8px);
+  clip-path: inset(-.25em 100% -.25em 0);
   animation: tfxReveal 1.1s cubic-bezier(.65,0,.25,1) forwards;
   animation-delay: var(--tfx-atom-delay, .3s);
 }
-@keyframes tfxRise { 55% { opacity: 1; filter: blur(1.5px); } 100% { opacity: 1; transform: none; filter: none; } }
-@keyframes tfxReveal { to { clip-path: inset(-.25em -2% -.25em 0); filter: none; } }
+@keyframes tfxRise { 60% { opacity: 1; } 100% { opacity: 1; transform: none; } }
+@keyframes tfxReveal { to { clip-path: inset(-.25em -2% -.25em 0); } }
 /* il sopratitolo scivola dentro poco prima del titolo */
 .tfx-kick { opacity: 0; transform: translateX(-18px); transition: opacity .7s, transform .8s cubic-bezier(.2,.7,.2,1); }
 .tfx-kick.tfx-kick-on { opacity: 1; transform: none; }
@@ -24,3 +24,6 @@
   .tfx-kick { opacity: 1 !important; transform: none !important; }
   .tfx-play .tfx-ch, .tfx-play .tfx-atom { animation: none !important; opacity: 1; transform: none; filter: none; clip-path: none; }
 }
+
+/* sezioni fuori dallo schermo: animazioni ferme (vedi motion.js) */
+.is-offscreen, .is-offscreen *, .is-offscreen *::before, .is-offscreen *::after { animation-play-state: paused !important; }

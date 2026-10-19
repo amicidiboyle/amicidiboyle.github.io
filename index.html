@@ -1397,51 +1397,62 @@
       };
     }
 
-    /* Profondità maggiore → più motes */
-    for (var i = 0; i < 140; i++) motes.push(mkMote(false));
+    /* Profondità maggiore → più motes (meno sui telefoni) */
+    var small = window.innerWidth < 768;
+    var N = small ? 70 : 120;
+    for (var i = 0; i < N; i++) motes.push(mkMote(false));
 
-    function draw(){
+    /* Ogni puntino viene disegnato una sola volta in un piccolo "timbro" riutilizzato
+       a ogni fotogramma: prima il gradiente veniva ricreato per ogni particella, 60 volte al secondo. */
+    var sprites = {};
+    function sprite(m){
+      var R = m.isBubble ? m.r : m.r * (m.isFine ? 2 : 2.8);
+      var key = (m.isBubble ? 'b' : 'd') + (Math.round(R * 4) / 4);
+      if (sprites[key]) return sprites[key];
+      var S = Math.ceil(R * 2 + 4), c = document.createElement('canvas');
+      c.width = c.height = S;
+      var x = c.getContext('2d'), o = S / 2;
+      if (m.isBubble){
+        x.beginPath(); x.arc(o, o, R, 0, Math.PI*2);
+        x.strokeStyle = 'rgba(160,230,255,0.8)'; x.lineWidth = 0.55; x.stroke();
+        x.beginPath(); x.arc(o - R*0.28, o - R*0.3, R*0.22, 0, Math.PI*2);
+        x.fillStyle = 'rgba(255,255,255,0.6)'; x.fill();
+      } else {
+        var g = x.createRadialGradient(o, o, 0, o, o, R);
+        g.addColorStop(0,   'rgba(210,242,255,0.95)');
+        g.addColorStop(0.35,'rgba(170,225,255,0.45)');
+        g.addColorStop(1,   'rgba(130,200,255,0)');
+        x.fillStyle = g; x.beginPath(); x.arc(o, o, R, 0, Math.PI*2); x.fill();
+      }
+      return (sprites[key] = c);
+    }
+
+    var last = 0, STEP = 1000 / 30; /* 30 fotogrammi al secondo bastano per un pulviscolo lento */
+    function draw(t){
+      raf = requestAnimationFrame(draw);
+      t = t || performance.now();
+      if (last && t - last < STEP) return;
+      var k = last ? Math.min(3, (t - last) / 16.7) : 1; /* stessa velocita' di prima */
+      last = t;
       ctx.clearRect(0,0,W,H);
       for (var i = 0; i < motes.length; i++){
         var m = motes[i];
-        m.y -= m.spd;
-        m.wb += m.wbS;
-        m.x += m.drift + Math.sin(m.wb)*m.wbA;
-        if (m.y < -m.r*3) Object.assign(m, mkMote(true));
-
-        ctx.save();
+        m.y -= m.spd * k;
+        m.wb += m.wbS * k;
+        m.x += (m.drift + Math.sin(m.wb)*m.wbA) * k;
+        if (m.y < -m.r*3) { Object.assign(m, mkMote(true)); m.sp = null; }
+        var sp = m.sp || (m.sp = sprite(m));
         ctx.globalAlpha = m.op;
-        if (m.isBubble){
-          /* Bolla: cerchio vuoto con highlight */
-          ctx.beginPath();
-          ctx.arc(m.x, m.y, m.r, 0, Math.PI*2);
-          ctx.strokeStyle = 'rgba(160,230,255,0.8)';
-          ctx.lineWidth = 0.55;
-          ctx.stroke();
-          ctx.beginPath();
-          ctx.arc(m.x - m.r*0.28, m.y - m.r*0.3, m.r*0.22, 0, Math.PI*2);
-          ctx.fillStyle = 'rgba(255,255,255,0.6)';
-          ctx.fill();
-        } else {
-          /* Pulviscolo fine / medio: punto radiale sfumato */
-          var g = ctx.createRadialGradient(m.x, m.y, 0, m.x, m.y, m.r*(m.isFine?2:2.8));
-          g.addColorStop(0,   'rgba(210,242,255,0.95)');
-          g.addColorStop(0.35,'rgba(170,225,255,0.45)');
-          g.addColorStop(1,   'rgba(130,200,255,0)');
-          ctx.beginPath();
-          ctx.arc(m.x, m.y, m.r*(m.isFine?2:2.8), 0, Math.PI*2);
-          ctx.fillStyle = g;
-          ctx.fill();
-        }
-        ctx.restore();
+        ctx.drawImage(sp, m.x - sp.width/2, m.y - sp.height/2);
       }
-      raf = requestAnimationFrame(draw);
+      ctx.globalAlpha = 1;
     }
+    if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) { draw(); cancelAnimationFrame(raf); return; }
 
     draw();
     document.addEventListener('visibilitychange', function(){
       if (document.hidden){ cancelAnimationFrame(raf); paused = true; }
-      else if (paused){ paused = false; draw(); }
+      else if (paused){ paused = false; last = 0; draw(); }
     });
   })();
   </script>
@@ -1490,19 +1501,17 @@
     }, {passive:true});
     /* Segui il mouse con leggero lag */
     (function startLoop(){
-      var rafId;
+      /* il ciclo gira solo mentre la bolla insegue il mouse, poi si ferma */
+      var rafId = 0;
+      el.style.left = '0px'; el.style.top = '0px';
       function loop(){
         x += (tx - x) * 0.14;
         y += (ty - y) * 0.14;
-        el.style.left = x + 'px';
-        el.style.top  = y + 'px';
-        rafId = requestAnimationFrame(loop);
+        el.style.translate = x.toFixed(1) + 'px ' + y.toFixed(1) + 'px';
+        if (Math.abs(tx - x) + Math.abs(ty - y) > 0.3) rafId = requestAnimationFrame(loop);
+        else rafId = 0;
       }
-      rafId = requestAnimationFrame(loop);
-      document.addEventListener('visibilitychange', function(){
-        if (document.hidden) cancelAnimationFrame(rafId);
-        else rafId = requestAnimationFrame(loop);
-      });
+      document.addEventListener('mousemove', function(){ if (!rafId) rafId = requestAnimationFrame(loop); }, {passive:true});
     })();
     /* Ingrandisci su elementi interattivi */
     document.querySelectorAll('a,button,.btn,.glass-card,.activity-card,.founder-card').forEach(function(el2){
@@ -2228,5 +2237,6 @@
   })();
   </script>
   <script src="title-fx.js" defer></script>
+  <script src="motion.js" defer></script>
 </body>
 </html>
