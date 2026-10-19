@@ -11,9 +11,9 @@
 
   var T = {
     it: {
-      kicker: 'Newsletter mensile',
+      kicker: 'Newsletter bimestrale',
       title: 'Il Barometro di Boyle',
-      text: 'Eventi della Rete, nuove pubblicazioni, corsi e strumenti: una mail al mese, niente di più.',
+      text: 'Eventi della Rete, nuove pubblicazioni, corsi e strumenti: una mail ogni due mesi, niente di più.',
       ph: 'La tua email', label: 'Indirizzo email', btn: 'Iscriviti',
       note: 'Ti chiederemo di confermare l’iscrizione via email. Puoi cancellarti in ogni momento. <a href="privacy.html">Privacy</a>',
       read: 'Leggi il N. 1 · Ottobre 2026 →', readHref: 'newsletter/2026-10.html',
@@ -22,9 +22,9 @@
       dial: ['TEMPESTA', 'PIOGGIA', 'VARIABILE', 'BELLO']
     },
     en: {
-      kicker: 'Monthly newsletter',
+      kicker: 'Bimonthly newsletter',
       title: 'Boyle’s Barometer',
-      text: 'Network events, new publications, courses and tools: one email a month, nothing more.',
+      text: 'Network events, new publications, courses and tools: one email every two months, nothing more.',
       ph: 'Your email', label: 'Email address', btn: 'Subscribe',
       note: 'We will ask you to confirm by email. You can unsubscribe at any time. <a href="privacy.html">Privacy</a>',
       read: 'Read No. 1 · October 2026 →', readHref: 'newsletter/2026-10-en.html',

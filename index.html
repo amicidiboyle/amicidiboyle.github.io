@@ -93,7 +93,7 @@
   }
   </script>
   <link rel="stylesheet" href="title-fx.css?v=20261019g" />
-  <link rel="stylesheet" href="barometro.css?v=20261019g" />
+  <link rel="stylesheet" href="barometro.css?v=20261019h" />
 </head>
 <body>
   <canvas id="dust-canvas" aria-hidden="true" style="position:fixed;inset:0;z-index:-2;pointer-events:none;width:100%;height:100%;"></canvas>
@@ -380,13 +380,6 @@
           </div>
           <p class="section-lead" data-i18n="vis_p">Essere un riferimento internazionale per innovazione e ricerca in medicina iperbarica e subacquea, con un approccio multidisciplinare che integra competenze mediche, tecnologiche e scientifiche di alto livello.</p>
           <p data-i18n="vis_p2">Amici di Boyle vuol dire ambienti estremi e gestione dell'emergenza negli scenari più complessi. Ricerca verificabile, metodi chiari e formazione continua, pensata per chi lavora sul campo.</p>
-          <div class="bullet-cloud">
-            <span data-i18n="vis_bullet1">Professionisti di prima linea</span>
-            <span data-i18n="vis_bullet2">Competenze che nascono dal lavoro sul campo</span>
-            <span data-i18n="vis_bullet3">Clinica, ingegneria, fisiologia, safety</span>
-            <span data-i18n="vis_bullet4">Formazione continua</span>
-            <span data-i18n="vis_bullet5">Approccio multidisciplinare</span>
-          </div>
         </div>
         <div class="glass-card timeline-card reveal reveal-right">
           <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">
@@ -671,7 +664,7 @@
             <h2 data-i18n="db_h2">Dove si immerge l’Italia</h2>
             <p data-i18n="db_p">La mappa dei diving center italiani curata dagli Amici di Boyle: cerca per nome o città, esplora regione per regione e trova il centro giusto per la tua prossima immersione.</p>
             <div class="db-stats">
-              <span><b>700+</b> <em data-i18n="db_s1">diving mappati</em></span>
+              <span><b>740+</b> <em data-i18n="db_s1">centri, club e istruttori</em></span>
               <span><b>20</b> <em data-i18n="db_s2">regioni</em></span>
             </div>
             <span class="btn btn-primary db-btn"><span data-i18n="db_cta">Esplora la mappa</span> <span aria-hidden="true">→</span></span>
@@ -1536,15 +1529,15 @@
       <svg viewBox="0 0 22 22" fill="none" width="20" height="20"><path d="M4 6h14M4 11h14M4 16h14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
     </button>
     <div id="mobile-quicknav-panel" role="menu" aria-hidden="true">
-      <a href="#home">↑ Inizio</a>
+      <a href="#home">↑ Home</a>
       <a href="#eventi">Appuntamenti</a>
       <a href="#visione">Visione</a>
       <a href="#attivita">Aree</a>
       <a href="#fondatori">Fondatori</a>
       <a href="#rete-home">Rete</a>
-      <a href="#contenuti-articoli">Pubblicazioni</a>
       <a href="#ricerca">Ricerca</a>
       <a href="#formazione">Formazione</a>
+      <a href="#contenuti-articoli">Pubblicazioni</a>
       <a href="#partner">Partner</a>
       <a href="#contatti">Contatti</a>
     </div>
@@ -2074,7 +2067,7 @@
         'ax3_stat':'episodes of Sotto Pressione, over 500,000 views','ax3_l1s':'Latest episode · Season 3','ax3_l2':'In the press','ax3_l2s':'Articles and interviews about Gli Amici di Boyle','ax3_l3':'The invisible cost of breathing',
         'db_new':'New','db_h2':'Where Italy dives',
         'db_p':'The map of Italian dive centres curated by Gli Amici di Boyle: search by name or town, explore region by region and find the right centre for your next dive.',
-        'db_s1':'dive centres mapped','db_s2':'regions','db_cta':'Explore the map',
+        'db_s1':'centres, clubs and instructors','db_s2':'regions','db_cta':'Explore the map',
 }
     };
 
@@ -2119,6 +2112,30 @@
       document.querySelectorAll('.site-nav a, .nav-mobile-menu a, .footer-grid nav a').forEach(function(a) {
         var txt = a.textContent.trim();
         if (navMap[txt] && dict[navMap[txt]]) a.textContent = dict[navMap[txt]];
+      });
+
+      /* Menu flottanti (mobile e desktop): stesse voci, etichette per sezione */
+      var qnLabels = {
+        '#home':        ['Home', 'Home'],
+        '#eventi':      ['Appuntamenti', 'Upcoming'],
+        '#visione':     ['Visione', 'Vision'],
+        '#attivita':    ['Aree', 'Areas'],
+        '#fondatori':   ['Fondatori', 'Founders'],
+        '#rete-home':   ['Rete', 'Network'],
+        '#ricerca':     ['Ricerca', 'Research'],
+        '#formazione':  ['Formazione', 'Education'],
+        '#contenuti-articoli': ['Pubblicazioni', 'Publications'],
+        '#partner':     ['Partner', 'Partners'],
+        '#contatti':    ['Contatti', 'Contact']
+      };
+      var qi = lang === 'en' ? 1 : 0;
+      document.querySelectorAll('#mobile-quicknav-panel a').forEach(function(a) {
+        var l = qnLabels[a.getAttribute('href')];
+        if (l) a.textContent = (a.getAttribute('href') === '#home' ? '↑ ' : '') + l[qi];
+      });
+      document.querySelectorAll('#desktop-quicknav a').forEach(function(a) {
+        var l = qnLabels[a.getAttribute('href')];
+        if (l) { a.setAttribute('data-label', l[qi]); a.setAttribute('aria-label', (qi ? 'Go to ' : 'Vai a ') + l[qi]); }
       });
 
       /* Update toggle button */
@@ -2240,7 +2257,7 @@
     });
   })();
   </script>
-  <script src="barometro.js?v=20261019g" defer></script>
+  <script src="barometro.js?v=20261019h" defer></script>
   <script src="title-fx.js?v=20261019g" defer></script>
   <script src="motion.js?v=20261019g" defer></script>
 </body>
