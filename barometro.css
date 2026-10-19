@@ -12,8 +12,23 @@
   color: #E8EEF5;
 }
 .bmx__dial { width: 100%; max-width: 240px; justify-self: center; display: block; }
-.bmx__needle { transform-origin: 120px 120px; transform: rotate(-118deg); transition: transform 2.2s cubic-bezier(.16, 1, .3, 1) .2s; }
-.bmx.is-on .bmx__needle { transform: rotate(94deg); }
+/* lancetta: la posizione la decide il modulo, il tremolio la fa sembrare viva */
+.bmx__needle { transform-origin: 120px 120px; transform: rotate(var(--bmx-a, -118deg));
+  transition: transform 1.6s cubic-bezier(.34, 1.25, .5, 1); }
+.bmx:not(.is-on) .bmx__needle { transition: none; }
+.bmx[data-bmx-state="idle"] .bmx__needle { transition-duration: 2.4s; transition-timing-function: cubic-bezier(.16, 1, .3, 1); }
+.bmx__wob { transform-origin: 120px 120px; animation: bmxWob 5.5s ease-in-out infinite; }
+@keyframes bmxWob { 0%, 100% { transform: rotate(-1.6deg); } 35% { transform: rotate(2.2deg); } 60% { transform: rotate(.4deg); } 80% { transform: rotate(1.6deg); } }
+/* lancetta di riferimento dorata, ferma sul bello come nei barometri da parete */
+.bmx__set { transform-origin: 120px 120px; transform: rotate(84deg); }
+/* riflesso del vetro che passa lento */
+.bmx__sheen { transform-origin: 120px 120px; animation: bmxSheen 9s ease-in-out infinite; pointer-events: none; }
+@keyframes bmxSheen { 0%, 100% { transform: rotate(-35deg); opacity: .6; } 50% { transform: rotate(35deg); opacity: 1; } }
+/* esiti */
+.bmx__ring { transition: stroke .6s, filter .6s; }
+.bmx[data-bmx-state="done"] .bmx__ring { stroke: #4DFFD6; filter: drop-shadow(0 0 10px rgba(77, 255, 214, .6)); }
+.bmx[data-bmx-state="rain"] .bmx__ring { stroke: #FFB48A; }
+.bmx[data-bmx-state="fair"] .bmx__ring { stroke: rgba(77, 255, 214, .7); }
 .bmx__kicker { margin: 0 0 10px; font: 600 12px/1.2 ui-monospace, 'SFMono-Regular', Menlo, monospace; letter-spacing: .14em; text-transform: uppercase; color: #7BE4FF; }
 .bmx__title { margin: 0; font-size: clamp(30px, 4vw, 44px); line-height: 1.05; font-weight: 800; letter-spacing: -.02em; color: #fff; }
 .bmx__text { margin: 14px 0 0; max-width: 560px; font-size: 17px; line-height: 1.6; color: #B9C6D6; }
@@ -47,4 +62,4 @@
   .bmx__dial { max-width: 170px; }
   .bmx__btn { width: 100%; }
 }
-@media (prefers-reduced-motion: reduce) { .bmx__needle { transition: none; } }
+@media (prefers-reduced-motion: reduce) { .bmx__needle { transition: none; } .bmx__wob, .bmx__sheen { animation: none; } }
