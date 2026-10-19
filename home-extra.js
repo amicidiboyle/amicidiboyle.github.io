@@ -356,3 +356,35 @@
   /* al cambio lingua aggiorna subito il quadrante */
   document.addEventListener('click', function (e) { if (e.target.closest && e.target.closest('#langToggle')) setTimeout(readout, 50); });
 })();
+
+/* Console della hero: la prima cella mostra il prossimo appuntamento in calendario,
+   presi dalle schede "Dove ci trovate" (data, titolo, citta'), con il conto alla rovescia. */
+(function () {
+  var sub = document.getElementById('hxEventSub');
+  if (!sub) return;
+  function paint() {
+    var en = (document.documentElement.lang || 'it').indexOf('en') === 0;
+    var now = Date.now(), best = null;
+    document.querySelectorAll('.appt-card[data-start]').forEach(function (c) {
+      var end = Date.parse(c.getAttribute('data-end') || c.getAttribute('data-start'));
+      var start = Date.parse(c.getAttribute('data-start'));
+      if (isNaN(start) || end < now) return;
+      if (!best || start < best.start) best = { start: start, el: c };
+    });
+    if (!best) { sub.textContent = en ? 'Events calendar' : 'Calendario degli incontri'; return; }
+    var h = best.el.querySelector('h3'), meta = best.el.querySelector('.appt-meta span:last-child');
+    var place = meta ? meta.textContent.split('·')[0].trim() : '';
+    var days = Math.ceil((best.start - now) / 864e5);
+    var when = best.start <= now ? (en ? 'in progress' : 'in corso')
+      : days <= 1 ? (en ? 'tomorrow' : 'domani')
+      : (en ? 'in ' + days + ' days' : 'tra ' + days + ' giorni');
+    sub.innerHTML = '';
+    var b = document.createElement('b'); b.textContent = (place ? place + ' · ' : '') + when;
+    sub.appendChild(b);
+    sub.appendChild(document.createElement('br'));
+    sub.appendChild(document.createTextNode(h ? h.textContent.trim() : ''));
+    var a = sub.closest('a'); if (a && h) a.setAttribute('aria-label', (en ? 'Next event: ' : 'Prossimo evento: ') + h.textContent.trim() + ', ' + (place ? place + ', ' : '') + when);
+  }
+  paint();
+  new MutationObserver(paint).observe(document.documentElement, { attributes: true, attributeFilter: ['lang'] });
+})();
