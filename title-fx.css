@@ -129,3 +129,17 @@ html body .db-hero__intro h1 { font-size: clamp(2.4rem, 8vw, 7.4rem); line-heigh
   html body .bb-hero h1 { font-size: clamp(2.8rem, 14vw, 4.4rem); }
   html body .db-hero__intro h1 { font-size: clamp(2rem, 11vw, 3.6rem); }
 }
+html body .hero__title .hero__grad {
+  background: linear-gradient(135deg, #a8eeff 0%, #7be4ff 40%, #c4b0ff 100%);
+  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent;
+  display: inline-block; padding-bottom: .06em;
+}
+
+/* ── 9. Sfondo fisso che non "scatta" sul telefono ──────────────────────────────────
+   Gli strati di sfondo erano alti quanto lo schermo visibile: quando la barra del browser
+   si nasconde scorrendo, l'altezza cambia e l'immagine (in "cover") si ingrandiva di colpo.
+   Ora sono alti quanto lo schermo piu' grande possibile e non cambiano mai misura. */
+html::before, html::after, body::before, body::after {
+  bottom: auto; height: 100vh; height: 100lvh;
+  transform: translateZ(0);
+}
