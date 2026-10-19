@@ -8,6 +8,11 @@
    si rivela con un fascio di luce che lo attraversa e una linea di
    profondità che si accende. Al termine resta un riflesso lento. */
 .hero h1.hero-title { position: relative; }
+/* senza la pillola sopra, il titolo prende tutto lo spazio */
+.hero h1.hero-title { font-size: clamp(2.6rem, 11.2vw, 8.2rem); line-height: .92; letter-spacing: -.045em; margin-bottom: 26px; }
+@media (min-width: 901px) { .hero .hero-content { max-width: 1180px; } }
+/* sul telefono il titolo va su tre righe, piu' grande: "ambienti" ed "estremi" una per riga */
+@media (max-width: 600px) { .hero h1.hero-title { font-size: clamp(2.6rem, 13.4vw, 4.2rem); line-height: .95; } }
 .ht-word { display: inline-block; white-space: nowrap; }
 .ht-ch {
   display: inline-block;
