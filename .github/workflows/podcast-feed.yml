@@ -1,0 +1,35 @@
+name: Podcast · nuovi episodi dal feed RSS
+
+on:
+  schedule:
+    - cron: "17 5 * * *"   # ogni giorno verso le 7 ora italiana
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: podcast-feed
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Aggiorna feed.json
+        run: python scripts/podcast_feed.py
+      - name: Pubblica se ci sono novità
+        run: |
+          if git diff --quiet -- assets/podcast/feed.json && git ls-files --error-unmatch assets/podcast/feed.json >/dev/null 2>&1; then
+            echo "Nessun episodio nuovo."
+            exit 0
+          fi
+          git config user.name "Boyle bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/podcast/feed.json
+          git commit -m "Podcast: aggiornamento automatico dal feed RSS"
+          git push

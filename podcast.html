@@ -114,13 +114,13 @@
       <div class="container">
         <div class="podPlayer__inner reveal">
           <div class="podPlayer__copy">
-            <span class="podPlayer__badge" data-i18n="pod_latest_badge">🚀 Ultimo episodio · Stagione 3 · Ep. 13</span>
+            <span class="podPlayer__badge" data-i18n="pod_latest_badge">🚀 Ultimo episodio</span>
             <h2 class="podPlayer__title">Le Leggi dei Gas: Boyle, Charles e Gay-Lussac</h2>
             <p class="podPlayer__desc">Le tre leggi fondamentali dei gas e l'equazione dei gas ideali che le unisce: la fisica che governa ogni immersione.</p>
             <a class="podPlayer__link" href="https://open.spotify.com/episode/2WB7O2Bcgod7xQ7K5BrIl7" target="_blank" rel="noopener" data-i18n="pod_listen_spotify">Ascolta su Spotify →</a>
           </div>
           <div class="podEmbed">
-            <iframe src="https://open.spotify.com/embed/episode/2WB7O2Bcgod7xQ7K5BrIl7?utm_source=generator&theme=0" width="100%" height="152" frameborder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" title="HBOT e Medicina Spaziale"></iframe>
+            <iframe src="https://open.spotify.com/embed/show/2kiLEUpdpn6FIUzTDMx0V7?utm_source=generator&theme=0" width="100%" height="232" frameborder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" title="Sotto Pressione · ultimi episodi"></iframe>
           </div>
         </div>
       </div>
@@ -399,7 +399,7 @@
   const cards = Array.from(document.querySelectorAll('.epCard'));
   q?.addEventListener('input', () => {
     const term = q.value.trim().toLowerCase();
-    cards.forEach(c => {
+    document.querySelectorAll('.epCard').forEach(c => {
       c.style.display = (!term || c.dataset.title.includes(term) || c.innerText.toLowerCase().includes(term)) ? '' : 'none';
     });
   });
@@ -491,7 +491,7 @@
         'pod_stat_stagioni':'Stagioni',
         'pod_stat_episodi':'Episodi',
         'pod_stat_curiosita':'Curiosità',
-        'pod_latest_badge':'🚀 Ultimo episodio · Stagione 3 · Ep. 13',
+        'pod_latest_badge':'🚀 Ultimo episodio',
         'pod_listen_spotify':'Ascolta su Spotify →',
         'pod_s1_title':'Stagione 1',
         'pod_s1_desc':'Le basi del mondo subacqueo: leggi fisiche, idoneità, attrezzatura e barotraumi.',
@@ -534,7 +534,7 @@
         'pod_stat_stagioni':'Seasons',
         'pod_stat_episodi':'Episodes',
         'pod_stat_curiosita':'Curiosity',
-        'pod_latest_badge':'🚀 Latest episode · Season 3 · Ep. 13',
+        'pod_latest_badge':'🚀 Latest episode',
         'pod_listen_spotify':'Listen on Spotify →',
         'pod_s1_title':'Season 1',
         'pod_s1_desc':'The foundations of the underwater world: physical laws, fitness, equipment and barotrauma.',
@@ -850,6 +850,7 @@
     });
   })();
   </script>
+  <script src="podcast-feed.js?v=20261019a" defer></script>
   <script src="barometro.js?v=20261019g" defer></script>
   <script src="title-fx.js?v=20261019g" defer></script>
   <script src="motion.js?v=20261019g" defer></script>
