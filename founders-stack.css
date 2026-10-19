@@ -1,0 +1,55 @@
+/* Gli Amici di Boyle · fondatori in pila (founders-stack.css)
+   Attivo solo quando founders-stack.js aggiunge .is-stack alla griglia:
+   senza JavaScript resta la griglia normale. */
+
+#fondatori .founders-grid.is-stack,
+.founders-grid.is-stack {
+  display: block; position: relative;
+  height: var(--stack-h, 440px);
+  margin: 10px auto 0; max-width: 100%;
+  perspective: none;
+  touch-action: pan-y;
+  -webkit-user-select: none; user-select: none;
+}
+#fondatori .founders-grid.is-stack > .founder-card,
+.founders-grid.is-stack > .founder-card {
+  position: absolute; top: 28px; left: 0;
+  width: var(--card-w, 250px); height: var(--card-h, 380px);
+  transform: translateX(var(--x, 0px)) translateY(var(--y, 0px)) scale(var(--s, 1)) !important;
+  opacity: 1 !important;
+  transition: transform .42s cubic-bezier(.22,.8,.2,1), box-shadow .35s, filter .35s !important;
+  transition-delay: 0s !important;
+  z-index: var(--z, 1);
+  cursor: pointer;
+  filter: brightness(var(--b, .62)) saturate(.8);
+  box-shadow: -14px 0 30px rgba(0, 6, 20, .5), 0 0 0 1px rgba(123,228,255,.12);
+  display: flex; flex-direction: column;
+  outline: none;
+}
+#fondatori .founders-grid.is-stack > .founder-card.is-open,
+.founders-grid.is-stack > .founder-card.is-open {
+  filter: none; cursor: default;
+  box-shadow: 0 26px 60px rgba(0, 6, 20, .65), 0 0 0 1px rgba(123,228,255,.38), 0 0 36px rgba(80,200,255,.16);
+}
+.founders-grid.is-stack > .founder-card p {
+  display: -webkit-box; -webkit-line-clamp: 8; -webkit-box-orient: vertical; overflow: hidden;
+}
+.founders-grid.is-stack > .founder-card:focus-visible {
+  box-shadow: 0 26px 60px rgba(0, 6, 20, .65), 0 0 0 2px #7be4ff;
+}
+
+/* tacche sotto la pila: dicono quale carta e' aperta */
+.stack-dots { display: flex; justify-content: center; gap: 8px; margin-top: 6px; }
+.stack-dots span {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: rgba(123,228,255,.22); transition: background .3s, transform .3s;
+}
+.stack-dots span.on { background: #7be4ff; transform: scale(1.35); }
+.stack-hint {
+  text-align: center; margin: 10px 0 0; font-size: .74rem;
+  letter-spacing: .14em; text-transform: uppercase; color: rgba(190,230,255,.55);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #fondatori .founders-grid.is-stack > .founder-card { transition: none !important; }
+}
