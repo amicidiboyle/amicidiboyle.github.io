@@ -114,3 +114,18 @@ header.site-header, header.header { view-transition-name: ms-nav; }
 
 /* le animazioni di sezioni fuori schermo restano in pausa (motion.js) */
 .is-offscreen, .is-offscreen *, .is-offscreen *::before, .is-offscreen *::after { animation-play-state: paused !important; }
+
+/* ── 8. Titoli delle pagine: grandi e soli, come nella home ─────────────────────────── */
+html body .ev-hero__content h1 { font-size: clamp(3rem, 6vw, 5.6rem); line-height: .92; letter-spacing: -.045em; }
+html body .hero__content .hero__title { font-size: clamp(3.2rem, 9.6vw, 8.6rem); line-height: .9; letter-spacing: -.05em; }
+html body .podHero__copy .podTitle { font-size: clamp(3rem, 7.6vw, 7.2rem); line-height: .9; }
+html body .podHero__copy .podByline { font-size: clamp(1rem, 1.6vw, 1.3rem); letter-spacing: -.01em; }
+html body .bb-hero h1 { font-size: clamp(3.2rem, 8.6vw, 7.6rem); line-height: .92; letter-spacing: -.045em; }
+html body .db-hero__intro h1 { font-size: clamp(2.4rem, 8vw, 7.4rem); line-height: .92; letter-spacing: -.03em; white-space: nowrap; }
+@media (max-width: 600px) {
+  html body .ev-hero__content h1 { font-size: clamp(2.8rem, 14vw, 4.4rem); }
+  html body .hero__content .hero__title { font-size: clamp(2.8rem, 15vw, 4.6rem); }
+  html body .podHero__copy .podTitle { font-size: clamp(2.8rem, 14.5vw, 4.4rem); }
+  html body .bb-hero h1 { font-size: clamp(2.8rem, 14vw, 4.4rem); }
+  html body .db-hero__intro h1 { font-size: clamp(2rem, 11vw, 3.6rem); }
+}
