@@ -92,6 +92,7 @@
     ]
   }
   </script>
+  <link rel="stylesheet" href="title-fx.css" />
 </head>
 <body>
   <canvas id="dust-canvas" aria-hidden="true" style="position:fixed;inset:0;z-index:-2;pointer-events:none;width:100%;height:100%;"></canvas>
@@ -135,7 +136,7 @@
             <a href="#attivita">Aree</a>
             <a href="#ricerca">Ricerca</a>
             <a href="#formazione">Formazione</a>
-            <a href="#contenuti">Contenuti</a>
+            <a href="#contenuti-articoli">Pubblicazioni</a>
             <a href="boylebibliography.html">Bibliography <span class="nav-badge-new">Nuovo</span></a>
             <a href="diving-boyle.html">Diving-Boyle <span class="nav-badge-new">Nuovo</span></a>
           </div>
@@ -223,14 +224,22 @@
 
 <section class="section section-intro" id="evidenza" aria-label="In primo piano">
       <div class="container section-grid split-3 stagger">
-        <a class="glass-card info-card info-card--network info-card--link reveal" href="rete.html">
-          <div class="info-card__icon" aria-hidden="true">
-            <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="20" cy="12" r="5" stroke="currentColor" stroke-width="1.6"/>
-              <circle cx="8"  cy="30" r="4" stroke="currentColor" stroke-width="1.6"/>
-              <circle cx="32" cy="30" r="4" stroke="currentColor" stroke-width="1.6"/>
-              <path d="M20 17v4M14 28l5-7M26 28l-5-7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+        <a class="glass-card info-card info-card--network info-card--link gx reveal" href="rete.html">
+          <div class="gx-media gx-media--net" aria-hidden="true">
+            <svg viewBox="0 0 320 130" preserveAspectRatio="xMidYMid slice">
+              <defs><pattern id="gxGrid" width="8" height="8" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r=".7"/></pattern></defs>
+              <rect class="gx-grid" width="320" height="130" fill="url(#gxGrid)"/>
+              <g class="gx-arcs">
+                <path d="M168 25Q240 -10 262 50"/><path d="M168 25Q260 10 315 111"/><path d="M168 25Q120 40 119 97"/>
+                <path d="M168 25Q160 12 152 30"/><path d="M168 25Q166 20 165 25"/><path d="M168 25Q170 18 170 23"/><path d="M168 25Q171 24 171 27"/>
+              </g>
+              <g class="gx-nodes">
+                <circle cx="168" cy="25" r="3.4" class="gx-hub"/><circle cx="262" cy="50" r="2.4" style="--d:.4s"/><circle cx="315" cy="111" r="2.4" style="--d:.8s"/>
+                <circle cx="119" cy="97" r="2.4" style="--d:1.2s"/><circle cx="152" cy="30" r="2" style="--d:1.6s"/><circle cx="165" cy="25" r="1.6" style="--d:2s"/>
+                <circle cx="170" cy="23" r="1.6" style="--d:2.4s"/><circle cx="171" cy="27" r="1.6" style="--d:2.8s"/>
+              </g>
             </svg>
+            <span class="gx-chip">Varese · Ginevra · Monaco · Porto · Hong Kong · Auckland · São José dos Campos</span>
           </div>
           <div class="info-card-body">
             <p class="section-kicker" data-i18n="gate1_k">La Rete di Boyle</p>
@@ -239,12 +248,11 @@
             <span class="info-card__go"><span data-i18n="gate1_cta">Esplora la Rete</span> <span aria-hidden="true">→</span></span>
           </div>
         </a>
-        <a class="glass-card info-card info-card--vision info-card--link reveal" href="#contenuti-articoli">
-          <div class="info-card__icon" aria-hidden="true">
-            <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M11 6h13l7 7v21a2 2 0 0 1-2 2H11a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
-              <path d="M24 6v7h7M14 20h12M14 25h12M14 30h7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-            </svg>
+        <a class="glass-card info-card info-card--vision info-card--link gx reveal" href="#contenuti-articoli">
+          <div class="gx-media gx-media--mars" aria-hidden="true">
+            <span class="gx-planet"></span><span class="gx-stars"></span>
+            <img class="gx-cover" src="assets/home/firstcut-256.jpg" alt="" width="256" height="369" loading="lazy" decoding="async" />
+            <span class="gx-badge">Open Access</span>
           </div>
           <div class="info-card-body">
             <p class="section-kicker" data-i18n="gate2_k">Ultima pubblicazione · Open Access</p>
@@ -253,13 +261,11 @@
             <span class="info-card__go"><span data-i18n="gate2_cta">Tutte le pubblicazioni</span> <span aria-hidden="true">→</span></span>
           </div>
         </a>
-        <a class="glass-card info-card info-card--content info-card--link reveal" href="podcast.html">
-          <div class="info-card__icon" aria-hidden="true">
-            <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M8 25v-5a12 12 0 0 1 24 0v5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-              <rect x="7" y="24" width="6" height="9" rx="2" stroke="currentColor" stroke-width="1.6"/>
-              <rect x="27" y="24" width="6" height="9" rx="2" stroke="currentColor" stroke-width="1.6"/>
-            </svg>
+        <a class="glass-card info-card info-card--content info-card--link gx reveal" href="podcast.html">
+          <div class="gx-media gx-media--pod" aria-hidden="true">
+            <img class="gx-pod" src="assets/home/podcast-320.jpg" alt="" width="320" height="320" loading="lazy" decoding="async" />
+            <span class="gx-eq"><i style="--k:0"></i><i style="--k:1"></i><i style="--k:2"></i><i style="--k:3"></i><i style="--k:4"></i><i style="--k:5"></i><i style="--k:6"></i><i style="--k:7"></i><i style="--k:8"></i><i style="--k:9"></i><i style="--k:10"></i><i style="--k:11"></i><i style="--k:12"></i><i style="--k:13"></i><i style="--k:14"></i><i style="--k:15"></i><i style="--k:16"></i><i style="--k:17"></i></span>
+            <span class="gx-play"><svg viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z"/></svg></span>
           </div>
           <div class="info-card-body">
             <p class="section-kicker" data-i18n="gate3_k">Sotto Pressione · Nuovo episodio</p>
@@ -331,7 +337,7 @@
           </article>
 
           <article class="glass-card appt-card appt-card--alpine reveal" data-start="2027-01-21T13:30:00+01:00" data-end="2027-01-22T18:00:00+01:00">
-            <a class="appt-media" href="assets/eventi/hypercare-2027.pdf" target="_blank" rel="noopener" aria-label="Programma Hypercare 2027 (PDF)">
+            <a class="appt-media" href="assets/eventi/hypercare-2027.pdf" target="_blank" rel="noopener" aria-label="Locandina Hypercare 2027 (PDF)">
               <img src="assets/eventi/hypercare-2027.jpg" alt="Locandina Hypercare Emergency Medicine Course, Bolzano 21-22 gennaio 2027" width="900" height="1382" loading="lazy" decoding="async" />
               <span class="appt-date" aria-hidden="true"><b>21<i>–22</i></b><span data-i18n="m_gen">Gen</span><em>2027</em></span>
               <span class="appt-badge appt-badge--save" data-i18n="appt3_badge">Save the date</span>
@@ -342,13 +348,13 @@
               <p class="appt-sub">Emergency Medicine Course</p>
               <ul class="appt-facts">
                 <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.1-7-11.5a7 7 0 0 1 14 0C19 14.9 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg><span>terraXcube, Eurac Research</span></li>
-                <li><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span data-i18n="appt3_when">21–22 gennaio 2027 · teoria e simulazione</span></li>
+                <li><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span data-i18n="appt3_when">21–22 gennaio 2027</span></li>
                 <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 20l6-10 4 6 3-4 5 8z"/></svg><span data-i18n="appt3_topics">Ustioni, ipotermia e valanghe, malattie da decompressione</span></li>
               </ul>
               <div class="appt-cta">
-                <a class="btn btn-primary" href="assets/eventi/hypercare-2027.pdf" target="_blank" rel="noopener" data-i18n="appt_program_full">Programma</a>
+                <a class="btn btn-primary" href="assets/eventi/hypercare-2027.pdf" target="_blank" rel="noopener" data-i18n="appt3_poster">Locandina</a>
               </div>
-              <p class="appt-note" data-i18n="appt3_note">22 gennaio: giornata hands-on con sette stazioni di simulazione, due dedicate all’iperbarica.</p>
+              <p class="appt-note" data-i18n="appt3_note">Save the date: programma completo e iscrizioni saranno pubblicati qui appena definitivi.</p>
             </div>
           </article>
 
@@ -429,42 +435,77 @@
       </div>
     </section>
 
-    <section class="section alt-section" id="attivita">
+    <section class="section alt-section ax" id="attivita">
       <div class="container">
         <div class="section-heading reveal">
           <p class="section-kicker" data-i18n="att_kicker">Aree di attività</p>
-          <h2 id="att-h2" data-i18n="att_h2">Quattro direttrici chiare, con contenuti reali dentro</h2>
-          <p data-i18n="att_sub">Ricerca, formazione, pubblicazioni e media organizzati in un ecosistema coerente, leggibile e utile.</p>
+          <h2 id="att-h2" data-i18n="att_h2">Quattro direttrici, contenuti veri</h2>
+          <p data-i18n="att_sub">Scegli un’area: trovi subito i lavori, i corsi e gli episodi che la raccontano.</p>
         </div>
-        <div class="cards-grid cards-grid-4 activity-grid-row stagger">
-          <article class="glass-card activity-card activity-card--ricerca reveal">
-            <img class="activity-asset" src="assets/ricerca.webp" alt="Icona Ricerca" loading="lazy" decoding="async" />
-            <p class="micro-label" data-i18n="att1_k">Macroarea 01</p>
-            <h3 data-i18n="att1_h3">Ricerca</h3>
-            <p data-i18n="att1_p">Studi clinici, collaborazioni scientifiche, progetti di ricerca e protocolli applicati alla medicina iperbarica e subacquea.</p>
-            <a class="text-link" href="#ricerca" data-i18n="att1_cta">Esplora la ricerca</a>
-          </article>
-          <article class="glass-card activity-card activity-card--formazione reveal">
-            <img class="activity-asset" src="assets/formazione.webp" alt="Icona Formazione" loading="lazy" decoding="async" />
-            <p class="micro-label" data-i18n="att2_k">Macroarea 02</p>
-            <h3 data-i18n="att2_h3">Formazione</h3>
-            <p data-i18n="att2_p">Didattica universitaria, corsi, congressi, materiali didattici e attività costruite per chi lavora sul campo.</p>
-            <a class="text-link" href="#formazione" data-i18n="att2_cta">Vai alla formazione</a>
-          </article>
-          <article class="glass-card activity-card activity-card--pubblicazioni reveal">
-            <img class="activity-asset" src="assets/pubblicazioni.webp" alt="Icona Pubblicazioni" loading="lazy" decoding="async" />
-            <p class="micro-label" data-i18n="att3_k">Macroarea 03</p>
-            <h3 data-i18n="att3_h3">Pubblicazioni</h3>
-            <p data-i18n="att3_p">Articoli, case report, contributi editoriali e materiali scientifici utili a clinici, operatori e ricercatori.</p>
-            <a class="text-link" href="#contenuti" data-i18n="att3_cta">Leggi le pubblicazioni</a>
-          </article>
-          <article class="glass-card activity-card activity-card--media reveal">
-            <img class="activity-asset" src="assets/media.webp" alt="Icona Media" loading="lazy" decoding="async" />
-            <p class="micro-label" data-i18n="att4_k">Macroarea 04</p>
-            <h3 data-i18n="att4_h3">Media</h3>
-            <p data-i18n="att4_p">Podcast, interviste e contenuti divulgativi che rendono accessibile la medicina degli ambienti estremi.</p>
-            <a class="text-link" href="podcast.html" data-i18n="att4_cta">Apri area media</a>
-          </article>
+        <div class="ax-wrap reveal" id="axWrap">
+          <div class="ax-tabs" role="tablist" aria-label="Aree di attività">
+            <button class="ax-tab is-on" role="tab" id="axTab0" aria-controls="axPanel0" aria-selected="true" style="--c:#5cd6ff"><b>01</b><span data-i18n="att1_h3">Ricerca</span><i class="ax-bar"></i></button>
+            <button class="ax-tab" role="tab" id="axTab1" aria-controls="axPanel1" aria-selected="false" tabindex="-1" style="--c:#4dffd6"><b>02</b><span data-i18n="att2_h3">Formazione</span><i class="ax-bar"></i></button>
+            <button class="ax-tab" role="tab" id="axTab2" aria-controls="axPanel2" aria-selected="false" tabindex="-1" style="--c:#ffb86b"><b>03</b><span data-i18n="att3_h3">Pubblicazioni</span><i class="ax-bar"></i></button>
+            <button class="ax-tab" role="tab" id="axTab3" aria-controls="axPanel3" aria-selected="false" tabindex="-1" style="--c:#b9a6ff"><b>04</b><span data-i18n="att4_h3">Media</span><i class="ax-bar"></i></button>
+          </div>
+          <div class="ax-panels">
+            <div class="ax-panel is-on" role="tabpanel" id="axPanel0" aria-labelledby="axTab0" style="--c:#5cd6ff">
+              <div class="ax-copy">
+                <p class="ax-stat"><b>3</b> <span data-i18n="ax0_stat">fronti di ricerca, dall’abisso a Marte</span></p>
+                <p class="ax-p" data-i18n="att1_p">Studi clinici, collaborazioni scientifiche e protocolli applicati alla medicina subacquea, iperbarica e degli ambienti estremi.</p>
+                <ul class="ax-list">
+                  <li><a href="#ricerca"><span data-i18n="ax0_l1">Medicina subacquea e iperbarica</span><small>J Physiol 2026 · DHM 2026 · ITA-OTI</small></a></li>
+                  <li><a href="#ricerca"><span data-i18n="ax0_l2">Human factors e soccorso</span><small>HyperCare · RDE · The Day After</small></a></li>
+                  <li><a href="#ricerca"><span data-i18n="ax0_l3">Medicina spaziale</span><small>First Cut on Mars · IntechOpen 2026</small></a></li>
+                </ul>
+                <a class="ax-cta" href="#ricerca"><span data-i18n="att1_cta">Esplora la ricerca</span> <span aria-hidden="true">→</span></a>
+              </div>
+              <div class="ax-visual ax-visual--sonar" aria-hidden="true"><span></span><span></span><span></span><em>01</em></div>
+            </div>
+            <div class="ax-panel" role="tabpanel" id="axPanel1" aria-labelledby="axTab1" style="--c:#4dffd6" hidden>
+              <div class="ax-copy">
+                <p class="ax-stat"><b id="axCourses">6</b> <span data-i18n="ax1_stat">corsi e congressi in archivio, con le locandine</span></p>
+                <p class="ax-p" data-i18n="att2_p">Didattica universitaria, corsi, congressi e materiali costruiti per chi lavora sul campo.</p>
+                <ul class="ax-list">
+                  <li><a href="eventi.html"><span>Hypercare 2027</span><small data-i18n="ax1_l1s">Bolzano · 21–22 gennaio 2027</small></a></li>
+                  <li><a href="#formazione"><span data-i18n="ax1_l2">Attività didattiche elettive</span><small data-i18n="ax1_l2s">Università degli Studi dell’Insubria</small></a></li>
+                  <li><a href="assets/corsi/RDE.pdf" target="_blank" rel="noopener"><span>Rescue in Difficult Environment</span><small data-i18n="ax1_l3s">Programma completo · PDF</small></a></li>
+                </ul>
+                <a class="ax-cta" href="#formazione"><span data-i18n="att2_cta">Vai alla formazione</span> <span aria-hidden="true">→</span></a>
+              </div>
+              <div class="ax-visual"><div class="ax-fan"><img src="assets/home/rde-300.jpg" alt="" width="300" height="420" loading="lazy" decoding="async" style="--n:0" /><img src="assets/home/ade-sub-300.jpg" alt="" width="300" height="420" loading="lazy" decoding="async" style="--n:1" /><img src="assets/home/hypercare27-300.jpg" alt="" width="300" height="420" loading="lazy" decoding="async" style="--n:2" /></div></div>
+            </div>
+            <div class="ax-panel" role="tabpanel" id="axPanel2" aria-labelledby="axTab2" style="--c:#ffb86b" hidden>
+              <div class="ax-copy">
+                <p class="ax-stat"><b id="axPubs">7</b> <span data-i18n="ax2_stat">lavori consultabili, tra articoli, capitoli e case report</span></p>
+                <p class="ax-p" data-i18n="att3_p">Articoli, case report, contributi editoriali e materiali scientifici utili a clinici, operatori e ricercatori.</p>
+                <ul class="ax-list">
+                  <li><a href="https://www.intechopen.com/online-first/1266763" target="_blank" rel="noopener"><span>First Cut on Mars</span><small>IntechOpen · 2026 · Open Access</small></a></li>
+                  <li><a href="assets/pubblicazioni/The%20Journal%20of%20Physiology.pdf" target="_blank" rel="noopener"><span data-i18n="ax2_l2">Scambi gassosi in immersione e in apnea</span><small>The Journal of Physiology · 2026</small></a></li>
+                  <li><a href="https://dhmjournal.com/index.php?option=com_content&amp;view=article&amp;id=431" target="_blank" rel="noopener"><span data-i18n="ax2_l3">Immersione dopo ablazione per fibrillazione atriale</span><small>Diving and Hyperbaric Medicine · 2026</small></a></li>
+                </ul>
+                <a class="ax-cta" href="#contenuti-articoli"><span data-i18n="att3_cta">Leggi le pubblicazioni</span> <span aria-hidden="true">→</span></a>
+              </div>
+              <div class="ax-visual"><div class="ax-fan"><img src="assets/home/spaceblue-300.jpg" alt="" width="300" height="420" loading="lazy" decoding="async" style="--n:0" /><img src="assets/home/jphysiol-300.jpg" alt="" width="300" height="420" loading="lazy" decoding="async" style="--n:1" /><img src="assets/home/firstcut-256.jpg" alt="" width="300" height="420" loading="lazy" decoding="async" style="--n:2" /></div></div>
+            </div>
+            <div class="ax-panel" role="tabpanel" id="axPanel3" aria-labelledby="axTab3" style="--c:#b9a6ff" hidden>
+              <div class="ax-copy">
+                <p class="ax-stat"><b>40+</b> <span data-i18n="ax3_stat">episodi di Sotto Pressione, oltre 500.000 visualizzazioni</span></p>
+                <p class="ax-p" data-i18n="att4_p">Podcast, interviste e contenuti divulgativi che rendono accessibile la medicina degli ambienti estremi.</p>
+                <ul class="ax-list">
+                  <li><a href="podcast.html"><span data-i18n="gate3_h">Le leggi dei gas</span><small data-i18n="ax3_l1s">Ultimo episodio · Stagione 3</small></a></li>
+                  <li><a href="#dicono-di-noi"><span data-i18n="ax3_l2">Dicono di noi</span><small data-i18n="ax3_l2s">Articoli e interviste sugli Amici di Boyle</small></a></li>
+                  <li><a href="https://www.economiadellospazio.it/il-costo-invisibile-del-respiro/" target="_blank" rel="noopener"><span data-i18n="ax3_l3">Il costo invisibile del respiro</span><small>Economia dello Spazio</small></a></li>
+                </ul>
+                <a class="ax-cta" href="podcast.html"><span data-i18n="att4_cta">Apri il podcast</span> <span aria-hidden="true">→</span></a>
+              </div>
+              <div class="ax-visual ax-visual--pod" aria-hidden="true">
+                <img src="assets/home/podcast-320.jpg" alt="" width="320" height="320" loading="lazy" decoding="async" />
+                <span class="gx-eq"><i style="--k:0"></i><i style="--k:1"></i><i style="--k:2"></i><i style="--k:3"></i><i style="--k:4"></i><i style="--k:5"></i><i style="--k:6"></i><i style="--k:7"></i><i style="--k:8"></i><i style="--k:9"></i><i style="--k:10"></i><i style="--k:11"></i><i style="--k:12"></i><i style="--k:13"></i><i style="--k:14"></i><i style="--k:15"></i><i style="--k:16"></i><i style="--k:17"></i><i style="--k:18"></i><i style="--k:19"></i><i style="--k:20"></i><i style="--k:21"></i></span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -493,7 +534,7 @@
             <div class="founder-topline"><span class="founder-role" data-i18n="fond_role_vincenzo">Responsabile Area Iperbarica</span><a class="linkedin-link linkedin-link--text" href="https://www.linkedin.com/in/vincenzo-benenati-29a815130/" aria-label="LinkedIn di Vincenzo Benenati" target="_blank" rel="noopener">in</a></div>
             <img src="images/vincenzo.benenati.webp" alt="Vincenzo Benenati" loading="lazy" />
             <h3>Dott. Vincenzo Benenati</h3>
-            <p data-i18n="fond_desc_vincenzo">Anestesista Rianimatore, Intensivista, Medico Iperbarico e Subacqueo.</p>
+            <p data-i18n="fond_desc_vincenzo">Anestesista Rianimatore, Cardioanestesista, Intensivista, Medico Iperbarico e Subacqueo.</p>
           </article>
           <article class="glass-card founder-card founder-card--3d founder-card--dario reveal" data-delay="240">
             <div class="founder-topline"><span class="founder-role" data-i18n="fond_role_dario">Responsabile Area Diving</span><a class="linkedin-link linkedin-link--text" href="https://www.linkedin.com/in/dario-nicosia87/" aria-label="LinkedIn di Dario Nicosia" target="_blank" rel="noopener">in</a></div>
@@ -590,54 +631,6 @@
       </div>
     </section>
 
-    <section class="section alt-section" id="contenuti">
-      <div class="container">
-        <div class="section-heading reveal">
-          <p class="section-kicker" data-i18n="cont_kicker">Contenuti</p>
-          <h2 id="cont-h2" data-i18n="cont_h2">Podcast, corsi, lezioni e pubblicazioni</h2>
-          <p data-i18n="cont_sub">Materiali formativi e divulgativi raccolti in un archivio chiaro, consultabile e orientato alla pratica clinica e operativa.</p>
-        </div>
-        <div class="cards-grid cards-grid-4 content-grid stagger">
-          <article class="glass-card feature-card content-card reveal">
-            <img src="assets/sotto-pressione-cover.jpg" alt="Cover podcast Sotto Pressione" loading="lazy" decoding="async" />
-          <div class="content-card-text">
-            <p class="section-kicker" data-i18n="cont_podcast_k">Podcast</p>
-            <h3 data-i18n="cont_podcast_title">Sotto Pressione</h3>
-            <p data-i18n="cont_podcast_desc">Pressione, immersione, fisiologia estrema e spazio in un formato divulgativo, chiaro e originale.</p>
-            <a class="text-link" href="podcast.html" data-i18n="cont_podcast_cta">Ascolta il podcast</a>
-                    </div>
-          </article>
-          <article class="glass-card feature-card content-card reveal">
-            <img src="assets/corsi/hypercare.jpg" alt="Locandina HyperCare" loading="lazy" decoding="async" />
-          <div class="content-card-text">
-            <p class="section-kicker" data-i18n="cont_corsi_k">Corsi</p>
-            <h3 data-i18n="cont_corsi_title">Corsi e formazione sul campo</h3>
-            <p data-i18n="cont_corsi_p">HyperCare, SIMAE Bologna, Rescue in Difficult Environment: programmi formativi certificati per clinici e operatori.</p>
-            <a class="text-link" href="#formazione" data-i18n="cont_corsi_cta">Vai ai corsi</a>
-                    </div>
-          </article>
-          <article class="glass-card feature-card content-card reveal">
-            <img src="assets/lezioni/ADE_Medicina%20Subacquea.webp" alt="ADE Medicina Subacquea e Iperbarica" loading="lazy" decoding="async" />
-          <div class="content-card-text">
-            <p class="section-kicker" data-i18n="cont_lez_k">Lezioni</p>
-            <h3 data-i18n="cont_lez_title">Didattica universitaria e materiali</h3>
-            <p data-i18n="cont_lez_p">Attività didattiche elettive e materiali didattici presso l’Università degli Studi dell’Insubria.</p>
-            <a class="text-link" href="#formazione" data-i18n="cont_lez_cta">Apri le lezioni</a>
-                    </div>
-          </article>
-          <article class="glass-card feature-card content-card reveal">
-            <img src="assets/pubblicazioni/Locandina_Space%26Blue.webp" alt="Copertina articolo Space &amp; Blue" loading="lazy" decoding="async" />
-          <div class="content-card-text">
-            <p class="section-kicker" data-i18n="cont_art_k">Articoli</p>
-            <h3 data-i18n="cont_art_title">Dall’abisso allo spazio</h3>
-            <p data-i18n="cont_art_p">Pubblicazioni divulgative e contributi scientifici legati alla medicina subacquea, iperbarica e agli ambienti estremi.</p>
-            <a class="text-link" href="#contenuti-articoli" data-i18n="cont_art_cta">Leggi gli articoli</a>
-                    </div>
-          </article>
-        </div>
-      </div>
-    </section>
-
     <section class="section alt-section" id="boyle-bibliography">
       <div class="container">
         <article class="glass-card bb-spotlight reveal">
@@ -654,75 +647,96 @@
       </div>
     </section>
 
+    <section class="section alt-section db-sec" id="diving-boyle-home">
+      <div class="container">
+        <a class="glass-card db-spot reveal" href="diving-boyle.html">
+          <div class="db-map" aria-hidden="true">
+            <svg viewBox="-4 -4 85.5 108">
+              <defs>
+                <path id="dbDots" d="M50.7 41.5h0M49.2 40.3h0M49.3 40.1h0M51.9 42.4h0M48.0 38.4h0M50.5 42.1h0M49.7 40.5h0M48.8 41.1h0M44.1 41.0h0M51.0 41.8h0M52.3 43.1h0M48.9 40.0h0M52.2 43.2h0M47.5 43.5h0M44.2 43.6h0M44.0 40.9h0M46.0 38.5h0M58.7 61.0h0M63.4 73.9h0M59.1 62.1h0M59.5 72.8h0M58.3 77.0h0M59.4 72.5h0M58.7 75.8h0M59.1 62.0h0M64.1 74.3h0M58.2 77.1h0M60.9 68.1h0M58.3 77.2h0M59.4 75.0h0M59.2 62.7h0M59.3 75.5h0M58.7 78.5h0M59.8 72.2h0M67.6 68.8h0M62.3 69.8h0M59.0 61.7h0M58.3 77.7h0M61.1 72.2h0M66.9 70.3h0M67.7 70.0h0M58.2 76.2h0M59.2 62.8h0M64.0 72.2h0M62.6 75.4h0M48.3 54.1h0M48.4 54.0h0M50.2 55.7h0M50.1 56.1h0M50.9 54.9h0M55.9 60.8h0M48.5 54.0h0M47.5 54.7h0M49.4 53.7h0M50.1 54.3h0M54.1 58.0h0M51.3 55.8h0M56.6 61.0h0M54.3 58.3h0M47.0 54.8h0M50.9 55.7h0M56.5 61.0h0M47.8 52.7h0M47.6 54.8h0M51.0 54.6h0M54.2 57.1h0M50.0 55.9h0M50.0 51.9h0M31.6 23.2h0M24.9 20.6h0M26.7 21.4h0M34.7 23.6h0M24.8 20.2h0M30.9 22.9h0M36.8 26.0h0M27.7 20.3h0M35.6 25.2h0M34.2 20.8h0M35.5 25.3h0M30.7 22.7h0M26.5 21.2h0M31.4 22.8h0M38.3 26.0h0M36.5 23.9h0M36.6 23.7h0M24.6 20.9h0M33.2 21.9h0M36.9 23.7h0M38.9 26.5h0M31.3 22.8h0M37.1 23.0h0M37.4 25.8h0M27.6 22.5h0M27.5 20.7h0M31.2 23.8h0M37.0 23.0h0M31.3 23.1h0M24.9 20.5h0M32.8 20.1h0M30.3 23.0h0M28.7 21.5h0M26.2 21.0h0M32.7 19.8h0M46.3 13.5h0M43.1 9.8h0M43.1 9.7h0M46.5 13.3h0M46.5 13.2h0M42.9 9.4h0M46.8 13.2h0M39.1 10.4h0M43.6 11.0h0M39.4 10.4h0M40.6 10.2h0M39.2 10.1h0M46.6 13.4h0M40.8 10.9h0M44.9 11.8h0M38.9 10.4h0M46.3 13.1h0M44.0 12.9h0M40.6 10.8h0M46.3 13.2h0M42.6 12.2h0M34.1 43.5h0M38.2 47.3h0M41.3 53.4h0M37.3 46.3h0M37.9 45.0h0M38.7 44.4h0M34.5 43.8h0M38.1 44.6h0M44.3 54.3h0M44.7 50.6h0M41.4 53.4h0M36.8 46.3h0M38.2 45.1h0M45.3 50.8h0M38.7 47.7h0M38.0 45.4h0M38.2 45.6h0M38.3 45.6h0M39.1 44.8h0M36.0 40.4h0M34.3 43.8h0M37.5 46.0h0M39.1 44.5h0M38.1 45.9h0M38.7 45.2h0M39.4 45.2h0M37.6 44.7h0M39.5 45.9h0M38.5 45.1h0M39.3 46.6h0M37.7 45.0h0M39.0 45.4h0M39.2 48.8h0M37.9 44.2h0M37.2 46.4h0M45.2 50.8h0M37.8 43.4h0M38.8 44.9h0M36.4 43.1h0M39.4 43.8h0M39.5 45.3h0M38.2 45.2h0M43.2 50.1h0M38.2 44.6h0M40.1 44.3h0M40.8 49.0h0M38.1 45.3h0M44.3 54.2h0M38.2 45.3h0M43.7 47.7h0M35.2 38.6h0M15.4 23.6h0M10.2 28.2h0M9.5 28.5h0M11.7 26.0h0M11.4 26.8h0M14.4 23.7h0M18.5 24.5h0M12.4 25.6h0M17.7 24.3h0M12.9 25.0h0M12.7 25.4h0M17.3 24.1h0M17.3 24.0h0M17.2 24.1h0M21.6 26.4h0M16.0 23.8h0M9.2 28.5h0M10.6 27.9h0M12.9 25.1h0M12.2 25.7h0M17.8 24.2h0M22.0 26.4h0M7.6 28.9h0M12.9 24.7h0M15.9 23.7h0M11.3 27.0h0M19.9 25.4h0M15.9 23.6h0M21.7 26.6h0M16.2 23.8h0M21.0 26.3h0M15.7 23.3h0M16.6 23.9h0M16.5 23.9h0M14.8 23.5h0M20.9 12.8h0M25.9 14.4h0M26.2 14.1h0M20.7 13.2h0M16.9 11.7h0M16.9 14.0h0M17.8 14.9h0M17.2 15.1h0M18.3 11.0h0M18.1 13.4h0M17.6 14.1h0M18.1 14.0h0M18.3 13.9h0M24.1 13.6h0M27.4 12.3h0M23.0 13.1h0M23.3 12.5h0M17.4 14.6h0M18.2 15.0h0M16.6 11.8h0M17.1 12.4h0M18.6 11.2h0M17.8 16.7h0M20.7 15.6h0M17.5 14.8h0M17.3 15.0h0M17.3 13.9h0M20.7 12.6h0M17.4 13.9h0M18.2 14.9h0M23.8 14.0h0M16.8 14.8h0M17.9 14.1h0M23.3 11.9h0M18.6 13.3h0M17.2 14.4h0M17.7 14.9h0M20.8 12.7h0M16.6 13.3h0M16.1 13.4h0M20.0 14.3h0M20.5 12.5h0M20.2 13.2h0M19.6 13.5h0M20.1 14.2h0M27.7 17.7h0M45.3 36.8h0M45.6 31.6h0M45.5 31.3h0M45.4 31.9h0M46.0 33.0h0M47.2 36.0h0M45.8 34.1h0M46.2 33.1h0M44.4 33.1h0M41.1 32.7h0M54.1 44.1h0M7.9 18.3h0M12.9 17.6h0M7.4 18.0h0M14.4 9.4h0M7.9 22.1h0M7.9 18.5h0M7.8 18.0h0M6.3 18.1h0M6.3 17.5h0M7.7 18.2h0M9.1 21.1h0M13.9 12.6h0M8.7 20.6h0M7.2 18.0h0M13.7 11.5h0M7.7 18.0h0M8.3 15.8h0M7.9 18.0h0M72.1 58.6h0M73.0 59.8h0M73.1 60.0h0M72.6 59.5h0M75.3 62.7h0M58.1 44.7h0M72.8 55.4h0M68.7 52.9h0M75.1 62.3h0M75.9 60.7h0M72.8 55.5h0M76.2 59.8h0M72.4 58.8h0M68.1 57.5h0M61.6 45.9h0M57.3 43.0h0M68.7 53.1h0M70.3 58.5h0M68.7 53.0h0M68.5 57.8h0M68.7 57.8h0M66.1 51.6h0M70.4 54.9h0M68.6 53.0h0M74.2 57.9h0M68.5 52.8h0M69.0 58.0h0M65.5 51.3h0M64.1 50.9h0M66.1 51.8h0M63.7 50.6h0M76.1 59.7h0M66.7 51.9h0M65.9 51.4h0M69.9 58.4h0M63.9 51.4h0M68.6 57.8h0M68.6 52.9h0M65.1 51.1h0M68.3 57.1h0M64.3 50.9h0M19.7 52.3h0M11.6 56.2h0M20.7 54.1h0M18.8 51.0h0M19.6 68.5h0M11.5 56.0h0M19.1 51.6h0M11.3 55.8h0M20.4 53.6h0M20.0 67.3h0M20.0 52.5h0M19.9 52.5h0M20.4 58.6h0M15.1 70.4h0M16.4 69.4h0M18.3 67.7h0M15.9 70.1h0M21.1 57.5h0M20.1 52.8h0M20.8 53.9h0M20.1 66.3h0M19.5 51.4h0M13.1 58.5h0M19.1 51.7h0M17.6 50.5h0M13.0 69.0h0M20.7 54.5h0M20.6 60.0h0M13.9 60.3h0M16.0 52.1h0M19.7 68.4h0M11.4 56.0h0M18.8 68.1h0M18.9 51.2h0M14.5 53.3h0M12.2 51.9h0M19.6 68.3h0M19.9 67.9h0M19.2 51.4h0M20.3 52.5h0M11.4 52.9h0M20.7 61.1h0M21.1 55.8h0M20.8 57.9h0M18.4 51.0h0M15.6 52.4h0M16.0 70.0h0M11.1 56.0h0M11.9 56.0h0M12.5 67.8h0M19.8 52.3h0M17.4 67.9h0M12.8 54.3h0M20.5 53.7h0M18.9 50.4h0M19.4 68.3h0M12.0 68.3h0M18.8 50.7h0M43.1 76.3h0M43.6 77.1h0M45.0 77.2h0M45.0 77.5h0M43.7 76.8h0M40.8 77.8h0M40.8 77.7h0M43.6 76.8h0M39.9 76.4h0M45.0 77.3h0M55.8 86.6h0M43.3 76.3h0M56.1 79.2h0M55.4 81.0h0M55.2 81.6h0M55.7 75.8h0M53.9 76.6h0M42.8 72.0h0M55.7 76.1h0M54.9 82.0h0M55.8 79.6h0M40.4 77.4h0M38.8 77.5h0M55.9 79.5h0M38.0 79.8h0M55.0 81.9h0M42.1 76.7h0M53.1 76.6h0M41.0 81.6h0M55.9 79.4h0M54.9 81.9h0M53.9 74.4h0M54.9 88.7h0M56.0 85.9h0M45.0 77.4h0M37.3 78.7h0M53.4 73.2h0M39.0 80.9h0M35.7 78.2h0M55.6 76.7h0M55.3 81.6h0M37.3 78.5h0M51.5 88.1h0M58.2 75.7h0M54.5 76.8h0M55.9 85.9h0M55.2 81.7h0M53.9 74.0h0M43.9 77.2h0M42.8 82.5h0M48.1 77.6h0M38.3 78.5h0M55.0 86.1h0M51.4 73.2h0M53.6 76.4h0M34.8 88.0h0M52.4 87.2h0M43.9 76.7h0M51.3 88.3h0M54.9 88.6h0M43.1 76.4h0M55.3 80.9h0M54.7 81.7h0M44.9 84.0h0M55.0 81.8h0M27.5 36.3h0M24.7 31.5h0M25.2 37.6h0M24.9 37.3h0M23.9 37.2h0M24.2 37.4h0M24.6 37.6h0M30.3 40.8h0M24.1 37.7h0M25.0 37.9h0M24.9 37.6h0M25.6 32.3h0M29.8 40.4h0M24.7 37.3h0M28.5 41.0h0M25.3 32.2h0M25.2 37.5h0M28.2 37.6h0M25.8 33.0h0M24.2 37.7h0M24.4 37.1h0M25.8 35.6h0M24.8 31.6h0M25.3 36.8h0M25.1 31.8h0M25.2 37.7h0M21.6 35.2h0M27.9 28.2h0M28.9 38.0h0M24.7 37.6h0M30.3 40.7h0M29.7 40.5h0M24.2 37.8h0M25.4 32.3h0M24.3 37.3h0M30.8 29.0h0M30.1 29.3h0M29.7 40.4h0M23.6 37.2h0M25.2 29.6h0M24.6 31.0h0M23.2 26.9h0M25.4 37.2h0M24.8 31.0h0M29.7 40.3h0M30.3 28.9h0M25.7 28.5h0M28.2 40.9h0M25.9 28.5h0M25.4 37.3h0M29.8 31.6h0M28.2 41.0h0M24.6 37.3h0M30.0 40.4h0M24.7 37.2h0M12.7 25.2h0M25.8 35.7h0M27.2 36.1h0M23.7 27.4h0M29.7 37.7h0M29.7 37.6h0M33.2 36.6h0M24.8 31.5h0M31.1 6.0h0M28.1 11.2h0M29.7 9.5h0M31.2 6.1h0M29.8 9.8h0M31.0 6.1h0M29.8 9.7h0M31.0 6.0h0M31.1 10.1h0M30.5 9.6h0M30.0 4.6h0M28.1 11.5h0M29.2 11.2h0M31.1 6.6h0M29.9 4.6h0M29.8 9.6h0M27.3 13.0h0M34.7 10.1h0M30.1 4.8h0M29.7 9.4h0M27.0 13.5h0M27.5 4.8h0M28.8 15.0h0M26.2 14.8h0M29.0 14.9h0M38.0 34.5h0M37.4 35.2h0M38.7 35.0h0M39.2 39.4h0M37.7 34.6h0M39.8 35.7h0M38.8 32.6h0M36.8 31.6h0M5.8 12.4h0M27.6 12.5h0M36.6 9.0h0M38.1 14.9h0M37.3 17.3h0M27.1 13.8h0M37.1 14.4h0M38.9 14.6h0M34.4 14.7h0M37.5 18.1h0M34.3 15.5h0M28.4 15.3h0M27.0 14.9h0M38.2 19.9h0M34.4 15.0h0M36.7 13.1h0M34.6 15.2h0M28.5 15.0h0M37.6 15.2h0M32.4 14.0h0M34.6 12.9h0M34.3 15.2h0M37.1 14.6h0M37.0 14.2h0M35.7 15.0h0M33.9 15.9h0M36.6 13.1h0M37.2 11.2h0M33.9 18.2h0M36.8 14.2h0M32.3 13.9h0M38.4 12.0h0M28.7 15.2h0M36.5 14.3h0M33.6 12.2h0M35.3 15.2h0M36.3 13.6h0M29.0 15.2h0M33.6 12.9h0M35.5 12.1h0M34.2 15.2h0M31.5 12.7h0M34.7 15.0h0M28.8 14.9h0M40.7 13.6h0M37.3 14.8h0M31.5 17.0h0M28.9 14.7h0M36.6 11.8h0M31.0 14.2h0M36.8 12.2h0M28.6 14.7h0M36.4 14.7h0M28.5 15.1h0M36.7 14.5h0"/>
+                <mask id="dbMask" maskUnits="userSpaceOnUse" x="-10" y="-10" width="100" height="125">
+                  <circle cx="38.4" cy="44.9" r="0" fill="none" stroke="#fff" stroke-width="7"><animate attributeName="r" values="0;75" dur="4.2s" repeatCount="indefinite"/><animate attributeName="stroke-opacity" values="1;0" dur="4.2s" repeatCount="indefinite"/></circle>
+                  <circle cx="38.4" cy="44.9" r="0" fill="none" stroke="#fff" stroke-width="7"><animate attributeName="r" values="0;75" dur="4.2s" begin="2.1s" repeatCount="indefinite"/><animate attributeName="stroke-opacity" values="1;0" dur="4.2s" begin="2.1s" repeatCount="indefinite"/></circle>
+                </mask>
+              </defs>
+              <use href="#dbDots" class="db-dots"/>
+              <use href="#dbDots" class="db-dots db-dots--hi" mask="url(#dbMask)"/>
+            </svg>
+          </div>
+          <div class="db-body">
+            <p class="section-kicker">Diving-Boyle <span class="nav-badge-new" data-i18n="db_new">Nuovo</span></p>
+            <h2 data-i18n="db_h2">Dove si immerge l’Italia</h2>
+            <p data-i18n="db_p">La mappa dei diving center italiani curata dagli Amici di Boyle: cerca per nome o città, esplora regione per regione e trova il centro giusto per la tua prossima immersione.</p>
+            <div class="db-stats">
+              <span><b>700+</b> <em data-i18n="db_s1">diving mappati</em></span>
+              <span><b>20</b> <em data-i18n="db_s2">regioni</em></span>
+            </div>
+            <span class="btn btn-primary db-btn"><span data-i18n="db_cta">Esplora la mappa</span> <span aria-hidden="true">→</span></span>
+          </div>
+        </a>
+      </div>
+    </section>
+
 
 
     
-    <section class="section alt-section rx" id="ricerca">
+    <section class="section rx2" id="ricerca" aria-labelledby="ric-h2">
       <div class="container">
         <div class="section-heading reveal">
           <p class="section-kicker" data-i18n="ric_kicker">Ricerca</p>
-          <h2 id="ric-h2" data-i18n="ric_h2">Tre fronti, lavori pubblicati</h2>
-          <p class="section-lead" data-i18n="ric_sub">Non temi di principio: ogni fronte ha già prodotto articoli, capitoli o corsi che puoi aprire e leggere.</p>
+          <h2 id="ric-h2" data-i18n="ric_h2">Dall’abisso a Marte</h2>
+          <p class="section-lead" data-i18n="ric_sub">Risali con noi dalla profondità all’orbita: tre fronti di ricerca, ognuno con lavori già pubblicati.</p>
         </div>
-        <div class="rx-grid stagger">
-
-          <a class="glass-card rx-card rx-card--hyper reveal" href="#contenuti-articoli">
-            <svg class="rx-art" viewBox="0 0 120 80" aria-hidden="true">
-              <path class="rx-gauge" d="M20 66a40 40 0 0 1 80 0"/>
-              <path class="rx-ticks" d="M24 50l6 3M35 33l5 5M60 26v7M85 33l-5 5M96 50l-6 3"/>
-              <g class="rx-needle"><path d="M60 66L60 34"/></g>
-              <circle class="rx-hub" cx="60" cy="66" r="4"/>
-              <circle class="rx-bub b1" cx="14" cy="76" r="2.4"/><circle class="rx-bub b2" cx="104" cy="76" r="3"/><circle class="rx-bub b3" cx="110" cy="76" r="1.8"/>
-            </svg>
-            <p class="rx-k" data-i18n="ric1_k">Medicina subacquea e iperbarica</p>
-            <h3 data-i18n="ric1_h3">Sotto pressione, in clinica</h3>
-            <p class="rx-p" data-i18n="ric1_p">Ossigenoterapia iperbarica, idoneità all’immersione, cuore e subacquea: dal razionale fisiologico alle decisioni cliniche.</p>
-            <ul class="rx-proof">
-              <li data-i18n="ric1_l1">Scambi gassosi in immersione e in apnea · J Physiol 2026</li>
-              <li data-i18n="ric1_l2">Tornare a immergersi dopo ablazione per fibrillazione atriale · DHM 2026</li>
-              <li data-i18n="ric1_l3">Studio ITA-OTI sull’ossigenoterapia iperbarica in Italia · SIAARTI</li>
-            </ul>
-            <span class="rx-go"><span data-i18n="ric1_cta">Leggi le pubblicazioni</span> <span aria-hidden="true">→</span></span>
-          </a>
-
-          <a class="glass-card rx-card rx-card--space reveal" href="#contenuti-articoli">
-            <svg class="rx-art" viewBox="0 0 120 80" aria-hidden="true">
-              <path class="rx-sea" d="M4 64c10-5 18 5 28 0s18 5 28 0 18 5 28 0 18 5 28 0"/>
-              <ellipse class="rx-orbit" cx="60" cy="20" rx="34" ry="9"/>
-              <circle class="rx-planet" cx="60" cy="20" r="6"/>
-              <path class="rx-path" d="M60 62V32"/>
-              <circle class="rx-diver" cx="60" cy="62" r="3.2"/>
-            </svg>
-            <p class="rx-k" data-i18n="ric2_k">Ambienti estremi · Spazio</p>
-            <h3 data-i18n="ric2_h3">Dall’abisso a Marte</h3>
-            <p class="rx-p" data-i18n="ric2_p">Pressione, gas e microgravità letti con gli occhi di chi lavora in rianimazione e in camera iperbarica.</p>
-            <ul class="rx-proof">
-              <li data-i18n="ric2_l1">First Cut on Mars · IntechOpen 2026</li>
-              <li data-i18n="ric2_l2">Il costo invisibile del respiro · Economia dello Spazio</li>
-              <li data-i18n="ric2_l3">Dall’abisso allo spazio · Economia dello Spazio</li>
-            </ul>
-            <span class="rx-go"><span data-i18n="ric2_cta">Leggi le pubblicazioni</span> <span aria-hidden="true">→</span></span>
-          </a>
-
-          <a class="glass-card rx-card rx-card--human reveal" href="#formazione">
-            <svg class="rx-art" viewBox="0 0 120 80" aria-hidden="true">
-              <rect class="rx-board" x="30" y="8" width="60" height="66" rx="7"/>
-              <path class="rx-line" d="M56 26h24M56 42h24M56 58h18"/>
-              <path class="rx-check c1" d="M40 26l4 4 7-8"/>
-              <path class="rx-check c2" d="M40 42l4 4 7-8"/>
-              <path class="rx-check c3" d="M40 58l4 4 7-8"/>
-            </svg>
-            <p class="rx-k" data-i18n="ric3_k">Human factors · Safety</p>
-            <h3 data-i18n="ric3_h3">Decidere quando sbagliare costa</h3>
-            <p class="rx-p" data-i18n="ric3_p">Comunicazione, lavoro di squadra, checklist e gestione dell’errore, portati in aula e nelle esercitazioni sul campo.</p>
-            <ul class="rx-proof">
-              <li>HyperCare</li>
-              <li>Rescue in Difficult Environment</li>
-              <li>The Day After</li>
-            </ul>
-            <span class="rx-go"><span data-i18n="ric3_cta">Vai ai corsi</span> <span aria-hidden="true">→</span></span>
-          </a>
-
+      </div>
+      <div class="rx2-track" id="rxTrack">
+        <div class="rx2-stage" id="rxStage">
+          <div class="rx2-bg" aria-hidden="true">
+            <div class="rx2-space"></div>
+            <div class="rx2-sky" id="rxSky"></div>
+            <svg class="rx2-ridge" id="rxRidge" viewBox="0 0 1440 260" preserveAspectRatio="none"><path class="r1" d="M0 260V170l90-46 70 30 110-92 80 58 60-34 120 104 90-60 80 40 130-118 100 82 70-30 120 96 90-52 70 34 160-60v148z"/><path class="r2" d="M0 260v-48l120-40 110 36 140-70 120 62 150-48 130 56 140-64 120 48 150-40 140 44 100-20v84z"/></svg>
+            <div class="rx2-mars" id="rxMars"></div>
+            <canvas class="rx2-canvas" id="rxCanvas"></canvas>
+            <div class="rx2-sea" id="rxSea"><svg class="rx2-wave" viewBox="0 0 1440 60" preserveAspectRatio="none"><path d="M0 30C120 10 240 50 360 30S600 10 720 30 960 50 1080 30 1320 10 1440 30V60H0z"/></svg><div class="rx2-water"></div></div>
+          </div>
+          <div class="container rx2-inner">
+            <div class="rx2-gauge" aria-hidden="true">
+              <p class="rx2-env" id="rxEnv">Sotto la superficie</p>
+              <p class="rx2-val" id="rxVal">−40 m</p>
+              <p class="rx2-unit" id="rxUnit">5,0 ATA</p>
+              <div class="rx2-rail"><i class="rx2-mark" id="rxMark"></i>
+                <span style="--y:0%">Marte</span><span style="--y:30%">408 km</span><span style="--y:60%">8.848 m</span><span style="--y:72%">0 m</span><span style="--y:100%">−40 m</span>
+              </div>
+            </div>
+            <div class="rx2-panels">
+              <article class="rx2-panel is-on" style="--c:#5cd6ff">
+                <p class="rx2-num">01</p>
+                <p class="rx2-k" data-i18n="ric1_k">Medicina subacquea e iperbarica</p>
+                <h3 data-i18n="ric1_h3">Sotto pressione, in clinica</h3>
+                <p class="rx2-p" data-i18n="ric1_p">Ossigenoterapia iperbarica, idoneità all’immersione, cuore e subacquea: dal razionale fisiologico alle decisioni cliniche.</p>
+                <ul class="rx2-proof"><li data-i18n="ric1_l1">Scambi gassosi in immersione e in apnea · J Physiol 2026</li><li data-i18n="ric1_l2">Tornare a immergersi dopo ablazione per fibrillazione atriale · DHM 2026</li><li data-i18n="ric1_l3">Studio ITA-OTI sull’ossigenoterapia iperbarica in Italia · SIAARTI</li></ul>
+                <a class="rx2-go" href="#contenuti-articoli"><span data-i18n="ric1_cta">Leggi le pubblicazioni</span> <span aria-hidden="true">→</span></a>
+              </article>
+              <article class="rx2-panel" style="--c:#4dffd6">
+                <p class="rx2-num">02</p>
+                <p class="rx2-k" data-i18n="ric3_k">Human factors · Soccorso</p>
+                <h3 data-i18n="ric3_h3">Decidere quando sbagliare costa</h3>
+                <p class="rx2-p" data-i18n="ric3_p">In rianimazione, in montagna, sul campo: comunicazione, lavoro di squadra, checklist e gestione dell’errore, portati in aula e nelle esercitazioni.</p>
+                <ul class="rx2-proof"><li>HyperCare</li><li>Rescue in Difficult Environment</li><li>The Day After</li></ul>
+                <a class="rx2-go" href="#formazione"><span data-i18n="ric3_cta">Vai ai corsi</span> <span aria-hidden="true">→</span></a>
+              </article>
+              <article class="rx2-panel" style="--c:#ffb07a">
+                <p class="rx2-num">03</p>
+                <p class="rx2-k" data-i18n="ric2_k">Medicina spaziale</p>
+                <h3 data-i18n="ric2_h3">Oltre l’atmosfera</h3>
+                <p class="rx2-p" data-i18n="ric2_p">Pressione, gas e microgravità letti con gli occhi di chi lavora in rianimazione e in camera iperbarica.</p>
+                <ul class="rx2-proof"><li data-i18n="ric2_l1">First Cut on Mars · IntechOpen 2026</li><li data-i18n="ric2_l2">Il costo invisibile del respiro · Economia dello Spazio</li><li data-i18n="ric2_l3">Dall’abisso allo spazio · Economia dello Spazio</li></ul>
+                <a class="rx2-go" href="#contenuti-articoli"><span data-i18n="ric2_cta">Leggi le pubblicazioni</span> <span aria-hidden="true">→</span></a>
+              </article>
+            </div>
+            <div class="rx2-dots" role="group" aria-label="Fronti di ricerca">
+              <button type="button" data-go="0" class="is-on" aria-label="Fronte 1">01</button><button type="button" data-go="1" aria-label="Fronte 2">02</button><button type="button" data-go="2" aria-label="Fronte 3">03</button>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -1516,7 +1530,6 @@
       <a href="#attivita">Aree</a>
       <a href="#fondatori">Fondatori</a>
       <a href="#rete-home">Rete</a>
-      <a href="#contenuti">Contenuti</a>
       <a href="#contenuti-articoli">Pubblicazioni</a>
       <a href="#ricerca">Ricerca</a>
       <a href="#formazione">Formazione</a>
@@ -1577,9 +1590,9 @@
       <li><a href="#attivita"   data-label="Aree"       aria-label="Vai ad Aree"></a></li>
       <li><a href="#fondatori"  data-label="Fondatori"  aria-label="Vai a Fondatori"></a></li>
       <li><a href="#rete-home"  data-label="Rete"       aria-label="Vai a Rete"></a></li>
-      <li><a href="#contenuti"  data-label="Contenuti"  aria-label="Vai a Contenuti"></a></li>
       <li><a href="#ricerca"    data-label="Ricerca"    aria-label="Vai a Ricerca"></a></li>
       <li><a href="#formazione" data-label="Formazione" aria-label="Vai a Formazione"></a></li>
+      <li><a href="#contenuti-articoli" data-label="Pubblicazioni" aria-label="Vai a Pubblicazioni"></a></li>
       <li><a href="#partner"    data-label="Partner"    aria-label="Vai a Partner"></a></li>
       <li><a href="#contatti"   data-label="Contatti"   aria-label="Vai a Contatti"></a></li>
     </ul>
@@ -1977,7 +1990,7 @@
         /* ── 2026-10 aggiornamento home ── */
         'fond_desc_silvio':'Anaesthesiologist and intensivist, Trauma Team Leader. Diving and hyperbaric physician, with advanced training in aeronautical and space medicine.',
         'fond_desc_luigi':'Nuclear and biomedical engineer, specialist in underwater and hyperbaric, aeronautical and aerospace medicine.',
-        'fond_desc_vincenzo':'Anaesthesiologist and intensivist, hyperbaric and diving physician.',
+        'fond_desc_vincenzo':'Anaesthesiologist, cardiac anaesthesiologist and intensivist, hyperbaric and diving physician.',
         'fond_desc_matteo':'Researcher, emergency physician, PhD in Global Health, Humanitarian Aid and Disaster Medicine.',
         'tl_2026':'Members of the Scientific Committee of the Polo Nazionale Droni.',
         'vis_p2':'Amici di Boyle means extreme environments and emergency management in the most complex scenarios. Verifiable research, clear methods and continuous training, designed for those working in the field.',
@@ -2010,9 +2023,9 @@
         'appt2_who':'Chairs <strong>Silvio Zerbi</strong> and <strong>Paolo Severgnini</strong> · with <strong>Vincenzo Benenati</strong>',
         'appt2_note':'Free · up to 90 participants · CME event ID 223241.1',
         'appt3_badge':'Save the date',
-        'appt3_when':'21–22 January 2027 · theory and simulation',
+        'appt3_when':'21–22 January 2027','appt3_poster':'Poster',
         'appt3_topics':'Burns, hypothermia and avalanches, decompression illness',
-        'appt3_note':'22 January: hands-on day with seven simulation stations, two dedicated to hyperbaric medicine.',
+        'appt3_note':'Save the date: the full programme and registration will be published here once final.',
         'ev_p2':'Joining the Boyle Network also means giving visibility to quality events and initiatives that share rigour, utility and educational value.',
         'ev_cta2':'Propose an activity',
         'pubf_badge':'New · Open Access',
@@ -2029,6 +2042,26 @@
         'gate3_k':'Sotto Pressione · New episode','gate3_h':'The gas laws',
         'gate3_p':'Boyle, Charles and Gay-Lussac: the physics behind every dive, told by Luigi Tarsia. Season 3, episode 13. (In Italian)',
         'gate3_cta':'Listen to the podcast',
+        'ric_h2':'From the deep to Mars',
+        'ric_sub':'Rise with us from the depths to orbit: three research fronts, each with work already published.',
+        'ric1_k':'Diving and hyperbaric medicine','ric3_k':'Human factors · Rescue',
+        'ric3_p':'In intensive care, in the mountains, in the field: communication, teamwork, checklists and error management, brought into the classroom and into exercises.',
+        'ric2_k':'Space medicine','ric2_h3':'Beyond the atmosphere',
+        'att_kicker':'Areas of activity','att_h2':'Four directions, real content',
+        'att_sub':'Pick an area: you will find the work, courses and episodes that tell its story.',
+        'att1_h3':'Research','att2_h3':'Education','att3_h3':'Publications','att4_h3':'Media',
+        'att1_p':'Clinical studies, scientific collaborations and protocols applied to diving, hyperbaric and extreme environment medicine.',
+        'att2_p':'University teaching, courses, congresses and materials built for those who work in the field.',
+        'att3_p':'Articles, case reports, editorial contributions and scientific materials for clinicians, operators and researchers.',
+        'att4_p':'Podcasts, interviews and outreach that make extreme environment medicine accessible.',
+        'att1_cta':'Explore research','att2_cta':'Go to education','att3_cta':'Read the publications','att4_cta':'Open the podcast',
+        'ax0_stat':'research fronts, from the deep to Mars','ax0_l1':'Diving and hyperbaric medicine','ax0_l2':'Human factors and rescue','ax0_l3':'Space medicine',
+        'ax1_stat':'courses and congresses in the archive, with their posters','ax1_l1s':'Bolzano · 21–22 January 2027','ax1_l2':'Elective teaching activities','ax1_l2s':'University of Insubria','ax1_l3s':'Full programme · PDF',
+        'ax2_stat':'works to read, from articles to chapters and case reports','ax2_l2':'Gas exchange in SCUBA and breath-hold diving','ax2_l3':'Diving after ablation for atrial fibrillation',
+        'ax3_stat':'episodes of Sotto Pressione, over 500,000 views','ax3_l1s':'Latest episode · Season 3','ax3_l2':'In the press','ax3_l2s':'Articles and interviews about Gli Amici di Boyle','ax3_l3':'The invisible cost of breathing',
+        'db_new':'New','db_h2':'Where Italy dives',
+        'db_p':'The map of Italian dive centres curated by Gli Amici di Boyle: search by name or town, explore region by region and find the right centre for your next dive.',
+        'db_s1':'dive centres mapped','db_s2':'regions','db_cta':'Explore the map',
 }
     };
 
@@ -2194,5 +2227,6 @@
     });
   })();
   </script>
+  <script src="title-fx.js" defer></script>
 </body>
 </html>
