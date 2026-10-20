@@ -2932,6 +2932,16 @@ html, body { overflow-x: hidden; }
   .site-nav .nav-dropdown-panel a::before { order: 2; }
   .site-nav .nav-dropdown-panel .nav-badge-new { flex-shrink: 0; overflow: visible; }
   .site-nav .lang-toggle--mobile { justify-content: flex-end !important; }
+
+  /* larghezza aderente alle voci, senza spazio vuoto a sinistra */
+  .site-nav { width: max-content !important; min-width: 150px !important; max-width: calc(100vw - 32px) !important; }
+  #mobile-quicknav-panel { width: max-content; min-width: 140px; max-width: calc(100vw - 32px); }
+  .site-nav > a, .site-nav .nav-dropdown-btn { padding-left: 20px !important; padding-right: 14px !important; }
+  #mobile-quicknav-panel a { padding-left: 20px; padding-right: 14px; }
+  /* sottomenu chiuso: non deve allargare il pannello */
+  .site-nav .nav-dropdown:not(.is-open) .nav-dropdown-panel { display: none !important; }
+  /* con l'hamburger aperto il pulsante flottante non copre le voci */
+  body:has(.nav-toggle:checked) #mobile-quicknav { opacity: 0; pointer-events: none; }
 }
 
 /* ── Cookie banner ── */
