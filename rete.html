@@ -304,8 +304,8 @@
           <button class="modal__close" id="publishEventClose" aria-label="Chiudi">✕</button>
         </div>
         <p class="modal__desc" data-i18n="r_pub_ev_desc">Compila il form per proporre un evento o un corso da pubblicare sulla Rete di Boyle. Ti risponderemo entro 48 ore.</p>
-        <form class="modal__form" id="publishEventForm"
-              action="https://formspree.io/f/mbdalowy"
+        <form data-boyle-form="evento-rete" action="https://script.google.com/macros/s/AKfycbwzgZvPxxW3yjA_Fa0_9GYINJO1QwBC_cT8sHhmRG5oDi3dJ9egqMGVznBcDIDP2ED_fQ/exec" class="modal__form" id="publishEventForm"
+             
               method="POST">
           <input type="hidden" name="_subject" value="Proposta evento — Rete di Boyle" />
           <div class="form-grid">
@@ -528,7 +528,7 @@
         <h2 class="modal__title" id="modal-title" data-i18n="r_join_title">Connettiamo menti brillanti</h2>
         <p class="modal__desc" data-i18n="r_cand_desc">La Rete di Boyle è riservata a professionisti con curriculum validato in medicina subacquea, iperbarica, aerospaziale, safety o fisiologia degli ambienti estremi. Valutiamo ogni candidatura individualmente.</p>
       </div>
-      <form class="network-form" id="network-form" action="https://formspree.io/f/xzdareqw" method="POST" enctype="multipart/form-data">
+      <form data-boyle-form="rete" action="https://script.google.com/macros/s/AKfycbwzgZvPxxW3yjA_Fa0_9GYINJO1QwBC_cT8sHhmRG5oDi3dJ9egqMGVznBcDIDP2ED_fQ/exec" class="network-form" id="network-form" method="POST" enctype="multipart/form-data">
         <input type="hidden" name="_subject" value="Nuova candidatura alla Rete di Boyle" />
         <input type="hidden" name="_language" value="it" />
         <input type="hidden" id="cand-snippet" name="codice_card_html" />
@@ -635,7 +635,7 @@
         </div>
       </div>
 
-      <form class="network-form" id="amici-form" action="https://formspree.io/f/xzdareqw" method="POST">
+      <form data-boyle-form="amici" action="https://script.google.com/macros/s/AKfycbwzgZvPxxW3yjA_Fa0_9GYINJO1QwBC_cT8sHhmRG5oDi3dJ9egqMGVznBcDIDP2ED_fQ/exec" class="network-form" id="amici-form" method="POST">
         <input type="hidden" name="_subject" value="Nuova iscrizione — Amici di Boyle" />
         <input type="hidden" name="tipo" value="amico-di-boyle" />
         <input type="hidden" name="codice_generato" id="amici-codice-hidden" />
@@ -2709,5 +2709,6 @@
   <script src="title-fx.js?v=20261019g" defer></script>
   <script src="motion.js?v=20261019g" defer></script>
   <script src="consent.js?v=20261020a" defer></script>
+  <script src="boyle-forms.js?v=20261020a" defer></script>
 </body>
 </html>

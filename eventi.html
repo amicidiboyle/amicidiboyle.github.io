@@ -345,7 +345,7 @@
       </div>
       <p class="ev-modal__desc" data-i18n="ev_modal_desc">Compila il form. Ti risponderemo entro 48 ore. Per file superiori ai limiti indicati puoi inviare tutto a <a href="mailto:eventi@amicidiboyle.it" style="color:#7be4ff">eventi@amicidiboyle.it</a>.</p>
 
-      <form id="evProposeForm" action="https://formspree.io/f/xpqkdjba" method="POST" enctype="multipart/form-data" novalidate>
+      <form data-boyle-form="evento" action="https://script.google.com/macros/s/AKfycbwzgZvPxxW3yjA_Fa0_9GYINJO1QwBC_cT8sHhmRG5oDi3dJ9egqMGVznBcDIDP2ED_fQ/exec" id="evProposeForm" method="POST" enctype="multipart/form-data" novalidate>
         <input type="hidden" name="_subject" value="Proposta evento — Rete di Boyle" />
         <input type="hidden" name="codice_membro" id="hiddenCode" />
 
@@ -1252,5 +1252,6 @@
   <script src="title-fx.js?v=20261019g" defer></script>
   <script src="motion.js?v=20261019g" defer></script>
   <script src="consent.js?v=20261020a" defer></script>
+  <script src="boyle-forms.js?v=20261020a" defer></script>
 </body>
 </html>

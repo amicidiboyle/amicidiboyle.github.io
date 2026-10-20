@@ -1053,7 +1053,7 @@
         </button>
       </div>
       <p class="dialog__desc" data-i18n="dlg1_desc">Per domande, proposte di collaborazione, richieste editoriali o informazioni generali sul progetto.</p>
-      <form id="contactFormGeneral" class="form modalForm" action="https://formspree.io/f/xzdareqw" method="POST" accept-charset="UTF-8">
+      <form data-boyle-form="contatti" action="https://script.google.com/macros/s/AKfycbwzgZvPxxW3yjA_Fa0_9GYINJO1QwBC_cT8sHhmRG5oDi3dJ9egqMGVznBcDIDP2ED_fQ/exec" id="contactFormGeneral" class="form modalForm" method="POST" accept-charset="UTF-8">
         <input type="hidden" name="_subject" value="Nuovo contatto generale — Gli Amici di Boyle" />
         <label class="field"><span>Nome e cognome</span><input name="name" type="text" autocomplete="name" placeholder="Come ti chiami?" required /></label>
         <div class="section-grid split-2">
@@ -1084,7 +1084,7 @@
         </button>
       </div>
       <p class="dialog__desc" data-i18n="dlg2_desc">Per docenze universitarie, corsi specialistici, congressi, seminari e collaborazioni strutturate con enti e istituzioni.</p>
-      <form id="contactFormTeaching" class="form modalForm" action="https://formspree.io/f/xzdareqw" method="POST" accept-charset="UTF-8">
+      <form data-boyle-form="docenza" action="https://script.google.com/macros/s/AKfycbwzgZvPxxW3yjA_Fa0_9GYINJO1QwBC_cT8sHhmRG5oDi3dJ9egqMGVznBcDIDP2ED_fQ/exec" id="contactFormTeaching" class="form modalForm" method="POST" accept-charset="UTF-8">
         <input type="hidden" name="_subject" value="Richiesta docenza o incontro — Gli Amici di Boyle" />
         <label class="field"><span>Nome o ente richiedente</span><input name="name" type="text" placeholder="Nome, università, società scientifica, azienda…" required /></label>
         <div class="section-grid split-2">
@@ -1115,7 +1115,7 @@
         </button>
       </div>
       <p class="dialog__desc" data-i18n="dlg3_desc">La Rete di Boyle è selettiva e orientata a chi opera davvero negli ambienti estremi. Presentati: valuteremo il profilo e ti contatteremo.</p>
-      <form id="contactFormBoyle" class="form modalForm" action="https://formspree.io/f/xzdareqw" method="POST" accept-charset="UTF-8">
+      <form data-boyle-form="collabora" action="https://script.google.com/macros/s/AKfycbwzgZvPxxW3yjA_Fa0_9GYINJO1QwBC_cT8sHhmRG5oDi3dJ9egqMGVznBcDIDP2ED_fQ/exec" id="contactFormBoyle" class="form modalForm" method="POST" accept-charset="UTF-8">
         <input type="hidden" name="_subject" value="Candidatura Rete di Boyle" />
         <div class="section-grid split-2">
           <label class="field"><span>Nome e Cognome</span><input name="name" type="text" placeholder="Nome e Cognome" required /></label>
@@ -2237,5 +2237,6 @@
   <script src="title-fx.js?v=20261019g" defer></script>
   <script src="motion.js?v=20261019g" defer></script>
   <script src="consent.js?v=20261020a" defer></script>
+  <script src="boyle-forms.js?v=20261020a" defer></script>
 </body>
 </html>
