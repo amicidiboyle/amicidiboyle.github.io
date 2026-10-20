@@ -57,7 +57,7 @@
       owner_note: "Verificata manualmente da Amici di Boyle prima di qualsiasi modifica pubblica — nessun aggiornamento automatico.",
       owner_confirm: "✓ Richiesta inviata. Ti risponderemo il prima possibile.",
       owner_error: "Non siamo riusciti a inviare la richiesta. Riprova, oppure scrivi direttamente a <a href=\"mailto:info@amicidiboyle.it\">info@amicidiboyle.it</a>.",
-      footer_note: "Se gestisci uno di questi centri e vuoi segnalare una correzione o la rimozione, scrivi a <a href=\"mailto:info@amicidiboyle.it\">info@amicidiboyle.it</a>.",
+      footer_note: "I dati dei centri provengono da fonti pubbliche, come siti web e schede pubbliche delle attività. Se gestisci uno di questi centri puoi chiedere una correzione o la rimozione dal pulsante «Sei il titolare di questo diving?» nella scheda, oppure scrivendo a <a href=\"mailto:info@amicidiboyle.it\">info@amicidiboyle.it</a>.<br><a href=\"privacy.html\">Privacy</a> · <a href=\"cookie.html\">Cookie</a> · <a href=\"note-legali.html\">Note legali</a>",
     },
     en: {
       nav_open_menu: "Open menu",
@@ -104,7 +104,7 @@
       owner_note: "Manually reviewed by Amici di Boyle before any public change — no automatic updates.",
       owner_confirm: "✓ Request sent. We'll get back to you as soon as possible.",
       owner_error: "We couldn't send the request. Please try again, or email us directly at <a href=\"mailto:info@amicidiboyle.it\">info@amicidiboyle.it</a>.",
-      footer_note: "If you manage one of these centers and want to report a correction or removal, email us at <a href=\"mailto:info@amicidiboyle.it\">info@amicidiboyle.it</a>.",
+      footer_note: "Center data comes from public sources, such as websites and public business listings. If you manage one of these centers you can request a correction or removal with the “Do you manage this dive center?” button on its card, or by emailing <a href=\"mailto:info@amicidiboyle.it\">info@amicidiboyle.it</a>.<br><a href=\"privacy.html\">Privacy</a> · <a href=\"cookie.html\">Cookie</a> · <a href=\"note-legali.html\">Legal notes</a>",
     },
   };
 

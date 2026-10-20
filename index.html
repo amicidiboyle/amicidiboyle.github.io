@@ -1,14 +1,6 @@
 <!doctype html>
 <html lang="it">
 <head>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-T39LRQMK7Y"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-T39LRQMK7Y');
-</script>
 
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -1042,6 +1034,7 @@
         <a href="podcast.html">Podcast</a>
         <a href="privacy.html" data-i18n="footer_privacy">Privacy</a>
         <a href="cookie.html" data-i18n="footer_cookie">Cookie</a>
+        <a href="note-legali.html">Note legali</a>
       </nav>
     </div>
   </footer>
@@ -1070,6 +1063,7 @@
         <label class="field"><span>Messaggio</span><textarea name="message" rows="4" placeholder="Descrivi la tua richiesta o proposta. Più è chiara, prima rispondiamo." required></textarea></label>
         <div class="dialog__actions">
           <button id="submitGeneral" type="submit" class="btn btn-primary btn-electric">Invia messaggio</button>
+<p class="form-privacy-note" style="margin:10px 0 0;font-size:.74rem;line-height:1.5;opacity:.72;">Inviando il modulo accetti il trattamento dei dati descritto nella <a href="privacy.html" style="color:inherit;text-decoration:underline;">Privacy Policy</a>.</p>
           <button type="button" class="btn btn-ghost" data-close-dialog>Annulla</button>
         </div>
         <p class="form__status" id="statusGeneral" aria-live="polite"></p>
@@ -1100,6 +1094,7 @@
         <label class="field"><span>Contesto e dettagli</span><textarea name="message" rows="4" placeholder="Descrivi l'evento, la data prevista, il pubblico di riferimento e qualsiasi altra informazione utile." required></textarea></label>
         <div class="dialog__actions">
           <button id="submitTeaching" type="submit" class="btn btn-primary btn-electric">Invia richiesta</button>
+<p class="form-privacy-note" style="margin:10px 0 0;font-size:.74rem;line-height:1.5;opacity:.72;">Inviando il modulo accetti il trattamento dei dati descritto nella <a href="privacy.html" style="color:inherit;text-decoration:underline;">Privacy Policy</a>.</p>
           <button type="button" class="btn btn-ghost" data-close-dialog>Annulla</button>
         </div>
         <p class="form__status" id="statusTeaching" aria-live="polite"></p>
@@ -1143,6 +1138,7 @@
         <label class="field"><span>Presentazione e motivazione</span><textarea name="message" rows="4" placeholder="Chi sei, cosa fai, perché vuoi entrare nella Rete di Boyle e cosa puoi portare al progetto." required></textarea></label>
         <div class="dialog__actions">
           <button id="submitBoyle" type="submit" class="btn btn-primary btn-electric">Invia candidatura</button>
+<p class="form-privacy-note" style="margin:10px 0 0;font-size:.74rem;line-height:1.5;opacity:.72;">Inviando il modulo accetti il trattamento dei dati descritto nella <a href="privacy.html" style="color:inherit;text-decoration:underline;">Privacy Policy</a>.</p>
           <button type="button" class="btn btn-ghost" data-close-dialog>Annulla</button>
         </div>
         <p class="form__status" id="statusBoyle" aria-live="polite"></p>
@@ -2237,28 +2233,9 @@
   })();
   </script>
   <script src="home-extra.js?v=20261019g" defer></script>
-  <!-- Cookie banner -->
-  <div id="cookie-banner" role="region" aria-label="Cookie">
-    <p>Questo sito usa cookie tecnici e servizi di terze parti (Formspree, GitHub Pages).
-      <a href="cookie.html">Cookie Policy</a> &middot; <a href="privacy.html" data-i18n="footer_privacy">Privacy</a></p>
-    <button id="cookie-accept">Accetta</button>
-  </div>
-  <script>
-  (function(){
-    if (!localStorage.getItem('boyle_cookie_ok')) {
-      var b = document.getElementById('cookie-banner');
-      if (b) setTimeout(function(){ b.classList.add('visible'); }, 600);
-    }
-    var btn = document.getElementById('cookie-accept');
-    if (btn) btn.addEventListener('click', function(){
-      localStorage.setItem('boyle_cookie_ok','1');
-      var b = document.getElementById('cookie-banner');
-      if (b) { b.style.transition='transform .3s ease-in'; b.style.transform='translateY(100%)'; }
-    });
-  })();
-  </script>
   <script src="barometro.js?v=20261020b" defer></script>
   <script src="title-fx.js?v=20261019g" defer></script>
   <script src="motion.js?v=20261019g" defer></script>
+  <script src="consent.js?v=20261020a" defer></script>
 </body>
 </html>
