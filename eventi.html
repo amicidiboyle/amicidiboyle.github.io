@@ -822,37 +822,20 @@
     }
 
     /* ── Access codes (stesso sistema di rete.html) ── */
-    var CODE_TO_KEY = {
-      'BOYLE-V666-ZERBI': 'silvio-zerbi',
-      'BOYLE-HM6Q-ZERBI': 'silvio-zerbi',
-      'BOYLE-WY8W-VINCIGUERRA': 'felicia-vinciguerra',
-      'BOYLE-5ZS4-ZANON': 'vincenzo-zanon',
-      'BOYLE-ZXTB-LANCIO': 'pre-lancio',
-      'BOYLE-XSYN-TEST': 'last-test',
-      'BOYLE-RDBF-49': 'prova-testh-9-49',
-      'BOYLE-4CJ2-PIPPA': 'pippo-pippa',
-      'BOYLE-ADMIN-2026': 'admin'
-    };
-    var DYNAMIC_CODES = {};
+    // i codici li verifica lo script Google, non sono piu' scritti nella pagina
+    var ACCESS_URL = 'https://script.google.com/macros/s/AKfycbwzgZvPxxW3yjA_Fa0_9GYINJO1QwBC_cT8sHhmRG5oDi3dJ9egqMGVznBcDIDP2ED_fQ/exec';
     var ACCESS_KEY = 'boyle_member_unlocked';
-
-    fetch('boyle-access-codes.json?v=' + Date.now())
-      .then(function(r) { return r.json(); })
-      .then(function(data) {
-        if (data && data.codes) {
-          Object.keys(data.codes).forEach(function(k) {
-            DYNAMIC_CODES[k.toUpperCase()] = String(data.codes[k] || '').trim();
-          });
-        }
-      })
-      .catch(function() {});
 
     function isMemberUnlocked() {
       return sessionStorage.getItem(ACCESS_KEY) === 'true';
     }
     function validateCode(raw) {
-      var nc = raw.trim().toUpperCase();
-      return !!(CODE_TO_KEY[nc] || DYNAMIC_CODES[nc]);
+      var nc = String(raw || '').trim().toUpperCase();
+      if (!nc) return Promise.resolve(false);
+      return fetch(ACCESS_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ action: 'access', code: nc }) })
+        .then(function(r) { return r.json(); })
+        .then(function(j) { return !!(j && j.ok); })
+        .catch(function() { return false; });
     }
 
     /* ── Access wall ── */
@@ -881,7 +864,10 @@
     if (evWallBtn) {
       evWallBtn.addEventListener('click', function() {
         var code = evWallCode ? evWallCode.value : '';
-        if (validateCode(code)) {
+        if (evWallErr) evWallErr.textContent = getLang() === 'en' ? 'Checking...' : 'Verifica in corso...';
+        validateCode(code).then(function(valid) {
+        if (valid) {
+          if (evWallErr) evWallErr.textContent = '';
           sessionStorage.setItem(ACCESS_KEY, 'true');
           sessionStorage.setItem('boyle_access_code', code.trim().toUpperCase());
           closeWall();
@@ -889,6 +875,7 @@
         } else {
           if (evWallErr) evWallErr.textContent = getLang() === 'en' ? 'Code not recognised. Check the welcome email.' : 'Codice non riconosciuto. Controlla la mail di benvenuto.';
         }
+        });
       });
     }
     if (evWallCode) {

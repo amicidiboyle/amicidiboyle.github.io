@@ -1271,82 +1271,33 @@
   }
 
   /* ── Sistema accesso email per membri (codice personalizzato) ── */
-  const CODE_TO_KEY = {
-    'BOYLE-K7X2-DAMIANO':    'simona-damiano',
-    'BOYLE-9QM4-ALPINI':     'andrea-murdock-alpini',
-    'BOYLE-R3N8-ZERBI':      'valerio-zerbi',
-    'BOYLE-F5W1-BOROTTO':    'erika-borotto',
-    'BOYLE-M2J9-GALVANI':    'andrea-galvani',
-    'BOYLE-T6P3-GIUFFRIDA':  'federica-giuffrida',
-    'BOYLE-W8L5-CALZAVACCA': 'paolo-calzavacca',
-    'BOYLE-N4R7-XHEPA':      'erion-xhepa',
-    'BOYLE-D1K6-MARSLAND':   'david-james-marsland',
-    'BOYLE-H3Y8-GIACON':     'tommaso-antonio-giacon',
-    'BOYLE-C9F2-CARDOSO':    'tiago-miguel-cardoso',
-    'BOYLE-V7Q4-VENTURELLI': 'federica-venturelli',
-    'BOYLE-X5B1-SALETTI':    'giulio-saletti',
-    'BOYLE-J2M8-SOLDINI':    'gabriele-soldini',
-    'BOYLE-E6N3-DENARO':     'matteo-denaro',
-    'BOYLE-ENAR-CAPPA':      'giovanni-cappa',
-    'BOYLE-YHT9-CAMPONOVO':  'claudio-camponovo',
-    'BOYLE-X7N3-MAK':        'ho-man-mak',
-    'BOYLE-L9P5-PORRI':      'lidia-porri',
-    'BOYLE-A8T2-ALMEIDA':    'adriana-almeida',
-    'BOYLE-S4K7-SANNA':      'antonello-sanna',
-    'BOYLE-P2R9-LIPARULO':   'luigi-liparulo',
-    'BOYLE-ZPK5-BALZANI':    'alessandro-balzani',
-    'FRIEND-M7R3-MARTEL':    'angelo-martellotti',
-      'pippo-pippa': 'BOYLE-4CJ2-PIPPA',
-      'peppe-trippa': 'FRIEND-TY6R-TRIPPA',
-      'cotica-porchetta': 'FRIEND-3UYH-PORCHETT',
-      'prova-test': 'FRIEND-I1VZ-TEST',
-      'silvio-zerbi': 'BOYLE-V666-ZERBI',
-      'test-yesto': 'FRIEND-UXFW-YESTO',
-      'last-test': 'BOYLE-XSYN-TEST',
-      'test-name': 'FRIEND-FY9L-TESTNAME',
-      'felicia-vinciguerra': 'BOYLE-WY8W-VINCIGUERRA',
-      'andrea-fabbro': 'FRIEND-ZBI5-FABBRO',
-      'andrea-neville-cracchiolo': 'FRIEND-C2DV-CRACCHIO',
-      'vincenzo-zanon': 'BOYLE-5ZS4-ZANON',
-      'chiara-zanovello': 'FRIEND-ZCUH-ZANOVELL',
-      'BOYLE-VUXG-FABBRO': 'andrea-fabbro',
-      'marco-filippi': 'BOYLE-Z9G4-FILIPPI',
-      'matteo-placci': 'BOYLE-RQ27-PLACCI',
-      'umberto-galli-zugaro': 'FRIEND-HXVU-ZUGARO',
-      'BOYLE-4V6E-MARTELLOTTI': 'angelo-martellotti',
-      'benedetta-beltramelli': 'BOYLE-6Z9R-BELTRAMELLI',
-  };
-  const VALID_CODES = {
-    'simona-damiano':         'BOYLE-K7X2-DAMIANO',
-    'andrea-murdock-alpini':  'BOYLE-9QM4-ALPINI',
-    'valerio-zerbi':          'BOYLE-R3N8-ZERBI',
-    'erika-borotto':          'BOYLE-F5W1-BOROTTO',
-    'andrea-galvani':         'BOYLE-M2J9-GALVANI',
-    'federica-giuffrida':     'BOYLE-T6P3-GIUFFRIDA',
-    'paolo-calzavacca':       'BOYLE-W8L5-CALZAVACCA',
-    'erion-xhepa':            'BOYLE-N4R7-XHEPA',
-    'david-james-marsland':   'BOYLE-D1K6-MARSLAND',
-    'tommaso-antonio-giacon': 'BOYLE-H3Y8-GIACON',
-    'tiago-miguel-cardoso':   'BOYLE-C9F2-CARDOSO',
-    'federica-venturelli':    'BOYLE-V7Q4-VENTURELLI',
-    'giulio-saletti':         'BOYLE-X5B1-SALETTI',
-    'gabriele-soldini':       'BOYLE-J2M8-SOLDINI',
-    'matteo-denaro':          'BOYLE-E6N3-DENARO',
-    'giovanni-cappa':         'BOYLE-ENAR-CAPPA',
-    'claudio-camponovo':      'BOYLE-YHT9-CAMPONOVO',
-  };
-  let ALL_CODES = [...Object.keys(CODE_TO_KEY), 'BOYLE-FONDATORI'];
+  // I codici d'accesso non stanno piu' nella pagina: li verifica lo script Google,
+  // che restituisce la chiave del titolare e gli indirizzi email dei membri.
+  const ACCESS_URL = 'https://script.google.com/macros/s/AKfycbwzgZvPxxW3yjA_Fa0_9GYINJO1QwBC_cT8sHhmRG5oDi3dJ9egqMGVznBcDIDP2ED_fQ/exec';
+  const CODE_TO_KEY = {};
   const DYNAMIC_CODE_TO_KEY = {};
-  fetch('boyle-access-codes.json?v=' + Date.now())
-    .then(function(r){ return r.ok ? r.json() : null; })
-    .then(function(d){
-      if (!d || !d.codes) return;
-      Object.keys(d.codes).forEach(function(k){
-        var ck = k.trim().toUpperCase();
-        ALL_CODES = [...new Set([...ALL_CODES, ck])];
-        DYNAMIC_CODE_TO_KEY[ck] = String(d.codes[k]||'').trim();
-      });
-    }).catch(function(){});
+  let MEMBER_EMAILS = {};
+  try {
+    MEMBER_EMAILS = JSON.parse(sessionStorage.getItem('boyle_member_emails') || '{}');
+    var _mk = sessionStorage.getItem('boyle_member_key'), _mc = (sessionStorage.getItem('boyle_member_code') || '').toUpperCase();
+    if (_mk && _mc) DYNAMIC_CODE_TO_KEY[_mc] = _mk;
+  } catch(e) {}
+  async function checkAccessCode(code) {
+    if (!code) return false;
+    try {
+      const r = await fetch(ACCESS_URL, { method:'POST', headers:{'Content-Type':'text/plain;charset=utf-8'}, body: JSON.stringify({ action:'access', code: code }) });
+      const j = await r.json();
+      if (!j || !j.ok) return false;
+      MEMBER_EMAILS = {};
+      (j.emails || []).forEach(function(e){ MEMBER_EMAILS[String(e.name||'').trim().toLowerCase()] = e.email; });
+      try {
+        sessionStorage.setItem('boyle_member_emails', JSON.stringify(MEMBER_EMAILS));
+        if (j.key) sessionStorage.setItem('boyle_member_key', j.key); else sessionStorage.removeItem('boyle_member_key');
+      } catch(e) {}
+      if (j.key) DYNAMIC_CODE_TO_KEY[code] = j.key;
+      return true;
+    } catch(e) { return false; }
+  }
   const ACCESS_KEY = 'boyle_member_access';
   const EMAIL_ICON_HTML = '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6.75A2.75 2.75 0 0 1 5.75 4h12.5A2.75 2.75 0 0 1 21 6.75v10.5A2.75 2.75 0 0 1 18.25 20H5.75A2.75 2.75 0 0 1 3 17.25V6.75Zm2.2-.25 6.27 5.05a.83.83 0 0 0 1.06 0L18.8 6.5H5.2Zm13.8 1.46-5.42 4.36a2.33 2.33 0 0 1-2.96 0L5.2 7.96v9.29c0 .3.25.55.55.55h12.5c.3 0 .55-.25.55-.55V7.96Z"/></svg>';
 
@@ -1360,7 +1311,10 @@
 
     // Sblocca email
     document.querySelectorAll('.member-email-btn').forEach(btn => {
-      const email = btn.dataset.email;
+      const card = btn.closest('.member-card');
+      const nameEl = card && card.querySelector('[data-name]');
+      const nm = String(nameEl ? nameEl.getAttribute('data-name') : '').trim().toLowerCase();
+      const email = MEMBER_EMAILS[nm] || (String(btn.dataset.email||'').includes('@') ? btn.dataset.email : '');
       if (!email) return;
       const a = document.createElement('a');
       a.className = 'icon-btn';
@@ -1468,9 +1422,10 @@
     accModal?.addEventListener('click', e => { if (e.target === accModal) closeAcc(); });
     accJoin?.addEventListener('click', () => { closeAcc(); openModal(); });
 
-    function tryCode() {
+    async function tryCode() {
       const code = (accInput?.value || '').trim().toUpperCase();
-      if (ALL_CODES.includes(code)) {
+      if (accStatus) { accStatus.textContent = 'Verifica in corso...'; accStatus.className = 'access-modal__status'; }
+      if (await checkAccessCode(code)) {
         if (accStatus) { accStatus.textContent = "✓ Accesso confermato. Benvenuto."; accStatus.className = 'access-modal__status success'; }
         unlockAll(code);
         setTimeout(closeAcc, 1400);
@@ -1756,10 +1711,11 @@
     const bi = document.getElementById('barCodeInput');
     const bb = document.getElementById('barCodeBtn');
     const bs = document.getElementById('barStatus');
-    function tryBar() {
+    async function tryBar() {
       const code = (bi?.value||'').trim().toUpperCase();
       if (!code) return;
-      if (ALL_CODES.includes(code)) {
+      if (bs) { bs.textContent = 'Verifica in corso...'; bs.className = 'hero-access-status'; }
+      if (await checkAccessCode(code)) {
         unlockAll(code);
       } else {
         if (bs) { bs.textContent = '✗ Codice non valido'; bs.className = 'hero-access-status err'; }
@@ -1976,7 +1932,7 @@
       if(status){ status.textContent='Salvataggio...'; status.className='edit-status'; }
 
       const payload = {
-        action:'save_profile', key:currentKey, name:currentKey,
+        action:'save_profile', key:currentKey, name:currentKey, code:(sessionStorage.getItem('boyle_member_code')||''),
         bio: document.getElementById('ef-bio').value.trim(),
         linkedin: document.getElementById('ef-linkedin').value.trim(),
         researchgate: document.getElementById('ef-researchgate').value.trim(),
