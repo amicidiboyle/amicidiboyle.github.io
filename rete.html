@@ -1894,7 +1894,7 @@
   }
 
   /* ── MODAL MATITA ── */
-  const GH_TOKEN = ['github_pat','_11B5YK77Y0lJDhvomks','6Sq_LMuAIP38AjYrvQuTmgsuduyUq1VBbQbcYkDU7CnEVOUV7LXPGUDcKhOkTSS'].join('');
+  /* repository pubblico: la lettura di verifica non richiede chiavi */
   const GH_REPO  = 'amicidiboyle/amicidiboyle.github.io';
   const GH_FILE  = 'rete-profiles.json';
   const GH_API   = 'https://api.github.com/repos/' + GH_REPO + '/contents/' + GH_FILE;
@@ -2022,7 +2022,7 @@
             await new Promise(function(r){setTimeout(r,3000);});
             try {
               var res = await fetch(GH_API+'?t='+Date.now(),{
-                headers:{'Authorization':'Bearer '+GH_TOKEN,'Accept':'application/vnd.github+json','Cache-Control':'no-cache'}
+                headers:{'Accept':'application/vnd.github+json'}
               });
               if(!res.ok) continue;
               var file = await res.json();
