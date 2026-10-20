@@ -1,0 +1,361 @@
+/**
+ * Report settimanale Google Analytics 4 · Gli Amici di Boyle
+ * Ogni lunedì mattina legge GA4, costruisce i grafici e invia una mail a
+ * Silvio e Luigi. Sezioni dedicate a Diving-Boyle e Boyle Bibliography,
+ * più un riepilogo del podcast dal feed RSS. Storico su Google Sheets.
+ *
+ * Uso: eseguire una sola volta la funzione setup() e autorizzare.
+ */
+
+const CONFIG = {
+  MEASUREMENT_ID: 'G-T39LRQMK7Y',
+  PROPERTY_ID: '',            // vuoto: viene trovato da solo tramite il Measurement ID
+  RECIPIENTS: ['zerbi.silvio@gmail.com', 'luigi.tarsia@amicidiboyle.it'],
+  SENDER_NAME: 'Gli Amici di Boyle',
+  REPLY_TO: 'info@amicidiboyle.it',
+  HOUR: 9,
+  FOCUS_PAGES: [
+    { label: 'Diving-Boyle', match: 'diving-boyle', color: '#20a4c3' },
+    { label: 'Boyle Bibliography', match: 'boylebibliography', color: '#c9a227' }
+  ],
+  PODCAST_RSS: 'https://anchor.fm/s/103fe6a4c/podcast/rss',
+  PODCAST_URL: 'https://open.spotify.com/show/2kiLEUpdpn6FIUzTDMx0V7',
+  SITE_START: '2026-04-01'       // lancio del sito: il primo report parte da qui
+};
+
+// spiegazione mostrata solo nel primo report
+const FIRST_NOTE =
+  '<div style="background:#fff8e6;border:1px solid #f0d58a;border-radius:8px;padding:12px 14px;margin:14px 0;font-size:14px;line-height:21px">' +
+  '<b>Primo report: come leggere i numeri.</b><br>' +
+  'Il grafico qui sotto mostra tutte le settimane dal lancio del sito, ad aprile; dalla prossima settimana mostrerà le ultime otto. ' +
+  'Da martedì 20 ottobre il sito rispetta le regole del Garante sui cookie: Google Analytics conta solo chi clicca “Accetta” sul banner, ' +
+  'quindi da quella data le visite registrate calano anche se i visitatori reali non diminuiscono. ' +
+  'Diving-Boyle è misurata solo dalla sera del 19 ottobre, per questo il suo storico parte quasi da zero.' +
+  '</div>';
+
+const PALETTE = ['#0b4f6c', '#20a4c3', '#c9a227', '#7a9e7e', '#b5653b', '#8c7aa9'];
+
+/* ---------- installazione ---------- */
+
+function setup() {
+  const propertyId = getPropertyId_();
+  getHistorySheet_();
+  ScriptApp.getProjectTriggers()
+    .filter(t => t.getHandlerFunction() === 'sendWeeklyReport')
+    .forEach(t => ScriptApp.deleteTrigger(t));
+  ScriptApp.newTrigger('sendWeeklyReport')
+    .timeBased().onWeekDay(ScriptApp.WeekDay.MONDAY).atHour(CONFIG.HOUR)
+    .inTimezone('Europe/Rome').create();
+  ScriptApp.getProjectTriggers()
+    .filter(t => t.getHandlerFunction() === 'checkNewEpisode')
+    .forEach(t => ScriptApp.deleteTrigger(t));
+  ScriptApp.newTrigger('checkNewEpisode').timeBased().everyDays(1).atHour(10)
+    .inTimezone('Europe/Rome').create();
+  checkNewEpisode(); // memorizza l'episodio attuale senza mandare mail
+  Logger.log('Proprietà GA4: ' + propertyId + ' · invio ogni lunedì alle ' + CONFIG.HOUR);
+  sendWeeklyReport({ first: true }); // primo invio subito, con lo storico completo
+}
+
+/* ---------- report ---------- */
+
+function sendWeeklyReport(opts) {
+  const first = !!(opts && opts.first === true);
+  const prop = 'properties/' + getPropertyId_();
+  // il primo report mostra tutto lo storico dal lancio del sito, poi le ultime 8 settimane
+  const trendStart = first ? CONFIG.SITE_START : '56daysAgo';
+  const metrics = ['activeUsers', 'newUsers', 'sessions', 'screenPageViews',
+                   'averageSessionDuration', 'engagementRate'];
+
+  const kpi = compare_(prop, metrics);
+
+  // trend sito: 8 settimane ISO complete (lunedì-domenica)
+  const weekly = run_(prop, {
+    dateRanges: [{ startDate: trendStart, endDate: 'yesterday' }],
+    dimensions: [{ name: 'isoYearIsoWeek' }],
+    metrics: [{ name: 'activeUsers' }, { name: 'sessions' }, { name: 'screenPageViews' }],
+    orderBys: [{ dimension: { dimensionName: 'isoYearIsoWeek' } }]
+  });
+  const weeks = weekly.map(r => r.dims[0]);
+
+  // pagine in evidenza
+  const focus = CONFIG.FOCUS_PAGES.map(fp => {
+    const filter = { filter: { fieldName: 'pagePath',
+      stringFilter: { matchType: 'CONTAINS', value: fp.match, caseSensitive: false } } };
+    const trendRows = run_(prop, {
+      dateRanges: [{ startDate: trendStart, endDate: 'yesterday' }],
+      dimensions: [{ name: 'isoYearIsoWeek' }],
+      metrics: [{ name: 'screenPageViews' }],
+      dimensionFilter: filter
+    });
+    const byWeek = {};
+    trendRows.forEach(r => byWeek[r.dims[0]] = r.vals[0]);
+    return Object.assign({}, fp, {
+      kpi: compare_(prop, ['screenPageViews', 'activeUsers', 'userEngagementDuration'], filter),
+      trend: weeks.map(w => byWeek[w] || 0)
+    });
+  });
+
+  const pages = topList_(prop, 'pagePath', 'screenPageViews', 8);
+  const channels = topList_(prop, 'sessionDefaultChannelGroup', 'sessions', 6);
+  const countries = topList_(prop, 'country', 'activeUsers', 6);
+  const podcast = podcastInfo_();
+
+  const images = {
+    trend: lineChart_(first ? 'Sito: tutte le settimane dal lancio' : 'Sito: ultime 8 settimane', weeks,
+      [['Utenti', weekly.map(r => r.vals[0])],
+       ['Sessioni', weekly.map(r => r.vals[1])],
+       ['Pagine viste', weekly.map(r => r.vals[2])]], PALETTE.slice(0, 3)),
+    focus: lineChart_('Pagine viste per settimana', weeks,
+      focus.map(f => [f.label, f.trend]), focus.map(f => f.color)),
+    channels: pieChart_('Da dove arrivano le visite', channels),
+    countries: barChart_('Utenti per paese', countries)
+  };
+
+  const range = weekLabel_();
+  saveHistory_(range, kpi.cur, focus);
+
+  MailApp.sendEmail({
+    to: CONFIG.RECIPIENTS.join(','),
+    subject: 'amicidiboyle.it · visite della settimana ' + range,
+    htmlBody: buildHtml_(range, kpi, focus, pages, podcast, first),
+    name: CONFIG.SENDER_NAME,
+    replyTo: CONFIG.REPLY_TO,
+    inlineImages: images
+  });
+}
+
+/* ---------- helper GA4 ---------- */
+
+function getPropertyId_() {
+  if (CONFIG.PROPERTY_ID) return CONFIG.PROPERTY_ID;
+  const sp = PropertiesService.getScriptProperties();
+  const cached = sp.getProperty('PROPERTY_ID');
+  if (cached) return cached;
+  const summaries = AnalyticsAdmin.AccountSummaries.list().accountSummaries || [];
+  for (const acc of summaries) {
+    for (const p of (acc.propertySummaries || [])) {
+      const streams = AnalyticsAdmin.Properties.DataStreams.list(p.property).dataStreams || [];
+      if (streams.some(s => s.webStreamData && s.webStreamData.measurementId === CONFIG.MEASUREMENT_ID)) {
+        const id = p.property.split('/')[1];
+        sp.setProperty('PROPERTY_ID', id);
+        return id;
+      }
+    }
+  }
+  throw new Error('Nessuna proprietà GA4 con ' + CONFIG.MEASUREMENT_ID +
+                  ' accessibile da questo account Google.');
+}
+
+function run_(prop, request) {
+  const res = AnalyticsData.Properties.runReport(request, prop);
+  return (res.rows || []).map(r => ({
+    dims: (r.dimensionValues || []).map(d => d.value),
+    vals: (r.metricValues || []).map(m => Number(m.value))
+  }));
+}
+
+// settimana appena chiusa vs precedente
+function compare_(prop, metrics, dimensionFilter) {
+  const req = {
+    dateRanges: [
+      { startDate: '7daysAgo', endDate: 'yesterday', name: 'cur' },
+      { startDate: '14daysAgo', endDate: '8daysAgo', name: 'prev' }
+    ],
+    metrics: metrics.map(name => ({ name }))
+  };
+  if (dimensionFilter) req.dimensionFilter = dimensionFilter;
+  const out = { cur: {}, prev: {} };
+  run_(prop, req).forEach(r => {
+    const t = r.dims[r.dims.length - 1] === 'cur' ? out.cur : out.prev;
+    metrics.forEach((m, i) => t[m] = r.vals[i]);
+  });
+  return out;
+}
+
+function topList_(prop, dim, metric, limit) {
+  return run_(prop, {
+    dateRanges: [{ startDate: '7daysAgo', endDate: 'yesterday' }],
+    dimensions: [{ name: dim }],
+    metrics: [{ name: metric }],
+    orderBys: [{ metric: { metricName: metric }, desc: true }],
+    limit: limit
+  }).map(r => [r.dims[0], r.vals[0]]);
+}
+
+/* ---------- podcast (feed RSS pubblico) ---------- */
+
+function podcastInfo_() {
+  try {
+    const xml = XmlService.parse(UrlFetchApp.fetch(CONFIG.PODCAST_RSS).getContentText());
+    const items = xml.getRootElement().getChild('channel').getChildren('item');
+    const last = items[0];
+    const date = new Date(last.getChildText('pubDate'));
+    return { count: items.length, title: last.getChildText('title'),
+             date: Utilities.formatDate(date, 'Europe/Rome', 'd/M/yyyy'),
+             days: Math.floor((new Date() - date) / 86400000) };
+  } catch (e) {
+    return null;
+  }
+}
+
+// controllo giornaliero: avvisa Silvio quando Luigi pubblica un episodio nuovo
+function checkNewEpisode() {
+  const info = podcastInfo_();
+  if (!info) return;
+  const sp = PropertiesService.getScriptProperties();
+  const last = sp.getProperty('LAST_EPISODE');
+  sp.setProperty('LAST_EPISODE', info.title);
+  if (!last || last === info.title) return;
+  MailApp.sendEmail({
+    to: CONFIG.RECIPIENTS[0],
+    subject: 'Sotto Pressione · nuovo episodio: ' + info.title,
+    htmlBody: '<div style="font-family:Arial,sans-serif;font-size:14px;line-height:21px">' +
+      '<p>Luigi ha pubblicato <b>' + info.title + '</b> (' + info.date + ').</p>' +
+      '<p>Entro un giorno compare da solo su ' +
+      '<a href="https://www.amicidiboyle.it/podcast.html">amicidiboyle.it/podcast</a>, nel blocco "Nuovi episodi". ' +
+      'Per usare il player Spotify dell\'episodio, incolla il suo ID nel campo spotify_id di assets/podcast/feed.json.</p></div>',
+    name: CONFIG.SENDER_NAME
+  });
+}
+
+/* ---------- grafici ---------- */
+
+function weekName_(w) { return 'sett. ' + String(w).slice(4); }
+
+function lineChart_(title, weeks, series, colors) {
+  const dt = Charts.newDataTable().addColumn(Charts.ColumnType.STRING, 'Settimana');
+  series.forEach(s => dt.addColumn(Charts.ColumnType.NUMBER, s[0]));
+  weeks.forEach((w, i) => dt.addRow([weekName_(w)].concat(series.map(s => s[1][i] || 0))));
+  return Charts.newLineChart().setDataTable(dt.build()).setTitle(title)
+    .setColors(colors).setDimensions(640, 300)
+    .setLegendPosition(Charts.Position.BOTTOM)
+    .setPointStyle(Charts.PointStyle.MEDIUM)
+    .build().getAs('image/png');
+}
+
+function pieChart_(title, rows) {
+  const dt = Charts.newDataTable()
+    .addColumn(Charts.ColumnType.STRING, 'Canale')
+    .addColumn(Charts.ColumnType.NUMBER, 'Sessioni');
+  (rows.length ? rows : [['Nessun dato', 1]]).forEach(r => dt.addRow([r[0], r[1]]));
+  return Charts.newPieChart().setDataTable(dt.build()).setTitle(title)
+    .setColors(PALETTE).setDimensions(640, 300)
+    .setLegendPosition(Charts.Position.RIGHT)
+    .build().getAs('image/png');
+}
+
+function barChart_(title, rows) {
+  const dt = Charts.newDataTable()
+    .addColumn(Charts.ColumnType.STRING, 'Paese')
+    .addColumn(Charts.ColumnType.NUMBER, 'Utenti');
+  (rows.length ? rows : [['Nessun dato', 0]]).forEach(r => dt.addRow([r[0], r[1]]));
+  return Charts.newBarChart().setDataTable(dt.build()).setTitle(title)
+    .setColors([PALETTE[0]]).setDimensions(640, 280)
+    .setLegendPosition(Charts.Position.NONE)
+    .build().getAs('image/png');
+}
+
+/* ---------- storico su Google Sheets ---------- */
+
+function getHistorySheet_() {
+  const sp = PropertiesService.getScriptProperties();
+  const id = sp.getProperty('HISTORY_SHEET_ID');
+  if (id) return SpreadsheetApp.openById(id).getSheets()[0];
+  const ss = SpreadsheetApp.create('Boyle · Analytics settimanali');
+  const sh = ss.getSheets()[0];
+  sh.appendRow(['Settimana', 'Utenti attivi', 'Nuovi utenti', 'Sessioni', 'Pagine viste',
+                'Durata media sessione (s)', 'Tasso di engagement']
+    .concat(CONFIG.FOCUS_PAGES.map(f => 'Viste ' + f.label)));
+  sh.setFrozenRows(1);
+  sp.setProperty('HISTORY_SHEET_ID', ss.getId());
+  return sh;
+}
+
+function saveHistory_(range, cur, focus) {
+  getHistorySheet_().appendRow([range, cur.activeUsers || 0, cur.newUsers || 0,
+    cur.sessions || 0, cur.screenPageViews || 0,
+    Math.round(cur.averageSessionDuration || 0), cur.engagementRate || 0]
+    .concat(focus.map(f => f.kpi.cur.screenPageViews || 0)));
+}
+
+/* ---------- mail ---------- */
+
+const n_ = v => Math.round(v || 0).toLocaleString('it-IT');
+const sec_ = v => Math.floor((v || 0) / 60) + ' min ' + Math.round((v || 0) % 60) + ' s';
+const pct_ = v => ((v || 0) * 100).toFixed(0) + '%';
+
+function delta_(c, p) {
+  if (!p) return '<span style="color:#888">·</span>';
+  const d = (c - p) / p * 100;
+  return '<span style="color:' + (d >= 0 ? '#1a7f37' : '#b42318') + '">' +
+         (d >= 0 ? '▲ +' : '▼ ') + d.toFixed(0) + '%</span>';
+}
+
+function kpiTable_(rows) {
+  const td = 'padding:6px 10px;border-bottom:1px solid #eef2f4;';
+  return '<table style="border-collapse:collapse;width:100%;font-size:14px">' +
+    '<tr style="background:#f1f6f8"><th style="' + td + 'text-align:left"></th>' +
+    '<th style="' + td + 'text-align:right">Questa sett.</th>' +
+    '<th style="' + td + 'text-align:right">Precedente</th>' +
+    '<th style="' + td + 'text-align:right">Var.</th></tr>' +
+    rows.map(r => '<tr><td style="' + td + '">' + r[0] + '</td>' +
+      '<td style="' + td + 'text-align:right;font-weight:600">' + r[3](r[1]) + '</td>' +
+      '<td style="' + td + 'text-align:right;color:#666">' + r[3](r[2]) + '</td>' +
+      '<td style="' + td + 'text-align:right">' + delta_(r[1], r[2]) + '</td></tr>').join('') +
+    '</table>';
+}
+
+function h3_(t) { return '<h3 style="font-size:16px;margin:28px 0 8px;color:#0b4f6c">' + t + '</h3>'; }
+function img_(cid) { return '<p style="margin:10px 0"><img src="cid:' + cid + '" style="max-width:100%;border:1px solid #eef2f4;border-radius:6px"></p>'; }
+
+function buildHtml_(range, kpi, focus, pages, podcast, first) {
+  const c = kpi.cur, p = kpi.prev;
+  let html = '<div style="font-family:Arial,sans-serif;max-width:660px;color:#1d2a33">' +
+    '<h2 style="font-family:Georgia,serif;color:#0b4f6c;margin-bottom:4px">amicidiboyle.it</h2>' +
+    '<p style="margin-top:0;color:#555">Settimana ' + range + ', confronto con la settimana precedente</p>' +
+    (first ? FIRST_NOTE : '') +
+    kpiTable_([
+      ['Utenti attivi', c.activeUsers, p.activeUsers, n_],
+      ['Nuovi utenti', c.newUsers, p.newUsers, n_],
+      ['Sessioni', c.sessions, p.sessions, n_],
+      ['Pagine viste', c.screenPageViews, p.screenPageViews, n_],
+      ['Durata media sessione', c.averageSessionDuration, p.averageSessionDuration, sec_],
+      ['Tasso di engagement', c.engagementRate, p.engagementRate, pct_]
+    ]) + img_('trend');
+
+  html += h3_('Diving-Boyle e Boyle Bibliography') +
+    kpiTable_([].concat.apply([], focus.map(f => {
+      const tc = (f.kpi.cur.userEngagementDuration || 0) / Math.max(f.kpi.cur.activeUsers || 0, 1);
+      const tp = (f.kpi.prev.userEngagementDuration || 0) / Math.max(f.kpi.prev.activeUsers || 0, 1);
+      return [
+        ['<b>' + f.label + '</b> · pagine viste', f.kpi.cur.screenPageViews, f.kpi.prev.screenPageViews, n_],
+        [f.label + ' · utenti', f.kpi.cur.activeUsers, f.kpi.prev.activeUsers, n_],
+        [f.label + ' · tempo medio per utente', tc, tp, sec_]
+      ];
+    }))) + img_('focus');
+
+  html += h3_('Pagine più viste') +
+    '<table style="border-collapse:collapse;width:100%;font-size:14px">' +
+    (pages.length ? pages.map(r => '<tr><td style="padding:5px 10px;border-bottom:1px solid #eef2f4">' + r[0] +
+      '</td><td style="padding:5px 10px;border-bottom:1px solid #eef2f4;text-align:right">' + n_(r[1]) + '</td></tr>').join('')
+      : '<tr><td style="color:#666">Nessun dato.</td></tr>') + '</table>';
+
+  html += h3_('Provenienza e paesi') + img_('channels') + img_('countries');
+
+  if (podcast) {
+    html += h3_('Sotto Pressione · podcast') +
+      '<p style="font-size:14px;line-height:21px">' + podcast.count + ' episodi pubblicati. ' +
+      'Ultimo: <a href="' + CONFIG.PODCAST_URL + '" style="color:#0b4f6c">' + podcast.title + '</a> (' +
+      podcast.date + ', ' + podcast.days + ' giorni fa). ' +
+      '<span style="color:#888">Gli ascolti sono visibili solo in Spotify for Creators.</span></p>';
+  }
+
+  return html + '<p style="font-size:12px;color:#888;margin-top:30px">Report automatico da Google Apps Script sui dati di Google Analytics 4.</p></div>';
+}
+
+function weekLabel_() {
+  const tz = 'Europe/Rome';
+  const end = new Date(); end.setDate(end.getDate() - 1);
+  const start = new Date(); start.setDate(start.getDate() - 7);
+  return Utilities.formatDate(start, tz, 'd/M') + '–' + Utilities.formatDate(end, tz, 'd/M/yyyy');
+}
