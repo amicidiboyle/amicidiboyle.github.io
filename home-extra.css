@@ -14,6 +14,11 @@
 /* sul telefono il titolo va su tre righe, piu' grande: "ambienti" ed "estremi" una per riga */
 @media (max-width: 600px) { .hero h1.hero-title { font-size: clamp(2.6rem, 13.4vw, 4.2rem); line-height: .95; } }
 .ht-word { display: inline-block; white-space: nowrap; }
+/* il titolo statico non deve comparire prima dell'animazione: resta nascosto
+   finche' home-extra.js non lo ricostruisce (rete di sicurezza dopo 2,5 s) */
+.hero-intro #hero-h1-el:not(.ht-ready) { visibility: hidden; animation: htShowFallback 0s linear 2.5s forwards; }
+@keyframes htShowFallback { to { visibility: visible; } }
+
 .ht-ch {
   display: inline-block;
   will-change: transform, opacity, filter;
