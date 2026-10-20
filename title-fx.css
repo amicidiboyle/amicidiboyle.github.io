@@ -143,3 +143,24 @@ html::before, html::after, body::before, body::after {
   bottom: auto; height: 100vh; height: 100lvh;
   transform: translateZ(0);
 }
+
+/* ── 10. Menu mobile come nella home, su tutte le pagine ─────────────────────────────
+   Pannello stretto quanto le voci, ancorato a destra sotto l'hamburger, voci allineate
+   a destra; il pulsante flottante della Rete si nasconde quando il menu e' aperto. */
+@media (max-width: 768px) {
+  html body .nav-mobile-panel, html body .site-nav {
+    left: auto !important; width: max-content !important; min-width: 150px !important; max-width: calc(100vw - 32px) !important;
+  }
+  html body .nav-mobile-panel > a, html body .site-nav > a {
+    text-align: right !important; padding-left: 20px !important; padding-right: 14px !important;
+  }
+  html body .site-nav .nav-dropdown-btn { justify-content: flex-end !important; gap: 8px; text-align: right !important; padding-left: 20px !important; padding-right: 14px !important; }
+  html body .site-nav .nav-dropdown-panel a { justify-content: flex-end; text-align: right; white-space: nowrap; }
+  html body .site-nav .nav-dropdown-panel a::before { order: 2; }
+  html body .site-nav .nav-dropdown:not(.is-open) .nav-dropdown-panel { display: none !important; }
+  html body .nav-mobile-panel .lang-toggle--mobile, html body .site-nav .lang-toggle--mobile { justify-content: flex-end !important; margin-left: auto; }
+  /* pulsante flottante della Rete: voci a destra, pannello stretto */
+  #rete-qn-panel { min-width: 140px !important; width: max-content; }
+  #rete-qn-panel a { text-align: right; padding-left: 20px !important; padding-right: 14px !important; }
+  body:has(#navMobilePanel[aria-hidden="false"]) #rete-mobile-qn { opacity: 0; pointer-events: none; }
+}
