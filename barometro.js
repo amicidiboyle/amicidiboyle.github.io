@@ -13,7 +13,7 @@
     it: {
       kicker: 'Newsletter bimestrale',
       title: 'Il Barometro di Boyle',
-      text: 'Appuntamenti della Rete, congressi internazionali e una review della letteratura sugli ambienti estremi. Una mail ogni due mesi, niente di più.',
+      text: 'Appuntamenti della Rete, congressi internazionali e il meglio della letteratura sugli ambienti estremi, dagli abissi all’orbita. Una mail ogni due mesi, niente di più.',
       ph: 'La tua email', label: 'Indirizzo email', btn: 'Iscriviti',
       note: 'Ti chiederemo di confermare l’iscrizione via email. Puoi cancellarti in ogni momento. <a href="privacy.html">Privacy</a>',
       read: 'Leggi il N. 1 · Ottobre 2026 →', readHref: 'newsletter/2026-10.html',
@@ -24,7 +24,7 @@
     en: {
       kicker: 'Bimonthly newsletter',
       title: 'Boyle’s Barometer',
-      text: 'Network events, international congresses and a review of the literature on extreme environments. One email every two months, nothing more.',
+      text: 'Network events, international congresses and the best of the literature on extreme environments, from the deep sea to orbit. One email every two months, nothing more.',
       ph: 'Your email', label: 'Email address', btn: 'Subscribe',
       note: 'We will ask you to confirm by email. You can unsubscribe at any time. <a href="privacy.html">Privacy</a>',
       read: 'Read No. 1 · October 2026 →', readHref: 'newsletter/2026-10-en.html',
