@@ -16,7 +16,7 @@
   <meta property="og:image:height" content="630" />
   <meta property="og:locale" content="it_IT" />
   <meta name="twitter:card" content="summary_large_image" />
-  <link rel="stylesheet" href="diving-boyle.css?v=20261019g" />
+  <link rel="stylesheet" href="diving-boyle.css?v=20261020v" />
   <link rel="stylesheet" href="title-fx.css?v=20261019g" />
 </head>
 <body>
@@ -134,6 +134,12 @@
 
   <main>
     <!-- ═══ HERO: bivio a due percorsi ═══ -->
+    <div class="db-hero-wrap">
+      <video class="db-hero-video" autoplay muted loop playsinline preload="metadata" poster="assets/video/diving-hero-poster.jpg" aria-hidden="true">
+        <source src="assets/video/diving-hero-mobile.mp4" type="video/mp4" media="(max-width: 700px)" />
+        <source src="assets/video/diving-hero.mp4" type="video/mp4" />
+      </video>
+      <div class="db-hero-veil" aria-hidden="true"></div>
     <section class="db-hero container">
       <div class="db-hero__gauge-bg" aria-hidden="true">
         <svg viewBox="0 0 220 220">
@@ -165,6 +171,7 @@
         </div>
       </div>
     </section>
+    </div>
 
     <!-- ═══ RICERCA DIVING per nome/città ═══ -->
     <div class="search-modal" id="search-modal" aria-hidden="true">

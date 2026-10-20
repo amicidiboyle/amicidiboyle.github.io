@@ -467,6 +467,28 @@ body::after {
 }
 
 /* ── HERO: bivio a due percorsi ── */
+/* video di sfondo (clip Pexels, senza audio, in loop) */
+.db-hero-wrap { position: relative; overflow: hidden; isolation: isolate; }
+.db-hero-video {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; object-position: center 40%; z-index: -2; pointer-events: none;
+  -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 12%, #000 72%, transparent 100%);
+          mask-image: linear-gradient(180deg, transparent 0, #000 12%, #000 72%, transparent 100%);
+}
+.db-hero-veil {
+  position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background:
+    radial-gradient(ellipse 75% 60% at 50% 40%, rgba(2,14,28,0), rgba(2,14,28,.45) 75%);
+}
+.db-hero-wrap .db-hero { z-index: 0; }
+.db-hero-wrap .db-hero__intro h1, .db-hero-wrap .db-hero__intro p { text-shadow: 0 2px 18px rgba(0,0,0,.55); }
+@media (prefers-reduced-motion: reduce) {
+  .db-hero-video { display: none; }
+  .db-hero-wrap::before { content: ""; position: absolute; inset: 0; z-index: -2;
+    background: url("assets/video/diving-hero-poster.jpg") center 40% / cover no-repeat;
+    -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 12%, #000 72%, transparent 100%);
+            mask-image: linear-gradient(180deg, transparent 0, #000 12%, #000 72%, transparent 100%); }
+}
 .db-hero { padding: 64px 0 40px; position: relative; }
 .db-hero__gauge-bg {
   position: absolute; top: -80px; right: -160px; width: 620px; height: 620px;
