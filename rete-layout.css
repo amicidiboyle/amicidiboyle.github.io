@@ -149,7 +149,7 @@
 @property --rl-a { syntax: "<angle>"; initial-value: 0deg; inherits: false; }
 @keyframes rlSpin { to { --rl-a: 360deg; } }
 
-.hero__cta .btn-electric, .hero__cta .btn-amici, .hero__cta .btn-eventi {
+:is(.hero__cta, .rw-path) .btn-electric, :is(.hero__cta, .rw-path) .btn-amici, :is(.hero__cta, .rw-path) .btn-eventi {
   --c1: #4fa8ff; --c2: #7be4ff; --glow: rgba(79,168,255,.45); --txt: #eaf6ff;
   position: relative !important; overflow: hidden !important; isolation: isolate;
   display: inline-flex !important; align-items: center !important; justify-content: flex-start !important; gap: 12px !important;
@@ -165,11 +165,11 @@
   transition: transform .25s cubic-bezier(.3,1.4,.5,1), box-shadow .25s !important;
   filter: none !important;
 }
-.hero__cta .btn-amici  { --c1: #39ff8f; --c2: #4dffd6; --glow: rgba(57,255,143,.42); }
-.hero__cta .btn-eventi { --c1: #a98bff; --c2: #e6a8ff; --glow: rgba(169,139,255,.45); animation-duration: 7s; }
+:is(.hero__cta, .rw-path) .btn-amici  { --c1: #39ff8f; --c2: #4dffd6; --glow: rgba(57,255,143,.42); }
+:is(.hero__cta, .rw-path) .btn-eventi { --c1: #a98bff; --c2: #e6a8ff; --glow: rgba(169,139,255,.45); animation-duration: 7s; }
 
 /* icona: quella del pulsante Rete c'e' gia', per gli altri due la aggiungo qui */
-.hero__cta .btn-electric::before, .hero__cta .btn-amici::before, .hero__cta .btn-eventi::before {
+:is(.hero__cta, .rw-path) .btn-electric::before, :is(.hero__cta, .rw-path) .btn-amici::before, :is(.hero__cta, .rw-path) .btn-eventi::before {
   content: "" !important; position: relative !important; inset: auto !important; flex: none;
   width: 38px !important; height: 38px !important; border-radius: 50%; transform: none !important; filter: none !important;
   opacity: 1 !important; animation: none !important;
@@ -178,28 +178,28 @@
   -webkit-mask-composite: xor; mask: var(--ico) center / 18px no-repeat exclude, linear-gradient(#000 0 0);
   box-shadow: 0 0 16px var(--glow);
 }
-.hero__cta .btn-electric::before { --ico: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2'/%3E%3Ccircle cx='9' cy='7' r='4'/%3E%3Cpath d='M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75'/%3E%3C/svg%3E"); }
-.hero__cta .btn-amici::before  { --ico: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1 1.1L12 21l7.8-7.5 1-1.1a5.5 5.5 0 0 0 0-7.8z'/%3E%3C/svg%3E"); }
-.hero__cta .btn-eventi::before { --ico: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='4' width='18' height='18' rx='2'/%3E%3Cpath d='M16 2v4M8 2v4M3 10h18'/%3E%3C/svg%3E"); }
-.hero__cta .btn-electric__inner > svg { display: none; }
-.hero__cta .btn-electric__inner { gap: 0 !important; }
+:is(.hero__cta, .rw-path) .btn-electric::before { --ico: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2'/%3E%3Ccircle cx='9' cy='7' r='4'/%3E%3Cpath d='M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75'/%3E%3C/svg%3E"); }
+:is(.hero__cta, .rw-path) .btn-amici::before  { --ico: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1 1.1L12 21l7.8-7.5 1-1.1a5.5 5.5 0 0 0 0-7.8z'/%3E%3C/svg%3E"); }
+:is(.hero__cta, .rw-path) .btn-eventi::before { --ico: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='4' width='18' height='18' rx='2'/%3E%3Cpath d='M16 2v4M8 2v4M3 10h18'/%3E%3C/svg%3E"); }
+:is(.hero__cta, .rw-path) .btn-electric__inner > svg { display: none; }
+:is(.hero__cta, .rw-path) .btn-electric__inner { gap: 0 !important; }
 
 /* freccia */
-.hero__cta .btn-electric::after, .hero__cta .btn-amici::after, .hero__cta .btn-eventi::after {
+:is(.hero__cta, .rw-path) .btn-electric::after, :is(.hero__cta, .rw-path) .btn-amici::after, :is(.hero__cta, .rw-path) .btn-eventi::after {
   content: "→"; position: absolute; right: 20px; top: 50%; transform: translate(-6px, -50%); opacity: .55;
   color: var(--c2); font-weight: 700; transition: transform .25s, opacity .25s;
 }
-.hero__cta .btn-electric:hover, .hero__cta .btn-amici:hover, .hero__cta .btn-eventi:hover {
+:is(.hero__cta, .rw-path) .btn-electric:hover, :is(.hero__cta, .rw-path) .btn-amici:hover, :is(.hero__cta, .rw-path) .btn-eventi:hover {
   transform: translateY(-3px) !important;
   box-shadow: 0 16px 38px rgba(0,0,0,.4), 0 0 40px -4px var(--glow), inset 0 1px 0 rgba(255,255,255,.1) !important;
 }
-.hero__cta .btn-electric:hover::after, .hero__cta .btn-amici:hover::after, .hero__cta .btn-eventi:hover::after { transform: translate(0, -50%); opacity: 1; }
-.hero__cta .btn-electric:active, .hero__cta .btn-amici:active, .hero__cta .btn-eventi:active { transform: translateY(0) scale(.98) !important; }
+:is(.hero__cta, .rw-path) .btn-electric:hover::after, :is(.hero__cta, .rw-path) .btn-amici:hover::after, :is(.hero__cta, .rw-path) .btn-eventi:hover::after { transform: translate(0, -50%); opacity: 1; }
+:is(.hero__cta, .rw-path) .btn-electric:active, :is(.hero__cta, .rw-path) .btn-amici:active, :is(.hero__cta, .rw-path) .btn-eventi:active { transform: translateY(0) scale(.98) !important; }
 @media (min-width: 901px) {
-  .hero__cta .btn-electric, .hero__cta .btn-amici, .hero__cta .btn-eventi { min-width: 270px; }
+  :is(.hero__cta, .rw-path) .btn-electric, :is(.hero__cta, .rw-path) .btn-amici, :is(.hero__cta, .rw-path) .btn-eventi { min-width: 270px; }
 }
 @media (max-width: 640px) {
-  .hero__cta .btn-electric, .hero__cta .btn-amici, .hero__cta .btn-eventi { white-space: normal; padding-right: 40px !important; }
+  :is(.hero__cta, .rw-path) .btn-electric, :is(.hero__cta, .rw-path) .btn-amici, :is(.hero__cta, .rw-path) .btn-eventi { white-space: normal; padding-right: 40px !important; }
 }
 
 /* pulsante ⓘ accanto */
@@ -252,10 +252,10 @@
 .skill-filter-panel--open ~ * #skillFilterArrow, .skill-filter-toggle[aria-expanded="true"] #skillFilterArrow { transform: rotate(180deg); }
 
 @media (prefers-reduced-motion: reduce) {
-  .hero__cta .btn-electric, .hero__cta .btn-amici, .hero__cta .btn-eventi { animation: none; }
+  :is(.hero__cta, .rw-path) .btn-electric, :is(.hero__cta, .rw-path) .btn-amici, :is(.hero__cta, .rw-path) .btn-eventi { animation: none; }
 }
 
-.hero__cta .btn-electric::after, .hero__cta .btn-amici::after, .hero__cta .btn-eventi::after { font-size: 1.1rem; line-height: 1; }
+:is(.hero__cta, .rw-path) .btn-electric::after, :is(.hero__cta, .rw-path) .btn-amici::after, :is(.hero__cta, .rw-path) .btn-eventi::after { font-size: 1.1rem; line-height: 1; }
 
 /* disposizione: i tre percorsi affiancati alla pari, l'accesso dei membri centrato sotto */
 @media (min-width: 1100px) {
@@ -265,4 +265,109 @@
   }
   .hero__cta .hero-cta-group { align-items: flex-start; }
   .hero__cta .hero-access-bar { grid-column: 1 / -1; justify-self: center; margin: 0 !important; }
+}
+
+
+/* ── "Perché entrare": due percorsi + tabella di cosa offrono ── */
+.rw-section { position: relative; }
+.rw-anchor { position: absolute; top: -90px; }
+.rw-paths { display: grid; grid-template-columns: 1fr 1fr; gap: 26px; margin: 34px 0 30px; }
+.rw-path {
+  --c1: #4fa8ff; --c2: #7be4ff; --mx: 50%; --my: 0%;
+  position: relative; overflow: hidden; isolation: isolate; border-radius: 26px; padding: 34px 34px 30px;
+  display: flex; flex-direction: column; align-items: flex-start; gap: 14px;
+  border: 1.5px solid transparent;
+  background:
+    radial-gradient(420px circle at var(--mx) var(--my), color-mix(in srgb, var(--c1) 16%, transparent), transparent 60%) padding-box,
+    linear-gradient(180deg, rgba(7,24,52,.86), rgba(3,12,28,.9)) padding-box,
+    linear-gradient(135deg, color-mix(in srgb, var(--c2) 70%, transparent), rgba(255,255,255,.05) 45%, color-mix(in srgb, var(--c1) 55%, transparent)) border-box;
+  box-shadow: 0 26px 60px rgba(0,0,0,.4), 0 0 50px -20px var(--c1);
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  transition: transform .35s cubic-bezier(.3,1.3,.5,1), box-shadow .35s;
+}
+.rw-path:hover { transform: translateY(-4px); box-shadow: 0 32px 70px rgba(0,0,0,.45), 0 0 70px -18px var(--c1); }
+.rw-path--amici { --c1: #39ff8f; --c2: #4dffd6; }
+.rw-path::after { /* orbita decorativa che ruota lenta nell'angolo */
+  content: ""; position: absolute; z-index: -1; right: -90px; top: -90px; width: 240px; height: 240px; border-radius: 50%;
+  border: 1px dashed color-mix(in srgb, var(--c2) 35%, transparent);
+  box-shadow: inset 0 0 0 28px color-mix(in srgb, var(--c1) 5%, transparent), 0 0 0 28px color-mix(in srgb, var(--c1) 3%, transparent);
+  animation: rwOrbit 40s linear infinite;
+}
+@keyframes rwOrbit { to { transform: rotate(360deg); } }
+.rw-path__badge {
+  font-size: .72rem; font-weight: 800; letter-spacing: .2em; text-transform: uppercase; color: var(--c2);
+  padding: 7px 14px; border-radius: 999px; border: 1px solid color-mix(in srgb, var(--c2) 45%, transparent);
+  background: color-mix(in srgb, var(--c1) 10%, transparent);
+}
+.rw-path__title { margin: 4px 0 0; font-size: clamp(1.4rem, 2.4vw, 1.9rem); line-height: 1.15; letter-spacing: -.035em; color: #fff; }
+.rw-path__text { margin: 0; color: rgba(225,240,255,.72); line-height: 1.65; }
+.rw-path__meta {
+  margin: 2px 0 8px; font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: .74rem; letter-spacing: .12em;
+  text-transform: uppercase; color: color-mix(in srgb, var(--c2) 85%, white);
+}
+.rw-path__meta::before { content: "● "; color: var(--c1); }
+.rw-path .btn-electric, .rw-path .btn-amici { margin-top: auto; }
+
+.rw-matrix {
+  border-radius: 26px; overflow: hidden;
+  background: linear-gradient(180deg, rgba(6,22,48,.82), rgba(3,12,28,.88));
+  border: 1px solid rgba(123,228,255,.18);
+  box-shadow: 0 26px 60px rgba(0,0,0,.38);
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+}
+.rw-row {
+  --mx: 50%; display: grid; grid-template-columns: 1fr 120px 120px; align-items: center; gap: 10px;
+  padding: 16px 26px; border-top: 1px solid rgba(123,228,255,.08); position: relative;
+  background: radial-gradient(300px circle at var(--mx) 50%, rgba(123,228,255,.07), transparent 70%);
+  background-size: 0 0; background-repeat: no-repeat;
+  transition: opacity .6s ease calc(var(--i, 0) * 70ms), transform .6s cubic-bezier(.2,.8,.2,1) calc(var(--i, 0) * 70ms);
+}
+.rw-row:hover { background-size: 100% 100%; }
+.rl-js .rw-matrix:not(.is-in) .rw-row { opacity: 0; transform: translateY(14px); }
+.rw-row--head { border-top: 0; padding-top: 20px; padding-bottom: 14px; background: rgba(123,228,255,.04); }
+.rw-row--head h3 { margin: 0; font-size: .78rem; letter-spacing: .2em; text-transform: uppercase; color: rgba(200,235,255,.7); }
+.rw-feat { display: flex; align-items: flex-start; gap: 16px; min-width: 0; }
+.rw-feat h3 { margin: 0 0 3px; font-size: 1.02rem; color: #fff; letter-spacing: -.01em; }
+.rw-feat p { margin: 0; font-size: .9rem; color: rgba(225,240,255,.62); line-height: 1.5; }
+.rw-ico {
+  flex: none; width: 42px; height: 42px; border-radius: 13px; display: grid; place-items: center; color: #7be4ff;
+  background: linear-gradient(135deg, rgba(123,228,255,.16), rgba(79,168,255,.05)); border: 1px solid rgba(123,228,255,.25);
+  transition: transform .3s, box-shadow .3s;
+}
+.rw-ico svg { width: 20px; height: 20px; }
+.rw-row:hover .rw-ico { transform: rotate(-6deg) scale(1.08); box-shadow: 0 0 20px rgba(123,228,255,.35); }
+.rw-soon {
+  margin-left: 8px; vertical-align: middle; font-size: .62rem; font-weight: 800; letter-spacing: .14em; text-transform: uppercase;
+  color: #ffb020; border: 1px solid rgba(255,176,32,.45); border-radius: 999px; padding: 2px 8px;
+}
+.rw-cell { display: grid; place-items: center; }
+.rw-col {
+  font-size: .72rem; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; padding: 6px 14px; border-radius: 999px;
+  color: #021022; background: linear-gradient(135deg, #4fa8ff, #7be4ff); box-shadow: 0 0 18px rgba(123,228,255,.4);
+}
+.rw-cell--amici .rw-col { background: linear-gradient(135deg, #39ff8f, #4dffd6); box-shadow: 0 0 18px rgba(57,255,143,.4); }
+.rw-check { width: 30px; height: 30px; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.rw-cell--rete .rw-check { stroke: #7be4ff; filter: drop-shadow(0 0 6px rgba(123,228,255,.55)); }
+.rw-cell--amici .rw-check { stroke: #39ff8f; filter: drop-shadow(0 0 6px rgba(57,255,143,.55)); }
+.rw-check circle { stroke-dasharray: 64; stroke-dashoffset: 0; opacity: .45; transition: stroke-dashoffset .8s ease calc(var(--i, 0) * 70ms + 250ms); }
+.rw-check path { stroke-dasharray: 16; stroke-dashoffset: 0; transition: stroke-dashoffset .45s ease calc(var(--i, 0) * 70ms + 700ms); }
+.rl-js .rw-matrix:not(.is-in) .rw-check circle { stroke-dashoffset: 64; }
+.rl-js .rw-matrix:not(.is-in) .rw-check path { stroke-dashoffset: 16; }
+.rw-dash { width: 16px; height: 2px; border-radius: 2px; background: rgba(200,235,255,.22); }
+
+@media (max-width: 860px) {
+  .rw-paths { grid-template-columns: 1fr; gap: 18px; }
+  .rw-path { padding: 26px 22px 24px; }
+  .rw-row { grid-template-columns: 1fr 64px 64px; padding: 14px 14px; gap: 6px; }
+  .rw-feat { gap: 12px; }
+  .rw-ico { width: 36px; height: 36px; border-radius: 11px; }
+  .rw-feat p { font-size: .82rem; }
+  .rw-col { font-size: .6rem; padding: 5px 8px; letter-spacing: .1em; }
+  .rw-check { width: 26px; height: 26px; }
+  .rw-row--head h3 { font-size: .66rem; letter-spacing: .14em; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .rw-row { opacity: 1; transform: none; transition: none; }
+  .rw-check circle, .rw-check path { stroke-dashoffset: 0; transition: none; }
+  .rw-path::after { animation: none; }
 }

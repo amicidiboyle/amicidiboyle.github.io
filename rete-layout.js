@@ -7,6 +7,7 @@
    Per tornare indietro basta togliere questo file e rete-layout.css dalla pagina. */
 (function () {
   'use strict';
+  document.documentElement.classList.add('rl-js');
 
   var NEW_COUNT = 3;
 
@@ -383,6 +384,26 @@
 
   var resizeT;
   window.addEventListener('resize', function () { clearTimeout(resizeT); resizeT = setTimeout(drawMap, 200); });
+
+  /* "Perche' entrare": tabella che si compone quando entra nello schermo, luce che segue il mouse */
+  (function () {
+    var mx = document.querySelector('.rw-matrix');
+    if (mx) {
+      if ('IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function (es) {
+          es.forEach(function (e) { if (e.isIntersecting) { mx.classList.add('is-in'); io.disconnect(); } });
+        }, { threshold: 0.15 });
+        io.observe(mx);
+      } else mx.classList.add('is-in');
+    }
+    document.querySelectorAll('.rw-path, .rw-row').forEach(function (el) {
+      el.addEventListener('pointermove', function (e) {
+        var r = el.getBoundingClientRect();
+        el.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+        el.style.setProperty('--my', (e.clientY - r.top) + 'px');
+      });
+    });
+  })();
 
   load().then(function () {
     arrange();
