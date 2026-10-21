@@ -142,3 +142,127 @@
   .rl-map__frame { height: 300px; }
 }
 @media (prefers-reduced-motion: reduce) { .rl-map__halo, .rl-map__arc { animation: none; } }
+
+/* ── pulsanti principali della pagina Rete ──
+   Stessa famiglia per tutti: vetro scuro, bordo a gradiente che ruota piano,
+   bagliore del proprio colore, icona in un cerchietto e freccia che scorre al passaggio. */
+@property --rl-a { syntax: "<angle>"; initial-value: 0deg; inherits: false; }
+@keyframes rlSpin { to { --rl-a: 360deg; } }
+
+.hero__cta .btn-electric, .hero__cta .btn-amici, .hero__cta .btn-eventi {
+  --c1: #4fa8ff; --c2: #7be4ff; --glow: rgba(79,168,255,.45); --txt: #eaf6ff;
+  position: relative !important; overflow: hidden !important; isolation: isolate;
+  display: inline-flex !important; align-items: center !important; justify-content: flex-start !important; gap: 12px !important;
+  min-height: 54px !important; padding: 0 46px 0 8px !important; border-radius: 999px !important;
+  border: 1.5px solid transparent !important;
+  background:
+    linear-gradient(180deg, rgba(8,26,54,.92), rgba(3,13,30,.95)) padding-box,
+    conic-gradient(from var(--rl-a), var(--c1), var(--c2), rgba(255,255,255,.08) 35%, var(--c1) 60%, var(--c2), var(--c1)) border-box !important;
+  color: var(--txt) !important; font-size: .95rem !important; font-weight: 700 !important; letter-spacing: .01em;
+  text-decoration: none !important; white-space: nowrap;
+  box-shadow: 0 10px 30px rgba(0,0,0,.35), 0 0 26px -6px var(--glow), inset 0 1px 0 rgba(255,255,255,.07) !important;
+  animation: rlSpin 6s linear infinite;
+  transition: transform .25s cubic-bezier(.3,1.4,.5,1), box-shadow .25s !important;
+  filter: none !important;
+}
+.hero__cta .btn-amici  { --c1: #39ff8f; --c2: #4dffd6; --glow: rgba(57,255,143,.42); }
+.hero__cta .btn-eventi { --c1: #a98bff; --c2: #e6a8ff; --glow: rgba(169,139,255,.45); animation-duration: 7s; }
+
+/* icona: quella del pulsante Rete c'e' gia', per gli altri due la aggiungo qui */
+.hero__cta .btn-electric::before, .hero__cta .btn-amici::before, .hero__cta .btn-eventi::before {
+  content: "" !important; position: relative !important; inset: auto !important; flex: none;
+  width: 38px !important; height: 38px !important; border-radius: 50%; transform: none !important; filter: none !important;
+  opacity: 1 !important; animation: none !important;
+  background-color: var(--c1) !important;
+  -webkit-mask: var(--ico) center / 18px no-repeat, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor; mask: var(--ico) center / 18px no-repeat exclude, linear-gradient(#000 0 0);
+  box-shadow: 0 0 16px var(--glow);
+}
+.hero__cta .btn-electric::before { --ico: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2'/%3E%3Ccircle cx='9' cy='7' r='4'/%3E%3Cpath d='M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75'/%3E%3C/svg%3E"); }
+.hero__cta .btn-amici::before  { --ico: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1 1.1L12 21l7.8-7.5 1-1.1a5.5 5.5 0 0 0 0-7.8z'/%3E%3C/svg%3E"); }
+.hero__cta .btn-eventi::before { --ico: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='4' width='18' height='18' rx='2'/%3E%3Cpath d='M16 2v4M8 2v4M3 10h18'/%3E%3C/svg%3E"); }
+.hero__cta .btn-electric__inner > svg { display: none; }
+.hero__cta .btn-electric__inner { gap: 0 !important; }
+
+/* freccia */
+.hero__cta .btn-electric::after, .hero__cta .btn-amici::after, .hero__cta .btn-eventi::after {
+  content: "→"; position: absolute; right: 20px; top: 50%; transform: translate(-6px, -50%); opacity: .55;
+  color: var(--c2); font-weight: 700; transition: transform .25s, opacity .25s;
+}
+.hero__cta .btn-electric:hover, .hero__cta .btn-amici:hover, .hero__cta .btn-eventi:hover {
+  transform: translateY(-3px) !important;
+  box-shadow: 0 16px 38px rgba(0,0,0,.4), 0 0 40px -4px var(--glow), inset 0 1px 0 rgba(255,255,255,.1) !important;
+}
+.hero__cta .btn-electric:hover::after, .hero__cta .btn-amici:hover::after, .hero__cta .btn-eventi:hover::after { transform: translate(0, -50%); opacity: 1; }
+.hero__cta .btn-electric:active, .hero__cta .btn-amici:active, .hero__cta .btn-eventi:active { transform: translateY(0) scale(.98) !important; }
+@media (min-width: 901px) {
+  .hero__cta .btn-electric, .hero__cta .btn-amici, .hero__cta .btn-eventi { min-width: 270px; }
+}
+@media (max-width: 640px) {
+  .hero__cta .btn-electric, .hero__cta .btn-amici, .hero__cta .btn-eventi { white-space: normal; padding-right: 40px !important; }
+}
+
+/* pulsante ⓘ accanto */
+.hero__cta .hero-info-btn {
+  width: 34px; height: 34px; border-radius: 50%; display: inline-grid; place-items: center;
+  background: rgba(8,26,54,.7); border: 1px solid rgba(123,228,255,.3); color: rgba(200,235,255,.8);
+  backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); transition: background .2s, color .2s, transform .2s;
+}
+.hero__cta .hero-info-btn:hover { background: rgba(123,228,255,.18); color: #fff; transform: scale(1.06); }
+
+/* barra "Codice membro + Accedi": un'unica capsula */
+.hero-access-bar {
+  padding: 5px !important; gap: 4px !important; border-radius: 999px;
+  border: 1.5px solid transparent;
+  background:
+    linear-gradient(180deg, rgba(8,26,54,.9), rgba(3,13,30,.94)) padding-box,
+    linear-gradient(135deg, rgba(123,228,255,.55), rgba(57,255,143,.35), rgba(123,228,255,.15)) border-box;
+  box-shadow: 0 10px 28px rgba(0,0,0,.32), inset 0 1px 0 rgba(255,255,255,.06);
+}
+.hero-access-bar .hero-access-input {
+  background: transparent !important; border: 0 !important; padding: 10px 14px 10px 16px !important;
+  font-family: ui-monospace, "SF Mono", Menlo, monospace; letter-spacing: .12em; text-transform: uppercase;
+}
+.hero-access-bar .hero-access-btn {
+  border: 0 !important; padding: 10px 22px !important; border-radius: 999px !important;
+  background: linear-gradient(135deg, #7be4ff, #39ff8f) !important; color: #021022 !important;
+  font-size: .8rem !important; font-weight: 800 !important; letter-spacing: .08em; text-transform: uppercase;
+  box-shadow: 0 0 20px rgba(123,228,255,.35); transition: transform .2s, box-shadow .2s !important;
+}
+.hero-access-bar .hero-access-btn:hover { transform: translateY(-1px); box-shadow: 0 0 28px rgba(57,255,143,.5); }
+.hero-access-bar .hero-access-btn:disabled { opacity: .45; transform: none; }
+.hero-access-bar .hero-access-status { padding: 0 10px; }
+
+/* "Filtra per specialita'" */
+.skill-filter-toggle {
+  position: relative; gap: 12px !important; padding: 6px 22px 6px 6px !important; min-height: 48px;
+  border: 1.5px solid transparent !important; color: #eaf6ff !important;
+  font-size: .82rem !important; letter-spacing: .1em !important; text-transform: uppercase;
+  background:
+    linear-gradient(180deg, rgba(8,26,54,.92), rgba(3,13,30,.95)) padding-box,
+    linear-gradient(135deg, rgba(123,228,255,.7), rgba(79,168,255,.25), rgba(123,228,255,.5)) border-box !important;
+  box-shadow: 0 10px 26px rgba(0,0,0,.3), 0 0 22px -8px rgba(123,228,255,.6) !important;
+}
+.skill-filter-toggle > svg {
+  box-sizing: content-box; padding: 10px; border-radius: 50%;
+  background: linear-gradient(135deg, #7be4ff, #4fa8ff); color: #021022; stroke: #021022;
+}
+.skill-filter-toggle:hover { transform: translateY(-2px) !important; box-shadow: 0 14px 30px rgba(0,0,0,.36), 0 0 30px -6px rgba(123,228,255,.7) !important; }
+#skillFilterArrow { opacity: .8 !important; }
+.skill-filter-panel--open ~ * #skillFilterArrow, .skill-filter-toggle[aria-expanded="true"] #skillFilterArrow { transform: rotate(180deg); }
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__cta .btn-electric, .hero__cta .btn-amici, .hero__cta .btn-eventi { animation: none; }
+}
+
+.hero__cta .btn-electric::after, .hero__cta .btn-amici::after, .hero__cta .btn-eventi::after { font-size: 1.1rem; line-height: 1; }
+
+/* disposizione: i tre percorsi affiancati alla pari, l'accesso dei membri centrato sotto */
+@media (min-width: 1100px) {
+  .hero__cta {
+    display: grid !important; grid-template-columns: repeat(3, max-content); justify-content: center;
+    column-gap: 30px; row-gap: 26px; align-items: end;
+  }
+  .hero__cta .hero-cta-group { align-items: flex-start; }
+  .hero__cta .hero-access-bar { grid-column: 1 / -1; justify-self: center; margin: 0 !important; }
+}
