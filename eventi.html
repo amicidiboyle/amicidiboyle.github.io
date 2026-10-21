@@ -834,8 +834,8 @@
       if (!nc) return Promise.resolve(false);
       return fetch(ACCESS_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ action: 'access', code: nc }) })
         .then(function(r) { return r.json(); })
-        .then(function(j) { return !!(j && j.ok); })
-        .catch(function() { return false; });
+        .then(function(j) { return (j && j.ok) ? true : (j && j.error ? 'busy' : false); })
+        .catch(function() { return 'net'; });
     }
 
     /* ── Access wall ── */
@@ -866,7 +866,11 @@
         var code = evWallCode ? evWallCode.value : '';
         if (evWallErr) evWallErr.textContent = getLang() === 'en' ? 'Checking...' : 'Verifica in corso...';
         validateCode(code).then(function(valid) {
-        if (valid) {
+        if (valid === 'net' || valid === 'busy') {
+          if (evWallErr) evWallErr.textContent = getLang() === 'en' ? 'Slow connection, please try again.' : 'Connessione lenta, riprova tra un momento.';
+          return;
+        }
+        if (valid === true) {
           if (evWallErr) evWallErr.textContent = '';
           sessionStorage.setItem(ACCESS_KEY, 'true');
           sessionStorage.setItem('boyle_access_code', code.trim().toUpperCase());
@@ -1239,6 +1243,6 @@
   <script src="title-fx.js?v=20261020m" defer></script>
   <script src="motion.js?v=20261020m" defer></script>
   <script src="consent.js?v=20261020a" defer></script>
-  <script src="boyle-forms.js?v=20261020a" defer></script>
+  <script src="boyle-forms.js?v=20261021a" defer></script>
 </body>
 </html>

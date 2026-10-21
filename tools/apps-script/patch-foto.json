@@ -1,0 +1,1 @@
+[["    if (!img) img = slugify_(name) + '.jpg';\n", "    if (!img) img = slugify_(name) + '.jpg';\n    img = publishCandidatePhoto_(obj, name, img); // foto caricata dal candidato (Moduli.gs)\n"]]

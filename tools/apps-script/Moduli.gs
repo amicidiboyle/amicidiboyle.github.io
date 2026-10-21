@@ -42,7 +42,7 @@ function handleFormSubmission_(data) {
     if (!f || !f.data) return;
     var bytes = Utilities.base64Decode(f.data);
     if (bytes.length > FORMS_MAX_FILE) return;
-    files.push({ field: f.field, name: String(f.name || 'allegato').slice(0, 120), content: f.data });
+    files.push({ field: f.field, name: String(f.name || 'allegato').slice(0, 120), type: String(f.type || ''), content: f.data });
   });
 
   // campi leggibili (senza quelli tecnici)
@@ -77,6 +77,11 @@ function handleFormSubmission_(data) {
       receiveCandidate_(d);
     } catch (e) {
       Logger.log('receiveCandidate_ error: ' + e.message);
+    }
+    var foto = files.filter(function (f) { return f.field === 'foto'; })[0];
+    if (foto && nome && email) {
+      try { saveCandidatePhoto_(nome, email, foto); }
+      catch (e) { Logger.log('saveCandidatePhoto_ error: ' + e.message); }
     }
   }
 
@@ -207,4 +212,63 @@ function testModuli() {
     nome: 'Prova Sistema', email: 'info@amicidiboyle.it',
     subject: 'Prova', message: 'Messaggio di prova del nuovo sistema dei moduli.'
   });
+}
+
+/*************************************************
+ * FOTO DEI CANDIDATI
+ * All'invio la foto va in una cartella privata di Drive e il suo ID nel
+ * foglio (colonna FOTO_DRIVE). Diventa pubblica su GitHub, in assets/rete/,
+ * solo quando la candidatura viene pubblicata dal pannello.
+ *************************************************/
+function getPhotoFolder_() {
+  var props = PropertiesService.getScriptProperties();
+  var id = props.getProperty('PHOTO_FOLDER_ID');
+  if (id) { try { return DriveApp.getFolderById(id); } catch (e) {} }
+  var folder = DriveApp.createFolder('Amici di Boyle · Foto candidati');
+  props.setProperty('PHOTO_FOLDER_ID', folder.getId());
+  return folder;
+}
+
+function saveCandidatePhoto_(nome, email, f) {
+  var name = slugify_(nome) + '.jpg';
+  var blob = Utilities.newBlob(Utilities.base64Decode(f.content), f.type || 'image/jpeg', name);
+  var file = getPhotoFolder_().createFile(blob);
+  file.setDescription('Candidatura di ' + nome + ' <' + email + '>');
+  var sheet = getSheet_();
+  var col = ensureOptionalHeader_(sheet, 'FOTO_DRIVE');
+  var emailCol = getHeaderMap_(sheet).map['EMAIL'];
+  var last = sheet.getLastRow();
+  if (!emailCol || last < 2) return;
+  var emails = sheet.getRange(2, emailCol, last - 1, 1).getDisplayValues();
+  for (var i = emails.length - 1; i >= 0; i--) {
+    if (String(emails[i][0]).trim().toLowerCase() === String(email).trim().toLowerCase()) {
+      sheet.getRange(i + 2, col).setValue(file.getId());
+      return;
+    }
+  }
+}
+
+// chiamata da publishCandidate: carica la foto su GitHub se non ce n'e' gia' una
+function publishCandidatePhoto_(obj, name, img) {
+  var id = String(obj['FOTO_DRIVE'] || '').trim();
+  if (!id) return img;
+  try {
+    var target = slugify_(name) + '.jpg';
+    var url = 'https://api.github.com/repos/' + GITHUB_REPO + '/contents/assets/rete/' + target;
+    var exists = false;
+    try { githubRequest_('get', url); exists = true; } catch (e) {}
+    if (!exists) {
+      var bytes = DriveApp.getFileById(id).getBlob().getBytes();
+      githubRequest_('put', url, { message: 'Rete: foto di ' + name, content: Utilities.base64Encode(bytes) });
+    }
+    return target;
+  } catch (e) {
+    Logger.log('publishCandidatePhoto_ error: ' + e.message);
+    return img;
+  }
+}
+
+// da eseguire una volta dall'editor: chiede l'autorizzazione a Drive
+function autorizzaFoto() {
+  Logger.log('Cartella foto: ' + getPhotoFolder_().getUrl());
 }

@@ -564,7 +564,7 @@
           <div class="field field--full">
             <label for="cand-foto" data-i18n="r_cand_label_foto">FOTO PROFILO</label>
             <input id="cand-foto" name="foto" type="file" accept="image/jpeg,image/png,image/webp" style="background:rgba(8,26,62,.7);border:1px solid rgba(123,228,255,.2);border-radius:10px;color:rgba(237,247,255,.8);font-size:.82rem;padding:10px 14px;width:100%;cursor:pointer;" />
-            <p style="font-size:.72rem;color:rgba(237,247,255,.45);margin-top:4px;" data-i18n="r_cand_foto_hint">Carica una foto profilo in formato JPG, PNG o WebP. Max 1MB.</p>
+            <p style="font-size:.72rem;color:rgba(237,247,255,.45);margin-top:4px;" data-i18n="r_cand_foto_hint">Carica una foto profilo in formato JPG, PNG o WebP.</p>
           </div>
           <div class="field field--full">
             <label for="cand-bio" data-i18n="r_cand_label_pres">PRESENTAZIONE E MOTIVAZIONE</label>
@@ -1287,6 +1287,7 @@
     try {
       const r = await fetch(ACCESS_URL, { method:'POST', headers:{'Content-Type':'text/plain;charset=utf-8'}, body: JSON.stringify({ action:'access', code: code }) });
       const j = await r.json();
+      if (j && j.error) return 'busy';
       if (!j || !j.ok) return false;
       MEMBER_EMAILS = {};
       (j.emails || []).forEach(function(e){ MEMBER_EMAILS[String(e.name||'').trim().toLowerCase()] = e.email; });
@@ -1296,7 +1297,7 @@
       } catch(e) {}
       if (j.key) DYNAMIC_CODE_TO_KEY[code] = j.key;
       return true;
-    } catch(e) { return false; }
+    } catch(e) { return 'net'; }
   }
   const ACCESS_KEY = 'boyle_member_access';
   const EMAIL_ICON_HTML = '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6.75A2.75 2.75 0 0 1 5.75 4h12.5A2.75 2.75 0 0 1 21 6.75v10.5A2.75 2.75 0 0 1 18.25 20H5.75A2.75 2.75 0 0 1 3 17.25V6.75Zm2.2-.25 6.27 5.05a.83.83 0 0 0 1.06 0L18.8 6.5H5.2Zm13.8 1.46-5.42 4.36a2.33 2.33 0 0 1-2.96 0L5.2 7.96v9.29c0 .3.25.55.55.55h12.5c.3 0 .55-.25.55-.55V7.96Z"/></svg>';
@@ -1425,7 +1426,12 @@
     async function tryCode() {
       const code = (accInput?.value || '').trim().toUpperCase();
       if (accStatus) { accStatus.textContent = 'Verifica in corso...'; accStatus.className = 'access-modal__status'; }
-      if (await checkAccessCode(code)) {
+      const res = await checkAccessCode(code);
+      if (res === 'net' || res === 'busy') {
+        if (accStatus) { accStatus.textContent = res === 'net' ? 'Connessione lenta, riprova tra un momento.' : 'Troppi tentativi, riprova più tardi.'; accStatus.className = 'access-modal__status error'; }
+        return;
+      }
+      if (res === true) {
         if (accStatus) { accStatus.textContent = "✓ Accesso confermato. Benvenuto."; accStatus.className = 'access-modal__status success'; }
         unlockAll(code);
         setTimeout(closeAcc, 1400);
@@ -1715,7 +1721,12 @@
       const code = (bi?.value||'').trim().toUpperCase();
       if (!code) return;
       if (bs) { bs.textContent = 'Verifica in corso...'; bs.className = 'hero-access-status'; }
-      if (await checkAccessCode(code)) {
+      const res = await checkAccessCode(code);
+      if (res === 'net' || res === 'busy') {
+        if (bs) { bs.textContent = res === 'net' ? 'Connessione lenta, riprova' : 'Troppi tentativi, riprova più tardi'; bs.className = 'hero-access-status err'; }
+        return;
+      }
+      if (res === true) {
         unlockAll(code);
       } else {
         if (bs) { bs.textContent = '✗ Codice non valido'; bs.className = 'hero-access-status err'; }
@@ -2212,7 +2223,7 @@
         'r_cand_label_pres':'PRESENTAZIONE E MOTIVAZIONE',
         'r_cand_label_foto':'FOTO PROFILO',
 
-        'r_cand_foto_hint':'Carica una foto profilo in formato JPG, PNG o WebP. Max 1MB.',
+        'r_cand_foto_hint':'Carica una foto profilo in formato JPG, PNG o WebP.',
         'r_cand_submit':'Invia candidatura',
         'r_footer_copy':'\u00a9 Gli Amici di Boyle \u00b7 Medicina subacquea, iperbarica e ambienti estremi.',
         'r_amici_join_desc':'Diventa un Amico di Boyle: se sei appassionato di medicina degli ambienti estremi e della diffusione della cultura scientifica, questa \u00e8 la tua community.',
@@ -2364,7 +2375,7 @@
         'r_cand_label_pres':'PRESENTATION AND MOTIVATION',
         'r_cand_label_foto':'PROFILE PHOTO',
 
-        'r_cand_foto_hint':'Upload a profile photo in JPG, PNG or WebP format. Max 1MB.',
+        'r_cand_foto_hint':'Upload a profile photo in JPG, PNG or WebP format.',
         'r_cand_submit':'Submit application',
         'r_footer_copy':'\u00a9 2026 Gli Amici di Boyle',
         'r_amici_join_desc':'Become an Amico di Boyle: if you are passionate about extreme environment medicine and the spread of scientific culture, this is your community.',
@@ -2665,6 +2676,6 @@
   <script src="title-fx.js?v=20261020m" defer></script>
   <script src="motion.js?v=20261020m" defer></script>
   <script src="consent.js?v=20261020a" defer></script>
-  <script src="boyle-forms.js?v=20261020a" defer></script>
+  <script src="boyle-forms.js?v=20261021a" defer></script>
 </body>
 </html>

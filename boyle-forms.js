@@ -34,6 +34,26 @@
     return i;
   }
 
+  // le foto profilo vengono ridotte a 1200 px e convertite in JPEG prima dell'invio
+  function shrinkImage(file) {
+    return new Promise(function (resolve) {
+      if (!/^image\/(jpeg|png|webp)$/i.test(file.type || '')) return resolve(null);
+      var url = URL.createObjectURL(file), img = new Image();
+      img.onload = function () {
+        var max = 1200, w = img.naturalWidth, h = img.naturalHeight, k = Math.min(1, max / Math.max(w, h));
+        var c = document.createElement('canvas');
+        c.width = Math.round(w * k); c.height = Math.round(h * k);
+        var ctx = c.getContext('2d');
+        ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, c.width, c.height);
+        ctx.drawImage(img, 0, 0, c.width, c.height);
+        URL.revokeObjectURL(url);
+        resolve(c.toDataURL('image/jpeg', 0.85).split(',')[1] || null);
+      };
+      img.onerror = function () { URL.revokeObjectURL(url); resolve(null); };
+      img.src = url;
+    });
+  }
+
   function readFile(file) {
     return new Promise(function (resolve) {
       if (!file || !file.size || file.size > MAX_FILE) return resolve(null);
@@ -51,8 +71,12 @@
     opts.body.forEach(function (v, k) {
       if (typeof File !== 'undefined' && v instanceof File) {
         if (!v.size) return;
-        jobs.push(readFile(v).then(function (b64) {
-          if (b64) (data._files = data._files || []).push({ field: k, name: v.name, type: v.type, data: b64 });
+        var isPhoto = k === 'foto';
+        jobs.push((isPhoto ? shrinkImage(v) : Promise.resolve(null)).then(function (small) {
+          if (small) return { name: v.name.replace(/\.[^.]+$/, '') + '.jpg', type: 'image/jpeg', data: small };
+          return readFile(v).then(function (b64) { return b64 ? { name: v.name, type: v.type, data: b64 } : null; });
+        }).then(function (f) {
+          if (f) (data._files = data._files || []).push({ field: k, name: f.name, type: f.type, data: f.data });
         }));
       } else if (data[k] !== undefined) {
         data[k] = data[k] + ', ' + v;          // checkbox multipli

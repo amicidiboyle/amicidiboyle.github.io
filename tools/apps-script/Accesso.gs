@@ -44,7 +44,29 @@ function stripMemberEmails_(items) {
     return c;
   });
   writeJsonProp_('MEMBER_EMAILS', emails);
+  // aggiorna subito l'elenco usato dal login, cosi' resta allineato all'ultimo salvataggio
+  var list = (items || []).map(function (m) {
+    return { name: m.name, email: emails[slugify_(m.name || '')] || '' };
+  }).filter(function (m) { return m.email; });
+  putMemberEmailList_(list);
   return out;
+}
+
+/* elenco nome/email per il login: tenuto in memoria temporanea per non
+   rileggere GitHub a ogni accesso (era la causa della lentezza) */
+function putMemberEmailList_(list) {
+  try { CacheService.getScriptCache().put('MEMBER_EMAIL_LIST', JSON.stringify(list), 21600); } catch (e) {}
+}
+function getMemberEmailList_() {
+  try {
+    var c = CacheService.getScriptCache().get('MEMBER_EMAIL_LIST');
+    if (c) return JSON.parse(c);
+  } catch (e) {}
+  var members = mergeMemberEmails_(getReteMembers_RAW_()).items || [];
+  var list = members.filter(function (m) { return m.email; })
+                    .map(function (m) { return { name: m.name, email: m.email }; });
+  putMemberEmailList_(list);
+  return list;
 }
 function mergeMemberEmails_(file) {
   var emails = readJsonProp_('MEMBER_EMAILS', {});
@@ -93,13 +115,11 @@ function handleAccess_(data) {
     cache.put('ACCESS_FAILS', String(fails + 1), 3600);
     return { ok: false };
   }
-  var members = mergeMemberEmails_(getReteMembers_RAW_()).items || [];
   return {
     ok: true,
     key: codes[code] || '',
     friend: code.indexOf('FRIEND-') === 0,
-    emails: members.filter(function (m) { return m.email; })
-                   .map(function (m) { return { name: m.name, email: m.email }; })
+    emails: getMemberEmailList_()
   };
 }
 
