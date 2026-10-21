@@ -199,7 +199,7 @@
   }
   function label(m) { return String(m.city || '').split(/[,.]/)[0].trim(); }
 
-  var MAP = null, view = 'europa', activeCity = null, mapEl = null;
+  var MAP = null, AMICI = [], view = 'europa', activeCity = null, mapEl = null;
 
   function project(lat, lon) {
     var l = lon * Math.PI / 180, f = lat * Math.PI / 180, f2 = f * f, f4 = f2 * f2;
@@ -225,13 +225,18 @@
       '</div>' +
       '<div class="rl-map__frame"><svg class="rl-map__svg" id="rlMapSvg" role="img" aria-label="Mappa della Rete di Boyle"></svg>' +
       '<div class="rl-map__tip" id="rlMapTip" hidden></div></div>' +
+      '<div class="rl-map__legend"><span class="rl-map__lg rl-map__lg--rete" data-rl-it="Rete di Boyle" data-rl-en="Boyle Network"></span>' +
+      '<span class="rl-map__lg rl-map__lg--amici" data-rl-it="Amici di Boyle" data-rl-en="Friends of Boyle"></span></div>' +
       '<div class="rl-map__chip" id="rlMapChip" hidden></div>';
     anchor.parentNode.insertBefore(mapEl, anchor);
     mapEl.querySelectorAll('[data-view]').forEach(function (b) {
       b.addEventListener('click', function () { view = b.getAttribute('data-view'); drawMap(); });
     });
     applyText();
-    fetch('assets/rete/mappa.json').then(function (r) { return r.json(); }).then(function (d) { MAP = d; drawMap(); });
+    Promise.all([
+      fetch('assets/rete/mappa.json').then(function (r) { return r.json(); }),
+      fetch('assets/rete/amici-mappa.json', { cache: 'no-cache' }).then(function (r) { return r.json(); }).catch(function () { return { punti: [] }; })
+    ]).then(function (d) { MAP = d[0]; AMICI = d[1].punti || []; drawMap(); });
   }
 
   function cityGroups() {
@@ -284,6 +289,11 @@
       '<path class="rl-map__land" d="' + (world ? MAP.world : MAP.europe) + '"/>';
     var arr = Object.keys(groups).map(function (k) { return groups[k]; })
       .sort(function (a, b) { return b.list.length - a.list.length; });
+    /* Amici di Boyle: punti piccoli, non cliccabili */
+    AMICI.forEach(function (a, i) {
+      var p = project(a[0], a[1]);
+      html += '<circle class="rl-map__amico" style="animation-delay:' + ((i * 0.37) % 4).toFixed(2) + 's" cx="' + p[0].toFixed(2) + '" cy="' + p[1].toFixed(2) + '" r="' + ((world ? 2.4 : 3.3) * pxu).toFixed(3) + '"/>';
+    });
     /* archi della Rete: da Varese, dove e' nata, verso ogni citta' */
     var hub = project(45.82, 8.83);
     arr.forEach(function (g, i) {

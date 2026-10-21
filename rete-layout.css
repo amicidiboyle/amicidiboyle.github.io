@@ -120,6 +120,21 @@
   background: linear-gradient(135deg, #39ff8f, #7be4ff); color: #021022;
 }
 .rl-map__chip[hidden] { display: none; }
+/* Amici di Boyle e legenda */
+.rl-map__amico { fill: #39ff8f; opacity: .75; filter: drop-shadow(0 0 3px rgba(57,255,143,.8)); animation: rlTwinkle 4s ease-in-out infinite; }
+@keyframes rlTwinkle { 0%, 100% { opacity: .85; } 50% { opacity: .35; } }
+.rl-map__legend {
+  position: absolute; z-index: 3; right: 18px; bottom: 16px; display: flex; gap: 16px;
+  font-size: .74rem; letter-spacing: .08em; text-transform: uppercase; color: rgba(220,240,255,.75);
+}
+.rl-map__lg { display: inline-flex; align-items: center; gap: 7px; }
+.rl-map__lg::before { content: ""; width: 9px; height: 9px; border-radius: 50%; }
+.rl-map__lg--rete::before { background: #eafaff; box-shadow: 0 0 0 2px #7be4ff, 0 0 8px #7be4ff; }
+.rl-map__lg--amici::before { width: 7px; height: 7px; background: #39ff8f; box-shadow: 0 0 6px #39ff8f; }
+@media (max-width: 700px) {
+  .rl-map__legend { right: auto; left: 14px; bottom: 12px; gap: 12px; font-size: .66rem; }
+}
+@media (prefers-reduced-motion: reduce) { .rl-map__amico { animation: none; } }
 @media (max-width: 700px) {
   .rl-map__bar { position: relative; padding: 14px 14px 4px; }
   .rl-map__stats { gap: 10px; font-size: .68rem; }
