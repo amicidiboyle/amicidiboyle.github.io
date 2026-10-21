@@ -18,7 +18,7 @@
   <link rel="icon" href="assets/logo.png" type="image/png" />
   <link rel="stylesheet" href="rete.css?v=20261020m" />
   <link rel="stylesheet" href="rete-extra.css?v=20261020m" />
-  <link rel="stylesheet" href="rete-layout.css?v=20261021e" />
+  <link rel="stylesheet" href="rete-layout.css?v=20261021f" />
   <style>
     .modal{position:fixed;inset:0;z-index:9000;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(1,6,16,.78);backdrop-filter:blur(8px)}
     .modal.is-open{display:flex}
@@ -401,95 +401,97 @@
 
     <!-- VANTAGGI DELLA RETE -->
     <!-- ── PERCHÉ ENTRARE + EVENTO ── -->
-    <section class="section rete-why-section" id="rete-why">
+    <!-- PERCHE' ENTRARE: due percorsi e cosa offrono (sostituisce i riquadri vantaggi e le due card) -->
+    <section class="section rw-section" id="amici">
+      <span id="rete-why" class="rw-anchor" aria-hidden="true"></span>
       <div class="container">
-
         <div class="rete-why-header reveal">
           <p class="section-kicker" data-i18n="r_why_kicker">Perché entrare</p>
           <h2 data-i18n="r_why_title">Cosa significa far parte della Rete di Boyle</h2>
           <p class="section-subheading" data-i18n="r_why_sub">La rete non è una directory. È un ecosistema attivo dove ogni membro contribuisce e riceve valore concreto.</p>
         </div>
 
-        <div class="rete-why-grid">
-
-          <!-- Benefit cards -->
-          <div class="rete-benefits-col">
-            <div class="benefit-card reveal">
-              <div class="benefit-icon benefit-icon--cyan"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
-              <div><h3 data-i18n="r_b1_title">Contatti diretti</h3><p data-i18n="r_b1_p">Email personali di tutti i membri, visibili solo a chi è dentro la rete.</p></div>
-            </div>
-            <div class="benefit-card reveal" data-delay="60">
-              <div class="benefit-icon benefit-icon--green"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div>
-              <div><h3 data-i18n="r_b2_title">Visibilità sul portale</h3><p data-i18n="r_b2_p">La tua card è pubblica. CV, pubblicazioni, link professionali — sempre aggiornati.</p></div>
-            </div>
-            <div class="benefit-card reveal" data-delay="120">
-              <div class="benefit-icon benefit-icon--purple"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></div>
-              <div><h3 data-i18n="r_b3_title">Newsletter</h3><p data-i18n="r_b3_p">Proponi articoli, casi clinici, contributi. Arrivi direttamente a tutta la community.</p></div>
-            </div>
-            <div class="benefit-card reveal" data-delay="60">
-              <div class="benefit-icon benefit-icon--orange"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M22 10v6M2 10l10-8 10 8M4 20v-6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v6"/></svg></div>
-              <div><h3 data-i18n="r_b4_title">Pubblica i tuoi corsi</h3><p data-i18n="r_b4_p">Hai un evento formativo? La sezione formazione è aperta ai membri del portale.</p></div>
-            </div>
-            <div class="benefit-card reveal" data-delay="120">
-              <div class="benefit-icon benefit-icon--cyan"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2v-4M9 21H5a2 2 0 0 1-2-2v-4m0 0h18"/></svg></div>
-              <div><h3 data-i18n="r_b5_title">Ricerca scientifica</h3><p data-i18n="r_b5_p">Studi, protocolli, pubblicazioni. I membri vengono invitati alle iniziative di ricerca.</p></div>
-            </div>
-            <div class="benefit-card reveal" data-delay="180">
-              <div class="benefit-icon benefit-icon--green"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg></div>
-              <div><h3 data-i18n="r_b6_title">Prima fila</h3><p data-i18n="r_b6_p">Congressi, workshop, editoriali. I membri vengono coinvolti per primi, prima del pubblico.</p></div>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </section>
-
-
-    <!-- CTA ENTRATA RETE -->
-    <section class="cta-section" id="amici">
-      <div class="container">
-
-        <!-- DUE CARD: Rete + Amici -->
-        <div class="join-grid">
-
-          <!-- Rete di Boyle -->
-          <div class="join-card join-card--rete">
-            <div class="join-card__badge" data-i18n="rj_rete_badge">Rete di Boyle</div>
-            <h2 class="join-card__title" data-i18n="rj_rete_title">Sei un professionista degli ambienti estremi?</h2>
-            <p class="join-card__text" data-i18n="rj_rete_p">La Rete di Boyle è riservata a medici, ricercatori, ingegneri e operatori militari con un curriculum validato in medicina subacquea, iperbarica, aerospaziale, safety, medicina militare o fisiologia degli ambienti estremi. L'accesso è selettivo e valutato caso per caso.</p>
-            <div class="join-card__benefits">
-              <span data-i18n="rj_rete_b1">✓ Card pubblica nella griglia</span>
-              <span data-i18n="rj_rete_b2">✓ Contatti diretti dei membri</span>
-              <span data-i18n="rj_rete_b3">✓ Collaborazioni scientifiche</span>
-              <span data-i18n="rj_rete_b4">✓ Prima fila su congressi ed editoriali</span>
-              <span data-i18n="rj_rete_b5">✓ Newsletter riservata</span>
-              <span data-i18n="rj_rete_b6">✓ Pubblica corsi ed eventi</span>
-              <span>✓ Accesso alla Biblioteca di Boyle <em style="opacity:.6;font-size:.85em">- in progress</em></span>
-            </div>
+        <div class="rw-paths">
+          <article class="rw-path rw-path--rete">
+            <span class="rw-path__badge" data-i18n="rj_rete_badge">Rete di Boyle</span>
+            <h3 class="rw-path__title" data-i18n="rj_rete_title">Sei un professionista degli ambienti estremi?</h3>
+            <p class="rw-path__text" data-i18n="rj_rete_p">La Rete di Boyle è riservata a medici, ricercatori, ingegneri e operatori militari con un curriculum validato in medicina subacquea, iperbarica, aerospaziale, safety, medicina militare o fisiologia degli ambienti estremi. L’accesso è selettivo e valutato caso per caso.</p>
+            <p class="rw-path__meta" data-i18n="rw_rete_meta">Su candidatura · curriculum valutato</p>
             <button class="btn-electric" id="open-network-modal-2" type="button">
-              <span class="btn-electric__inner" data-i18n="rj_rete_cta">Candidati alla Rete</span>
+              <span class="btn-electric__inner"><span data-i18n="rj_rete_cta">Candidati alla Rete</span></span>
             </button>
-          </div>
-
-          <!-- Amici di Boyle -->
-          <div class="join-card join-card--amici">
-            <div class="join-card__badge join-card__badge--amici" data-i18n="rj_amici_badge">Amici di Boyle</div>
-            <h2 class="join-card__title" data-i18n="rj_amici_title">Entra nella community e aiutaci a crescere con le tue idee.</h2>
-            <p class="join-card__text" data-i18n="rj_amici_p">Per chi è curioso e ha voglia di contribuire. La porta d\u2019ingresso alla community. L\u2019immersione nella Scienza inizia da qui.</p>
-            <div class="join-card__benefits">
-              <span data-i18n="rj_amici_b1">✓ Codice personale di accesso</span>
-              <span>✓ Contatti diretti dei membri</span>
-              <span data-i18n="rj_amici_b3">✓ Profili estesi della Rete</span>
-              <span data-i18n="rj_amici_b4">✓ Pubblica eventi di ambienti estremi</span>
-              <span data-i18n="rj_amici_b5">✓ Newsletter della community</span>
-              <span>✓ Accesso alla Biblioteca di Boyle <em style="opacity:.6;font-size:.85em">- in progress</em></span>
-              <span data-i18n="rj_amici_b6">✓ Scrivi a <a href="mailto:info@amicidiboyle.it">info@amicidiboyle.it</a></span>
-            </div>
+          </article>
+          <article class="rw-path rw-path--amici">
+            <span class="rw-path__badge" data-i18n="rj_amici_badge">Amici di Boyle</span>
+            <h3 class="rw-path__title" data-i18n="rw_amici_title">Entra nella community e aiutaci a crescere con le tue idee.</h3>
+            <p class="rw-path__text" data-i18n="rj_amici_p">Sei uno studente, un appassionato, un operatore o semplicemente qualcuno che condivide la nostra visione? Gli Amici di Boyle sono la porta d’ingresso alla community. Nessun curriculum richiesto, solo curiosità e voglia di contribuire.</p>
+            <p class="rw-path__meta" data-i18n="rw_amici_meta">Aperto a tutti · gratuito</p>
             <button class="btn-amici" id="open-amici-modal" type="button">
-              <span data-i18n="rj_amici_cta">Curioso o appassionato? → Diventa Amico di Boyle</span>
+              <span data-i18n="rj_amici_cta">Diventa Amico di Boyle</span>
             </button>
-          </div>
+          </article>
+        </div>
 
+        <div class="rw-matrix">
+          <div class="rw-row rw-row--head">
+            <div class="rw-feat"><h3 data-i18n="rw_matrix_title">Cosa trovi dentro</h3></div>
+            <div class="rw-cell rw-cell--rete"><span class="rw-col" data-i18n="rw_col_rete">Rete</span></div>
+            <div class="rw-cell rw-cell--amici"><span class="rw-col" data-i18n="rw_col_amici">Amici</span></div>
+          </div>
+            <div class="rw-row" style="--i:1">
+              <div class="rw-feat"><span class="rw-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2l-2 2m-7.6 7.6a5.5 5.5 0 1 1-7.8 7.8 5.5 5.5 0 0 1 7.8-7.8zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg></span>
+                <div><h3><span data-i18n="rw_r1_t">Codice personale d’accesso</span></h3><p data-i18n="rw_r1_d">Sblocca contatti, profili estesi e le funzioni riservate del sito.</p></div></div>
+              <div class="rw-cell rw-cell--rete"><svg class="rw-check" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M7.5 12.5l3 3 6-6.5"/></svg></div>
+              <div class="rw-cell rw-cell--amici"><svg class="rw-check" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M7.5 12.5l3 3 6-6.5"/></svg></div>
+            </div>
+            <div class="rw-row" style="--i:2">
+              <div class="rw-feat"><span class="rw-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
+                <div><h3><span data-i18n="rw_r2_t">Contatti diretti</span></h3><p data-i18n="rw_r2_d">Le email personali di tutti i membri della Rete.</p></div></div>
+              <div class="rw-cell rw-cell--rete"><svg class="rw-check" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M7.5 12.5l3 3 6-6.5"/></svg></div>
+              <div class="rw-cell rw-cell--amici"><svg class="rw-check" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M7.5 12.5l3 3 6-6.5"/></svg></div>
+            </div>
+            <div class="rw-row" style="--i:3">
+              <div class="rw-feat"><span class="rw-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2.2"/><path d="M5.5 16.5c.6-1.6 1.9-2.5 3.5-2.5s2.9.9 3.5 2.5M14 9h4M14 13h4"/></svg></span>
+                <div><h3><span data-i18n="rw_r3_t">Profili estesi</span></h3><p data-i18n="rw_r3_d">Curriculum, pubblicazioni e link professionali di ogni membro.</p></div></div>
+              <div class="rw-cell rw-cell--rete"><svg class="rw-check" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M7.5 12.5l3 3 6-6.5"/></svg></div>
+              <div class="rw-cell rw-cell--amici"><svg class="rw-check" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M7.5 12.5l3 3 6-6.5"/></svg></div>
+            </div>
+            <div class="rw-row" style="--i:4">
+              <div class="rw-feat"><span class="rw-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></span>
+                <div><h3><span data-i18n="rw_r4_t">Pubblica corsi ed eventi</span></h3><p data-i18n="rw_r4_d">I tuoi eventi formativi compaiono nella pagina Eventi.</p></div></div>
+              <div class="rw-cell rw-cell--rete"><svg class="rw-check" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M7.5 12.5l3 3 6-6.5"/></svg></div>
+              <div class="rw-cell rw-cell--amici"><svg class="rw-check" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M7.5 12.5l3 3 6-6.5"/></svg></div>
+            </div>
+            <div class="rw-row" style="--i:5">
+              <div class="rw-feat"><span class="rw-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></span>
+                <div><h3><span data-i18n="rw_r5_t">Il Barometro di Boyle</span></h3><p data-i18n="rw_r5_d">La newsletter bimestrale: puoi proporre articoli, casi e contributi.</p></div></div>
+              <div class="rw-cell rw-cell--rete"><svg class="rw-check" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M7.5 12.5l3 3 6-6.5"/></svg></div>
+              <div class="rw-cell rw-cell--amici"><svg class="rw-check" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M7.5 12.5l3 3 6-6.5"/></svg></div>
+            </div>
+            <div class="rw-row" style="--i:6">
+              <div class="rw-feat"><span class="rw-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></span>
+                <div><h3><span data-i18n="rw_r6_t">La tua card pubblica</span></h3><p data-i18n="rw_r6_d">Il tuo profilo nella griglia e sulla mappa della Rete, aggiornabile da te.</p></div></div>
+              <div class="rw-cell rw-cell--rete"><svg class="rw-check" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M7.5 12.5l3 3 6-6.5"/></svg></div>
+              <div class="rw-cell rw-cell--amici"><span class="rw-dash" aria-hidden="true"></span></div>
+            </div>
+            <div class="rw-row" style="--i:7">
+              <div class="rw-feat"><span class="rw-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6M10 3v6l-5 9a2 2 0 0 0 1.8 3h10.4a2 2 0 0 0 1.8-3l-5-9V3"/><path d="M7.5 15h9"/></svg></span>
+                <div><h3><span data-i18n="rw_r7_t">Ricerca e collaborazioni</span></h3><p data-i18n="rw_r7_d">Inviti a studi, protocolli e pubblicazioni del gruppo.</p></div></div>
+              <div class="rw-cell rw-cell--rete"><svg class="rw-check" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M7.5 12.5l3 3 6-6.5"/></svg></div>
+              <div class="rw-cell rw-cell--amici"><span class="rw-dash" aria-hidden="true"></span></div>
+            </div>
+            <div class="rw-row" style="--i:8">
+              <div class="rw-feat"><span class="rw-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg></span>
+                <div><h3><span data-i18n="rw_r8_t">In prima fila</span></h3><p data-i18n="rw_r8_d">Congressi, workshop ed editoriali: i membri vengono coinvolti per primi.</p></div></div>
+              <div class="rw-cell rw-cell--rete"><svg class="rw-check" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M7.5 12.5l3 3 6-6.5"/></svg></div>
+              <div class="rw-cell rw-cell--amici"><span class="rw-dash" aria-hidden="true"></span></div>
+            </div>
+            <div class="rw-row" style="--i:9">
+              <div class="rw-feat"><span class="rw-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V3H6.5A2.5 2.5 0 0 0 4 5.5v14z"/><path d="M8 7h8M8 11h6"/></svg></span>
+                <div><h3><span data-i18n="rw_r9_t">Biblioteca di Boyle</span> <span class="rw-soon" data-i18n="rw_soon">in arrivo</span></h3><p data-i18n="rw_r9_d">Archivio di letteratura sugli ambienti estremi.</p></div></div>
+              <div class="rw-cell rw-cell--rete"><svg class="rw-check" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M7.5 12.5l3 3 6-6.5"/></svg></div>
+              <div class="rw-cell rw-cell--amici"><svg class="rw-check" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M7.5 12.5l3 3 6-6.5"/></svg></div>
+            </div>
         </div>
       </div>
     </section>
@@ -2127,6 +2129,32 @@
         'r_why_kicker':'Perch\u00e9 entrare',
         'r_why_title':'Cosa significa far parte della Rete di Boyle',
         'r_why_sub':'La rete non \u00e8 una directory. \u00c8 un ecosistema attivo dove ogni membro contribuisce e riceve valore concreto.',
+        'rw_r1_t':'Codice personale d’accesso',
+        'rw_r1_d':'Sblocca contatti, profili estesi e le funzioni riservate del sito.',
+        'rw_r2_t':'Contatti diretti',
+        'rw_r2_d':'Le email personali di tutti i membri della Rete.',
+        'rw_r3_t':'Profili estesi',
+        'rw_r3_d':'Curriculum, pubblicazioni e link professionali di ogni membro.',
+        'rw_r4_t':'Pubblica corsi ed eventi',
+        'rw_r4_d':'I tuoi eventi formativi compaiono nella pagina Eventi.',
+        'rw_r5_t':'Il Barometro di Boyle',
+        'rw_r5_d':'La newsletter bimestrale: puoi proporre articoli, casi e contributi.',
+        'rw_r6_t':'La tua card pubblica',
+        'rw_r6_d':'Il tuo profilo nella griglia e sulla mappa della Rete, aggiornabile da te.',
+        'rw_r7_t':'Ricerca e collaborazioni',
+        'rw_r7_d':'Inviti a studi, protocolli e pubblicazioni del gruppo.',
+        'rw_r8_t':'In prima fila',
+        'rw_r8_d':'Congressi, workshop ed editoriali: i membri vengono coinvolti per primi.',
+        'rw_r9_t':'Biblioteca di Boyle',
+        'rw_r9_d':'Archivio di letteratura sugli ambienti estremi.',
+        'rw_paths_kicker':'Due modi per entrare',
+        'rw_rete_meta':'Su candidatura · curriculum valutato',
+        'rw_amici_meta':'Aperto a tutti · gratuito',
+        'rw_matrix_title':'Cosa trovi dentro',
+        'rw_col_rete':'Rete',
+        'rw_col_amici':'Amici',
+        'rw_soon':'in arrivo',
+        'rw_amici_title':'Entra nella community e aiutaci a crescere con le tue idee.',
         'r_b1_title':'Contatti diretti',
         'r_b1_p':'Email personali di tutti i membri, visibili solo a chi \u00e8 dentro la rete.',
         'r_b2_title':'Visibilit\u00e0 sul portale',
@@ -2279,6 +2307,32 @@
         'r_why_kicker':'Why join',
         'r_why_title':'What it means to be part of the Boyle Network',
         'r_why_sub':'The network is not a directory. It is an active ecosystem where every member contributes and receives concrete value.',
+        'rw_r1_t':'Personal access code',
+        'rw_r1_d':'Unlocks contacts, extended profiles and the members-only features of the site.',
+        'rw_r2_t':'Direct contacts',
+        'rw_r2_d':'The personal email addresses of every Network member.',
+        'rw_r3_t':'Extended profiles',
+        'rw_r3_d':'Background, publications and professional links of every member.',
+        'rw_r4_t':'Publish courses and events',
+        'rw_r4_d':'Your training events appear on the Events page.',
+        'rw_r5_t':'Boyle’s Barometer',
+        'rw_r5_d':'The bimonthly newsletter: you can propose articles, cases and contributions.',
+        'rw_r6_t':'Your public card',
+        'rw_r6_d':'Your profile in the Network grid and map, which you can update yourself.',
+        'rw_r7_t':'Research and collaborations',
+        'rw_r7_d':'Invitations to the group’s studies, protocols and publications.',
+        'rw_r8_t':'Front row',
+        'rw_r8_d':'Congresses, workshops and editorials: members are involved first.',
+        'rw_r9_t':'Boyle Library',
+        'rw_r9_d':'An archive of literature on extreme environments.',
+        'rw_paths_kicker':'Two ways in',
+        'rw_rete_meta':'By application · background reviewed',
+        'rw_amici_meta':'Open to all · free',
+        'rw_matrix_title':'What you get',
+        'rw_col_rete':'Network',
+        'rw_col_amici':'Friends',
+        'rw_soon':'coming soon',
+        'rw_amici_title':'Join the community and help us grow with your ideas.',
         'r_b1_title':'Direct contacts',
         'r_b1_p':'Personal emails of all members, visible only to those inside the network.',
         'r_b2_title':'Portal visibility',
@@ -2673,7 +2727,7 @@
   }
   </script>
   <script src="rete-extra.js?v=20261020m"></script>
-  <script src="rete-layout.js?v=20261021c" defer></script>
+  <script src="rete-layout.js?v=20261021d" defer></script>
   <script src="barometro.js?v=20261020b" defer></script>
   <script src="title-fx.js?v=20261020m" defer></script>
   <script src="motion.js?v=20261020m" defer></script>
