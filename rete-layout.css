@@ -371,3 +371,5 @@
   .rw-check circle, .rw-check path { stroke-dashoffset: 0; transition: none; }
   .rw-path::after { animation: none; }
 }
+
+.rl-map__amici-n b { text-shadow: 0 0 18px rgba(57,255,143,.6); color: #d9ffe9; }

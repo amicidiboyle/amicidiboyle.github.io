@@ -200,6 +200,7 @@
   }
   function label(m) { return String(m.city || '').split(/[,.]/)[0].trim(); }
 
+  var AMICI_COUNT = '100+'; /* numero degli Amici di Boyle mostrato sopra la mappa */
   var MAP = null, AMICI = [], view = 'europa', activeCity = null, mapEl = null;
 
   function project(lat, lon) {
@@ -351,8 +352,8 @@
     var nc = Object.keys(cc).length;
     var st = document.getElementById('rlMapStats');
     if (st) st.innerHTML = l === 'en'
-      ? '<span><b>' + members.length + '</b>members</span><span><b>' + ks.length + '</b>cities</span><span><b>' + nc + '</b>countries</span>'
-      : '<span><b>' + members.length + '</b>membri</span><span><b>' + ks.length + '</b>città</span><span><b>' + nc + '</b>paesi</span>';
+      ? '<span><b>' + members.length + '</b>members</span><span class="rl-map__amici-n"><b>' + AMICI_COUNT + '</b>Friends of Boyle</span><span><b>' + ks.length + '</b>cities</span><span><b>' + nc + '</b>countries</span>'
+      : '<span><b>' + members.length + '</b>membri</span><span class="rl-map__amici-n"><b>' + AMICI_COUNT + '</b>amici di Boyle</span><span><b>' + ks.length + '</b>città</span><span><b>' + nc + '</b>paesi</span>';
     var chip = document.getElementById('rlMapChip');
     if (chip && activeCity && groups[activeCity]) {
       chip.hidden = false;
