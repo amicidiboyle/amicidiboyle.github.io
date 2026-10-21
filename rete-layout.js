@@ -268,15 +268,40 @@
     var unit = box[2] / 1000;
     svg.setAttribute('viewBox', box.join(' '));
     svg.setAttribute('preserveAspectRatio', view === 'mondo' ? 'xMidYMid meet' : 'xMidYMid slice');
-    var html = '<path class="rl-map__land" d="' + (view === 'mondo' ? MAP.world : MAP.europe) + '"/>';
+    var world = view === 'mondo';
+    var dotStep = (world ? 4.2 : 5) * pxu, dotR = dotStep * 0.3;
+    var html =
+      '<defs>' +
+        '<pattern id="rlDots" patternUnits="userSpaceOnUse" width="' + dotStep.toFixed(3) + '" height="' + dotStep.toFixed(3) + '">' +
+          '<circle cx="' + (dotStep / 2).toFixed(3) + '" cy="' + (dotStep / 2).toFixed(3) + '" r="' + dotR.toFixed(3) + '" fill="rgba(140,225,255,.55)"/>' +
+        '</pattern>' +
+        '<radialGradient id="rlGlow"><stop offset="0" stop-color="#7be4ff" stop-opacity=".55"/><stop offset="1" stop-color="#7be4ff" stop-opacity="0"/></radialGradient>' +
+        '<linearGradient id="rlArc" x1="0" x2="1"><stop offset="0" stop-color="#39ff8f" stop-opacity=".9"/><stop offset="1" stop-color="#7be4ff" stop-opacity=".35"/></linearGradient>' +
+      '</defs>' +
+      '<path class="rl-map__grat" d="' + (world ? MAP.gratWorld : MAP.gratEurope) + '"/>' +
+      (world ? '<path class="rl-map__sphere" d="' + MAP.sphere + '"/>' : '') +
+      '<path class="rl-map__landbg" d="' + (world ? MAP.world : MAP.europe) + '"/>' +
+      '<path class="rl-map__land" d="' + (world ? MAP.world : MAP.europe) + '"/>';
     var arr = Object.keys(groups).map(function (k) { return groups[k]; })
       .sort(function (a, b) { return b.list.length - a.list.length; });
+    /* archi della Rete: da Varese, dove e' nata, verso ogni citta' */
+    var hub = project(45.82, 8.83);
+    arr.forEach(function (g, i) {
+      if (g.key === 'varese') return;
+      var p = project(CITIES[g.key][0], CITIES[g.key][1]);
+      var dx = p[0] - hub[0], dy = p[1] - hub[1], len = Math.sqrt(dx * dx + dy * dy);
+      if (len < 2 * pxu) return;
+      var bend = Math.min(len * 0.28, (world ? 60 : 9));
+      var cx = (hub[0] + p[0]) / 2 - dy / len * bend, cy = (hub[1] + p[1]) / 2 + dx / len * bend;
+      html += '<path class="rl-map__arc" style="animation-delay:' + (i * 0.18).toFixed(2) + 's" d="M' + hub[0].toFixed(2) + ',' + hub[1].toFixed(2) +
+        ' Q' + cx.toFixed(2) + ',' + cy.toFixed(2) + ' ' + p[0].toFixed(2) + ',' + p[1].toFixed(2) + '"/>';
+    });
     arr.forEach(function (g) {
       var p = project(CITIES[g.key][0], CITIES[g.key][1]);
       var r = (view === 'mondo' ? 3.5 : 4.5) * (1 + 0.45 * Math.sqrt(g.list.length - 1)) * pxu;
       var on = activeCity === g.key ? ' is-on' : '';
       html += '<g class="rl-map__pt' + on + '" data-city="' + g.key + '" tabindex="0" role="button" aria-label="' + g.name + '">' +
-        '<circle class="rl-map__halo" cx="' + p[0].toFixed(2) + '" cy="' + p[1].toFixed(2) + '" r="' + (r * 2.4).toFixed(2) + '"/>' +
+        '<circle class="rl-map__halo" fill="url(#rlGlow)" cx="' + p[0].toFixed(2) + '" cy="' + p[1].toFixed(2) + '" r="' + (r * 3.2).toFixed(2) + '"/>' +
         '<circle class="rl-map__dot" cx="' + p[0].toFixed(2) + '" cy="' + p[1].toFixed(2) + '" r="' + r.toFixed(2) + '"/></g>';
     });
     svg.innerHTML = html;
@@ -284,6 +309,8 @@
     mapEl.querySelectorAll('[data-view]').forEach(function (b) {
       b.classList.toggle('is-on', b.getAttribute('data-view') === view);
     });
+    var vw = mapEl.querySelector('.rl-map__views');
+    if (vw) vw.classList.toggle('is-mondo', view === 'mondo');
 
     var tip = document.getElementById('rlMapTip');
     svg.querySelectorAll('.rl-map__pt').forEach(function (pt) {
@@ -313,8 +340,8 @@
     var nc = Object.keys(cc).length;
     var st = document.getElementById('rlMapStats');
     if (st) st.innerHTML = l === 'en'
-      ? '<b>' + members.length + '</b> members · <b>' + ks.length + '</b> cities · <b>' + nc + '</b> countries'
-      : '<b>' + members.length + '</b> membri · <b>' + ks.length + '</b> città · <b>' + nc + '</b> paesi';
+      ? '<span><b>' + members.length + '</b>members</span><span><b>' + ks.length + '</b>cities</span><span><b>' + nc + '</b>countries</span>'
+      : '<span><b>' + members.length + '</b>membri</span><span><b>' + ks.length + '</b>città</span><span><b>' + nc + '</b>paesi</span>';
     var chip = document.getElementById('rlMapChip');
     if (chip && activeCity && groups[activeCity]) {
       chip.hidden = false;
