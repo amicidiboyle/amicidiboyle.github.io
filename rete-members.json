@@ -438,5 +438,14 @@
       "Medicina Polare",
       "Medicina delle Spedizioni"
     ]
+  },
+  {
+    "name": "Prova Foto",
+    "role": "Test",
+    "img": "prova-foto.jpg",
+    "city": "Varese",
+    "linkedin": "https://www.linkedin.com/in/prova-foto",
+    "email": "riservata",
+    "tags": []
   }
 ]
