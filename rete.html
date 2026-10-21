@@ -1055,7 +1055,7 @@
     const grid = document.getElementById('membersGrid');
     const countEl = document.getElementById('memberCount');
     try {
-      const res = await fetch(MEMBERS_URL);
+      const res = await fetch(MEMBERS_URL, { cache: 'no-cache' }); // sempre l'elenco aggiornato, senza aspettare la cache
       if (!res.ok) throw new Error('fetch failed');
       const members = await res.json();
       grid.innerHTML = members.map(renderCard).join('');
