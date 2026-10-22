@@ -75,10 +75,30 @@
       card.classList.toggle('appt-card--past', state === 'past');
       if (label) label.textContent = text;
       if (state === 'past') past.push(card);
-      card.hidden = state === 'past' && card.hasAttribute('data-auto-hide');
+      /* concluso: esce da "Dove ci troverete" */
+      card.hidden = state === 'past';
     });
-    /* gli eventi conclusi scivolano in fondo */
-    past.forEach(function (c) { grid.appendChild(c); });
+    /* gli eventi conclusi in cui parla qualcuno di noi passano in "Corsi, congressi e docenze",
+       in testa, con locandina e programma (se non ci sono gia') */
+    var corsi = document.querySelector('#formazione .course-poster-grid');
+    if (corsi) past.forEach(function (c) {
+      if (!c.hasAttribute('data-speaker')) return;
+      var media = c.querySelector('.appt-media'), img = c.querySelector('.appt-media img'), h = c.querySelector('h3');
+      var pdf = media && media.getAttribute('href');
+      if (!pdf || corsi.querySelector('a[href="' + pdf + '"]')) return;
+      var sub = c.querySelector('.appt-meta span:last-child');
+      var art = document.createElement('article');
+      art.className = 'glass-card course-poster-card';
+      var im = document.createElement('img');
+      im.src = img ? img.getAttribute('src') : ''; im.alt = img ? img.alt : ''; im.loading = 'lazy'; im.decoding = 'async';
+      var t = document.createElement('h4');
+      t.textContent = (h ? h.textContent.trim() : '') + (sub ? ' · ' + sub.textContent.split('·')[0].trim() + ' ' + new Date(c.getAttribute('data-start')).getFullYear() : '');
+      var a = document.createElement('a');
+      a.className = 'btn btn-secondary btn-block'; a.href = pdf; a.target = '_blank'; a.rel = 'noopener';
+      a.textContent = (lang === 'en') ? 'Download full programme' : 'Download programma completo';
+      art.appendChild(im); art.appendChild(t); art.appendChild(a);
+      corsi.insertBefore(art, corsi.firstChild);
+    });
   }
 
   /* ---------- pallini del carosello mobile ---------- */
