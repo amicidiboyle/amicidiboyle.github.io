@@ -75,6 +75,7 @@
       card.classList.toggle('appt-card--past', state === 'past');
       if (label) label.textContent = text;
       if (state === 'past') past.push(card);
+      card.hidden = state === 'past' && card.hasAttribute('data-auto-hide');
     });
     /* gli eventi conclusi scivolano in fondo */
     past.forEach(function (c) { grid.appendChild(c); });
