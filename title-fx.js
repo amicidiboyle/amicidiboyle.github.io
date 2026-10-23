@@ -36,7 +36,7 @@
     '#proponi h2', '#esplora > h2', '[data-tfx]', '.bb-hero h1', '.db-hero h1'
   ].join(',');
   var SKIP_T = 'dialog, [role="dialog"], .modal, [class*="modal"], #evidenza, .podPlayer, .member-card, .profile-hero, .ev-wall, .intro-title, #home, .gx';
-  var SKIP_C = 'dialog, [role="dialog"], [class*="modal"], header, footer, nav, #home, #ricerca, #attivita, .ticker, .founders-grid';
+  var SKIP_C = 'dialog, [role="dialog"], [class*="modal"], header, footer, nav, #home, #ricerca, #attivita, .ticker' + (innerWidth >= 769 ? ', .founders-grid' : '');
 
   /* ── osservatore unico ── */
   var queue = [], qTimer = 0;

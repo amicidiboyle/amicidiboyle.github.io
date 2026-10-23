@@ -410,56 +410,58 @@
   new MutationObserver(paint).observe(document.documentElement, { attributes: true, attributeFilter: ['lang'] });
 })();
 
-/* Fondatori: un mazzo di carte che si distribuisce scorrendo.
-   Arrivando alla sezione le cinque card sono impilate al centro, leggermente ruotate;
-   scorrendo vengono "servite" una alla volta fino alla loro posizione. Il movimento segue
-   lo scorrimento (si puo' anche tornare indietro). Usa le proprieta' translate/rotate,
-   cosi' gli effetti al passaggio del mouse restano intatti a mazzo distribuito. */
+/* Fondatori (solo computer): un mazzo appoggiato a sinistra che si apre a nastro,
+   come quando si fa scorrere un mazzo sul tavolo con una mano: la mano trascina le carte
+   verso destra e ciascuna si ferma al suo posto, una dopo l'altra. Segue lo scorrimento
+   (tornando su il mazzo si richiude). Sul telefono le card compaiono semplicemente
+   una sotto l'altra, con l'entrata normale delle card. */
 (function () {
   var grid = document.querySelector('#fondatori .founders-grid');
   if (!grid || !window.requestAnimationFrame) return;
   if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if (innerWidth < 769) return;
   var cards = Array.prototype.slice.call(grid.children);
-  if (cards.length < 2) return;
-  var TILT = [-5, 4, -2.5, 6, -4, 3];
+  var n = cards.length;
+  if (n < 2) return;
   var geo = null, ticking = false, active = false, lastP = -1;
   grid.classList.add('fx-deck');
 
+  function clear() { cards.forEach(function (c) { c.style.translate = ''; c.style.rotate = ''; c.style.zIndex = ''; c.classList.remove('fx-deck-in'); }); }
   function measure() {
-    /* posizioni "a riposo", senza le trasformazioni del mazzo */
-    cards.forEach(function (c) { c.style.translate = ''; c.style.rotate = ''; });
-    var gw = grid.clientWidth, first = cards[0];
-    var ax = gw / 2 - first.offsetWidth / 2, ay = first.offsetTop;
-    geo = cards.map(function (c, i) {
-      return { dx: ax - c.offsetLeft + i * 2, dy: ay - c.offsetTop + i * 4 };
-    });
+    clear();
+    var x0 = cards[0].offsetLeft, y0 = cards[0].offsetTop;
+    geo = cards.map(function (c) { return { x: c.offsetLeft, y: c.offsetTop }; });
+    geo.x0 = x0; geo.y0 = y0; geo.span = Math.max(1, geo[n - 1].x - x0);
     lastP = -1;
   }
-  function ease(t) { return 1 - Math.pow(1 - t, 3); }
+  function ease(t) { return t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; }
   function frame() {
     ticking = false;
+    if (innerWidth < 769) { clear(); return; }
     if (!geo) measure();
     var vh = innerHeight, top = grid.getBoundingClientRect().top;
-    var mobile = innerWidth < 769;
-    var start = vh * (mobile ? 0.6 : 0.55), end = mobile ? vh * -0.2 : vh * 0.08;
+    var start = vh * 0.62, end = vh * 0.14;
     var p = Math.min(1, Math.max(0, (start - top) / (start - end)));
     if (Math.abs(p - lastP) < 0.002) return;
     lastP = p;
-    var n = cards.length, slice = 0.55, step = (1 - slice) / (n - 1);
+    var hand = geo.x0 + ease(p) * geo.span;           /* dove si trova la mano */
     cards.forEach(function (c, i) {
-      var k = ease(Math.min(1, Math.max(0, (p - i * step) / slice)));
-      if (k >= 1) { c.style.translate = ''; c.style.rotate = ''; c.style.zIndex = ''; c.classList.remove('fx-deck-in'); return; }
-      var g = geo[i], r = 1 - k;
-      c.style.translate = (g.dx * r).toFixed(1) + 'px ' + (g.dy * r).toFixed(1) + 'px';
-      c.style.rotate = (TILT[i % TILT.length] * r).toFixed(2) + 'deg';
-      c.style.zIndex = String(20 + n - i);
+      var g = geo[i];
+      var x = Math.min(g.x, hand);                      /* la carta segue la mano finche' non arriva al suo posto */
+      var left = (g.x - x) / geo.span;                  /* quanto le manca (0 = arrivata) */
+      if (left <= 0.0005 && i > 0 || p >= 1) { c.style.translate = ''; c.style.rotate = ''; c.style.zIndex = ''; c.classList.remove('fx-deck-in'); return; }
+      var moving = x > geo.x0 + 1 && left > 0;          /* in movimento sotto la mano */
+      var dy = (geo.y0 - g.y) + (n - 1 - i) * 3 * Math.min(1, left * 4);
+      c.style.translate = (x - g.x).toFixed(1) + 'px ' + dy.toFixed(1) + 'px';
+      c.style.rotate = (i === 0 ? 0 : (moving ? 1.6 : -1.2 + i * .9) * Math.min(1, left * 3)).toFixed(2) + 'deg';
+      c.style.zIndex = String(30 + n - i);              /* Silvio in cima, le altre escono da sotto */
       c.classList.add('fx-deck-in');
     });
   }
   function onScroll() { if (active && !ticking) { ticking = true; requestAnimationFrame(frame); } }
   addEventListener('scroll', onScroll, { passive: true });
-  addEventListener('resize', function () { geo = null; onScroll(); });
-  addEventListener('load', function () { geo = null; onScroll(); });
+  addEventListener('resize', function () { geo = null; lastP = -1; requestAnimationFrame(frame); });
+  addEventListener('load', function () { geo = null; requestAnimationFrame(frame); });
   if ('IntersectionObserver' in window) {
     new IntersectionObserver(function (es) {
       active = es[0].isIntersecting;
