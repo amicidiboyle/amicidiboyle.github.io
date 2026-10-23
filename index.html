@@ -23,67 +23,396 @@
   <meta name="twitter:card"       content="summary_large_image" />
   <!-- Dati strutturati (Google): organizzazione e prossimi eventi -->
   <script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
   {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "Organization",
-        "@id": "https://www.amicidiboyle.it/#org",
-        "name": "Gli Amici di Boyle – Research & Education",
-        "url": "https://www.amicidiboyle.it/",
-        "logo": "https://www.amicidiboyle.it/assets/logo.png",
-        "email": "info@amicidiboyle.it",
-        "foundingDate": "2023"
-      },
-      {
-        "@type": "Event",
-        "name": "Il limite è la conoscenza. Decompressione, prevenzione e soccorso in immersione",
-        "startDate": "2026-11-07T15:00:00+01:00",
-        "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
-        "eventStatus": "https://schema.org/EventScheduled",
-        "location": {
-          "@type": "Place",
-          "name": "Auditorium Luigi Durand De La Penne, ITTL Nautico San Giorgio",
-          "address": { "@type": "PostalAddress", "streetAddress": "Edificio Calata Darsena, Porto Antico", "addressLocality": "Genova", "addressCountry": "IT" }
-        },
-        "image": "https://www.amicidiboyle.it/assets/eventi/genova-limite-conoscenza-2026.jpg",
-        "organizer": { "@type": "Organization", "name": "FIAS – Federazione Italiana Attività Subacquee", "url": "https://www.fias.it/" },
-        "performer": { "@type": "Person", "name": "Silvio Zerbi" },
-        "isAccessibleForFree": true
-      },
-      {
-        "@type": "Event",
-        "name": "Medicina Subacquea ed Iperbarica: dalla fisiologia alla pratica clinica",
-        "startDate": "2026-11-27T13:45:00+01:00",
-        "endDate": "2026-11-27T18:30:00+01:00",
-        "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
-        "eventStatus": "https://schema.org/EventScheduled",
-        "location": {
-          "@type": "Place",
-          "name": "Aula Magna, Collegio Cattaneo",
-          "address": { "@type": "PostalAddress", "streetAddress": "Via J.H. Dunant 7", "addressLocality": "Varese", "addressCountry": "IT" }
-        },
-        "image": "https://www.amicidiboyle.it/assets/eventi/varese-medicina-subacquea-iperbarica-2026.jpg",
-        "organizer": { "@type": "Organization", "name": "ASST Sette Laghi" },
-        "isAccessibleForFree": true
-      },
-      {
-        "@type": "Event",
-        "name": "Hypercare – Emergency Medicine Course",
-        "startDate": "2027-01-21T13:30:00+01:00",
-        "endDate": "2027-01-22T18:00:00+01:00",
-        "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
-        "eventStatus": "https://schema.org/EventScheduled",
-        "location": {
-          "@type": "Place",
-          "name": "terraXcube, Eurac Research",
-          "address": { "@type": "PostalAddress", "addressLocality": "Bolzano", "addressCountry": "IT" }
-        },
-        "image": "https://www.amicidiboyle.it/assets/eventi/hypercare-2027.jpg"
-      }
-    ]
+   "@type": "WebSite",
+   "@id": "https://www.amicidiboyle.it/#website",
+   "url": "https://www.amicidiboyle.it/",
+   "name": "Gli Amici di Boyle",
+   "inLanguage": [
+    "it",
+    "en"
+   ],
+   "publisher": {
+    "@id": "https://www.amicidiboyle.it/#org"
+   }
+  },
+  {
+   "@type": "Organization",
+   "@id": "https://www.amicidiboyle.it/#org",
+   "name": "Gli Amici di Boyle",
+   "alternateName": [
+    "Gli Amici di Boyle – Research & Education",
+    "Amici di Boyle",
+    "Rete di Boyle"
+   ],
+   "url": "https://www.amicidiboyle.it/",
+   "logo": {
+    "@type": "ImageObject",
+    "url": "https://www.amicidiboyle.it/assets/logo.png"
+   },
+   "email": "info@amicidiboyle.it",
+   "foundingDate": "2023",
+   "description": "Progetto scientifico e rete professionale italiana dedicata alla medicina degli ambienti estremi: medicina subacquea e iperbarica, medicina aerospaziale, medicina d'emergenza e maxiemergenze, fisiologia umana e sicurezza. Ricerca, formazione, podcast divulgativo e strumenti gratuiti per professionisti.",
+   "areaServed": "IT",
+   "knowsLanguage": [
+    "it",
+    "en"
+   ],
+   "knowsAbout": [
+    "Medicina subacquea",
+    "Medicina iperbarica",
+    "Ossigenoterapia iperbarica",
+    "Malattia da decompressione",
+    "Idoneità all'immersione",
+    "Medicina aerospaziale",
+    "Medicina spaziale",
+    "Fisiologia degli ambienti estremi",
+    "Medicina d'emergenza-urgenza",
+    "Maxiemergenze",
+    "Human factors",
+    "Sicurezza in ambienti estremi"
+   ],
+   "founder": [
+    {
+     "@id": "https://www.amicidiboyle.it/#silvio-zerbi"
+    },
+    {
+     "@id": "https://www.amicidiboyle.it/#luigi-tarsia"
+    },
+    {
+     "@id": "https://www.amicidiboyle.it/#vincenzo-benenati"
+    },
+    {
+     "@id": "https://www.amicidiboyle.it/#dario-nicosia"
+    },
+    {
+     "@id": "https://www.amicidiboyle.it/#matteo-paganini"
+    }
+   ],
+   "member": [
+    {
+     "@id": "https://www.amicidiboyle.it/#silvio-zerbi"
+    },
+    {
+     "@id": "https://www.amicidiboyle.it/#luigi-tarsia"
+    },
+    {
+     "@id": "https://www.amicidiboyle.it/#vincenzo-benenati"
+    },
+    {
+     "@id": "https://www.amicidiboyle.it/#dario-nicosia"
+    },
+    {
+     "@id": "https://www.amicidiboyle.it/#matteo-paganini"
+    }
+   ]
+  },
+  {
+   "@type": "Person",
+   "@id": "https://www.amicidiboyle.it/#silvio-zerbi",
+   "name": "Silvio Zerbi",
+   "jobTitle": "Fondatore",
+   "description": "Anestesista Rianimatore, Intensivista, Trauma Team Leader. Medico Subacqueo e Iperbarico, con formazione avanzata in Medicina Aeronautica e Spaziale.",
+   "sameAs": [
+    "https://www.linkedin.com/in/silvio-zerbi/"
+   ],
+   "memberOf": {
+    "@id": "https://www.amicidiboyle.it/#org"
+   }
+  },
+  {
+   "@type": "Person",
+   "@id": "https://www.amicidiboyle.it/#luigi-tarsia",
+   "name": "Luigi Tarsia",
+   "jobTitle": "Direttore Ingegneria",
+   "description": "Ingegnere Nucleare e Biomedico, Specialista in Medicina Subacquea e Iperbarica, Aeronautica ed Aerospaziale.",
+   "sameAs": [
+    "https://www.linkedin.com/in/peppino601/"
+   ],
+   "memberOf": {
+    "@id": "https://www.amicidiboyle.it/#org"
+   }
+  },
+  {
+   "@type": "Person",
+   "@id": "https://www.amicidiboyle.it/#vincenzo-benenati",
+   "name": "Vincenzo Benenati",
+   "jobTitle": "Responsabile Area Iperbarica",
+   "description": "Anestesista Rianimatore, Cardioanestesista, Intensivista, Medico Iperbarico e Subacqueo.",
+   "sameAs": [
+    "https://www.linkedin.com/in/vincenzo-benenati-29a815130/"
+   ],
+   "memberOf": {
+    "@id": "https://www.amicidiboyle.it/#org"
+   }
+  },
+  {
+   "@type": "Person",
+   "@id": "https://www.amicidiboyle.it/#dario-nicosia",
+   "name": "Dario Nicosia",
+   "jobTitle": "Responsabile Area Diving",
+   "description": "Anestesista Rianimatore, Medico Iperbarico e Subacqueo, Mass Gathering Expert.",
+   "sameAs": [
+    "https://www.linkedin.com/in/dario-nicosia87/"
+   ],
+   "memberOf": {
+    "@id": "https://www.amicidiboyle.it/#org"
+   }
+  },
+  {
+   "@type": "Person",
+   "@id": "https://www.amicidiboyle.it/#matteo-paganini",
+   "name": "Matteo Paganini",
+   "jobTitle": "Capo Ricercatore",
+   "description": "Ricercatore, Medico di Emergenza-Urgenza, PhD in Global Health, Humanitarian Aid and Disaster Medicine.",
+   "sameAs": [
+    "https://www.linkedin.com/in/paganinimatteo/"
+   ],
+   "memberOf": {
+    "@id": "https://www.amicidiboyle.it/#org"
+   }
+  },
+  {
+   "@type": "Chapter",
+   "@id": "https://doi.org/10.5772/intechopen.1018019",
+   "name": "Perspective Chapter: First Cut on Mars – Designing Surgical Capability for an Early Martian Outpost",
+   "author": [
+    {
+     "@id": "https://www.amicidiboyle.it/#silvio-zerbi"
+    },
+    {
+     "@id": "https://www.amicidiboyle.it/#luigi-tarsia"
+    },
+    {
+     "@type": "Person",
+     "name": "Francesco Baggio"
+    },
+    {
+     "@type": "Person",
+     "name": "Tommaso Antonio Giacon"
+    }
+   ],
+   "isPartOf": {
+    "@type": "Book",
+    "name": "Mars Exploration – Science, Vision and the Road Ahead",
+    "editor": {
+     "@type": "Person",
+     "name": "Ilaria Cinelli"
+    },
+    "publisher": {
+     "@type": "Organization",
+     "name": "IntechOpen"
+    }
+   },
+   "datePublished": "2026",
+   "isAccessibleForFree": true,
+   "sameAs": "https://doi.org/10.5772/intechopen.1018019"
+  },
+  {
+   "@type": "ScholarlyArticle",
+   "@id": "https://doi.org/10.28920/dhm56.2.203-207",
+   "name": "Returning to diving and hyperbaric exposure after pulmonary vein isolation for atrial fibrillation",
+   "author": [
+    {
+     "@id": "https://www.amicidiboyle.it/#silvio-zerbi"
+    },
+    {
+     "@id": "https://www.amicidiboyle.it/#luigi-tarsia"
+    },
+    {
+     "@id": "https://www.amicidiboyle.it/#vincenzo-benenati"
+    },
+    {
+     "@id": "https://www.amicidiboyle.it/#dario-nicosia"
+    },
+    {
+     "@type": "Person",
+     "name": "Gerardo Bosco"
+    },
+    {
+     "@id": "https://www.amicidiboyle.it/#matteo-paganini"
+    }
+   ],
+   "isPartOf": {
+    "@type": "PublicationIssue",
+    "issueNumber": "2",
+    "isPartOf": {
+     "@type": "PublicationVolume",
+     "volumeNumber": "56",
+     "isPartOf": {
+      "@type": "Periodical",
+      "name": "Diving and Hyperbaric Medicine"
+     }
+    }
+   },
+   "pagination": "203-207",
+   "datePublished": "2026",
+   "sameAs": "https://doi.org/10.28920/dhm56.2.203-207"
+  },
+  {
+   "@type": "PodcastSeries",
+   "@id": "https://www.amicidiboyle.it/podcast.html#podcast",
+   "name": "Sotto Pressione",
+   "url": "https://www.amicidiboyle.it/podcast.html",
+   "inLanguage": "it",
+   "description": "Il podcast di Luigi Tarsia su medicina iperbarica, ipobarismo, astronautica e fisiologia estrema.",
+   "author": {
+    "@id": "https://www.amicidiboyle.it/#luigi-tarsia"
+   },
+   "publisher": {
+    "@id": "https://www.amicidiboyle.it/#org"
+   }
+  },
+  {
+   "@type": "WebApplication",
+   "@id": "https://www.amicidiboyle.it/boylebibliography.html#app",
+   "name": "Boyle Bibliography",
+   "url": "https://www.amicidiboyle.it/boylebibliography.html",
+   "applicationCategory": "ReferenceApplication",
+   "operatingSystem": "Web",
+   "description": "Ricerca bibliografica su PubMed e OpenAlex per la medicina degli ambienti estremi, con bibliografia in stile Vancouver ed export BibTeX, RIS e Word.",
+   "isAccessibleForFree": true,
+   "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "EUR"
+   },
+   "publisher": {
+    "@id": "https://www.amicidiboyle.it/#org"
+   }
+  },
+  {
+   "@type": "WebApplication",
+   "@id": "https://www.amicidiboyle.it/diving-boyle.html#app",
+   "name": "Diving-Boyle",
+   "url": "https://www.amicidiboyle.it/diving-boyle.html",
+   "applicationCategory": "TravelApplication",
+   "operatingSystem": "Web",
+   "description": "Mappa dei diving center italiani curata dagli Amici di Boyle, con ricerca per nome, città e regione.",
+   "isAccessibleForFree": true,
+   "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "EUR"
+   },
+   "publisher": {
+    "@id": "https://www.amicidiboyle.it/#org"
+   }
+  },
+  {
+   "@type": "Event",
+   "@id": "https://www.amicidiboyle.it/eventi.html#sismax-2026",
+   "name": "Il meglio deve ancora venire – 3° Congresso Nazionale SISmax",
+   "startDate": "2026-10-21T09:00:00+02:00",
+   "endDate": "2026-10-23T18:30:00+02:00",
+   "location": {
+    "@type": "Place",
+    "name": "Palazzo del Turismo",
+    "address": {
+     "@type": "PostalAddress",
+     "addressLocality": "Riccione",
+     "addressCountry": "IT",
+     "streetAddress": "Piazzale Ceccarini 11"
+    }
+   },
+   "image": "https://www.amicidiboyle.it/assets/eventi/sismax-riccione-2026.jpg",
+   "organizer": {
+    "@type": "Organization",
+    "name": "SISmax – Sistema Integrato dei Soccorsi in Maxiemergenza"
+   },
+   "performer": {
+    "@id": "https://www.amicidiboyle.it/#dario-nicosia"
+   },
+   "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+   "eventStatus": "https://schema.org/EventScheduled"
+  },
+  {
+   "@type": "Event",
+   "@id": "https://www.amicidiboyle.it/eventi.html#genova-2026",
+   "name": "Il limite è la conoscenza. Decompressione, prevenzione e soccorso in immersione",
+   "startDate": "2026-11-07T15:00:00+01:00",
+   "endDate": "2026-11-07T18:00:00+01:00",
+   "location": {
+    "@type": "Place",
+    "name": "Auditorium Luigi Durand De La Penne, ITTL Nautico San Giorgio",
+    "address": {
+     "@type": "PostalAddress",
+     "addressLocality": "Genova",
+     "addressCountry": "IT",
+     "streetAddress": "Edificio Calata Darsena, Porto Antico"
+    }
+   },
+   "image": "https://www.amicidiboyle.it/assets/eventi/genova-limite-conoscenza-2026.jpg",
+   "organizer": {
+    "@type": "Organization",
+    "name": "FIAS – Federazione Italiana Attività Subacquee",
+    "url": "https://www.fias.it/"
+   },
+   "performer": {
+    "@id": "https://www.amicidiboyle.it/#silvio-zerbi"
+   },
+   "isAccessibleForFree": true,
+   "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+   "eventStatus": "https://schema.org/EventScheduled"
+  },
+  {
+   "@type": "Event",
+   "@id": "https://www.amicidiboyle.it/eventi.html#varese-2026",
+   "name": "Medicina Subacquea ed Iperbarica: dalla fisiologia alla pratica clinica",
+   "startDate": "2026-11-27T13:45:00+01:00",
+   "endDate": "2026-11-27T18:30:00+01:00",
+   "location": {
+    "@type": "Place",
+    "name": "Aula Magna, Collegio Cattaneo",
+    "address": {
+     "@type": "PostalAddress",
+     "addressLocality": "Varese",
+     "addressCountry": "IT",
+     "streetAddress": "Via J.H. Dunant 7"
+    }
+   },
+   "image": "https://www.amicidiboyle.it/assets/eventi/varese-medicina-subacquea-iperbarica-2026.jpg",
+   "organizer": {
+    "@type": "Organization",
+    "name": "ASST Sette Laghi"
+   },
+   "performer": [
+    {
+     "@id": "https://www.amicidiboyle.it/#silvio-zerbi"
+    },
+    {
+     "@id": "https://www.amicidiboyle.it/#vincenzo-benenati"
+    }
+   ],
+   "isAccessibleForFree": true,
+   "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+   "eventStatus": "https://schema.org/EventScheduled"
+  },
+  {
+   "@type": "Event",
+   "@id": "https://www.amicidiboyle.it/eventi.html#hypercare-2027",
+   "name": "Hypercare – Emergency Medicine Course",
+   "startDate": "2027-01-21T13:30:00+01:00",
+   "endDate": "2027-01-22T18:00:00+01:00",
+   "location": {
+    "@type": "Place",
+    "name": "terraXcube, Eurac Research",
+    "address": {
+     "@type": "PostalAddress",
+     "addressLocality": "Bolzano",
+     "addressCountry": "IT"
+    }
+   },
+   "image": "https://www.amicidiboyle.it/assets/eventi/hypercare-2027.jpg",
+   "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+   "eventStatus": "https://schema.org/EventScheduled"
   }
-  </script>
+ ]
+}
+</script>
   <link rel="stylesheet" href="title-fx.css?v=20261022b" />
   <link rel="stylesheet" href="barometro.css?v=20261022b" />
 </head>

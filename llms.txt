@@ -1,0 +1,31 @@
+# Gli Amici di Boyle
+
+> Progetto scientifico e rete professionale italiana dedicata alla medicina degli ambienti estremi: medicina subacquea e iperbarica, medicina aerospaziale, medicina d'emergenza e maxiemergenze, fisiologia umana e sicurezza. Ricerca, formazione, un podcast divulgativo e strumenti gratuiti per professionisti. Fondato nel 2023. Sito: https://www.amicidiboyle.it/ · Contatto: info@amicidiboyle.it
+
+Italian scientific project and professional network on extreme-environment medicine (diving and hyperbaric medicine, aerospace medicine, emergency and mass-casualty medicine, human physiology and safety). The site is bilingual (Italian and English).
+
+## Fondatori
+- Silvio Zerbi, fondatore: anestesista rianimatore, intensivista, trauma team leader; medico subacqueo e iperbarico
+- Luigi Tarsia, direttore ingegneria: ingegnere nucleare e biomedico; autore del podcast Sotto Pressione
+- Vincenzo Benenati, area iperbarica: anestesista rianimatore, cardioanestesista, medico iperbarico e subacqueo
+- Dario Nicosia, area diving: anestesista rianimatore, medico iperbarico e subacqueo, mass gathering
+- Matteo Paganini, capo ricercatore: medico di emergenza-urgenza, PhD in Global Health, Humanitarian Aid and Disaster Medicine
+
+## Pagine principali
+- [Home](https://www.amicidiboyle.it/): progetto, ricerca, formazione, pubblicazioni, fondatori, partner, contatti
+- [Eventi della Rete](https://www.amicidiboyle.it/eventi.html): congressi e corsi in cui intervengono i membri, con archivio
+- [Rete di Boyle](https://www.amicidiboyle.it/rete.html): professionisti e ricercatori della rete, come entrarvi
+- [Sotto Pressione](https://www.amicidiboyle.it/podcast.html): podcast su medicina iperbarica, ipobarismo, astronautica e fisiologia estrema
+- [Boyle Bibliography](https://www.amicidiboyle.it/boylebibliography.html): ricerca bibliografica gratuita su PubMed e OpenAlex, citazioni in stile Vancouver
+- [Diving-Boyle](https://www.amicidiboyle.it/diving-boyle.html): mappa dei diving center italiani
+
+## Pubblicazioni scelte
+- [First Cut on Mars: Designing Surgical Capability for an Early Martian Outpost](https://doi.org/10.5772/intechopen.1018019), capitolo in "Mars Exploration – Science, Vision and the Road Ahead", IntechOpen, 2026
+- [Returning to diving and hyperbaric exposure after pulmonary vein isolation for atrial fibrillation](https://doi.org/10.28920/dhm56.2.203-207), Diving and Hyperbaric Medicine 56(2):203-207, 2026
+
+## Newsletter
+- [Il Barometro di Boyle, N. 1, ottobre 2026](https://www.amicidiboyle.it/newsletter/2026-10.html) ([English](https://www.amicidiboyle.it/newsletter/2026-10-en.html))
+
+## Optional
+- [Privacy](https://www.amicidiboyle.it/privacy.html)
+- [Note legali](https://www.amicidiboyle.it/note-legali.html)
