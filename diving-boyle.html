@@ -16,39 +16,8 @@
   <meta property="og:image:height" content="630" />
   <meta property="og:locale" content="it_IT" />
   <meta name="twitter:card" content="summary_large_image" />
-  <link rel="stylesheet" href="diving-boyle.css?v=20261023e" />
-  <link rel="stylesheet" href="title-fx.css?v=20261023e" />
-  <script type="application/ld+json">
-{
- "@context": "https://schema.org",
- "@graph": [
-  {
-   "@type": "Organization",
-   "@id": "https://www.amicidiboyle.it/#org",
-   "name": "Gli Amici di Boyle",
-   "url": "https://www.amicidiboyle.it/"
-  },
-  {
-   "@type": "WebApplication",
-   "@id": "https://www.amicidiboyle.it/diving-boyle.html#app",
-   "name": "Diving-Boyle",
-   "url": "https://www.amicidiboyle.it/diving-boyle.html",
-   "applicationCategory": "TravelApplication",
-   "operatingSystem": "Web",
-   "description": "Mappa dei diving center italiani curata dagli Amici di Boyle, con ricerca per nome, città e regione.",
-   "isAccessibleForFree": true,
-   "offers": {
-    "@type": "Offer",
-    "price": "0",
-    "priceCurrency": "EUR"
-   },
-   "publisher": {
-    "@id": "https://www.amicidiboyle.it/#org"
-   }
-  }
- ]
-}
-</script>
+  <link rel="stylesheet" href="diving-boyle.css?v=20261023f" />
+  <link rel="stylesheet" href="title-fx.css?v=20261023f" />
 </head>
 <body>
 
@@ -328,11 +297,43 @@
   <script src="assets/vendor/gsap.min.js"></script>
   <script src="assets/vendor/ScrollTrigger.min.js"></script>
 
-  <script src="diving-boyle.js?v=20261023e"></script>
-  <script src="diving-boyle-map.js?v=20261023e"></script>
-  <script src="title-fx.js?v=20261023e" defer></script>
-  <script src="motion.js?v=20261023e" defer></script>
-  <script src="consent.js?v=20261023e" defer></script>
-  <script src="boyle-forms.js?v=20261023e" defer></script>
+  <script src="diving-boyle.js?v=20261023f"></script>
+  <script src="diving-boyle-map.js?v=20261023f"></script>
+  <script src="title-fx.js?v=20261023f" defer></script>
+  <script src="motion.js?v=20261023f" defer></script>
+  <script src="consent.js?v=20261023f" defer></script>
+  <script src="boyle-forms.js?v=20261023f" defer></script>
+  <!-- Dati strutturati (schema.org): in fondo, cosi' non ritardano la prima schermata -->
+  <script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "Organization",
+   "@id": "https://www.amicidiboyle.it/#org",
+   "name": "Gli Amici di Boyle",
+   "url": "https://www.amicidiboyle.it/"
+  },
+  {
+   "@type": "WebApplication",
+   "@id": "https://www.amicidiboyle.it/diving-boyle.html#app",
+   "name": "Diving-Boyle",
+   "url": "https://www.amicidiboyle.it/diving-boyle.html",
+   "applicationCategory": "TravelApplication",
+   "operatingSystem": "Web",
+   "description": "Mappa dei diving center italiani curata dagli Amici di Boyle, con ricerca per nome, città e regione.",
+   "isAccessibleForFree": true,
+   "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "EUR"
+   },
+   "publisher": {
+    "@id": "https://www.amicidiboyle.it/#org"
+   }
+  }
+ ]
+}
+</script>
 </body>
 </html>

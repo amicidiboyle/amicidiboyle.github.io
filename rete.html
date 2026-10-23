@@ -16,9 +16,9 @@
   <meta property="og:image:height" content="630" />
   <meta name="twitter:card" content="summary_large_image" />
   <link rel="icon" href="assets/logo.png" type="image/png" />
-  <link rel="stylesheet" href="rete.css?v=20261023e" />
-  <link rel="stylesheet" href="rete-extra.css?v=20261023e" />
-  <link rel="stylesheet" href="rete-layout.css?v=20261023e" />
+  <link rel="stylesheet" href="rete.css?v=20261023f" />
+  <link rel="stylesheet" href="rete-extra.css?v=20261023f" />
+  <link rel="stylesheet" href="rete-layout.css?v=20261023f" />
   <style>
     .modal{position:fixed;inset:0;z-index:9000;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(1,6,16,.78);backdrop-filter:blur(8px)}
     .modal.is-open{display:flex}
@@ -55,34 +55,8 @@
 }
 #cookie-accept:hover { background: rgba(123,228,255,.22); }
 </style>
-  <link rel="stylesheet" href="title-fx.css?v=20261023e" />
-  <link rel="stylesheet" href="barometro.css?v=20261023e" />
-  <script type="application/ld+json">
-{
- "@context": "https://schema.org",
- "@graph": [
-  {
-   "@type": "Organization",
-   "@id": "https://www.amicidiboyle.it/#org",
-   "name": "Gli Amici di Boyle",
-   "url": "https://www.amicidiboyle.it/"
-  },
-  {
-   "@type": "CollectionPage",
-   "@id": "https://www.amicidiboyle.it/rete.html",
-   "url": "https://www.amicidiboyle.it/rete.html",
-   "name": "Rete di Boyle",
-   "description": "La rete di professionisti e ricercatori degli Amici di Boyle: medicina subacquea, iperbarica, ambienti estremi, fisiologia umana e sicurezza.",
-   "about": {
-    "@id": "https://www.amicidiboyle.it/#org"
-   },
-   "isPartOf": {
-    "@id": "https://www.amicidiboyle.it/#website"
-   }
-  }
- ]
-}
-</script>
+  <link rel="stylesheet" href="title-fx.css?v=20261023f" />
+  <link rel="stylesheet" href="barometro.css?v=20261023f" />
 </head>
 <body>
   <!-- Canvas sinaptico globale -->
@@ -2752,12 +2726,39 @@
     window.location.replace('eventi.html');
   }
   </script>
-  <script src="rete-extra.js?v=20261023e"></script>
-  <script src="rete-layout.js?v=20261023e" defer></script>
-  <script src="barometro.js?v=20261023e" defer></script>
-  <script src="title-fx.js?v=20261023e" defer></script>
-  <script src="motion.js?v=20261023e" defer></script>
-  <script src="consent.js?v=20261023e" defer></script>
-  <script src="boyle-forms.js?v=20261023e" defer></script>
+  <script src="rete-extra.js?v=20261023f"></script>
+  <script src="rete-layout.js?v=20261023f" defer></script>
+  <script src="barometro.js?v=20261023f" defer></script>
+  <script src="title-fx.js?v=20261023f" defer></script>
+  <script src="motion.js?v=20261023f" defer></script>
+  <script src="consent.js?v=20261023f" defer></script>
+  <script src="boyle-forms.js?v=20261023f" defer></script>
+  <!-- Dati strutturati (schema.org): in fondo, cosi' non ritardano la prima schermata -->
+  <script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "Organization",
+   "@id": "https://www.amicidiboyle.it/#org",
+   "name": "Gli Amici di Boyle",
+   "url": "https://www.amicidiboyle.it/"
+  },
+  {
+   "@type": "CollectionPage",
+   "@id": "https://www.amicidiboyle.it/rete.html",
+   "url": "https://www.amicidiboyle.it/rete.html",
+   "name": "Rete di Boyle",
+   "description": "La rete di professionisti e ricercatori degli Amici di Boyle: medicina subacquea, iperbarica, ambienti estremi, fisiologia umana e sicurezza.",
+   "about": {
+    "@id": "https://www.amicidiboyle.it/#org"
+   },
+   "isPartOf": {
+    "@id": "https://www.amicidiboyle.it/#website"
+   }
+  }
+ ]
+}
+</script>
 </body>
 </html>
