@@ -96,12 +96,9 @@
 }
 
 /* ── 7. Passaggio tra le pagine: dissolvenza morbida, il menu resta fermo ──────────── */
-@view-transition { navigation: auto; }
-header.site-header, header.header { view-transition-name: ms-nav; }
-::view-transition-old(root) { animation: msPageOut .22s cubic-bezier(.4, 0, 1, 1) both; }
-::view-transition-new(root) { animation: msPageIn .55s var(--ms-ease) both; }
-@keyframes msPageOut { to { opacity: 0; } }
-@keyframes msPageIn { from { opacity: 0; transform: translateY(14px); } }
+/* Passaggio tra le pagine: disattivato. La dissolvenza incrociata lasciava intravedere
+   per un attimo lo sfondo del fondale della pagina precedente prima della hero. */
+@view-transition { navigation: none; }
 
 /* ── Chi preferisce meno movimento: tutto subito visibile ──────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
