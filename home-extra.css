@@ -936,3 +936,15 @@ html.hero-video-on .site-header { -webkit-backdrop-filter: none; backdrop-filter
 
 /* ── 17. FONDATORI: MAZZO DI CARTE ── */
 .fx-deck { position: relative; }
+/* mazzo fluido: niente sfocatura "a vetro" dietro le card dei fondatori (ricalcolarla a ogni
+   fotogramma mentre si muovono faceva scattare l'animazione); al suo posto un fondo pieno */
+@media (min-width: 769px) {
+  #fondatori .founders-grid > .founder-card { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; background-color: rgba(7, 20, 42, .86) !important; }
+  .fx-deck > .founder-card { backface-visibility: hidden; }
+}
+
+/* ── 18. HERO: niente "vecchio sfondo" al caricamento ──
+   I raggi di luce e il pulviscolo della vecchia hero restavano visibili per un attimo,
+   finche' il video non partiva. Ora la hero mostra subito e solo il fotogramma del video. */
+#home.hero::before, #home.hero::after, #home .particles, #home .light-scattering { display: none !important; }
+#home .hero-bg { background: none !important; }
