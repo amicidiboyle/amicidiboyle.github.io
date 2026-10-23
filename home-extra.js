@@ -409,3 +409,62 @@
   paint();
   new MutationObserver(paint).observe(document.documentElement, { attributes: true, attributeFilter: ['lang'] });
 })();
+
+/* Fondatori: un mazzo di carte che si distribuisce scorrendo.
+   Arrivando alla sezione le cinque card sono impilate al centro, leggermente ruotate;
+   scorrendo vengono "servite" una alla volta fino alla loro posizione. Il movimento segue
+   lo scorrimento (si puo' anche tornare indietro). Usa le proprieta' translate/rotate,
+   cosi' gli effetti al passaggio del mouse restano intatti a mazzo distribuito. */
+(function () {
+  var grid = document.querySelector('#fondatori .founders-grid');
+  if (!grid || !window.requestAnimationFrame) return;
+  if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var cards = Array.prototype.slice.call(grid.children);
+  if (cards.length < 2) return;
+  var TILT = [-5, 4, -2.5, 6, -4, 3];
+  var geo = null, ticking = false, active = false, lastP = -1;
+  grid.classList.add('fx-deck');
+
+  function measure() {
+    /* posizioni "a riposo", senza le trasformazioni del mazzo */
+    cards.forEach(function (c) { c.style.translate = ''; c.style.rotate = ''; });
+    var gw = grid.clientWidth, first = cards[0];
+    var ax = gw / 2 - first.offsetWidth / 2, ay = first.offsetTop;
+    geo = cards.map(function (c, i) {
+      return { dx: ax - c.offsetLeft + i * 2, dy: ay - c.offsetTop + i * 4 };
+    });
+    lastP = -1;
+  }
+  function ease(t) { return 1 - Math.pow(1 - t, 3); }
+  function frame() {
+    ticking = false;
+    if (!geo) measure();
+    var vh = innerHeight, top = grid.getBoundingClientRect().top;
+    var mobile = innerWidth < 769;
+    var start = vh * (mobile ? 0.6 : 0.55), end = mobile ? vh * -0.2 : vh * 0.08;
+    var p = Math.min(1, Math.max(0, (start - top) / (start - end)));
+    if (Math.abs(p - lastP) < 0.002) return;
+    lastP = p;
+    var n = cards.length, slice = 0.55, step = (1 - slice) / (n - 1);
+    cards.forEach(function (c, i) {
+      var k = ease(Math.min(1, Math.max(0, (p - i * step) / slice)));
+      if (k >= 1) { c.style.translate = ''; c.style.rotate = ''; c.style.zIndex = ''; c.classList.remove('fx-deck-in'); return; }
+      var g = geo[i], r = 1 - k;
+      c.style.translate = (g.dx * r).toFixed(1) + 'px ' + (g.dy * r).toFixed(1) + 'px';
+      c.style.rotate = (TILT[i % TILT.length] * r).toFixed(2) + 'deg';
+      c.style.zIndex = String(20 + n - i);
+      c.classList.add('fx-deck-in');
+    });
+  }
+  function onScroll() { if (active && !ticking) { ticking = true; requestAnimationFrame(frame); } }
+  addEventListener('scroll', onScroll, { passive: true });
+  addEventListener('resize', function () { geo = null; onScroll(); });
+  addEventListener('load', function () { geo = null; onScroll(); });
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function (es) {
+      active = es[0].isIntersecting;
+      requestAnimationFrame(frame);
+    }, { rootMargin: '30% 0px 30% 0px' }).observe(grid);
+  } else active = true;
+  frame();
+})();
