@@ -936,5 +936,3 @@ html.hero-video-on .site-header { -webkit-backdrop-filter: none; backdrop-filter
 
 /* ── 17. FONDATORI: MAZZO DI CARTE ── */
 .fx-deck { position: relative; }
-.fx-deck > .founder-card { will-change: translate, rotate; }
-.fx-deck > .founder-card.fx-deck-in { box-shadow: 0 18px 40px rgba(0, 0, 0, .45); }

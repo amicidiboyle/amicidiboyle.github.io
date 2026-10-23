@@ -410,11 +410,10 @@
   new MutationObserver(paint).observe(document.documentElement, { attributes: true, attributeFilter: ['lang'] });
 })();
 
-/* Fondatori (solo computer): un mazzo appoggiato a sinistra che si apre a nastro,
-   come quando si fa scorrere un mazzo sul tavolo con una mano: la mano trascina le carte
-   verso destra e ciascuna si ferma al suo posto, una dopo l'altra. Segue lo scorrimento
-   (tornando su il mazzo si richiude). Sul telefono le card compaiono semplicemente
-   una sotto l'altra, con l'entrata normale delle card. */
+/* Fondatori (solo computer): un mazzo appoggiato a sinistra che si apre una volta sola.
+   Le card aspettano impilate; quando la sezione arriva sullo schermo il mazzo si apre
+   a nastro verso destra, con un movimento morbido a tempo (non legato allo scorrimento),
+   e poi resta aperto per sempre. Sul telefono le card compaiono una sotto l'altra. */
 (function () {
   var grid = document.querySelector('#fondatori .founders-grid');
   if (!grid || !window.requestAnimationFrame) return;
@@ -423,50 +422,61 @@
   var cards = Array.prototype.slice.call(grid.children);
   var n = cards.length;
   if (n < 2) return;
-  var geo = null, ticking = false, active = false, lastP = -1;
-  grid.classList.add('fx-deck');
+  /* se la sezione e' gia' sullo schermo o superata al caricamento, niente mazzo */
+  if (grid.getBoundingClientRect().top < innerHeight * 0.9) return;
 
-  function clear() { cards.forEach(function (c) { c.style.translate = ''; c.style.rotate = ''; c.style.zIndex = ''; c.classList.remove('fx-deck-in'); }); }
+  var geo, done = false, playing = false;
+  function clear() {
+    cards.forEach(function (c) { c.style.translate = ''; c.style.rotate = ''; c.style.zIndex = ''; c.style.willChange = ''; });
+    grid.classList.remove('fx-deck');
+  }
   function measure() {
-    clear();
     var x0 = cards[0].offsetLeft, y0 = cards[0].offsetTop;
     geo = cards.map(function (c) { return { x: c.offsetLeft, y: c.offsetTop }; });
     geo.x0 = x0; geo.y0 = y0; geo.span = Math.max(1, geo[n - 1].x - x0);
-    lastP = -1;
   }
+  /* curva morbida, senza strappi all'inizio e all'arrivo */
   function ease(t) { return t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; }
-  function frame() {
-    ticking = false;
-    if (innerWidth < 769) { clear(); return; }
-    if (!geo) measure();
-    var vh = innerHeight, top = grid.getBoundingClientRect().top;
-    var start = vh * 0.62, end = vh * 0.14;
-    var p = Math.min(1, Math.max(0, (start - top) / (start - end)));
-    if (Math.abs(p - lastP) < 0.002) return;
-    lastP = p;
-    var hand = geo.x0 + ease(p) * geo.span;           /* dove si trova la mano */
+  function settle(t) { return 1 - Math.pow(1 - t, 3); }
+  function pose(p) {
+    var hand = geo.x0 + p * geo.span;
     cards.forEach(function (c, i) {
       var g = geo[i];
-      var x = Math.min(g.x, hand);                      /* la carta segue la mano finche' non arriva al suo posto */
-      var left = (g.x - x) / geo.span;                  /* quanto le manca (0 = arrivata) */
-      if (left <= 0.0005 && i > 0 || p >= 1) { c.style.translate = ''; c.style.rotate = ''; c.style.zIndex = ''; c.classList.remove('fx-deck-in'); return; }
-      var moving = x > geo.x0 + 1 && left > 0;          /* in movimento sotto la mano */
-      var dy = (geo.y0 - g.y) + (n - 1 - i) * 3 * Math.min(1, left * 4);
-      c.style.translate = (x - g.x).toFixed(1) + 'px ' + dy.toFixed(1) + 'px';
-      c.style.rotate = (i === 0 ? 0 : (moving ? 1.6 : -1.2 + i * .9) * Math.min(1, left * 3)).toFixed(2) + 'deg';
-      c.style.zIndex = String(30 + n - i);              /* Silvio in cima, le altre escono da sotto */
-      c.classList.add('fx-deck-in');
+      var x = Math.min(g.x, hand);
+      var left = (g.x - x) / geo.span;                         /* 0 = arrivata */
+      var k = settle(Math.min(1, left * 3));                   /* l'inclinazione si scioglie all'arrivo */
+      var dy = (geo.y0 - g.y) + (n - 1 - i) * 3 * k;
+      c.style.translate = (x - g.x).toFixed(2) + 'px ' + dy.toFixed(2) + 'px';
+      c.style.rotate = (i === 0 ? 0 : (-2.2 + i * 1.1) * k).toFixed(3) + 'deg';
     });
   }
-  function onScroll() { if (active && !ticking) { ticking = true; requestAnimationFrame(frame); } }
-  addEventListener('scroll', onScroll, { passive: true });
-  addEventListener('resize', function () { geo = null; lastP = -1; requestAnimationFrame(frame); });
-  addEventListener('load', function () { geo = null; requestAnimationFrame(frame); });
-  if ('IntersectionObserver' in window) {
-    new IntersectionObserver(function (es) {
-      active = es[0].isIntersecting;
-      requestAnimationFrame(frame);
-    }, { rootMargin: '30% 0px 30% 0px' }).observe(grid);
-  } else active = true;
-  frame();
+  /* stato iniziale: mazzo chiuso a sinistra, Silvio in cima */
+  grid.classList.add('fx-deck');
+  measure();
+  cards.forEach(function (c, i) { c.style.zIndex = String(30 + n - i); c.style.willChange = 'translate, rotate'; });
+  pose(0);
+
+  function play() {
+    if (done || playing) return;
+    playing = true;
+    var t0 = null, DUR = 1900;
+    function step(ts) {
+      if (t0 === null) t0 = ts;
+      var t = Math.min(1, (ts - t0) / DUR);
+      pose(ease(t));
+      if (t < 1) requestAnimationFrame(step);
+      else { done = true; clear(); }
+    }
+    requestAnimationFrame(step);
+  }
+  function check() {
+    if (done || playing) return;
+    if (innerWidth < 769) { done = true; clear(); return; }
+    if (grid.getBoundingClientRect().top < innerHeight * 0.62) play();
+  }
+  addEventListener('scroll', check, { passive: true });
+  addEventListener('resize', function () { if (!done && !playing) { clear(); grid.classList.add('fx-deck'); measure(); pose(0); } check(); });
+  /* rete di sicurezza: se la pagina viene aperta con un'ancora o con un salto, apri comunque */
+  addEventListener('hashchange', check);
+  check();
 })();
