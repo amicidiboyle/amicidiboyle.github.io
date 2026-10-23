@@ -16,8 +16,11 @@ const CONFIG = {
   HOUR: 9,
   FOCUS_PAGES: [
     { label: 'Diving-Boyle', match: 'diving-boyle', color: '#20a4c3' },
-    { label: 'Boyle Bibliography', match: 'boylebibliography', color: '#c9a227' }
+    { label: 'Boyle Bibliography', match: 'boylebibliography', color: '#c9a227' },
+    { label: 'Podcast', match: 'podcast', color: '#7a9e7e' }
   ],
+  // cartella Drive dove Luigi salva ogni mese il CSV esportato da Spotify for Creators
+  SPOTIFY_FOLDER_ID: '1p6bljx7qtKrNTt3Lb1trnoNoD8fBTJ7l',
   PODCAST_RSS: 'https://anchor.fm/s/103fe6a4c/podcast/rss',
   PODCAST_URL: 'https://open.spotify.com/show/2kiLEUpdpn6FIUzTDMx0V7',
   SITE_START: '2026-04-01',      // lancio del sito: il primo report parte da qui
@@ -101,6 +104,10 @@ function sendWeeklyReport(opts) {
   const channels = topList_(prop, 'sessionDefaultChannelGroup', 'sessions', 6);
   const countries = topList_(prop, 'country', 'activeUsers', 6);
   const podcast = podcastInfo_();
+  if (podcast) {
+    podcast.site = podcastSiteEvents_(prop);
+    podcast.spotify = spotifyInfo_();
+  }
   const newsletter = newsletterInfo_();
 
   const images = {
@@ -115,7 +122,7 @@ function sendWeeklyReport(opts) {
   };
 
   const range = weekLabel_();
-  saveHistory_(range, kpi.cur, focus);
+  if (!(opts && opts.test)) saveHistory_(range, kpi.cur, focus);   // le prove non finiscono nello storico
 
   MailApp.sendEmail({
     to: CONFIG.RECIPIENTS.join(','),
@@ -275,7 +282,9 @@ function getHistorySheet_() {
 }
 
 function saveHistory_(range, cur, focus) {
-  getHistorySheet_().appendRow([range, cur.activeUsers || 0, cur.newUsers || 0,
+  const sh = getHistorySheet_();
+  focus.forEach((f, i) => { const c = sh.getRange(1, 8 + i); if (!c.getValue()) c.setValue('Viste ' + f.label); });
+  sh.appendRow([range, cur.activeUsers || 0, cur.newUsers || 0,
     cur.sessions || 0, cur.screenPageViews || 0,
     Math.round(cur.averageSessionDuration || 0), cur.engagementRate || 0]
     .concat(focus.map(f => f.kpi.cur.screenPageViews || 0)));
@@ -326,7 +335,7 @@ function buildHtml_(range, kpi, focus, pages, podcast, first, newsletter) {
       ['Tasso di engagement', c.engagementRate, p.engagementRate, pct_]
     ]) + img_('trend');
 
-  html += h3_('Diving-Boyle e Boyle Bibliography') +
+  html += h3_('Diving-Boyle, Boyle Bibliography e Podcast') +
     kpiTable_([].concat.apply([], focus.map(f => {
       const tc = (f.kpi.cur.userEngagementDuration || 0) / Math.max(f.kpi.cur.activeUsers || 0, 1);
       const tp = (f.kpi.prev.userEngagementDuration || 0) / Math.max(f.kpi.prev.activeUsers || 0, 1);
@@ -350,7 +359,8 @@ function buildHtml_(range, kpi, focus, pages, podcast, first, newsletter) {
       '<p style="font-size:14px;line-height:21px">' + podcast.count + ' episodi pubblicati. ' +
       'Ultimo: <a href="' + CONFIG.PODCAST_URL + '" style="color:#0b4f6c">' + podcast.title + '</a> (' +
       podcast.date + ', ' + podcast.days + ' giorni fa). ' +
-      '<span style="color:#888">Gli ascolti sono visibili solo in Spotify for Creators.</span></p>';
+      '</p>';
+    html += podcastExtraHtml_(podcast);
   }
 
   html += newsletterHtml_(newsletter);
@@ -447,5 +457,104 @@ function newsletterHtml_(nl) {
 // prova dall'editor: manda il report solo a Silvio
 function testReport() {
   const r = CONFIG.RECIPIENTS; CONFIG.RECIPIENTS = [r[0]];
-  try { sendWeeklyReport(); } finally { CONFIG.RECIPIENTS = r; }
+  try { sendWeeklyReport({ test: true }); } finally { CONFIG.RECIPIENTS = r; }
+}
+
+/* ---------- podcast: ascolti dal sito (GA4) e da Spotify (CSV) ---------- */
+
+function podcastSiteEvents_(prop) {
+  try {
+    const names = ['podcast_play', 'podcast_spotify', 'podcast_voice'];
+    const filter = { filter: { fieldName: 'eventName', inListFilter: { values: names } } };
+    const tot = {};
+    names.forEach(n => tot[n] = { cur: 0, prev: 0 });
+    ['7daysAgo|yesterday|cur', '14daysAgo|8daysAgo|prev'].forEach(r => {
+      const [a, b, k] = r.split('|');
+      run_(prop, { dateRanges: [{ startDate: a, endDate: b }], dimensions: [{ name: 'eventName' }],
+        metrics: [{ name: 'eventCount' }], dimensionFilter: filter })
+        .forEach(x => { if (tot[x.dims[0]]) tot[x.dims[0]][k] = x.vals[0]; });
+    });
+    const top = run_(prop, { dateRanges: [{ startDate: '7daysAgo', endDate: 'yesterday' }],
+      dimensions: [{ name: 'linkText' }], metrics: [{ name: 'eventCount' }],
+      dimensionFilter: { filter: { fieldName: 'eventName', inListFilter: { values: ['podcast_play', 'podcast_spotify'] } } },
+      orderBys: [{ metric: { metricName: 'eventCount' }, desc: true }], limit: 5 })
+      .filter(x => x.dims[0] && x.dims[0] !== '(not set)').map(x => [x.dims[0], x.vals[0]]);
+    return { tot: tot, top: top };
+  } catch (e) { Logger.log('podcastSiteEvents_: ' + e.message); return null; }
+}
+
+// legge il CSV piu' recente nella cartella Drive, qualunque grafico Luigi abbia esportato
+function spotifyInfo_() {
+  try {
+    if (!CONFIG.SPOTIFY_FOLDER_ID) return null;
+    const it = DriveApp.getFolderById(CONFIG.SPOTIFY_FOLDER_ID).getFiles();
+    const files = [];
+    while (it.hasNext()) {
+      const f = it.next();
+      if (/\.csv$/i.test(f.getName()) || f.getMimeType() === 'text/csv') files.push(f);
+    }
+    if (!files.length) return { empty: true };
+    files.sort((a, b) => b.getLastUpdated() - a.getLastUpdated());
+    const f = files[0];
+    const rows = Utilities.parseCsv(f.getBlob().getDataAsString('utf-8').replace(/^\uFEFF/, ''));
+    if (rows.length < 2) return { empty: true };
+    const head = rows[0].map(h => String(h).trim()), body = rows.slice(1).filter(r => r.some(c => String(c).trim()));
+    const num = v => { const x = parseFloat(String(v).replace(/\./g, '').replace(',', '.').replace(/[^0-9.\-]/g, '')); return isNaN(x) ? null : x; };
+    const isNumCol = i => body.filter(r => num(r[i]) !== null).length >= body.length * .8;
+    const isDateCol = i => body.filter(r => !isNaN(Date.parse(r[i]))).length >= body.length * .8 && !isNumCol(i);
+    const dateCol = head.findIndex((h, i) => isDateCol(i));
+    const numCols = head.map((h, i) => i).filter(i => i !== dateCol && isNumCol(i));
+    const textCol = head.findIndex((h, i) => i !== dateCol && !isNumCol(i));
+    const out = { file: f.getName(), updated: Utilities.formatDate(f.getLastUpdated(), 'Europe/Rome', 'd/M/yyyy') };
+    if (dateCol >= 0) {
+      // serie giornaliera: ultimi 30 giorni contro i 30 precedenti
+      const last = Math.max.apply(null, body.map(r => Date.parse(r[dateCol])));
+      const day = 86400000;
+      out.series = numCols.map(i => {
+        let cur = 0, prev = 0;
+        body.forEach(r => { const d = last - Date.parse(r[dateCol]); const v = num(r[i]) || 0;
+          if (d < 30 * day) cur += v; else if (d < 60 * day) prev += v; });
+        return [head[i], cur, prev];
+      });
+      out.until = Utilities.formatDate(new Date(last), 'Europe/Rome', 'd/M/yyyy');
+    } else if (textCol >= 0 && numCols.length) {
+      // tabella per episodio: i primi 5 secondo la prima colonna numerica
+      const i = numCols[0];
+      out.metric = head[i];
+      out.top = body.map(r => [r[textCol], num(r[i]) || 0]).sort((a, b) => b[1] - a[1]).slice(0, 5);
+      out.total = body.reduce((a, r) => a + (num(r[i]) || 0), 0);
+    }
+    return out;
+  } catch (e) { Logger.log('spotifyInfo_: ' + e.message); return { error: e.message }; }
+}
+
+function podcastExtraHtml_(p) {
+  let html = '';
+  const td = 'padding:5px 10px;border-bottom:1px solid #eef2f4;';
+  if (p.site) {
+    const t = p.site.tot;
+    html += '<p style="font-size:14px;margin:14px 0 4px"><b>Dal sito</b> (solo visitatori che hanno accettato i cookie)</p>' +
+      kpiTable_([
+        ['Ascolti avviati dal player del sito', t.podcast_play.cur, t.podcast_play.prev, n_],
+        ['Clic verso Spotify', t.podcast_spotify.cur, t.podcast_spotify.prev, n_],
+        ['Messaggi vocali inviati a Luigi', t.podcast_voice.cur, t.podcast_voice.prev, n_]
+      ]);
+    if (p.site.top.length) html += '<table style="border-collapse:collapse;width:100%;font-size:14px;margin-top:6px">' +
+      p.site.top.map(r => '<tr><td style="' + td + '">' + r[0] + '</td><td style="' + td + 'text-align:right">' + n_(r[1]) + '</td></tr>').join('') + '</table>';
+  }
+  const s = p.spotify;
+  if (s) {
+    html += '<p style="font-size:14px;margin:16px 0 4px"><b>Su Spotify</b></p>';
+    if (s.error) html += '<p style="font-size:13px;color:#a33">Non riesco a leggere il file di Spotify: ' + s.error + '.</p>';
+    else if (s.empty) html += '<p style="font-size:13px;color:#888">Nessun dato: Luigi non ha ancora caricato l\'esportazione CSV di Spotify for Creators nella cartella Drive "Sotto Pressione · statistiche Spotify".</p>';
+    else {
+      if (s.series) html += kpiTable_(s.series.map(r => [r[0] + ' (ultimi 30 giorni)', r[1], r[2], n_]))
+        .replace('Questa sett.', 'Ultimi 30 gg').replace('Precedente', '30 gg prima');
+      if (s.top) html += '<table style="border-collapse:collapse;width:100%;font-size:14px">' +
+        '<tr><td style="' + td + 'color:#666">Totale · ' + s.metric + '</td><td style="' + td + 'text-align:right;font-weight:600">' + n_(s.total) + '</td></tr>' +
+        s.top.map(r => '<tr><td style="' + td + '">' + r[0] + '</td><td style="' + td + 'text-align:right">' + n_(r[1]) + '</td></tr>').join('') + '</table>';
+      html += '<p style="font-size:12px;color:#888;margin-top:4px">Dal file ' + s.file + ', caricato il ' + s.updated + (s.until ? ', dati fino al ' + s.until : '') + '.</p>';
+    }
+  }
+  return html;
 }
