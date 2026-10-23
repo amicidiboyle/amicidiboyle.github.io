@@ -20,7 +20,9 @@ const CONFIG = {
   ],
   PODCAST_RSS: 'https://anchor.fm/s/103fe6a4c/podcast/rss',
   PODCAST_URL: 'https://open.spotify.com/show/2kiLEUpdpn6FIUzTDMx0V7',
-  SITE_START: '2026-04-01'       // lancio del sito: il primo report parte da qui
+  SITE_START: '2026-04-01',      // lancio del sito: il primo report parte da qui
+  // newsletter su Brevo: serve la proprieta' di script BREVO_API_KEY
+  NEWSLETTER_LISTS: [{ id: 3, label: 'Italiano' }, { id: 4, label: 'English' }]
 };
 
 // spiegazione mostrata solo nel primo report
@@ -99,6 +101,7 @@ function sendWeeklyReport(opts) {
   const channels = topList_(prop, 'sessionDefaultChannelGroup', 'sessions', 6);
   const countries = topList_(prop, 'country', 'activeUsers', 6);
   const podcast = podcastInfo_();
+  const newsletter = newsletterInfo_();
 
   const images = {
     trend: lineChart_(first ? 'Sito: tutte le settimane dal lancio' : 'Sito: ultime 8 settimane', weeks,
@@ -117,7 +120,7 @@ function sendWeeklyReport(opts) {
   MailApp.sendEmail({
     to: CONFIG.RECIPIENTS.join(','),
     subject: 'amicidiboyle.it · visite della settimana ' + range,
-    htmlBody: buildHtml_(range, kpi, focus, pages, podcast, first),
+    htmlBody: buildHtml_(range, kpi, focus, pages, podcast, first, newsletter),
     name: CONFIG.SENDER_NAME,
     replyTo: CONFIG.REPLY_TO,
     inlineImages: images
@@ -308,7 +311,7 @@ function kpiTable_(rows) {
 function h3_(t) { return '<h3 style="font-size:16px;margin:28px 0 8px;color:#0b4f6c">' + t + '</h3>'; }
 function img_(cid) { return '<p style="margin:10px 0"><img src="cid:' + cid + '" style="max-width:100%;border:1px solid #eef2f4;border-radius:6px"></p>'; }
 
-function buildHtml_(range, kpi, focus, pages, podcast, first) {
+function buildHtml_(range, kpi, focus, pages, podcast, first, newsletter) {
   const c = kpi.cur, p = kpi.prev;
   let html = '<div style="font-family:Arial,sans-serif;max-width:660px;color:#1d2a33">' +
     '<h2 style="font-family:Georgia,serif;color:#0b4f6c;margin-bottom:4px">amicidiboyle.it</h2>' +
@@ -350,7 +353,9 @@ function buildHtml_(range, kpi, focus, pages, podcast, first) {
       '<span style="color:#888">Gli ascolti sono visibili solo in Spotify for Creators.</span></p>';
   }
 
-  return html + '<p style="font-size:12px;color:#888;margin-top:30px">Report automatico da Google Apps Script sui dati di Google Analytics 4.</p></div>';
+  html += newsletterHtml_(newsletter);
+
+  return html + '<p style="font-size:12px;color:#888;margin-top:30px">Report automatico da Google Apps Script sui dati di Google Analytics 4 e Brevo.</p></div>';
 }
 
 function weekLabel_() {
@@ -358,4 +363,89 @@ function weekLabel_() {
   const end = new Date(); end.setDate(end.getDate() - 1);
   const start = new Date(); start.setDate(start.getDate() - 7);
   return Utilities.formatDate(start, tz, 'd/M') + '–' + Utilities.formatDate(end, tz, 'd/M/yyyy');
+}
+
+/* ---------- newsletter (Brevo) ---------- */
+
+function brevo_(path) {
+  const key = PropertiesService.getScriptProperties().getProperty('BREVO_API_KEY');
+  if (!key) throw new Error('manca la proprieta\' di script BREVO_API_KEY');
+  const r = UrlFetchApp.fetch('https://api.brevo.com/v3' + path, {
+    headers: { 'api-key': String(key).trim(), accept: 'application/json' }, muteHttpExceptions: true });
+  if (r.getResponseCode() >= 300) throw new Error('Brevo ' + r.getResponseCode() + ': ' + r.getContentText().slice(0, 200));
+  return JSON.parse(r.getContentText());
+}
+
+function newsletterInfo_() {
+  try {
+    const now = Date.now(), day = 86400000;
+    const lists = CONFIG.NEWSLETTER_LISTS.map(l => {
+      const info = brevo_('/contacts/lists/' + l.id);
+      let contacts = [], off = 0;
+      while (true) {
+        const page = brevo_('/contacts/lists/' + l.id + '/contacts?limit=500&offset=' + off);
+        contacts = contacts.concat(page.contacts || []);
+        if (!page.contacts || page.contacts.length < 500) break;
+        off += 500;
+      }
+      const created = c => new Date(c.createdAt).getTime();
+      return {
+        label: l.label,
+        total: info.uniqueSubscribers || contacts.length,
+        week: contacts.filter(c => now - created(c) <= 7 * day).length,
+        prevWeek: contacts.filter(c => now - created(c) > 7 * day && now - created(c) <= 14 * day).length
+      };
+    });
+    // ultimo numero inviato (una campagna per lingua)
+    const camps = (brevo_('/emailCampaigns?status=sent&limit=10&sort=desc&statistics=globalStats&excludeHtmlContent=true').campaigns || []);
+    const last = [];
+    CONFIG.NEWSLETTER_LISTS.forEach(l => {
+      const c = camps.find(x => x.recipients && (x.recipients.lists || []).indexOf(l.id) >= 0);
+      if (!c) return;
+      const g = (c.statistics && c.statistics.globalStats) || {};
+      const cs = ((c.statistics && c.statistics.campaignStats) || [])[0] || {};
+      last.push({
+        label: l.label, name: c.subject, date: Utilities.formatDate(new Date(c.sentDate), 'Europe/Rome', 'd/M/yyyy'),
+        days: Math.round((now - new Date(c.sentDate).getTime()) / day),
+        sent: g.sent || 0, delivered: g.delivered || 0, opens: g.uniqueViews || 0, mpp: g.appleMppOpens || 0,
+        clicks: cs.uniqueClicks != null ? cs.uniqueClicks : (g.uniqueClicks || 0),
+        unsub: g.unsubscriptions || 0, bounces: (g.hardBounces || 0) + (g.softBounces || 0)
+      });
+    });
+    return { lists: lists, last: last };
+  } catch (e) {
+    Logger.log('newsletterInfo_: ' + e.message);
+    return { error: e.message };
+  }
+}
+
+function newsletterHtml_(nl) {
+  if (!nl) return '';
+  let html = h3_('Il Barometro di Boyle · newsletter');
+  if (nl.error) return html + '<p style="font-size:14px;color:#a33">Dati della newsletter non disponibili: ' + nl.error + '.</p>';
+  const tot = nl.lists.reduce((a, l) => a + l.total, 0);
+  html += kpiTable_(
+    [['Iscritti totali', tot, tot - nl.lists.reduce((a, l) => a + l.week, 0), n_]].concat(
+      nl.lists.map(l => ['Nuovi iscritti questa settimana · ' + l.label, l.week, l.prevWeek, n_])));
+  nl.last.forEach(c => {
+    const rate = c.delivered ? c.opens / c.delivered : 0;
+    html += '<p style="font-size:14px;line-height:21px;margin:12px 0 4px"><b>Ultimo numero (' + c.label + ')</b>: ' + c.name +
+      ' · inviato il ' + c.date + ' (' + c.days + ' giorni fa)</p>' +
+      '<table style="border-collapse:collapse;width:100%;font-size:14px">' +
+      [['Consegnate', n_(c.delivered) + ' su ' + n_(c.sent)],
+       ['Aperture uniche', n_(c.opens) + ' (' + pct_(rate) + ')' + (c.mpp ? ' · di cui ' + n_(c.mpp) + ' automatiche di Apple Mail' : '')],
+       ['Persone che hanno cliccato', n_(c.clicks)],
+       ['Disiscrizioni', n_(c.unsub)],
+       ['Indirizzi non raggiungibili', n_(c.bounces)]
+      ].map(r => '<tr><td style="padding:5px 10px;border-bottom:1px solid #eef2f4">' + r[0] +
+        '</td><td style="padding:5px 10px;border-bottom:1px solid #eef2f4;text-align:right">' + r[1] + '</td></tr>').join('') +
+      '</table>';
+  });
+  return html + '<p style="font-size:12px;color:#888;margin-top:6px">Apple Mail apre in automatico le mail per proteggere la privacy: le aperture reali sono un po\' meno di quelle indicate.</p>';
+}
+
+// prova dall'editor: manda il report solo a Silvio
+function testReport() {
+  const r = CONFIG.RECIPIENTS; CONFIG.RECIPIENTS = [r[0]];
+  try { sendWeeklyReport(); } finally { CONFIG.RECIPIENTS = r; }
 }
