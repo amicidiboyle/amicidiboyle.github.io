@@ -420,14 +420,15 @@ export const BASE = [
         ['Immersione a ' + p.depth + ' m (aria)', F.absolutePressureAtDepth(p.depth), 0.21],
         ['Montagna a ' + p.alt + ' m (ISA)', F.isaPressure(p.alt), 0.21],
         ['Cabina d\'aereo a 8000 ft', F.isaPressure(2438.4), 0.21],
-        ['Stazione spaziale', 101300, 0.21],
+        ['Stazione spaziale', CONST.P_ATM, 0.21],
         ['Habitat marziano (esempio)', p.habP * 1000, p.habF / 100],
         ['Superficie di Marte (esterno)', 600, 0.0015],
       ];
-      const rows = envs.map(([n, pa, f]) => ({ n, kpa: pa / 1000, pio2: P.inspiredPO2(mmHg(pa), f) }));
+      /* sotto 47 mmHg (tensione di vapore a 37 °C) PiO₂ = FiO₂·(PB − 47) perde significato fisiologico: non si mostra come 0 */
+      const rows = envs.map(([n, pa, f]) => ({ n, kpa: pa / 1000, pio2: P.inspiredPO2(mmHg(pa), f), undef: mmHg(pa) <= CONST.PH2O_37_MMHG }));
       return {
-        outputs: rows.map(r => ({ label: r.n, value: r.pio2, unit: 'mmHg PiO₂', digits: 0, hint: r.kpa, hintUnit: 'kPa' })),
-        chart: { type: 'bar', spec: { title: 'PO₂ inspirata nei diversi ambienti', unit: 'mmHg', groups: rows.map(r => ({ label: r.n.replace(' (aria)', '').replace(' (ISA)', ''), values: [{ name: 'PiO₂', v: r.pio2 }] })) } },
+        outputs: rows.map(r => ({ label: r.n, value: r.pio2, unit: 'mmHg PiO₂', digits: 0, hint: r.kpa, hintUnit: 'kPa', ...(r.undef ? { text: 'PiO₂ non definita: pressione sotto 47 mmHg (limite di Armstrong 6,3 kPa)' } : {}) })),
+        chart: { type: 'bar', spec: { title: 'PO₂ inspirata nei diversi ambienti', unit: 'mmHg', groups: rows.map(r => ({ label: r.n.replace(' (aria)', '').replace(' (ISA)', ''), values: [{ name: 'PiO₂', v: r.pio2, text: r.undef ? 'non respirabile' : undefined }] })) } },
         warnings: ['La superficie di Marte ha circa 0,6 kPa, quasi tutta CO₂ (O₂ ≈ 0,1–0,2%): sotto i 6,3 kPa (47 mmHg) i liquidi corporei bollono a 37 °C. Non è respirabile.'],
       };
     },

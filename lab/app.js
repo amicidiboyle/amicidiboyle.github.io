@@ -1,11 +1,11 @@
 /* BOYLE LAB · applicazione (routing, catalogo, banco di lavoro, registro, validazione)
    ES module puro, nessuna dipendenza. Tutti i calcoli arrivano da lab/core. */
-import { BASE } from './experiments/base.js';
-import { ADVANCED } from './experiments/advanced.js';
-import { MODELS, CATEGORY } from './core/registry.js';
+import { BASE } from './experiments/base.js?v=20261026e';
+import { ADVANCED } from './experiments/advanced.js?v=20261026e';
+import { MODELS, CATEGORY } from './core/registry.js?v=20261026e';
 import { REFS, refLink } from './core/refs.js';
 import { lineChart, barChart } from './ui/chart.js?v=20261026e';
-import { runAll } from './tests/cases.js';
+import { runAll } from './tests/cases.js?v=20261026e';
 import { patch } from './ui/instruments.js';
 
 const VERSION = '1.0.0';

@@ -104,7 +104,7 @@ export function barChart(spec, { width = 720 } = {}) {
   const LS = 12, VS = 11, maxL = Math.round(width * 0.38);
   const labels = spec.groups.map(g => textW(g.label, LS) + 24 <= maxL ? [g.label] : wrap2(g.label));
   const lw = Math.max(...labels.flat().map(t => textW(t, LS)));
-  const vw = Math.max(...spec.groups.flatMap(g => g.values.map(v => textW(fmtV(v.v), VS))));
+  const vw = Math.max(...spec.groups.flatMap(g => g.values.map(v => textW(v.text ?? fmtV(v.v), VS))));
   const rowH = 18, gap = 14;
   const m = { l: Math.min(Math.max(Math.ceil(lw) + 26, 90), maxL), r: Math.ceil(vw) + 16, t: 46 + (names.length > 1 ? 18 : 0), b: 34 };
   const groupH = g => Math.max(g.values.length * rowH, labels[spec.groups.indexOf(g)].length * 15);
@@ -124,7 +124,7 @@ export function barChart(spec, { width = 720 } = {}) {
     g.values.forEach(v => {
       const i = names.indexOf(v.name), w = Math.max(v.v / max * W, 0);
       s += `<rect x="${m.l}" y="${ry + 2}" width="${w}" height="${rowH - 4}" rx="3" fill="${PALETTE[i]}" opacity=".9"/>`;
-      s += `<text x="${m.l + w + 6}" y="${ry + rowH - 5}" fill="rgba(237,247,255,.85)" font-size="${VS}">${esc(fmtV(v.v))}</text>`;
+      s += `<text x="${m.l + w + 6}" y="${ry + rowH - 5}" fill="rgba(237,247,255,.85)" font-size="${VS}">${esc(v.text ?? fmtV(v.v))}</text>`;
       ry += rowH;
     });
     y += gh + gap;
