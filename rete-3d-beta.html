@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+  <title>Rete di Boyle 3D · anteprima beta</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="theme-color" content="#020a18" />
+  <link rel="icon" href="assets/logo.png" type="image/png" />
+  <link rel="stylesheet" href="assets/fonts/dm-sans.css" />
+  <link rel="stylesheet" href="rete.css?v=20261026a" />
+  <link rel="stylesheet" href="nav-tools.css?v=20261026e" />
+  <link rel="stylesheet" href="assets/rete3d/rete3d.css?v=20261026b" />
+  <link rel="modulepreload" href="assets/rete3d/app.js?v=20261026b" />
+</head>
+<body class="r3d-page">
+  <a class="skip" href="#r3dList">Vai all'elenco dei membri</a>
+
+  <header class="header" role="banner">
+    <div class="container header__inner">
+      <a class="brand" href="index.html" aria-label="Gli Amici di Boyle — Home">
+        <img src="assets/logo.png" alt="Logo Gli Amici di Boyle" width="52" height="52" />
+        <span class="brand__text">
+          <strong>Gli Amici di Boyle</strong>
+          <em>Diving &amp; Hyperbaric Medicine · Research &amp; Education</em>
+        </span>
+      </a>
+      <nav class="nav--desktop">
+        <a href="index.html">Home</a>
+        <a href="index.html#visione">Visione</a>
+        <a href="index.html#ricerca">Ricerca</a>
+        <div class="nav-tools" data-nav-tools>
+          <button type="button" class="nav-tools__btn" aria-expanded="false"><span data-nt="tools">Strumenti</span></button>
+          <div class="nav-tools__panel" hidden>
+            <a href="boyle-lab.html"><b>Boyle Lab</b><small data-nt="lab">Laboratorio virtuale</small></a>
+            <a href="boylebibliography.html"><b>Boyle Bibliography</b><small data-nt="bib">Bibliografia scientifica</small></a>
+            <a href="diving-boyle.html"><b>Diving-Boyle</b><small data-nt="div">I diving italiani</small></a>
+          </div>
+        </div>
+        <a class="nav-active" href="rete.html">Rete</a>
+        <a href="podcast.html">Podcast</a>
+        <a href="eventi.html">Eventi</a>
+        <a href="index.html#contatti">Contatti</a>
+      </nav>
+      <button class="nav-mobile-btn" id="navMobileBtn" aria-label="Apri menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="nav-mobile-panel" id="navMobilePanel" aria-hidden="true">
+        <a href="index.html">Home</a>
+        <a href="index.html#visione">Visione</a>
+        <a href="index.html#ricerca">Ricerca</a>
+        <div class="nav-tools" data-nav-tools>
+          <button type="button" class="nav-tools__btn" aria-expanded="false"><span data-nt="tools">Strumenti</span></button>
+          <div class="nav-tools__panel" hidden>
+            <a href="boyle-lab.html"><b>Boyle Lab</b><small data-nt="lab">Laboratorio virtuale</small></a>
+            <a href="boylebibliography.html"><b>Boyle Bibliography</b><small data-nt="bib">Bibliografia scientifica</small></a>
+            <a href="diving-boyle.html"><b>Diving-Boyle</b><small data-nt="div">I diving italiani</small></a>
+          </div>
+        </div>
+        <a href="rete.html">Rete</a>
+        <a href="podcast.html">Podcast</a>
+        <a href="eventi.html">Eventi</a>
+        <a href="index.html#contatti">Contatti</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <p class="r3d-beta"><b>Anteprima beta</b> · pagina di prova, non collegata al sito e non indicizzata. Aree dei membri provvisorie.</p>
+
+    <section class="r3d-hero container">
+      <p class="r3d-kicker">La Rete di Boyle</p>
+      <h1>Rete di <span class="r3d-grad">Boyle</span></h1>
+      <p class="r3d-lead">Ogni punto luminoso è una persona. Trascina per far ruotare la rete, scegli qualcuno per aprire la sua scheda, tocca il nucleo per mandare un impulso a tutti. Tienilo premuto: è una bolla di gas, e si comprime.</p>
+    </section>
+
+    <section class="r3d-wrap" aria-label="Rete di Boyle in 3D">
+      <div class="r3d-stage" id="r3dStage">
+        <div class="r3d-ph" aria-hidden="true"><span></span></div>
+        <div class="r3d-hud" id="r3dHud"></div>
+        <div class="r3d-press" id="r3dPress" hidden></div>
+        <div class="r3d-label" id="r3dLabel" hidden></div>
+        <div class="r3d-tools" id="r3dTools">
+          <button type="button" data-cmd="rotate" aria-pressed="false" hidden>Ruota</button>
+          <button type="button" data-cmd="in" aria-label="Avvicina">+</button>
+          <button type="button" data-cmd="out" aria-label="Allontana">−</button>
+          <button type="button" data-cmd="home">Centra</button>
+          <button type="button" data-cmd="wave">Impulso</button>
+        </div>
+        <p class="r3d-hint" id="r3dHint" hidden>Ctrl + rotella (⌘ su Mac) per avvicinarti</p>
+        <p class="r3d-help">Trascina per ruotare · clic su una persona · clic sul nucleo · tieni premuto il nucleo</p>
+        <p class="r3d-fallback">La vista 3D non è disponibile su questo dispositivo. L'elenco qui sotto contiene tutta la Rete.</p>
+        <aside class="r3d-panel" id="r3dPanel" hidden aria-live="polite"></aside>
+      </div>
+
+      <div class="container r3d-bar">
+        <label class="r3d-search"><span class="sr-only">Cerca un membro</span>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5L21 21"/></svg>
+          <input type="search" id="r3dSearch" placeholder="Cerca per nome, ruolo, città…" autocomplete="off" />
+        </label>
+        <label class="r3d-toggle"><input type="checkbox" id="r3dFounders" checked /> Fondatori vicino al nucleo</label>
+        <div class="r3d-chips" id="r3dChips" role="group" aria-label="Aree"></div>
+      </div>
+      <div class="container">
+        <p class="r3d-count" id="r3dCount" aria-live="polite"></p>
+        <ul class="r3d-list" id="r3dList"></ul>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    (function () {
+      var b = document.getElementById('navMobileBtn'), p = document.getElementById('navMobilePanel');
+      b.addEventListener('click', function () { var o = p.getAttribute('aria-hidden') === 'false'; p.setAttribute('aria-hidden', o ? 'true' : 'false'); b.setAttribute('aria-expanded', String(!o)); b.classList.toggle('is-open', !o); });
+      document.addEventListener('click', function (e) { if (!p.contains(e.target) && !b.contains(e.target)) { p.setAttribute('aria-hidden', 'true'); b.classList.remove('is-open'); } });
+    })();
+  </script>
+  <script src="nav-tools.js?v=20261026g" defer></script>
+  <script type="module" src="assets/rete3d/app.js?v=20261026b"></script>
+</body>
+</html>

@@ -1,0 +1,119 @@
+/* Gli Amici di Boyle · Rete di Boyle 3D (BETA) */
+.r3d-page { background: #020a18; }
+.r3d-page main { position: relative; z-index: 1; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.r3d-beta { margin: 0; padding: 9px 16px; text-align: center; font-size: .82rem; color: #ffe1a6; background: rgba(230,159,0,.12); border-bottom: 1px solid rgba(230,159,0,.3); }
+.r3d-beta b { letter-spacing: .08em; text-transform: uppercase; font-size: .74rem; }
+
+.r3d-hero { padding: 34px 28px 8px; text-align: center; }
+.r3d-kicker { margin: 0 0 8px; font: 700 .72rem/1 ui-monospace, "SF Mono", Menlo, Consolas, monospace; letter-spacing: .18em; text-transform: uppercase; color: #7be4ff; }
+.r3d-hero h1 { margin: 0; font-size: clamp(2.6rem, 6vw, 4.8rem); line-height: .95; letter-spacing: -.045em; color: #edf7ff; }
+.r3d-grad { background: linear-gradient(135deg, #a8eeff 0%, #7be4ff 40%, #c4b0ff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent; }
+.r3d-lead { max-width: 720px; margin: 16px auto 0; color: rgba(237,247,255,.72); font-size: 1.02rem; line-height: 1.6; }
+
+/* ── scena ── */
+.r3d-stage { position: relative; height: min(80vh, 860px); min-height: 520px; margin-top: 18px; overflow: hidden;
+  background: radial-gradient(ellipse at 50% 46%, rgba(20,70,140,.35) 0%, rgba(4,16,36,.6) 45%, #020a18 75%);
+  border-top: 1px solid rgba(123,228,255,.12); border-bottom: 1px solid rgba(123,228,255,.12); }
+.r3d-stage::after { content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: repeating-linear-gradient(0deg, rgba(123,228,255,.025) 0 1px, transparent 1px 4px); mix-blend-mode: screen; }
+.r3d-canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; cursor: grab; }
+.r3d-canvas:active { cursor: grabbing; }
+/* anteprima statica mentre il motore 3D si carica: nessuna area vuota */
+.r3d-ph { position: absolute; inset: 0; display: grid; place-items: center; pointer-events: none; transition: opacity .8s ease; }
+.r3d-ph span { width: min(30vh, 260px); aspect-ratio: 1; border-radius: 50%;
+  background: radial-gradient(circle at 38% 34%, rgba(255,255,255,.55), rgba(120,220,255,.25) 12%, rgba(40,110,255,.35) 38%, rgba(30,40,140,.25) 62%, rgba(0,0,0,0) 72%);
+  box-shadow: 0 0 80px rgba(80,170,255,.35), inset 0 0 40px rgba(123,228,255,.35); animation: r3dBreath 5.2s ease-in-out infinite; }
+@keyframes r3dBreath { 50% { transform: scale(1.04); filter: brightness(1.15); } }
+.r3d-stage.is-live .r3d-ph { opacity: 0; }
+
+.r3d-hud { position: absolute; left: 18px; top: 16px; display: flex; flex-wrap: wrap; gap: 6px 18px; z-index: 3; pointer-events: none;
+  font: 700 .7rem/1 ui-monospace, "SF Mono", Menlo, Consolas, monospace; letter-spacing: .14em; color: rgba(168,238,255,.8); }
+.r3d-hud b { color: #fff; text-shadow: 0 0 10px rgba(123,228,255,.8); }
+.r3d-hud span { display: inline-flex; align-items: center; gap: 8px; }
+.r3d-led { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #39e6c3; box-shadow: 0 0 10px #39e6c3; animation: r3dLed 2.4s ease-in-out infinite; }
+@keyframes r3dLed { 50% { opacity: .4; } }
+.r3d-press { position: absolute; left: 50%; bottom: 74px; transform: translateX(-50%); z-index: 3; pointer-events: none; padding: 10px 16px; border-radius: 12px;
+  background: rgba(2,11,24,.85); border: 1px solid rgba(123,228,255,.4); font: 600 .9rem/1.2 ui-monospace, "SF Mono", Menlo, Consolas, monospace; color: rgba(237,247,255,.75); white-space: nowrap; }
+.r3d-press b { color: #c9f6ff; font-size: 1.1rem; text-shadow: 0 0 10px rgba(123,228,255,.7); }
+.r3d-press small { margin-left: 10px; color: rgba(237,247,255,.5); font-size: .72rem; }
+.r3d-label { position: absolute; left: 0; top: 0; z-index: 4; pointer-events: none; margin: -78px 0 0 18px; padding: 8px 12px 9px; border-radius: 10px;
+  background: rgba(2,11,24,.9); border: 1px solid rgba(123,228,255,.45); box-shadow: 0 0 24px rgba(123,228,255,.25); white-space: nowrap; }
+.r3d-label::before { content: ""; position: absolute; left: -18px; top: 62px; width: 18px; height: 1px; background: rgba(123,228,255,.6); transform-origin: 0 0; transform: rotate(-35deg); }
+.r3d-label b { display: block; color: #fff; font-size: .95rem; }
+.r3d-label span { display: inline-flex; align-items: center; gap: 6px; font: 600 .7rem/1.4 ui-monospace, "SF Mono", Menlo, Consolas, monospace; letter-spacing: .06em; color: rgba(237,247,255,.7); }
+.r3d-label span::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--c); }
+.r3d-tools { position: absolute; right: 16px; top: 14px; z-index: 3; display: flex; gap: 6px; }
+.r3d-tools button { min-width: 38px; height: 38px; padding: 0 12px; border-radius: 10px; cursor: pointer; font: 700 .8rem/1 ui-monospace, "SF Mono", Menlo, Consolas, monospace; letter-spacing: .06em;
+  color: #c9f6ff; background: rgba(2,11,24,.75); border: 1px solid rgba(123,228,255,.35); }
+.r3d-tools button:hover, .r3d-tools button[aria-pressed="true"] { background: rgba(123,228,255,.15); border-color: rgba(123,228,255,.7); }
+.r3d-tools button[hidden] { display: none; }
+.r3d-help { position: absolute; left: 0; right: 0; bottom: 14px; z-index: 2; margin: 0; text-align: center; pointer-events: none; font: 600 .7rem/1.3 ui-monospace, "SF Mono", Menlo, Consolas, monospace; letter-spacing: .1em; color: rgba(168,238,255,.55); text-transform: uppercase; }
+.r3d-hint { position: absolute; left: 50%; top: 52px; transform: translateX(-50%); z-index: 3; margin: 0; padding: 8px 14px; border-radius: 10px; background: rgba(2,11,24,.9); border: 1px solid rgba(123,228,255,.35); color: #c9f6ff; font-size: .82rem; }
+.r3d-fallback { display: none; position: absolute; inset: auto 20px 50% 20px; text-align: center; color: #c9f6ff; z-index: 3; }
+.r3d-stage.is-fallback .r3d-fallback { display: block; }
+.r3d-stage.is-fallback .r3d-help, .r3d-stage.is-fallback .r3d-tools { display: none; }
+
+/* ── scheda della persona ── */
+.r3d-panel { position: absolute; z-index: 5; right: 22px; top: 64px; bottom: 22px; width: min(400px, 40%); overflow: auto; padding: 22px 22px 20px; border-radius: 20px;
+  background: linear-gradient(180deg, rgba(6,26,51,.94), rgba(2,11,24,.96)); border: 1px solid rgba(123,228,255,.35);
+  box-shadow: 0 30px 80px rgba(0,0,0,.6), 0 0 40px rgba(123,228,255,.12); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  opacity: 0; transform: translateX(24px); transition: opacity .3s ease, transform .4s cubic-bezier(.22,1,.36,1); }
+.r3d-panel.is-open { opacity: 1; transform: none; }
+.r3d-panel[hidden] { display: none; }
+.r3d-close { position: absolute; right: 12px; top: 12px; width: 36px; height: 36px; border-radius: 10px; cursor: pointer; color: #c9f6ff; background: rgba(123,228,255,.08); border: 1px solid rgba(123,228,255,.3); font-size: 1rem; }
+.r3d-card { text-align: center; color: #edf7ff; }
+.r3d-card__photo { width: 128px; height: 128px; margin: 6px auto 14px; border-radius: 50%; padding: 4px; background: conic-gradient(var(--c), rgba(123,228,255,.4), var(--c)); box-shadow: 0 0 30px color-mix(in srgb, var(--c) 45%, transparent); }
+.r3d-card__photo img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; display: block; background: #06203f; }
+.r3d-card__area { display: inline-flex; align-items: center; gap: 8px; margin: 0 0 8px; font: 700 .7rem/1 ui-monospace, "SF Mono", Menlo, Consolas, monospace; letter-spacing: .12em; text-transform: uppercase; color: rgba(237,247,255,.75); }
+.r3d-card__area i { width: 9px; height: 9px; border-radius: 50%; background: var(--c); box-shadow: 0 0 8px var(--c); }
+.r3d-card h2 { margin: 0 0 10px; font-size: 1.5rem; letter-spacing: -.02em; }
+.r3d-card__tags { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; margin: 0 0 12px; }
+.r3d-card__tags span { padding: 4px 10px; border-radius: 999px; font-size: .74rem; border: 1px solid rgba(123,228,255,.3); color: #a8eeff; }
+.r3d-card__role { margin: 0 0 12px; color: rgba(237,247,255,.82); line-height: 1.55; font-size: .93rem; }
+.r3d-card__bio { margin: 0 0 12px; color: rgba(237,247,255,.65); line-height: 1.55; font-size: .88rem; text-align: left; }
+.r3d-card__city { margin: 0 0 16px; font: 600 .76rem/1 ui-monospace, "SF Mono", Menlo, Consolas, monospace; letter-spacing: .08em; color: rgba(168,238,255,.7); }
+.r3d-card__links { display: flex; justify-content: center; align-items: center; gap: 10px; flex-wrap: wrap; }
+.r3d-ic { width: 40px; height: 40px; display: grid; place-items: center; border-radius: 12px; border: 1px solid rgba(123,228,255,.3); color: #a8eeff; }
+.r3d-ic svg { width: 18px; height: 18px; }
+.r3d-btn { display: inline-block; padding: 11px 16px; border-radius: 999px; text-decoration: none; font-weight: 700; font-size: .88rem; color: #021022; background: linear-gradient(135deg, #a8eeff, #7be4ff); }
+
+/* ── barra: ricerca, fondatori, aree ── */
+.r3d-bar { display: grid; grid-template-columns: 1fr auto; gap: 12px 18px; align-items: center; padding-top: 22px; padding-bottom: 6px; }
+.r3d-search { position: relative; display: block; }
+.r3d-search svg { position: absolute; left: 14px; top: 50%; width: 18px; height: 18px; transform: translateY(-50%); fill: none; stroke: #7be4ff; stroke-width: 1.8; }
+.r3d-search input { width: 100%; padding: 13px 16px 13px 44px; border-radius: 14px; font: inherit; color: #edf7ff; background: rgba(3,14,32,.85); border: 1px solid rgba(123,228,255,.28); }
+.r3d-toggle { display: inline-flex; align-items: center; gap: 8px; color: rgba(237,247,255,.75); font-size: .88rem; cursor: pointer; white-space: nowrap; }
+.r3d-toggle input { accent-color: #7be4ff; width: 18px; height: 18px; }
+.r3d-chips { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 8px; }
+.r3d-chip { display: inline-flex; align-items: center; gap: 8px; padding: 8px 13px; border-radius: 999px; cursor: pointer; font: inherit; font-size: .84rem; color: rgba(237,247,255,.8); background: rgba(3,14,32,.7); border: 1px solid rgba(123,228,255,.2); }
+.r3d-chip i { width: 9px; height: 9px; border-radius: 50%; background: var(--c); }
+.r3d-chip em { font-style: normal; color: rgba(237,247,255,.45); font-size: .78rem; }
+.r3d-chip.is-on { color: #fff; border-color: rgba(123,228,255,.7); background: rgba(123,228,255,.12); }
+.r3d-count { margin: 18px 0 10px; color: rgba(237,247,255,.5); font-size: .85rem; }
+.r3d-list { list-style: none; margin: 0 0 80px; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 10px; }
+.r3d-item { width: 100%; display: grid; grid-template-columns: 48px 1fr; gap: 12px; align-items: center; padding: 10px 12px; border-radius: 14px; cursor: pointer; text-align: left; font: inherit;
+  color: #edf7ff; background: rgba(5,18,46,.6); border: 1px solid rgba(123,228,255,.14); }
+.r3d-item:hover, .r3d-item:focus-visible { border-color: rgba(123,228,255,.55); background: rgba(10,32,66,.75); }
+.r3d-item img { width: 48px; height: 48px; border-radius: 50%; object-fit: cover; box-shadow: 0 0 0 2px var(--c); }
+.r3d-item.is-founder img { box-shadow: 0 0 0 3px #fff; }
+.r3d-item b { display: block; font-size: .95rem; }
+.r3d-item small { color: rgba(237,247,255,.55); font-size: .78rem; }
+.r3d-empty { color: rgba(237,247,255,.5); }
+
+@media (max-width: 760px) {
+  .r3d-hero { padding: 24px 16px 4px; }
+  .r3d-lead { font-size: .95rem; }
+  .r3d-stage { height: 64svh; min-height: 420px; }
+  .r3d-hud { left: 12px; top: 12px; gap: 4px 12px; font-size: .62rem; max-width: 60%; }
+  .r3d-tools { right: 10px; top: auto; bottom: 40px; flex-wrap: wrap; justify-content: flex-end; max-width: 60%; }
+  .r3d-help { font-size: .6rem; bottom: 10px; padding: 0 12px; }
+  .r3d-panel { position: fixed; left: 0; right: 0; top: auto; bottom: 0; width: auto; max-height: 72svh; border-radius: 22px 22px 0 0; transform: translateY(40px); z-index: 9000; }
+  .r3d-panel.is-open { transform: none; }
+  .r3d-bar { grid-template-columns: 1fr; padding-left: 16px; padding-right: 16px; }
+  .r3d-press { bottom: 96px; font-size: .8rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .r3d-ph span, .r3d-led { animation: none; }
+  .r3d-panel { transition: none; }
+}
