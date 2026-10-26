@@ -1,11 +1,11 @@
 /* BOYLE LAB · applicazione (routing, catalogo, banco di lavoro, registro, validazione)
    ES module puro, nessuna dipendenza. Tutti i calcoli arrivano da lab/core. */
-import { BASE } from './experiments/base.js?v=20261026f';
-import { ADVANCED } from './experiments/advanced.js?v=20261026f';
-import { MODELS, CATEGORY } from './core/registry.js?v=20261026f';
+import { BASE } from './experiments/base.js?v=20261026g';
+import { ADVANCED } from './experiments/advanced.js?v=20261026g';
+import { MODELS, CATEGORY } from './core/registry.js?v=20261026g';
 import { REFS, refLink } from './core/refs.js';
-import { lineChart, barChart } from './ui/chart.js?v=20261026f';
-import { runAll } from './tests/cases.js?v=20261026f';
+import { lineChart, barChart } from './ui/chart.js?v=20261026g';
+import { runAll } from './tests/cases.js?v=20261026g';
 import { patch } from './ui/instruments.js';
 
 const VERSION = '1.0.0';
@@ -37,7 +37,7 @@ const UI = {
     back: '← Tutti gli esperimenti', B: 'B (fissato)', A: 'A (attuale)', delta: 'Δ', note: 'Nota del modello', warn: 'Attenzione', namePrompt: 'Nome del salvataggio',
     savedOk: 'Salvato in questo browser', module: 'Modulo', unimplemented: 'Moduli in preparazione',
     pick: 'Scegli un esperimento', pickHint: 'Area per area, tutti gli esperimenti del laboratorio', switchExp: 'Cambia esperimento', go: 'Vai direttamente a un esperimento',
-    simOn: 'Simulazione attiva', bench: 'Banco di prova', motto: 'Dagli abissi a Marte', verified: 'modelli verificati', verifiedT: (a, b) => a + ' casi di prova su ' + b + ' superati: apri la validazione', close: 'Chiudi', readouts: 'Letture', instrument: 'Strumento', chartT: 'Grafico', ready: 'Pronto', soon: 'in arrivo',
+    simOn: 'Simulazione attiva', bench: 'Banco di prova', motto: 'Il tuo laboratorio di fisiologia', verified: 'modelli verificati', verifiedT: (a, b) => a + ' casi di prova su ' + b + ' superati: apri la validazione', close: 'Chiudi', readouts: 'Letture', instrument: 'Strumento', chartT: 'Grafico', ready: 'Pronto', soon: 'in arrivo',
   },
   en: {
     home: 'Lab', catalog: 'Experiments', models: 'Models & validation', biblio: 'References',
@@ -58,7 +58,7 @@ const UI = {
     back: '← All experiments', B: 'B (pinned)', A: 'A (current)', delta: 'Δ', note: 'Model note', warn: 'Warning', namePrompt: 'Name for this save',
     savedOk: 'Saved in this browser', module: 'Module', unimplemented: 'Modules in preparation',
     pick: 'Choose an experiment', pickHint: 'Area by area, every experiment in the lab', switchExp: 'Switch experiment', go: 'Jump straight to an experiment',
-    simOn: 'Simulation running', bench: 'Test bench', motto: 'From the deep sea to Mars', verified: 'verified models', verifiedT: (a, b) => a + ' of ' + b + ' test cases passed: open the validation page', close: 'Close', readouts: 'Readouts', instrument: 'Instrument', chartT: 'Chart', ready: 'Ready', soon: 'coming',
+    simOn: 'Simulation running', bench: 'Test bench', motto: 'Your physiology laboratory', verified: 'verified models', verifiedT: (a, b) => a + ' of ' + b + ' test cases passed: open the validation page', close: 'Close', readouts: 'Readouts', instrument: 'Instrument', chartT: 'Chart', ready: 'Ready', soon: 'coming',
   },
 };
 const u = k => (UI[LANG] || UI.it)[k] ?? UI.it[k];
