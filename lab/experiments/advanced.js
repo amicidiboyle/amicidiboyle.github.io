@@ -4,6 +4,7 @@ import * as F from '../core/physics.js';
 import * as P from '../core/physio.js';
 import * as M from '../core/mixtures.js';
 import * as K from '../core/kinetics.js';
+import * as V from '../ui/instruments.js';
 
 const range = (a, b, n) => Array.from({ length: n + 1 }, (_, i) => a + (b - a) * i / n);
 const mmHg = pa => pa / CONST.MMHG;
@@ -46,6 +47,7 @@ export const ADVANCED = [
       if (pc.O2 < 0.16) warnings.push('PO₂ inferiore a 0,16 bar: miscela ipossica a questa profondità.');
       return {
         outputs: out, warnings,
+        visual: V.mixCylinder({ fo2: m.O2, fhe: m.He, po2: pc.O2, limit: p.po2max, label: 'Miscela ' + Math.round(m.O2 * 100) + '/' + Math.round(m.He * 100) }),
         chart: { type: 'line', spec: { title: 'PO₂ della miscela in funzione della profondità', x: { label: 'Profondità', unit: 'm', min: 0, max: 120 }, y: { label: 'PO₂', unit: 'bar', min: 0, max: Math.max(2, Math.min(pc.O2 * 1.3, 6)) },
           bands: [{ y1: p.po2max, y2: 99, label: 'oltre il limite scelto', color: 'rgba(213,94,0,.14)' }],
           series: [{ name: 'PO₂', points: xs.map(d => [d, m.O2 * M.ambientBar(d)]) }, { name: 'PN₂', points: xs.map(d => [d, m.N2 * M.ambientBar(d)]) }, ...(m.He ? [{ name: 'PHe', points: xs.map(d => [d, m.He * M.ambientBar(d)]) }] : [])],
@@ -72,8 +74,10 @@ export const ADVANCED = [
       const bottomEnd = samples.reduce((acc, s, i) => (s.depth === p.depth ? i : acc), 0);
       const out = show.map(c => ({ label: 'T½ ' + String(K.ZHL16_N2_HALFTIMES[c]).replace('.', ',') + ' min: a fine fondo / all\'emersione', text: fx(samples[bottomEnd].tensions[c], 2) + ' / ' + fx(samples[surf].tensions[c], 2) + ' bar' }));
       out.unshift({ label: 'Tensione di partenza (superficie, aria)', value: K.surfaceSaturation(), unit: 'bar', digits: 3 });
+      const be = samples[bottomEnd];
       return {
         outputs: out,
+        visual: V.compartments({ tensions: be.tensions, pamb: be.pamb, maxP: Math.ceil(be.pamb + 0.5), halfTimes: K.ZHL16_N2_HALFTIMES, title: 'Fine del tempo sul fondo', label: 'Tensioni dei 16 compartimenti a fine fondo' }),
         chart: { type: 'line', spec: { title: 'Tensione di N₂ nei compartimenti e pressione ambiente', x: { label: 'Tempo', unit: 'min', min: 0 }, y: { label: 'Pressione', unit: 'bar', min: 0 }, series: [
           { name: 'P ambiente', points: samples.map(s => [s.t, s.pamb]), color: 'rgba(237,247,255,.55)', colorIndex: 7 },
           ...show.map((c, i) => ({ name: 'T½ ' + String(K.ZHL16_N2_HALFTIMES[c]).replace('.', ',') + ' min', colorIndex: i, points: samples.map(s => [s.t, s.tensions[c]]) })),
@@ -180,6 +184,7 @@ export const ADVANCED = [
           { label: 'O₂ disciolto', value: r.dissolved, unit: 'mL/dL', digits: 2 },
           { label: 'CaO₂ totale', value: r.total, unit: 'mL/dL', digits: 2, hint: r.dissolved / r.total * 100, hintUnit: '% disciolto' },
         ],
+        visual: V.chamber({ ata: p.ata, gas: f >= 0.99 ? 'o2' : 'aria', gasText: 'FiO₂ ' + p.fio2 + '%', label: 'Camera a ' + p.ata + ' ATA' }),
         chart: { type: 'line', spec: { title: 'Contenuto arterioso di O₂ in funzione della pressione', x: { label: 'Pressione', unit: 'ATA', min: 1, max: 3 }, y: { label: 'Contenuto', unit: 'mL/dL', min: 0 }, series: [
           { name: 'Legato', points: xs.map(x => [x, calc(x).bound]) },
           { name: 'Disciolto', points: xs.map(x => [x, calc(x).dissolved]) },
@@ -214,6 +219,7 @@ export const ADVANCED = [
           { label: 'PaO₂ (ipotesi)', value: a, unit: 'mmHg', digits: 1 },
           { label: 'Saturazione stimata (curva standard)', value: P.severinghausSat(a) * 100, unit: '%', digits: 1 },
         ],
+        visual: V.mountain({ alt: p.alt, maxAlt: 11000, pb: pb(p.alt), label: 'Quota ' + p.alt + ' metri' }),
         chart: { type: 'line', spec: { title: 'PAO₂ in funzione della quota', x: { label: 'Quota', unit: 'm', min: 0, max: 11000 }, y: { label: 'PAO₂', unit: 'mmHg', min: 0 }, series: [
           { name: 'PaCO₂ 40 mmHg', points: xs.map(h => [h, P.alveolarPO2({ pb: pb(h), fio2: f, paco2: 40 })]) },
           ...(p.paco2 !== 40 ? [{ name: 'PaCO₂ ' + p.paco2 + ' mmHg', points: xs.map(h => [h, A(h)]) }] : []),

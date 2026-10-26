@@ -24,6 +24,8 @@ lab/
     registry.js         registro dei modelli: equazioni, variabili, ipotesi, limiti, fonti, revisione, stato
     refs.js             bibliografia (PMID e DOI degli articoli controllati su PubMed)
   ui/chart.js           grafici SVG (palette Okabe-Ito + tratteggi: leggibili con i deficit del colore)
+  ui/instruments.js     strumenti disegnati (manometri, pistone, termometro, colonna d'acqua, camera, provetta,
+                        montagna, compartimenti, bombola) e aggiornamento senza ridisegno, per il movimento continuo
   experiments/
     base.js             esperimenti BASE (moduli 5.1–5.5)
     advanced.js         esperimenti ADVANCED (moduli 6.1–6.10)
@@ -81,7 +83,9 @@ In attesa di validazione (scheda presente, nessun calcolo):
 - 6.8 Apnea: consumo di O₂ e scambi in apnea richiedono un modello validato.
 - Cinetica con elio (trimix) nel modulo 6.2.
 
-Banco di lavoro: salvataggio locale, confronto A/B con grafici sovrapposti (Fissa come B), ripristino, esportazione CSV/JSON/SVG/PNG, link condivisibile con i parametri, modalità presentazione, schede scientifiche e fonti.
+Navigazione: menu a cascata area → esperimento (catalogo, home, pagina dell'esperimento).
+
+Banco di lavoro: letture digitali, strumento animato, grafico, salvataggio locale, confronto A/B con grafici sovrapposti (Fissa come B), ripristino, esportazione CSV/JSON/SVG/PNG, link condivisibile con i parametri, modalità presentazione, schede scientifiche e fonti.
 
 ## Pubblicazione
 

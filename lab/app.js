@@ -6,6 +6,7 @@ import { MODELS, CATEGORY } from './core/registry.js';
 import { REFS, refLink } from './core/refs.js';
 import { lineChart, barChart } from './ui/chart.js';
 import { runAll } from './tests/cases.js';
+import { patch } from './ui/instruments.js';
 
 const VERSION = '1.0.0';
 const EXPS = [...BASE, ...ADVANCED];
@@ -35,6 +36,8 @@ const UI = {
     passed: (a, b) => a + ' casi superati su ' + b, expected: 'Atteso', got: 'Ottenuto', source: 'Origine del valore atteso', regT: 'Registro dei modelli',
     back: '← Tutti gli esperimenti', B: 'B (fissato)', A: 'A (attuale)', delta: 'Δ', note: 'Nota del modello', warn: 'Attenzione', namePrompt: 'Nome del salvataggio',
     savedOk: 'Salvato in questo browser', module: 'Modulo', unimplemented: 'Moduli in preparazione',
+    pick: 'Scegli un esperimento', pickHint: 'Area per area, tutti gli esperimenti del laboratorio', switchExp: 'Cambia esperimento', go: 'Vai direttamente a un esperimento',
+    simOn: 'Simulazione attiva', bench: 'Banco di prova', readouts: 'Letture', instrument: 'Strumento', chartT: 'Grafico', ready: 'Pronto', soon: 'in arrivo',
   },
   en: {
     home: 'Lab', catalog: 'Experiments', models: 'Models & validation', biblio: 'References',
@@ -54,6 +57,8 @@ const UI = {
     passed: (a, b) => a + ' of ' + b + ' cases passed', expected: 'Expected', got: 'Got', source: 'Origin of expected value', regT: 'Model registry',
     back: '← All experiments', B: 'B (pinned)', A: 'A (current)', delta: 'Δ', note: 'Model note', warn: 'Warning', namePrompt: 'Name for this save',
     savedOk: 'Saved in this browser', module: 'Module', unimplemented: 'Modules in preparation',
+    pick: 'Choose an experiment', pickHint: 'Area by area, every experiment in the lab', switchExp: 'Switch experiment', go: 'Jump straight to an experiment',
+    simOn: 'Simulation running', bench: 'Test bench', readouts: 'Readouts', instrument: 'Instrument', chartT: 'Chart', ready: 'Ready', soon: 'coming',
   },
 };
 const u = k => (UI[LANG] || UI.it)[k] ?? UI.it[k];
@@ -67,6 +72,72 @@ const AREAS = {
 };
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const fmt = (v, d = 2) => Number.isFinite(v) ? v.toLocaleString(LANG === 'en' ? 'en-GB' : 'it-IT', { minimumFractionDigits: d, maximumFractionDigits: d }) : '—';
+
+/* ── icone (linee, 24×24) ──────────────────────────────────────────────── */
+const ic = d => `<svg viewBox="0 0 24 24" class="lab-ic" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">${d}</svg>`;
+const ICON = {
+  A: ic('<circle cx="12" cy="13" r="8"/><path d="M12 13l4-4M6.5 13H8M12 7.5V9M17.5 13H16"/><path d="M9 3h6"/>'),
+  B: ic('<path d="M12 3v7M12 10c-1.5 0-2 1-3 1M12 10c1.5 0 2 1 3 1"/><path d="M9 7.5C6 7 4 10 4 14c0 3 1 6 3 6s3-2 3-5V9"/><path d="M15 7.5c3-.5 5 2.5 5 6.5 0 3-1 6-3 6s-3-2-3-5V9"/>'),
+  C: ic('<path d="M2 7c2-1.5 3-1.5 5 0s3 1.5 5 0 3-1.5 5 0 3 1.5 5 0"/><circle cx="8" cy="13" r="1.6"/><circle cx="13" cy="16.5" r="2.2"/><circle cx="9.5" cy="20" r="1.2"/><circle cx="17" cy="12" r="1"/>'),
+  D: ic('<rect x="2.5" y="7" width="16" height="10" rx="5"/><circle cx="7.5" cy="12" r="2"/><path d="M18.5 12h3M21.5 9v6"/>'),
+  E: ic('<path d="M2 20l6-9 3 4 3-6 8 11z"/><circle cx="18" cy="5" r="2.2"/><path d="M14.5 5.5c1.5.8 5.5.2 7-1"/>'),
+  F: ic('<path d="M2 12h4l2-5 3 10 3-8 2 3h6"/>'),
+  flask: ic('<path d="M9 3h6M10 3v6l-5 9a2 2 0 0 0 2 3h10a2 2 0 0 0 2-3l-5-9V3"/><path d="M7.5 15h9"/>'),
+  scope: ic('<rect x="2.5" y="4" width="19" height="14" rx="2"/><path d="M5 13c2 0 2-5 4-5s2 7 4 7 2-4 4-4 1.5 2 2 2M8 21h8"/>'),
+  chev: ic('<path d="M9 6l6 6-6 6"/>'),
+  search: ic('<circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5L21 21"/>'),
+  down: ic('<path d="M6 9l6 6 6-6"/>'),
+};
+
+/* ── menu a cascata: area → esperimenti ─────────────────────────────────── */
+let CX = 0;
+function cascade(label, current = null, cls = '') {
+  const id = 'cx' + (++CX);
+  const curArea = current && byId[current] ? byId[current].area : 'A';
+  const areas = Object.entries(AREAS).map(([k, a]) => {
+    const list = EXPS.filter(e => e.area === k).sort((x, y) => (x.pending - y.pending) || x.module.localeCompare(y.module, 'it', { numeric: true }));
+    return { k, a, list };
+  });
+  return `<div class="lab-cx ${cls}" data-cx>
+    <button type="button" class="lab-cx__btn" aria-expanded="false" aria-controls="${id}">
+      <span class="lab-cx__led"></span><span class="lab-cx__lab">${esc(label)}</span>${current && byId[current] ? `<span class="lab-cx__cur">${esc(t(byId[current].title))}</span>` : ''}${ICON.down}
+    </button>
+    <div class="lab-cx__panel" id="${id}" hidden>
+      <ul class="lab-cx__areas">${areas.map(({ k, a, list }) => `<li><button type="button" class="lab-cx__area${k === curArea ? ' is-on' : ''}" data-area="${k}">
+        <span class="lab-cx__ic">${ICON[k]}</span><span><b>${k}</b> ${esc(t(a))}</span><em>${list.length}</em>${ICON.chev}</button></li>`).join('')}</ul>
+      <div class="lab-cx__items">${areas.map(({ k, a, list }) => `<ul data-for="${k}"${k === curArea ? '' : ' hidden'}>
+        <li class="lab-cx__h">${k} · ${esc(t(a))}</li>
+        ${list.map(e => `<li><a href="#/exp/${e.id}" class="lab-cx__it${e.id === current ? ' is-cur' : ''}${e.pending ? ' is-pending' : ''}"><code>${e.module}</code><span>${esc(t(e.title))}</span><em class="lab-cx__lv lab-cx__lv--${e.level}">${e.pending ? esc(u('soon')) : e.level === 'base' ? 'BASE' : 'ADV'}</em></a></li>`).join('')}
+      </ul>`).join('')}</div>
+    </div>
+  </div>`;
+}
+function bindCascades(root = app) {
+  root.querySelectorAll('[data-cx]').forEach(cx => {
+    const btn = cx.querySelector('.lab-cx__btn'), panel = cx.querySelector('.lab-cx__panel');
+    const setOpen = on => { btn.setAttribute('aria-expanded', String(on)); panel.hidden = !on; cx.classList.toggle('is-open', on); };
+    const show = k => {
+      cx.querySelectorAll('.lab-cx__area').forEach(b => b.classList.toggle('is-on', b.dataset.area === k));
+      cx.querySelectorAll('.lab-cx__items ul').forEach(l => { l.hidden = l.dataset.for !== k; });
+    };
+    btn.addEventListener('click', () => setOpen(panel.hidden));
+    cx.querySelectorAll('.lab-cx__area').forEach(b => {
+      b.addEventListener('click', () => show(b.dataset.area));
+      b.addEventListener('mouseenter', () => { if (matchMedia('(hover: hover) and (min-width: 701px)').matches) show(b.dataset.area); });
+      b.addEventListener('focus', () => show(b.dataset.area));
+    });
+    cx.addEventListener('keydown', ev => { if (ev.key === 'Escape' && !panel.hidden) { setOpen(false); btn.focus(); } });
+    cx.querySelectorAll('.lab-cx__it').forEach(a => a.addEventListener('click', () => setOpen(false)));
+  });
+}
+document.addEventListener('click', ev => {
+  document.querySelectorAll('[data-cx].is-open').forEach(cx => {
+    if (!cx.contains(ev.target)) { cx.classList.remove('is-open'); cx.querySelector('.lab-cx__panel').hidden = true; cx.querySelector('.lab-cx__btn').setAttribute('aria-expanded', 'false'); }
+  });
+});
+const REDUCED = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
+let BENCH = null;
+const benchScore = () => { if (!BENCH) { const r = runAll(); BENCH = { ok: r.filter(x => x.ok).length, n: r.length }; } return BENCH; };
 
 /* ── badge ──────────────────────────────────────────────────────────────── */
 function catsOf(e) { return [...new Set(e.models.map(m => MODELS[m]?.cat).filter(Boolean))]; }
@@ -94,6 +165,7 @@ function route() {
   document.body.classList.remove('lab-present');
   app.onclick = null;
   const { parts, q } = parseHash();
+  app.classList.toggle('is-wide', parts[0] === 'exp');
   const navKey = parts[0] === 'exp' && byId[parts[1]] ? byId[parts[1]].level : (parts[0] || 'home');
   document.querySelectorAll('[data-lab-nav]').forEach(a => a.classList.toggle('is-on', a.dataset.labNav === navKey));
   if (!parts.length) return viewHome();
@@ -121,15 +193,42 @@ function viewHome() {
   setTitle('');
   const count = (lvl) => EXPS.filter(e => e.level === lvl && !e.pending).length;
   const saved = loadSaved();
+  const bs = benchScore();
+  const trace = 'M20 30 C 60 150, 110 175, 330 186';
   app.innerHTML = `
-    ${hero('Boyle <span class="lab-grad">Lab</span>', esc(u('lead')))}
+    <section class="lab-hero lab-hero--home">
+      <div class="lab-bubbles" aria-hidden="true">${Array.from({ length: 14 }, (_, i) => `<i style="--x:${(i * 7.3) % 100}%;--d:${(i * 1.7) % 9}s;--s:${6 + (i * 5) % 9}px;--t:${9 + (i * 3) % 7}s"></i>`).join('')}</div>
+      <div class="lab-hero__copy">
+        <p class="lab-kicker"><span class="lab-led"></span> ${esc(u('ready'))} · ${bs.ok}/${bs.n} ${LANG === 'en' ? 'tests passed' : 'test superati'}</p>
+        <h1 class="lab-title">Boyle <span class="lab-grad">Lab</span></h1>
+        <p class="lab-lead">${esc(u('lead'))}</p>
+        <div class="lab-hero__pick">${cascade(u('go'))}</div>
+      </div>
+      <div class="lab-hero__scope" aria-hidden="true">
+        <div class="lab-scope-mini">
+          <div class="lab-scope-mini__bar"><span class="lab-led"></span>CH1 · P·V = k<span>BOYLE</span></div>
+          <svg viewBox="0 0 360 220">
+            <defs><pattern id="hg" width="30" height="22" patternUnits="userSpaceOnUse"><path d="M30 0H0V22" fill="none" stroke="rgba(123,228,255,.12)"/></pattern></defs>
+            <rect width="360" height="220" fill="url(#hg)"/>
+            <path d="M20 200H350M20 10V200" stroke="rgba(237,247,255,.35)"/>
+            <path class="home-trace" d="${trace}" fill="none" stroke="#7be4ff" stroke-width="2.5"/>
+            <circle class="home-dot" r="5" fill="#fff" style="offset-path: path('${trace}')"/>
+            <text x="350" y="214" text-anchor="end" font-size="10" fill="rgba(237,247,255,.6)">P (bar)</text>
+            <text x="26" y="20" font-size="10" fill="rgba(237,247,255,.6)">V (L)</text>
+          </svg>
+          <div class="lab-scope-mini__lcd"><span>P <b>2,02</b> bar</span><span>V <b>3,01</b> L</span><span>V₀ <b>6,00</b> L</span></div>
+        </div>
+      </div>
+    </section>
     <div class="lab-paths">
       <a class="lab-path lab-path--base" href="#/base">
-        <span class="lab-path__k">01 · ${count('base')} ${LANG === 'en' ? 'experiments' : 'esperimenti'}</span>
+        <span class="lab-path__ic">${ICON.flask}</span>
+        <span class="lab-path__k"><span class="lab-led"></span>01 · ${count('base')} ${LANG === 'en' ? 'experiments' : 'esperimenti'}</span>
         <h2>${esc(u('baseT'))}</h2><p>${esc(u('baseD'))}</p><span class="lab-path__go">${esc(u('enter'))} →</span>
       </a>
       <a class="lab-path lab-path--adv" href="#/advanced">
-        <span class="lab-path__k">02 · ${count('advanced')} ${LANG === 'en' ? 'modules' : 'moduli'}</span>
+        <span class="lab-path__ic">${ICON.scope}</span>
+        <span class="lab-path__k"><span class="lab-led lab-led--v"></span>02 · ${count('advanced')} ${LANG === 'en' ? 'modules' : 'moduli'}</span>
         <h2>${esc(u('advT'))}</h2><p>${esc(u('advD'))}</p><span class="lab-path__go">${esc(u('enter'))} →</span>
       </a>
     </div>
@@ -137,18 +236,20 @@ function viewHome() {
     <h2 class="lab-h2">${esc(u('areas'))}</h2>
     <div class="lab-areas">${Object.entries(AREAS).map(([k, a]) => {
       const n = EXPS.filter(e => e.area === k).length;
-      return `<a class="lab-area" href="#/catalogo?area=${k}"><b>${k}</b><span>${esc(t(a))}</span><em>${n}</em></a>`;
+      return `<a class="lab-area" href="#/catalogo?area=${k}"><b>${ICON[k]}</b><span><small>${k}</small>${esc(t(a))}</span><em>${n}</em></a>`;
     }).join('')}</div>
     ${saved.length ? `<h2 class="lab-h2">${esc(u('saved'))}</h2>${savedList(saved)}` : ''}
     <div class="lab-foot-links"><a href="#/modelli">${esc(u('models'))} →</a><a href="#/bibliografia">${esc(u('biblio'))} →</a></div>`;
   bindSaved();
+  bindCascades();
 }
 
 function card(e) {
   return `<a class="lab-card${e.pending ? ' is-pending' : ''}" href="#/exp/${e.id}">
+    <div class="lab-card__top"><span class="lab-card__ic">${ICON[e.area]}</span><code class="lab-card__code">MOD ${e.module}</code></div>
     <div class="lab-card__badges">${badges(e)}</div>
     <h3>${esc(t(e.title))}</h3><p>${esc(t(e.summary))}</p>
-    <span class="lab-card__meta">${esc(u('module'))} ${e.module} · ${e.area} ${esc(t(AREAS[e.area]))}</span>
+    <span class="lab-card__meta">${e.area} · ${esc(t(AREAS[e.area]))}<span class="lab-card__go">${ICON.chev}</span></span>
   </a>`;
 }
 
@@ -158,7 +259,8 @@ function viewCatalog(q) {
   const title = st.level === 'base' ? u('baseT') : st.level === 'advanced' ? u('advT') : u('catalog');
   app.innerHTML = `${hero(esc(title), '')}
     <div class="lab-filters" role="search">
-      <label class="lab-search"><span class="sr-only">${esc(u('search'))}</span><input type="search" id="lf-s" placeholder="${esc(u('search'))}" value="${esc(st.s)}" /></label>
+      <label class="lab-search"><span class="sr-only">${esc(u('search'))}</span>${ICON.search.replace('lab-ic', 'lab-ic lab-search__ic')}<input type="search" id="lf-s" placeholder="${esc(u('search'))}" value="${esc(st.s)}" /></label>
+      <div class="lab-filters__pick">${cascade(u('pick'))}<span class="lab-filters__hint">${esc(u('pickHint'))}</span></div>
       ${select('lf-level', u('level'), [['', u('all')], ['base', 'BASE'], ['advanced', 'ADVANCED']], st.level)}
       ${select('lf-area', u('area'), [['', u('all')], ...Object.entries(AREAS).map(([k, a]) => [k, k + ' · ' + t(a)])], st.area)}
       ${select('lf-cat', u('status'), [['', u('all')], ...Object.entries(CATEGORY).map(([k, c]) => [k, t(c)])], st.cat)}
@@ -175,7 +277,8 @@ function viewCatalog(q) {
     document.getElementById('lf-grid').innerHTML = list.map(card).join('') || `<p class="lab-empty">${esc(u('none'))}</p>`;
     document.getElementById('lf-count').textContent = u('results')(list.length);
   };
-  app.querySelectorAll('select, input').forEach(el => el.addEventListener('input', apply));
+  app.querySelectorAll('.lab-filters > .lab-sel select, #lf-s').forEach(el => el.addEventListener('input', apply));
+  bindCascades();
   apply();
 }
 function select(id, label, opts, val) {
@@ -198,19 +301,25 @@ function readParams(e, q) {
 function viewExp(e, q) {
   setTitle(t(e.title));
   if (B && B.id !== e.id) B = null;
-  const head = `<a class="lab-back" href="#/${e.level}">← ${esc(u(e.level === 'base' ? 'baseT' : 'advT'))}</a>
+  const bs = benchScore();
+  const head = `<div class="lab-exp-top"><a class="lab-back" href="#/${e.level}">← ${esc(u(e.level === 'base' ? 'baseT' : 'advT'))}</a>${cascade(u('switchExp'), e.id, 'lab-cx--right')}</div>
     <div class="lab-exp-head"><div class="lab-card__badges">${badges(e)}</div>
-    <h1 class="lab-exp-title">${esc(t(e.title))}</h1><p class="lab-lead">${esc(t(e.summary))}</p>
-    <p class="lab-exp-meta">${esc(u('module'))} ${e.module} · ${e.area} ${esc(t(AREAS[e.area]))}</p></div>`;
+    <h1 class="lab-exp-title">${esc(t(e.title))}</h1><p class="lab-lead">${esc(t(e.summary))}</p></div>
+    <div class="lab-bench" role="status">
+      <span class="lab-bench__on"><span class="lab-led${e.pending ? ' lab-led--off' : ''}"></span>${esc(e.pending ? u('pending') : u('simOn'))}</span>
+      <span><small>MOD</small> ${e.module}</span><span class="lab-bench__area">${ICON[e.area]} ${e.area} · ${esc(t(AREAS[e.area]))}</span>
+      <a href="#/modelli"><small>${esc(u('bench'))}</small> ${bs.ok}/${bs.n} ${bs.ok === bs.n ? '✓' : '✗'}</a>
+    </div>`;
   if (e.pending) {
     app.innerHTML = head + `<div class="lab-pending"><h2>${esc(u('pending'))}</h2><p>${esc(u('pendingD'))}</p></div>` + scienceCards(e) + disclaimer();
+    bindCascades();
     return;
   }
   let p = readParams(e, q);
-  app.innerHTML = head + disclaimer() + `
-    <div class="lab-work">
+  app.innerHTML = head + `
+    <div class="lab-work" id="lab-work">
       <form class="lab-panel lab-controls" id="lab-controls" aria-label="${esc(u('params'))}" onsubmit="return false">
-        <h2 class="lab-h3">${esc(u('params'))}</h2>
+        <h2 class="lab-ph"><span class="lab-led lab-led--s"></span>${esc(u('params'))}</h2>
         ${(e.params || []).map(control).join('')}
         <div class="lab-toolbar">
           <button type="button" class="lab-btn" data-act="reset">${esc(u('reset'))}</button>
@@ -225,12 +334,12 @@ function viewExp(e, q) {
         </div>
         <p class="lab-toast" id="lab-toast" role="status" aria-live="polite"></p>
       </form>
-      <div class="lab-stage">
-        <div class="lab-panel lab-chart-wrap" id="lab-chart"></div>
-        <div class="lab-panel lab-visual-wrap" id="lab-visual" hidden></div>
-        <div class="lab-panel lab-results"><h2 class="lab-h3">${esc(u('results2'))}</h2><div id="lab-out" aria-live="polite"></div><div id="lab-warn"></div></div>
-      </div>
+      <div class="lab-readouts" id="lab-readouts" aria-label="${esc(u('readouts'))}"></div>
+      <div class="lab-panel lab-scope"><h2 class="lab-ph"><span class="lab-led lab-led--s"></span>${esc(u('chartT'))}<span class="lab-ph__r">CH1${B ? ' · CH2 (B)' : ''}</span></h2><div id="lab-chart"></div></div>
+      <div class="lab-panel lab-instr" id="lab-instr" hidden><h2 class="lab-ph"><span class="lab-led lab-led--s"></span>${esc(u('instrument'))}</h2><div id="lab-visual"></div></div>
+      <div class="lab-panel lab-results"><h2 class="lab-ph"><span class="lab-led lab-led--s"></span>${esc(u('results2'))}</h2><div id="lab-out" aria-live="polite"></div><div id="lab-warn"></div></div>
     </div>
+    ${disclaimer()}
     <button type="button" class="lab-btn lab-exit" data-act="present" hidden>${esc(u('exitPresent'))}</button>
     ${e.didactic ? didactic(e) : ''}
     ${scienceCards(e)}
@@ -251,15 +360,13 @@ function viewExp(e, q) {
     const ch = document.getElementById('lab-chart');
     if (r.chart.type === 'line') {
       const spec = { ...r.chart.spec, series: [...r.chart.spec.series] };
-      if (rb && rb.chart.type === 'line') {
-        rb.chart.spec.series.forEach((s, i) => spec.series.push({ ...s, name: 'B · ' + s.name, ghost: true, colorIndex: s.colorIndex ?? i }));
-        if (spec.y.max === undefined) { /* lascia calcolare il massimo su A e B */ }
-      }
-      ch.innerHTML = lineChart(spec);
-    } else ch.innerHTML = barChart(r.chart.spec);
-    const vis = document.getElementById('lab-visual');
-    vis.hidden = !r.visual; if (r.visual) vis.innerHTML = r.visual;
-    document.querySelector('.lab-stage').classList.toggle('has-visual', !!r.visual);
+      if (rb && rb.chart.type === 'line') rb.chart.spec.series.forEach((s2, i) => spec.series.push({ ...s2, name: 'B · ' + s2.name, ghost: true, colorIndex: s2.colorIndex ?? i }));
+      patch(ch, lineChart(spec));
+    } else patch(ch, barChart(r.chart.spec));
+    const ins = document.getElementById('lab-instr');
+    ins.hidden = !r.visual; if (r.visual) patch(document.getElementById('lab-visual'), r.visual);
+    document.getElementById('lab-work').classList.toggle('no-vis', !r.visual);
+    readouts(r);
     /* risultati */
     out.innerHTML = outputsTable(r, rb) + (r.table ? compareTable(r.table) : '');
     const ws = [...(r.warnings || [])];
@@ -310,7 +417,8 @@ function viewExp(e, q) {
       renderSaved(e);
     } else if (act === 'pin') {
       B = B ? null : { id: e.id, params: { ...p } };
-      b.textContent = B ? u('unpinB') : u('pinB'); b.setAttribute('aria-pressed', B ? 'true' : 'false'); render();
+      b.textContent = B ? u('unpinB') : u('pinB'); b.setAttribute('aria-pressed', B ? 'true' : 'false');
+      document.querySelector('.lab-scope .lab-ph__r').textContent = B ? 'CH1 · CH2 (B)' : 'CH1'; render();
     } else if (act === 'share') {
       const url = location.href;
       (navigator.clipboard ? navigator.clipboard.writeText(url) : Promise.reject()).then(() => toast(u('copied')), () => toast(url));
@@ -322,8 +430,30 @@ function viewExp(e, q) {
     } else if (b.dataset.exp && last) doExport(b.dataset.exp, e, p, last);
   };
   bindQuiz();
+  bindCascades();
   render();
   renderSaved(e);
+}
+
+/* ── letture digitali: i valori principali, con un breve conteggio ─────── */
+const PREV = new Map();
+function readouts(r) {
+  const box = document.getElementById('lab-readouts'); if (!box) return;
+  const list = r.outputs.filter(o => !o.text && Number.isFinite(o.value)).slice(0, 4);
+  const sig = list.map(o => o.label + o.unit).join('|');
+  if (box.dataset.sig !== sig) {
+    box.dataset.sig = sig; PREV.clear();
+    box.innerHTML = list.map((o, i) => `<div class="lab-lcd"><span class="lab-lcd__k">${esc(o.label)}</span><b class="lab-lcd__v" data-i="${i}">${fmt(o.value, o.digits)}</b><span class="lab-lcd__u">${esc(o.unit || '')}</span></div>`).join('');
+  }
+  list.forEach((o, i) => {
+    const el = box.querySelector(`[data-i="${i}"]`); if (!el) return;
+    const from = PREV.has(i) ? PREV.get(i) : o.value, to = o.value; PREV.set(i, to);
+    if (REDUCED() || from === to) { el.textContent = fmt(to, o.digits); return; }
+    const t0 = performance.now(), D = 260;
+    const step = now => { const k = Math.min((now - t0) / D, 1), e2 = 1 - Math.pow(1 - k, 3); el.textContent = fmt(from + (to - from) * e2, o.digits); if (k < 1 && PREV.get(i) === to) requestAnimationFrame(step); };
+    requestAnimationFrame(step);
+    el.parentElement.classList.remove('is-tick'); void el.offsetWidth; el.parentElement.classList.add('is-tick');
+  });
 }
 
 function control(d) {

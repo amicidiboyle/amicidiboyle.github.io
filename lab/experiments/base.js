@@ -5,46 +5,13 @@ import { CONST } from '../core/units.js';
 import * as F from '../core/physics.js';
 import * as P from '../core/physio.js';
 import * as M from '../core/mixtures.js';
+import * as V from '../ui/instruments.js';
 
 const range = (a, b, n) => Array.from({ length: n + 1 }, (_, i) => a + (b - a) * i / n);
 const bar = pa => pa / CONST.BAR;
 const mmHg = pa => pa / CONST.MMHG;
 const WATER = [{ v: 'mare', label: { it: 'Acqua di mare (1025 kg/m³)', en: 'Seawater (1025 kg/m³)' } }, { v: 'dolce', label: { it: 'Acqua dolce (1000 kg/m³)', en: 'Fresh water (1000 kg/m³)' } }];
 const rhoOf = w => w === 'dolce' ? CONST.RHO_FRESHWATER : CONST.RHO_SEAWATER;
-
-/* ── disegni ─────────────────────────────────────────────────────────────── */
-function waterColumn(depth, maxDepth, vol, v0, label) {
-  const H = 300, y = 30 + depth / maxDepth * (H - 60);
-  const r = 10 + 26 * Math.cbrt(Math.max(vol, 0.01) / v0);
-  let ticksSvg = '';
-  for (let d = 0; d <= maxDepth; d += maxDepth > 30 ? 10 : 5) {
-    const ty = 30 + d / maxDepth * (H - 60);
-    ticksSvg += `<line x1="40" x2="52" y1="${ty}" y2="${ty}" stroke="rgba(237,247,255,.5)"/><text x="34" y="${ty + 4}" text-anchor="end" font-size="11" fill="rgba(237,247,255,.75)">${d} m</text>`;
-  }
-  return `<svg viewBox="0 0 260 ${H}" class="lab-visual" role="img" aria-label="${label}">
-    <defs><linearGradient id="wc" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1b6fae"/><stop offset="1" stop-color="#03142c"/></linearGradient></defs>
-    <rect x="52" y="30" width="196" height="${H - 40}" rx="8" fill="url(#wc)"/>
-    <line x1="52" x2="248" y1="30" y2="30" stroke="#a8eeff" stroke-width="2"/>
-    ${ticksSvg}
-    <g transform="translate(150 ${y})">
-      <circle r="${r.toFixed(1)}" fill="rgba(168,238,255,.18)" stroke="#a8eeff" stroke-width="2"/>
-      <text y="4" text-anchor="middle" font-size="11" fill="#edf7ff">${vol.toLocaleString('it-IT', { maximumFractionDigits: 2 })} L</text>
-    </g>
-    <line x1="52" x2="248" y1="${y}" y2="${y}" stroke="rgba(255,255,255,.35)" stroke-dasharray="3 3"/>
-  </svg>`;
-}
-
-function chamber(ata, gas) {
-  const fill = Math.min((ata - 1) / 2, 1);
-  return `<svg viewBox="0 0 300 180" class="lab-visual" role="img" aria-label="Camera iperbarica a ${ata.toFixed(2)} ATA">
-    <rect x="20" y="40" width="250" height="100" rx="50" fill="#0b2b52" stroke="#7be4ff" stroke-width="2"/>
-    <rect x="20" y="40" width="250" height="100" rx="50" fill="rgba(123,228,255,${(0.08 + fill * 0.32).toFixed(2)})"/>
-    <circle cx="265" cy="90" r="22" fill="#061a33" stroke="#7be4ff" stroke-width="2"/>
-    <text x="145" y="86" text-anchor="middle" font-size="22" font-weight="700" fill="#edf7ff">${ata.toFixed(2)} ATA</text>
-    <text x="145" y="108" text-anchor="middle" font-size="12" fill="#a8eeff">${gas}</text>
-    <text x="145" y="164" text-anchor="middle" font-size="11" fill="rgba(237,247,255,.7)">≈ ${((ata - 1) * 10).toFixed(1)} m di acqua equivalenti (convenzione 10 m = 1 bar)</text>
-  </svg>`;
-}
 
 /* ── esperimenti ─────────────────────────────────────────────────────────── */
 export const BASE = [
@@ -73,7 +40,7 @@ export const BASE = [
           { label: 'PN₂ respirando aria', value: 0.79 * bar(pabs), unit: 'bar', digits: 3 },
         ],
         chart: { type: 'line', spec: { title: 'Volume di una quantità fissa di gas in funzione della profondità', x: { label: 'Profondità', unit: 'm', min: 0, max: 40 }, y: { label: 'Volume', unit: 'L', min: 0 }, series: [{ name: 'Volume (Boyle)', points: pts }], marker: { x: p.depth, y: v, label: v.toLocaleString('it-IT', { maximumFractionDigits: 2 }) + ' L' } } },
-        visual: waterColumn(p.depth, 40, v, p.v0, 'Colonna d\'acqua con il subacqueo a ' + p.depth + ' metri'),
+        visual: V.waterColumn({ depth: p.depth, vol: v, v0: p.v0, pBar: bar(pabs), label: 'Colonna d\'acqua: pallone di gas a ' + p.depth + ' metri' }),
       };
     },
     didactic: {
@@ -105,6 +72,7 @@ export const BASE = [
           { label: 'P · V (costante)', value: p.p1 * p.v1, unit: 'bar·L', digits: 2 },
           { label: 'Rapporto V₂ / V₁', value: v2 / p.v1, unit: '', digits: 3 },
         ],
+        visual: V.piston({ frac: v2 / (p.v1 * p.p1 / 0.5), pBar: p.p2, pMax: 6, vol: v2, label: 'Cilindro con pistone a ' + p.p2 + ' bar' }),
         chart: { type: 'line', spec: { title: 'P · V = costante', x: { label: 'Pressione assoluta', unit: 'bar', min: 0, max: 6 }, y: { label: 'Volume', unit: 'L', min: 0, max: Math.min(Math.max(p.v1 * p.p1 / 0.2, 1), p.v1 * p.p1 * 2.5) }, series: [{ name: 'Isoterma', points: pts }], marker: { x: p.p2, y: v2, label: v2.toLocaleString('it-IT', { maximumFractionDigits: 2 }) + ' L' } } },
       };
     },
@@ -138,6 +106,7 @@ export const BASE = [
           { label: 'T₂ assoluta', value: k2, unit: 'K', digits: 2 },
           { label: 'Variazione', value: (v2 / p.v1 - 1) * 100, unit: '%', digits: 1 },
         ],
+        visual: V.piston({ frac: v2 / (p.v1 * (100 + CONST.T0) / k1), vol: v2, tC: p.t2, label: 'Cilindro a pressione costante a ' + p.t2 + ' °C' }),
         chart: { type: 'line', spec: { title: 'Volume a pressione costante', x: { label: 'Temperatura', unit: '°C', min: -40, max: 100 }, y: { label: 'Volume', unit: 'L', min: 0 }, series: [{ name: 'Charles', points: pts }], marker: { x: p.t2, y: v2, label: v2.toLocaleString('it-IT', { maximumFractionDigits: 3 }) + ' L' } } },
       };
     },
@@ -171,6 +140,7 @@ export const BASE = [
           { label: 'Pressione finale (assoluta)', value: abs2, unit: 'bar', digits: 1 },
           { label: 'Aumento', value: abs2 - abs1, unit: 'bar', digits: 1 },
         ],
+        visual: V.tank({ pRel: abs2 - pAtm, tC: p.t2, label: 'Bombola a ' + p.t2 + ' °C' }),
         chart: { type: 'line', spec: { title: 'Pressione in recipiente rigido', x: { label: 'Temperatura', unit: '°C', min: -10, max: 70 }, y: { label: 'Pressione relativa', unit: 'bar', min: 0 }, series: [{ name: 'Gay-Lussac (gas ideale)', points: pts }], marker: { x: p.t2, y: abs2 - pAtm, label: (abs2 - pAtm).toFixed(0) + ' bar' } } },
         warnings: p.p1 > 50 ? ['A queste pressioni l\'aria non si comporta esattamente come un gas ideale: il valore è indicativo.'] : [],
       };
@@ -205,6 +175,7 @@ export const BASE = [
           { label: 'PN₂', value: (1 - f) * pt, unit: 'bar', digits: 3 },
           { label: 'Somma delle parziali', value: pt, unit: 'bar', digits: 3 },
         ],
+        visual: V.gasStack({ parts: [{ name: 'PN₂', value: (1 - f) * pt, color: '#E69F00' }, { name: 'PO₂', value: f * pt, color: '#56B4E9' }], maxTotal: 7.5, title: 'Pressione totale ' + pt.toFixed(2).replace('.', ',') + ' bar', label: 'Pressioni parziali a ' + p.depth + ' metri' }),
         chart: { type: 'line', spec: { title: 'Pressioni parziali in funzione della profondità', x: { label: 'Profondità', unit: 'm', min: 0, max: 60 }, y: { label: 'Pressione parziale', unit: 'bar', min: 0 }, series: [{ name: 'PO₂', points: xs.map(d => [d, f * P(d)]) }, { name: 'PN₂', points: xs.map(d => [d, (1 - f) * P(d)]) }], marker: { x: p.depth, y: f * pt, label: 'PO₂ ' + (f * pt).toFixed(2) + ' bar' } } },
       };
     },
@@ -237,6 +208,7 @@ export const BASE = [
           { label: 'O₂ disciolto nel plasma', value: c.dissolved, unit: 'mL/dL', digits: 2 },
           { label: 'Contenuto totale', value: c.total, unit: 'mL/dL', digits: 2 },
         ],
+        visual: V.plasma({ dissolved: c.dissolved, sat: s, label: 'Ossigeno disciolto nel plasma e legato all\'emoglobina' }),
         chart: { type: 'line', spec: { title: 'Contenuto di O₂ del sangue in funzione della PO₂', x: { label: 'PO₂', unit: 'mmHg', min: 0, max: 2200 }, y: { label: 'Contenuto', unit: 'mL/dL', min: 0 }, series: [
           { name: 'Legato (Hb)', points: xs.map(x => [x, P.o2Content(p.hb, P.severinghausSat(x), x).bound]) },
           { name: 'Disciolto (Henry)', points: xs.map(x => [x, P.O2_SOLUBILITY * x]) },
@@ -273,6 +245,7 @@ export const BASE = [
           { label: 'PO₂ per il 90% (standard)', value: P.po2ForSat(0.9), unit: 'mmHg', digits: 1 },
           { label: 'PO₂ per il 90% (P50 scelto)', value: P.po2ForSat(0.9, p.p50), unit: 'mmHg', digits: 1 },
         ],
+        visual: V.hbCompare({ s1: s0, s2: s1, t1: 'curva standard', t2: 'P50 ' + String(p.p50).replace('.', ','), label: 'Siti dell\'emoglobina occupati alla PO₂ scelta' }),
         chart: { type: 'line', spec: { title: 'Curva di dissociazione dell\'ossiemoglobina', x: { label: 'PO₂', unit: 'mmHg', min: 0, max: 150 }, y: { label: 'Saturazione', unit: '%', min: 0, max: 100 }, series: [
           { name: 'Standard, P50 26,8', points: xs.map(x => [x, P.severinghausSat(x) * 100]) },
           { name: 'P50 ' + String(p.p50).replace('.', ','), points: xs.map(x => [x, P.satWithP50(x, p.p50) * 100]) },
@@ -312,6 +285,7 @@ export const BASE = [
           { label: 'PiO₂ in percentuale del livello del mare', value: pio2 / sea * 100, unit: '%', digits: 0 },
           { label: 'FiO₂ per avere la PiO₂ del livello del mare', value: fNeeded > 1 ? NaN : fNeeded * 100, unit: '%', digits: 1, note: fNeeded > 1 ? 'non raggiungibile nemmeno con O₂ al 100%' : '' },
         ],
+        visual: V.mountain({ alt: p.alt, pb, label: 'Quota ' + p.alt + ' metri' }),
         chart: { type: 'line', spec: { title: 'PO₂ inspirata in funzione della quota', x: { label: 'Quota', unit: 'm', min: 0, max: 9000 }, y: { label: 'PiO₂', unit: 'mmHg', min: 0 }, series: [
           { name: 'Aria (21%)', points: xs.map(h => [h, P.inspiredPO2(mmHg(F.isaPressure(h)), 0.21)]) },
           ...(p.fio2 !== 21 ? [{ name: 'FiO₂ ' + p.fio2 + '%', points: xs.map(h => [h, P.inspiredPO2(mmHg(F.isaPressure(h)), f)]) }] : []),
@@ -342,6 +316,7 @@ export const BASE = [
       const xs = range(0, 100, 100);
       return {
         outputs: mixes.map(([n, m]) => ({ label: 'Densità ' + n, value: M.gasDensityAt(p.depth, m, p.temp), unit: 'g/L', digits: 2 })),
+        visual: V.densityBoxes({ items: [{ name: 'Aria', rho: M.gasDensityAt(p.depth, mixes[0][1], p.temp), color: '#56B4E9' }, { name: 'Trimix 18/45', rho: M.gasDensityAt(p.depth, mixes[2][1], p.temp), color: '#009E73' }], maxRho: 14, label: 'Molecole di gas a ' + p.depth + ' metri' }),
         chart: { type: 'line', spec: { title: 'Densità del gas in funzione della profondità', x: { label: 'Profondità', unit: 'm', min: 0, max: 100 }, y: { label: 'Densità', unit: 'g/L', min: 0 }, series: mixes.map(([n, m]) => ({ name: n, points: xs.map(d => [d, M.gasDensityAt(d, m, p.temp)]) })), marker: { x: p.depth, y: M.gasDensityAt(p.depth, mixes[0][1], p.temp), label: 'Aria' } } },
       };
     },
@@ -375,6 +350,7 @@ export const BASE = [
           { label: 'Spinta del GAV', value: F.buoyancyForce(v / 1000), unit: 'N', digits: 1, hint: lift(p.depth), hintUnit: 'kg' },
           { label: 'Assetto risultante', value: net(p.depth), unit: 'kg', digits: 2, note: net(p.depth) > 0.05 ? 'positivo: tende a salire' : net(p.depth) < -0.05 ? 'negativo: tende a scendere' : 'neutro' },
         ],
+        visual: V.waterColumn({ depth: p.depth, vol: v, v0: p.vgas, ref: 6, pBar: F.absolutePressureAtDepth(p.depth) / CONST.BAR, arrows: { up: lift(p.depth), down: p.net0, max: Math.max(lift(0), Math.abs(p.net0), 1) }, label: 'Subacqueo con il GAV a ' + p.depth + ' metri' }),
         chart: { type: 'line', spec: { title: 'Assetto in funzione della profondità (GAV non regolato)', x: { label: 'Profondità', unit: 'm', min: 0, max: 40 }, y: { label: 'Assetto (positivo = galleggia)', unit: 'kg', min: Math.min(-p.net0, 0) - 1, max: Math.max(net(0), 0) + 1 }, series: [{ name: 'Assetto', points: xs.map(d => [d, net(d)]) }, { name: 'Neutro', points: [[0, 0], [40, 0]], color: 'rgba(237,247,255,.4)', hideLegend: true }], marker: { x: p.depth, y: net(p.depth), label: net(p.depth).toFixed(1) + ' kg' } } },
       };
     },
@@ -414,7 +390,7 @@ export const BASE = [
           { name: 'Ossigeno 100%', points: xs.map(x => [x, P.O2_SOLUBILITY * P.alveolarPO2({ pb: x * 760, fio2: 1 })]) },
           { name: 'Aria', points: xs.map(x => [x, P.O2_SOLUBILITY * P.alveolarPO2({ pb: x * 760, fio2: 0.21 })]) },
         ], marker: { x: p.ata, y: P.O2_SOLUBILITY * A, label: (P.O2_SOLUBILITY * A).toFixed(1) + ' mL/dL' } } },
-        visual: chamber(p.ata, p.gas === 'o2' ? 'Ossigeno 100%' : 'Aria'),
+        visual: V.chamber({ ata: p.ata, gas: p.gas, label: 'Camera iperbarica a ' + p.ata.toFixed(2) + ' ATA' }),
       };
     },
     didactic: {

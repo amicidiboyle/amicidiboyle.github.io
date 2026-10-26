@@ -40,15 +40,15 @@ export function lineChart(spec, { width = 720, height = 420 } = {}) {
   const axisLabel = a => esc(a.label) + (a.unit ? ' (' + esc(a.unit) + ')' : '');
   let s = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${height}" role="img" aria-labelledby="ct-t ct-d" class="lab-chart" font-family="DM Sans, system-ui, sans-serif">`;
   s += `<title id="ct-t">${esc(spec.title)}</title><desc id="ct-d">${axisLabel(spec.y)} in funzione di ${axisLabel(spec.x)}. Serie: ${spec.series.map(x => esc(x.name)).join(', ')}.</desc>`;
-  s += `<rect width="${width}" height="${height}" fill="#061a33"/>`;
+  s += `<rect width="${width}" height="${height}" fill="#03101f"/>`;
   s += `<text x="${m.l}" y="22" fill="#edf7ff" font-size="15" font-weight="700">${esc(spec.title)}</text>`;
   for (const b of spec.bands || []) {
     const y1 = sy(Math.min(Math.max(b.y2, ymin), ymax)), y2 = sy(Math.max(Math.min(b.y1, ymax), ymin));
     s += `<rect x="${m.l}" y="${y1}" width="${W}" height="${Math.max(y2 - y1, 0)}" fill="${b.color || 'rgba(123,228,255,.07)'}"/>`;
     if (b.label) s += `<text x="${m.l + W - 6}" y="${y1 + 14}" text-anchor="end" fill="rgba(237,247,255,.6)" font-size="11">${esc(b.label)}</text>`;
   }
-  for (const v of yt) s += `<line x1="${m.l}" x2="${m.l + W}" y1="${sy(v)}" y2="${sy(v)}" stroke="rgba(160,210,255,.12)"/><text x="${m.l - 8}" y="${sy(v) + 4}" text-anchor="end" fill="rgba(237,247,255,.7)" font-size="11">${fmtTick(v)}</text>`;
-  for (const v of xt) s += `<line x1="${sx(v)}" x2="${sx(v)}" y1="${m.t}" y2="${m.t + H}" stroke="rgba(160,210,255,.07)"/><text x="${sx(v)}" y="${m.t + H + 18}" text-anchor="middle" fill="rgba(237,247,255,.7)" font-size="11">${fmtTick(v)}</text>`;
+  for (const v of yt) s += `<line x1="${m.l}" x2="${m.l + W}" y1="${sy(v)}" y2="${sy(v)}" stroke="rgba(123,228,255,.13)" stroke-dasharray="2 4"/><text x="${m.l - 8}" y="${sy(v) + 4}" text-anchor="end" fill="rgba(237,247,255,.7)" font-size="11">${fmtTick(v)}</text>`;
+  for (const v of xt) s += `<line x1="${sx(v)}" x2="${sx(v)}" y1="${m.t}" y2="${m.t + H}" stroke="rgba(123,228,255,.09)" stroke-dasharray="2 4"/><text x="${sx(v)}" y="${m.t + H + 18}" text-anchor="middle" fill="rgba(237,247,255,.7)" font-size="11">${fmtTick(v)}</text>`;
   s += `<line x1="${m.l}" x2="${m.l + W}" y1="${m.t + H}" y2="${m.t + H}" stroke="rgba(237,247,255,.45)"/><line x1="${m.l}" x2="${m.l}" y1="${m.t}" y2="${m.t + H}" stroke="rgba(237,247,255,.45)"/>`;
   s += `<text x="${m.l + W / 2}" y="${height - 12}" text-anchor="middle" fill="#a8eeff" font-size="12">${axisLabel(spec.x)}</text>`;
   s += `<text transform="translate(16 ${m.t + H / 2}) rotate(-90)" text-anchor="middle" fill="#a8eeff" font-size="12">${axisLabel(spec.y)}</text>`;
@@ -58,14 +58,15 @@ export function lineChart(spec, { width = 720, height = 420 } = {}) {
     if (!pts.length) return;
     const d = pts.map((p, j) => (j ? 'L' : 'M') + sx(p[0]).toFixed(1) + ' ' + sy(p[1]).toFixed(1)).join('');
     const ci = ser.colorIndex ?? i;
-    s += `<path d="${d}" fill="none" stroke="${ser.color || PALETTE[ci % PALETTE.length]}" stroke-width="${ser.ghost ? 1.6 : 2.4}" stroke-dasharray="${ser.ghost ? '5 5' : DASHES[ci % DASHES.length]}" opacity="${ser.ghost ? .75 : 1}" stroke-linejoin="round"/>`;
+    s += `<path class="ct-line" d="${d}" fill="none" stroke="${ser.color || PALETTE[ci % PALETTE.length]}" stroke-width="${ser.ghost ? 1.6 : 2.4}" stroke-dasharray="${ser.ghost ? '5 5' : DASHES[ci % DASHES.length]}" opacity="${ser.ghost ? .75 : 1}" stroke-linejoin="round"/>`;
   });
   s += '</g>';
   if (spec.marker && Number.isFinite(spec.marker.y)) {
     const mx = sx(spec.marker.x), my = sy(spec.marker.y);
-    s += `<line x1="${mx}" x2="${mx}" y1="${m.t}" y2="${m.t + H}" stroke="rgba(255,255,255,.35)" stroke-dasharray="3 3"/>`;
-    s += `<circle cx="${mx}" cy="${my}" r="6" fill="#061a33" stroke="#ffffff" stroke-width="2.5"/>`;
-    if (spec.marker.label) s += `<text x="${Math.min(mx + 10, m.l + W - 4)}" y="${Math.max(my - 10, m.t + 12)}" text-anchor="${mx + 10 > m.l + W - 120 ? 'end' : 'start'}" fill="#ffffff" font-size="12" font-weight="700">${esc(spec.marker.label)}</text>`;
+    const right = mx + 10 > m.l + W - 120;
+    s += `<g class="ct-mk" style="transform:translateX(${mx.toFixed(1)}px)"><line x1="0" x2="0" y1="${m.t}" y2="${m.t + H}" stroke="rgba(255,255,255,.35)" stroke-dasharray="3 3"/></g>`;
+    s += `<g class="ct-mk" style="transform:translate(${mx.toFixed(1)}px, ${my.toFixed(1)}px)"><circle r="12" fill="rgba(255,255,255,.10)" class="ct-halo"/><circle r="6" fill="#061a33" stroke="#ffffff" stroke-width="2.5"/>`;
+    s += `<text x="${right ? -12 : 12}" y="${my - 10 < m.t + 12 ? 18 : -10}" text-anchor="${right ? 'end' : 'start'}" fill="#ffffff" font-size="12" font-weight="700">${esc(spec.marker.label || '')}</text></g>`;
   }
   /* legenda */
   let lx = m.l, ly = m.t + 6;
@@ -92,7 +93,7 @@ export function barChart(spec, { width = 720 } = {}) {
   const W = width - m.l - m.r;
   const max = spec.max ?? Math.max(...spec.groups.flatMap(g => g.values.map(v => v.v)), 1);
   let s = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${height}" role="img" aria-label="${esc(spec.title)}" class="lab-chart" font-family="DM Sans, system-ui, sans-serif">`;
-  s += `<rect width="${width}" height="${height}" fill="#061a33"/><text x="16" y="24" fill="#edf7ff" font-size="15" font-weight="700">${esc(spec.title)}</text>`;
+  s += `<rect width="${width}" height="${height}" fill="#03101f"/><text x="16" y="24" fill="#edf7ff" font-size="15" font-weight="700">${esc(spec.title)}</text>`;
   if (names.length > 1) names.forEach((n, i) => { s += `<rect x="${16 + i * 150}" y="34" width="12" height="10" fill="${PALETTE[i]}"/><text x="${32 + i * 150}" y="43" fill="#edf7ff" font-size="11">${esc(n)}</text>`; });
   let y = m.t;
   for (const g of spec.groups) {
