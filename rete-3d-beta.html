@@ -58,7 +58,7 @@
 </style>
   <link rel="stylesheet" href="title-fx.css?v=20261026a" />
   <link rel="stylesheet" href="nav-tools.css?v=20261026e" />
-  <link rel="stylesheet" href="assets/rete3d/rete3d.css?v=20261026f" />
+  <link rel="stylesheet" href="assets/rete3d/rete3d.css?v=20261027a" />
   <link rel="stylesheet" href="barometro.css?v=20261026a" />
 </head>
 <body>
@@ -126,7 +126,7 @@
     <section class="r3d-top" id="top">
       <div class="r3d-stage" id="r3dStage">
         <div class="r3d-ph" aria-hidden="true"><span></span></div>
-        <div class="r3d-hud" id="r3dHud"><h1 class="r3d-title">Rete di <span class="r3d-grad">Boyle</span></h1><p class="r3d-stats" id="r3dStats"></p></div>
+        <div class="r3d-hud" id="r3dHud"><h1 class="r3d-title">Rete di <span class="r3d-grad">Boyle</span></h1></div>
         <p class="r3d-betapill">Anteprima beta</p>
         <div class="r3d-press" id="r3dPress" hidden></div>
         <div class="r3d-label" id="r3dLabel" hidden></div>
@@ -232,29 +232,19 @@
 
 
     <!-- GRIGLIA MEMBRI -->
-    <section class="members-section" id="members">
+    <section class="members-section r3d-find" id="members">
       <div class="container">
-        <div class="members-header">
-          <h2 class="members-title" data-i18n="r_members_title">I Membri della Rete</h2>
-          <p class="members-sub" data-i18n="r_members_sub">Professionisti selezionati per competenza, curriculum e impatto operativo.</p>
-        <div class="profile-legend"><span class="pleg pleg--base"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>&nbsp;Base</span><span class="pleg pleg--partial"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>&nbsp;Parzialmente completo</span><span class="pleg pleg--complete"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>&nbsp;Completo</span></div>
-        
+        <div class="r3d-find__head">
+          <h2 class="r3d-find__title">Cerca nella Rete</h2>
+          <label class="r3d-search"><span class="sr-only">Cerca un membro</span>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5L21 21"/></svg>
+            <input type="search" id="r3dSearch" placeholder="Nome, area, ruolo, città…" autocomplete="off" />
+          </label>
+          <p class="r3d-count" id="r3dCount" aria-live="polite"></p>
         </div>
-
-        <!-- Filtro per specialità -->
-        <div class="skill-filter-wrap">
-          <button class="skill-filter-toggle" id="skillFilterToggle" type="button">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M7 12h10M11 18h2"/></svg>
-            Filtra per specialità
-            <span id="skillFilterArrow">▾</span>
-          </button>
-          <div class="skill-filter-panel" id="skillFilterPanel" aria-hidden="true">
-            <div class="skill-filter-inner" id="skillFilterInner"></div>
-          </div>
-        </div>
-
-        <!-- Le card vengono iniettate da JS -->
-        <div class="members-grid" id="membersGrid" role="list"></div>
+        <ul class="r3d-list" id="r3dList"></ul>
+        <!-- griglia originale: resta nella pagina (codice, matita, sblocchi) ma nascosta; le card vengono riusate nella scheda -->
+        <div class="members-grid r3d-hidden-grid" id="membersGrid" role="list" aria-hidden="true"></div>
       </div>
     </section>
 
@@ -390,13 +380,14 @@
     <!-- VANTAGGI DELLA RETE -->
     <!-- ── PERCHÉ ENTRARE + EVENTO ── -->
     <!-- PERCHE' ENTRARE: due percorsi e cosa offrono (sostituisce i riquadri vantaggi e le due card) -->
-    <section class="section rw-section" id="amici">
+    <section class="section rw-section r3d-why is-closed" id="amici">
       <span id="rete-why" class="rw-anchor" aria-hidden="true"></span>
       <div class="container">
         <div class="rete-why-header reveal">
           <p class="section-kicker" data-i18n="r_why_kicker">Perché entrare</p>
           <h2 data-i18n="r_why_title">Cosa significa far parte della Rete di Boyle</h2>
           <p class="section-subheading" data-i18n="r_why_sub">La rete non è una directory. È un ecosistema attivo dove ogni membro contribuisce e riceve valore concreto.</p>
+          <button type="button" class="r3d-why__btn" id="r3dWhyBtn" aria-expanded="false" aria-controls="amici"><span>Scopri cosa offre</span><i aria-hidden="true"></i></button>
         </div>
 
         <div class="rw-paths">
@@ -2750,6 +2741,6 @@
  ]
 }
 </script>
-  <script type="module" src="assets/rete3d/app.js?v=20261026f"></script>
+  <script type="module" src="assets/rete3d/app.js?v=20261027a"></script>
 </body>
 </html>

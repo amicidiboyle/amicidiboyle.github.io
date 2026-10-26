@@ -200,3 +200,78 @@
 }
 .r3d-panel .r3d-membercard .member-role { padding-bottom: 100px !important; margin-bottom: 0 !important; max-width: 34ch; }
 .r3d-panel .r3d-membercard .member-bio-snippet:empty { display: none; }
+
+/* ══ v4: il fondale si intravede dietro la sfera; titolo grande; cerca con microcard; "perche' entrare" a richiesta ══ */
+.r3d-top { background: transparent; }
+.r3d-top .r3d-stage { border: 0;
+  background:
+    radial-gradient(ellipse 46% 52% at 50% 50%, rgba(30,100,190,.30) 0%, rgba(8,30,66,.10) 60%, transparent 75%),
+    linear-gradient(180deg, rgba(2,10,24,.80) 0%, rgba(2,10,24,.62) 45%, rgba(2,10,24,.86) 100%); }
+.r3d-title { font-size: clamp(2.4rem, 5vw, 4.4rem); letter-spacing: -.035em; text-shadow: 0 4px 40px rgba(0,0,0,.55); }
+.r3d-hud { top: 22px; left: 26px; }
+.r3d-console { background: linear-gradient(180deg, rgba(2,10,24,.86) 0%, rgba(2,10,24,.55) 100%); border-top: 0; }
+
+/* griglia originale: viva ma invisibile (serve alle card della scheda) */
+.r3d-hidden-grid { display: none !important; }
+
+.r3d-find { padding: 56px 0 24px; }
+.r3d-find__head { display: grid; grid-template-columns: auto minmax(260px, 460px) 1fr; align-items: center; gap: 14px 22px; margin-bottom: 18px; }
+.r3d-find__title { margin: 0; font-size: clamp(1.4rem, 2.2vw, 1.9rem); color: #edf7ff; letter-spacing: -.02em; }
+.r3d-find .r3d-count { margin: 0; justify-self: end; }
+.r3d-find .r3d-list { margin: 0; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); align-items: start; }
+.r3d-mc { border-radius: 16px; background: rgba(4,18,40,.72); border: 1px solid rgba(123,228,255,.16); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); transition: border-color .2s, background .2s; }
+.r3d-mc:hover { border-color: rgba(123,228,255,.45); }
+.r3d-mc.is-open { grid-column: 1 / -1; border-color: color-mix(in srgb, var(--c) 60%, transparent); background: rgba(4,18,40,.88); }
+.r3d-mc__head { width: 100%; display: grid; grid-template-columns: 52px 1fr 18px; gap: 12px; align-items: center; padding: 10px 12px; background: none; border: 0; cursor: pointer; text-align: left; font: inherit; color: #edf7ff; }
+.r3d-mc__head img { width: 52px; height: 52px; border-radius: 50%; object-fit: cover; box-shadow: 0 0 0 2px rgba(123,228,255,.55); }
+.r3d-mc.is-founder .r3d-mc__head img { box-shadow: 0 0 0 3px #fff; }
+.r3d-mc__txt { display: grid; gap: 3px; min-width: 0; }
+.r3d-mc__txt b { font-size: .95rem; line-height: 1.2; }
+.r3d-mc__txt small { display: flex; align-items: center; gap: 7px; font-size: .74rem; color: rgba(237,247,255,.72); }
+.r3d-mc__txt small i { flex: none; width: 8px; height: 8px; border-radius: 50%; background: var(--c); }
+.r3d-mc__txt em { font-style: normal; font-size: .72rem; color: rgba(168,238,255,.6); letter-spacing: .06em; text-transform: uppercase; }
+.r3d-mc__chev { width: 10px; height: 10px; border-right: 2px solid rgba(123,228,255,.7); border-bottom: 2px solid rgba(123,228,255,.7); transform: rotate(45deg); transition: transform .25s; justify-self: center; }
+.r3d-mc.is-open .r3d-mc__chev { transform: rotate(225deg); }
+.r3d-mc__body { padding: 4px 14px 18px; display: grid; justify-items: center; gap: 14px; }
+.r3d-mc__body .member-card.r3d-membercard { width: min(400px, 100%); opacity: 1 !important; transform: none !important; translate: none !important; scale: none !important; animation: none !important; height: auto !important; min-height: 0 !important; margin: 0; }
+.r3d-mc__body .r3d-membercard .member-role { padding-bottom: 100px !important; margin-bottom: 0 !important; max-width: 34ch; }
+.r3d-mc__body .r3d-membercard .member-bio-snippet:empty { display: none; }
+.r3d-mc__go { padding: 10px 18px; border-radius: 999px; cursor: pointer; font: inherit; font-weight: 700; font-size: .85rem; color: #c9f6ff; background: rgba(123,228,255,.08); border: 1px solid rgba(123,228,255,.45); }
+.r3d-mc__go:hover { background: rgba(123,228,255,.18); }
+.r3d-empty { grid-column: 1 / -1; padding: 18px; color: rgba(237,247,255,.6); }
+
+/* perche' entrare: chiuso, si apre col pulsante */
+.r3d-why .rete-why-header { margin-bottom: 0; }
+.r3d-why.is-closed { padding-bottom: 40px; }
+.r3d-why.is-closed .container > :not(.rete-why-header) { display: none !important; }
+.r3d-why__btn { display: inline-flex; align-items: center; gap: 10px; margin-top: 18px; padding: 12px 22px; border-radius: 999px; cursor: pointer; font: inherit; font-weight: 700; font-size: .9rem; color: #021022; background: linear-gradient(135deg, #a8eeff, #7be4ff); border: 0; box-shadow: 0 8px 28px rgba(123,228,255,.25); }
+.r3d-why__btn i { width: 8px; height: 8px; border-right: 2px solid currentColor; border-bottom: 2px solid currentColor; transform: rotate(45deg) translateY(-2px); transition: transform .25s; }
+.r3d-why:not(.is-closed) .r3d-why__btn i { transform: rotate(225deg) translateY(-2px); }
+.r3d-why:not(.is-closed) .rete-why-header { margin-bottom: 36px; }
+
+@media (max-width: 760px) {
+  .r3d-title { font-size: 2.3rem; }
+  .r3d-hud { top: 14px; left: 16px; }
+  .r3d-find { padding: 40px 0 16px; }
+  .r3d-find__head { grid-template-columns: 1fr; }
+  .r3d-find .r3d-count { justify-self: start; }
+  .r3d-find .r3d-list { grid-template-columns: 1fr; }
+}
+@media (max-width: 760px) {
+  .r3d-tools { top: auto; bottom: 62px; right: 10px; max-width: none; flex-direction: column; }
+  .r3d-hud { max-width: 90%; }
+  .r3d-betapill { bottom: auto; top: 70px; left: 16px; transform: none; }
+}
+/* titolo come gli altri titoli di pagina del sito */
+.r3d-top .r3d-hud .r3d-title { font-family: 'DM Sans', system-ui, -apple-system, sans-serif; font-weight: 800; font-size: clamp(3rem, 6.4vw, 6.2rem); line-height: .9; letter-spacing: -.05em; }
+.r3d-top .r3d-title .r3d-grad { display: inline-block; padding: 0 .06em .06em 0; }
+/* fondale piu' discreto: si intuisce dietro la sfera */
+.r3d-top .r3d-stage { background:
+    radial-gradient(ellipse 46% 52% at 50% 50%, rgba(30,100,190,.26) 0%, rgba(8,30,66,.12) 60%, transparent 75%),
+    linear-gradient(180deg, rgba(2,10,24,.88) 0%, rgba(2,10,24,.74) 45%, rgba(2,10,24,.9) 100%); }
+@media (max-width: 760px) {
+  .r3d-top .r3d-hud .r3d-title { font-size: clamp(2.6rem, 13vw, 3.6rem); }
+  .r3d-betapill { top: auto; bottom: 64px; left: 16px; }
+  .r3d-tools { flex-direction: row; bottom: 60px; gap: 6px; }
+  .r3d-tools button { height: 32px; min-width: 32px; padding: 0 8px; font-size: .68rem; }
+}

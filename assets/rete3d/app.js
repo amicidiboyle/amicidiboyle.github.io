@@ -11,11 +11,11 @@ const AREAS = [
   { id: 'F', name: 'Ricerca e altre specialità', color: '#b9a6ff', tags: [] },
 ];
 const FOUNDERS = [
-  { name: 'Silvio Zerbi', title: 'Dott.', role: 'Fondatore', area: null, thumb: 'founder-silvio-zerbi.webp', img: 'images/silvio.zerbi.jpg' },
-  { name: 'Luigi Tarsia', title: 'Ing.', role: 'Direttore Ingegneria', area: 'F', thumb: 'founder-luigi-tarsia.webp', img: 'images/luigi.tarsia.webp' },
-  { name: 'Vincenzo Benenati', title: 'Dott.', role: 'Responsabile Area Iperbarica', area: 'B', thumb: 'founder-vincenzo-benenati.webp', img: 'images/vincenzo.benenati.webp' },
-  { name: 'Dario Nicosia', title: 'Dott.', role: 'Responsabile Area Diving', area: 'A', thumb: 'founder-dario-nicosia.webp', img: 'images/dario.nicosia.webp' },
-  { name: 'Matteo Paganini', title: 'Dott.', role: 'Capo Ricercatore', area: 'F', thumb: 'founder-matteo-paganini.webp', img: 'images/matteo.paganini.webp' },
+  { name: 'Silvio Zerbi', title: 'Dott.', badge: 'Fondatore', role: 'Fondatore', area: null, thumb: 'founder-silvio-zerbi.webp', img: 'images/silvio.zerbi.jpg' },
+  { name: 'Luigi Tarsia', title: 'Ing.', badge: 'Co-fondatore', role: 'Direttore Ingegneria', area: 'F', thumb: 'founder-luigi-tarsia.webp', img: 'images/luigi.tarsia.webp' },
+  { name: 'Vincenzo Benenati', title: 'Dott.', badge: 'Co-fondatore', role: 'Responsabile Area Iperbarica', area: 'B', thumb: 'founder-vincenzo-benenati.webp', img: 'images/vincenzo.benenati.webp' },
+  { name: 'Dario Nicosia', title: 'Dott.', badge: 'Co-fondatore', role: 'Responsabile Area Diving', area: 'A', thumb: 'founder-dario-nicosia.webp', img: 'images/dario.nicosia.webp' },
+  { name: 'Matteo Paganini', title: 'Dott.', badge: 'Co-fondatore', role: 'Capo Ricercatore', area: 'F', thumb: 'founder-matteo-paganini.webp', img: 'images/matteo.paganini.webp' },
 ];
 const areaOf = tags => { for (const t of tags || []) { const k = String(t).trim().toLowerCase(); const a = AREAS.find(a => a.tags.includes(k)); if (a) return a.id; } return 'F'; };
 const AREA = Object.fromEntries(AREAS.map(a => [a.id, a]));
@@ -29,7 +29,10 @@ const stage = document.getElementById('r3dStage');
 const panel = document.getElementById('r3dPanel');
 const label = document.getElementById('r3dLabel');
 const chipsEl = document.getElementById('r3dChips');
-const statsEl = document.getElementById('r3dStats');
+const listEl = document.getElementById('r3dList');
+const searchEl = document.getElementById('r3dSearch');
+const countEl = document.getElementById('r3dCount');
+const fLabel = p => p.badge === 'Fondatore' ? 'Fondatore' : p.badge + ' · ' + p.role;
 const pressEl = document.getElementById('r3dPress');
 const zoomBox = document.getElementById('r3dZoom');
 
@@ -45,7 +48,7 @@ const cardEls = new Map(); const shownCards = new Set();
   const ms = members.map(m => ({ ...m, _thumb: thumbOf(m.img), _area: areaOf(m.tags), founder: false }));
   const fs = FOUNDERS.map(f => ({ ...f, _thumb: 'assets/rete/thumb/' + f.thumb, _area: f.area || null, founder: true, tags: [] }));
   people = [...ms, ...fs];
-  renderChips(); stats();
+  renderChips(); renderList(); initSearch(); initWhy();
   lazy3d(ms, fs);
 })();
 
@@ -61,14 +64,11 @@ function lazy3d(ms, fs) {
         onCoreState: (p, v, on) => { pressEl.hidden = !on; if (on) pressEl.innerHTML = `P <b>${p.toFixed(2).replace('.', ',')}</b> bar · V <b>${v.toFixed(2).replace('.', ',')}</b> L <small>P·V = 6 bar·L</small>`; },
       });
       stage.classList.add('is-live');
-      stats(); tickLabel();
+      tickLabel();
     } catch (e) { console.error(e); stage.classList.add('is-fallback'); }
   };
   const io = new IntersectionObserver(en => { if (en[0].isIntersecting) { io.disconnect(); go(); } }, { rootMargin: '200px' });
   io.observe(stage);
-}
-function stats() {
-  statsEl.innerHTML = `<span><i class="r3d-led"></i>${people.length} persone</span><span>${net ? net.edgesCount() : '—'} connessioni</span><span>${AREAS.length} aree</span>`;
 }
 
 /* ── etichetta al passaggio ── */
@@ -82,7 +82,7 @@ function tickLabel() {
   label.style.transform = `translate(${Math.round(p.x)}px, ${Math.round(p.y)}px)`;
   const a = m._area ? AREA[m._area] : null;
   const t = (m.founder ? m.title + ' ' : '') + m.name;
-  if (label.dataset.t !== t) { label.dataset.t = t; label.innerHTML = `<b>${esc(t)}</b><span style="--c:${a ? a.color : '#fff'}">${esc(m.founder ? 'Fondatore · ' + m.role : a.name)}</span>`; }
+  if (label.dataset.t !== t) { label.dataset.t = t; label.innerHTML = `<b>${esc(t)}</b><span style="--c:${a ? a.color : '#fff'}">${esc(m.founder ? fLabel(m) : a.name)}</span>`; }
 }
 
 /* ── aree: i filamenti si colorano solo quando ne scegli una ── */
@@ -94,6 +94,7 @@ function renderChips() {
     area = b.dataset.a || null;
     chipsEl.querySelectorAll('.r3d-chip').forEach(x => x.classList.toggle('is-on', x === b));
     if (net) { close(true); net.setArea(area); }
+    renderList();
   });
 }
 
@@ -112,7 +113,7 @@ function founderCard(p) {
   const d = document.createElement('article');
   d.className = 'r3d-founder';
   d.innerHTML = `<div class="r3d-founder__photo"><img src="${esc(p.img)}" alt="${esc(p.name)}" /></div>
-    <h2>${esc((p.title ? p.title + ' ' : '') + p.name)}</h2><p class="r3d-founder__role">${esc(p.role || '')}</p>
+    <h2>${esc((p.title ? p.title + ' ' : '') + p.name)}</h2><p class="r3d-founder__role">${esc(p.founder ? fLabel(p) : (p.role || ''))}</p>
     ${p.founder ? '<a class="r3d-btn" href="index.html#fondatori">I fondatori →</a>' : ''}`;
   return d;
 }
@@ -121,7 +122,7 @@ function open(i) {
   current = i; label.hidden = true;
   const a = p._area ? AREA[p._area] : null;
   panel.innerHTML = `<button type="button" class="r3d-close" aria-label="Chiudi la scheda">✕</button>
-    <p class="r3d-panel__area" style="--c:${a ? a.color : '#fff'}"><i></i>${esc(p.founder ? 'Fondatore' + (a ? ' · ' + a.name : '') : a.name)}</p>`;
+    <p class="r3d-panel__area" style="--c:${a ? a.color : '#fff'}"><i></i>${esc(p.founder ? p.badge + (a ? ' · ' + a.name : '') : a.name)}</p>`;
   const card = p.founder ? founderCard(p) : (realCard(p) || founderCard({ ...p, img: 'assets/rete/' + p.img }));
   panel.appendChild(card);
   const nb = net ? net.neighbors(i) : [];
@@ -158,7 +159,7 @@ function zoomCard(i) {
   const bio = pr.bio && pr.bio.trim().length > 5 ? pr.bio.trim() : '';
   el = document.createElement('div'); el.className = 'r3d-zc'; el.style.setProperty('--c', a ? a.color : '#fff');
   el.innerHTML = `<b>${esc((p.founder ? p.title + ' ' : '') + p.name)}</b>
-    <span class="r3d-zc__a"><i></i>${esc(p.founder ? 'Fondatore · ' + p.role : a.name)}</span>
+    <span class="r3d-zc__a"><i></i>${esc(p.founder ? fLabel(p) : a.name)}</span>
     ${p.founder ? '' : `<span class="r3d-zc__r">${esc(p.role)}</span>`}
     ${p.founder ? '' : `<span class="r3d-zc__t">${(p.tags || []).map(t => `<em>${esc(t)}</em>`).join('')}</span>`}
     ${bio ? `<span class="r3d-zc__b">${esc(bio.length > 220 ? bio.slice(0, 217) + '…' : bio)}</span>` : ''}
@@ -198,3 +199,64 @@ document.getElementById('r3dTools').addEventListener('click', e => {
 let hintT = 0;
 stage.addEventListener('r3d-wheelhint', () => { const h = document.getElementById('r3dHint'); h.hidden = false; clearTimeout(hintT); hintT = setTimeout(() => { h.hidden = true; }, 1600); });
 if (/[?&]debug\b/.test(location.search)) window.__r3d = { get proj() { return lastProj; }, people: () => people };
+
+/* ── cerca nella rete: microcard che si aprono sulla card completa ── */
+let match = null, openRow = -1;
+function rowsNow() {
+  return people.map((p, i) => ({ p, i })).filter(({ p, i }) => (!area || p._area === area) && (!match || match.has(i)))
+    .sort((x, y) => (y.p.founder - x.p.founder) || (x.p.founder ? 0 : x.p.name.localeCompare(y.p.name, 'it')));
+}
+function renderList() {
+  const rows = rowsNow();
+  listEl.innerHTML = rows.map(({ p, i }) => {
+    const a = p._area ? AREA[p._area] : null;
+    const sub = p.founder ? fLabel(p) : (a ? a.name : '');
+    return `<li class="r3d-mc${p.founder ? ' is-founder' : ''}" data-i="${i}" style="--c:${a ? a.color : '#fff'}">
+      <button type="button" class="r3d-mc__head" aria-expanded="false">
+        <img src="${esc(p._thumb)}" alt="" width="52" height="52" loading="lazy" />
+        <span class="r3d-mc__txt"><b>${esc((p.founder ? p.title + ' ' : '') + p.name)}</b><small><i></i>${esc(sub)}</small>${p.city ? `<em>${esc(p.city)}</em>` : ''}</span>
+        <span class="r3d-mc__chev" aria-hidden="true"></span>
+      </button>
+      <div class="r3d-mc__body" hidden></div></li>`;
+  }).join('') || '<li class="r3d-empty">Nessuno con questi criteri.</li>';
+  countEl.textContent = rows.length + (rows.length === 1 ? ' persona' : ' persone') + (area ? ' · ' + AREA[area].name : '');
+  openRow = -1;
+}
+function toggleRow(li) {
+  const i = +li.dataset.i, body = li.querySelector('.r3d-mc__body'), head = li.querySelector('.r3d-mc__head');
+  const was = !body.hidden;
+  listEl.querySelectorAll('.r3d-mc.is-open').forEach(x => { x.classList.remove('is-open'); x.querySelector('.r3d-mc__body').hidden = true; x.querySelector('.r3d-mc__head').setAttribute('aria-expanded', 'false'); });
+  if (was) { openRow = -1; return; }
+  const p = people[i];
+  body.innerHTML = '';
+  body.appendChild(p.founder ? founderCard(p) : (realCard(p) || founderCard({ ...p, img: 'assets/rete/' + p.img })));
+  const go = document.createElement('button'); go.type = 'button'; go.className = 'r3d-mc__go'; go.textContent = 'Mostra nella sfera';
+  body.appendChild(go);
+  body.hidden = false; li.classList.add('is-open'); head.setAttribute('aria-expanded', 'true'); openRow = i;
+}
+listEl.addEventListener('click', e => {
+  const li = e.target.closest('.r3d-mc'); if (!li) return;
+  if (e.target.closest('.r3d-mc__go')) { stage.scrollIntoView({ behavior: REDUCED ? 'auto' : 'smooth', block: 'start' }); setTimeout(() => open(+li.dataset.i), REDUCED ? 0 : 450); return; }
+  if (e.target.closest('.r3d-mc__head')) toggleRow(li);
+});
+function initSearch() {
+  searchEl.addEventListener('input', () => {
+    const q = searchEl.value.trim().toLowerCase();
+    match = q ? new Set(people.map((p, i) => ((p.name + ' ' + (p.role || '') + ' ' + (p.tags || []).join(' ') + ' ' + (p.city || '') + ' ' + (p._area ? AREA[p._area].name : '') + ' ' + (p.badge || '')).toLowerCase().includes(q) ? i : -1)).filter(i => i >= 0)) : null;
+    if (net && net.setMatch) net.setMatch(match);
+    renderList();
+  });
+  searchEl.addEventListener('keydown', e => {
+    if (e.key !== 'Enter') return;
+    const li = listEl.querySelector('.r3d-mc'); if (li && !li.classList.contains('is-open')) toggleRow(li);
+  });
+}
+/* ── "Cosa significa far parte della Rete": si apre a richiesta ── */
+function initWhy() {
+  const sec = document.getElementById('amici'), btn = document.getElementById('r3dWhyBtn');
+  if (!sec || !btn) return;
+  const set = o => { sec.classList.toggle('is-closed', !o); btn.setAttribute('aria-expanded', String(o)); btn.querySelector('span').textContent = o ? 'Chiudi' : 'Scopri cosa offre'; };
+  btn.addEventListener('click', () => set(sec.classList.contains('is-closed')));
+  if (location.hash === '#amici' || location.hash === '#rete-why') set(true);
+  document.addEventListener('click', e => { const a = e.target.closest('a[href="#amici"], a[href="#rete-why"]'); if (a) set(true); });
+}
