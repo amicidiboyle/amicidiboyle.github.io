@@ -13,8 +13,8 @@
   <link rel="preload" as="image" href="assets/ocean-desktop.jpg" media="(min-width: 769px)" />
   <link rel="preload" as="image" href="assets/ocean-mobile.jpg" media="(max-width: 768px)" />
   <link rel="icon" href="assets/logo.png" type="image/png" />
-  <link rel="stylesheet" href="styles.css?v=20261026a" />
-  <link rel="stylesheet" href="home-extra.css?v=20261026a" />
+  <link rel="stylesheet" href="styles.css?v=20261026b" />
+  <link rel="stylesheet" href="home-extra.css?v=20261026b" />
   <!-- Open Graph -->
   <meta property="og:type"        content="website" />
   <meta property="og:url"         content="https://www.amicidiboyle.it/" />
@@ -24,8 +24,8 @@
   <meta property="og:image:width"  content="1200" />
   <meta property="og:image:height" content="630" />
   <meta name="twitter:card"       content="summary_large_image" />
-  <link rel="stylesheet" href="title-fx.css?v=20261026a" />
-  <link rel="stylesheet" href="barometro.css?v=20261026a" />
+  <link rel="stylesheet" href="title-fx.css?v=20261026b" />
+  <link rel="stylesheet" href="barometro.css?v=20261026b" />
 </head>
 <body>
   <canvas id="dust-canvas" aria-hidden="true" style="position:fixed;inset:0;z-index:-2;pointer-events:none;width:100%;height:100%;"></canvas>
@@ -578,6 +578,43 @@
             </a>
           </div>
         </div>
+      </div>
+    </section>
+
+    <section class="section alt-section" id="boyle-lab-home">
+      <div class="container">
+        <article class="glass-card lsp">
+          <div class="lsp-body">
+            <p class="section-kicker" data-i18n-html="lsp_kicker">Boyle Lab <span class="nav-badge-new">Nuovo</span></p>
+            <h2 data-i18n="lsp_title">Il laboratorio virtuale degli ambienti estremi</h2>
+            <p data-i18n="lsp_desc">Porta un pallone a 30 metri, metti un paziente in camera iperbarica a 2,4 ATA, sali a 5000 metri o entra in un habitat marziano: pressione, gas e ossigeno cambiano sotto i tuoi occhi, con le equazioni e le fonti sempre in vista. Ogni calcolo è verificato da un banco di prova.</p>
+            <div class="lsp-paths">
+              <a class="btn btn-primary" href="boyle-lab.html#/base" data-i18n="lsp_base">Percorso BASE</a>
+              <a class="btn btn-secondary" href="boyle-lab.html#/advanced" data-i18n="lsp_adv">Percorso ADVANCED</a>
+            </div>
+            <p class="lsp-note" data-i18n="lsp_note">Strumento educativo e di ricerca, non un dispositivo medico.</p>
+          </div>
+          <a class="lsp-scope" href="boyle-lab.html" aria-label="Apri Boyle Lab">
+            <span class="lsp-bar"><span class="lsp-led"></span>CH1 · P·V = k<span>BOYLE LAB</span></span>
+            <svg viewBox="0 0 360 210" aria-hidden="true">
+              <defs><pattern id="lspg" width="30" height="21" patternUnits="userSpaceOnUse"><path d="M30 0H0V21" fill="none" stroke="rgba(123,228,255,.12)"/></pattern></defs>
+              <rect width="360" height="210" fill="url(#lspg)"/>
+              <path d="M24 192H350M24 10V192" stroke="rgba(237,247,255,.35)"/>
+              <path class="lsp-trace" d="M28 24 C 66 140, 116 166, 340 178" fill="none" stroke="#7be4ff" stroke-width="2.5"/>
+              <circle class="lsp-dot" r="5" fill="#fff" style="offset-path: path('M28 24 C 66 140, 116 166, 340 178')"/>
+              <g transform="translate(296 58)">
+                <circle r="34" fill="#020b18" stroke="rgba(123,228,255,.45)" stroke-width="2"/>
+                <path d="M-23 18A30 30 0 1 1 23 18" fill="none" stroke="rgba(123,228,255,.25)" stroke-width="4"/>
+                <g class="lsp-needle"><path d="M-2 6L0 -27L2 6Z" fill="#ffb020"/></g>
+                <circle r="3.5" fill="#ffb020"/>
+              </g>
+              <text x="346" y="205" text-anchor="end" font-size="10" fill="rgba(237,247,255,.6)">P (bar)</text>
+              <text x="30" y="20" font-size="10" fill="rgba(237,247,255,.6)">V (L)</text>
+            </svg>
+            <span class="lsp-lcd"><span>P <b>2,02</b> bar</span><span>V <b>3,01</b> L</span><span>V₀ <b>6,00</b> L</span></span>
+            <span class="lsp-go" data-i18n="lsp_go">Entra nel laboratorio →</span>
+          </a>
+        </article>
       </div>
     </section>
 
@@ -1691,6 +1728,8 @@
         'cont_art_p':'Pubblicazioni divulgative e contributi scientifici legati alla medicina subacquea, iperbarica e agli ambienti estremi.',
         'cont_art_cta':'Leggi gli articoli',
         // Boyle Bibliography spotlight
+        'lsp_kicker':'Boyle Lab <span class="nav-badge-new">Nuovo</span>','lsp_title':'Il laboratorio virtuale degli ambienti estremi','lsp_base':'Percorso BASE','lsp_adv':'Percorso ADVANCED','lsp_note':'Strumento educativo e di ricerca, non un dispositivo medico.','lsp_go':'Entra nel laboratorio →',
+        'lsp_desc':'Porta un pallone a 30 metri, metti un paziente in camera iperbarica a 2,4 ATA, sali a 5000 metri o entra in un habitat marziano: pressione, gas e ossigeno cambiano sotto i tuoi occhi, con le equazioni e le fonti sempre in vista. Ogni calcolo è verificato da un banco di prova.',
         'bb_spot_kicker':'Boyle Bibliography <span class="nav-badge-new">Nuovo</span>',
         'bb_spot_title':'Bibliografia scientifica in stile Vancouver, in tempo reale',
         'bb_spot_desc':'Cerca per argomento o per autore, in italiano o in inglese: PubMed e OpenAlex in tempo reale, abstract al volo, PDF ad accesso libero già riconosciuti, bibliografia in stile Vancouver pronta per BibTeX, RIS o Word. Zero testo generato, zero fonti inventate — solo scienza vera, verificabile con un click.',
@@ -1869,6 +1908,8 @@
         'cont_art_p':'Outreach publications and scientific contributions related to underwater, hyperbaric medicine and extreme environments.',
         'cont_art_cta':'Read articles',
         // Boyle Bibliography spotlight
+        'lsp_kicker':'Boyle Lab <span class="nav-badge-new">New</span>','lsp_title':'The virtual laboratory of extreme environments','lsp_base':'BASE path','lsp_adv':'ADVANCED path','lsp_note':'Educational and research tool, not a medical device.','lsp_go':'Enter the lab →',
+        'lsp_desc':'Take a balloon to 30 metres, put a patient in a hyperbaric chamber at 2.4 ATA, climb to 5000 metres or step into a Mars habitat: pressure, gases and oxygen change before your eyes, with equations and sources always in view. Every calculation is checked by a test bench.',
         'bb_spot_kicker':'Boyle Bibliography <span class="nav-badge-new">New</span>',
         'bb_spot_title':'Vancouver-style scientific bibliography, in real time',
         'bb_spot_desc':'Search by topic or by author, in Italian or English: PubMed and OpenAlex in real time, abstracts on hover, open-access PDFs flagged instantly, a Vancouver-style bibliography ready to export as BibTeX, RIS or Word. Zero generated text, zero invented sources — just real science, verifiable in one click.',
@@ -2200,12 +2241,12 @@
     }
   })();
   </script>
-  <script src="home-extra.js?v=20261026a" defer></script>
-  <script src="barometro.js?v=20261026a" defer></script>
-  <script src="title-fx.js?v=20261026a" defer></script>
-  <script src="motion.js?v=20261026a" defer></script>
-  <script src="consent.js?v=20261026a" defer></script>
-  <script src="boyle-forms.js?v=20261026a" defer></script>
+  <script src="home-extra.js?v=20261026b" defer></script>
+  <script src="barometro.js?v=20261026b" defer></script>
+  <script src="title-fx.js?v=20261026b" defer></script>
+  <script src="motion.js?v=20261026b" defer></script>
+  <script src="consent.js?v=20261026b" defer></script>
+  <script src="boyle-forms.js?v=20261026b" defer></script>
   <!-- Dati strutturati (schema.org): in fondo, cosi' non ritardano la prima schermata -->
     <script type="application/ld+json">
 {

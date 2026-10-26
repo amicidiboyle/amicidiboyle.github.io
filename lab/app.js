@@ -200,7 +200,7 @@ function viewHome() {
       <div class="lab-bubbles" aria-hidden="true">${Array.from({ length: 14 }, (_, i) => `<i style="--x:${(i * 7.3) % 100}%;--d:${(i * 1.7) % 9}s;--s:${6 + (i * 5) % 9}px;--t:${9 + (i * 3) % 7}s"></i>`).join('')}</div>
       <div class="lab-hero__copy">
         <p class="lab-kicker"><span class="lab-led"></span> ${esc(u('ready'))} · ${bs.ok}/${bs.n} ${LANG === 'en' ? 'tests passed' : 'test superati'}</p>
-        <h1 class="lab-title">Boyle <span class="lab-grad">Lab</span></h1>
+        <h1 class="lab-title lab-title--fx" aria-label="Boyle Lab"><span class="lt-w" aria-hidden="true">${[...'Boyle'].map((c, i) => `<span class="lt-c" style="--i:${i}">${c}</span>`).join('')}</span> <span class="lt-lab lab-grad" aria-hidden="true">Lab</span><span class="lt-line" aria-hidden="true"></span></h1>
         <p class="lab-lead">${esc(u('lead'))}</p>
         <div class="lab-hero__pick">${cascade(u('go'))}</div>
       </div>

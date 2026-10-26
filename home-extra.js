@@ -480,3 +480,13 @@
   addEventListener('hashchange', check);
   check();
 })();
+
+/* Boyle Lab in home: l'oscilloscopio parte quando il riquadro entra nello schermo */
+(function () {
+  var box = document.querySelector('.lsp');
+  if (!box) return;
+  if (!('IntersectionObserver' in window)) { box.classList.add('is-live'); return; }
+  new IntersectionObserver(function (en, ob) {
+    en.forEach(function (x) { if (x.isIntersecting) { box.classList.add('is-live'); ob.disconnect(); } });
+  }, { threshold: 0.35 }).observe(box);
+})();

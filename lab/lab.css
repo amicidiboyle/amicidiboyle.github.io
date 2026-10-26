@@ -457,3 +457,21 @@ body.lab-present #lab-app.is-wide { width: min(1680px, 100%); }
   .lab-bubbles, .lab-visual .iv-bub { display: none; }
 }
 .lab-cx__items ul[hidden] { display: none; }
+
+/* ── entrata del titolo: "Boyle" sale lettera per lettera, "Lab" si comprime come un gas ── */
+.lab-title--fx { position: relative; display: inline-block; padding-bottom: .08em; }
+.lab-title--fx .lt-w { display: inline-block; overflow: hidden; vertical-align: bottom; padding: .04em .02em .12em; margin: -.04em -.02em -.12em; }
+.lab-title--fx .lt-c { display: inline-block; transform: translateY(112%); animation: ltRise .95s cubic-bezier(.16,1,.3,1) forwards; animation-delay: calc(.08s + var(--i) * .055s); }
+.lab-title--fx .lt-lab { display: inline-block; padding-right: .08em; margin-right: -.08em; opacity: 0; letter-spacing: .55em; filter: blur(10px); background-size: 220% 100%; background-position: 100% 0;
+  background-image: linear-gradient(110deg, #a8eeff 0%, #7be4ff 30%, #ffffff 45%, #7be4ff 60%, #c4b0ff 100%);
+  animation: ltCompress 1.15s cubic-bezier(.22,1,.36,1) .55s forwards, ltShine 1.6s ease-in-out 1.55s forwards; }
+.lab-title--fx .lt-line { position: absolute; left: 0; right: 0; bottom: -.02em; height: 3px; border-radius: 3px; background: linear-gradient(90deg, transparent, #7be4ff 30%, #c4b0ff 70%, transparent);
+  box-shadow: 0 0 14px rgba(123,228,255,.8); transform: scaleX(0); transform-origin: 0 50%; opacity: 0; animation: ltLine 1.4s cubic-bezier(.22,1,.36,1) 1.1s forwards; }
+@keyframes ltRise { to { transform: none; } }
+@keyframes ltCompress { 0% { opacity: 0; letter-spacing: .55em; filter: blur(10px); } 60% { opacity: 1; filter: blur(0); } 100% { opacity: 1; letter-spacing: -.05em; filter: none; } }
+@keyframes ltShine { from { background-position: 100% 0; } to { background-position: 0 0; } }
+@keyframes ltLine { 0% { transform: scaleX(0); opacity: 1; } 60% { transform: scaleX(1); opacity: 1; } 100% { transform: scaleX(1); opacity: 0; } }
+@media (prefers-reduced-motion: reduce) {
+  .lab-title--fx .lt-c, .lab-title--fx .lt-lab { animation: none !important; transform: none; opacity: 1; filter: none; letter-spacing: -.05em; }
+  .lab-title--fx .lt-line { display: none; }
+}

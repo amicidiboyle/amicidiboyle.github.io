@@ -948,3 +948,44 @@ html.hero-video-on .site-header { -webkit-backdrop-filter: none; backdrop-filter
    finche' il video non partiva. Ora la hero mostra subito e solo il fotogramma del video. */
 #home.hero::before, #home.hero::after, #home .particles, #home .light-scattering { display: none !important; }
 #home .hero-bg { background: none !important; }
+
+/* ── 19. BOYLE LAB in home: testo + piccolo oscilloscopio animato ── */
+#boyle-lab-home { padding-bottom: 0; }
+.lsp { display: grid; grid-template-columns: 1.1fr .9fr; gap: 40px; align-items: center; padding: 38px 40px; }
+.lsp-body h2 { margin: 8px 0 12px; }
+.lsp-body > p { margin: 0 0 22px; color: var(--muted); line-height: 1.6; }
+.lsp-paths { display: flex; flex-wrap: wrap; gap: 12px; }
+.lsp-body .lsp-note { margin: 16px 0 0; font-size: .82rem; opacity: .75; }
+.lsp-scope { display: block; text-decoration: none; color: inherit; border-radius: 20px; padding: 14px 16px 16px; position: relative; overflow: hidden;
+  border: 1px solid rgba(123,228,255,.3); background: linear-gradient(180deg, rgba(6,26,51,.92), rgba(2,11,24,.96));
+  box-shadow: 0 26px 70px rgba(0,0,0,.45), inset 0 0 60px rgba(123,228,255,.06); transition: border-color .3s, transform .3s; }
+.lsp-scope:hover { border-color: rgba(123,228,255,.6); transform: translateY(-3px); }
+.lsp-scope::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: repeating-linear-gradient(0deg, rgba(255,255,255,.025) 0 1px, transparent 1px 3px); }
+.lsp-bar { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; font: 700 .7rem/1 ui-monospace, "SF Mono", Menlo, Consolas, monospace; letter-spacing: .14em; color: #a8eeff; }
+.lsp-bar > span:last-child { margin-left: auto; color: rgba(237,247,255,.5); }
+.lsp-led { width: 8px; height: 8px; border-radius: 50%; background: #39e6c3; box-shadow: 0 0 0 3px rgba(57,230,195,.14), 0 0 10px rgba(57,230,195,.8); animation: lspLed 2.4s ease-in-out infinite; }
+.lsp-scope svg { display: block; width: 100%; height: auto; border-radius: 10px; background: #020b18; }
+.lsp-lcd { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 12px; }
+.lsp-lcd > span { padding: 8px 10px; border-radius: 10px; background: #020b18; border: 1px solid rgba(123,228,255,.18); font: 600 .72rem/1.2 ui-monospace, "SF Mono", Menlo, Consolas, monospace; color: rgba(237,247,255,.55); }
+.lsp-lcd b { color: #c9f6ff; font-size: 1.02rem; text-shadow: 0 0 10px rgba(123,228,255,.6); }
+.lsp-go { display: block; margin-top: 12px; text-align: right; font-weight: 700; color: #7be4ff; }
+.lsp-trace { stroke-dasharray: 520; stroke-dashoffset: 520; filter: drop-shadow(0 0 6px rgba(123,228,255,.8)); }
+.lsp-dot { offset-distance: 0%; opacity: 0; filter: drop-shadow(0 0 8px #7be4ff); }
+.lsp-needle { transform: rotate(-120deg); }
+.lsp.is-live .lsp-trace { animation: lspTrace 5s cubic-bezier(.33,1,.68,1) infinite; }
+.lsp.is-live .lsp-dot { animation: lspDot 5s cubic-bezier(.33,1,.68,1) infinite; }
+.lsp.is-live .lsp-needle { animation: lspNeedle 5s cubic-bezier(.33,1,.68,1) infinite; }
+@keyframes lspTrace { 0% { stroke-dashoffset: 520; opacity: 1; } 55%, 85% { stroke-dashoffset: 0; opacity: 1; } 100% { stroke-dashoffset: 0; opacity: 0; } }
+@keyframes lspDot { 0% { offset-distance: 0%; opacity: 1; } 55%, 85% { offset-distance: 100%; opacity: 1; } 100% { offset-distance: 100%; opacity: 0; } }
+@keyframes lspNeedle { 0% { transform: rotate(-120deg); } 55%, 85% { transform: rotate(100deg); } 100% { transform: rotate(-120deg); } }
+@keyframes lspLed { 50% { opacity: .45; } }
+@media (max-width: 900px) {
+  .lsp { grid-template-columns: 1fr; padding: 30px 22px; gap: 26px; text-align: center; }
+  .lsp-paths { justify-content: center; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .lsp-trace { stroke-dashoffset: 0; animation: none !important; }
+  .lsp-dot { opacity: 1; offset-distance: 60%; animation: none !important; }
+  .lsp-needle, .lsp-led { animation: none !important; }
+  .lsp-needle { transform: rotate(40deg); }
+}
