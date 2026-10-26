@@ -1,11 +1,11 @@
 /* BOYLE LAB · applicazione (routing, catalogo, banco di lavoro, registro, validazione)
    ES module puro, nessuna dipendenza. Tutti i calcoli arrivano da lab/core. */
-import { BASE } from './experiments/base.js?v=20261026i';
-import { ADVANCED } from './experiments/advanced.js?v=20261026i';
-import { MODELS, CATEGORY } from './core/registry.js?v=20261026i';
+import { BASE } from './experiments/base.js?v=20261026k';
+import { ADVANCED } from './experiments/advanced.js?v=20261026k';
+import { MODELS, CATEGORY } from './core/registry.js?v=20261026k';
 import { REFS, refLink } from './core/refs.js';
-import { lineChart, barChart } from './ui/chart.js?v=20261026i';
-import { runAll } from './tests/cases.js?v=20261026i';
+import { lineChart, barChart } from './ui/chart.js?v=20261026k';
+import { runAll } from './tests/cases.js?v=20261026k';
 import { patch } from './ui/instruments.js';
 
 const VERSION = '1.0.0';
@@ -532,7 +532,7 @@ function modelCard(id, open = false) {
       <dt>${esc(u('limits'))}</dt><dd>${li(m.limits)}</dd>
       <dt>${esc(u('sources'))}</dt><dd>${m.refs.length ? `<ol class="lab-refs">${m.refs.map(r => refItem(r)).join('')}</ol>` : '—'}</dd>
       <dt>${esc(u('reviewed'))}</dt><dd>${esc(m.reviewed)}</dd>
-      <dt>${esc(u('vstatus'))}</dt><dd>${esc(m.status)}${m.tests.length ? ` · ${esc(u('tests'))}: ${m.tests.map(x => `<a href="#/modelli" data-t="${x}"><code>${x}</code></a>`).join(', ')}` : ''}</dd>
+      <dt>${esc(u('vstatus'))}</dt><dd>${esc(m.status)}${m.tests.length ? ` · ${esc(u('tests'))}: ${m.tests.map(x => `<a href="#/modelli?t=${x}" data-t="${x}"><code>${x}</code></a>`).join(', ')}` : ''}</dd>
     </dl></details>`;
 }
 function refItem(id) {
@@ -606,24 +606,55 @@ function doExport(kind, e, p, { r, rb }) {
 /* ── registro e validazione ─────────────────────────────────────────────── */
 function viewModels() {
   setTitle(u('models'));
-  const res = runAll(), ok = res.filter(r => r.ok).length;
+  const EN = LANG === 'en';
+  const res = runAll(), ok = res.filter(r => r.ok).length, all = ok === res.length;
+  const byTest = Object.fromEntries(res.map(r => [r.id, r]));
   const pending = EXPS.filter(e => e.pending);
-  app.innerHTML = hero(esc(u('models')), '') + `
-    <section class="lab-section"><h2 class="lab-h2">${esc(u('valT'))}</h2><p>${esc(u('valD'))}</p>
-      <p class="lab-score ${ok === res.length ? 'is-ok' : 'is-ko'}">${esc(u('passed')(ok, res.length))}</p>
-      <div class="lab-scroll"><table class="lab-out lab-val"><thead><tr><th>ID</th><th>${LANG === 'en' ? 'Case' : 'Caso'}</th><th>${esc(u('expected'))}</th><th>${esc(u('got'))}</th><th>${esc(u('source'))}</th><th></th></tr></thead><tbody>
-      ${res.map(r => `<tr id="t-${r.id}"><td><code>${r.id}</code></td><td>${esc(r.what)}</td><td>${fmtNum(r.expected)} ${r.tol < 1e-6 ? (LANG === 'en' ? '(exact)' : '(esatto)') : '± ' + fmtNum(r.tol)} ${esc(r.unit)}</td><td>${r.err ? esc(r.err) : fmtNum(r.got)}</td><td>${esc(r.source)}</td><td>${r.ok ? '<span class="lab-ok">✓</span>' : '<span class="lab-ko">✗</span>'}</td></tr>`).join('')}
-      </tbody></table></div></section>
-    <section class="lab-section"><h2 class="lab-h2">${esc(u('regT'))}</h2>
+  /* i controlli raggruppati per modello, con gli esperimenti che lo usano */
+  const seen = new Set();
+  const groups = Object.entries(MODELS).filter(([, m]) => m.tests && m.tests.length).map(([id, m]) => {
+    const tests = m.tests.map(x => byTest[x]).filter(Boolean); tests.forEach(r => seen.add(r.id));
+    const used = EXPS.filter(e => !e.pending && (e.models || []).includes(id));
+    return { id, m, tests, used };
+  });
+  const rest = res.filter(r => !seen.has(r.id));
+  const row = r => `<li class="lab-chk${r.ok ? '' : ' is-ko'}" id="t-${r.id}">
+      <span class="lab-chk__mark" aria-label="${r.ok ? 'superato' : 'non superato'}">${r.ok ? '✓' : '✗'}</span>
+      <div class="lab-chk__body"><p class="lab-chk__q">${esc(r.what)}</p>
+        <p class="lab-chk__n"><span>${EN ? 'Expected' : 'Atteso'} <b>${fmtNum(r.expected)} ${esc(r.unit)}</b></span><span>${EN ? 'Lab result' : 'Calcolato dal laboratorio'} <b>${r.err ? esc(r.err) : fmtNum(r.got) + ' ' + esc(r.unit)}</b></span></p>
+        <p class="lab-chk__src">${EN ? 'How the expected value was obtained' : 'Come è stato ricavato il valore atteso'}: ${esc(r.source)} <code>${r.id}</code></p></div></li>`;
+  const openG = matchMedia('(min-width: 901px)').matches ? ' open' : '';
+  const group = g => `<details class="lab-panel lab-vgroup"${openG}>
+      <summary><span class="lab-vgroup__ok">${g.tests.every(r => r.ok) ? '✓' : '✗'} ${g.tests.length}</span><header><span class="lb lb--${CATEGORY[g.m.cat].id}">${esc(t(CATEGORY[g.m.cat])).toUpperCase()}</span><h3>${esc(t(g.m.name))}</h3>
+      ${g.used.length ? `<p class="lab-vgroup__use">${EN ? 'Used in' : 'Usato in'}: ${g.used.map(e => `<a href="#/exp/${e.id}">${esc(t(e.title))}</a>`).join(' · ')}</p>` : ''}</header>
+      </summary><ul class="lab-chks">${g.tests.map(row).join('')}</ul></details>`;
+  app.innerHTML = hero(EN ? 'Why you can trust these numbers' : 'Perché puoi fidarti di questi numeri',
+    EN ? 'Like calibrating an instrument before using it: every formula in the lab is checked against a result worked out by hand or taken from published tables.'
+       : 'Come si tara uno strumento prima di usarlo: ogni formula del laboratorio viene confrontata con un risultato calcolato a mano o preso da tabelle pubblicate.') + `
+    <div class="lab-vsteps">
+      <div class="lab-panel"><span>1</span><h3>${EN ? 'Worked out by hand' : 'Calcolato a mano'}</h3><p>${EN ? 'For each formula we take a known case and compute the answer on paper, or read it from a published table, without using the site\'s code.' : 'Per ogni formula si prende un caso noto e si ricava il risultato su carta, o da una tabella pubblicata, senza usare il codice del sito.'}</p></div>
+      <div class="lab-panel"><span>2</span><h3>${EN ? 'Computed by the lab' : 'Calcolato dal laboratorio'}</h3><p>${EN ? 'The same case is run through the lab\'s own formulas, right now, in your browser.' : 'Lo stesso caso passa nelle formule del laboratorio, adesso, nel tuo browser.'}</p></div>
+      <div class="lab-panel"><span>3</span><h3>${EN ? 'Compared' : 'Confrontato'}</h3><p>${EN ? 'If the two match, you see ✓. If a formula were ever changed by mistake, its check would turn red.' : 'Se i due valori coincidono compare ✓. Se un giorno una formula venisse modificata per errore, il suo controllo diventerebbe rosso.'}</p></div>
+    </div>
+    <p class="lab-vstatus ${all ? 'is-ok' : 'is-ko'}"><span class="lab-led${all ? '' : ' lab-led--off'}"></span>${all
+      ? (EN ? `All ${res.length} checks passed, just now, on this device.` : `Tutti i ${res.length} controlli superati, adesso, su questo dispositivo.`)
+      : (EN ? `${ok} of ${res.length} checks passed: the red ones need attention.` : `${ok} controlli superati su ${res.length}: quelli in rosso vanno verificati.`)}</p>
+    <h2 class="lab-h2">${EN ? 'The checks, formula by formula' : 'I controlli, formula per formula'}</h2>
+    <div class="lab-vgroups">${groups.map(group).join('')}
+      ${rest.length ? group({ m: { name: { it: 'Unità di misura e coerenza interna', en: 'Units and internal consistency' }, cat: 'FIS' }, tests: rest, used: [] }) : ''}</div>
+    <section class="lab-section"><details class="lab-vpro"><summary><h2 class="lab-h2">${EN ? 'For teachers and researchers: model sheets' : 'Per docenti e ricercatori: le schede dei modelli'}</h2>
+      <p>${EN ? 'Equations, variables, assumptions, validity range, limits, sources and review date of every model.' : 'Equazioni, variabili, ipotesi, intervallo di validità, limiti, fonti e data di revisione di ogni modello.'}</p></summary>
       <div class="lab-cats">${Object.values(CATEGORY).map(c => `<p><span class="lb lb--${c.id}">${esc(t(c)).toUpperCase()}</span> ${esc(t(c.desc))}</p>`).join('')}</div>
-      <div class="lab-sci">${Object.keys(MODELS).map(id => modelCard(id)).join('')}</div></section>
+      <div class="lab-sci">${Object.keys(MODELS).map(id => modelCard(id)).join('')}</div></details></section>
     <section class="lab-section"><h2 class="lab-h2">${esc(u('unimplemented'))}</h2>
+      <p>${EN ? 'These modules are designed but stay switched off until validated data are available: we would rather show nothing than an unverified number.' : 'Questi moduli sono progettati ma restano spenti finché non ci sono dati validati: preferiamo non mostrare nulla piuttosto che un numero non verificato.'}</p>
       <ul class="lab-plain">${pending.map(e => `<li><b>${e.module}</b> ${esc(t(e.title))}: ${esc(t(e.summary))}</li>`).join('')}
-      <li>${LANG === 'en' ? 'Inert gas kinetics with helium (trimix): planned.' : 'Cinetica dei gas inerti con elio (trimix): prevista.'}</li></ul></section>
+      <li>${EN ? 'Inert gas kinetics with helium (trimix): planned.' : 'Cinetica dei gas inerti con elio (trimix): prevista.'}</li></ul></section>
     ${disclaimer()}`;
-  const hash = parseHash().q.t; if (hash) document.getElementById('t-' + hash)?.scrollIntoView();
+  const hash = parseHash().q.t;
+  if (hash) { const el = document.getElementById('t-' + hash); if (el) { el.closest('details').open = true; el.classList.add('is-hl'); el.scrollIntoView({ block: 'center' }); } }
 }
-const fmtNum = v => Number.isFinite(v) ? (Math.abs(v) >= 1000 ? v.toFixed(2) : +v.toPrecision(6)).toLocaleString(LANG === 'en' ? 'en-GB' : 'it-IT', { maximumFractionDigits: 6 }) : '—';
+const fmtNum = v => Number.isFinite(v) ? Number(Math.abs(v) >= 1000 ? v.toFixed(2) : v.toPrecision(6)).toLocaleString(LANG === 'en' ? 'en-GB' : 'it-IT', { maximumFractionDigits: 6 }) : '—';
 
 function viewBiblio() {
   setTitle(u('biblio'));
@@ -633,5 +664,6 @@ function viewBiblio() {
 
 /* ── cambio lingua dal menu del sito ─────────────────────────────────────── */
 window.boyleLabLang = l => { LANG = l; route(); };
-route();
-lastRoute = location.hash.split('?')[0];
+/* si parte quando il carattere del sito e' pronto (al massimo 1,2 s): niente salto di impaginazione */
+const labStart = () => { route(); lastRoute = location.hash.split('?')[0]; requestAnimationFrame(() => document.documentElement.classList.remove('lab-wait')); };
+Promise.race([document.fonts ? document.fonts.ready : Promise.resolve(), new Promise(r => setTimeout(r, 1200))]).then(labStart, labStart);
