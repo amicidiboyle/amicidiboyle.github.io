@@ -168,7 +168,7 @@ export const ADVANCED = [
     compute(p) {
       const f = p.fio2 / 100;
       const calc = ata => {
-        const A = P.alveolarPO2({ pb: ata * 760, fio2: f, paco2: p.paco2 });
+        const A = P.alveolarPO2({ pb: ata * 760, fio2: f, paco2: p.paco2 , full: true });
         const a = Math.max(A - p.aa, 0);
         const c = P.o2Content(p.hb, P.severinghausSat(a), a);
         return { A, a, ...c, s: P.severinghausSat(a) };
@@ -208,7 +208,7 @@ export const ADVANCED = [
     compute(p) {
       const f = p.fio2 / 100;
       const pb = h => mmHg(F.isaPressure(h));
-      const A = h => P.alveolarPO2({ pb: pb(h), fio2: f, paco2: p.paco2 });
+      const A = h => P.alveolarPO2({ pb: pb(h), fio2: f, paco2: p.paco2 , full: true });
       const a = Math.max(A(p.alt) - p.aa, 0);
       const xs = range(0, 11000, 110);
       return {
@@ -221,7 +221,7 @@ export const ADVANCED = [
         ],
         visual: V.mountain({ alt: p.alt, maxAlt: 11000, pb: pb(p.alt), label: 'Quota ' + p.alt + ' metri' }),
         chart: { type: 'line', spec: { title: 'PAO₂ in funzione della quota', x: { label: 'Quota', unit: 'm', min: 0, max: 11000 }, y: { label: 'PAO₂', unit: 'mmHg', min: 0 }, series: [
-          { name: 'PaCO₂ 40 mmHg', points: xs.map(h => [h, P.alveolarPO2({ pb: pb(h), fio2: f, paco2: 40 })]) },
+          { name: 'PaCO₂ 40 mmHg', points: xs.map(h => [h, P.alveolarPO2({ pb: pb(h), fio2: f, paco2: 40 , full: true })]) },
           ...(p.paco2 !== 40 ? [{ name: 'PaCO₂ ' + p.paco2 + ' mmHg', points: xs.map(h => [h, A(h)]) }] : []),
         ], marker: { x: p.alt, y: A(p.alt), label: fx(A(p.alt), 0) + ' mmHg' } } },
         warnings: ['La saturazione è stimata con la curva standard: in quota l\'alcalosi da iperventilazione sposta la curva, e la risposta individuale varia molto.'],
@@ -246,7 +246,7 @@ export const ADVANCED = [
         else if (t === 'quota') { const h = Math.min(v, 11000); pa = F.isaPressure(h); name = h + ' m di quota'; }
         else { const k2 = Math.min(Math.max(v, 1), 1000); pa = k2 * 1000; name = k2 + ' kPa'; }
         const pb = mmHg(pa);
-        const A = P.alveolarPO2({ pb, fio2: f });
+        const A = P.alveolarPO2({ pb, fio2: f , full: true });
         return { k, name: k + ' · ' + name + ', ' + Math.round(f * 100) + '% O₂', short: k, pa, pio2: P.inspiredPO2(pb, f), A, s: P.severinghausSat(A), d: P.O2_SOLUBILITY * A };
       });
       return {

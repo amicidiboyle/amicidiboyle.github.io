@@ -43,6 +43,8 @@ export const CASES = [
     run: () => P.alveolarPO2({ pb: 760, fio2: 0.21 }) },
   { id: 'pao2-full', what: 'PAO₂ a livello del mare in aria (forma completa)', source: '149,73 − 40·(0,21 + 0,79/0,8) = 101,83', expected: 101.83, tol: 0.01, unit: 'mmHg',
     run: () => P.alveolarPO2({ pb: 760, fio2: 0.21, full: true }) },
+  { id: 'pao2-hbo', what: 'PAO₂ in O₂ 100% a 2,4 ATA (forma completa: con FiO₂ = 1 il fattore vale 1)', source: '1·(1824−47) − 40·(1 + 0/0,8) = 1737', expected: 1737, tol: 0.01, unit: 'mmHg',
+    run: () => P.alveolarPO2({ pb: 2.4 * 760, fio2: 1, full: true }) },
   { id: 'cao2', what: 'CaO₂ con Hb 15, SaO₂ 0,98, PaO₂ 100', source: '1,34·15·0,98 + 0,3 = 20,0', expected: 19.998, tol: 0.001, unit: 'mL/dL',
     run: () => P.o2Content(15, 0.98, 100).total },
   { id: 'do2', what: 'DO₂ con CaO₂ 20 e Q 5', source: '20·5·10', expected: 1000, tol: 1e-9, unit: 'mL/min',

@@ -117,7 +117,7 @@ export const MODELS = Object.freeze({
     variables: [['PB', 'pressione barometrica', 'mmHg'], ['FiO₂', 'frazione inspirata', '0–1'], ['PaCO₂', 'CO₂ arteriosa', 'mmHg'], ['R', 'quoziente respiratorio', '—']],
     assumptions: ['Stato stazionario', 'PACO₂ = PaCO₂', 'R costante (default 0,8)'],
     range: 'PB 140–3000 mmHg', limits: ['È un valore medio ideale: non descrive le differenze tra regioni del polmone.'],
-    refs: ['fenn1946'], reviewed: REV, status: TESTED, tests: ['pao2-sea', 'pao2-full'],
+    refs: ['fenn1946'], reviewed: REV, status: TESTED, tests: ['pao2-sea', 'pao2-full', 'pao2-hbo'],
   },
   o2content: {
     name: { it: 'Contenuto arterioso di O₂', en: 'Arterial O₂ content' }, cat: 'FISIO',

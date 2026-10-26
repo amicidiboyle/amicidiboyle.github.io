@@ -376,7 +376,7 @@ export const BASE = [
     compute(p) {
       const f = p.gas === 'o2' ? 1 : 0.21;
       const pb = p.ata * 760;
-      const pao2 = d => P.alveolarPO2({ pb: d * 760, fio2: f });
+      const pao2 = d => P.alveolarPO2({ pb: d * 760, fio2: f, full: true });
       const xs = range(1, 3, 40);
       const A = pao2(p.ata);
       return {
@@ -387,8 +387,8 @@ export const BASE = [
           { label: 'O₂ disciolto se PaO₂ = PAO₂ (ipotesi)', value: P.O2_SOLUBILITY * A, unit: 'mL/dL', digits: 2 },
         ],
         chart: { type: 'line', spec: { title: 'O₂ disciolto nel plasma in funzione della pressione (ipotesi PaO₂ = PAO₂)', x: { label: 'Pressione della camera', unit: 'ATA', min: 1, max: 3 }, y: { label: 'O₂ disciolto', unit: 'mL/dL', min: 0, max: 7 }, bands: [{ y1: 4.5, y2: 5.5, label: 'differenza artero-venosa tipica a riposo (≈ 5 mL/dL)' }], series: [
-          { name: 'Ossigeno 100%', points: xs.map(x => [x, P.O2_SOLUBILITY * P.alveolarPO2({ pb: x * 760, fio2: 1 })]) },
-          { name: 'Aria', points: xs.map(x => [x, P.O2_SOLUBILITY * P.alveolarPO2({ pb: x * 760, fio2: 0.21 })]) },
+          { name: 'Ossigeno 100%', points: xs.map(x => [x, P.O2_SOLUBILITY * P.alveolarPO2({ pb: x * 760, fio2: 1, full: true })]) },
+          { name: 'Aria', points: xs.map(x => [x, P.O2_SOLUBILITY * P.alveolarPO2({ pb: x * 760, fio2: 0.21, full: true })]) },
         ], marker: { x: p.ata, y: P.O2_SOLUBILITY * A, label: (P.O2_SOLUBILITY * A).toFixed(1) + ' mL/dL' } } },
         visual: V.chamber({ ata: p.ata, gas: p.gas, label: 'Camera iperbarica a ' + p.ata.toFixed(2) + ' ATA' }),
       };

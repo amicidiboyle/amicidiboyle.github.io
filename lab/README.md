@@ -48,7 +48,7 @@ lab/
 node lab/tests/run.mjs
 ```
 
-Controlla i 28 casi e la coerenza del registro (ogni test e ogni fonte citati esistono). Gli stessi casi girano nel browser in `boyle-lab.html#/modelli`.
+Controlla i 29 casi e la coerenza del registro (ogni test e ogni fonte citati esistono). Gli stessi casi girano nel browser in `boyle-lab.html#/modelli`.
 
 ## Aggiungere un esperimento
 

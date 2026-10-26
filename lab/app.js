@@ -4,7 +4,7 @@ import { BASE } from './experiments/base.js';
 import { ADVANCED } from './experiments/advanced.js';
 import { MODELS, CATEGORY } from './core/registry.js';
 import { REFS, refLink } from './core/refs.js';
-import { lineChart, barChart } from './ui/chart.js';
+import { lineChart, barChart } from './ui/chart.js?v=20261026e';
 import { runAll } from './tests/cases.js';
 import { patch } from './ui/instruments.js';
 
@@ -362,7 +362,7 @@ function viewExp(e, q) {
       const spec = { ...r.chart.spec, series: [...r.chart.spec.series] };
       if (rb && rb.chart.type === 'line') rb.chart.spec.series.forEach((s2, i) => spec.series.push({ ...s2, name: 'B · ' + s2.name, ghost: true, colorIndex: s2.colorIndex ?? i }));
       patch(ch, lineChart(spec));
-    } else patch(ch, barChart(r.chart.spec));
+    } else patch(ch, barChart(r.chart.spec, { width: Math.round(Math.min(Math.max(ch.clientWidth || 720, 340), 720)) }));
     const ins = document.getElementById('lab-instr');
     ins.hidden = !r.visual; if (r.visual) patch(document.getElementById('lab-visual'), r.visual);
     document.getElementById('lab-work').classList.toggle('no-vis', !r.visual);

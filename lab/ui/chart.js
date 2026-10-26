@@ -85,26 +85,49 @@ export function lineChart(spec, { width = 720, height = 420 } = {}) {
   return s + '</svg>';
 }
 
-/* barre orizzontali raggruppate: spec { title, unit, groups:[{label, values:[{name, v}]}] } */
+/* larghezza stimata di un testo DM Sans (px): media prudente per carattere */
+const textW = (t, size) => String(t).length * size * 0.56;
+
+/* spezza un'etichetta lunga in due righe sullo spazio piu' vicino al centro */
+function wrap2(t) {
+  const sp = [...t.matchAll(/ /g)].map(m => m.index);
+  if (!sp.length) return [t];
+  const mid = t.length / 2, k = sp.reduce((a, b) => Math.abs(b - mid) < Math.abs(a - mid) ? b : a);
+  return [t.slice(0, k), t.slice(k + 1)];
+}
+
+/* barre orizzontali raggruppate: spec { title, unit, groups:[{label, values:[{name, v}]}] }
+   I margini si adattano alle etichette e ai valori: nessun testo esce dal riquadro. */
 export function barChart(spec, { width = 720 } = {}) {
   const names = [...new Set(spec.groups.flatMap(g => g.values.map(v => v.name)))];
-  const rowH = 18, gap = 14, m = { l: 150, r: 70, t: 46 + (names.length > 1 ? 18 : 0), b: 34 };
-  const height = m.t + spec.groups.length * (names.length * rowH + gap) + m.b;
+  const fmtV = v => v.toLocaleString('it-IT', { maximumFractionDigits: 1 }) + ' ' + spec.unit;
+  const LS = 12, VS = 11, maxL = Math.round(width * 0.38);
+  const labels = spec.groups.map(g => textW(g.label, LS) + 24 <= maxL ? [g.label] : wrap2(g.label));
+  const lw = Math.max(...labels.flat().map(t => textW(t, LS)));
+  const vw = Math.max(...spec.groups.flatMap(g => g.values.map(v => textW(fmtV(v.v), VS))));
+  const rowH = 18, gap = 14;
+  const m = { l: Math.min(Math.max(Math.ceil(lw) + 26, 90), maxL), r: Math.ceil(vw) + 16, t: 46 + (names.length > 1 ? 18 : 0), b: 34 };
+  const groupH = g => Math.max(g.values.length * rowH, labels[spec.groups.indexOf(g)].length * 15);
+  const height = m.t + spec.groups.reduce((a, g) => a + groupH(g) + gap, 0) + m.b;
   const W = width - m.l - m.r;
   const max = spec.max ?? Math.max(...spec.groups.flatMap(g => g.values.map(v => v.v)), 1);
   let s = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${height}" role="img" aria-label="${esc(spec.title)}" class="lab-chart" font-family="DM Sans, system-ui, sans-serif">`;
   s += `<rect width="${width}" height="${height}" fill="#03101f"/><text x="16" y="24" fill="#edf7ff" font-size="15" font-weight="700">${esc(spec.title)}</text>`;
   if (names.length > 1) names.forEach((n, i) => { s += `<rect x="${16 + i * 150}" y="34" width="12" height="10" fill="${PALETTE[i]}"/><text x="${32 + i * 150}" y="43" fill="#edf7ff" font-size="11">${esc(n)}</text>`; });
   let y = m.t;
-  for (const g of spec.groups) {
-    s += `<text x="${m.l - 10}" y="${y + names.length * rowH / 2 + 4}" text-anchor="end" fill="#edf7ff" font-size="12">${esc(g.label)}</text>`;
+  spec.groups.forEach((g, gi) => {
+    const gh = groupH(g), lines = labels[gi], cy = y + gh / 2;
+    s += `<text x="${m.l - 10}" y="${cy + 4 - (lines.length - 1) * 7.5}" text-anchor="end" fill="#edf7ff" font-size="${LS}">`;
+    lines.forEach((t, j) => { s += `<tspan x="${m.l - 10}" dy="${j ? 15 : 0}">${esc(t)}</tspan>`; });
+    s += `</text>`;
+    let ry = y + (gh - g.values.length * rowH) / 2;
     g.values.forEach(v => {
       const i = names.indexOf(v.name), w = Math.max(v.v / max * W, 0);
-      s += `<rect x="${m.l}" y="${y + 2}" width="${w}" height="${rowH - 4}" rx="3" fill="${PALETTE[i]}" opacity=".9"/>`;
-      s += `<text x="${m.l + w + 6}" y="${y + rowH - 5}" fill="rgba(237,247,255,.85)" font-size="11">${v.v.toLocaleString('it-IT', { maximumFractionDigits: 1 })} ${esc(spec.unit)}</text>`;
-      y += rowH;
+      s += `<rect x="${m.l}" y="${ry + 2}" width="${w}" height="${rowH - 4}" rx="3" fill="${PALETTE[i]}" opacity=".9"/>`;
+      s += `<text x="${m.l + w + 6}" y="${ry + rowH - 5}" fill="rgba(237,247,255,.85)" font-size="${VS}">${esc(fmtV(v.v))}</text>`;
+      ry += rowH;
     });
-    y += gap;
-  }
+    y += gh + gap;
+  });
   return s + `<line x1="${m.l}" x2="${m.l}" y1="${m.t - 4}" y2="${y - gap + 4}" stroke="rgba(237,247,255,.45)"/></svg>`;
 }
