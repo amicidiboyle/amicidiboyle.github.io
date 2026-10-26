@@ -117,3 +117,32 @@
   .r3d-ph span, .r3d-led { animation: none; }
   .r3d-panel { transition: none; }
 }
+
+/* ── v2: schede che compaiono avvicinandosi ── */
+.r3d-zoom { position: absolute; inset: 0; z-index: 4; pointer-events: none; overflow: hidden; }
+.r3d-zc { position: absolute; left: 0; top: 0; width: max-content; max-width: 280px; padding: 10px 13px 11px; border-radius: 12px; pointer-events: auto;
+  display: grid; gap: 4px; text-align: left; color: #edf7ff; opacity: 0; visibility: hidden;
+  background: rgba(2,11,24,.88); border: 1px solid color-mix(in srgb, var(--c) 55%, rgba(123,228,255,.4)); box-shadow: 0 0 26px color-mix(in srgb, var(--c) 25%, transparent);
+  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); transition: opacity .25s ease, visibility .25s; }
+.r3d-zc.is-on { opacity: 1; visibility: visible; }
+.r3d-zc b { font-size: .95rem; line-height: 1.2; }
+.r3d-zc__a { display: inline-flex; align-items: center; gap: 6px; font: 600 .68rem/1.3 ui-monospace, "SF Mono", Menlo, Consolas, monospace; letter-spacing: .06em; color: rgba(237,247,255,.7); }
+.r3d-zc__a i { width: 8px; height: 8px; border-radius: 50%; background: var(--c); flex: none; }
+.r3d-zc__r, .r3d-zc__t, .r3d-zc__b, .r3d-zc__c, .r3d-zc__go { display: none; }
+.r3d-zc[data-l="m"] .r3d-zc__r, .r3d-zc[data-l="l"] .r3d-zc__r { display: block; font-size: .8rem; line-height: 1.45; color: rgba(237,247,255,.8); white-space: normal; width: 240px; }
+.r3d-zc[data-l="m"] .r3d-zc__r { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.r3d-zc[data-l="l"] { max-width: 300px; padding: 14px 16px; }
+.r3d-zc[data-l="l"] b { font-size: 1.15rem; }
+.r3d-zc[data-l="l"] .r3d-zc__t { display: flex; flex-wrap: wrap; gap: 4px; }
+.r3d-zc__t em { font-style: normal; font-size: .7rem; padding: 2px 8px; border-radius: 999px; border: 1px solid rgba(123,228,255,.3); color: #a8eeff; }
+.r3d-zc[data-l="l"] .r3d-zc__b { display: block; font-size: .78rem; line-height: 1.45; color: rgba(237,247,255,.62); width: 260px; }
+.r3d-zc[data-l="l"] .r3d-zc__c { display: block; font: 600 .7rem/1 ui-monospace, "SF Mono", Menlo, Consolas, monospace; letter-spacing: .08em; color: rgba(168,238,255,.7); }
+.r3d-zc[data-l="l"] .r3d-zc__go { display: inline-block; justify-self: start; margin-top: 4px; padding: 7px 12px; border-radius: 999px; cursor: pointer; font: 700 .76rem/1 inherit; color: #021022; background: linear-gradient(135deg, #a8eeff, #7be4ff); border: 0; }
+/* collegati nella scheda */
+.r3d-card__net { margin: 4px 0 16px; }
+.r3d-card__net p { margin: 0 0 8px; font: 700 .66rem/1 ui-monospace, "SF Mono", Menlo, Consolas, monospace; letter-spacing: .14em; text-transform: uppercase; color: rgba(168,238,255,.7); }
+.r3d-card__net div { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
+.r3d-card__net button { display: grid; justify-items: center; gap: 4px; padding: 0; background: none; border: 0; cursor: pointer; color: rgba(237,247,255,.75); font: inherit; font-size: .68rem; }
+.r3d-card__net img { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; box-shadow: 0 0 0 2px rgba(123,228,255,.5); transition: box-shadow .2s; }
+.r3d-card__net button:hover img, .r3d-card__net button:focus-visible img { box-shadow: 0 0 0 3px #7be4ff, 0 0 14px rgba(123,228,255,.6); }
+@media (prefers-reduced-motion: reduce) { .r3d-zc { transition: none; } }

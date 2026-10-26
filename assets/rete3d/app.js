@@ -54,10 +54,10 @@ function lazy3d(ms, fs) {
   if (!ok) { stage.classList.add('is-fallback'); return; }
   const go = async () => {
     try {
-      const mod = await import('./rete3d.min.js?v=20261026b');
+      const mod = await import('./rete3d.min.js?v=20261026d');
       net = mod.createNetwork(stage, {
         members: ms, founders: fs, reduced: REDUCED, mobile: MOBILE,
-        onSelect: i => open(i), onHover: i => hoverLabel(i),
+        onSelect: i => open(i), onHover: i => hoverLabel(i), onEmpty: () => close(), onFrame: zoomCards,
         onCoreState: (p, v, on) => { pressEl.hidden = !on; if (on) pressEl.innerHTML = `P <b>${p.toFixed(2).replace('.', ',')}</b> bar · V <b>${v.toFixed(2).replace('.', ',')}</b> L <small>P·V = 6 bar·L</small>`; },
       });
       stage.classList.add('is-live');
@@ -81,8 +81,9 @@ function hoverLabel(i) { hoverI = i; if (net) net.hoverEdges(i); if (i < 0) labe
 function tickLabel() {
   requestAnimationFrame(tickLabel);
   const i = hoverI >= 0 ? hoverI : -1;
-  if (i < 0 || !net || i === current) { label.hidden = true; return; }
-  const p = net.project(i), m = people[i];
+  if (i < 0 || !net || i === current || shownCards.has(i)) { label.hidden = true; return; }
+  const p = lastProj && lastProj[i], m = people[i];
+  if (!p || !p.front) { label.hidden = true; return; }
   label.hidden = false;
   label.style.transform = `translate(${Math.round(p.x)}px, ${Math.round(p.y)}px)`;
   const a = m.founder ? null : AREA[m._area];
@@ -145,6 +146,7 @@ function open(i, fromList) {
       ${p.founder ? `<p class="r3d-card__role">${esc(p.role)}</p>` : `<p class="r3d-card__tags">${(p.tags || []).map(t => `<span>${esc(t)}</span>`).join('')}</p><p class="r3d-card__role">${esc(p.role)}</p>`}
       ${bio ? `<p class="r3d-card__bio">${esc(bio.length > 360 ? bio.slice(0, 357) + '…' : bio)}</p>` : ''}
       ${p.city ? `<p class="r3d-card__city">${esc(p.city)}</p>` : ''}
+      ${netLinks(i)}
       <div class="r3d-card__links">
         ${p.linkedin && p.linkedin !== 'https://www.linkedin.com/' ? `<a class="r3d-ic" href="${esc(p.linkedin)}" target="_blank" rel="noopener" aria-label="LinkedIn di ${esc(p.name)}">${LI}</a>` : ''}
         <a class="r3d-btn" href="${p.founder ? 'index.html#fondatori' : 'rete.html'}">${p.founder ? 'I fondatori nella home' : 'Scheda completa nella Rete'} →</a>
@@ -162,7 +164,51 @@ function close() {
   setTimeout(() => { if (current < 0) panel.hidden = true; }, 300);
   if (net) net.clear();
 }
-panel.addEventListener('click', e => { if (e.target.closest('.r3d-close')) close(); });
+panel.addEventListener('click', e => { if (e.target.closest('.r3d-close')) close(); const nb = e.target.closest('[data-goto]'); if (nb) open(+nb.dataset.goto); });
+function netLinks(i) {
+  if (!net) return '';
+  const nb = net.neighbors(i); if (!nb.length) return '';
+  return `<div class="r3d-card__net"><p>Collegati nella rete</p><div>${nb.map(j => { const q = people[j]; return `<button type="button" data-goto="${j}" title="${esc(q.name)}"><img src="${esc(q._thumb)}" alt="" width="40" height="40" /><span>${esc(q.name.split(' ')[0])}</span></button>`; }).join('')}</div></div>`;
+}
+
+/* ── schede che compaiono avvicinandosi a una persona ── */
+const zoomBox = document.getElementById('r3dZoom');
+const cardEls = new Map(); const shownCards = new Set();
+function zoomCard(i) {
+  let el = cardEls.get(i); if (el) return el;
+  const p = people[i], a = p._area ? AREA[p._area] : null;
+  const pr = profiles[key(p.name)] || {};
+  const bio = pr.bio && pr.bio.trim().length > 5 ? pr.bio.trim() : '';
+  el = document.createElement('div'); el.className = 'r3d-zc'; el.style.setProperty('--c', a ? a.color : '#fff');
+  el.innerHTML = `<b>${esc((p.founder ? p.title + ' ' : '') + p.name)}</b>
+    <span class="r3d-zc__a"><i></i>${esc(p.founder ? 'Fondatore · ' + p.role : a.name)}</span>
+    ${p.founder ? '' : `<span class="r3d-zc__r">${esc(p.role)}</span>`}
+    ${p.founder ? '' : `<span class="r3d-zc__t">${(p.tags || []).map(t => `<em>${esc(t)}</em>`).join('')}</span>`}
+    ${bio ? `<span class="r3d-zc__b">${esc(bio.length > 220 ? bio.slice(0, 217) + '…' : bio)}</span>` : ''}
+    ${p.city ? `<span class="r3d-zc__c">${esc(p.city)}</span>` : ''}
+    <button type="button" class="r3d-zc__go" data-open="${i}">Apri la scheda</button>`;
+  el.addEventListener('click', ev => { if (ev.target.closest('[data-open]')) open(i); });
+  zoomBox.appendChild(el); cardEls.set(i, el); return el;
+}
+let lastProj = null;
+function zoomCards(proj) {
+  lastProj = proj;
+  const W = stage.clientWidth, H = stage.clientHeight;
+  const cand = proj.map((p, i) => ({ ...p, i })).filter(p => p.front && p.op > 0.55 && p.px > 30 && p.i !== current && p.x > -50 && p.x < W + 50 && p.y > -50 && p.y < H + 50)
+    .sort((a, b) => b.px - a.px).slice(0, MOBILE ? 2 : 3);
+  const now = new Set(cand.map(c => c.i));
+  for (const i of shownCards) if (!now.has(i)) { const el = cardEls.get(i); if (el) el.classList.remove('is-on'); shownCards.delete(i); }
+  cand.forEach(c => {
+    const el = zoomCard(c.i);
+    const lvl = c.px < 62 ? 's' : c.px < 120 ? 'm' : 'l';
+    if (el.dataset.l !== lvl) { el.dataset.l = lvl; }
+    const right = c.x + c.px * 1.1 + 280 < W || c.x < W / 2;
+    const x = right ? c.x + c.px * 1.1 : c.x - c.px * 1.1;
+    const y = Math.min(Math.max(c.y - 24, 8), H - 40);
+    el.style.transform = `translate(${Math.round(x)}px, ${Math.round(y)}px) translateX(${right ? 0 : -100}%)`;
+    if (!shownCards.has(c.i)) { el.classList.add('is-on'); shownCards.add(c.i); }
+  });
+}
 document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
 
 /* ── comandi della scena ── */
@@ -173,14 +219,10 @@ document.getElementById('r3dTools').addEventListener('click', e => {
   else if (c === 'out') net.zoom(1.18);
   else if (c === 'home') { close(); net.home(); }
   else if (c === 'wave') net.wave();
-  else if (c === 'rotate') { const on = !net.rotateMode(); net.setRotateMode(on); b.setAttribute('aria-pressed', String(on)); b.textContent = on ? 'Ruota: attivo' : 'Ruota'; }
 });
 document.getElementById('r3dFounders').addEventListener('change', e => { if (net) net.setFoundersInner(e.target.checked); setTimeout(hud, 50); });
 let hintT = 0;
 stage.addEventListener('r3d-wheelhint', () => {
   const h = document.getElementById('r3dHint'); h.hidden = false; clearTimeout(hintT); hintT = setTimeout(() => { h.hidden = true; }, 1600);
 });
-if (MOBILE) {
-  document.querySelector('[data-cmd="rotate"]').hidden = false;
-  document.querySelector('.r3d-help').textContent = 'Tocca una persona · tocca il nucleo · tienilo premuto · «Ruota» per girare la rete';
-}
+if (MOBILE) document.querySelector('.r3d-help').textContent = 'Scorri di lato per ruotare · due dita per avvicinarti · tocca una persona o il nucleo';

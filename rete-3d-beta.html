@@ -10,8 +10,8 @@
   <link rel="stylesheet" href="assets/fonts/dm-sans.css" />
   <link rel="stylesheet" href="rete.css?v=20261026a" />
   <link rel="stylesheet" href="nav-tools.css?v=20261026e" />
-  <link rel="stylesheet" href="assets/rete3d/rete3d.css?v=20261026b" />
-  <link rel="modulepreload" href="assets/rete3d/app.js?v=20261026b" />
+  <link rel="stylesheet" href="assets/rete3d/rete3d.css?v=20261026d" />
+  <link rel="modulepreload" href="assets/rete3d/app.js?v=20261026d" />
 </head>
 <body class="r3d-page">
   <a class="skip" href="#r3dList">Vai all'elenco dei membri</a>
@@ -71,7 +71,7 @@
     <section class="r3d-hero container">
       <p class="r3d-kicker">La Rete di Boyle</p>
       <h1>Rete di <span class="r3d-grad">Boyle</span></h1>
-      <p class="r3d-lead">Ogni punto luminoso è una persona. Trascina per far ruotare la rete, scegli qualcuno per aprire la sua scheda, tocca il nucleo per mandare un impulso a tutti. Tienilo premuto: è una bolla di gas, e si comprime.</p>
+      <p class="r3d-lead">Ogni punto luminoso è una persona. Fai ruotare la rete, avvicinati e le schede compaiono da sole; scegli un'area per accenderne i collegamenti. Tocca il nucleo per mandare un impulso a tutti, tienilo premuto: è una bolla di gas, e si comprime.</p>
     </section>
 
     <section class="r3d-wrap" aria-label="Rete di Boyle in 3D">
@@ -80,15 +80,15 @@
         <div class="r3d-hud" id="r3dHud"></div>
         <div class="r3d-press" id="r3dPress" hidden></div>
         <div class="r3d-label" id="r3dLabel" hidden></div>
+        <div class="r3d-zoom" id="r3dZoom"></div>
         <div class="r3d-tools" id="r3dTools">
-          <button type="button" data-cmd="rotate" aria-pressed="false" hidden>Ruota</button>
           <button type="button" data-cmd="in" aria-label="Avvicina">+</button>
           <button type="button" data-cmd="out" aria-label="Allontana">−</button>
           <button type="button" data-cmd="home">Centra</button>
           <button type="button" data-cmd="wave">Impulso</button>
         </div>
-        <p class="r3d-hint" id="r3dHint" hidden>Ctrl + rotella (⌘ su Mac) per avvicinarti</p>
-        <p class="r3d-help">Trascina per ruotare · clic su una persona · clic sul nucleo · tieni premuto il nucleo</p>
+        <p class="r3d-hint" id="r3dHint" hidden>Clicca nella rete, poi usa la rotella per avvicinarti</p>
+        <p class="r3d-help">Trascina per ruotare · rotella per avvicinarti alle persone · clic su una persona o sul nucleo</p>
         <p class="r3d-fallback">La vista 3D non è disponibile su questo dispositivo. L'elenco qui sotto contiene tutta la Rete.</p>
         <aside class="r3d-panel" id="r3dPanel" hidden aria-live="polite"></aside>
       </div>
@@ -116,6 +116,6 @@
     })();
   </script>
   <script src="nav-tools.js?v=20261026g" defer></script>
-  <script type="module" src="assets/rete3d/app.js?v=20261026b"></script>
+  <script type="module" src="assets/rete3d/app.js?v=20261026d"></script>
 </body>
 </html>
