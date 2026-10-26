@@ -161,3 +161,16 @@ html::before, html::after, body::before, body::after {
   #rete-qn-panel a { text-align: right; padding-left: 20px !important; padding-right: 14px !important; }
   body:has(#navMobilePanel[aria-hidden="false"]) #rete-mobile-qn { opacity: 0; pointer-events: none; }
 }
+
+/* ── 11. Menu con la voce Boyle Lab: sotto i 1120 px si passa all'hamburger
+   (header di eventi, rete e podcast), cosi' le voci non escono dallo schermo. */
+@media (max-width: 1120px) {
+  html body .header .nav--desktop { display: none !important; }
+  html body .header .nav-mobile-btn { display: flex !important; }
+  html body .header .lang-toggle:not(.lang-toggle--mobile) { display: none !important; }
+}
+@media (min-width: 769px) and (max-width: 1120px) {
+  html body .header .nav-mobile-panel { left: auto !important; right: 8px !important; width: max-content !important; min-width: 200px !important; }
+  html body .header .nav-mobile-panel .lang-toggle--mobile { display: flex !important; justify-content: flex-end !important; }
+  html body .header .nav-mobile-panel > a { text-align: right !important; padding-left: 20px !important; padding-right: 14px !important; }
+}

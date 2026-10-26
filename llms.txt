@@ -16,6 +16,7 @@ Italian scientific project and professional network on extreme-environment medic
 - [Eventi della Rete](https://www.amicidiboyle.it/eventi.html): congressi e corsi in cui intervengono i membri, con archivio
 - [Rete di Boyle](https://www.amicidiboyle.it/rete.html): professionisti e ricercatori della rete, come entrarvi
 - [Sotto Pressione](https://www.amicidiboyle.it/podcast.html): podcast su medicina iperbarica, ipobarismo, astronautica e fisiologia estrema
+- [Boyle Lab](https://www.amicidiboyle.it/boyle-lab.html): laboratorio virtuale di fisiologia degli ambienti estremi (pressione, gas, ossigeno, immersione, iperbarica, quota), con equazioni, fonti verificate e banco di prova; strumento educativo, non dispositivo medico
 - [Boyle Bibliography](https://www.amicidiboyle.it/boylebibliography.html): ricerca bibliografica gratuita su PubMed e OpenAlex, citazioni in stile Vancouver
 - [Diving-Boyle](https://www.amicidiboyle.it/diving-boyle.html): mappa dei diving center italiani
 

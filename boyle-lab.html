@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+  <title>Boyle Lab · Gli Amici di Boyle</title>
+  <meta name="description" content="Boyle Lab: il laboratorio virtuale di fisiologia degli ambienti estremi. Esperimenti interattivi su pressione, gas, ossigeno, immersione, iperbarica e quota, con equazioni, fonti e validazione." />
+  <meta name="theme-color" content="#031427" />
+  <link rel="canonical" href="https://www.amicidiboyle.it/boyle-lab.html" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.amicidiboyle.it/boyle-lab.html" />
+  <meta property="og:title" content="Boyle Lab · il laboratorio virtuale degli Amici di Boyle" />
+  <meta property="og:description" content="Pressione, gas e ossigeno negli ambienti estremi: esperimenti interattivi con equazioni e fonti sempre in vista." />
+  <meta property="og:image" content="https://www.amicidiboyle.it/assets/og-image-boyle.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" href="assets/logo.png" type="image/png" />
+  <link rel="stylesheet" href="assets/fonts/dm-sans.css" />
+  <link rel="stylesheet" href="lab/lab.css?v=20261026a" />
+  <link rel="stylesheet" href="barometro.css?v=20261026a" />
+  <link rel="modulepreload" href="lab/app.js?v=20261026a" />
+</head>
+<body>
+  <a class="skip" href="#lab-app" data-i18n="skip">Vai al contenuto</a>
+
+  <header class="header" role="banner" id="siteHeader">
+    <div class="container header__inner">
+      <a class="brand" href="index.html" aria-label="Gli Amici di Boyle — Home">
+        <img src="assets/logo.png" alt="Logo Gli Amici di Boyle" width="50" height="50" />
+        <span class="brand__text">
+          <strong>Gli Amici di Boyle</strong>
+          <em>Diving &amp; Hyperbaric Medicine · Research &amp; Education</em>
+        </span>
+      </a>
+      <nav class="nav--desktop" aria-label="Navigazione principale">
+        <a href="index.html" data-i18n="n_home">Home</a>
+        <a href="index.html#visione" data-i18n="n_vis">Visione</a>
+        <a href="index.html#ricerca" data-i18n="n_ric">Ricerca</a>
+        <a href="boyle-lab.html" class="nav-active" aria-current="page">Boyle Lab</a>
+        <a href="boylebibliography.html">Bibliography</a>
+        <a href="diving-boyle.html">Diving-Boyle</a>
+        <a href="rete.html" data-i18n="n_rete">Rete</a>
+        <a href="podcast.html">Podcast</a>
+        <a href="eventi.html" data-i18n="n_ev">Eventi</a>
+        <a href="index.html#contatti" data-i18n="n_cont">Contatti</a>
+      </nav>
+      <button class="lang-toggle" id="langToggle" type="button" aria-label="Cambia lingua / Switch language">
+        <span class="lang-cur">IT</span><span class="lang-sep"> · </span><span class="lang-oth">EN</span>
+      </button>
+      <button class="nav-mobile-btn" id="navMobileBtn" aria-label="Apri menu" aria-expanded="false" aria-controls="navMobilePanel">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="nav-mobile-panel" id="navMobilePanel" aria-hidden="true">
+        <a href="index.html" data-i18n="n_home">Home</a>
+        <a href="index.html#visione" data-i18n="n_vis">Visione</a>
+        <a href="index.html#ricerca" data-i18n="n_ric">Ricerca</a>
+        <a href="boyle-lab.html">Boyle Lab</a>
+        <a href="boylebibliography.html">Bibliography</a>
+        <a href="diving-boyle.html">Diving-Boyle</a>
+        <a href="rete.html" data-i18n="n_rete">Rete</a>
+        <a href="podcast.html">Podcast</a>
+        <a href="eventi.html" data-i18n="n_ev">Eventi</a>
+        <a href="index.html#contatti" data-i18n="n_cont">Contatti</a>
+        <button type="button" class="lang-toggle lang-toggle--mobile" id="langToggleMobile" aria-label="Cambia lingua">
+          <span class="lang-cur">IT</span><span class="lang-sep"> · </span><span class="lang-oth">EN</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <nav class="lab-subnav" aria-label="Boyle Lab">
+    <div class="container">
+      <a class="lab-brand" href="#/" data-lab-nav="home">Boyle Lab</a>
+      <a href="#/base" data-lab-nav="base">BASE</a>
+      <a href="#/advanced" data-lab-nav="advanced">ADVANCED</a>
+      <a href="#/catalogo" data-lab-nav="catalogo" data-i18n="s_cat">Tutti gli esperimenti</a>
+      <a href="#/modelli" data-lab-nav="modelli" data-i18n="s_mod">Modelli e validazione</a>
+      <a href="#/bibliografia" data-lab-nav="bibliografia" data-i18n="s_bib">Bibliografia</a>
+    </div>
+  </nav>
+
+  <main>
+    <div class="container" id="lab-app" tabindex="-1">
+      <noscript><p>Boyle Lab richiede JavaScript per i calcoli interattivi. Le equazioni e le fonti sono descritte nel file <a href="lab/README.md">lab/README.md</a>.</p></noscript>
+    </div>
+  </main>
+
+  <footer class="site-footer lab-footer" role="contentinfo">
+    <div class="container">
+      <p data-i18n="f_txt">© Gli Amici di Boyle · Boyle Lab è uno strumento educativo e di ricerca, non un dispositivo medico.</p>
+      <p><a href="privacy.html">Privacy</a> · <a href="cookie.html">Cookie</a> · <a href="note-legali.html">Note legali</a></p>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      var T = { en: { skip: 'Skip to content', n_home: 'Home', n_vis: 'Vision', n_ric: 'Research', n_rete: 'Network', n_ev: 'Events', n_cont: 'Contact',
+        s_cat: 'All experiments', s_mod: 'Models & validation', s_bib: 'References', f_txt: '© Gli Amici di Boyle · Boyle Lab is an educational and research tool, not a medical device.' } };
+      function getLang() { try { return sessionStorage.getItem('boyle_lang') || 'it'; } catch (e) { return 'it'; } }
+      function applyLang(l) {
+        document.querySelectorAll('[data-i18n]').forEach(function (el) {
+          if (el.__it === undefined) el.__it = el.textContent;
+          var d = T[l]; el.textContent = (l !== 'it' && d && d[el.getAttribute('data-i18n')]) || el.__it;
+        });
+        document.querySelectorAll('.lang-cur').forEach(function (el) { el.textContent = l === 'en' ? 'EN' : 'IT'; });
+        document.querySelectorAll('.lang-oth').forEach(function (el) { el.textContent = l === 'en' ? 'IT' : 'EN'; });
+        document.documentElement.lang = l;
+        try { sessionStorage.setItem('boyle_lang', l); } catch (e) {}
+        if (window.boyleLabLang) window.boyleLabLang(l);
+      }
+      ['langToggle', 'langToggleMobile'].forEach(function (id) {
+        var b = document.getElementById(id);
+        if (b) b.addEventListener('click', function () { applyLang(getLang() === 'it' ? 'en' : 'it'); });
+      });
+      var btn = document.getElementById('navMobileBtn'), panel = document.getElementById('navMobilePanel');
+      btn.addEventListener('click', function () {
+        var open = panel.getAttribute('aria-hidden') === 'false';
+        panel.setAttribute('aria-hidden', open ? 'true' : 'false');
+        btn.setAttribute('aria-expanded', String(!open)); btn.classList.toggle('is-open', !open);
+      });
+      document.addEventListener('click', function (e) {
+        if (!panel.contains(e.target) && !btn.contains(e.target)) { panel.setAttribute('aria-hidden', 'true'); btn.setAttribute('aria-expanded', 'false'); btn.classList.remove('is-open'); }
+      });
+      if (getLang() !== 'it') applyLang(getLang());
+    })();
+  </script>
+  <script type="module" src="lab/app.js?v=20261026a"></script>
+  <script src="barometro.js?v=20261026a" defer></script>
+  <script src="consent.js?v=20261026a" defer></script>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"WebApplication","name":"Boyle Lab","url":"https://www.amicidiboyle.it/boyle-lab.html","applicationCategory":"EducationalApplication","operatingSystem":"Web","inLanguage":["it","en"],"isAccessibleForFree":true,"description":"Laboratorio virtuale di fisiologia degli ambienti estremi: pressione, gas, ossigeno, immersione, iperbarica, quota. Strumento educativo, non dispositivo medico.","publisher":{"@type":"Organization","name":"Gli Amici di Boyle","url":"https://www.amicidiboyle.it/"}}
+  </script>
+</body>
+</html>
