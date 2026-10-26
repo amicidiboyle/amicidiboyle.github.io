@@ -78,11 +78,11 @@
       /* concluso: esce da "Dove ci troverete" */
       card.hidden = state === 'past';
     });
-    /* gli eventi conclusi in cui parla qualcuno di noi passano in "Corsi, congressi e docenze",
+    /* gli eventi conclusi in cui parla uno dei fondatori (data-founder) passano in "Corsi, congressi e docenze",
        in testa, con locandina e programma (se non ci sono gia') */
     var corsi = document.querySelector('#formazione .course-poster-grid');
     if (corsi) past.forEach(function (c) {
-      if (!c.hasAttribute('data-speaker')) return;
+      if (!c.hasAttribute('data-founder')) return; /* solo eventi con uno dei fondatori tra i relatori */
       var media = c.querySelector('.appt-media'), img = c.querySelector('.appt-media img'), h = c.querySelector('h3');
       var pdf = media && media.getAttribute('href');
       if (!pdf || corsi.querySelector('a[href="' + pdf + '"]')) return;

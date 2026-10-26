@@ -4,9 +4,10 @@ Ogni giorno (GitHub Actions, vedi .github/workflows/eventi-archivio.yml) control
 di fine degli eventi e, se sono passate:
   - eventi.html: sposta la card da «Prossimi appuntamenti» in cima all'archivio «Eventi conclusi»,
     come scheda compatta con locandina e programma;
-  - index.html: toglie l'evento da «Dove ci troverete»; se un membro della Rete era relatore
-    (attributo data-speaker) e la locandina non c'e' gia', la aggiunge in testa a
-    «Corsi, congressi e docenze».
+  - index.html: toglie l'evento da «Dove ci troverete»; se tra i relatori c'era uno dei fondatori
+    (attributo data-founder="Nome Cognome, ...") e la locandina non c'e' gia', la aggiunge in testa
+    a «Corsi, congressi e docenze». Gli eventi con relatori della Rete che non sono fondatori
+    restano solo nell'archivio della pagina Eventi.
 Cosi' le pagine sono corrette anche per chi le legge senza JavaScript (motori di ricerca, AI).
 Il JavaScript delle pagine fa la stessa cosa nel browser, nel frattempo.
 """
@@ -99,7 +100,7 @@ def home():
         title = re.search(r'<h3>(.*?)</h3>', block, re.S)
         title = html.unescape(re.sub(r'<[^>]+>', '', title.group(1))).strip() if title else ''
         done.append('home: ' + title)
-        if 'data-speaker' not in tag:
+        if 'data-founder' not in tag:
             continue
         media = re.search(r'<a class="appt-media" href="([^"]+)"', block)
         img = re.search(r'<img src="([^"]+)" alt="([^"]*)"', block)
