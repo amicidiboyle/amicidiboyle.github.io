@@ -20,6 +20,7 @@
   <link rel="stylesheet" href="eventi.css?v=20261026a" />
   <link rel="stylesheet" href="eventi-extra.css?v=20261026a" />
   <link rel="stylesheet" href="title-fx.css?v=20261026a" />
+  <link rel="stylesheet" href="nav-tools.css?v=20261026e" />
   <link rel="stylesheet" href="barometro.css?v=20261026a" />
 </head>
 <body>
@@ -39,9 +40,14 @@
         <a href="index.html"          data-i18n="ev_nav_home">Home</a>
         <a href="index.html#visione"  data-i18n="ev_nav_vis">Visione</a>
         <a href="index.html#ricerca"  data-i18n="ev_nav_ric">Ricerca</a>
-        <a href="boyle-lab.html">Boyle Lab</a>
-        <a href="boylebibliography.html" data-i18n="ev_nav_biblio">Bibliography</a>
-        <a href="diving-boyle.html"   data-i18n="ev_nav_diving">Diving-Boyle</a>
+        <div class="nav-tools" data-nav-tools>
+          <button type="button" class="nav-tools__btn" aria-expanded="false"><span data-nt="tools">Strumenti</span></button>
+          <div class="nav-tools__panel" hidden>
+            <a href="boyle-lab.html"><b>Boyle Lab</b><small data-nt="lab">Laboratorio virtuale</small></a>
+            <a href="boylebibliography.html"><b>Boyle Bibliography</b><small data-nt="bib">Bibliografia scientifica</small></a>
+            <a href="diving-boyle.html"><b>Diving-Boyle</b><small data-nt="div">I diving italiani</small></a>
+          </div>
+        </div>
         <a href="rete.html"           data-i18n="ev_nav_rete">Rete</a>
         <a href="podcast.html"        data-i18n="ev_nav_pod">Podcast</a>
         <a href="eventi.html" class="nav-active" aria-current="page" data-i18n="ev_nav_ev">Eventi</a>
@@ -57,9 +63,14 @@
         <a href="index.html"          data-i18n="ev_nav_home">Home</a>
         <a href="index.html#visione"  data-i18n="ev_nav_vis">Visione</a>
         <a href="index.html#ricerca"  data-i18n="ev_nav_ric">Ricerca</a>
-        <a href="boyle-lab.html">Boyle Lab</a>
-        <a href="boylebibliography.html" data-i18n="ev_nav_biblio">Bibliography</a>
-        <a href="diving-boyle.html"   data-i18n="ev_nav_diving">Diving-Boyle</a>
+        <div class="nav-tools" data-nav-tools>
+          <button type="button" class="nav-tools__btn" aria-expanded="false"><span data-nt="tools">Strumenti</span></button>
+          <div class="nav-tools__panel" hidden>
+            <a href="boyle-lab.html"><b>Boyle Lab</b><small data-nt="lab">Laboratorio virtuale</small></a>
+            <a href="boylebibliography.html"><b>Boyle Bibliography</b><small data-nt="bib">Bibliografia scientifica</small></a>
+            <a href="diving-boyle.html"><b>Diving-Boyle</b><small data-nt="div">I diving italiani</small></a>
+          </div>
+        </div>
         <a href="rete.html"           data-i18n="ev_nav_rete">Rete</a>
         <a href="podcast.html"        data-i18n="ev_nav_pod">Podcast</a>
         <a href="eventi.html"         data-i18n="ev_nav_ev">Eventi</a>
@@ -104,39 +115,6 @@
 
         <div class="evx-list" id="evxList">
 
-          <article class="evx-card" data-start="2026-10-21T09:00:00+02:00" data-end="2026-10-23T18:30:00+02:00"
-                   data-city="Riccione" data-title="Il meglio deve ancora venire · 3° Congresso Nazionale SISmax" data-when="21–23 Ott 2026"
-                   data-place="Palazzo del Turismo, Piazzale Ceccarini 11, Riccione"
-                   data-pdf="assets/eventi/sismax-riccione-2026.pdf" data-poster="assets/eventi/sismax-riccione-2026.jpg">
-            <button class="evx-poster" type="button" onclick="openLightbox('assets/eventi/sismax-riccione-2026.jpg','Il meglio deve ancora venire · SISmax 2026')" aria-label="Ingrandisci la locandina">
-              <img src="assets/eventi/sismax-riccione-2026.jpg" alt="Locandina del 3° Congresso Nazionale SISmax, Riccione 21-23 ottobre 2026" width="862" height="1277" loading="lazy" decoding="async" />
-              <span class="evx-zoom" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></span>
-            </button>
-            <div class="evx-body">
-              <div class="evx-top">
-                <div class="evx-date evx-date--range" aria-hidden="true"><b>21<i>–23</i></b><span data-i18n="evx_m_ott">Ott</span><em>2026</em></div>
-                <div class="evx-top-r">
-                  <span class="evx-countdown" aria-live="polite"></span>
-                  <div class="evx-badges">
-                    <span class="evx-badge" data-i18n="evx_speaker">Relatore della Rete</span>
-                  </div>
-                </div>
-              </div>
-              <p class="evx-org">SISmax · Sistema Integrato dei Soccorsi in Maxiemergenza</p>
-              <h3 class="evx-title">Il meglio deve ancora venire</h3>
-              <p class="evx-sub" data-i18n="evx0_sub">3° Congresso Nazionale SISmax · Dalle evidenze alle prime raccomandazioni clinico-assistenziali</p>
-              <ul class="evx-facts">
-                <li><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span data-i18n="evx0_when">21–22 ottobre corsi e masterclass · 23 ottobre congresso</span></li>
-                <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.1-7-11.5a7 7 0 0 1 14 0C19 14.9 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg><span>Palazzo del Turismo · Piazzale Ceccarini 11, Riccione</span></li>
-                <li><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg><span data-i18n-html="evx0_who"><strong>Dario Nicosia</strong>, «Gestione delle maxiemergenze legate a flussi migratori ad alto impatto: esperienza dell’elisoccorso sull’isola di Lampedusa» · venerdì 23 ottobre, ore 14:00, Sessione 3A</span></li>
-              </ul>
-              <div class="evx-cta">
-                <a class="evx-btn evx-btn--primary" href="assets/eventi/sismax-riccione-2026.pdf" target="_blank" rel="noopener" data-i18n="evx_program">Programma</a>
-                <button class="evx-btn evx-btn--ghost evx-ics" type="button" data-i18n="evx_cal">+ Calendario</button>
-              </div>
-              <p class="evx-note" data-i18n="evx0_note">Informazioni e iscrizioni: segreteria@sismax.it</p>
-            </div>
-          </article>
 
           <article class="evx-card" data-start="2026-11-07T15:00:00+01:00" data-end="2026-11-07T18:00:00+01:00"
                    data-city="Genova" data-title="Il limite è la conoscenza" data-when="7 Nov 2026"
@@ -256,6 +234,10 @@
           <h2 id="evxArchTitle" data-i18n="evx_arch_title">Eventi conclusi</h2>
         </div>
         <div class="evx-grid" id="evxArchive">
+          <article class="evx-mini" data-date="2026-10-21">
+            <button class="evx-mini__media" type="button" onclick="openLightbox('assets/eventi/sismax-riccione-2026.jpg','Il meglio deve ancora venire · 3° Congresso Nazionale SISmax')" aria-label="Ingrandisci la locandina"><img src="assets/eventi/sismax-riccione-2026.jpg" alt="Locandina Il meglio deve ancora venire · 3° Congresso Nazionale SISmax" loading="lazy" decoding="async" /></button>
+            <div class="evx-mini__body"><span class="evx-mini__date">21–23 Ott 2026</span><h3>Il meglio deve ancora venire · 3° Congresso Nazionale SISmax</h3><p>Riccione · Palazzo del Turismo</p><div class="evx-mini__links"><a href="assets/eventi/sismax-riccione-2026.pdf" target="_blank" rel="noopener" data-i18n="evx_program">Programma</a></div></div>
+          </article>
           <article class="evx-mini" data-date="2026-09-14">
             <div class="evx-mini__media evx-mini__media--ph" aria-hidden="true"><span>EUBS</span></div>
             <div class="evx-mini__body"><span class="evx-mini__date">14–18 Set 2026</span><h3>50th EUBS Congress</h3><p>Ginevra, Svizzera · CICG</p><div class="evx-mini__links"><a href="https://eubs2026.com" target="_blank" rel="noopener" data-i18n="evx_site">Sito</a></div></div>
@@ -1280,6 +1262,7 @@
 
   <script src="eventi-extra.js?v=20261026a" defer></script>
   <script src="barometro.js?v=20261026a" defer></script>
+  <script src="nav-tools.js?v=20261026g" defer></script>
   <script src="title-fx.js?v=20261026a" defer></script>
   <script src="motion.js?v=20261026a" defer></script>
   <script src="consent.js?v=20261026a" defer></script>

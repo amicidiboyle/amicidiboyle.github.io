@@ -23,6 +23,7 @@
   <link rel="icon" href="assets/logo.png" type="image/png" />
   <link rel="stylesheet" href="podcast.css?v=20261026a" />
   <link rel="stylesheet" href="title-fx.css?v=20261026a" />
+  <link rel="stylesheet" href="nav-tools.css?v=20261026e" />
 </head>
 <body>
   <a class="skip" href="#contenuto">Vai al contenuto</a>
@@ -41,9 +42,14 @@
         <a href="index.html">Home</a>
         <a href="index.html#visione">Visione</a>
         <a href="index.html#ricerca">Ricerca</a>
-        <a href="boyle-lab.html">Boyle Lab</a>
-        <a href="boylebibliography.html">Bibliography</a>
-        <a href="diving-boyle.html">Diving-Boyle</a>
+        <div class="nav-tools" data-nav-tools>
+          <button type="button" class="nav-tools__btn" aria-expanded="false"><span data-nt="tools">Strumenti</span></button>
+          <div class="nav-tools__panel" hidden>
+            <a href="boyle-lab.html"><b>Boyle Lab</b><small data-nt="lab">Laboratorio virtuale</small></a>
+            <a href="boylebibliography.html"><b>Boyle Bibliography</b><small data-nt="bib">Bibliografia scientifica</small></a>
+            <a href="diving-boyle.html"><b>Diving-Boyle</b><small data-nt="div">I diving italiani</small></a>
+          </div>
+        </div>
         <a href="rete.html">Rete</a>
         <a class="nav-active" href="podcast.html" aria-current="page">Podcast</a>
         <a href="eventi.html">Eventi</a>
@@ -59,9 +65,14 @@
         <a href="index.html" data-i18n="pod_nav_home">Home</a>
         <a href="index.html#visione" data-i18n="pod_nav_vis">Visione</a>
         <a href="index.html#ricerca" data-i18n="pod_nav_ric">Ricerca</a>
-        <a href="boyle-lab.html">Boyle Lab</a>
-        <a href="boylebibliography.html" data-i18n="pod_nav_biblio">Bibliography</a>
-        <a href="diving-boyle.html" data-i18n="pod_nav_diving">Diving-Boyle</a>
+        <div class="nav-tools" data-nav-tools>
+          <button type="button" class="nav-tools__btn" aria-expanded="false"><span data-nt="tools">Strumenti</span></button>
+          <div class="nav-tools__panel" hidden>
+            <a href="boyle-lab.html"><b>Boyle Lab</b><small data-nt="lab">Laboratorio virtuale</small></a>
+            <a href="boylebibliography.html"><b>Boyle Bibliography</b><small data-nt="bib">Bibliografia scientifica</small></a>
+            <a href="diving-boyle.html"><b>Diving-Boyle</b><small data-nt="div">I diving italiani</small></a>
+          </div>
+        </div>
         <a href="rete.html" data-i18n="pod_nav_rete">Rete</a>
         <a href="podcast.html" data-i18n="pod_nav_pod">Podcast</a>
         <a href="eventi.html" data-i18n="pod_nav_ev">Eventi</a>
@@ -449,7 +460,7 @@
     mBtn.setAttribute('aria-expanded', String(!open));
     mBtn.classList.toggle('is-open', !open);
   });
-  mPanel?.querySelectorAll('a, button').forEach(el => el.addEventListener('click', () => {
+  mPanel?.querySelectorAll('a, button:not(.nav-tools__btn)').forEach(el => el.addEventListener('click', () => {
     mPanel.setAttribute('aria-hidden','true');
     mBtn?.setAttribute('aria-expanded','false');
     mBtn?.classList.remove('is-open');
@@ -827,6 +838,7 @@
   })();
   </script>
   <script src="podcast-feed.js?v=20261026a" defer></script>
+  <script src="nav-tools.js?v=20261026g" defer></script>
   <script src="title-fx.js?v=20261026a" defer></script>
   <script src="motion.js?v=20261026a" defer></script>
   <script src="consent.js?v=20261026a" defer></script>

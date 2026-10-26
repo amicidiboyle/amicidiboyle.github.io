@@ -28,6 +28,7 @@
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='40' fill='none' stroke='%237be4ff' stroke-width='8'/%3E%3Cpath d='M 29 71 C 29.33 69.33, 30.17 64.2, 31 61 C 31.83 57.8, 32.67 54.76, 34 51.8 C 35.33 48.84, 36.83 45.81, 39 43.24 C 41.17 40.67, 43.33 38.4, 47 36.36 C 50.67 34.32, 57 32.23, 61 31 C 65 29.77, 69.33 29.33, 71 29' fill='none' stroke='%23a8eeff' stroke-width='8' stroke-linecap='round'/%3E%3Ccircle cx='71' cy='29' r='6.5' fill='%23a8eeff'/%3E%3C/svg%3E" />
 <link rel="stylesheet" href="boylebibliography.css?v=20261026a" />
   <link rel="stylesheet" href="title-fx.css?v=20261026a" />
+  <link rel="stylesheet" href="nav-tools.css?v=20261026e" />
 </head>
 <body class="boylebot-page">
 
@@ -70,9 +71,14 @@
             <a href="index.html#ricerca">Ricerca</a>
             <a href="index.html#formazione">Formazione</a>
             <a href="index.html#contenuti-articoli">Contenuti</a>
-            <a href="boyle-lab.html">Boyle Lab <span class="nav-badge-new">Nuovo</span></a>
-            <a href="boylebibliography.html" aria-current="page">Bibliography <span class="nav-badge-new">Nuovo</span></a>
-            <a href="diving-boyle.html">Diving-Boyle <span class="nav-badge-new">Nuovo</span></a>
+          </div>
+        </div>
+        <div class="nav-tools is-current" data-nav-tools>
+          <button type="button" class="nav-tools__btn" aria-expanded="false"><span data-nt="tools">Strumenti</span></button>
+          <div class="nav-tools__panel" hidden>
+            <a href="boyle-lab.html"><b>Boyle Lab</b><small data-nt="lab">Laboratorio virtuale</small></a>
+            <a href="boylebibliography.html" aria-current="page"><b>Boyle Bibliography</b><small data-nt="bib">Bibliografia scientifica</small></a>
+            <a href="diving-boyle.html"><b>Diving-Boyle</b><small data-nt="div">I diving italiani</small></a>
           </div>
         </div>
         <a href="index.html#fondatori">Fondatori</a>
@@ -1960,6 +1966,7 @@
   }
 })();
 </script>
+  <script src="nav-tools.js?v=20261026g" defer></script>
   <script src="title-fx.js?v=20261026a" defer></script>
   <script src="motion.js?v=20261026a" defer></script>
   <script src="consent.js?v=20261026a" defer></script>

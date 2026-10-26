@@ -18,6 +18,7 @@
   <meta name="twitter:card" content="summary_large_image" />
   <link rel="stylesheet" href="diving-boyle.css?v=20261026a" />
   <link rel="stylesheet" href="title-fx.css?v=20261026a" />
+  <link rel="stylesheet" href="nav-tools.css?v=20261026e" />
 </head>
 <body>
 
@@ -101,15 +102,20 @@
         <a href="index.html#home" data-i18n="nav_home">Home</a>
         <a href="index.html#visione" data-i18n="nav_vision">Visione</a>
         <div class="nav-dropdown">
-          <button class="nav-dropdown-btn is-current" type="button" data-i18n="nav_activity">Attività</button>
+          <button class="nav-dropdown-btn" type="button" data-i18n="nav_activity">Attività</button>
           <div class="nav-dropdown-panel">
             <a href="index.html#attivita" data-i18n="nav_areas">Aree</a>
             <a href="index.html#ricerca" data-i18n="nav_research">Ricerca</a>
             <a href="index.html#formazione" data-i18n="nav_training">Formazione</a>
             <a href="index.html#contenuti-articoli" data-i18n="nav_content">Contenuti</a>
-            <a href="boyle-lab.html">Boyle Lab <span class="nav-badge-new" data-i18n="nav_badge_new">Nuovo</span></a>
-            <a href="boylebibliography.html"><span data-i18n="nav_bibliography">Bibliography</span> <span class="nav-badge-new" data-i18n="nav_badge_new">Nuovo</span></a>
-            <a href="diving-boyle.html" class="is-current"><span data-i18n="nav_diving_boyle">Diving-Boyle</span> <span class="nav-badge-new" data-i18n="nav_badge_new">Nuovo</span></a>
+          </div>
+        </div>
+        <div class="nav-tools is-current" data-nav-tools>
+          <button type="button" class="nav-tools__btn" aria-expanded="false"><span data-nt="tools">Strumenti</span></button>
+          <div class="nav-tools__panel" hidden>
+            <a href="boyle-lab.html"><b>Boyle Lab</b><small data-nt="lab">Laboratorio virtuale</small></a>
+            <a href="boylebibliography.html"><b>Boyle Bibliography</b><small data-nt="bib">Bibliografia scientifica</small></a>
+            <a href="diving-boyle.html" aria-current="page"><b>Diving-Boyle</b><small data-nt="div">I diving italiani</small></a>
           </div>
         </div>
         <a href="index.html#fondatori" data-i18n="nav_founders">Fondatori</a>
@@ -300,6 +306,7 @@
 
   <script src="diving-boyle.js?v=20261026a"></script>
   <script src="diving-boyle-map.js?v=20261026a"></script>
+  <script src="nav-tools.js?v=20261026g" defer></script>
   <script src="title-fx.js?v=20261026a" defer></script>
   <script src="motion.js?v=20261026a" defer></script>
   <script src="consent.js?v=20261026a" defer></script>

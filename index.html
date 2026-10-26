@@ -25,6 +25,7 @@
   <meta property="og:image:height" content="630" />
   <meta name="twitter:card"       content="summary_large_image" />
   <link rel="stylesheet" href="title-fx.css?v=20261026b" />
+  <link rel="stylesheet" href="nav-tools.css?v=20261026e" />
   <link rel="stylesheet" href="barometro.css?v=20261026b" />
 </head>
 <body>
@@ -70,9 +71,14 @@
             <a href="#ricerca">Ricerca</a>
             <a href="#formazione">Formazione</a>
             <a href="#contenuti-articoli">Pubblicazioni</a>
-            <a href="boyle-lab.html">Boyle Lab <span class="nav-badge-new">Nuovo</span></a>
-            <a href="boylebibliography.html">Bibliography <span class="nav-badge-new">Nuovo</span></a>
-            <a href="diving-boyle.html">Diving-Boyle <span class="nav-badge-new">Nuovo</span></a>
+          </div>
+        </div>
+        <div class="nav-tools" data-nav-tools>
+          <button type="button" class="nav-tools__btn" aria-expanded="false"><span data-nt="tools">Strumenti</span></button>
+          <div class="nav-tools__panel" hidden>
+            <a href="boyle-lab.html"><b>Boyle Lab</b><small data-nt="lab">Laboratorio virtuale</small></a>
+            <a href="boylebibliography.html"><b>Boyle Bibliography</b><small data-nt="bib">Bibliografia scientifica</small></a>
+            <a href="diving-boyle.html"><b>Diving-Boyle</b><small data-nt="div">I diving italiani</small></a>
           </div>
         </div>
         <a href="#fondatori">Fondatori</a>
@@ -225,27 +231,6 @@
         </div>
 
         <div class="appt-grid stagger">
-
-          <article class="glass-card appt-card reveal" data-speaker data-start="2026-10-21T09:00:00+02:00" data-end="2026-10-23T18:30:00+02:00">
-            <a class="appt-media" href="assets/eventi/sismax-riccione-2026.pdf" target="_blank" rel="noopener" aria-label="Programma del 3° Congresso Nazionale SISmax (PDF)">
-              <img src="assets/eventi/sismax-riccione-2026.jpg" alt="Locandina del 3° Congresso Nazionale SISmax, Riccione 21-23 ottobre 2026" width="862" height="1277" loading="lazy" decoding="async" />
-              <span class="appt-date" aria-hidden="true"><b>21<i>–23</i></b><span data-i18n="m_ott">Ott</span><em>2026</em></span>
-              <span class="appt-badge" data-i18n="appt0_badge">Relatore della Rete</span>
-            </a>
-            <div class="appt-body">
-              <p class="appt-meta"><span class="appt-countdown" aria-live="polite"></span><span>Riccione · SISmax</span></p>
-              <h3>Il meglio deve ancora venire</h3>
-              <p class="appt-sub" data-i18n="appt0_sub">3° Congresso Nazionale SISmax sulle maxiemergenze</p>
-              <ul class="appt-facts">
-                <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.1-7-11.5a7 7 0 0 1 14 0C19 14.9 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg><span>Palazzo del Turismo, Piazzale Ceccarini</span></li>
-                <li><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span data-i18n="appt0_when">Venerdì 23 ottobre · ore 14:00</span></li>
-                <li><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg><span data-i18n-html="appt0_who"><strong>Dario Nicosia</strong> · le maxiemergenze dei flussi migratori: l’elisoccorso a Lampedusa</span></li>
-              </ul>
-              <div class="appt-cta">
-                <a class="btn btn-ghost" href="assets/eventi/sismax-riccione-2026.pdf" target="_blank" rel="noopener" data-i18n="appt_program">Programma</a>
-              </div>
-            </div>
-          </article>
 
           <article class="glass-card appt-card reveal" data-speaker data-start="2026-11-07T15:00:00+01:00" data-end="2026-11-07T18:00:00+01:00">
             <a class="appt-media" href="assets/eventi/genova-limite-conoscenza-2026.pdf" target="_blank" rel="noopener" aria-label="Locandina Il limite è la conoscenza (PDF)">
@@ -510,7 +495,7 @@
           <h2 id="rete-h2" data-i18n="rete_h2">Connettiamo Menti Brillanti</h2>
           </div>
           <p class="section-lead" data-i18n-html="rete_lead">La <strong>Rete di Boyle</strong> unisce medici, ricercatori, ingegneri e operatori militari che lavorano dove l'aria finisce, la pressione sale e i margini di errore scompaiono. Professionisti selezionati, non collezionati.</p>
-             <p data-i18n-html="rete_amici_p">Gli <strong>Amici di Boyle</strong> sono il futuro della medicina degli ambienti estremi: una comunità di studenti, operatori e appassionati, orientati all'eccellenza, pronti a imparare, contribuire e crescere insieme.</p>
+             <p data-i18n-html="rete_amici_p">Gli <strong>Amici di Boyle</strong> sono la comunità che cresce intorno alla Rete: studenti, operatori e appassionati che seguono i nostri corsi, leggono le nostre pubblicazioni e usano i nostri strumenti, per imparare, contribuire e crescere insieme.</p>
           <div class="cta-row">
             <a class="btn-split-community" href="rete.html">
               <span class="btn-split__rete">
@@ -1705,7 +1690,7 @@
         'rete_kicker':'La Rete di Boyle',
         'rete_h2':'Connettiamo Menti Brillanti',
         'rete_lead':"La <strong>Rete di Boyle</strong> unisce medici, ricercatori, ingegneri e operatori militari che lavorano dove l’aria finisce, la pressione sale e i margini di errore scompaiono. Professionisti selezionati, non collezionati.",
-        'rete_amici_p':"Gli <strong>Amici di Boyle</strong> sono il futuro della medicina degli ambienti estremi: una comunità di studenti, operatori e appassionati, orientati all’eccellenza, pronti a imparare, contribuire e crescere insieme.",
+        'rete_amici_p':"Gli <strong>Amici di Boyle</strong> sono la comunità che cresce intorno alla Rete: studenti, operatori e appassionati che seguono i nostri corsi, leggono le nostre pubblicazioni e usano i nostri strumenti, per imparare, contribuire e crescere insieme.",
         'split_rete':'Scopri la Rete','split_amici':'Amici di Boyle',
         'chip_esplora_t':'Esplora','chip_esplora_p':'Profili, competenze e connessioni tra clinica, ricerca e ambienti estremi.',
         'chip_partecipa_t':'Partecipa','chip_partecipa_p':'Eventi, idee, attività formative e contributi costruiti insieme alla rete.',
@@ -1885,7 +1870,7 @@
         'rete_kicker':'The Boyle Network',
         'rete_h2':'Connecting Brilliant Minds',
         'rete_lead':'The <strong>Boyle Network</strong> brings together physicians, researchers, engineers and military operators who work where the air runs out, pressure rises and error margins disappear. Professionals selected, not collected.',
-        'rete_amici_p':'The <strong>Amici di Boyle</strong> are the future of extreme environment medicine: a community of students, practitioners and enthusiasts, driven by excellence, ready to learn, contribute and grow together.',
+        'rete_amici_p':'The <strong>Amici di Boyle</strong> are the community growing around the Network: students, practitioners and enthusiasts who attend our courses, read our publications and use our tools, to learn, contribute and grow together.',
         'split_rete':'Discover the Network','split_amici':'Amici di Boyle',
         'chip_esplora_t':'Explore','chip_esplora_p':'Profiles, expertise and connections across clinical practice, research and extreme environments.',
         'chip_partecipa_t':'Participate','chip_partecipa_p':'Events, ideas, educational activities and contributions built together with the network.',
@@ -2243,6 +2228,7 @@
   </script>
   <script src="home-extra.js?v=20261026b" defer></script>
   <script src="barometro.js?v=20261026b" defer></script>
+  <script src="nav-tools.js?v=20261026g" defer></script>
   <script src="title-fx.js?v=20261026b" defer></script>
   <script src="motion.js?v=20261026b" defer></script>
   <script src="consent.js?v=20261026b" defer></script>

@@ -1,0 +1,42 @@
+/* Gli Amici di Boyle · menu «Strumenti» (Boyle Lab, Boyle Bibliography, Diving-Boyle)
+   Uguale su tutte le pagine: a tendina sul computer, a fisarmonica nel menu del telefono. */
+.nav-tools { position: relative; display: inline-flex; align-items: center; }
+.nav-tools__btn { display: inline-flex; align-items: center; gap: 6px; font: inherit; font-size: inherit; color: inherit; opacity: .86;
+  background: none; border: 0; cursor: pointer; padding: 6px 10px; border-radius: 9px; white-space: nowrap; transition: background .2s, color .2s, opacity .2s; }
+.nav-tools__btn::after { content: ""; width: 10px; height: 10px; flex: none; transition: transform .25s;
+  background: url("data:image/svg+xml,%3Csvg viewBox='0 0 18 18' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M4 7l5 5 5-5' stroke='%237be4ff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/contain no-repeat; }
+.nav-tools__btn:hover, .nav-tools.is-open .nav-tools__btn { opacity: 1; background: rgba(123,228,255,.08); }
+.nav-tools.is-current .nav-tools__btn { color: #7be4ff; opacity: 1; }
+.nav-tools.is-open .nav-tools__btn::after { transform: rotate(180deg); }
+.nav-tools__panel { position: absolute; z-index: 9500; top: calc(100% + 10px); left: 50%; transform: translateX(-50%); min-width: 270px;
+  display: grid; gap: 2px; padding: 8px; border-radius: 16px; background: rgba(3,14,32,.97); border: 1px solid rgba(123,228,255,.22);
+  box-shadow: 0 24px 60px rgba(0,0,0,.55); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); text-align: left; }
+.nav-tools__panel[hidden] { display: none; }
+.nav-tools__panel::before { content: ""; position: absolute; left: 0; right: 0; top: -12px; height: 12px; }
+html body .nav-tools__panel a { display: grid !important; gap: 1px; padding: 10px 14px !important; border-radius: 11px; text-decoration: none; color: #edf7ff !important;
+  text-align: left !important; white-space: nowrap; background: none; }
+.nav-tools__panel a b { font-weight: 700; font-size: .92rem; }
+.nav-tools__panel a small { font-size: .74rem; color: rgba(237,247,255,.55); font-weight: 400; }
+html body .nav-tools__panel a:hover, html body .nav-tools__panel a:focus-visible { background: rgba(123,228,255,.1); }
+.nav-tools__panel a[aria-current="page"] b { color: #7be4ff; }
+.nav-tools__panel a::before { content: none !important; display: none !important; }
+@media (hover: hover) and (min-width: 769px) {
+  .nav--desktop .nav-tools:hover .nav-tools__panel, .site-nav .nav-tools:hover .nav-tools__panel { display: grid; }
+}
+
+/* nel menu del telefono: voce che si apre sotto, allineata a destra come le altre */
+.nav-mobile-panel .nav-tools { display: block; }
+.nav-mobile-panel .nav-tools__btn { width: 100%; justify-content: flex-end; padding: 11px 14px 11px 20px; font-size: .95rem; font-weight: 600; border-radius: 12px; }
+.nav-mobile-panel .nav-tools__panel { position: static; transform: none; min-width: 0; box-shadow: none; border: 0; background: rgba(123,228,255,.05); backdrop-filter: none; margin: 2px 0 4px; padding: 4px; }
+.nav-mobile-panel .nav-tools:hover .nav-tools__panel[hidden] { display: none; }
+html body .nav-mobile-panel .nav-tools__panel a { text-align: right !important; justify-items: end; padding: 9px 14px !important; }
+@media (max-width: 768px) {
+  .site-nav .nav-tools { display: block; }
+  .site-nav .nav-tools__btn { width: 100%; justify-content: flex-end; padding: 12px 14px 12px 20px; font-size: .98rem; font-weight: 600; border-radius: 12px; }
+  .site-nav .nav-tools__panel { position: static; transform: none; min-width: 0; box-shadow: none; border: 0; background: rgba(123,228,255,.05); backdrop-filter: none; margin: 2px 0 4px; padding: 4px; }
+  html body .site-nav .nav-tools__panel a { text-align: right !important; justify-items: end; padding: 9px 14px !important; }
+}
+@media (min-width: 769px) and (max-width: 1120px) {
+  .header .nav-mobile-panel .nav-tools__btn { justify-content: flex-end; }
+}
+@media (prefers-reduced-motion: reduce) { .nav-tools__btn::after { transition: none; } }

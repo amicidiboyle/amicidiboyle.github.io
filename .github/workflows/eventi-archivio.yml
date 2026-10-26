@@ -1,0 +1,36 @@
+name: Eventi · archivio automatico degli eventi conclusi
+
+on:
+  schedule:
+    - cron: "11 0 * * *"    # poco dopo mezzanotte UTC (1-2 di notte in Italia)
+    - cron: "11 12 * * *"   # e a meta' giornata, per gli eventi che finiscono di mattina
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: eventi-archivio
+  cancel-in-progress: false
+
+jobs:
+  archivia:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Sposta gli eventi conclusi nell'archivio
+        run: python scripts/eventi_archivio.py
+      - name: Pubblica se qualcosa e' cambiato
+        run: |
+          if git diff --quiet -- eventi.html index.html; then
+            echo "Nessun evento da archiviare."
+            exit 0
+          fi
+          git config user.name "Boyle bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add eventi.html index.html
+          git commit -m "Eventi: archiviazione automatica degli eventi conclusi"
+          git push
