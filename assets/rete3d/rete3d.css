@@ -146,3 +146,57 @@
 .r3d-card__net img { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; box-shadow: 0 0 0 2px rgba(123,228,255,.5); transition: box-shadow .2s; }
 .r3d-card__net button:hover img, .r3d-card__net button:focus-visible img { box-shadow: 0 0 0 3px #7be4ff, 0 0 14px rgba(123,228,255,.6); }
 @media (prefers-reduced-motion: reduce) { .r3d-zc { transition: none; } }
+
+/* ══ v3: la scena e' la hero della pagina della Rete ══ */
+.r3d-top { position: relative; z-index: 2; background: #020a18; }
+.r3d-top .r3d-stage { margin-top: 0; border-top: 0; height: min(calc(100svh - 72px - 150px), 860px); min-height: 480px;
+  background: radial-gradient(ellipse at 50% 48%, rgba(24,86,170,.42) 0%, rgba(6,24,52,.75) 42%, #020a18 78%); }
+.r3d-hud { flex-direction: column; gap: 6px; }
+.r3d-title { margin: 0; font-size: clamp(1.6rem, 2.6vw, 2.4rem); line-height: 1; letter-spacing: -.03em; color: #edf7ff; font-family: inherit; text-transform: none; }
+.r3d-stats { margin: 0; display: flex; flex-wrap: wrap; gap: 4px 16px; font: 700 .68rem/1 ui-monospace, "SF Mono", Menlo, Consolas, monospace; letter-spacing: .12em; text-transform: uppercase; color: rgba(168,238,255,.75); }
+.r3d-stats span { display: inline-flex; align-items: center; gap: 8px; }
+.r3d-betapill { position: absolute; left: 50%; top: 14px; transform: translateX(-50%); z-index: 3; margin: 0; padding: 5px 12px; border-radius: 999px; pointer-events: none;
+  font: 700 .62rem/1 ui-monospace, "SF Mono", Menlo, Consolas, monospace; letter-spacing: .16em; text-transform: uppercase; color: #ffd98a; background: rgba(230,159,0,.12); border: 1px solid rgba(230,159,0,.4); }
+.r3d-areas { position: absolute; left: 16px; right: 16px; bottom: 14px; z-index: 3; display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; }
+.r3d-areas .r3d-chip { padding: 7px 12px; font-size: .78rem; background: rgba(2,11,24,.72); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+/* console delle azioni: stessa notte della scena, nessuno stacco chiaro */
+.r3d-console { position: relative; padding: 18px 0 30px; background: linear-gradient(180deg, #020a18 0%, rgba(2,10,24,.92) 70%, rgba(2,10,24,0) 100%); border-top: 1px solid rgba(123,228,255,.1); }
+.r3d-console .hero__cta { justify-content: center; margin: 0; }
+.r3d-console .hero-access-bar { margin-top: 6px !important; }
+/* scheda a destra: la card vera della griglia */
+.r3d-panel { top: 70px; padding: 16px 16px 18px; }
+.r3d-panel__area { display: inline-flex; align-items: center; gap: 8px; margin: 2px 0 10px; font: 700 .68rem/1 ui-monospace, "SF Mono", Menlo, Consolas, monospace; letter-spacing: .12em; text-transform: uppercase; color: rgba(237,247,255,.75); }
+.r3d-panel__area i { width: 9px; height: 9px; border-radius: 50%; background: var(--c); box-shadow: 0 0 8px var(--c); }
+.r3d-panel .member-card.r3d-membercard { opacity: 1 !important; transform: none !important; translate: none !important; scale: none !important; width: 100%; max-width: none; margin: 0; animation: none !important; }
+.r3d-founder { text-align: center; color: #edf7ff; padding: 6px 0 4px; }
+.r3d-founder__photo { width: 136px; height: 136px; margin: 4px auto 14px; border-radius: 50%; padding: 4px; background: conic-gradient(#ffffff, rgba(123,228,255,.5), #ffffff); }
+.r3d-founder__photo img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; display: block; }
+.r3d-founder h2 { margin: 0 0 6px; font-size: 1.4rem; }
+.r3d-founder__role { margin: 0 0 16px; color: rgba(237,247,255,.75); }
+.r3d-net { margin: 16px 0 0; text-align: center; }
+.r3d-net p { margin: 0 0 8px; font: 700 .64rem/1 ui-monospace, "SF Mono", Menlo, Consolas, monospace; letter-spacing: .14em; text-transform: uppercase; color: rgba(168,238,255,.7); }
+.r3d-net div { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
+.r3d-net button { display: grid; justify-items: center; gap: 4px; padding: 0; background: none; border: 0; cursor: pointer; color: rgba(237,247,255,.75); font: inherit; font-size: .68rem; }
+.r3d-net img { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; box-shadow: 0 0 0 2px rgba(123,228,255,.5); }
+.r3d-net button:hover img, .r3d-net button:focus-visible img { box-shadow: 0 0 0 3px #7be4ff, 0 0 14px rgba(123,228,255,.6); }
+.r3d-zc__go { cursor: pointer; }
+@media (max-width: 760px) {
+  .r3d-top .r3d-stage { height: 68svh; min-height: 440px; }
+  .r3d-title { font-size: 1.5rem; }
+  .r3d-betapill { top: auto; bottom: 64px; }
+  .r3d-areas { flex-wrap: nowrap; justify-content: flex-start; overflow-x: auto; scrollbar-width: none; left: 0; right: 0; padding: 0 12px; bottom: 10px; }
+  .r3d-areas::-webkit-scrollbar { display: none; }
+  .r3d-areas .r3d-chip { flex: none; }
+  .r3d-tools { top: 12px; bottom: auto; right: 10px; max-width: 46%; }
+  .r3d-tools button { min-width: 34px; height: 34px; padding: 0 9px; font-size: .72rem; }
+  .r3d-hud { max-width: 52%; }
+  .r3d-console { padding: 16px 0 26px; }
+}
+.r3d-panel .member-card.r3d-membercard { height: auto !important; min-height: 0 !important; aspect-ratio: auto !important; }
+.r3d-panel .r3d-membercard .member-bio, .r3d-panel .r3d-membercard [class*="bio"] { flex: none !important; }
+@media (min-width: 761px) {
+  .r3d-stage:has(.r3d-panel.is-open) .r3d-areas { right: calc(min(400px, 40%) + 40px); justify-content: flex-start; }
+  .r3d-stage:has(.r3d-panel.is-open) .r3d-hud ~ .r3d-betapill { left: 40%; }
+}
+.r3d-panel .r3d-membercard .member-role { padding-bottom: 100px !important; margin-bottom: 0 !important; max-width: 34ch; }
+.r3d-panel .r3d-membercard .member-bio-snippet:empty { display: none; }

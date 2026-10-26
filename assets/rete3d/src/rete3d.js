@@ -312,27 +312,44 @@ export function createNetwork(stage, { members, founders, onSelect, onHover, onC
     pick();
     if (hoverCore && !hover) { pressing = true; pressT = 0; controls.enabled = false; }
   });
-  window.addEventListener('pointerup', e => {
+  window.addEventListener('pointerup', () => {
     const long = pressing && pressT > 0.25;
-    if (pressing) { pressing = false; controls.enabled = true; if (long) wave(); }
-    if (e.target !== canvas) return;
-    if (performance.now() - downAt > 450 || Math.hypot(e.clientX - downX, e.clientY - downY) > 8) return;
+    if (pressing) { pressing = false; controls.enabled = true; if (long) { wave(); suppressClick = true; } }
+  });
+  /* selezione con l'evento click: arriva anche dopo un tocco un po' impreciso,
+     ma non dopo un trascinamento (la rotazione non apre schede) */
+  let suppressClick = false;
+  canvas.addEventListener('click', e => {
+    if (suppressClick) { suppressClick = false; return; }
+    if (Math.hypot(e.clientX - downX, e.clientY - downY) > (mobile ? 14 : 8)) return;
     setNdc(e); pick();
     if (hover) onSelect(hover.index);
-    else if (hoverCore) { if (!long) wave(); }
+    else if (hoverCore) wave();
     else if (onEmpty) onEmpty();
   });
   canvas.addEventListener('contextmenu', e => { if (hoverCore || pressing) e.preventDefault(); });
   canvas.addEventListener('wheel', () => { if (!mobile && !engaged) stage.dispatchEvent(new CustomEvent('r3d-wheelhint')); }, { passive: true });
 
   const sprites = nodes.map(n => n.sprite);
+  const proj = nodes.map(() => ({ x: 0, y: 0, px: 0, front: false, op: 1, depth: 0 }));
+  /* scelta del nodo in coordinate di schermo: area di tocco generosa anche per i nodi piccoli */
   function pick() {
     hover = null; hoverCore = false;
     if (Math.abs(ndc.x) > 1.5) return;
+    const W = canvas.clientWidth, H = canvas.clientHeight;
+    const px = (ndc.x + 1) / 2 * W, py = (1 - ndc.y) / 2 * H;
+    let best = null, bestScore = Infinity;
+    proj.forEach((p, i) => {
+      if (!p.front || p.op < 0.12) return;
+      const r = Math.max(p.px * 1.25, mobile ? 24 : 15);
+      const d = Math.hypot(p.x - px, p.y - py);
+      if (d > r) return;
+      const score = d / r + p.depth * 0.02;
+      if (score < bestScore) { bestScore = score; best = nodes[i]; }
+    });
     ray.setFromCamera(ndc, camera);
-    const hit = ray.intersectObjects(sprites, false).find(h => h.object.userData.node.opacity > 0.3);
     const coreHit = ray.intersectObject(shell, false)[0];
-    if (hit && (!coreHit || hit.distance < coreHit.distance + 0.5)) { hover = hit.object.userData.node; return; }
+    if (best && (!coreHit || camera.position.distanceTo(best.pos) < coreHit.distance + 0.6)) { hover = best; return; }
     if (coreHit) hoverCore = true;
   }
   function wave() { if (reduced) return; waveT = 0; burst = 1.6; if (navigator.vibrate) try { navigator.vibrate(12); } catch (e) {} }
@@ -378,7 +395,6 @@ export function createNetwork(stage, { members, founders, onSelect, onHover, onC
   const clock = new THREE.Clock();
   let running = false, visible = true, raf = 0, intro = reduced ? 1 : 0;
   const tmp = new THREE.Vector3(), surf = new THREE.Vector3(), zero = new THREE.Vector3();
-  const proj = nodes.map(() => ({ x: 0, y: 0, px: 0, front: false }));
   function edgeEnds(e, outA, outB, coreR) {
     outA.copy(nodes[e.a].pos);
     if (e.b < 0) outB.copy(outA).setLength(coreR);   // dal bordo del nucleo, non dal centro
@@ -458,7 +474,7 @@ export function createNetwork(stage, { members, founders, onSelect, onHover, onC
       const dist = camera.position.distanceTo(n.pos);
       const p = proj[i];
       p.x = (tmp.x + 1) / 2 * canvas.clientWidth; p.y = (1 - tmp.y) / 2 * H;
-      p.front = tmp.z < 1 && tmp.z > -1; p.px = sc * 0.5 * fovK / Math.max(dist, 0.01); p.op = n.sprite.material.opacity;
+      p.front = tmp.z < 1 && tmp.z > -1; p.px = sc * 0.5 * fovK / Math.max(dist, 0.01); p.op = n.sprite.material.opacity; p.depth = dist;
     });
     if (onFrame) onFrame(proj);
 
