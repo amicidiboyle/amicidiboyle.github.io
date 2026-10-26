@@ -358,7 +358,8 @@ body::after { background:
 .lab-bench__area .lab-ic { width: 16px; height: 16px; color: var(--l-cyan); }
 .lab-bench a { margin-left: auto; color: #8ff0d9; text-decoration: none; }
 .lab-bench__motto { display: inline-flex; align-items: center; gap: 12px; flex-wrap: wrap; }
-.lab-bench__motto b { font: 800 1rem/1.15 'DM Sans', system-ui, sans-serif; letter-spacing: -.01em; text-transform: none; color: #eaf8ff; background: linear-gradient(90deg, #7be4ff, #c9f6ff 45%, #e69f00); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.lab-bench__motto b { font: 800 1rem/1.25 'DM Sans', system-ui, sans-serif; letter-spacing: -.01em; text-transform: none; color: #c9f6ff; text-shadow: 0 0 14px rgba(123,228,255,.35); }
+.lab-bench__motto b i { font-style: normal; color: #f2b84b; text-shadow: 0 0 14px rgba(230,159,0,.35); white-space: nowrap; }
 .lab-bench__ok { padding: 4px 9px; border-radius: 999px; border: 1px solid rgba(57,230,195,.4); background: rgba(57,230,195,.08); color: #8ff0d9; font-size: .64rem; letter-spacing: .12em; text-transform: uppercase; }
 .lab-bench__ok.is-ko { border-color: rgba(213,94,0,.5); color: #ff9f80; background: rgba(213,94,0,.1); }
 .lab-bench__motto:hover .lab-bench__ok { background: rgba(57,230,195,.16); }

@@ -1,11 +1,11 @@
 /* BOYLE LAB · applicazione (routing, catalogo, banco di lavoro, registro, validazione)
    ES module puro, nessuna dipendenza. Tutti i calcoli arrivano da lab/core. */
-import { BASE } from './experiments/base.js?v=20261026g';
-import { ADVANCED } from './experiments/advanced.js?v=20261026g';
-import { MODELS, CATEGORY } from './core/registry.js?v=20261026g';
+import { BASE } from './experiments/base.js?v=20261026h';
+import { ADVANCED } from './experiments/advanced.js?v=20261026h';
+import { MODELS, CATEGORY } from './core/registry.js?v=20261026h';
 import { REFS, refLink } from './core/refs.js';
-import { lineChart, barChart } from './ui/chart.js?v=20261026g';
-import { runAll } from './tests/cases.js?v=20261026g';
+import { lineChart, barChart } from './ui/chart.js?v=20261026h';
+import { runAll } from './tests/cases.js?v=20261026h';
 import { patch } from './ui/instruments.js';
 
 const VERSION = '1.0.0';
@@ -37,7 +37,7 @@ const UI = {
     back: '← Tutti gli esperimenti', B: 'B (fissato)', A: 'A (attuale)', delta: 'Δ', note: 'Nota del modello', warn: 'Attenzione', namePrompt: 'Nome del salvataggio',
     savedOk: 'Salvato in questo browser', module: 'Modulo', unimplemented: 'Moduli in preparazione',
     pick: 'Scegli un esperimento', pickHint: 'Area per area, tutti gli esperimenti del laboratorio', switchExp: 'Cambia esperimento', go: 'Vai direttamente a un esperimento',
-    simOn: 'Simulazione attiva', bench: 'Banco di prova', motto: 'Il tuo laboratorio di fisiologia', verified: 'modelli verificati', verifiedT: (a, b) => a + ' casi di prova su ' + b + ' superati: apri la validazione', close: 'Chiudi', readouts: 'Letture', instrument: 'Strumento', chartT: 'Grafico', ready: 'Pronto', soon: 'in arrivo',
+    simOn: 'Simulazione attiva', bench: 'Banco di prova', motto: 'Il laboratorio di fisiologia', motto2: 'degli ambienti estremi', verified: 'modelli verificati', verifiedT: (a, b) => a + ' casi di prova su ' + b + ' superati: apri la validazione', close: 'Chiudi', readouts: 'Letture', instrument: 'Strumento', chartT: 'Grafico', ready: 'Pronto', soon: 'in arrivo',
   },
   en: {
     home: 'Lab', catalog: 'Experiments', models: 'Models & validation', biblio: 'References',
@@ -58,7 +58,7 @@ const UI = {
     back: '← All experiments', B: 'B (pinned)', A: 'A (current)', delta: 'Δ', note: 'Model note', warn: 'Warning', namePrompt: 'Name for this save',
     savedOk: 'Saved in this browser', module: 'Module', unimplemented: 'Modules in preparation',
     pick: 'Choose an experiment', pickHint: 'Area by area, every experiment in the lab', switchExp: 'Switch experiment', go: 'Jump straight to an experiment',
-    simOn: 'Simulation running', bench: 'Test bench', motto: 'Your physiology laboratory', verified: 'verified models', verifiedT: (a, b) => a + ' of ' + b + ' test cases passed: open the validation page', close: 'Close', readouts: 'Readouts', instrument: 'Instrument', chartT: 'Chart', ready: 'Ready', soon: 'coming',
+    simOn: 'Simulation running', bench: 'Test bench', motto: 'The laboratory of', motto2: 'extreme-environment physiology', verified: 'verified models', verifiedT: (a, b) => a + ' of ' + b + ' test cases passed: open the validation page', close: 'Close', readouts: 'Readouts', instrument: 'Instrument', chartT: 'Chart', ready: 'Ready', soon: 'coming',
   },
 };
 const u = k => (UI[LANG] || UI.it)[k] ?? UI.it[k];
@@ -312,7 +312,7 @@ function viewExp(e, q) {
     <div class="lab-bench" role="status">
       <span class="lab-bench__on"><span class="lab-led${e.pending ? ' lab-led--off' : ''}"></span>${esc(e.pending ? u('pending') : u('simOn'))}</span>
       <span><small>MOD</small> ${e.module}</span><span class="lab-bench__area">${ICON[e.area]} ${e.area} · ${esc(t(AREAS[e.area]))}</span>
-      <a class="lab-bench__motto" href="#/modelli" title="${esc(u('verifiedT')(bs.ok, bs.n))}"><b>${esc(u('motto'))}</b><span class="lab-bench__ok${bs.ok === bs.n ? '' : ' is-ko'}">${bs.ok === bs.n ? '✓' : '✗'} ${esc(u('verified'))}</span></a>
+      <a class="lab-bench__motto" href="#/modelli" title="${esc(u('verifiedT')(bs.ok, bs.n))}"><b>${esc(u('motto'))} <i>${esc(u('motto2'))}</i></b><span class="lab-bench__ok${bs.ok === bs.n ? '' : ' is-ko'}">${bs.ok === bs.n ? '✓' : '✗'} ${esc(u('verified'))}</span></a>
     </div>`;
   if (e.pending) {
     app.innerHTML = head + `<div class="lab-pending"><h2>${esc(u('pending'))}</h2><p>${esc(u('pendingD'))}</p></div>` + scienceCards(e) + disclaimer();
