@@ -1,11 +1,11 @@
 /* BOYLE LAB · applicazione (routing, catalogo, banco di lavoro, registro, validazione)
    ES module puro, nessuna dipendenza. Tutti i calcoli arrivano da lab/core. */
-import { BASE } from './experiments/base.js?v=20261026e';
-import { ADVANCED } from './experiments/advanced.js?v=20261026e';
-import { MODELS, CATEGORY } from './core/registry.js?v=20261026e';
+import { BASE } from './experiments/base.js?v=20261026f';
+import { ADVANCED } from './experiments/advanced.js?v=20261026f';
+import { MODELS, CATEGORY } from './core/registry.js?v=20261026f';
 import { REFS, refLink } from './core/refs.js';
-import { lineChart, barChart } from './ui/chart.js?v=20261026e';
-import { runAll } from './tests/cases.js?v=20261026e';
+import { lineChart, barChart } from './ui/chart.js?v=20261026f';
+import { runAll } from './tests/cases.js?v=20261026f';
 import { patch } from './ui/instruments.js';
 
 const VERSION = '1.0.0';
@@ -37,7 +37,7 @@ const UI = {
     back: '← Tutti gli esperimenti', B: 'B (fissato)', A: 'A (attuale)', delta: 'Δ', note: 'Nota del modello', warn: 'Attenzione', namePrompt: 'Nome del salvataggio',
     savedOk: 'Salvato in questo browser', module: 'Modulo', unimplemented: 'Moduli in preparazione',
     pick: 'Scegli un esperimento', pickHint: 'Area per area, tutti gli esperimenti del laboratorio', switchExp: 'Cambia esperimento', go: 'Vai direttamente a un esperimento',
-    simOn: 'Simulazione attiva', bench: 'Banco di prova', readouts: 'Letture', instrument: 'Strumento', chartT: 'Grafico', ready: 'Pronto', soon: 'in arrivo',
+    simOn: 'Simulazione attiva', bench: 'Banco di prova', motto: 'Dagli abissi a Marte', verified: 'modelli verificati', verifiedT: (a, b) => a + ' casi di prova su ' + b + ' superati: apri la validazione', close: 'Chiudi', readouts: 'Letture', instrument: 'Strumento', chartT: 'Grafico', ready: 'Pronto', soon: 'in arrivo',
   },
   en: {
     home: 'Lab', catalog: 'Experiments', models: 'Models & validation', biblio: 'References',
@@ -58,7 +58,7 @@ const UI = {
     back: '← All experiments', B: 'B (pinned)', A: 'A (current)', delta: 'Δ', note: 'Model note', warn: 'Warning', namePrompt: 'Name for this save',
     savedOk: 'Saved in this browser', module: 'Module', unimplemented: 'Modules in preparation',
     pick: 'Choose an experiment', pickHint: 'Area by area, every experiment in the lab', switchExp: 'Switch experiment', go: 'Jump straight to an experiment',
-    simOn: 'Simulation running', bench: 'Test bench', readouts: 'Readouts', instrument: 'Instrument', chartT: 'Chart', ready: 'Ready', soon: 'coming',
+    simOn: 'Simulation running', bench: 'Test bench', motto: 'From the deep sea to Mars', verified: 'verified models', verifiedT: (a, b) => a + ' of ' + b + ' test cases passed: open the validation page', close: 'Close', readouts: 'Readouts', instrument: 'Instrument', chartT: 'Chart', ready: 'Ready', soon: 'coming',
   },
 };
 const u = k => (UI[LANG] || UI.it)[k] ?? UI.it[k];
@@ -102,7 +102,9 @@ function cascade(label, current = null, cls = '') {
     <button type="button" class="lab-cx__btn" aria-expanded="false" aria-controls="${id}">
       <span class="lab-cx__led"></span><span class="lab-cx__lab">${esc(label)}</span>${current && byId[current] ? `<span class="lab-cx__cur">${esc(t(byId[current].title))}</span>` : ''}${ICON.down}
     </button>
-    <div class="lab-cx__panel" id="${id}" hidden>
+    <div class="lab-cx__veil" data-cx-close hidden></div>
+    <div class="lab-cx__panel" id="${id}" role="dialog" aria-label="${esc(label)}" hidden>
+      <div class="lab-cx__sheet"><span>${esc(label)}</span><button type="button" class="lab-cx__x" data-cx-close aria-label="${esc(u('close'))}">×</button></div>
       <ul class="lab-cx__areas">${areas.map(({ k, a, list }) => `<li><button type="button" class="lab-cx__area${k === curArea ? ' is-on' : ''}" data-area="${k}">
         <span class="lab-cx__ic">${ICON[k]}</span><span><b>${k}</b> ${esc(t(a))}</span><em>${list.length}</em>${ICON.chev}</button></li>`).join('')}</ul>
       <div class="lab-cx__items">${areas.map(({ k, a, list }) => `<ul data-for="${k}"${k === curArea ? '' : ' hidden'}>
@@ -115,7 +117,9 @@ function cascade(label, current = null, cls = '') {
 function bindCascades(root = app) {
   root.querySelectorAll('[data-cx]').forEach(cx => {
     const btn = cx.querySelector('.lab-cx__btn'), panel = cx.querySelector('.lab-cx__panel');
-    const setOpen = on => { btn.setAttribute('aria-expanded', String(on)); panel.hidden = !on; cx.classList.toggle('is-open', on); };
+    const veil = cx.querySelector('.lab-cx__veil');
+    const setOpen = on => { btn.setAttribute('aria-expanded', String(on)); panel.hidden = !on; if (veil) veil.hidden = !on; cx.classList.toggle('is-open', on); document.documentElement.classList.toggle('lab-cx-lock', on && matchMedia('(max-width: 900px)').matches); };
+    cx.querySelectorAll('[data-cx-close]').forEach(x => x.addEventListener('click', ev => { ev.stopPropagation(); setOpen(false); btn.focus(); }));
     const show = k => {
       cx.querySelectorAll('.lab-cx__area').forEach(b => b.classList.toggle('is-on', b.dataset.area === k));
       cx.querySelectorAll('.lab-cx__items ul').forEach(l => { l.hidden = l.dataset.for !== k; });
@@ -132,7 +136,7 @@ function bindCascades(root = app) {
 }
 document.addEventListener('click', ev => {
   document.querySelectorAll('[data-cx].is-open').forEach(cx => {
-    if (!cx.contains(ev.target)) { cx.classList.remove('is-open'); cx.querySelector('.lab-cx__panel').hidden = true; cx.querySelector('.lab-cx__btn').setAttribute('aria-expanded', 'false'); }
+    if (!cx.contains(ev.target)) { cx.classList.remove('is-open'); cx.querySelector('.lab-cx__panel').hidden = true; const v = cx.querySelector('.lab-cx__veil'); if (v) v.hidden = true; cx.querySelector('.lab-cx__btn').setAttribute('aria-expanded', 'false'); document.documentElement.classList.remove('lab-cx-lock'); }
   });
 });
 const REDUCED = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -308,7 +312,7 @@ function viewExp(e, q) {
     <div class="lab-bench" role="status">
       <span class="lab-bench__on"><span class="lab-led${e.pending ? ' lab-led--off' : ''}"></span>${esc(e.pending ? u('pending') : u('simOn'))}</span>
       <span><small>MOD</small> ${e.module}</span><span class="lab-bench__area">${ICON[e.area]} ${e.area} · ${esc(t(AREAS[e.area]))}</span>
-      <a href="#/modelli"><small>${esc(u('bench'))}</small> ${bs.ok}/${bs.n} ${bs.ok === bs.n ? '✓' : '✗'}</a>
+      <a class="lab-bench__motto" href="#/modelli" title="${esc(u('verifiedT')(bs.ok, bs.n))}"><b>${esc(u('motto'))}</b><span class="lab-bench__ok${bs.ok === bs.n ? '' : ' is-ko'}">${bs.ok === bs.n ? '✓' : '✗'} ${esc(u('verified'))}</span></a>
     </div>`;
   if (e.pending) {
     app.innerHTML = head + `<div class="lab-pending"><h2>${esc(u('pending'))}</h2><p>${esc(u('pendingD'))}</p></div>` + scienceCards(e) + disclaimer();
