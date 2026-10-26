@@ -37,9 +37,8 @@ export const ADVANCED = [
         { label: 'PN₂', value: pc.N2, unit: 'bar', digits: 2 },
         { label: 'PHe', value: pc.He, unit: 'bar', digits: 2 },
         { label: 'MOD al limite di ' + fx(p.po2max, 2) + ' bar', value: M.mod(m.O2, p.po2max), unit: 'm', digits: 1 },
-        m.He === 0
-          ? { label: 'EAD', value: Math.max(M.ead(p.depth, m.O2), 0), unit: 'm', digits: 1 }
-          : { label: 'END (' + (p.narc === 'si' ? 'O₂ narcotico' : 'O₂ non narcotico') + ')', value: Math.max(M.end(p.depth, mix, p.narc === 'si'), 0), unit: 'm', digits: 1 },
+        { label: 'EAD (profondità equivalente in aria, solo azoto)', value: Math.max(M.ead(p.depth, m.O2), 0), unit: 'm', digits: 1 },
+        { label: 'END (' + (p.narc === 'si' ? 'O₂ narcotico' : 'O₂ non narcotico') + ')', value: Math.max(M.end(p.depth, mix, p.narc === 'si'), 0), unit: 'm', digits: 1 },
         { label: 'Densità del gas (20 °C)', value: M.gasDensityAt(p.depth, mix), unit: 'g/L', digits: 2 },
       ];
       const warnings = [];
@@ -74,6 +73,8 @@ export const ADVANCED = [
       const bottomEnd = samples.reduce((acc, s, i) => (s.depth === p.depth ? i : acc), 0);
       const out = show.map(c => ({ label: 'T½ ' + String(K.ZHL16_N2_HALFTIMES[c]).replace('.', ',') + ' min: a fine fondo / all\'emersione', text: fx(samples[bottomEnd].tensions[c], 2) + ' / ' + fx(samples[surf].tensions[c], 2) + ' bar' }));
       out.unshift({ label: 'Tensione di partenza (superficie, aria)', value: K.surfaceSaturation(), unit: 'bar', digits: 3 });
+      const endS = samples[samples.length - 1];
+      out.push({ label: 'Dopo ' + p.after + ' min in superficie: T½ 4 / 27 / 109 / 635 min', text: [0, 4, 8, 15].map(c => fx(endS.tensions[c], 2)).join(' / ') + ' bar' });
       const be = samples[bottomEnd];
       return {
         outputs: out,
@@ -116,7 +117,8 @@ export const ADVANCED = [
         chart: { type: 'line', spec: { title: 'PAO₂ in funzione della PaCO₂ (ventilazione)', x: { label: 'PaCO₂', unit: 'mmHg', min: 15, max: 90 }, y: { label: 'PAO₂', unit: 'mmHg', min: 0 }, series: [
           { name: 'Semplificata', points: xs.map(c => [c, P.alveolarPO2({ pb: p.pb, fio2: f, paco2: c, rq: p.rq })]) },
           { name: 'Completa', points: xs.map(c => [c, P.alveolarPO2({ pb: p.pb, fio2: f, paco2: c, rq: p.rq, full: true })]) },
-        ], marker: { x: p.paco2, y: A, label: fx(A, 0) + ' mmHg' } } },
+          { name: 'PaO₂ misurata ' + p.pao2 + ' mmHg', points: [[15, p.pao2], [90, p.pao2]], colorIndex: 5 },
+        ], marker: { x: p.paco2, y: A, label: 'PAO₂ ' + fx(A, 0) + ' · A-a ' + fx(A - p.pao2, 0) } } },
       };
     },
   },
@@ -147,8 +149,9 @@ export const ADVANCED = [
           { label: 'Estrazione O₂ER', value: P.o2Extraction(ca.total, cv.total) * 100, unit: '%', digits: 1 },
         ],
         warnings: p.svo2 > p.sao2 ? ['La SvO₂ è più alta della SaO₂: valori non fisiologici.'] : [],
-        chart: { type: 'line', spec: { title: 'DO₂ in funzione della portata cardiaca', x: { label: 'Portata cardiaca', unit: 'L/min', min: 1, max: 15 }, y: { label: 'DO₂', unit: 'mL/min', min: 0 }, series: [
-          { name: 'Hb ' + fx(p.hb, 1) + ' g/dL', points: xs.map(q => [q, P.o2Delivery(ca.total, q)]) },
+        chart: { type: 'line', spec: { title: 'DO₂ e VO₂ in funzione della portata cardiaca', x: { label: 'Portata cardiaca', unit: 'L/min', min: 1, max: 15 }, y: { label: 'Ossigeno', unit: 'mL/min', min: 0 }, series: [
+          { name: 'DO₂ (Hb ' + fx(p.hb, 1) + ' g/dL)', points: xs.map(q => [q, P.o2Delivery(ca.total, q)]) },
+          { name: 'VO₂ (con questa CvO₂)', points: xs.map(q => [q, P.o2Consumption(q, ca.total, cv.total)]), colorIndex: 1 },
         ], marker: { x: p.q, y: P.o2Delivery(ca.total, p.q), label: fx(P.o2Delivery(ca.total, p.q), 0) + ' mL/min' } } },
       };
     },
@@ -184,7 +187,7 @@ export const ADVANCED = [
           { label: 'O₂ disciolto', value: r.dissolved, unit: 'mL/dL', digits: 2 },
           { label: 'CaO₂ totale', value: r.total, unit: 'mL/dL', digits: 2, hint: r.dissolved / r.total * 100, hintUnit: '% disciolto' },
         ],
-        visual: V.chamber({ ata: p.ata, gas: f >= 0.99 ? 'o2' : 'aria', gasText: 'FiO₂ ' + p.fio2 + '%', label: 'Camera a ' + p.ata + ' ATA' }),
+        visual: V.chamber({ ata: p.ata, gas: f >= 0.99 ? 'o2' : 'aria', gasText: 'FiO₂ ' + p.fio2 + '%', lines: ['PaO₂ ' + fx(r.a, 0) + ' mmHg', 'CaO₂ ' + fx(r.total, 1) + ' mL/dL · Hb ' + fx(p.hb, 1)], label: 'Camera a ' + p.ata + ' ATA' }),
         chart: { type: 'line', spec: { title: 'Contenuto arterioso di O₂ in funzione della pressione', x: { label: 'Pressione', unit: 'ATA', min: 1, max: 3 }, y: { label: 'Contenuto', unit: 'mL/dL', min: 0 }, series: [
           { name: 'Legato', points: xs.map(x => [x, calc(x).bound]) },
           { name: 'Disciolto', points: xs.map(x => [x, calc(x).dissolved]) },
@@ -219,10 +222,11 @@ export const ADVANCED = [
           { label: 'PaO₂ (ipotesi)', value: a, unit: 'mmHg', digits: 1 },
           { label: 'Saturazione stimata (curva standard)', value: P.severinghausSat(a) * 100, unit: '%', digits: 1 },
         ],
-        visual: V.mountain({ alt: p.alt, maxAlt: 11000, pb: pb(p.alt), label: 'Quota ' + p.alt + ' metri' }),
+        visual: V.mountain({ alt: p.alt, maxAlt: 11000, pb: pb(p.alt), lines: ['FiO₂ ' + p.fio2 + '% · PaCO₂ ' + p.paco2, 'PaO₂ ' + fx(a, 0) + ' · SaO₂ ' + fx(P.severinghausSat(a) * 100, 0) + '%'], label: 'Quota ' + p.alt + ' metri' }),
         chart: { type: 'line', spec: { title: 'PAO₂ in funzione della quota', x: { label: 'Quota', unit: 'm', min: 0, max: 11000 }, y: { label: 'PAO₂', unit: 'mmHg', min: 0 }, series: [
           { name: 'PaCO₂ 40 mmHg', points: xs.map(h => [h, P.alveolarPO2({ pb: pb(h), fio2: f, paco2: 40 , full: true })]) },
           ...(p.paco2 !== 40 ? [{ name: 'PaCO₂ ' + p.paco2 + ' mmHg', points: xs.map(h => [h, A(h)]) }] : []),
+          ...(p.aa > 0 ? [{ name: 'PaO₂ (gradiente ' + p.aa + ' mmHg)', points: xs.map(h => [h, Math.max(A(h) - p.aa, 0)]), colorIndex: 5 }] : []),
         ], marker: { x: p.alt, y: A(p.alt), label: fx(A(p.alt), 0) + ' mmHg' } } },
         warnings: ['La saturazione è stimata con la curva standard: in quota l\'alcalosi da iperventilazione sposta la curva, e la risposta individuale varia molto.'],
       };

@@ -208,7 +208,7 @@ export const BASE = [
           { label: 'O₂ disciolto nel plasma', value: c.dissolved, unit: 'mL/dL', digits: 2 },
           { label: 'Contenuto totale', value: c.total, unit: 'mL/dL', digits: 2 },
         ],
-        visual: V.plasma({ dissolved: c.dissolved, sat: s, label: 'Ossigeno disciolto nel plasma e legato all\'emoglobina' }),
+        visual: V.plasma({ dissolved: c.dissolved, sat: s, hb: p.hb, bound: c.bound, label: 'Ossigeno disciolto nel plasma e legato all\'emoglobina' }),
         chart: { type: 'line', spec: { title: 'Contenuto di O₂ del sangue in funzione della PO₂', x: { label: 'PO₂', unit: 'mmHg', min: 0, max: 2200 }, y: { label: 'Contenuto', unit: 'mL/dL', min: 0 }, series: [
           { name: 'Legato (Hb)', points: xs.map(x => [x, P.o2Content(p.hb, P.severinghausSat(x), x).bound]) },
           { name: 'Disciolto (Henry)', points: xs.map(x => [x, P.O2_SOLUBILITY * x]) },
@@ -285,7 +285,7 @@ export const BASE = [
           { label: 'PiO₂ in percentuale del livello del mare', value: pio2 / sea * 100, unit: '%', digits: 0 },
           { label: 'FiO₂ per avere la PiO₂ del livello del mare', value: fNeeded > 1 ? NaN : fNeeded * 100, unit: '%', digits: 1, note: fNeeded > 1 ? 'non raggiungibile nemmeno con O₂ al 100%' : '' },
         ],
-        visual: V.mountain({ alt: p.alt, pb, label: 'Quota ' + p.alt + ' metri' }),
+        visual: V.mountain({ alt: p.alt, pb, lines: ['FiO₂ ' + p.fio2 + '%', 'PiO₂ ' + Math.round(pio2) + ' mmHg'], label: 'Quota ' + p.alt + ' metri' }),
         chart: { type: 'line', spec: { title: 'PO₂ inspirata in funzione della quota', x: { label: 'Quota', unit: 'm', min: 0, max: 9000 }, y: { label: 'PiO₂', unit: 'mmHg', min: 0 }, series: [
           { name: 'Aria (21%)', points: xs.map(h => [h, P.inspiredPO2(mmHg(F.isaPressure(h)), 0.21)]) },
           ...(p.fio2 !== 21 ? [{ name: 'FiO₂ ' + p.fio2 + '%', points: xs.map(h => [h, P.inspiredPO2(mmHg(F.isaPressure(h)), f)]) }] : []),

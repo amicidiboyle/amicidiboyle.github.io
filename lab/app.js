@@ -1,11 +1,11 @@
 /* BOYLE LAB · applicazione (routing, catalogo, banco di lavoro, registro, validazione)
    ES module puro, nessuna dipendenza. Tutti i calcoli arrivano da lab/core. */
-import { BASE } from './experiments/base.js?v=20261026h';
-import { ADVANCED } from './experiments/advanced.js?v=20261026h';
-import { MODELS, CATEGORY } from './core/registry.js?v=20261026h';
+import { BASE } from './experiments/base.js?v=20261026i';
+import { ADVANCED } from './experiments/advanced.js?v=20261026i';
+import { MODELS, CATEGORY } from './core/registry.js?v=20261026i';
 import { REFS, refLink } from './core/refs.js';
-import { lineChart, barChart } from './ui/chart.js?v=20261026h';
-import { runAll } from './tests/cases.js?v=20261026h';
+import { lineChart, barChart } from './ui/chart.js?v=20261026i';
+import { runAll } from './tests/cases.js?v=20261026i';
 import { patch } from './ui/instruments.js';
 
 const VERSION = '1.0.0';
@@ -37,7 +37,7 @@ const UI = {
     back: '← Tutti gli esperimenti', B: 'B (fissato)', A: 'A (attuale)', delta: 'Δ', note: 'Nota del modello', warn: 'Attenzione', namePrompt: 'Nome del salvataggio',
     savedOk: 'Salvato in questo browser', module: 'Modulo', unimplemented: 'Moduli in preparazione',
     pick: 'Scegli un esperimento', pickHint: 'Area per area, tutti gli esperimenti del laboratorio', switchExp: 'Cambia esperimento', go: 'Vai direttamente a un esperimento',
-    simOn: 'Simulazione attiva', bench: 'Banco di prova', motto: 'Il laboratorio di fisiologia', motto2: 'degli ambienti estremi', verified: 'modelli verificati', verifiedT: (a, b) => a + ' casi di prova su ' + b + ' superati: apri la validazione', close: 'Chiudi', readouts: 'Letture', instrument: 'Strumento', chartT: 'Grafico', ready: 'Pronto', soon: 'in arrivo',
+    simOn: 'Simulazione attiva', bench: 'Banco di prova', motto: 'Il laboratorio di fisiologia', motto2: 'degli ambienti estremi', kickerT: 'fisiologia degli ambienti estremi', verified: 'modelli verificati', verifiedT: (a, b) => a + ' casi di prova su ' + b + ' superati: apri la validazione', close: 'Chiudi', readouts: 'Letture', instrument: 'Strumento', chartT: 'Grafico', ready: 'Pronto', soon: 'in arrivo',
   },
   en: {
     home: 'Lab', catalog: 'Experiments', models: 'Models & validation', biblio: 'References',
@@ -58,7 +58,7 @@ const UI = {
     back: '← All experiments', B: 'B (pinned)', A: 'A (current)', delta: 'Δ', note: 'Model note', warn: 'Warning', namePrompt: 'Name for this save',
     savedOk: 'Saved in this browser', module: 'Module', unimplemented: 'Modules in preparation',
     pick: 'Choose an experiment', pickHint: 'Area by area, every experiment in the lab', switchExp: 'Switch experiment', go: 'Jump straight to an experiment',
-    simOn: 'Simulation running', bench: 'Test bench', motto: 'The laboratory of', motto2: 'extreme-environment physiology', verified: 'verified models', verifiedT: (a, b) => a + ' of ' + b + ' test cases passed: open the validation page', close: 'Close', readouts: 'Readouts', instrument: 'Instrument', chartT: 'Chart', ready: 'Ready', soon: 'coming',
+    simOn: 'Simulation running', bench: 'Test bench', motto: 'The laboratory of', motto2: 'extreme-environment physiology', kickerT: 'extreme-environment physiology', verified: 'verified models', verifiedT: (a, b) => a + ' of ' + b + ' test cases passed: open the validation page', close: 'Close', readouts: 'Readouts', instrument: 'Instrument', chartT: 'Chart', ready: 'Ready', soon: 'coming',
   },
 };
 const u = k => (UI[LANG] || UI.it)[k] ?? UI.it[k];
@@ -203,7 +203,7 @@ function viewHome() {
     <section class="lab-hero lab-hero--home">
       <div class="lab-bubbles" aria-hidden="true">${Array.from({ length: 14 }, (_, i) => `<i style="--x:${(i * 7.3) % 100}%;--d:${(i * 1.7) % 9}s;--s:${6 + (i * 5) % 9}px;--t:${9 + (i * 3) % 7}s"></i>`).join('')}</div>
       <div class="lab-hero__copy">
-        <p class="lab-kicker"><span class="lab-led"></span> ${esc(u('ready'))} · ${bs.ok}/${bs.n} ${LANG === 'en' ? 'tests passed' : 'test superati'}</p>
+        <a class="lab-kicker" href="#/modelli" title="${esc(u('verifiedT')(bs.ok, bs.n))}"><span class="lab-led${bs.ok === bs.n ? '' : ' lab-led--off'}"></span> ${bs.ok === bs.n ? '✓' : '✗'} ${esc(u('verified'))}<span class="lab-kicker__more"> · ${esc(u('kickerT'))}</span></a>
         <h1 class="lab-title lab-title--fx" aria-label="Boyle Lab"><span class="lt-w" aria-hidden="true">${[...'Boyle'].map((c, i) => `<span class="lt-c" style="--i:${i}">${c}</span>`).join('')}</span> <span class="lt-lab lab-grad" aria-hidden="true">Lab</span><span class="lt-line" aria-hidden="true"></span></h1>
         <p class="lab-lead">${esc(u('lead'))}</p>
         <div class="lab-hero__pick">${cascade(u('go'))}</div>
@@ -356,7 +356,9 @@ function viewExp(e, q) {
     let r;
     try { r = err ? null : e.compute(p); } catch (x) { r = null; }
     const out = document.getElementById('lab-out'), warn = document.getElementById('lab-warn');
-    if (!r) { out.innerHTML = `<p class="lab-warn">${esc(err || 'Parametri fuori intervallo.')}</p>`; warn.innerHTML = ''; return; }
+    const work = document.getElementById('lab-work');
+    work.classList.toggle('is-invalid', !r);
+    if (!r) { out.innerHTML = `<p class="lab-warn lab-warn--big">⚠ ${esc(err || 'Parametri fuori intervallo.')}</p>`; warn.innerHTML = ''; return; }
     let rb = null;
     if (B) { try { rb = e.compute(B.params); } catch (x) { rb = null; } }
     last = { r, rb };
@@ -365,7 +367,7 @@ function viewExp(e, q) {
     if (r.chart.type === 'line') {
       const spec = { ...r.chart.spec, series: [...r.chart.spec.series] };
       if (rb && rb.chart.type === 'line') rb.chart.spec.series.forEach((s2, i) => spec.series.push({ ...s2, name: 'B · ' + s2.name, ghost: true, colorIndex: s2.colorIndex ?? i }));
-      patch(ch, lineChart(spec));
+      patch(ch, lineChart(spec, { width: Math.round(Math.min(Math.max(ch.clientWidth || 720, 340), 720)), height: (ch.clientWidth || 720) < 560 ? 380 : 420 }));
     } else patch(ch, barChart(r.chart.spec, { width: Math.round(Math.min(Math.max(ch.clientWidth || 720, 340), 720)) }));
     const ins = document.getElementById('lab-instr');
     ins.hidden = !r.visual; if (r.visual) patch(document.getElementById('lab-visual'), r.visual);

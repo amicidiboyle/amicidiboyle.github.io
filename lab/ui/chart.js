@@ -24,8 +24,14 @@ const fmtTick = v => Math.abs(v) >= 1000 ? v.toLocaleString('it-IT', { maximumFr
 
 /* spec: { title, x:{label,unit,min,max,reverse}, y:{label,unit,min,max},
            series:[{name, points:[[x,y]...], ghost?:bool}], marker?:{x,y,label}, bands?:[{y1,y2,label}] } */
+const clip = (t, n = 24) => t.length > n ? t.slice(0, n - 1) + '…' : t;
 export function lineChart(spec, { width = 720, height = 420 } = {}) {
-  const m = { l: 64, r: 18, t: 40, b: 56 };
+  /* etichette a fine curva: ogni serie porta il proprio nome, nel proprio colore, accanto alla linea */
+  const maxR = Math.min(190, Math.round(width * 0.3)), nameMax = Math.max(8, Math.floor((maxR - 22) / 6.3));
+  const endNames = spec.series.filter(x => !x.hideLegend && x.points.some(p => Number.isFinite(p[1]))).map(x => clip(x.name, nameMax));
+  const endW = endNames.length ? Math.max(...endNames.map(n => n.length * 6.3)) + 22 : 0;
+  const tLines = spec.title.length * 8.4 > width - 80 ? wrap2(spec.title) : [spec.title];
+  const m = { l: width < 500 ? 52 : 64, r: Math.min(Math.max(18, endW), maxR), t: 40 + (tLines.length - 1) * 19, b: 56 };
   const W = width - m.l - m.r, H = height - m.t - m.b;
   const all = spec.series.flatMap(s => s.points).filter(p => Number.isFinite(p[0]) && Number.isFinite(p[1]));
   let xmin = spec.x.min ?? Math.min(...all.map(p => p[0])), xmax = spec.x.max ?? Math.max(...all.map(p => p[0]));
@@ -41,7 +47,7 @@ export function lineChart(spec, { width = 720, height = 420 } = {}) {
   let s = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${height}" role="img" aria-labelledby="ct-t ct-d" class="lab-chart" font-family="DM Sans, system-ui, sans-serif">`;
   s += `<title id="ct-t">${esc(spec.title)}</title><desc id="ct-d">${axisLabel(spec.y)} in funzione di ${axisLabel(spec.x)}. Serie: ${spec.series.map(x => esc(x.name)).join(', ')}.</desc>`;
   s += `<rect width="${width}" height="${height}" fill="#03101f"/>`;
-  s += `<text x="${m.l}" y="22" fill="#edf7ff" font-size="15" font-weight="700">${esc(spec.title)}</text>`;
+  s += `<text x="${Math.min(m.l, 16 + (width < 500 ? 0 : 48))}" y="22" fill="#edf7ff" font-size="15" font-weight="700">${tLines.map((t, j) => `<tspan x="${Math.min(m.l, 16 + (width < 500 ? 0 : 48))}" dy="${j ? 19 : 0}">${esc(t)}</tspan>`).join('')}</text>`;
   for (const b of spec.bands || []) {
     const y1 = sy(Math.min(Math.max(b.y2, ymin), ymax)), y2 = sy(Math.max(Math.min(b.y1, ymax), ymin));
     s += `<rect x="${m.l}" y="${y1}" width="${W}" height="${Math.max(y2 - y1, 0)}" fill="${b.color || 'rgba(123,228,255,.07)'}"/>`;
@@ -58,7 +64,7 @@ export function lineChart(spec, { width = 720, height = 420 } = {}) {
     if (!pts.length) return;
     const d = pts.map((p, j) => (j ? 'L' : 'M') + sx(p[0]).toFixed(1) + ' ' + sy(p[1]).toFixed(1)).join('');
     const ci = ser.colorIndex ?? i;
-    s += `<path class="ct-line" d="${d}" fill="none" stroke="${ser.color || PALETTE[ci % PALETTE.length]}" stroke-width="${ser.ghost ? 1.6 : 2.4}" stroke-dasharray="${ser.ghost ? '5 5' : DASHES[ci % DASHES.length]}" opacity="${ser.ghost ? .75 : 1}" stroke-linejoin="round"/>`;
+    s += `<path class="ct-line" d="${d}" fill="none" stroke="${ser.color || PALETTE[ci % PALETTE.length]}" stroke-width="${ser.ghost ? 1.8 : 3}" stroke-dasharray="${ser.ghost ? '6 5' : DASHES[ci % DASHES.length]}" opacity="${ser.ghost ? .7 : 1}" stroke-linejoin="round" stroke-linecap="round"/>`;
   });
   s += '</g>';
   if (spec.marker && Number.isFinite(spec.marker.y)) {
@@ -68,19 +74,26 @@ export function lineChart(spec, { width = 720, height = 420 } = {}) {
     s += `<g class="ct-mk" style="transform:translate(${mx.toFixed(1)}px, ${my.toFixed(1)}px)"><circle r="12" fill="rgba(255,255,255,.10)" class="ct-halo"/><circle r="6" fill="#061a33" stroke="#ffffff" stroke-width="2.5"/>`;
     s += `<text x="${right ? -12 : 12}" y="${my - 10 < m.t + 12 ? 18 : -10}" text-anchor="${right ? 'end' : 'start'}" fill="#ffffff" font-size="12" font-weight="700">${esc(spec.marker.label || '')}</text></g>`;
   }
-  /* legenda */
-  let lx = m.l, ly = m.t + 6;
-  const legend = spec.series.filter(x => !x.hideLegend);
-  if (legend.length > 1) {
-    s += `<g font-size="11">`;
-    legend.forEach((ser) => {
-      const i = spec.series.indexOf(ser), ci = ser.colorIndex ?? i;
-      const w = 34 + ser.name.length * 6.2;
-      if (lx + w > m.l + W) { lx = m.l; ly += 16; }
-      s += `<line x1="${lx + 8}" x2="${lx + 28}" y1="${ly + 4}" y2="${ly + 4}" stroke="${ser.color || PALETTE[ci % PALETTE.length]}" stroke-width="2.4" stroke-dasharray="${ser.ghost ? '5 5' : DASHES[ci % DASHES.length]}"/><text x="${lx + 32}" y="${ly + 8}" fill="#edf7ff">${esc(ser.name)}</text>`;
-      lx += w;
-    });
-    s += '</g>';
+  /* etichette a fine curva, distanziate per non sovrapporsi */
+  const tags = [];
+  spec.series.forEach((ser, i) => {
+    if (ser.hideLegend) return;
+    const pts = ser.points.filter(p => Number.isFinite(p[1]) && p[0] >= Math.min(xmin, xmax) && p[0] <= Math.max(xmin, xmax));
+    if (!pts.length) return;
+    const last = spec.x.reverse ? pts[0] : pts[pts.length - 1];
+    const ci = ser.colorIndex ?? i;
+    const y0 = Math.min(Math.max(sy(Math.min(Math.max(last[1], ymin), ymax)), m.t + 6), m.t + H);
+    tags.push({ y0, y: y0, name: clip(ser.name, nameMax), color: ser.color || PALETTE[ci % PALETTE.length], ghost: ser.ghost, dash: ser.ghost ? '6 5' : DASHES[ci % DASHES.length] });
+  });
+  tags.sort((a, b) => a.y - b.y);
+  const GAP = 15;
+  for (let k = 1; k < tags.length; k++) if (tags[k].y < tags[k - 1].y + GAP) tags[k].y = tags[k - 1].y + GAP;
+  const over = tags.length ? tags[tags.length - 1].y - (m.t + H) : 0;
+  if (over > 0) { tags.forEach(t => { t.y -= over; }); for (let k = tags.length - 2; k >= 0; k--) if (tags[k].y > tags[k + 1].y - GAP) tags[k].y = tags[k + 1].y - GAP; }
+  const xe = m.l + W;
+  for (const t of tags) {
+    s += `<path d="M${xe + 2} ${t.y0.toFixed(1)}L${xe + 8} ${t.y0.toFixed(1)}L${xe + 12} ${t.y.toFixed(1)}" fill="none" stroke="${t.color}" stroke-width="1.2" opacity=".7"/>`;
+    s += `<text x="${xe + 15}" y="${(t.y + 4).toFixed(1)}" fill="${t.color}" font-size="11.5" font-weight="${t.ghost ? 500 : 700}" opacity="${t.ghost ? .8 : 1}">${esc(t.name)}</text>`;
   }
   return s + '</svg>';
 }

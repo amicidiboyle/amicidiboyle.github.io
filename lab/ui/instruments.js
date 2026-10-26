@@ -16,6 +16,8 @@ function niceStep(range, target = 6) {
 }
 const TXT = '#edf7ff', MUTED = 'rgba(237,247,255,.62)', CYAN = '#7be4ff', AMBER = '#ffb020';
 const svg = (w, h, label, body, cls = '') => `<svg viewBox="0 0 ${w} ${h}" class="lab-visual ${cls}" role="img" aria-label="${esc(label)}" font-family="DM Sans, system-ui, sans-serif">${body}</svg>`;
+/* righe di lettura aggiuntive (variabili che il disegno non rappresenta con una forma) */
+const info = (lines, x, y, anchor = 'start') => (lines || []).map((t, i) => `<text x="${x}" y="${y + i * 15}" text-anchor="${anchor}" class="iv-lcd" font-size="11" font-weight="700" fill="${i ? '#ffd27a' : '#c9f6ff'}">${esc(t)}</text>`).join('');
 const mv = (tf, origin) => `style="transform:${tf}${origin ? ';transform-origin:' + origin : ''}"`;
 
 /* ── manometro analogico ─────────────────────────────────────────────────── */
@@ -107,7 +109,7 @@ export function waterColumn({ depth, maxDepth = 40, vol, v0, ref = null, pBar, a
 }
 
 /* ── camera iperbarica con manometro ─────────────────────────────────────── */
-export function chamber({ ata, gas, gasText = null, max = 3, label }) {
+export function chamber({ ata, gas, gasText = null, max = 3, lines = null, label }) {
   const tint = 0.05 + clamp((ata - 1) / (max - 1), 0, 1) * 0.32;
   const r = rng(3); let part = '';
   for (let i = 0; i < 10; i++) part += `<circle class="iv-drift" cx="${(46 + r() * 150).toFixed(0)}" cy="${(108 + r() * 70).toFixed(0)}" r="${(1.2 + r() * 1.6).toFixed(1)}" style="--d:${(i * 0.7).toFixed(1)}s" fill="${gas === 'o2' ? '#a8eeff' : 'rgba(237,247,255,.6)'}"/>`;
@@ -120,6 +122,7 @@ export function chamber({ ata, gas, gasText = null, max = 3, label }) {
     <circle cx="214" cy="144" r="18" fill="#020b18" stroke="rgba(123,228,255,.6)" stroke-width="3"/><circle cx="214" cy="144" r="11" fill="rgba(123,228,255,.15)"/>
     <rect x="40" y="200" width="12" height="20" fill="#1b3554"/><rect x="190" y="200" width="12" height="20" fill="#1b3554"/>
     ${gauge(252, 50, 38, ata, max, { unit: 'ATA', digits: 2, min: 1 })}
+    ${info(lines, 16, 24)}
     <text x="122" y="238" text-anchor="middle" font-size="11" fill="${MUTED}">${gasText || (gas === 'o2' ? 'O₂ 100%' : 'Aria')} · ≈ ${f((ata - 1) * 10, 1)} m equivalenti</text>`);
 }
 
@@ -193,7 +196,7 @@ function hbRow(x, y, sat, title, cols = 5) {
 }
 
 /* ── provetta di plasma + emoglobina (Henry) ─────────────────────────────── */
-export function plasma({ dissolved, maxDissolved = 6.6, sat, label }) {
+export function plasma({ dissolved, maxDissolved = 6.6, sat, hb = null, bound = null, label }) {
   const N = 66, k = Math.round(clamp(dissolved / maxDissolved, 0, 1) * N);
   const r = rng(5); let dots = '';
   for (let i = 0; i < N; i++) dots += `<circle cx="${(36 + r() * 56).toFixed(1)}" cy="${(70 + r() * 196).toFixed(1)}" r="2.3" fill="#a8eeff" class="iv-fade" style="opacity:${i < k ? 0.95 : 0.06}"/>`;
@@ -204,7 +207,8 @@ export function plasma({ dissolved, maxDissolved = 6.6, sat, label }) {
     <text x="64" y="296" text-anchor="middle" class="iv-lcd" font-size="12" fill="${TXT}">${f(dissolved, 2)} mL/dL</text>
     ${hbRow(160, 78, sat, 'emoglobina', 2)}
     <text x="206" y="262" text-anchor="middle" class="iv-lcd" font-size="12" font-weight="700" fill="${TXT}">${f(sat * 100, 1)} %</text>
-    <text x="206" y="280" text-anchor="middle" font-size="10" fill="${MUTED}">siti dell'Hb occupati</text>`);
+    <text x="206" y="280" text-anchor="middle" font-size="10" fill="${MUTED}">siti dell'Hb occupati</text>
+    ${hb !== null ? info(['Hb ' + f(hb, 1) + ' g/dL', 'legato ' + f(bound, 2) + ' mL/dL'], 292, 18, 'end') : ''}`);
 }
 
 export function hbCompare({ s1, s2, t1, t2, label }) {
@@ -214,7 +218,7 @@ export function hbCompare({ s1, s2, t1, t2, label }) {
 }
 
 /* ── montagna con altimetro e barometro ──────────────────────────────────── */
-export function mountain({ alt, maxAlt = 9000, pb, label }) {
+export function mountain({ alt, maxAlt = 9000, pb, lines = null, label }) {
   const base = [30, 270], peak = [196, 70];
   const fr = clamp(alt / 8849, 0, 1);
   const above = alt > 8849;
@@ -229,6 +233,7 @@ export function mountain({ alt, maxAlt = 9000, pb, label }) {
       <text x="${x > 150 ? -12 : 12}" y="-10" text-anchor="${x > 150 ? 'end' : 'start'}" class="iv-lcd" font-size="12" font-weight="700" fill="${TXT}">${Math.round(alt).toLocaleString('it-IT')} m</text>
     </g>
     ${gauge(64, 62, 36, pb, 800, { unit: "mmHg", digits: 0 })}
+    ${info(lines, 290, 22, 'end')}
     <text x="12" y="294" font-size="9" fill="${MUTED}">Atmosfera standard ISA · vetta 8849 m</text>`);
 }
 
