@@ -11,11 +11,11 @@ const AREAS = [
   { id: 'F', name: 'Ricerca e altre specialità', color: '#b9a6ff', tags: [] },
 ];
 const FOUNDERS = [
-  { name: 'Silvio Zerbi', title: 'Dott.', badge: 'Fondatore', role: 'Fondatore', area: null, thumb: 'founder-silvio-zerbi.webp', img: 'images/silvio.zerbi.jpg' },
-  { name: 'Luigi Tarsia', title: 'Ing.', badge: 'Co-fondatore', role: 'Direttore Ingegneria', area: 'F', thumb: 'founder-luigi-tarsia.webp', img: 'images/luigi.tarsia.webp' },
-  { name: 'Vincenzo Benenati', title: 'Dott.', badge: 'Co-fondatore', role: 'Responsabile Area Iperbarica', area: 'B', thumb: 'founder-vincenzo-benenati.webp', img: 'images/vincenzo.benenati.webp' },
-  { name: 'Dario Nicosia', title: 'Dott.', badge: 'Co-fondatore', role: 'Responsabile Area Diving', area: 'A', thumb: 'founder-dario-nicosia.webp', img: 'images/dario.nicosia.webp' },
-  { name: 'Matteo Paganini', title: 'Dott.', badge: 'Co-fondatore', role: 'Capo Ricercatore', area: 'F', thumb: 'founder-matteo-paganini.webp', img: 'images/matteo.paganini.webp' },
+  { name: 'Silvio Zerbi', desc: 'Anestesista Rianimatore, Intensivista, Trauma Team Leader. Medico Subacqueo e Iperbarico, con formazione avanzata in Medicina Aeronautica e Spaziale.', linkedin: 'https://www.linkedin.com/in/silvio-zerbi/', title: 'Dott.', badge: 'Fondatore', role: 'Fondatore', area: null, thumb: 'founder-silvio-zerbi.webp', img: 'images/silvio.zerbi.jpg' },
+  { name: 'Luigi Tarsia', desc: 'Ingegnere Nucleare e Biomedico, Specialista in Medicina Subacquea e Iperbarica, Aeronautica ed Aerospaziale.', linkedin: 'https://www.linkedin.com/in/peppino601/', title: 'Ing.', badge: 'Co-fondatore', role: 'Direttore Ingegneria', area: 'F', thumb: 'founder-luigi-tarsia.webp', img: 'images/luigi.tarsia.webp' },
+  { name: 'Vincenzo Benenati', desc: 'Anestesista Rianimatore, Cardioanestesista, Intensivista, Medico Iperbarico e Subacqueo.', linkedin: 'https://www.linkedin.com/in/vincenzo-benenati-29a815130/', title: 'Dott.', badge: 'Co-fondatore', role: 'Responsabile Area Iperbarica', area: 'B', thumb: 'founder-vincenzo-benenati.webp', img: 'images/vincenzo.benenati.webp' },
+  { name: 'Dario Nicosia', desc: 'Anestesista Rianimatore, Medico Iperbarico e Subacqueo, Mass Gathering Expert. Gestisce il paziente critico in scenari operativi complessi, dall’emergenza territoriale agli ambienti estremi.', linkedin: 'https://www.linkedin.com/in/dario-nicosia87/', title: 'Dott.', badge: 'Co-fondatore', role: 'Responsabile Area Diving', area: 'A', thumb: 'founder-dario-nicosia.webp', img: 'images/dario.nicosia.webp' },
+  { name: 'Matteo Paganini', desc: 'Ricercatore, Medico di Emergenza-Urgenza, PhD in Global Health, Humanitarian Aid and Disaster Medicine.', linkedin: 'https://www.linkedin.com/in/paganinimatteo/', title: 'Dott.', badge: 'Co-fondatore', role: 'Capo Ricercatore', area: 'F', thumb: 'founder-matteo-paganini.webp', img: 'images/matteo.paganini.webp' },
 ];
 const areaOf = tags => { for (const t of tags || []) { const k = String(t).trim().toLowerCase(); const a = AREAS.find(a => a.tags.includes(k)); if (a) return a.id; } return 'F'; };
 const AREA = Object.fromEntries(AREAS.map(a => [a.id, a]));
@@ -121,7 +121,8 @@ function founderCard(p) {
   d.className = 'r3d-founder';
   d.innerHTML = `<div class="r3d-founder__photo"><img src="${esc(p.img)}" alt="${esc(p.name)}" /></div>
     <h2>${esc((p.title ? p.title + ' ' : '') + p.name)}</h2><p class="r3d-founder__role">${esc(p.founder ? fLabel(p) : (p.role || ''))}</p>
-    ${p.founder ? '<a class="r3d-btn" href="index.html#fondatori">I fondatori →</a>' : ''}`;
+    ${p.desc ? `<p class="r3d-founder__desc">${esc(p.desc)}</p>` : ''}
+    ${p.founder ? `<div class="r3d-founder__links">${p.linkedin ? `<a class="r3d-founder__in" href="${esc(p.linkedin)}" target="_blank" rel="noopener" aria-label="LinkedIn di ${esc(p.name)}">in</a>` : ''}<a class="r3d-btn" href="index.html#fondatori">I fondatori →</a></div>` : ''}`;
   return d;
 }
 function open(i) {

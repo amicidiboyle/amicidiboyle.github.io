@@ -243,7 +243,7 @@
 /* perche' entrare: chiuso, si apre col pulsante */
 .r3d-why .rete-why-header { margin-bottom: 0; }
 .r3d-why.is-closed { padding-bottom: 40px; }
-.r3d-why.is-closed .container > :not(.rete-why-header) { display: none !important; }
+.r3d-why.is-closed .container > :not(.rete-why-header):not(.r3d-why__btn) { display: none !important; }
 .r3d-why__btn { display: inline-flex; align-items: center; gap: 10px; margin-top: 18px; padding: 12px 22px; border-radius: 999px; cursor: pointer; font: inherit; font-weight: 700; font-size: .9rem; color: #021022; background: linear-gradient(135deg, #a8eeff, #7be4ff); border: 0; box-shadow: 0 8px 28px rgba(123,228,255,.25); }
 .r3d-why__btn i { width: 8px; height: 8px; border-right: 2px solid currentColor; border-bottom: 2px solid currentColor; transform: rotate(45deg) translateY(-2px); transition: transform .25s; }
 .r3d-why:not(.is-closed) .r3d-why__btn i { transform: rotate(225deg) translateY(-2px); }
@@ -445,3 +445,25 @@
   .r3d-console .hero-access-input { max-width: 170px; }
 }
 @media (max-width: 1379px) { .r3d-console .hero-access-bar::before { display: none; } }
+
+/* ══ v7: due barre gemelle una sotto l'altra; freccia che pulsa; fondatori con presentazione ══ */
+.r3d-explore { padding-bottom: 0; }
+.r3d-why.section { padding-top: 14px; }
+.r3d-why .r3d-why__btn { max-width: none; width: 100%; margin: 0; padding: 20px 26px; text-align: left; }
+.r3d-why .r3d-why__btn b { font-size: clamp(1.2rem, 2vw, 1.6rem); }
+.r3d-why.is-closed { padding-bottom: 30px; }
+.r3d-why.is-closed .rete-why-header { display: none; }
+.r3d-why:not(.is-closed) .rete-why-header { margin-top: 44px; }
+.r3d-why .rete-why-header h2 { background: none; -webkit-text-fill-color: currentColor; color: #edf7ff; }
+/* freccia che pulsa finche' il pannello e' chiuso */
+.r3d-explore.is-closed .r3d-explore__btn i, .r3d-why.is-closed .r3d-why__btn i { animation: r3dChev 1.6s ease-in-out infinite; }
+@keyframes r3dChev { 0%, 100% { transform: rotate(45deg) translate(-2px, -2px); filter: drop-shadow(0 0 0 rgba(123,228,255,0)); opacity: .75; } 50% { transform: rotate(45deg) translate(2px, 2px); filter: drop-shadow(0 0 6px #7be4ff); opacity: 1; } }
+.r3d-explore__btn i, .r3d-why__btn i { width: 14px !important; height: 14px !important; border-width: 0 3px 3px 0 !important; }
+@media (prefers-reduced-motion: reduce) { .r3d-explore__btn i, .r3d-why__btn i { animation: none !important; } }
+/* fondatori: presentazione dalla home */
+.r3d-founder__desc { margin: 0 auto 16px; max-width: 34ch; font-size: .92rem; line-height: 1.55; color: rgba(237,247,255,.82); }
+.r3d-founder__links { display: flex; justify-content: center; align-items: center; gap: 10px; }
+.r3d-founder__in { display: inline-grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; font-weight: 800; text-decoration: none; color: #edf7ff; border: 1px solid rgba(123,228,255,.45); background: rgba(123,228,255,.08); }
+.r3d-founder__in:hover { background: rgba(123,228,255,.2); }
+.r3d-lens .r3d-founder { padding: 18px 6px 4px; }
+.r3d-lens { background: linear-gradient(180deg, #061a33, #020b18); }
