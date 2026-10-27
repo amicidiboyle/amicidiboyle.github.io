@@ -111,7 +111,7 @@ function tickLabel() {
   label.hidden = false;
   label.style.transform = `translate(${Math.round(p.x)}px, ${Math.round(p.y)}px)`;
   const a = m._area ? AREA[m._area] : null;
-  const t = (m.founder ? m.title + ' ' : '') + m.name;
+  const t = m.name;
   if (label.dataset.t !== t) { label.dataset.t = t; label.innerHTML = `<b>${esc(t)}</b><span style="--c:${a ? a.color : '#fff'}">${esc(m.founder ? fLabel(m) : a.name)}</span>`; }
 }
 
@@ -197,7 +197,7 @@ function zoomCard(i) {
   const pr = profiles[key(p.name)] || {};
   const bio = pr.bio && pr.bio.trim().length > 5 ? pr.bio.trim() : '';
   el = document.createElement('div'); el.className = 'r3d-zc'; el.style.setProperty('--c', a ? a.color : '#fff');
-  el.innerHTML = `<b>${esc((p.founder ? p.title + ' ' : '') + p.name)}</b>
+  el.innerHTML = `<b>${esc(p.name)}</b>
     <span class="r3d-zc__a"><i></i>${esc(p.founder ? fLabel(p) : a.name)}</span>
     ${p.founder ? '' : `<span class="r3d-zc__r">${esc(p.role)}</span>`}
     ${p.founder ? '' : `<span class="r3d-zc__t">${(p.tags || []).map(t => `<em>${esc(t)}</em>`).join('')}</span>`}
@@ -267,7 +267,7 @@ function renderList() {
     const col = p.founder ? '#ffffff' : (a ? a.color : '#7be4ff');
     return `<button type="button" class="r3d-mc${p.founder ? ' is-founder' : ''}" data-i="${i}" style="--c:${col};--n:${n}">
       <img src="${esc(p._thumb)}"${p._full ? ` onerror="this.onerror=null;this.src='${esc(p._full)}'"` : ''} alt="" width="46" height="46" loading="lazy" />
-      <span class="r3d-mc__txt"><b>${esc((p.founder ? p.title + ' ' : '') + p.name)}</b><small>${esc(p.founder ? fLabel(p) : (p.role || (a ? a.name : '')))}</small></span></button>`;
+      <span class="r3d-mc__txt"><b>${esc(p.name)}</b><small>${esc(p.founder ? fLabel(p) : (p.role || (a ? a.name : '')))}</small></span></button>`;
   }).join('') || (match ? `<p class="r3d-empty">${L('Nessuno con questi criteri.', 'No one matches.')}</p>` : '');
   requestAnimationFrame(drawFlow);
 }
