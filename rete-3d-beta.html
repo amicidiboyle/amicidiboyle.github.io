@@ -58,7 +58,7 @@
 </style>
   <link rel="stylesheet" href="title-fx.css?v=20261026a" />
   <link rel="stylesheet" href="nav-tools.css?v=20261026e" />
-  <link rel="stylesheet" href="assets/rete3d/rete3d.css?v=20261027a" />
+  <link rel="stylesheet" href="assets/rete3d/rete3d.css?v=20261027b" />
   <link rel="stylesheet" href="barometro.css?v=20261026a" />
 </head>
 <body>
@@ -232,17 +232,23 @@
 
 
     <!-- GRIGLIA MEMBRI -->
-    <section class="members-section r3d-find" id="members">
+    <section class="members-section r3d-explore is-closed" id="members">
       <div class="container">
-        <div class="r3d-find__head">
-          <h2 class="r3d-find__title">Cerca nella Rete</h2>
+        <button type="button" class="r3d-explore__btn" id="r3dExploreBtn" aria-expanded="false" aria-controls="r3dExplore">
+          <span class="r3d-explore__k">Esplora la Rete</span><b>Aree e persone</b><i aria-hidden="true"></i>
+        </button>
+        <div class="r3d-explore__body" id="r3dExplore" hidden>
           <label class="r3d-search"><span class="sr-only">Cerca un membro</span>
             <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5L21 21"/></svg>
-            <input type="search" id="r3dSearch" placeholder="Nome, area, ruolo, città…" autocomplete="off" />
+            <input type="search" id="r3dSearch" placeholder="Cerca per nome, area, ruolo, città…" autocomplete="off" />
           </label>
-          <p class="r3d-count" id="r3dCount" aria-live="polite"></p>
+          <div class="r3d-flow" id="r3dFlow">
+            <svg class="r3d-flow__lines" id="r3dFlowSvg" aria-hidden="true"></svg>
+            <div class="r3d-flow__root" id="r3dFlowRoot"><i></i>Rete di Boyle</div>
+            <div class="r3d-flow__areas" id="r3dFlowAreas" role="group" aria-label="Aree"></div>
+            <div class="r3d-flow__cards" id="r3dFlowCards" aria-live="polite"></div>
+          </div>
         </div>
-        <ul class="r3d-list" id="r3dList"></ul>
         <!-- griglia originale: resta nella pagina (codice, matita, sblocchi) ma nascosta; le card vengono riusate nella scheda -->
         <div class="members-grid r3d-hidden-grid" id="membersGrid" role="list" aria-hidden="true"></div>
       </div>
@@ -2741,6 +2747,6 @@
  ]
 }
 </script>
-  <script type="module" src="assets/rete3d/app.js?v=20261027a"></script>
+  <script type="module" src="assets/rete3d/app.js?v=20261027b"></script>
 </body>
 </html>

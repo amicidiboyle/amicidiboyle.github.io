@@ -119,7 +119,9 @@ function nodeCanvas(node, img, colored) {
   return c;
 }
 
-export function createNetwork(stage, { members, founders, onSelect, onHover, onCoreState, onEmpty, onFrame, reduced, mobile }) {
+export function createNetwork(stage, { members, founders, onSelect, onHover, onCoreState, onEmpty, onFrame, reduced, mobile, safe }) {
+  // safe(): fasce in alto e in basso (titolo, aree) dove la rete non deve passare
+  let SAFE = { top: 0, bottom: 0 };
   const canvas = document.createElement('canvas');
   canvas.className = 'r3d-canvas'; canvas.setAttribute('aria-hidden', 'true');
   stage.prepend(canvas);
@@ -131,8 +133,10 @@ export function createNetwork(stage, { members, founders, onSelect, onHover, onC
   const CORE = 2.1;                 // raggio del nucleo
   const R_FIT = 8.2;                // raggio della rete da inquadrare
   const homeDist = () => {
-    const v = THREE.MathUtils.degToRad(camera.fov), h = 2 * Math.atan(Math.tan(v / 2) * camera.aspect);
-    const k = camera.aspect < 0.8 ? 0.8 : 0.86;   // in verticale la rete puo' uscire un po' dai lati
+    const H0 = stage.clientHeight || 1, He = Math.max(H0 - SAFE.top - SAFE.bottom, H0 * 0.45);
+    const v = 2 * Math.atan(Math.tan(THREE.MathUtils.degToRad(camera.fov) / 2) * He / H0);
+    const h = 2 * Math.atan(Math.tan(THREE.MathUtils.degToRad(camera.fov) / 2) * camera.aspect);
+    const k = camera.aspect < 0.8 ? 0.84 : 0.95;   // in verticale la rete puo' uscire un po' dai lati
     return R_FIT * k / Math.sin(Math.min(v, h) / 2);
   };
   const homePos = () => new THREE.Vector3(0, 0.12, 1).normalize().multiplyScalar(homeDist());
@@ -499,14 +503,16 @@ export function createNetwork(stage, { members, founders, onSelect, onHover, onC
   let first = true;
   function resize() {
     const w = stage.clientWidth, h = stage.clientHeight;
-    renderer.setSize(w, h, false); camera.aspect = w / h; camera.updateProjectionMatrix();
+    renderer.setSize(w, h, false); camera.aspect = w / h;
+    if (safe) { SAFE = safe() || SAFE; const d = (SAFE.top - SAFE.bottom) / 2; if (d) camera.setViewOffset(w, h, 0, -d, w, h); else camera.clearViewOffset(); }
+    camera.updateProjectionMatrix();
     if (first) { camera.position.copy(homePos()); first = false; }
   }
   new ResizeObserver(resize).observe(stage); resize();
   start();
 
   return {
-    nodes, edgesCount: () => edges.length, neighbors,
+    nodes, edgesCount: () => edges.length, neighbors, relayout() { resize(); },
     select(i) { focusNode(i); applyOpacity(); highlightEdges(nodes[i]); },
     clear() { selected = null; home(); applyOpacity(); highlightEdges(hover); },
     hoverEdges(i) { if (!selected) highlightEdges(i >= 0 ? nodes[i] : null); },

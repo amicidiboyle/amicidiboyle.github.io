@@ -275,3 +275,121 @@
   .r3d-tools { flex-direction: row; bottom: 60px; gap: 6px; }
   .r3d-tools button { height: 32px; min-width: 32px; padding: 0 8px; font-size: .68rem; }
 }
+
+/* ══ v5 ══════════════════════════════════════════════════════════════════ */
+/* la "y" di Boyle non si taglia */
+.r3d-top .r3d-hud .r3d-title { line-height: 1.02; padding-bottom: .04em; overflow: visible; }
+.r3d-top .r3d-title .r3d-grad { padding: 0 .08em .2em 0; margin-bottom: -.16em; }
+/* la rete sfuma prima del titolo e delle aree: non ci passa sopra */
+.r3d-top .r3d-canvas {
+  -webkit-mask-image: linear-gradient(180deg, transparent 0, transparent calc(var(--st, 0px) - 30px), #000 calc(var(--st, 0px) + 24px), #000 calc(100% - var(--sb, 0px) - 24px), transparent calc(100% - var(--sb, 0px) + 18px));
+          mask-image: linear-gradient(180deg, transparent 0, transparent calc(var(--st, 0px) - 30px), #000 calc(var(--st, 0px) + 24px), #000 calc(100% - var(--sb, 0px) - 24px), transparent calc(100% - var(--sb, 0px) + 18px)); }
+.r3d-top .r3d-stage { height: min(calc(100svh - 72px - 120px), 900px); min-height: 560px; }
+@media (max-width: 760px) { .r3d-top .r3d-stage { height: 80svh; min-height: 560px; } }
+
+/* ── Esplora la Rete: pannello a comparsa ── */
+.r3d-hidden-grid { display: none !important; }
+.r3d-explore { padding: 34px 0 10px; }
+.r3d-explore__btn { position: relative; display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 4px 18px; width: 100%; padding: 20px 26px; cursor: pointer; text-align: left; font: inherit; color: #edf7ff;
+  border-radius: 18px; border: 1px solid rgba(123,228,255,.3); background: linear-gradient(120deg, rgba(4,20,44,.9), rgba(6,30,62,.75)); box-shadow: inset 0 0 40px rgba(123,228,255,.06), 0 20px 50px rgba(0,0,0,.35); overflow: hidden; }
+.r3d-explore__btn::before { content: ""; position: absolute; inset: 0; background: linear-gradient(100deg, transparent 30%, rgba(123,228,255,.14) 50%, transparent 70%); transform: translateX(-100%); animation: r3dSweep 5s ease-in-out infinite; pointer-events: none; }
+@keyframes r3dSweep { 0%, 55% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
+.r3d-explore__k { font: 700 .68rem/1 ui-monospace, "SF Mono", Menlo, Consolas, monospace; letter-spacing: .2em; text-transform: uppercase; color: #7be4ff; }
+.r3d-explore__btn b { font-size: clamp(1.2rem, 2vw, 1.6rem); letter-spacing: -.02em; }
+.r3d-explore__btn i { width: 12px; height: 12px; border-right: 2px solid #7be4ff; border-bottom: 2px solid #7be4ff; transform: rotate(45deg) translateY(-3px); transition: transform .3s; }
+.r3d-explore:not(.is-closed) .r3d-explore__btn i { transform: rotate(225deg) translateY(-3px); }
+.r3d-explore__btn:hover { border-color: rgba(123,228,255,.6); }
+.r3d-explore__body { padding: 22px 0 10px; animation: r3dDrop .45s cubic-bezier(.22,1,.36,1); }
+@keyframes r3dDrop { from { opacity: 0; transform: translateY(-12px); } }
+.r3d-explore .r3d-search { max-width: 520px; margin: 0 auto 26px; }
+
+.r3d-flow { position: relative; padding: 0 0 40px 28px; }
+.r3d-flow__lines { position: absolute; left: 0; top: 0; pointer-events: none; overflow: visible; filter: drop-shadow(0 0 4px rgba(123,228,255,.55)); }
+.r3d-fl__base { fill: none; stroke: color-mix(in srgb, var(--c) 34%, transparent); stroke-width: 1.4; }
+.r3d-fl__pulse { fill: none; stroke: var(--c); stroke-width: 2.4; stroke-linecap: round; stroke-dasharray: 7 93; stroke-dashoffset: 100; animation: r3dPulse 2.6s linear var(--d, 0s) infinite; }
+@keyframes r3dPulse { to { stroke-dashoffset: 0; } }
+.r3d-flow__root { position: relative; z-index: 1; display: flex; align-items: center; gap: 10px; width: max-content; margin: 0 auto 46px; padding: 12px 22px; border-radius: 999px;
+  font-weight: 800; letter-spacing: -.01em; color: #021022; background: linear-gradient(135deg, #a8eeff, #7be4ff); box-shadow: 0 0 34px rgba(123,228,255,.45); }
+.r3d-flow__root i { width: 10px; height: 10px; border-radius: 50%; background: #021022; box-shadow: 0 0 0 3px rgba(2,16,34,.25); }
+.r3d-flow__areas { position: relative; z-index: 1; display: flex; flex-wrap: wrap; justify-content: center; gap: 30px 14px; }
+.r3d-fa { display: inline-flex; align-items: center; gap: 9px; padding: 11px 16px; border-radius: 12px; cursor: pointer; font: inherit; font-weight: 700; font-size: .86rem; color: #edf7ff;
+  background: rgba(3,14,32,.88); border: 1px solid color-mix(in srgb, var(--c) 45%, transparent); transition: transform .2s, box-shadow .2s, background .2s, opacity .2s; }
+.r3d-fa i { width: 9px; height: 9px; border-radius: 50%; background: var(--c); box-shadow: 0 0 10px var(--c); }
+.r3d-fa:hover { transform: translateY(-2px); box-shadow: 0 0 22px color-mix(in srgb, var(--c) 35%, transparent); }
+.r3d-fa.is-on { background: color-mix(in srgb, var(--c) 22%, rgba(3,14,32,.9)); border-color: var(--c); box-shadow: 0 0 30px color-mix(in srgb, var(--c) 45%, transparent); }
+.r3d-flow.has-sel .r3d-fa:not(.is-on) { opacity: .55; }
+.r3d-flow.has-search .r3d-fa { opacity: .35; }
+.r3d-flow__cards { position: relative; z-index: 1; display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 34px 14px; margin-top: 52px; }
+.r3d-flow__cards:empty { margin-top: 0; }
+.r3d-mc { display: grid; grid-template-columns: 46px 1fr; gap: 11px; align-items: center; padding: 9px 12px; border-radius: 14px; cursor: pointer; text-align: left; font: inherit; color: #edf7ff;
+  background: rgba(3,14,32,.9); border: 1px solid color-mix(in srgb, var(--c) 32%, transparent); box-shadow: 0 10px 26px rgba(0,0,0,.3);
+  animation: r3dCard .5s cubic-bezier(.22,1,.36,1) both; animation-delay: calc(var(--n) * 45ms); transition: border-color .2s, box-shadow .2s, opacity .2s; }
+@keyframes r3dCard { from { opacity: 0; transform: translateY(-16px) scale(.96); } }
+.r3d-mc:hover, .r3d-mc:focus-visible { border-color: var(--c); box-shadow: 0 0 24px color-mix(in srgb, var(--c) 35%, transparent); }
+.r3d-mc.is-lensed { opacity: .25; }
+.r3d-mc img { width: 46px; height: 46px; border-radius: 50%; object-fit: cover; box-shadow: 0 0 0 2px var(--c); }
+.r3d-mc__txt { display: grid; gap: 3px; min-width: 0; }
+.r3d-mc__txt b { font-size: .9rem; line-height: 1.2; }
+.r3d-mc__txt small { font-size: .72rem; line-height: 1.3; color: rgba(237,247,255,.65); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.r3d-empty { grid-column: 1 / -1; text-align: center; color: rgba(237,247,255,.6); }
+/* la lente: card completa sopra la microcard */
+.r3d-lens { position: absolute; z-index: 20; width: min(400px, 100%); padding: 14px 14px 16px; border-radius: 22px; display: grid; justify-items: center; gap: 12px;
+  background: linear-gradient(180deg, rgba(6,26,51,.97), rgba(2,11,24,.98)); border: 1px solid var(--c); box-shadow: 0 30px 80px rgba(0,0,0,.65), 0 0 40px color-mix(in srgb, var(--c) 30%, transparent);
+  opacity: 0; transform: scale(.55); transition: opacity .22s ease, transform .3s cubic-bezier(.22,1,.36,1); }
+.r3d-lens.is-on { opacity: 1; transform: none; }
+.r3d-lens__x { position: absolute; right: 10px; top: 10px; z-index: 2; width: 34px; height: 34px; border-radius: 10px; cursor: pointer; color: #c9f6ff; background: rgba(2,11,24,.8); border: 1px solid rgba(123,228,255,.35); }
+.r3d-lens .member-card.r3d-membercard { width: 100%; opacity: 1 !important; transform: none !important; translate: none !important; scale: none !important; animation: none !important; height: auto !important; min-height: 0 !important; margin: 0; }
+.r3d-lens .r3d-membercard .member-role { padding-bottom: 100px !important; margin-bottom: 0 !important; max-width: 34ch; }
+.r3d-lens .r3d-membercard .member-bio-snippet:empty { display: none; }
+@media (max-width: 760px) {
+  .r3d-flow { padding-left: 22px; }
+  .r3d-flow__areas { display: grid; grid-template-columns: 1fr 1fr; gap: 26px 10px; }
+  .r3d-fa { justify-content: flex-start; font-size: .78rem; padding: 10px 12px; text-align: left; }
+  .r3d-flow__cards { grid-template-columns: 1fr; gap: 26px; }
+  .r3d-lens { left: 0 !important; width: 100%; }
+}
+@media (prefers-reduced-motion: reduce) { .r3d-fl__pulse, .r3d-explore__btn::before, .r3d-mc, .r3d-explore__body { animation: none; } .r3d-fl__pulse { stroke-dasharray: none; opacity: .5; } }
+
+/* ── Perche' entrare e proposta eventi: pannelli olografici ── */
+.r3d-why, #prossimo-evento { position: relative; }
+.r3d-why .rete-why-header .section-kicker, #prossimo-evento .next-event-propose__title { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; }
+.r3d-why .rete-why-header .section-kicker { letter-spacing: .24em; color: #7be4ff; }
+.r3d-why .rete-why-header h2 { background: linear-gradient(135deg, #edf7ff 0%, #a8eeff 55%, #c4b0ff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; padding-bottom: .1em; }
+.r3d-why .rw-path, .r3d-why .rw-matrix, #prossimo-evento .next-event-propose {
+  position: relative; border-radius: 6px !important; border: 1px solid rgba(123,228,255,.28) !important;
+  background: linear-gradient(180deg, rgba(4,20,44,.86), rgba(2,10,24,.92)) !important;
+  background-image: linear-gradient(rgba(123,228,255,.05) 1px, transparent 1px), linear-gradient(90deg, rgba(123,228,255,.05) 1px, transparent 1px), linear-gradient(180deg, rgba(4,20,44,.88), rgba(2,10,24,.94)) !important;
+  background-size: 28px 28px, 28px 28px, auto !important;
+  box-shadow: inset 0 0 60px rgba(123,228,255,.05), 0 30px 70px rgba(0,0,0,.45) !important;
+  clip-path: polygon(0 18px, 18px 0, 100% 0, 100% calc(100% - 18px), calc(100% - 18px) 100%, 0 100%); }
+.r3d-why .rw-path::before, .r3d-why .rw-matrix::before, #prossimo-evento .next-event-propose::before {
+  content: ""; position: absolute; left: 0; right: 0; top: 0; height: 2px; z-index: 2; pointer-events: none;
+  background: linear-gradient(90deg, transparent, #7be4ff, transparent); animation: r3dScan 6s ease-in-out infinite; }
+@keyframes r3dScan { 0% { transform: translateY(0); opacity: 0; } 10% { opacity: .9; } 90% { opacity: .9; } 100% { transform: translateY(var(--scan, 420px)); opacity: 0; } }
+.r3d-why .rw-path--amici::before { background: linear-gradient(90deg, transparent, #39e6c3, transparent); }
+.r3d-why .rw-path__badge { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; letter-spacing: .16em; border-radius: 3px !important; }
+.r3d-why .rw-matrix { --scan: 900px; }
+.r3d-why .rw-row { border-color: rgba(123,228,255,.1) !important; transition: background .2s; }
+.r3d-why .rw-row:not(.rw-row--head):hover { background: linear-gradient(90deg, rgba(123,228,255,.08), transparent 70%) !important; }
+.r3d-why .rw-row:not(.rw-row--head):hover .rw-ico { box-shadow: 0 0 18px rgba(123,228,255,.5); }
+.r3d-why .rw-ico { border-radius: 4px !important; border-color: rgba(123,228,255,.4) !important; }
+.r3d-why .rw-check circle { stroke: #7be4ff; filter: drop-shadow(0 0 4px rgba(123,228,255,.7)); }
+.r3d-why .rw-cell--amici .rw-check circle { stroke: #39e6c3; filter: drop-shadow(0 0 4px rgba(57,230,195,.7)); }
+.r3d-why .rw-feat h3, .r3d-why .rw-row--head h3 { letter-spacing: -.01em; }
+.r3d-why .rw-row--head h3 { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; text-transform: uppercase; letter-spacing: .14em; font-size: .8rem; color: #a8eeff; }
+.r3d-why__btn { border-radius: 4px; clip-path: polygon(0 10px, 10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%); font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; letter-spacing: .1em; text-transform: uppercase; font-size: .8rem; }
+#prossimo-evento .next-event-propose { --scan: 200px; padding: 28px 30px !important; }
+#prossimo-evento .next-event-propose__title { letter-spacing: .14em; text-transform: uppercase; color: #a8eeff; font-size: .95rem !important; }
+#prossimo-evento .next-event-propose__title::before { content: "▸ "; color: #7be4ff; }
+#prossimo-evento .next-event-propose__desc { color: rgba(237,247,255,.72); }
+#prossimo-evento .next-event-propose a, #prossimo-evento .next-event-propose button { border-radius: 4px !important; }
+@media (prefers-reduced-motion: reduce) { .r3d-why .rw-path::before, .r3d-why .rw-matrix::before, #prossimo-evento .next-event-propose::before { animation: none; opacity: 0; } }
+@media (min-width: 761px) {
+  .r3d-flow__areas { gap: 30px 8px; flex-wrap: nowrap; }
+  .r3d-fa { padding: 10px 12px; font-size: .8rem; white-space: nowrap; }
+}
+@media (min-width: 761px) and (max-width: 1300px) { .r3d-flow__areas { flex-wrap: wrap; } }
+/* card completa nel pannello e nella lente: estratto della bio sotto il ruolo, senza sovrapporsi */
+:is(.r3d-panel, .r3d-lens) .r3d-membercard .member-role { padding-bottom: 6px !important; }
+:is(.r3d-panel, .r3d-lens) .r3d-membercard .member-bio-snippet { position: static !important; transform: none !important; margin: 6px 0 0 !important; max-width: 36ch; }
+:is(.r3d-panel, .r3d-lens) .member-card.r3d-membercard { padding-bottom: 118px !important; }
