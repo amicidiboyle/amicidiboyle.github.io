@@ -61,7 +61,7 @@ const cardEls = new Map(); const shownCards = new Set();
     fetch('rete-amici.json', { cache: 'no-cache' }).then(r => r.ok ? r.json() : []).catch(() => []),
   ]);
   profiles = prof || {};
-  const ms = members.map(m => ({ ...m, _thumb: thumbOf(m.img), _area: areaOf(m.tags), founder: false }));
+  const ms = members.map(m => ({ ...m, _thumb: thumbOf(m.img), _full: 'assets/rete/' + m.img, _area: areaOf(m.tags), founder: false }));
   const fs = FOUNDERS.map(f => ({ ...f, _thumb: 'assets/rete/thumb/' + f.thumb, _area: f.area || null, founder: true, tags: [] }));
   fs.forEach(f => { const e = F_EN[f.name]; if (e) { bil(f, 'badge', e[0]); bil(f, 'role', e[1]); bil(f, 'desc', e[2]); } });
   const frs = (Array.isArray(amici) ? amici : []).filter(a => a && a.name && a.img).map(a => {
@@ -86,7 +86,7 @@ function lazy3d(ms, fs, frs) {
   if (!ok) { stage.classList.add('is-fallback'); return; }
   const go = async () => {
     try {
-      const mod = await import('./rete3d.min.js?v=20261027d');
+      const mod = await import('./rete3d.min.js?v=20261027e');
       net = mod.createNetwork(stage, {
         members: ms, founders: fs, friends: frs, reduced: REDUCED, mobile: MOBILE,
         safe: safeBands,
@@ -160,7 +160,7 @@ function open(i) {
   const nb = net ? net.neighbors(i) : [];
   if (nb.length) {
     const box = document.createElement('div'); box.className = 'r3d-net';
-    box.innerHTML = `<p>${L('Collegati nella rete', 'Connected in the network')}</p><div>${nb.map(j => { const q = people[j]; return `<button type="button" data-goto="${j}" title="${esc(q.name)}"><img src="${esc(q._thumb)}" alt="" width="40" height="40" /><span>${esc(q.name.split(' ')[0])}</span></button>`; }).join('')}</div>`;
+    box.innerHTML = `<p>${L('Collegati nella rete', 'Connected in the network')}</p><div>${nb.map(j => { const q = people[j]; return `<button type="button" data-goto="${j}" title="${esc(q.name)}"><img src="${esc(q._thumb)}"${q._full ? ` onerror="this.onerror=null;this.src='${esc(q._full)}'"` : ''} alt="" width="40" height="40" /><span>${esc(q.name.split(' ')[0])}</span></button>`; }).join('')}</div>`;
     panel.appendChild(box);
   }
   panel.hidden = false; panel.scrollTop = 0;
@@ -266,7 +266,7 @@ function renderList() {
     const a = p._area ? AREA[p._area] : null;
     const col = p.founder ? '#ffffff' : (a ? a.color : '#7be4ff');
     return `<button type="button" class="r3d-mc${p.founder ? ' is-founder' : ''}" data-i="${i}" style="--c:${col};--n:${n}">
-      <img src="${esc(p._thumb)}" alt="" width="46" height="46" loading="lazy" />
+      <img src="${esc(p._thumb)}"${p._full ? ` onerror="this.onerror=null;this.src='${esc(p._full)}'"` : ''} alt="" width="46" height="46" loading="lazy" />
       <span class="r3d-mc__txt"><b>${esc((p.founder ? p.title + ' ' : '') + p.name)}</b><small>${esc(p.founder ? fLabel(p) : (p.role || (a ? a.name : '')))}</small></span></button>`;
   }).join('') || (match ? `<p class="r3d-empty">${L('Nessuno con questi criteri.', 'No one matches.')}</p>` : '');
   requestAnimationFrame(drawFlow);

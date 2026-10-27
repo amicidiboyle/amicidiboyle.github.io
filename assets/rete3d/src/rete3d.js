@@ -208,6 +208,8 @@ export function createNetwork(stage, { members, founders, friends = [], onSelect
     nodeGroup.add(node.sprite);
     const im = new Image(); im.decoding = 'async';
     im.onload = () => { node.img = im; nodeCanvas(node, im, node.colored); tex.needsUpdate = true; };
+    // nuovi membri: la miniatura puo' non esserci ancora, si usa la foto intera
+    im.onerror = () => { if (data._full && !im.src.endsWith(data._full)) im.src = data._full; };
     im.src = data._thumb;
     nodes.push(node);
   };
