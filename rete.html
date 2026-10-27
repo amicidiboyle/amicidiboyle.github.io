@@ -57,6 +57,7 @@
 </style>
   <link rel="stylesheet" href="title-fx.css?v=20261026a" />
   <link rel="stylesheet" href="nav-tools.css?v=20261026e" />
+  <link rel="stylesheet" href="assets/rete3d/rete3d.css?v=20261027f" />
   <link rel="stylesheet" href="barometro.css?v=20261026a" />
 </head>
 <body>
@@ -120,56 +121,28 @@
 
   <main id="contenuto">
 
-    <!-- HERO con connectome -->
-    <section class="hero" id="top">
-      <div class="hero__connectome" aria-hidden="true">
-        <svg class="connectome-svg" viewBox="0 0 1400 520" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <filter id="glow-line"><feGaussianBlur stdDeviation="1.8" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-            <filter id="glow-node"><feGaussianBlur stdDeviation="3.5" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-            <linearGradient id="lineGradA" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#d9fbff" stop-opacity="0.04"/><stop offset="50%" stop-color="#9aefff" stop-opacity="0.22"/><stop offset="100%" stop-color="#d9fbff" stop-opacity="0.04"/></linearGradient>
-            <radialGradient id="nodeGrad" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#ffffff" stop-opacity="0.98"/><stop offset="45%" stop-color="#bff8ff" stop-opacity="0.88"/><stop offset="100%" stop-color="#7cf3ff" stop-opacity="0.18"/></radialGradient>
-            <mask id="connectomeFade"><rect width="1400" height="520" fill="white"/><rect x="0" y="0" width="520" height="520" fill="url(#leftFade)"/></mask>
-            <linearGradient id="leftFade" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="black"/><stop offset="45%" stop-color="black"/><stop offset="80%" stop-color="white"/><stop offset="100%" stop-color="white"/></linearGradient>
-          </defs>
-          <g class="connectome-base" mask="url(#connectomeFade)">
-            <g class="connectome-links" filter="url(#glow-line)">
-              <path id="path-a" d="M 420 145 C 560 70, 770 90, 930 160 S 1160 240, 1310 150" />
-              <path id="path-b" d="M 455 220 C 620 130, 790 160, 940 235 S 1160 330, 1325 245" />
-              <path id="path-c" d="M 390 305 C 560 225, 720 250, 865 320 S 1080 410, 1280 330" />
-              <path id="path-d" d="M 520 120 C 610 220, 730 300, 885 280 S 1110 185, 1275 215" />
-              <path id="path-e" d="M 600 95 C 700 180, 810 210, 930 185 S 1150 115, 1295 175" />
-              <path id="path-f" d="M 650 355 C 760 250, 905 240, 1045 285 S 1200 355, 1330 315" />
-              <path id="path-g" d="M 745 85 C 780 180, 780 280, 745 405" class="link-faint" />
-              <path id="path-h" d="M 560 118 C 635 210, 665 305, 640 420" class="link-soft" />
-              <path id="path-i" d="M 905 118 C 850 200, 820 288, 835 392" class="link-soft" />
-              <path id="path-k" d="M 440 268 C 595 255, 760 305, 915 285 S 1140 220, 1305 250" class="link-soft" />
-            </g>
-            <g class="connectome-nodes" filter="url(#glow-node)">
-              <circle cx="455" cy="128" r="5.4" class="node node-1"/><circle cx="598" cy="98" r="4.6" class="node node-2"/>
-              <circle cx="734" cy="114" r="6.2" class="node node-3"/><circle cx="880" cy="144" r="5.2" class="node node-4"/>
-              <circle cx="1045" cy="175" r="4.6" class="node node-5"/><circle cx="1214" cy="165" r="6.4" class="node node-6"/>
-              <circle cx="520" cy="220" r="4.2" class="node node-7"/><circle cx="690" cy="196" r="5.8" class="node node-8"/>
-              <circle cx="846" cy="224" r="4.8" class="node node-9"/><circle cx="1012" cy="260" r="6.6" class="node node-10"/>
-              <circle cx="1156" cy="286" r="4.9" class="node node-11"/><circle cx="595" cy="300" r="4.8" class="node node-12"/>
-              <circle cx="742" cy="334" r="5.9" class="node node-13"/><circle cx="896" cy="318" r="4.1" class="node node-14"/>
-              <circle cx="1088" cy="348" r="5.7" class="node node-15"/><circle cx="1260" cy="332" r="4.7" class="node node-16"/>
-            </g>
-            <g class="travelers">
-              <circle r="3.8" class="traveler traveler-a"><animateMotion dur="7.2s" repeatCount="indefinite" rotate="auto"><mpath href="#path-a"/></animateMotion></circle>
-              <circle r="3.1" class="traveler traveler-b"><animateMotion dur="8.9s" begin="-2.1s" repeatCount="indefinite" rotate="auto"><mpath href="#path-b"/></animateMotion></circle>
-              <circle r="3.5" class="traveler traveler-c"><animateMotion dur="10.4s" begin="-5.4s" repeatCount="indefinite" rotate="auto"><mpath href="#path-c"/></animateMotion></circle>
-              <circle r="2.9" class="traveler traveler-d"><animateMotion dur="6.6s" begin="-1.8s" repeatCount="indefinite" rotate="auto"><mpath href="#path-d"/></animateMotion></circle>
-              <circle r="3.2" class="traveler traveler-e"><animateMotion dur="9.6s" begin="-3.8s" repeatCount="indefinite" rotate="auto"><mpath href="#path-e"/></animateMotion></circle>
-              <circle r="3.4" class="traveler traveler-f"><animateMotion dur="8.2s" begin="-4.6s" repeatCount="indefinite" rotate="auto"><mpath href="#path-f"/></animateMotion></circle>
-            </g>
-          </g>
-        </svg>
+    <!-- RETE 3D: la scena e' la hero della pagina -->
+    <section class="r3d-top" id="top">
+      <div class="r3d-stage" id="r3dStage">
+        <div class="r3d-ph" aria-hidden="true"><span></span></div>
+        <div class="r3d-hud" id="r3dHud"><h1 class="r3d-title" data-i18n-html="r_hero_title">Rete di <span class="hero__grad r3d-grad">Boyle</span></h1></div>
+        <div class="r3d-press" id="r3dPress" hidden></div>
+        <div class="r3d-label" id="r3dLabel" hidden></div>
+        <div class="r3d-zoom" id="r3dZoom"></div>
+        <div class="r3d-tools" id="r3dTools">
+          <button type="button" data-cmd="in" aria-label="Avvicina">+</button>
+          <button type="button" data-cmd="out" aria-label="Allontana">−</button>
+          <button type="button" data-cmd="home">Centra</button>
+          <button type="button" data-cmd="wave">Impulso</button>
+        </div>
+        <div class="r3d-areas" id="r3dChips" role="group" aria-label="Aree della Rete"></div>
+        <p class="r3d-hint" id="r3dHint" hidden>Clicca nella rete, poi usa la rotella per avvicinarti</p>
+        <p class="r3d-fallback">La vista 3D non è disponibile su questo dispositivo: tutti i membri sono qui sotto.</p>
+        <aside class="r3d-panel" id="r3dPanel" hidden aria-live="polite"></aside>
       </div>
-      <div class="hero__content">
-        <h1 class="hero__title" data-i18n-html="r_hero_title">Rete di <span class="hero__grad">Boyle</span></h1>
-        <p class="hero__subtitle" data-i18n="r_hero_sub">Un ecosistema multidisciplinare di professionisti, ricercatori e innovatori dedicati alla medicina subacquea, iperbarica, aerospaziale e alla fisiologia degli ambienti estremi.</p>
-        <div class="hero__cta">
+      <div class="r3d-console">
+        <div class="container">
+          <div class="hero__cta">
           <!-- Rete -->
           <div class="hero-cta-group">
             <span class="hero-cta-label" data-i18n="r_hero_cta_label1">Sei un professionista?</span>
@@ -251,35 +224,31 @@
             <span class="hero-access-status" id="barStatus"></span>
           </div>
         </div>
-
+        </div>
       </div>
     </section>
 
 
     <!-- GRIGLIA MEMBRI -->
-    <section class="members-section" id="members">
+    <section class="members-section r3d-explore is-closed" id="members">
       <div class="container">
-        <div class="members-header">
-          <h2 class="members-title" data-i18n="r_members_title">I Membri della Rete</h2>
-          <p class="members-sub" data-i18n="r_members_sub">Professionisti selezionati per competenza, curriculum e impatto operativo.</p>
-        <div class="profile-legend"><span class="pleg pleg--base"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>&nbsp;Base</span><span class="pleg pleg--partial"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>&nbsp;Parzialmente completo</span><span class="pleg pleg--complete"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>&nbsp;Completo</span></div>
-        
-        </div>
-
-        <!-- Filtro per specialità -->
-        <div class="skill-filter-wrap">
-          <button class="skill-filter-toggle" id="skillFilterToggle" type="button">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M7 12h10M11 18h2"/></svg>
-            Filtra per specialità
-            <span id="skillFilterArrow">▾</span>
-          </button>
-          <div class="skill-filter-panel" id="skillFilterPanel" aria-hidden="true">
-            <div class="skill-filter-inner" id="skillFilterInner"></div>
+        <button type="button" class="r3d-explore__btn" id="r3dExploreBtn" aria-expanded="false" aria-controls="r3dExplore">
+          <span class="r3d-explore__k">Esplora la Rete</span><b>Aree e persone</b><i aria-hidden="true"></i>
+        </button>
+        <div class="r3d-explore__body" id="r3dExplore" hidden>
+          <label class="r3d-search"><span class="sr-only">Cerca un membro</span>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5L21 21"/></svg>
+            <input type="search" id="r3dSearch" placeholder="Cerca per nome, area, ruolo, città…" autocomplete="off" />
+          </label>
+          <div class="r3d-flow" id="r3dFlow">
+            <svg class="r3d-flow__lines" id="r3dFlowSvg" aria-hidden="true"></svg>
+            <div class="r3d-flow__root" id="r3dFlowRoot"><i></i><span>Rete di Boyle</span></div>
+            <div class="r3d-flow__areas" id="r3dFlowAreas" role="group" aria-label="Aree"></div>
+            <div class="r3d-flow__cards" id="r3dFlowCards" aria-live="polite"></div>
           </div>
         </div>
-
-        <!-- Le card vengono iniettate da JS -->
-        <div class="members-grid" id="membersGrid" role="list"></div>
+        <!-- griglia originale: resta nella pagina (codice, matita, sblocchi) ma nascosta; le card vengono riusate nella scheda -->
+        <div class="members-grid r3d-hidden-grid" id="membersGrid" role="list" aria-hidden="true"></div>
       </div>
     </section>
 
@@ -415,12 +384,13 @@
     <!-- VANTAGGI DELLA RETE -->
     <!-- ── PERCHÉ ENTRARE + EVENTO ── -->
     <!-- PERCHE' ENTRARE: due percorsi e cosa offrono (sostituisce i riquadri vantaggi e le due card) -->
-    <section class="section rw-section" id="amici">
+    <section class="section rw-section r3d-why is-closed" id="amici">
       <span id="rete-why" class="rw-anchor" aria-hidden="true"></span>
       <div class="container">
-        <div class="rete-why-header reveal">
+        <button type="button" class="r3d-explore__btn r3d-why__btn" id="r3dWhyBtn" aria-expanded="false" aria-controls="amici"><span class="r3d-explore__k">Perché entrare</span><b>Scopri cosa offre</b><i aria-hidden="true"></i></button>
+        <div class="rete-why-header r3d-whyhead reveal">
           <p class="section-kicker" data-i18n="r_why_kicker">Perché entrare</p>
-          <h2 data-i18n="r_why_title">Cosa significa far parte della Rete di Boyle</h2>
+          <h2 data-i18n-html="r_why_title_h">Cosa significa far parte<br>della <span class="r3d-hl">Rete di Boyle</span></h2>
           <p class="section-subheading" data-i18n="r_why_sub">La rete non è una directory. È un ecosistema attivo dove ogni membro contribuisce e riceve valore concreto.</p>
         </div>
 
@@ -509,26 +479,28 @@
       </div>
     </section>
 
-  <!-- ── EVENTI ── -->
-  <section class="section next-event-section" id="prossimo-evento">
-    <div class="container">
-      <div class="next-event-propose reveal">
-        <div class="next-event-propose__inner">
-          <div class="next-event-propose__text">
-            <p class="next-event-propose__title" data-i18n="r_ev_propose">Hai un evento da proporre?</p>
-            <p class="next-event-propose__desc" data-i18n="r_ev_propose_p">Sei un membro della Rete o un Amico di Boyle? Proponi corsi, congressi o iniziative legate agli ambienti estremi. La pubblicazione è riservata alla community.</p>
-          </div>
-          <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
-            <a class="btn btn-ghost" href="eventi.html" data-i18n="r_events_link" style="display:inline-flex;align-items:center;gap:6px;">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
-              Tutti gli eventi
-            </a>
-            <a class="rete-event-publish-btn btn-secondary" href="eventi.html#proponi" style="display:inline-flex;align-items:center;gap:6px;">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
-              <span data-i18n="r_ev_propose_cta">Proponi un evento</span>
-            </a>
-          </div>
+  <!-- ── EVENTI: stesso riquadro del Barometro ── -->
+  <section class="bmx r3d-evx" id="prossimo-evento" aria-labelledby="evx-title">
+    <div class="bmx__panel">
+      <svg class="r3d-evx__dial" viewBox="0 0 240 240" aria-hidden="true">
+        <defs><radialGradient id="evxG" cx="50%" cy="45%" r="60%"><stop offset="0" stop-color="#16406e"/><stop offset="1" stop-color="#061426"/></radialGradient></defs>
+        <circle cx="120" cy="120" r="108" fill="url(#evxG)" stroke="rgba(123,228,255,.35)" stroke-width="2"/>
+        <circle class="r3d-evx__ring" cx="120" cy="120" r="94" fill="none" stroke="#7BE4FF" stroke-width="2" stroke-dasharray="4 10" opacity=".55"/>
+        <g class="r3d-evx__orbit"><circle cx="120" cy="26" r="6" fill="#7BE4FF"/><circle cx="120" cy="26" r="12" fill="#7BE4FF" opacity=".2"/></g>
+        <g transform="translate(70 66)" fill="none" stroke="#E8EEF5" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="0" y="14" width="100" height="92" rx="14"/><path d="M0 44h100M28 0v26M72 0v26"/>
+        </g>
+        <g fill="#7BE4FF"><circle class="r3d-evx__d" cx="96" cy="140" r="7"/><circle class="r3d-evx__d" cx="120" cy="140" r="7"/><circle class="r3d-evx__d r3d-evx__d--on" cx="144" cy="140" r="7"/><circle class="r3d-evx__d" cx="96" cy="160" r="7"/><circle class="r3d-evx__d" cx="120" cy="160" r="7"/></g>
+      </svg>
+      <div>
+        <p class="bmx__kicker">Eventi della Rete</p>
+        <h2 class="bmx__title" id="evx-title" data-i18n="r_ev_propose" data-tfx>Hai un evento da proporre?</h2>
+        <p class="bmx__text" data-i18n="r_ev_propose_p">Sei un membro della Rete o un Amico di Boyle? Proponi corsi, congressi o iniziative formative sulla piattaforma.</p>
+        <div class="bmx__form">
+          <button class="bmx__btn" id="publishEventBtn2" type="button"><span data-i18n="r_ev_propose_cta">Proponi evento</span></button>
+          <a class="r3d-evx__ghost" href="eventi.html" data-i18n="r_events_link">Prossimi eventi</a>
         </div>
+        <p class="bmx__note">La pubblicazione è riservata ai membri della Rete e agli Amici di Boyle: serve il codice personale.</p>
       </div>
     </div>
   </section>
@@ -2128,7 +2100,7 @@
         'r_nav_diving':'Diving-Boyle',
         'r_nav_rete':'Rete','r_nav_pod':'Podcast','r_nav_cont':'Contatti',
         'r_hero_eyebrow':'Network scientifico \u00b7 Ambienti estremi',
-        'r_hero_title':'Rete di <span class="hero__grad">Boyle</span>',
+        'r_hero_title':'Rete di <span class="hero__grad r3d-grad">Boyle</span>',
         'r_hero_sub':'Un ecosistema multidisciplinare di professionisti, ricercatori e innovatori dedicati alla medicina subacquea, iperbarica, aerospaziale e alla fisiologia degli ambienti estremi.',
         'r_hero_cta1':'Candidati alla Rete',
         'r_hero_cta_label1':'Sei un professionista?',
@@ -2141,6 +2113,7 @@
         'r_members_sub':'Professionisti selezionati per competenza, curriculum e impatto operativo.',
         'r_why_kicker':'Perch\u00e9 entrare',
         'r_why_title':'Cosa significa far parte della Rete di Boyle',
+        'r_why_title_h':'Cosa significa far parte<br>della <span class="r3d-hl">Rete di Boyle</span>',
         'r_why_sub':'La rete non \u00e8 una directory. \u00c8 un ecosistema attivo dove ogni membro contribuisce e riceve valore concreto.',
         'rw_r1_t':'Codice personale d’accesso',
         'rw_r1_d':'Sblocca contatti, profili estesi e le funzioni riservate del sito.',
@@ -2306,7 +2279,7 @@
         'r_nav_diving':'Diving-Boyle',
         'r_nav_rete':'Network','r_nav_pod':'Podcast','r_nav_cont':'Contact',
         'r_hero_eyebrow':'Scientific Network \u00b7 Extreme Environments',
-        'r_hero_title':'Boyle <span class="hero__grad">Network</span>',
+        'r_hero_title':'Boyle <span class="hero__grad r3d-grad">Network</span>',
         'r_hero_sub':'A multidisciplinary ecosystem of professionals, researchers and innovators dedicated to underwater, hyperbaric, aerospace medicine and the physiology of extreme environments.',
         'r_hero_cta1':'Apply to the Network',
         'r_hero_cta_label1':'Are you a professional?',
@@ -2319,6 +2292,7 @@
         'r_members_sub':'Professionals selected for competence, curriculum and operational impact.',
         'r_why_kicker':'Why join',
         'r_why_title':'What it means to be part of the Boyle Network',
+        'r_why_title_h':'What it means to be part<br>of the <span class="r3d-hl">Boyle Network</span>',
         'r_why_sub':'The network is not a directory. It is an active ecosystem where every member contributes and receives concrete value.',
         'rw_r1_t':'Personal access code',
         'rw_r1_d':'Unlocks contacts, extended profiles and the members-only features of the site.',
@@ -2775,5 +2749,6 @@
  ]
 }
 </script>
+  <script type="module" src="assets/rete3d/app.js?v=20261027h"></script>
 </body>
 </html>

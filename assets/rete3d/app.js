@@ -19,6 +19,19 @@ const FOUNDERS = [
 ];
 const areaOf = tags => { for (const t of tags || []) { const k = String(t).trim().toLowerCase(); const a = AREAS.find(a => a.tags.includes(k)); if (a) return a.id; } return 'F'; };
 const AREA = Object.fromEntries(AREAS.map(a => [a.id, a]));
+/* lingua: segue il selettore IT/EN della pagina (attributo lang di <html>) */
+const EN = () => (document.documentElement.lang || '').toLowerCase().startsWith('en');
+const L = (it, en) => EN() ? en : it;
+const bil = (o, k, en) => { const it = o[k]; Object.defineProperty(o, k, { get: () => EN() ? en : it, configurable: true, enumerable: true }); };
+const AREA_EN = { A: 'Diving', B: 'Hyperbaric', C: 'Emergency and critical care', D: 'Altitude, polar and space', E: 'Operational and military medicine', F: 'Research and other specialties' };
+AREAS.forEach(a => bil(a, 'name', AREA_EN[a.id]));
+const F_EN = {
+  'Silvio Zerbi': ['Founder', 'Founder', 'Anaesthesiologist and intensivist, Trauma Team Leader. Diving and hyperbaric physician, with advanced training in aeronautical and space medicine.'],
+  'Luigi Tarsia': ['Co-founder', 'Engineering Director', 'Nuclear and biomedical engineer, specialist in underwater and hyperbaric, aeronautical and aerospace medicine.'],
+  'Vincenzo Benenati': ['Co-founder', 'Hyperbaric Area Lead', 'Anaesthesiologist, cardiac anaesthesiologist and intensivist, hyperbaric and diving physician.'],
+  'Dario Nicosia': ['Co-founder', 'Diving Area Lead', 'Anaesthesiologist and Intensivist, Hyperbaric and Diving Physician, Mass Gathering Expert. Manages critically ill patients in complex operational scenarios, from pre-hospital emergency to extreme environments.'],
+  'Matteo Paganini': ['Co-founder', 'Chief Researcher', 'Researcher, emergency physician, PhD in Global Health, Humanitarian Aid and Disaster Medicine.'],
+};
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const key = n => n.toLowerCase().replace(/\s+/g, '-');
 const thumbOf = img => 'assets/rete/thumb/' + img.replace(/\.[a-z]+$/i, '') + '.webp';
@@ -30,7 +43,8 @@ const panel = document.getElementById('r3dPanel');
 const label = document.getElementById('r3dLabel');
 const chipsEl = document.getElementById('r3dChips');
 const searchEl = document.getElementById('r3dSearch');
-const fLabel = p => p.badge === 'Fondatore' ? 'Fondatore' : p.badge + ' · ' + p.role;
+const isFounder1 = p => p.name === 'Silvio Zerbi';
+const fLabel = p => isFounder1(p) ? p.badge : p.badge + ' · ' + p.role;
 const pressEl = document.getElementById('r3dPress');
 const zoomBox = document.getElementById('r3dZoom');
 
@@ -45,6 +59,7 @@ const cardEls = new Map(); const shownCards = new Set();
   profiles = prof || {};
   const ms = members.map(m => ({ ...m, _thumb: thumbOf(m.img), _area: areaOf(m.tags), founder: false }));
   const fs = FOUNDERS.map(f => ({ ...f, _thumb: 'assets/rete/thumb/' + f.thumb, _area: f.area || null, founder: true, tags: [] }));
+  fs.forEach(f => { const e = F_EN[f.name]; if (e) { bil(f, 'badge', e[0]); bil(f, 'role', e[1]); bil(f, 'desc', e[2]); } });
   people = [...ms, ...fs];
   renderChips(); initSearch(); initWhy();
   lazy3d(ms, fs);
@@ -94,8 +109,9 @@ function tickLabel() {
 
 /* ── aree: i filamenti si colorano solo quando ne scegli una ── */
 function renderChips() {
-  chipsEl.innerHTML = `<button type="button" class="r3d-chip is-on" data-a="">Tutte</button>` +
-    AREAS.map(a => `<button type="button" class="r3d-chip" data-a="${a.id}" style="--c:${a.color}"><i></i>${esc(a.name)}</button>`).join('');
+  chipsEl.innerHTML = `<button type="button" class="r3d-chip${area ? '' : ' is-on'}" data-a="">${L('Tutte', 'All')}</button>` +
+    AREAS.map(a => `<button type="button" class="r3d-chip" data-a="${a.id}" style="--c:${a.color}"${area === a.id ? ' data-on' : ''}><i></i>${esc(a.name)}</button>`).join('');
+  if (chipsEl.dataset.wired) return; chipsEl.dataset.wired = 1;
   chipsEl.addEventListener('click', e => {
     const b = e.target.closest('.r3d-chip'); if (!b) return;
     area = b.dataset.a || null;
@@ -122,7 +138,7 @@ function founderCard(p) {
   d.innerHTML = `<div class="r3d-founder__photo"><img src="${esc(p.img)}" alt="${esc(p.name)}" /></div>
     <h2>${esc((p.title ? p.title + ' ' : '') + p.name)}</h2><p class="r3d-founder__role">${esc(p.founder ? fLabel(p) : (p.role || ''))}</p>
     ${p.desc ? `<p class="r3d-founder__desc">${esc(p.desc)}</p>` : ''}
-    ${p.founder ? `<div class="r3d-founder__links">${p.linkedin ? `<a class="r3d-founder__in" href="${esc(p.linkedin)}" target="_blank" rel="noopener" aria-label="LinkedIn di ${esc(p.name)}">in</a>` : ''}<a class="r3d-btn" href="index.html#fondatori">I fondatori →</a></div>` : ''}`;
+    ${p.founder ? `<div class="r3d-founder__links">${p.linkedin ? `<a class="r3d-founder__in" href="${esc(p.linkedin)}" target="_blank" rel="noopener" aria-label="LinkedIn di ${esc(p.name)}">in</a>` : ''}<a class="r3d-btn" href="index.html#fondatori">${L('I fondatori →', 'The founders →')}</a></div>` : ''}`;
   return d;
 }
 function open(i) {
@@ -136,7 +152,7 @@ function open(i) {
   const nb = net ? net.neighbors(i) : [];
   if (nb.length) {
     const box = document.createElement('div'); box.className = 'r3d-net';
-    box.innerHTML = `<p>Collegati nella rete</p><div>${nb.map(j => { const q = people[j]; return `<button type="button" data-goto="${j}" title="${esc(q.name)}"><img src="${esc(q._thumb)}" alt="" width="40" height="40" /><span>${esc(q.name.split(' ')[0])}</span></button>`; }).join('')}</div>`;
+    box.innerHTML = `<p>${L('Collegati nella rete', 'Connected in the network')}</p><div>${nb.map(j => { const q = people[j]; return `<button type="button" data-goto="${j}" title="${esc(q.name)}"><img src="${esc(q._thumb)}" alt="" width="40" height="40" /><span>${esc(q.name.split(' ')[0])}</span></button>`; }).join('')}</div>`;
     panel.appendChild(box);
   }
   panel.hidden = false; panel.scrollTop = 0;
@@ -179,7 +195,7 @@ function zoomCard(i) {
     ${p.founder ? '' : `<span class="r3d-zc__t">${(p.tags || []).map(t => `<em>${esc(t)}</em>`).join('')}</span>`}
     ${bio ? `<span class="r3d-zc__b">${esc(bio.length > 220 ? bio.slice(0, 217) + '…' : bio)}</span>` : ''}
     ${p.city ? `<span class="r3d-zc__c">${esc(p.city)}</span>` : ''}
-    <button type="button" class="r3d-zc__go">Apri la scheda</button>`;
+    <button type="button" class="r3d-zc__go">${L('Apri la scheda', 'Open profile')}</button>`;
   el.addEventListener('click', () => open(i));
   zoomBox.appendChild(el); cardEls.set(i, el); return el;
 }
@@ -219,8 +235,8 @@ if (/[?&]debug\b/.test(location.search)) window.__r3d = { get proj() { return la
 const flowEl = document.getElementById('r3dFlow'), flowSvg = document.getElementById('r3dFlowSvg');
 const flowAreas = document.getElementById('r3dFlowAreas'), flowCards = document.getElementById('r3dFlowCards');
 const flowRoot = document.getElementById('r3dFlowRoot');
-const FND = { id: 'FND', name: 'Fondatore e co-fondatori', color: '#ffffff' };
-const ALL = { id: 'ALL', name: 'Tutti', color: '#7be4ff' };
+const FND = { id: 'FND', name: 'Fondatore e co-fondatori', color: '#ffffff' }; bil(FND, 'name', 'Founder and co-founders');
+const ALL = { id: 'ALL', name: 'Tutti', color: '#7be4ff' }; bil(ALL, 'name', 'Everyone');
 let match = null, flowSel = null, lens = null, lensI = -1, lensT = 0;
 const inGroup = (p, g) => g === 'ALL' ? true : g === 'FND' ? p.founder : (!p.founder && p._area === g);
 function renderAreas() {
@@ -231,7 +247,7 @@ function cardsFor() {
   if (match) return people.map((p, i) => ({ p, i })).filter(({ i }) => match.has(i));
   if (!flowSel) return [];
   return people.map((p, i) => ({ p, i })).filter(({ p }) => inGroup(p, flowSel))
-    .sort((x, y) => (y.p.founder - x.p.founder) || (x.p.founder ? (y.p.badge === 'Fondatore') - (x.p.badge === 'Fondatore') : x.p.name.localeCompare(y.p.name, 'it')));
+    .sort((x, y) => (y.p.founder - x.p.founder) || (x.p.founder ? isFounder1(y.p) - isFounder1(x.p) : x.p.name.localeCompare(y.p.name, 'it')));
 }
 function renderList() {
   closeLens(true);
@@ -244,7 +260,7 @@ function renderList() {
     return `<button type="button" class="r3d-mc${p.founder ? ' is-founder' : ''}" data-i="${i}" style="--c:${col};--n:${n}">
       <img src="${esc(p._thumb)}" alt="" width="46" height="46" loading="lazy" />
       <span class="r3d-mc__txt"><b>${esc((p.founder ? p.title + ' ' : '') + p.name)}</b><small>${esc(p.founder ? fLabel(p) : (p.role || (a ? a.name : '')))}</small></span></button>`;
-  }).join('') || (match ? '<p class="r3d-empty">Nessuno con questi criteri.</p>' : '');
+  }).join('') || (match ? `<p class="r3d-empty">${L('Nessuno con questi criteri.', 'No one matches.')}</p>` : '');
   requestAnimationFrame(drawFlow);
 }
 /* linee: dal genitore scende un tronco, corre su un bus sopra ogni riga e cade su ogni figlio */
@@ -299,7 +315,7 @@ function openLens(mc) {
   lens = document.createElement('div'); lens.className = 'r3d-lens'; lens.style.setProperty('--c', mc.style.getPropertyValue('--c'));
   lens.innerHTML = '<button type="button" class="r3d-lens__x" aria-label="Chiudi">✕</button>';
   lens.appendChild(p.founder ? founderCard(p) : (realCard(p) || founderCard({ ...p, img: 'assets/rete/' + p.img })));
-  const go = document.createElement('button'); go.type = 'button'; go.className = 'r3d-mc__go'; go.textContent = 'Mostra nella sfera'; go.dataset.i = i;
+  const go = document.createElement('button'); go.type = 'button'; go.className = 'r3d-mc__go'; go.textContent = L('Mostra nella sfera', 'Show in the sphere'); go.dataset.i = i;
   lens.appendChild(go);
   flowEl.appendChild(lens);
   const M = rel(mc), F = flowEl.getBoundingClientRect(), W = lens.offsetWidth;
@@ -309,8 +325,20 @@ function openLens(mc) {
   lensI = i; mc.classList.add('is-lensed');
   requestAnimationFrame(() => lens && lens.classList.add('is-on'));
   lens.addEventListener('pointerenter', () => clearTimeout(lensT));
-  lens.addEventListener('pointerleave', e => { if (e.pointerType === 'mouse') { clearTimeout(lensT); lensT = setTimeout(() => closeLens(), 220); } });
+  lens.addEventListener('pointerleave', e => { if (e.pointerType === 'mouse' && !scrolling()) { clearTimeout(lensT); lensT = setTimeout(() => closeLens(), 220); } });
 }
+/* lo scorrimento della pagina sposta la lente sotto il mouse: non e' un "allontanarsi" */
+let lastScroll = 0, scrollT = 0; const ptr = { x: -1, y: -1, t: '' };
+addEventListener('pointermove', e => { ptr.x = e.clientX; ptr.y = e.clientY; ptr.t = e.pointerType; }, { passive: true });
+addEventListener('scroll', () => {
+  lastScroll = Date.now(); clearTimeout(scrollT);
+  scrollT = setTimeout(() => {
+    if (!lens || ptr.t !== 'mouse') return;
+    const el = document.elementFromPoint(ptr.x, ptr.y);
+    if (!el || !(lens.contains(el) || el.closest('.r3d-mc'))) closeLens();
+  }, 500);
+}, { passive: true });
+const scrolling = () => Date.now() - lastScroll < 450;
 function closeLens(now) {
   clearTimeout(lensT);
   if (!lens) return;
@@ -331,7 +359,7 @@ flowCards.addEventListener('pointerout', e => {
   if (e.pointerType !== 'mouse') return;
   const mc = e.target.closest('.r3d-mc'); if (!mc || mc.contains(e.relatedTarget)) return;
   clearTimeout(hoverT);
-  if (lens && !lens.contains(e.relatedTarget)) { clearTimeout(lensT); lensT = setTimeout(() => closeLens(), 220); }
+  if (lens && !scrolling() && !lens.contains(e.relatedTarget)) { clearTimeout(lensT); lensT = setTimeout(() => closeLens(), 220); }
 });
 flowCards.addEventListener('click', e => { const mc = e.target.closest('.r3d-mc'); if (!mc) return; if (lensI === +mc.dataset.i) closeLens(); else openLens(mc); });
 flowEl.addEventListener('click', e => {
@@ -360,8 +388,32 @@ function initSearch() {
 function initWhy() {
   const sec = document.getElementById('amici'), btn = document.getElementById('r3dWhyBtn');
   if (!sec || !btn) return;
-  const set = o => { sec.classList.toggle('is-closed', !o); btn.setAttribute('aria-expanded', String(o)); btn.querySelector('b').textContent = o ? 'Chiudi' : 'Scopri cosa offre'; };
+  const set = o => { sec.classList.toggle('is-closed', !o); btn.setAttribute('aria-expanded', String(o)); btn.querySelector('b').textContent = o ? L('Chiudi', 'Close') : L('Scopri cosa offre', 'See what it offers'); };
   btn.addEventListener('click', () => set(sec.classList.contains('is-closed')));
   if (location.hash === '#amici' || location.hash === '#rete-why') set(true);
   document.addEventListener('click', e => { const a = e.target.closest('a[href="#amici"], a[href="#rete-why"]'); if (a) set(true); });
 }
+
+/* testi fissi della scena e dei pannelli, in italiano o inglese */
+function paintLang() {
+  const set = (sel, it, en) => { const el = document.querySelector(sel); if (el) el.textContent = L(it, en); };
+  set('#r3dExploreBtn .r3d-explore__k', 'Esplora la Rete', 'Explore the Network');
+  set('#r3dExploreBtn b', 'Aree e persone', 'Areas and people');
+  set('#r3dWhyBtn .r3d-explore__k', 'Perché entrare', 'Why join');
+  const wb = document.querySelector('#r3dWhyBtn b'); if (wb) wb.textContent = document.getElementById('amici').classList.contains('is-closed') ? L('Scopri cosa offre', 'See what it offers') : L('Chiudi', 'Close');
+  set('#r3dFlowRoot span', 'Rete di Boyle', 'Boyle Network');
+  set('[data-cmd="home"]', 'Centra', 'Center'); set('[data-cmd="wave"]', 'Impulso', 'Pulse');
+  set('#r3dHint', 'Clicca nella rete, poi usa la rotella per avvicinarti', 'Click in the network, then scroll to zoom in');
+  set('.r3d-evx .bmx__kicker', 'Eventi della Rete', 'Network events');
+  set('.r3d-evx .bmx__note', 'La pubblicazione è riservata ai membri della Rete e agli Amici di Boyle: serve il codice personale.', 'Publishing is reserved to Network members and Friends of Boyle: your personal code is required.');
+  if (searchEl) searchEl.placeholder = L('Cerca per nome, area, ruolo, città…', 'Search by name, area, role, city…');
+  document.documentElement.style.setProperty('--r3d-member-lbl', L('"Sei già membro?"', '"Already a member?"'));
+}
+function relang() {
+  paintLang(); label.dataset.t = ''; chipsEl.innerHTML = ''; renderChips();
+  chipsEl.querySelectorAll('.r3d-chip').forEach(x => x.classList.toggle('is-on', (x.dataset.a || null) === area));
+  renderAreas(); renderList(); if (current >= 0) open(current);
+  cardEls.forEach(el => el.remove()); cardEls.clear(); shownCards.clear();
+}
+paintLang();
+new MutationObserver(relang).observe(document.documentElement, { attributes: true, attributeFilter: ['lang'] });
