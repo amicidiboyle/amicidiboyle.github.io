@@ -438,5 +438,16 @@
       "Medicina Polare",
       "Medicina delle Spedizioni"
     ]
+  },
+  {
+    "name": "Alessandro Ivan De Martino",
+    "role": "Anestesista Rianimatore. ASST-settelagui. Focus: Medicina Iperbarica, Intelligenza artificiale applicata in campo sanitario",
+    "img": "alessandro-ivan-de-martino.jpg",
+    "city": "Varese, Italia",
+    "linkedin": "https://it.linkedin.com/in/aidemartino",
+    "email": "riservata",
+    "tags": [
+      "Medicina Iperbarica"
+    ]
   }
 ]
