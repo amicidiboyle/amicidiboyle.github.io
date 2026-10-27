@@ -27,9 +27,6 @@
   <link rel="stylesheet" href="title-fx.css?v=20261026b" />
   <link rel="stylesheet" href="nav-tools.css?v=20261026e" />
   <link rel="stylesheet" href="barometro.css?v=20261026b" />
-  <!-- Primo disegno: blu notte sotto la hero, il fondale entra dopo, cosi' non lampeggia prima del video -->
-  <style>html{background:#020a18}body::before{opacity:0;transition:opacity .6s ease}html.bg-on body::before{opacity:1}</style>
-  <script>(function(){var d=document.documentElement,on=function(){d.classList.add('bg-on')};addEventListener('load',on);setTimeout(on,2500);addEventListener('pageshow',function(e){if(e.persisted)on()})})();</script>
 </head>
 <body>
   <canvas id="dust-canvas" aria-hidden="true" style="position:fixed;inset:0;z-index:-2;pointer-events:none;width:100%;height:100%;"></canvas>
