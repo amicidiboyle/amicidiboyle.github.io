@@ -373,3 +373,13 @@
 }
 
 .rl-map__amici-n b { text-shadow: 0 0 18px rgba(57,255,143,.6); color: #d9ffe9; }
+
+/* Amici di Boyle: scelta di comparire nella sfera */
+.amici-sfera__opts { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 8px; }
+.amici-sfera__opt { display: inline-flex; align-items: center; gap: 8px; padding: 10px 14px; border-radius: 12px; cursor: pointer; font-weight: 600; letter-spacing: 0 !important; font-size: .9rem !important; color: #edf7ff !important; background: rgba(5,18,52,.8); border: 1px solid rgba(123,228,255,.2); }
+.amici-sfera__opt:has(input:checked) { border-color: #39e6c3; box-shadow: 0 0 0 3px rgba(57,230,195,.15); }
+.amici-sfera__opt input { accent-color: #39e6c3; width: auto; }
+.amici-sfera__extra { display: grid; gap: 8px; margin-top: 14px; }
+.amici-sfera__extra[hidden] { display: none; }
+.amici-sfera__extra input[type=file] { padding: 10px 14px; font-size: .82rem; }
+.amici-sfera__hint { margin: 2px 0 0; font-size: .74rem; line-height: 1.5; color: rgba(237,247,255,.55); }

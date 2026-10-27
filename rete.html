@@ -18,7 +18,7 @@
   <link rel="icon" href="assets/logo.png" type="image/png" />
   <link rel="stylesheet" href="rete.css?v=20261026a" />
   <link rel="stylesheet" href="rete-extra.css?v=20261026a" />
-  <link rel="stylesheet" href="rete-layout.css?v=20261026a" />
+  <link rel="stylesheet" href="rete-layout.css?v=20261027a" />
   <style>
     .modal{position:fixed;inset:0;z-index:9000;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(1,6,16,.78);backdrop-filter:blur(8px)}
     .modal.is-open{display:flex}
@@ -667,6 +667,20 @@
               <option value="Evento / Congresso">Evento / Congresso</option>
               <option value="Altro">Altro</option>
             </select>
+          </div>
+          <div class="field field--full amici-sfera">
+            <label data-i18n="r_amici_label_sfera">VUOI COMPARIRE NELLA SFERA DELLA RETE DI BOYLE?</label>
+            <div class="amici-sfera__opts" role="radiogroup">
+              <label class="amici-sfera__opt"><input type="radio" name="sfera" value="Sì" /> <span data-i18n="r_amici_sfera_si">Sì, con la mia foto</span></label>
+              <label class="amici-sfera__opt"><input type="radio" name="sfera" value="No" checked /> <span data-i18n="r_amici_sfera_no">No, grazie</span></label>
+            </div>
+            <div class="amici-sfera__extra" id="amiciSferaExtra" hidden>
+              <label for="amici-foto" data-i18n="r_amici_label_foto">LA TUA FOTO *</label>
+              <input id="amici-foto" name="foto" type="file" accept="image/jpeg,image/png,image/webp" />
+              <label for="amici-bio" data-i18n="r_amici_label_bio">DUE RIGHE SU DI TE</label>
+              <textarea id="amici-bio" name="descrizione_sfera" maxlength="280" rows="3" data-i18n-placeholder="r_amici_bio_ph" placeholder="Chi sei, cosa fai, cosa ti lega agli ambienti estremi (max 280 caratteri)"></textarea>
+              <p class="amici-sfera__hint" data-i18n="r_amici_sfera_hint">Dopo la nostra approvazione la tua foto, il tuo nome e queste righe compariranno nella sfera della Rete di Boyle. Puoi chiederci di toglierle quando vuoi.</p>
+            </div>
           </div>
         </div>
         <div class="modal__actions">
@@ -2249,6 +2263,9 @@
         'r_amici_label_name':'NOME E COGNOME *',
         'r_amici_label_why':'PERCH\u00c9 VUOI ENTRARE NELLA COMMUNITY *',
         'r_amici_label_how':'COME CI HAI CONOSCIUTO',
+        'r_amici_label_sfera':'VUOI COMPARIRE NELLA SFERA DELLA RETE DI BOYLE?','r_amici_sfera_si':'Sì, con la mia foto','r_amici_sfera_no':'No, grazie',
+        'r_amici_label_foto':'LA TUA FOTO *','r_amici_label_bio':'DUE RIGHE SU DI TE','r_amici_bio_ph':'Chi sei, cosa fai, cosa ti lega agli ambienti estremi (max 280 caratteri)',
+        'r_amici_sfera_hint':'Dopo la nostra approvazione la tua foto, il tuo nome e queste righe compariranno nella sfera della Rete di Boyle. Puoi chiederci di toglierle quando vuoi.',
         'r_amici_submit':'Invia la mia candidatura',
         'r_edit_maxchars':'max 300 caratteri',
         'r_edit_rg':'ResearchGate',
@@ -2428,6 +2445,9 @@
         'r_amici_label_name':'FULL NAME *',
         'r_amici_label_why':'WHY DO YOU WANT TO JOIN THE COMMUNITY *',
         'r_amici_label_how':'HOW DID YOU FIND US',
+        'r_amici_label_sfera':'DO YOU WANT TO APPEAR IN THE BOYLE NETWORK SPHERE?','r_amici_sfera_si':'Yes, with my photo','r_amici_sfera_no':'No, thanks',
+        'r_amici_label_foto':'YOUR PHOTO *','r_amici_label_bio':'A FEW LINES ABOUT YOU','r_amici_bio_ph':'Who you are, what you do, what ties you to extreme environments (max 280 characters)',
+        'r_amici_sfera_hint':'Once approved, your photo, name and these lines will appear in the Boyle Network sphere. You can ask us to remove them at any time.',
         'r_amici_submit':'Submit my application',
         'r_edit_maxchars':'max 300 characters',
         'r_edit_rg':'ResearchGate',
@@ -2750,5 +2770,18 @@
 }
 </script>
   <script type="module" src="assets/rete3d/app.js?v=20261027h"></script>
+  <script>
+  /* Amici di Boyle: foto e descrizione solo se si sceglie di comparire nella sfera */
+  (function () {
+    var f = document.getElementById('amici-form'), box = document.getElementById('amiciSferaExtra'), foto = document.getElementById('amici-foto');
+    if (!f || !box) return;
+    f.addEventListener('change', function (e) {
+      if (e.target.name !== 'sfera') return;
+      var on = e.target.value === 'Sì'; box.hidden = !on; foto.required = on;
+      if (!on) { foto.value = ''; document.getElementById('amici-bio').value = ''; }
+    });
+    f.addEventListener('reset', function () { box.hidden = true; foto.required = false; });
+  })();
+  </script>
 </body>
 </html>
