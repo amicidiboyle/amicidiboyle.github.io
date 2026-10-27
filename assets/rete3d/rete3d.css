@@ -467,3 +467,27 @@
 .r3d-founder__in:hover { background: rgba(123,228,255,.2); }
 .r3d-lens .r3d-founder { padding: 18px 6px 4px; }
 .r3d-lens { background: linear-gradient(180deg, #061a33, #020b18); }
+
+/* ══ v8: intestazione di "Perche' entrare" allineata a sinistra, in due colonne ══ */
+.r3d-why .r3d-whyhead { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); align-items: end; gap: 18px 56px; text-align: left; max-width: none; margin-left: 0; margin-right: 0; }
+.r3d-why .r3d-whyhead .section-kicker { grid-column: 1 / -1; display: flex; align-items: center; gap: 12px; margin: 0; font: 700 .72rem/1 ui-monospace, "SF Mono", Menlo, Consolas, monospace; letter-spacing: .2em; text-transform: uppercase; color: #7be4ff; }
+.r3d-why .r3d-whyhead .section-kicker::before { content: ""; width: 34px; height: 2px; background: linear-gradient(90deg, transparent, #7be4ff); box-shadow: 0 0 8px #7be4ff; }
+.r3d-why .r3d-whyhead h2 { margin: 0; text-align: left; font-size: clamp(2rem, 3.6vw, 3.4rem); line-height: 1.04; letter-spacing: -.035em; color: rgba(237,247,255,.92); }
+.r3d-why .r3d-hl { position: relative; display: inline-block; color: #7be4ff; text-shadow: 0 0 26px rgba(123,228,255,.45); padding-bottom: .08em; }
+.r3d-why .r3d-hl::after { content: ""; position: absolute; left: 0; right: 0; bottom: -.04em; height: 3px; border-radius: 3px;
+  background: linear-gradient(90deg, transparent, #7be4ff 30%, #c4b0ff 70%, transparent); background-size: 200% 100%; animation: r3dLine 3.2s linear infinite; box-shadow: 0 0 12px rgba(123,228,255,.6); }
+@keyframes r3dLine { from { background-position: 200% 0; } to { background-position: 0 0; } }
+.r3d-why .r3d-whyhead .section-subheading { margin: 0; max-width: 46ch; text-align: left; justify-self: start; padding: 4px 0 6px 22px; border-left: 2px solid rgba(123,228,255,.55); font-size: 1.05rem; line-height: 1.6; color: rgba(237,247,255,.78); box-shadow: -10px 0 18px -14px #7be4ff; }
+.r3d-why .r3d-whyhead .r3d-why__btn { grid-column: 1 / -1; }
+@media (max-width: 860px) {
+  .r3d-why .r3d-whyhead { grid-template-columns: 1fr; }
+  .r3d-why .r3d-whyhead h2 { font-size: clamp(1.8rem, 8vw, 2.4rem); }
+  .r3d-why .r3d-whyhead .section-subheading { font-size: .98rem; }
+}
+@media (prefers-reduced-motion: reduce) { .r3d-why .r3d-hl::after { animation: none; } }
+@media (max-width: 760px) {
+  .r3d-explore__btn, .r3d-why .r3d-why__btn { grid-template-columns: 1fr auto; grid-template-rows: auto auto; padding: 16px 20px; gap: 6px 12px; }
+  .r3d-explore__btn .r3d-explore__k { grid-column: 1; grid-row: 1; }
+  .r3d-explore__btn b { grid-column: 1; grid-row: 2; font-size: 1.25rem !important; }
+  .r3d-explore__btn i { grid-column: 2; grid-row: 1 / 3; }
+}
