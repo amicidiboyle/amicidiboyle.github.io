@@ -103,10 +103,11 @@ function glowTexture(size = 128, inner = 'rgba(160,235,255,1)', mid = 'rgba(80,1
   const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; return t;
 }
 const NEUTRAL = '#7be4ff';
+const FRIEND = '#5eead4';   // Amici di Boyle che hanno scelto di comparire nella sfera
 function nodeCanvas(node, img, colored) {
   const S = 192, c = node._canvas || (node._canvas = document.createElement('canvas'));
   c.width = c.height = S;
-  const g = c.getContext('2d'), r = S / 2, ring = colored && node.areaColor ? node.areaColor : (node.founder ? '#ffffff' : NEUTRAL);
+  const g = c.getContext('2d'), r = S / 2, ring = node.friend ? FRIEND : (colored && node.areaColor ? node.areaColor : (node.founder ? '#ffffff' : NEUTRAL));
   const halo = g.createRadialGradient(r, r, r * 0.42, r, r, r);
   halo.addColorStop(0, ring + '99'); halo.addColorStop(1, 'rgba(0,0,0,0)');
   g.fillStyle = halo; g.beginPath(); g.arc(r, r, r, 0, Math.PI * 2); g.fill();
@@ -119,7 +120,7 @@ function nodeCanvas(node, img, colored) {
   return c;
 }
 
-export function createNetwork(stage, { members, founders, onSelect, onHover, onCoreState, onEmpty, onFrame, reduced, mobile, safe }) {
+export function createNetwork(stage, { members, founders, friends = [], onSelect, onHover, onCoreState, onEmpty, onFrame, reduced, mobile, safe }) {
   // safe(): fasce in alto e in basso (titolo, aree) dove la rete non deve passare
   let SAFE = { top: 0, bottom: 0 };
   const canvas = document.createElement('canvas');
@@ -193,13 +194,13 @@ export function createNetwork(stage, { members, founders, onSelect, onHover, onC
   const nodeGroup = new THREE.Group(); scene.add(nodeGroup);
   const nodes = [];
   const AIDX = Object.fromEntries(AREAS.map((a, i) => [a.id, i]));
-  const add = (data, founder) => {
-    const area = founder ? (data.area || null) : areaOf(data.tags);
+  const add = (data, founder, friend) => {
+    const area = friend ? 'AM' : founder ? (data.area || null) : areaOf(data.tags);
     const node = {
-      data, founder, area, areaColor: area ? AREAS[AIDX[area]].color : null,
+      data, founder, friend: !!friend, area, areaColor: friend ? FRIEND : area ? AREAS[AIDX[area]].color : null,
       initials: data.name.split(/\s+/).map(s => s[0]).slice(0, 2).join('').toUpperCase(),
       base: new THREE.Vector3(), pos: new THREE.Vector3(), phase: Math.random() * 6.28,
-      size: founder ? 0.95 : 0.78, cur: 1, opacity: 1, sec: founder ? [] : secondaryAreas(data.tags, area), img: null, colored: false,
+      size: founder ? 0.95 : friend ? 0.56 : 0.78, cur: 1, opacity: 1, sec: (founder || friend) ? [] : secondaryAreas(data.tags, area), img: null, colored: false,
     };
     const tex = new THREE.CanvasTexture(nodeCanvas(node, null, false)); tex.colorSpace = THREE.SRGBColorSpace; node.tex = tex;
     node.sprite = new THREE.Sprite(new THREE.SpriteMaterial({ map: tex, transparent: true, depthWrite: false }));
@@ -212,6 +213,7 @@ export function createNetwork(stage, { members, founders, onSelect, onHover, onC
   };
   members.forEach(m => add(m, false));
   founders.forEach(f => add(f, true));
+  friends.forEach(f => add(f, false, true));
   nodes.forEach((n, i) => { n.index = i; });
 
   const dirs = AREAS.map((a, i) => { const y = 1 - (i + 0.5) / AREAS.length * 2, r = Math.sqrt(1 - y * y), th = i * 2.399963; return new THREE.Vector3(Math.cos(th) * r, y * 0.8, Math.sin(th) * r).normalize(); });
@@ -230,7 +232,10 @@ export function createNetwork(stage, { members, founders, onSelect, onHover, onC
 
   function layout() {
     const r = rng(42), byArea = {};
-    nodes.forEach(n => { if (!n.founder || !foundersInner) (byArea[n.area || 'F'] ||= []).push(n); });
+    nodes.forEach(n => { if (n.friend) return; if (!n.founder || !foundersInner) (byArea[n.area || 'F'] ||= []).push(n); });
+    // Amici di Boyle: un guscio esterno, distribuito in modo uniforme
+    const fr = nodes.filter(n => n.friend);
+    fr.forEach((n, k) => { const y = 1 - (k + 0.5) / fr.length * 2, rr = Math.sqrt(1 - y * y), th = k * 2.399963 + 0.7; n.base.set(Math.cos(th) * rr, y * 0.78, Math.sin(th) * rr).multiplyScalar(8.4 + r() * 0.9); });
     Object.entries(byArea).forEach(([a, list]) => {
       const d = dirs[AIDX[a]];
       const t1 = new THREE.Vector3().crossVectors(d, Math.abs(d.y) > 0.9 ? new THREE.Vector3(1, 0, 0) : new THREE.Vector3(0, 1, 0)).normalize();
@@ -248,8 +253,14 @@ export function createNetwork(stage, { members, founders, onSelect, onHover, onC
     edges = []; const seen = new Set();
     const link = (a, b, kind) => { const k = a < b ? a + '-' + b : b + '-' + a; if (a === b || seen.has(k)) return; seen.add(k); edges.push({ a, b, kind }); };
     nodes.forEach((n, i) => {
+      if (n.friend) {   // un Amico si lega all'Amico e al membro della Rete piu' vicini
+        const near = (f) => nodes.map((m, j) => ({ j, d: m.base.distanceTo(n.base) })).filter(o => o.j !== i && f(nodes[o.j])).sort((a, b) => a.d - b.d)[0];
+        const a1 = near(m => m.friend), a2 = near(m => !m.friend && !m.founder);
+        if (a1) link(i, a1.j, 'friend'); if (a2) link(i, a2.j, 'friend');
+        return;
+      }
       if (!n.founder || !foundersInner) link(i, -1, 'core');
-      nodes.map((m, j) => ({ j, d: m.base.distanceTo(n.base) })).filter(o => o.j !== i && nodes[o.j].area === n.area && !(nodes[o.j].founder && foundersInner) && !(n.founder && foundersInner)).sort((a, b) => a.d - b.d).slice(0, 2).forEach(o => link(i, o.j, 'area'));
+      nodes.map((m, j) => ({ j, d: m.base.distanceTo(n.base) })).filter(o => o.j !== i && !nodes[o.j].friend && nodes[o.j].area === n.area && !(nodes[o.j].founder && foundersInner) && !(n.founder && foundersInner)).sort((a, b) => a.d - b.d).slice(0, 2).forEach(o => link(i, o.j, 'area'));
       n.sec.forEach(sa => { const best = nodes.map((m, j) => ({ j, d: m.base.distanceTo(n.base) })).filter(o => nodes[o.j].area === sa && !nodes[o.j].founder).sort((a, b) => a.d - b.d)[0]; if (best) link(i, best.j, 'cross'); });
     });
     if (foundersInner) {
@@ -266,13 +277,13 @@ export function createNetwork(stage, { members, founders, onSelect, onHover, onC
   /* colori dei filamenti: neutri; colorati solo per l'area scelta */
   let focusArea = null;
   function colorEdges() {
-    const c = new THREE.Color(), n = new THREE.Color(NEUTRAL), cc = new THREE.Color('#9fdcff');
+    const c = new THREE.Color(), n = new THREE.Color(NEUTRAL), cc = new THREE.Color('#9fdcff'), fc = new THREE.Color(FRIEND);
     edges.forEach((e, k) => {
       const A = nodes[e.a], B = e.b < 0 ? null : nodes[e.b];
       const inArea = focusArea && A.area === focusArea && (!B || B.area === focusArea);
       let f, col;
       if (focusArea) { col = inArea ? c.set(A.areaColor || '#ffffff') : n; f = inArea ? 0.95 : 0.05; }
-      else { col = e.kind === 'core' ? cc : n; f = e.kind === 'core' ? 0.22 : e.kind === 'ring' ? 0.45 : 0.32; }
+      else { col = e.kind === 'core' ? cc : e.kind === 'friend' ? fc : n; f = e.kind === 'core' ? 0.22 : e.kind === 'ring' ? 0.45 : e.kind === 'friend' ? 0.2 : 0.32; }
       // il capo verso il nucleo (o verso il secondo nodo) leggermente piu' luminoso
       eCol.set([col.r * f * 0.6, col.g * f * 0.6, col.b * f * 0.6, col.r * f, col.g * f, col.b * f], k * 6);
     });
@@ -374,7 +385,7 @@ export function createNetwork(stage, { members, founders, onSelect, onHover, onC
   }
   function home() { selected = null; controls.autoRotate = !reduced; flyTo(homePos(), new THREE.Vector3()); }
   function faceArea(a) {
-    const d = dirs[AIDX[a]];
+    const d = dirs[AIDX[a]]; if (!d) return;
     controls.autoRotate = false;
     flyTo(d.clone().multiplyScalar(homeDist() * 0.82).add(new THREE.Vector3(0, 1.2, 0)), d.clone().multiplyScalar(2.5));
   }

@@ -497,3 +497,6 @@
 .r3d-evx .bmx__panel, #barometro .bmx__panel { max-width: 1344px; }
 @media (max-width: 760px) { .r3d-evx.bmx, #barometro.bmx { padding-left: 16px; padding-right: 16px; } }
 @media (min-width: 1380px) { .r3d-console .hero-access-status { position: absolute; left: 16px; top: calc(100% + 6px); white-space: nowrap; } }
+/* Amici di Boyle nella sfera */
+.r3d-founder.is-friend .r3d-founder__photo { background: conic-gradient(#5eead4, rgba(94,234,212,.35), #5eead4); }
+.r3d-founder.is-friend .r3d-founder__role { color: #5eead4; }

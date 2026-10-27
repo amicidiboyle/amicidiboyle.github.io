@@ -25,6 +25,9 @@ const L = (it, en) => EN() ? en : it;
 const bil = (o, k, en) => { const it = o[k]; Object.defineProperty(o, k, { get: () => EN() ? en : it, configurable: true, enumerable: true }); };
 const AREA_EN = { A: 'Diving', B: 'Hyperbaric', C: 'Emergency and critical care', D: 'Altitude, polar and space', E: 'Operational and military medicine', F: 'Research and other specialties' };
 AREAS.forEach(a => bil(a, 'name', AREA_EN[a.id]));
+/* Amici di Boyle che hanno scelto di comparire nella sfera (rete-amici.json, scritto dalla console) */
+const AMICI = { id: 'AM', name: 'Amici di Boyle', color: '#5eead4' }; bil(AMICI, 'name', 'Friends of Boyle');
+AREA.AM = AMICI;
 const F_EN = {
   'Silvio Zerbi': ['Founder', 'Founder', 'Anaesthesiologist and intensivist, Trauma Team Leader. Diving and hyperbaric physician, with advanced training in aeronautical and space medicine.'],
   'Luigi Tarsia': ['Co-founder', 'Engineering Director', 'Nuclear and biomedical engineer, specialist in underwater and hyperbaric, aeronautical and aerospace medicine.'],
@@ -52,17 +55,22 @@ let people = [], profiles = {}, net = null, area = null, current = -1, lastProj 
 const cardEls = new Map(); const shownCards = new Set();
 
 (async function init() {
-  const [members, prof] = await Promise.all([
+  const [members, prof, amici] = await Promise.all([
     fetch('rete-members.json').then(r => r.json()),
     fetch('rete-profiles.json').then(r => r.json()).catch(() => ({})),
+    fetch('rete-amici.json', { cache: 'no-cache' }).then(r => r.ok ? r.json() : []).catch(() => []),
   ]);
   profiles = prof || {};
   const ms = members.map(m => ({ ...m, _thumb: thumbOf(m.img), _area: areaOf(m.tags), founder: false }));
   const fs = FOUNDERS.map(f => ({ ...f, _thumb: 'assets/rete/thumb/' + f.thumb, _area: f.area || null, founder: true, tags: [] }));
   fs.forEach(f => { const e = F_EN[f.name]; if (e) { bil(f, 'badge', e[0]); bil(f, 'role', e[1]); bil(f, 'desc', e[2]); } });
-  people = [...ms, ...fs];
+  const frs = (Array.isArray(amici) ? amici : []).filter(a => a && a.name && a.img).map(a => {
+    const f = { name: a.name, img: a.img, _thumb: a.img, _area: 'AM', friend: true, founder: false, tags: [], city: a.city || '', desc: a.bio || '', role: 'Amico di Boyle' };
+    bil(f, 'role', 'Friend of Boyle'); return f;
+  });
+  people = [...ms, ...fs, ...frs];
   renderChips(); initSearch(); initWhy();
-  lazy3d(ms, fs);
+  lazy3d(ms, fs, frs);
 })();
 
 /* fasce dove la rete non deve passare: titolo in alto, aree in basso */
@@ -73,14 +81,14 @@ function safeBands() {
   stage.style.setProperty('--st', top + 'px'); stage.style.setProperty('--sb', bottom + 'px');
   return { top, bottom };
 }
-function lazy3d(ms, fs) {
+function lazy3d(ms, fs, frs) {
   const ok = (() => { try { const c = document.createElement('canvas'); return !!(c.getContext('webgl2') || c.getContext('webgl')); } catch (e) { return false; } })();
   if (!ok) { stage.classList.add('is-fallback'); return; }
   const go = async () => {
     try {
-      const mod = await import('./rete3d.min.js?v=20261027c');
+      const mod = await import('./rete3d.min.js?v=20261027d');
       net = mod.createNetwork(stage, {
-        members: ms, founders: fs, reduced: REDUCED, mobile: MOBILE,
+        members: ms, founders: fs, friends: frs, reduced: REDUCED, mobile: MOBILE,
         safe: safeBands,
         onSelect: i => open(i), onHover: i => { hoverI = i; if (net) net.hoverEdges(i); }, onEmpty: () => close(), onFrame: zoomCards,
         onCoreState: (p, v, on) => { pressEl.hidden = !on; if (on) pressEl.innerHTML = `P <b>${p.toFixed(2).replace('.', ',')}</b> bar · V <b>${v.toFixed(2).replace('.', ',')}</b> L <small>P·V = 6 bar·L</small>`; },
@@ -134,7 +142,7 @@ function realCard(p) {
 }
 function founderCard(p) {
   const d = document.createElement('article');
-  d.className = 'r3d-founder';
+  d.className = 'r3d-founder' + (p.friend ? ' is-friend' : '');
   d.innerHTML = `<div class="r3d-founder__photo"><img src="${esc(p.img)}" alt="${esc(p.name)}" /></div>
     <h2>${esc((p.title ? p.title + ' ' : '') + p.name)}</h2><p class="r3d-founder__role">${esc(p.founder ? fLabel(p) : (p.role || ''))}</p>
     ${p.desc ? `<p class="r3d-founder__desc">${esc(p.desc)}</p>` : ''}
@@ -147,7 +155,7 @@ function open(i) {
   const a = p._area ? AREA[p._area] : null;
   panel.innerHTML = `<button type="button" class="r3d-close" aria-label="Chiudi la scheda">✕</button>
     <p class="r3d-panel__area" style="--c:${a ? a.color : '#fff'}"><i></i>${esc(p.founder ? p.badge + (a ? ' · ' + a.name : '') : a.name)}</p>`;
-  const card = p.founder ? founderCard(p) : (realCard(p) || founderCard({ ...p, img: 'assets/rete/' + p.img }));
+  const card = (p.founder || p.friend) ? founderCard(p) : (realCard(p) || founderCard({ ...p, img: 'assets/rete/' + p.img }));
   panel.appendChild(card);
   const nb = net ? net.neighbors(i) : [];
   if (nb.length) {
@@ -238,9 +246,9 @@ const flowRoot = document.getElementById('r3dFlowRoot');
 const FND = { id: 'FND', name: 'Fondatore e co-fondatori', color: '#ffffff' }; bil(FND, 'name', 'Founder and co-founders');
 const ALL = { id: 'ALL', name: 'Tutti', color: '#7be4ff' }; bil(ALL, 'name', 'Everyone');
 let match = null, flowSel = null, lens = null, lensI = -1, lensT = 0;
-const inGroup = (p, g) => g === 'ALL' ? true : g === 'FND' ? p.founder : (!p.founder && p._area === g);
+const inGroup = (p, g) => g === 'ALL' ? true : g === 'AM' ? !!p.friend : g === 'FND' ? p.founder : (!p.founder && p._area === g);
 function renderAreas() {
-  const groups = [ALL, FND, ...AREAS];
+  const groups = [ALL, FND, ...AREAS, ...(people.some(p => p.friend) ? [AMICI] : [])];
   flowAreas.innerHTML = groups.map(g => `<button type="button" class="r3d-fa" data-g="${g.id}" style="--c:${g.color}" aria-pressed="false"><i></i><span>${esc(g.name)}</span></button>`).join('');
 }
 function cardsFor() {
@@ -314,7 +322,7 @@ function openLens(mc) {
   const p = people[i];
   lens = document.createElement('div'); lens.className = 'r3d-lens'; lens.style.setProperty('--c', mc.style.getPropertyValue('--c'));
   lens.innerHTML = '<button type="button" class="r3d-lens__x" aria-label="Chiudi">✕</button>';
-  lens.appendChild(p.founder ? founderCard(p) : (realCard(p) || founderCard({ ...p, img: 'assets/rete/' + p.img })));
+  lens.appendChild((p.founder || p.friend) ? founderCard(p) : (realCard(p) || founderCard({ ...p, img: 'assets/rete/' + p.img })));
   const go = document.createElement('button'); go.type = 'button'; go.className = 'r3d-mc__go'; go.textContent = L('Mostra nella sfera', 'Show in the sphere'); go.dataset.i = i;
   lens.appendChild(go);
   flowEl.appendChild(lens);
