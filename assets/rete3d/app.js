@@ -63,7 +63,7 @@ function lazy3d(ms, fs) {
   if (!ok) { stage.classList.add('is-fallback'); return; }
   const go = async () => {
     try {
-      const mod = await import('./rete3d.min.js?v=20261027b');
+      const mod = await import('./rete3d.min.js?v=20261027c');
       net = mod.createNetwork(stage, {
         members: ms, founders: fs, reduced: REDUCED, mobile: MOBILE,
         safe: safeBands,
@@ -219,17 +219,18 @@ const flowEl = document.getElementById('r3dFlow'), flowSvg = document.getElement
 const flowAreas = document.getElementById('r3dFlowAreas'), flowCards = document.getElementById('r3dFlowCards');
 const flowRoot = document.getElementById('r3dFlowRoot');
 const FND = { id: 'FND', name: 'Fondatore e co-fondatori', color: '#ffffff' };
+const ALL = { id: 'ALL', name: 'Tutti', color: '#7be4ff' };
 let match = null, flowSel = null, lens = null, lensI = -1, lensT = 0;
-const inGroup = (p, g) => g === 'FND' ? p.founder : (!p.founder && p._area === g);
+const inGroup = (p, g) => g === 'ALL' ? true : g === 'FND' ? p.founder : (!p.founder && p._area === g);
 function renderAreas() {
-  const groups = [FND, ...AREAS];
+  const groups = [ALL, FND, ...AREAS];
   flowAreas.innerHTML = groups.map(g => `<button type="button" class="r3d-fa" data-g="${g.id}" style="--c:${g.color}" aria-pressed="false"><i></i><span>${esc(g.name)}</span></button>`).join('');
 }
 function cardsFor() {
   if (match) return people.map((p, i) => ({ p, i })).filter(({ i }) => match.has(i));
   if (!flowSel) return [];
   return people.map((p, i) => ({ p, i })).filter(({ p }) => inGroup(p, flowSel))
-    .sort((x, y) => x.p.founder && y.p.founder ? (y.p.badge === 'Fondatore') - (x.p.badge === 'Fondatore') : x.p.name.localeCompare(y.p.name, 'it'));
+    .sort((x, y) => (y.p.founder - x.p.founder) || (x.p.founder ? (y.p.badge === 'Fondatore') - (x.p.badge === 'Fondatore') : x.p.name.localeCompare(y.p.name, 'it')));
 }
 function renderList() {
   closeLens(true);
@@ -358,7 +359,7 @@ function initSearch() {
 function initWhy() {
   const sec = document.getElementById('amici'), btn = document.getElementById('r3dWhyBtn');
   if (!sec || !btn) return;
-  const set = o => { sec.classList.toggle('is-closed', !o); btn.setAttribute('aria-expanded', String(o)); btn.querySelector('span').textContent = o ? 'Chiudi' : 'Scopri cosa offre'; };
+  const set = o => { sec.classList.toggle('is-closed', !o); btn.setAttribute('aria-expanded', String(o)); btn.querySelector('b').textContent = o ? 'Chiudi' : 'Scopri cosa offre'; };
   btn.addEventListener('click', () => set(sec.classList.contains('is-closed')));
   if (location.hash === '#amici' || location.hash === '#rete-why') set(true);
   document.addEventListener('click', e => { const a = e.target.closest('a[href="#amici"], a[href="#rete-why"]'); if (a) set(true); });

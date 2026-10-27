@@ -393,3 +393,55 @@
 :is(.r3d-panel, .r3d-lens) .r3d-membercard .member-role { padding-bottom: 6px !important; }
 :is(.r3d-panel, .r3d-lens) .r3d-membercard .member-bio-snippet { position: static !important; transform: none !important; margin: 6px 0 0 !important; max-width: 36ch; }
 :is(.r3d-panel, .r3d-lens) .member-card.r3d-membercard { padding-bottom: 118px !important; }
+
+/* ══ v6 ══ */
+/* titolo: entrata a parole (title-fx) + "Boyle" attraversato da una corrente di luce */
+.r3d-top .r3d-title .r3d-grad { background: linear-gradient(110deg, #a8eeff 0%, #7be4ff 30%, #ffffff 45%, #7be4ff 60%, #c4b0ff 100%); background-size: 250% 100%; -webkit-background-clip: text; background-clip: text; animation: r3dFlow 6s ease-in-out infinite; }
+@keyframes r3dFlow { 0%, 100% { background-position: 100% 0; } 50% { background-position: 0 0; } }
+.r3d-top .r3d-title { text-shadow: none; filter: drop-shadow(0 6px 30px rgba(0,0,0,.5)) drop-shadow(0 0 22px rgba(123,228,255,.18)); }
+@media (prefers-reduced-motion: reduce) { .r3d-top .r3d-title .r3d-grad { animation: none; } }
+
+/* codice membro sulla stessa riga delle tre azioni */
+@media (min-width: 1100px) {
+  .r3d-console .container { max-width: 1400px; }
+  .r3d-console .hero__cta { display: flex; flex-wrap: nowrap; align-items: flex-end; justify-content: center; gap: 22px; }
+  .r3d-console .hero-access-bar { position: relative; margin: 0 !important; flex: none; }
+  .r3d-console .hero-access-bar::before { content: "Sei già membro?"; position: absolute; left: 4px; bottom: calc(100% + 10px); font-size: .7rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: rgba(168,210,240,.7); white-space: nowrap; }
+}
+
+/* il pulsante "Scopri cosa offre" ha lo stesso disegno di "Esplora la Rete" */
+.r3d-why .r3d-why__btn { clip-path: none; border-radius: 18px; text-transform: none; letter-spacing: normal; font: inherit; color: #edf7ff; background: linear-gradient(120deg, rgba(4,20,44,.9), rgba(6,30,62,.75)); box-shadow: inset 0 0 40px rgba(123,228,255,.06), 0 20px 50px rgba(0,0,0,.35); max-width: 720px; margin: 22px auto 0; padding: 18px 24px; }
+.r3d-why .r3d-why__btn b { font-size: clamp(1.1rem, 1.8vw, 1.4rem); }
+.r3d-why .r3d-why__btn i { width: 12px; height: 12px; border-right: 2px solid #7be4ff; border-bottom: 2px solid #7be4ff; transform: rotate(45deg) translateY(-3px); }
+.r3d-why:not(.is-closed) .r3d-why__btn i { transform: rotate(225deg) translateY(-3px); }
+
+/* eventi: riquadro gemello del Barometro */
+#prossimo-evento.r3d-evx { padding-top: 40px; padding-bottom: 0; }
+#prossimo-evento .bmx__panel::before { display: none; }
+.r3d-evx__dial { width: 100%; max-width: 230px; justify-self: center; display: block; }
+.r3d-evx__orbit { transform-origin: 120px 120px; animation: r3dOrbit 9s linear infinite; }
+@keyframes r3dOrbit { to { transform: rotate(360deg); } }
+.r3d-evx__ring { transform-origin: 120px 120px; animation: r3dOrbit 40s linear infinite reverse; }
+.r3d-evx__d { opacity: .45; }
+.r3d-evx__d--on { opacity: 1; filter: drop-shadow(0 0 6px #7BE4FF); animation: r3dBlink 2.4s ease-in-out infinite; }
+@keyframes r3dBlink { 50% { opacity: .35; } }
+.r3d-evx .bmx__form { align-items: center; }
+.r3d-evx .bmx__btn { flex: none; }
+.r3d-evx__ghost { display: inline-flex; align-items: center; height: 54px; padding: 0 24px; border-radius: 999px; text-decoration: none; font-weight: 700; color: #E8EEF5; border: 1px solid rgba(232,238,245,.28); background: rgba(3,10,20,.55); transition: border-color .2s; }
+.r3d-evx__ghost:hover { border-color: #7BE4FF; }
+@media (max-width: 760px) { .r3d-evx__dial { max-width: 150px; } .r3d-evx__ghost { width: 100%; justify-content: center; } }
+@media (prefers-reduced-motion: reduce) { .r3d-evx__orbit, .r3d-evx__ring, .r3d-evx__d--on { animation: none; } }
+/* sfumatura delle fasce con due veli leggeri sopra la scena (piu' economico di una maschera sul canvas) */
+.r3d-top .r3d-canvas { -webkit-mask-image: none; mask-image: none; }
+.r3d-top .r3d-stage::before { content: ""; position: absolute; inset: 0; z-index: 2; pointer-events: none;
+  background:
+    linear-gradient(180deg, rgba(2,10,24,.84) 0, rgba(2,10,24,.8) calc(var(--st, 0px) - 34px), rgba(2,10,24,0) calc(var(--st, 0px) + 26px)),
+    linear-gradient(0deg, rgba(2,10,24,.84) 0, rgba(2,10,24,.8) calc(var(--sb, 0px) - 22px), rgba(2,10,24,0) calc(var(--sb, 0px) + 22px)); }
+.r3d-top .r3d-title { filter: none; text-shadow: 0 0 28px rgba(123,228,255,.16); }
+@media (min-width: 1380px) {
+  .r3d-console .container { max-width: 1420px; }
+  .r3d-console .hero__cta { grid-template-columns: repeat(4, max-content) !important; column-gap: 18px !important; }
+  .r3d-console .hero__cta .hero-access-bar { grid-column: auto !important; justify-self: start; }
+  .r3d-console .hero-access-input { max-width: 170px; }
+}
+@media (max-width: 1379px) { .r3d-console .hero-access-bar::before { display: none; } }

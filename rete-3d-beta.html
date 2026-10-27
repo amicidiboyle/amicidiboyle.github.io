@@ -58,7 +58,7 @@
 </style>
   <link rel="stylesheet" href="title-fx.css?v=20261026a" />
   <link rel="stylesheet" href="nav-tools.css?v=20261026e" />
-  <link rel="stylesheet" href="assets/rete3d/rete3d.css?v=20261027b" />
+  <link rel="stylesheet" href="assets/rete3d/rete3d.css?v=20261027c" />
   <link rel="stylesheet" href="barometro.css?v=20261026a" />
 </head>
 <body>
@@ -393,7 +393,7 @@
           <p class="section-kicker" data-i18n="r_why_kicker">Perché entrare</p>
           <h2 data-i18n="r_why_title">Cosa significa far parte della Rete di Boyle</h2>
           <p class="section-subheading" data-i18n="r_why_sub">La rete non è una directory. È un ecosistema attivo dove ogni membro contribuisce e riceve valore concreto.</p>
-          <button type="button" class="r3d-why__btn" id="r3dWhyBtn" aria-expanded="false" aria-controls="amici"><span>Scopri cosa offre</span><i aria-hidden="true"></i></button>
+          <button type="button" class="r3d-explore__btn r3d-why__btn" id="r3dWhyBtn" aria-expanded="false" aria-controls="amici"><span class="r3d-explore__k">Perché entrare</span><b>Scopri cosa offre</b><i aria-hidden="true"></i></button>
         </div>
 
         <div class="rw-paths">
@@ -481,26 +481,28 @@
       </div>
     </section>
 
-  <!-- ── EVENTI ── -->
-  <section class="section next-event-section" id="prossimo-evento">
-    <div class="container">
-      <div class="next-event-propose reveal">
-        <div class="next-event-propose__inner">
-          <div class="next-event-propose__text">
-            <p class="next-event-propose__title" data-i18n="r_ev_propose">Hai un evento da proporre?</p>
-            <p class="next-event-propose__desc" data-i18n="r_ev_propose_p">Sei un membro della Rete o un Amico di Boyle? Proponi corsi, congressi o iniziative legate agli ambienti estremi. La pubblicazione è riservata alla community.</p>
-          </div>
-          <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
-            <a class="btn btn-ghost" href="eventi.html" data-i18n="r_events_link" style="display:inline-flex;align-items:center;gap:6px;">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
-              Tutti gli eventi
-            </a>
-            <a class="rete-event-publish-btn btn-secondary" href="eventi.html#proponi" style="display:inline-flex;align-items:center;gap:6px;">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
-              <span data-i18n="r_ev_propose_cta">Proponi un evento</span>
-            </a>
-          </div>
+  <!-- ── EVENTI: stesso riquadro del Barometro ── -->
+  <section class="bmx r3d-evx" id="prossimo-evento" aria-labelledby="evx-title">
+    <div class="bmx__panel">
+      <svg class="r3d-evx__dial" viewBox="0 0 240 240" aria-hidden="true">
+        <defs><radialGradient id="evxG" cx="50%" cy="45%" r="60%"><stop offset="0" stop-color="#16406e"/><stop offset="1" stop-color="#061426"/></radialGradient></defs>
+        <circle cx="120" cy="120" r="108" fill="url(#evxG)" stroke="rgba(123,228,255,.35)" stroke-width="2"/>
+        <circle class="r3d-evx__ring" cx="120" cy="120" r="94" fill="none" stroke="#7BE4FF" stroke-width="2" stroke-dasharray="4 10" opacity=".55"/>
+        <g class="r3d-evx__orbit"><circle cx="120" cy="26" r="6" fill="#7BE4FF"/><circle cx="120" cy="26" r="12" fill="#7BE4FF" opacity=".2"/></g>
+        <g transform="translate(70 66)" fill="none" stroke="#E8EEF5" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="0" y="14" width="100" height="92" rx="14"/><path d="M0 44h100M28 0v26M72 0v26"/>
+        </g>
+        <g fill="#7BE4FF"><circle class="r3d-evx__d" cx="96" cy="140" r="7"/><circle class="r3d-evx__d" cx="120" cy="140" r="7"/><circle class="r3d-evx__d r3d-evx__d--on" cx="144" cy="140" r="7"/><circle class="r3d-evx__d" cx="96" cy="160" r="7"/><circle class="r3d-evx__d" cx="120" cy="160" r="7"/></g>
+      </svg>
+      <div>
+        <p class="bmx__kicker">Eventi della Rete</p>
+        <h2 class="bmx__title" id="evx-title" data-i18n="r_ev_propose" data-tfx>Hai un evento da proporre?</h2>
+        <p class="bmx__text" data-i18n="r_ev_propose_p">Sei un membro della Rete o un Amico di Boyle? Proponi corsi, congressi o iniziative formative sulla piattaforma.</p>
+        <div class="bmx__form">
+          <button class="bmx__btn" id="publishEventBtn2" type="button"><span data-i18n="r_ev_propose_cta">Proponi evento</span></button>
+          <a class="r3d-evx__ghost" href="eventi.html" data-i18n="r_events_link">Prossimi eventi</a>
         </div>
+        <p class="bmx__note">La pubblicazione è riservata ai membri della Rete e agli Amici di Boyle: serve il codice personale.</p>
       </div>
     </div>
   </section>
@@ -2747,6 +2749,6 @@
  ]
 }
 </script>
-  <script type="module" src="assets/rete3d/app.js?v=20261027b"></script>
+  <script type="module" src="assets/rete3d/app.js?v=20261027c"></script>
 </body>
 </html>

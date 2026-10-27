@@ -136,7 +136,7 @@ export function createNetwork(stage, { members, founders, onSelect, onHover, onC
     const H0 = stage.clientHeight || 1, He = Math.max(H0 - SAFE.top - SAFE.bottom, H0 * 0.45);
     const v = 2 * Math.atan(Math.tan(THREE.MathUtils.degToRad(camera.fov) / 2) * He / H0);
     const h = 2 * Math.atan(Math.tan(THREE.MathUtils.degToRad(camera.fov) / 2) * camera.aspect);
-    const k = camera.aspect < 0.8 ? 0.84 : 0.95;   // in verticale la rete puo' uscire un po' dai lati
+    const k = camera.aspect < 0.8 ? 0.66 : 0.64;   // piu' basso = rete piu' grande   // in verticale la rete puo' uscire un po' dai lati
     return R_FIT * k / Math.sin(Math.min(v, h) / 2);
   };
   const homePos = () => new THREE.Vector3(0, 0.12, 1).normalize().multiplyScalar(homeDist());
