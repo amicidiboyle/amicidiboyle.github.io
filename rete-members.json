@@ -452,11 +452,15 @@
   },
   {
     "name": "Giovanni Panziera",
-    "role": "medico. istituto iperbarico verona. Focus: medicina subacquea ed iperbarica",
+    "role": "Medico libero professionista – Verona. Focus: medicina subacquea e iperbarica, fisiologia dell'immersione e medicina aerospaziale.",
     "img": "giovanni-panziera.jpg",
     "city": "Verona",
     "linkedin": "https://www.linkedin.com/in/giovanni-panziera-8a3661182",
     "email": "riservata",
-    "tags": []
+    "tags": [
+      "iperbarica",
+      "subacquea",
+      "aerospaziale"
+    ]
   }
 ]
