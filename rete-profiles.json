@@ -590,18 +590,18 @@
   },
   "giovanni-panziera": {
     "name": "Giovanni Panziera",
-    "bio": "la medicina subacquea è il mio interesse principale, essendo anche sub, insieme all'iperbarica, all'aerospaziale ed alla formazione ( www.giovannipanziera.it).",
+    "bio": "Medico libero professionista con esperienza in medicina subacquea e iperbarica. Interesse per la fisiologia dell'immersione, la medicina aerospaziale e la gestione delle emergenze. Attualmente impegnato nella formazione sanitaria e nella divulgazione scientifica.",
     "linkedin": "https://www.linkedin.com/in/giovanni-panziera-8a3661182",
     "researchgate": "",
     "scholar": "",
     "orcid": "",
     "twitter": "",
     "instagram": "",
-    "website": "",
+    "website": "https://www.giovannipanziera.it",
     "courses": "",
-    "speaker": false,
+    "speaker": true,
     "podcast": false,
-    "research": false,
-    "updated": "2026-10-31 10:00:02"
+    "research": true,
+    "updated": "2026-10-31 15:51:08"
   }
 }
