@@ -557,13 +557,13 @@
             <input id="cand-role" name="ruolo" type="text" placeholder="Es. Medico iperbarico, ricercatore, ingegnere biomedico" />
           </div>
           <div class="field field--full cand-tags" id="candTags">
-            <label data-i18n="r_cand_label_tags">AREE DI COMPETENZA * (ALMENO 2)</label>
+            <label data-i18n="r_cand_label_tags">AREE DI COMPETENZA *</label>
             <p class="cand-tags__hint" data-i18n="r_cand_tags_hint">Apri un'area e scegli le voci che ti descrivono. La prima che scegli decide il gruppo in cui comparirai nella Rete.</p>
             <div class="cand-tags__areas" role="group" aria-label="Aree"></div>
             <div class="cand-tags__list" aria-live="polite"></div>
             <div class="cand-tags__picked"></div>
             <input type="hidden" name="tag" id="cand-tags-value" />
-            <p class="cand-tags__err" id="candTagsErr" hidden data-i18n="r_cand_tags_err">Scegli almeno due voci.</p>
+            <p class="cand-tags__err" id="candTagsErr" hidden data-i18n="r_cand_tags_err">Scegli almeno una voce.</p>
           </div>
           <div class="field field--full">
             <label for="cand-interest" data-i18n="r_cand_label_area">ALTRO DA AGGIUNGERE (FACOLTATIVO)</label>
@@ -896,6 +896,9 @@
     'HEMS':             '#ff6b6b',
     'Spazio':           '#a8eeff',
     'Montagna':         '#80ffd4',
+    'Medicina di Montagna': '#80ffd4',
+    'Medicina Speleologica': '#e58fd0',
+    'Space':            '#a8eeff',
     'ECMO':             '#4dffd6',
     'Safety':           '#ffd166',
     'Chirurgia':        '#f8a5c2',
@@ -2281,7 +2284,7 @@
         'r_cand_label_pres':'PRESENTAZIONE E MOTIVAZIONE',
         'r_cand_label_foto':'FOTO PROFILO *',
         'r_forgot_link':'Non ricordo il mio codice','r_forgot_title':'Recupera il tuo codice','r_forgot_desc':"Scrivi l'email con cui ti sei iscritto alla Rete o agli Amici di Boyle: se è registrata, ti mandiamo lì il tuo codice personale.",'r_forgot_send':'Mandami il codice',
-        'r_cand_label_tags':'AREE DI COMPETENZA * (ALMENO 2)','r_cand_tags_hint':"Apri un'area e scegli le voci che ti descrivono. La prima che scegli decide il gruppo in cui comparirai nella Rete.",'r_cand_tags_err':'Scegli almeno due voci.',
+        'r_cand_label_tags':'AREE DI COMPETENZA *','r_cand_tags_hint':"Apri un'area e scegli le voci che ti descrivono. La prima che scegli decide il gruppo in cui comparirai nella Rete.",'r_cand_tags_err':'Scegli almeno una voce.',
 
         'r_cand_foto_hint':'Obbligatoria: comparirà sulla tua card e nella sfera della Rete. Formato JPG, PNG o WebP.',
         'r_cand_submit':'Invia candidatura',
@@ -2465,7 +2468,7 @@
         'r_cand_label_pres':'PRESENTATION AND MOTIVATION',
         'r_cand_label_foto':'PROFILE PHOTO *',
         'r_forgot_link':'I forgot my code','r_forgot_title':'Get your code back','r_forgot_desc':'Enter the email you used to join the Network or the Friends of Boyle: if it is registered, we will send your personal code there.','r_forgot_send':'Send me the code',
-        'r_cand_label_tags':'AREAS OF EXPERTISE * (AT LEAST 2)','r_cand_tags_hint':'Open an area and pick the items that describe you. Your first pick decides the group you will appear in.','r_cand_tags_err':'Please choose at least two items.',
+        'r_cand_label_tags':'AREAS OF EXPERTISE *','r_cand_tags_hint':'Open an area and pick the items that describe you. Your first pick decides the group you will appear in.','r_cand_tags_err':'Please choose at least one item.',
 
         'r_cand_foto_hint':'Required: it will appear on your card and in the Network sphere. JPG, PNG or WebP format.',
         'r_cand_submit':'Submit application',
@@ -2802,7 +2805,7 @@
  ]
 }
 </script>
-  <script type="module" src="assets/rete3d/app.js?v=20261102c"></script>
+  <script type="module" src="assets/rete3d/app.js?v=20261102d"></script>
   <script>
   /* Amici di Boyle: foto e descrizione solo se si sceglie di comparire nella sfera */
   (function () {
@@ -2817,9 +2820,9 @@
   })();
   </script>
   <script>
-  /* Candidatura alla Rete: aree di competenza a cascata, almeno due voci (vocabolario comune a tutta la Rete) */
+  /* Candidatura alla Rete: aree di competenza a cascata, almeno una voce (vocabolario comune a tutta la Rete) */
   (function () {
-    var AREE = [{"id": "A", "name": "Subacquea", "color": "#56B4E9", "tags": ["Diving", "Subacquea", "Apnea", "Esplorazione", "Diving Medical Examiner"]}, {"id": "B", "name": "Iperbarica", "color": "#2fd6b0", "tags": ["Iperbarica", "Medicina Iperbarica", "Ossigenoterapia Iperbarica", "Tecnica Iperbarica"]}, {"id": "C", "name": "Emergenza e area critica", "color": "#E69F00", "tags": ["Critical Care", "Area Critica", "Anestesia e Rianimazione", "Emergenza", "Trauma", "ECMO", "HEMS", "SAR", "Soccorso in ambienti Estremi", "Chirurgia", "Mass Gathering", "Medicina dei Disastri", "Medicina Umanitaria", "Nursing"]}, {"id": "D", "name": "Quota, poli e spazio", "color": "#e58fd0", "tags": ["Space", "Aerospaziale", "Medicina Aeronautica", "Montagna", "Medicina Polare", "Medicina delle Spedizioni", "Ambienti Estremi", "Astrobiologia"]}, {"id": "E", "name": "Medicina operativa e militare", "color": "#F0E442", "tags": ["Medicina Militare", "Medicina Operativa", "Medical Intelligence", "Droni"]}, {"id": "F", "name": "Ricerca e altre specialità", "color": "#b9a6ff", "tags": ["Ricerca", "Fisiologia", "Neuroscienze", "Cardiologia", "Medicina Interna", "Psicologia", "Farmacologia", "Biologia", "Ingegneria", "Intelligenza Artificiale", "Safety", "Educazione"]}];
+    var AREE = [{"id": "A", "name": "Subacquea", "color": "#56B4E9", "tags": ["Diving", "Subacquea", "Apnea", "Esplorazione", "Diving Medical Examiner"]}, {"id": "B", "name": "Iperbarica", "color": "#2fd6b0", "tags": ["Iperbarica", "Medicina Iperbarica", "Ossigenoterapia Iperbarica", "Tecnica Iperbarica"]}, {"id": "C", "name": "Emergenza e area critica", "color": "#E69F00", "tags": ["Critical Care", "Area Critica", "Anestesia e Rianimazione", "Emergenza", "Trauma", "ECMO", "HEMS", "SAR", "Soccorso in ambienti Estremi", "Chirurgia", "Mass Gathering", "Medicina dei Disastri", "Medicina Umanitaria", "Nursing"]}, {"id": "D", "name": "Quota, poli e spazio", "color": "#e58fd0", "tags": ["Space", "Aerospaziale", "Medicina Aeronautica", "Medicina di Montagna", "Medicina Speleologica", "Medicina Polare", "Medicina delle Spedizioni", "Ambienti Estremi", "Astrobiologia"]}, {"id": "E", "name": "Medicina operativa e militare", "color": "#F0E442", "tags": ["Medicina Militare", "Medicina Operativa", "Medical Intelligence", "Droni"]}, {"id": "F", "name": "Ricerca e altre specialità", "color": "#b9a6ff", "tags": ["Ricerca", "Fisiologia", "Neuroscienze", "Cardiologia", "Medicina Interna", "Psicologia", "Farmacologia", "Biologia", "Ingegneria", "Intelligenza Artificiale", "Safety", "Educazione"]}];
     var box = document.getElementById('candTags'), form = document.getElementById('network-form');
     if (!box || !form) return;
     var areasEl = box.querySelector('.cand-tags__areas'), listEl = box.querySelector('.cand-tags__list'),
@@ -2837,7 +2840,7 @@
       }).join('') : '';
       pickedEl.innerHTML = picked.map(function (t, i) { return '<span class="cand-tags__chip">' + (i === 0 ? '<em>1</em>' : '') + esc(t) + '<button type="button" data-x="' + esc(t) + '" aria-label="Togli">&times;</button></span>'; }).join('');
       val.value = picked.join(', ');
-      if (picked.length >= 2) err.hidden = true;
+      if (picked.length >= 1) err.hidden = true;
     }
     box.addEventListener('click', function (e) {
       var b = e.target.closest('button'); if (!b) return;
@@ -2848,7 +2851,7 @@
     });
     // blocca l'invio se mancano le voci (prima degli altri gestori del modulo)
     form.addEventListener('submit', function (e) {
-      if (picked.length >= 2) return;
+      if (picked.length >= 1) return;
       e.preventDefault(); e.stopImmediatePropagation();
       err.hidden = false; box.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }, true);
