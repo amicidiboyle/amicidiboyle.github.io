@@ -86,7 +86,7 @@ function lazy3d(ms, fs, frs) {
   if (!ok) { stage.classList.add('is-fallback'); return; }
   const go = async () => {
     try {
-      const mod = await import('./rete3d.min.js?v=20261102a');
+      const mod = await import('./rete3d.min.js?v=20261102b');
       net = mod.createNetwork(stage, {
         members: ms, founders: fs, friends: frs, reduced: REDUCED, mobile: MOBILE,
         safe: safeBands,
@@ -189,6 +189,49 @@ document.addEventListener('keydown', e => {
   if (document.querySelector('.modal.is-open, .profile-modal.is-open, .edit-modal.is-open, .access-modal.is-open, .email-wall.is-open')) return;
   close();
 });
+
+/* "Mostra nella sfera": prima porta la sfera sotto l'header, aspetta che lo scroll
+   sia davvero finito (su telefono lo smooth scroll dura di piu'), poi apre la scheda
+   e fa volare la camera: cosi' il volo si vede tutto e la scena non e' in pausa */
+function afterScroll(cb) {
+  let last = window.scrollY, still = 0, done = false; const t0 = Date.now();
+  const fin = () => { if (done) return; done = true; clearInterval(iv); window.removeEventListener('scrollend', fin); cb(); };
+  const iv = setInterval(() => {
+    const y = window.scrollY; still = Math.abs(y - last) < 1 ? still + 1 : 0; last = y;
+    if (still >= 3 || Date.now() - t0 > 1400) fin();
+  }, 60);
+  window.addEventListener('scrollend', fin, { once: true });
+}
+function showInSphere(i) {
+  closeLens(true);
+  if (current >= 0) close(true);
+  const hdr = document.querySelector('.header');
+  const off = hdr && getComputedStyle(hdr).position !== 'static' ? hdr.getBoundingClientRect().height : 0;
+  const y = Math.max(0, Math.round(stage.getBoundingClientRect().top + window.scrollY - off));
+  if (Math.abs(window.scrollY - y) > 2) window.scrollTo({ top: y, behavior: REDUCED ? 'auto' : 'smooth' });
+  afterScroll(() => open(i));
+}
+/* telefono: la scheda e' un foglio dal basso; si chiude con ✕, toccando la sfera
+   fuori dai nodi, oppure trascinandola verso il basso */
+(function sheetDrag() {
+  let y0 = 0, dy = 0, on = false;
+  const mob = () => matchMedia('(max-width: 760px)').matches;
+  panel.addEventListener('touchstart', e => {
+    if (!mob() || panel.scrollTop > 0 || e.touches.length !== 1) return;
+    on = true; dy = 0; y0 = e.touches[0].clientY;
+  }, { passive: true });
+  panel.addEventListener('touchmove', e => {
+    if (!on) return;
+    dy = e.touches[0].clientY - y0;
+    if (dy <= 0) { panel.style.transform = ''; return; }
+    panel.classList.add('is-drag'); panel.style.transform = `translateY(${dy}px)`;
+  }, { passive: true });
+  const end = () => {
+    if (!on) return; on = false; panel.classList.remove('is-drag');
+    if (dy > 80) { panel.style.transform = ''; close(); } else panel.style.transform = '';
+  };
+  panel.addEventListener('touchend', end); panel.addEventListener('touchcancel', end);
+})();
 
 /* ── schede che compaiono avvicinandosi ── */
 function zoomCard(i) {
@@ -374,7 +417,7 @@ flowEl.addEventListener('click', e => {
   if (!lens) return;
   if (e.target.closest('.r3d-lens__x')) return closeLens();
   const go = e.target.closest('.r3d-mc__go');
-  if (go) { const i = +go.dataset.i; closeLens(true); stage.scrollIntoView({ behavior: REDUCED ? 'auto' : 'smooth', block: 'start' }); setTimeout(() => open(i), REDUCED ? 0 : 450); }
+  if (go) showInSphere(+go.dataset.i);
 });
 document.addEventListener('pointerdown', e => { if (lens && !lens.contains(e.target) && !e.target.closest('.r3d-mc') && !e.target.closest('.modal, .profile-modal, .edit-modal, .access-modal, .email-wall')) closeLens(); });
 document.addEventListener('keydown', e => { if (e.key === 'Escape' && lens) closeLens(); });

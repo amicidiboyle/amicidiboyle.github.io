@@ -402,3 +402,10 @@
 .cand-tags__chip button { width: 20px; height: 20px; border-radius: 50%; border: 0; cursor: pointer; color: #edf7ff; background: rgba(255,255,255,.12); font-size: .9rem; line-height: 1; padding: 0; }
 .cand-tags__err { margin: 8px 0 0; font-size: .8rem; font-weight: 700; color: #ffb48a; letter-spacing: 0; }
 @media (prefers-reduced-motion: reduce) { .cand-tags__tag { animation: none; } }
+
+/* "Non ricordo il mio codice" */
+.forgot-code-link { display: block; margin: 8px auto 0; padding: 4px 8px; background: none; border: 0; cursor: pointer; font: inherit; font-size: .78rem; color: rgba(168,238,255,.75); text-decoration: underline; text-underline-offset: 3px; }
+.forgot-code-link:hover { color: #7be4ff; }
+@media (min-width: 1380px) { .r3d-console .forgot-code-link { position: absolute; right: 0; bottom: -26px; margin: 0; } .r3d-console .hero__cta { position: relative; } }
+#forgotModal .access-modal__form { display: flex; flex-direction: column; gap: 12px; }
+#forgotModal .access-modal__input { flex: none; height: auto; min-height: 0; padding: 13px 16px; text-transform: none; letter-spacing: normal; font-family: inherit; font-size: 1rem; text-align: left; }

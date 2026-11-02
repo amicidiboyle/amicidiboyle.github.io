@@ -384,7 +384,7 @@ export function createNetwork(stage, { members, founders, friends = [], onSelect
     const side = new THREE.Vector3().crossVectors(dir, new THREE.Vector3(0, 1, 0)).normalize();
     const to = n.base.clone().addScaledVector(dir, mobile ? 6.2 : 4.6).addScaledVector(side, mobile ? 0 : -1.1).add(new THREE.Vector3(0, 0.6, 0));
     controls.autoRotate = false;
-    flyTo(to, n.base.clone().addScaledVector(side, mobile ? 0 : -0.9).add(new THREE.Vector3(0, mobile ? -2.1 : 0, 0)));
+    flyTo(to, n.base.clone().addScaledVector(side, mobile ? 0 : -0.9).add(new THREE.Vector3(0, 0, 0)));
   }
   function home() { selected = null; controls.autoRotate = !reduced; flyTo(homePos(), new THREE.Vector3()); }
   function faceArea(a) {
@@ -426,6 +426,8 @@ export function createNetwork(stage, { members, founders, friends = [], onSelect
       const k = Math.min((performance.now() - fly.start) / fly.ms, 1), e = ease(k);
       camera.position.lerpVectors(fly.p0, fly.p1, e); controls.target.lerpVectors(fly.t0, fly.t1, e);
       if (k >= 1) fly = null;
+    }
+    { const vt = viewYTarget(); if (Math.abs(vt - viewY) > 0.5) { viewY += (vt - viewY) * Math.min(1, dt * 5); applyView(); } else if (viewY !== vt) { viewY = vt; applyView(); }
     }
     controls.update();
 
@@ -514,12 +516,24 @@ export function createNetwork(stage, { members, founders, friends = [], onSelect
   function stop() { running = false; cancelAnimationFrame(raf); }
   new IntersectionObserver(en => { visible = en[0].isIntersecting; visible ? start() : stop(); }, { threshold: 0.02 }).observe(stage);
   document.addEventListener('visibilitychange', () => document.hidden ? stop() : start());
-  let first = true;
+  let first = true, viewY = 0;
+  // spostamento verticale dell'inquadratura: lascia spazio al titolo; su telefono, con una
+  // persona aperta, il nodo sale nella parte alta della scena (sotto c'e' il foglio della scheda)
+  function viewYTarget() {
+    const h = stage.clientHeight || 1;
+    if (mobile && selected) return h * 0.2;
+    return -(SAFE.top - SAFE.bottom) / 2;
+  }
+  function applyView() {
+    const w = stage.clientWidth, h = stage.clientHeight;
+    if (Math.abs(viewY) > 0.5) camera.setViewOffset(w, h, 0, viewY, w, h); else camera.clearViewOffset();
+    camera.updateProjectionMatrix();
+  }
   function resize() {
     const w = stage.clientWidth, h = stage.clientHeight;
     renderer.setSize(w, h, false); camera.aspect = w / h;
-    if (safe) { SAFE = safe() || SAFE; const d = (SAFE.top - SAFE.bottom) / 2; if (d) camera.setViewOffset(w, h, 0, -d, w, h); else camera.clearViewOffset(); }
-    camera.updateProjectionMatrix();
+    if (safe) SAFE = safe() || SAFE;
+    viewY = viewYTarget(); applyView();
     if (first) { camera.position.copy(homePos()); first = false; }
   }
   new ResizeObserver(resize).observe(stage); resize();
