@@ -383,3 +383,22 @@
 .amici-sfera__extra[hidden] { display: none; }
 .amici-sfera__extra input[type=file] { padding: 10px 14px; font-size: .82rem; }
 .amici-sfera__hint { margin: 2px 0 0; font-size: .74rem; line-height: 1.5; color: rgba(237,247,255,.55); }
+
+/* Candidatura alla Rete: aree di competenza a cascata */
+.cand-tags__hint { margin: 2px 0 10px; font-size: .78rem; line-height: 1.5; color: rgba(237,247,255,.6); letter-spacing: 0; font-weight: 400; }
+.cand-tags__areas { display: flex; flex-wrap: wrap; gap: 8px; }
+.cand-tags__area { display: inline-flex; align-items: center; gap: 8px; padding: 9px 13px; border-radius: 12px; cursor: pointer; font: inherit; font-size: .82rem; font-weight: 700; color: #edf7ff; background: rgba(5,18,52,.8); border: 1px solid color-mix(in srgb, var(--c) 40%, transparent); }
+.cand-tags__area i { width: 8px; height: 8px; border-radius: 50%; background: var(--c); box-shadow: 0 0 8px var(--c); }
+.cand-tags__area b { min-width: 18px; padding: 1px 6px; border-radius: 999px; font-size: .7rem; color: #021022; background: var(--c); }
+.cand-tags__area.is-open { background: color-mix(in srgb, var(--c) 20%, rgba(5,18,52,.9)); border-color: var(--c); }
+.cand-tags__list { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; padding-left: 14px; border-left: 2px solid rgba(123,228,255,.25); }
+.cand-tags__list:empty { display: none; }
+.cand-tags__tag { padding: 7px 12px; border-radius: 999px; cursor: pointer; font: inherit; font-size: .8rem; color: rgba(237,247,255,.85); background: rgba(5,18,52,.7); border: 1px solid rgba(123,228,255,.2); animation: candTagIn .25s ease both; }
+.cand-tags__tag.is-on { color: #021022; background: var(--c); border-color: var(--c); font-weight: 700; }
+@keyframes candTagIn { from { opacity: 0; transform: translateY(-6px); } }
+.cand-tags__picked { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+.cand-tags__chip { display: inline-flex; align-items: center; gap: 6px; padding: 5px 6px 5px 10px; border-radius: 999px; font-size: .78rem; color: #edf7ff; background: rgba(123,228,255,.12); border: 1px solid rgba(123,228,255,.35); }
+.cand-tags__chip em { font-style: normal; font-size: .64rem; font-weight: 800; padding: 1px 6px; border-radius: 999px; color: #021022; background: #7be4ff; }
+.cand-tags__chip button { width: 20px; height: 20px; border-radius: 50%; border: 0; cursor: pointer; color: #edf7ff; background: rgba(255,255,255,.12); font-size: .9rem; line-height: 1; padding: 0; }
+.cand-tags__err { margin: 8px 0 0; font-size: .8rem; font-weight: 700; color: #ffb48a; letter-spacing: 0; }
+@media (prefers-reduced-motion: reduce) { .cand-tags__tag { animation: none; } }

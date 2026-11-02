@@ -18,7 +18,7 @@
   <link rel="icon" href="assets/logo.png" type="image/png" />
   <link rel="stylesheet" href="rete.css?v=20261026a" />
   <link rel="stylesheet" href="rete-extra.css?v=20261026a" />
-  <link rel="stylesheet" href="rete-layout.css?v=20261027a" />
+  <link rel="stylesheet" href="rete-layout.css?v=20261102a" />
   <style>
     .modal{position:fixed;inset:0;z-index:9000;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(1,6,16,.78);backdrop-filter:blur(8px)}
     .modal.is-open{display:flex}
@@ -537,9 +537,18 @@
             <label for="cand-role" data-i18n="r_cand_label_qual">QUALIFICA PROFESSIONALE</label>
             <input id="cand-role" name="ruolo" type="text" placeholder="Es. Medico iperbarico, ricercatore, ingegnere biomedico" />
           </div>
+          <div class="field field--full cand-tags" id="candTags">
+            <label data-i18n="r_cand_label_tags">AREE DI COMPETENZA * (ALMENO 2)</label>
+            <p class="cand-tags__hint" data-i18n="r_cand_tags_hint">Apri un'area e scegli le voci che ti descrivono. La prima che scegli decide il gruppo in cui comparirai nella Rete.</p>
+            <div class="cand-tags__areas" role="group" aria-label="Aree"></div>
+            <div class="cand-tags__list" aria-live="polite"></div>
+            <div class="cand-tags__picked"></div>
+            <input type="hidden" name="tag" id="cand-tags-value" />
+            <p class="cand-tags__err" id="candTagsErr" hidden data-i18n="r_cand_tags_err">Scegli almeno due voci.</p>
+          </div>
           <div class="field field--full">
-            <label for="cand-interest" data-i18n="r_cand_label_area">AREA DI INTERESSE / FOCUS</label>
-            <input id="cand-interest" name="focus" type="text" placeholder="Es. Medicina iperbarica, neuroscienze, fisiologia, soccorso estremo" />
+            <label for="cand-interest" data-i18n="r_cand_label_area">ALTRO DA AGGIUNGERE (FACOLTATIVO)</label>
+            <input id="cand-interest" name="focus" type="text" placeholder="Es. un ambito preciso che non trovi tra le voci sopra" />
           </div>
           <div class="field field--full">
             <label for="cand-city">CITTÀ / NAZIONE</label>
@@ -1657,7 +1666,8 @@
       img:  slug + '.jpg',
       city,
       linkedin: li,
-      email
+      email,
+      tags: (document.getElementById('cand-tags-value')?.value || '').split(',').map(t => t.trim()).filter(Boolean)
     }, null, 2);
   }
 
@@ -2246,11 +2256,12 @@
         'r_cand_label_name':'NOME E COGNOME',
         'r_cand_label_affil':'AFFILIAZIONE',
         'r_cand_label_qual':'QUALIFICA PROFESSIONALE',
-        'r_cand_label_area':'AREA DI INTERESSE / FOCUS',
+        'r_cand_label_area':'ALTRO DA AGGIUNGERE (FACOLTATIVO)',
         'r_cand_label_city':'CIT\u00c0 / NAZIONE',
         'r_cand_label_li':'PROFILO LINKEDIN',
         'r_cand_label_pres':'PRESENTAZIONE E MOTIVAZIONE',
         'r_cand_label_foto':'FOTO PROFILO *',
+        'r_cand_label_tags':'AREE DI COMPETENZA * (ALMENO 2)','r_cand_tags_hint':"Apri un'area e scegli le voci che ti descrivono. La prima che scegli decide il gruppo in cui comparirai nella Rete.",'r_cand_tags_err':'Scegli almeno due voci.',
 
         'r_cand_foto_hint':'Obbligatoria: comparirà sulla tua card e nella sfera della Rete. Formato JPG, PNG o WebP.',
         'r_cand_submit':'Invia candidatura',
@@ -2428,11 +2439,12 @@
         'r_cand_label_name':'FULL NAME',
         'r_cand_label_affil':'AFFILIATION',
         'r_cand_label_qual':'PROFESSIONAL QUALIFICATION',
-        'r_cand_label_area':'AREA OF INTEREST / FOCUS',
+        'r_cand_label_area':'ANYTHING ELSE TO ADD (OPTIONAL)',
         'r_cand_label_city':'CITY / COUNTRY',
         'r_cand_label_li':'LINKEDIN PROFILE',
         'r_cand_label_pres':'PRESENTATION AND MOTIVATION',
         'r_cand_label_foto':'PROFILE PHOTO *',
+        'r_cand_label_tags':'AREAS OF EXPERTISE * (AT LEAST 2)','r_cand_tags_hint':'Open an area and pick the items that describe you. Your first pick decides the group you will appear in.','r_cand_tags_err':'Please choose at least two items.',
 
         'r_cand_foto_hint':'Required: it will appear on your card and in the Network sphere. JPG, PNG or WebP format.',
         'r_cand_submit':'Submit application',
@@ -2769,7 +2781,7 @@
  ]
 }
 </script>
-  <script type="module" src="assets/rete3d/app.js?v=20261027k"></script>
+  <script type="module" src="assets/rete3d/app.js?v=20261102a"></script>
   <script>
   /* Amici di Boyle: foto e descrizione solo se si sceglie di comparire nella sfera */
   (function () {
@@ -2781,6 +2793,46 @@
       if (!on) { foto.value = ''; document.getElementById('amici-bio').value = ''; }
     });
     f.addEventListener('reset', function () { box.hidden = true; foto.required = false; });
+  })();
+  </script>
+  <script>
+  /* Candidatura alla Rete: aree di competenza a cascata, almeno due voci (vocabolario comune a tutta la Rete) */
+  (function () {
+    var AREE = [{"id": "A", "name": "Subacquea", "color": "#56B4E9", "tags": ["Diving", "Subacquea", "Apnea", "Esplorazione", "Diving Medical Examiner"]}, {"id": "B", "name": "Iperbarica", "color": "#2fd6b0", "tags": ["Iperbarica", "Medicina Iperbarica", "Ossigenoterapia Iperbarica", "Tecnica Iperbarica"]}, {"id": "C", "name": "Emergenza e area critica", "color": "#E69F00", "tags": ["Critical Care", "Area Critica", "Anestesia e Rianimazione", "Emergenza", "Trauma", "ECMO", "HEMS", "SAR", "Soccorso in ambienti Estremi", "Chirurgia", "Mass Gathering", "Medicina dei Disastri", "Medicina Umanitaria", "Nursing"]}, {"id": "D", "name": "Quota, poli e spazio", "color": "#e58fd0", "tags": ["Space", "Aerospaziale", "Medicina Aeronautica", "Montagna", "Medicina Polare", "Medicina delle Spedizioni", "Ambienti Estremi", "Astrobiologia"]}, {"id": "E", "name": "Medicina operativa e militare", "color": "#F0E442", "tags": ["Medicina Militare", "Medicina Operativa", "Medical Intelligence", "Droni"]}, {"id": "F", "name": "Ricerca e altre specialità", "color": "#b9a6ff", "tags": ["Ricerca", "Fisiologia", "Neuroscienze", "Cardiologia", "Medicina Interna", "Psicologia", "Farmacologia", "Biologia", "Ingegneria", "Intelligenza Artificiale", "Safety", "Educazione"]}];
+    var box = document.getElementById('candTags'), form = document.getElementById('network-form');
+    if (!box || !form) return;
+    var areasEl = box.querySelector('.cand-tags__areas'), listEl = box.querySelector('.cand-tags__list'),
+        pickedEl = box.querySelector('.cand-tags__picked'), val = document.getElementById('cand-tags-value'), err = document.getElementById('candTagsErr');
+    var picked = [], open = null;
+    var esc = function (t) { return String(t).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
+    function draw() {
+      areasEl.innerHTML = AREE.map(function (a) {
+        var n = a.tags.filter(function (t) { return picked.indexOf(t) >= 0; }).length;
+        return '<button type="button" class="cand-tags__area' + (open === a.id ? ' is-open' : '') + '" data-a="' + a.id + '" style="--c:' + a.color + '"><i></i>' + esc(a.name) + (n ? ' <b>' + n + '</b>' : '') + '</button>';
+      }).join('');
+      var a = AREE.filter(function (x) { return x.id === open; })[0];
+      listEl.innerHTML = a ? a.tags.map(function (t) {
+        return '<button type="button" class="cand-tags__tag' + (picked.indexOf(t) >= 0 ? ' is-on' : '') + '" data-t="' + esc(t) + '" style="--c:' + a.color + '">' + esc(t) + '</button>';
+      }).join('') : '';
+      pickedEl.innerHTML = picked.map(function (t, i) { return '<span class="cand-tags__chip">' + (i === 0 ? '<em>1</em>' : '') + esc(t) + '<button type="button" data-x="' + esc(t) + '" aria-label="Togli">&times;</button></span>'; }).join('');
+      val.value = picked.join(', ');
+      if (picked.length >= 2) err.hidden = true;
+    }
+    box.addEventListener('click', function (e) {
+      var b = e.target.closest('button'); if (!b) return;
+      if (b.dataset.a) { open = open === b.dataset.a ? null : b.dataset.a; }
+      else if (b.dataset.t) { var t = b.dataset.t, i = picked.indexOf(t); if (i >= 0) picked.splice(i, 1); else picked.push(t); }
+      else if (b.dataset.x) { picked.splice(picked.indexOf(b.dataset.x), 1); }
+      draw();
+    });
+    // blocca l'invio se mancano le voci (prima degli altri gestori del modulo)
+    form.addEventListener('submit', function (e) {
+      if (picked.length >= 2) return;
+      e.preventDefault(); e.stopImmediatePropagation();
+      err.hidden = false; box.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, true);
+    form.addEventListener('reset', function () { picked = []; open = null; draw(); });
+    draw();
   })();
   </script>
 </body>

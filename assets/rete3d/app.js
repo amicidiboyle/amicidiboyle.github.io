@@ -3,12 +3,12 @@
    qui si aggiunge la scena 3D al posto della hero. Cliccando una persona si apre a destra
    la sua card vera, la stessa della griglia, con tutti i pulsanti funzionanti. */
 const AREAS = [
-  { id: 'A', name: 'Subacquea', color: '#56B4E9', tags: ['diving', 'subacquea', 'esplorazione'] },
-  { id: 'B', name: 'Iperbarica', color: '#2fd6b0', tags: ['iperbarica'] },
-  { id: 'C', name: 'Emergenza e area critica', color: '#E69F00', tags: ['critical care', 'emergenza', 'trauma', 'ecmo', 'hems', 'chirurgia', 'mass gathering', 'nursing', 'area critica', 'sar', 'soccorso in ambienti estremi', 'medicina umanitaria'] },
-  { id: 'D', name: 'Quota, poli e spazio', color: '#e58fd0', tags: ['space', 'spazio', 'aerospaziale', 'astrobiologia', 'montagna', 'medicina polare', 'medicina delle spedizioni', 'ambienti estremi'] },
-  { id: 'E', name: 'Medicina operativa e militare', color: '#F0E442', tags: ['medicina militare', 'medical intelligence', 'droni'] },
-  { id: 'F', name: 'Ricerca e altre specialità', color: '#b9a6ff', tags: [] },
+  { id: 'A', name: 'Subacquea', color: '#56B4E9', tags: ['diving', 'subacquea', 'esplorazione', 'apnea', 'diving medical examiner'] },
+  { id: 'B', name: 'Iperbarica', color: '#2fd6b0', tags: ['iperbarica', 'medicina iperbarica', 'ossigenoterapia iperbarica', 'tecnica iperbarica'] },
+  { id: 'C', name: 'Emergenza e area critica', color: '#E69F00', tags: ['critical care', 'emergenza', 'trauma', 'ecmo', 'hems', 'chirurgia', 'mass gathering', 'nursing', 'area critica', 'sar', 'soccorso in ambienti estremi', 'medicina umanitaria', 'anestesia e rianimazione', 'medicina dei disastri'] },
+  { id: 'D', name: 'Quota, poli e spazio', color: '#e58fd0', tags: ['space', 'spazio', 'aerospaziale', 'astrobiologia', 'montagna', 'medicina polare', 'medicina delle spedizioni', 'ambienti estremi', 'medicina aeronautica'] },
+  { id: 'E', name: 'Medicina operativa e militare', color: '#F0E442', tags: ['medicina militare', 'medical intelligence', 'droni', 'medicina operativa'] },
+  { id: 'F', name: 'Ricerca e altre specialità', color: '#b9a6ff', tags: ['ricerca', 'fisiologia', 'neuroscienze', 'cardiologia', 'medicina interna', 'psicologia', 'farmacologia', 'biologia', 'ingegneria', 'intelligenza artificiale', 'safety', 'educazione'] },
 ];
 const FOUNDERS = [
   { name: 'Silvio Zerbi', desc: 'Anestesista Rianimatore, Intensivista, Trauma Team Leader. Medico Subacqueo e Iperbarico, con formazione avanzata in Medicina Aeronautica e Spaziale.', linkedin: 'https://www.linkedin.com/in/silvio-zerbi/', title: 'Dott.', badge: 'Fondatore', role: 'Fondatore', area: null, thumb: 'founder-silvio-zerbi.webp', img: 'images/silvio.zerbi.jpg' },
@@ -17,7 +17,7 @@ const FOUNDERS = [
   { name: 'Dario Nicosia', desc: 'Anestesista Rianimatore, Medico Iperbarico e Subacqueo, Mass Gathering Expert. Gestisce il paziente critico in scenari operativi complessi, dall’emergenza territoriale agli ambienti estremi.', linkedin: 'https://www.linkedin.com/in/dario-nicosia87/', title: 'Dott.', badge: 'Co-fondatore', role: 'Responsabile Area Diving', area: 'A', thumb: 'founder-dario-nicosia.webp', img: 'images/dario.nicosia.webp' },
   { name: 'Matteo Paganini', desc: 'Ricercatore, Medico di Emergenza-Urgenza, PhD in Global Health, Humanitarian Aid and Disaster Medicine.', linkedin: 'https://www.linkedin.com/in/paganinimatteo/', title: 'Dott.', badge: 'Co-fondatore', role: 'Capo Ricercatore', area: 'F', thumb: 'founder-matteo-paganini.webp', img: 'images/matteo.paganini.webp' },
 ];
-const areaOf = tags => { for (const t of tags || []) { const k = String(t).trim().toLowerCase(); const a = AREAS.find(a => a.tags.includes(k)); if (a) return a.id; } return 'F'; };
+const areaOf = tags => { for (const t of tags || []) { const k = String(t).trim().toLowerCase(); const a = AREAS.find(a => a.id !== 'F' && a.tags.includes(k)); if (a) return a.id; } return 'F'; };
 const AREA = Object.fromEntries(AREAS.map(a => [a.id, a]));
 /* lingua: segue il selettore IT/EN della pagina (attributo lang di <html>) */
 const EN = () => (document.documentElement.lang || '').toLowerCase().startsWith('en');
@@ -86,7 +86,7 @@ function lazy3d(ms, fs, frs) {
   if (!ok) { stage.classList.add('is-fallback'); return; }
   const go = async () => {
     try {
-      const mod = await import('./rete3d.min.js?v=20261027e');
+      const mod = await import('./rete3d.min.js?v=20261102a');
       net = mod.createNetwork(stage, {
         members: ms, founders: fs, friends: frs, reduced: REDUCED, mobile: MOBILE,
         safe: safeBands,

@@ -9,15 +9,16 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
 export const AREAS = [
-  { id: 'A', name: 'Subacquea', color: '#56B4E9', tags: ['diving', 'subacquea', 'esplorazione'] },
-  { id: 'B', name: 'Iperbarica', color: '#2fd6b0', tags: ['iperbarica'] },
-  { id: 'C', name: 'Emergenza e area critica', color: '#E69F00', tags: ['critical care', 'emergenza', 'trauma', 'ecmo', 'hems', 'chirurgia', 'mass gathering', 'nursing', 'area critica', 'sar', 'soccorso in ambienti estremi', 'medicina umanitaria'] },
-  { id: 'D', name: 'Quota, poli e spazio', color: '#e58fd0', tags: ['space', 'spazio', 'aerospaziale', 'astrobiologia', 'montagna', 'medicina polare', 'medicina delle spedizioni', 'ambienti estremi'] },
-  { id: 'E', name: 'Medicina operativa e militare', color: '#F0E442', tags: ['medicina militare', 'medical intelligence', 'droni'] },
-  { id: 'F', name: 'Ricerca e altre specialità', color: '#b9a6ff', tags: [] },
+  { id: 'A', name: 'Subacquea', color: '#56B4E9', tags: ['diving', 'subacquea', 'esplorazione', 'apnea', 'diving medical examiner'] },
+  { id: 'B', name: 'Iperbarica', color: '#2fd6b0', tags: ['iperbarica', 'medicina iperbarica', 'ossigenoterapia iperbarica', 'tecnica iperbarica'] },
+  { id: 'C', name: 'Emergenza e area critica', color: '#E69F00', tags: ['critical care', 'emergenza', 'trauma', 'ecmo', 'hems', 'chirurgia', 'mass gathering', 'nursing', 'area critica', 'sar', 'soccorso in ambienti estremi', 'medicina umanitaria', 'anestesia e rianimazione', 'medicina dei disastri'] },
+  { id: 'D', name: 'Quota, poli e spazio', color: '#e58fd0', tags: ['space', 'spazio', 'aerospaziale', 'astrobiologia', 'montagna', 'medicina polare', 'medicina delle spedizioni', 'ambienti estremi', 'medicina aeronautica'] },
+  { id: 'E', name: 'Medicina operativa e militare', color: '#F0E442', tags: ['medicina militare', 'medical intelligence', 'droni', 'medicina operativa'] },
+  { id: 'F', name: 'Ricerca e altre specialità', color: '#b9a6ff', tags: ['ricerca', 'fisiologia', 'neuroscienze', 'cardiologia', 'medicina interna', 'psicologia', 'farmacologia', 'biologia', 'ingegneria', 'intelligenza artificiale', 'safety', 'educazione'] },
 ];
 export function areaOf(tags) {
-  for (const t of tags || []) { const k = String(t).trim().toLowerCase(); const a = AREAS.find(a => a.tags.includes(k)); if (a) return a.id; }
+  // prima le aree tematiche (A-E), poi Ricerca e altre specialita' (F)
+  for (const t of tags || []) { const k = String(t).trim().toLowerCase(); const a = AREAS.find(a => a.id !== 'F' && a.tags.includes(k)); if (a) return a.id; }
   return 'F';
 }
 function secondaryAreas(tags, primary) {
