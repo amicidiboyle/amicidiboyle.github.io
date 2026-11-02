@@ -508,3 +508,8 @@
   .r3d-panel.is-drag { transition: none; }
   .r3d-panel .r3d-close { width: 40px; height: 40px; top: 10px; right: 10px; z-index: 2; }
 }
+
+/* link al profilo */
+.r3d-share { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; margin: 14px 0 2px; padding: 10px 14px; border-radius: 12px; cursor: pointer; font: 600 .85rem/1.2 inherit; font-family: inherit; color: #c9f6ff; background: rgba(123,228,255,.07); border: 1px dashed rgba(123,228,255,.35); transition: background .2s, color .2s, border-color .2s; }
+.r3d-share:hover { background: rgba(123,228,255,.14); border-style: solid; }
+.r3d-share.is-done { color: #4dffd6; border-color: rgba(77,255,214,.6); border-style: solid; }

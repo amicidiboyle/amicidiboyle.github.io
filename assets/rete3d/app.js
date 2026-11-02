@@ -37,6 +37,10 @@ const F_EN = {
 };
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const key = n => n.toLowerCase().replace(/\s+/g, '-');
+// indirizzo personale di ogni persona: rete.html#nome-cognome (senza accenti)
+const slugOf = n => String(n).normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+const personFromHash = () => { const h = decodeURIComponent(location.hash.slice(1)); return h ? people.findIndex(p => slugOf(p.name) === h) : -1; };
+const personUrl = p => location.origin + location.pathname + '#' + slugOf(p.name);
 const thumbOf = img => 'assets/rete/thumb/' + img.replace(/\.[a-z]+$/i, '') + '.webp';
 const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const MOBILE = matchMedia('(max-width: 760px), (pointer: coarse)').matches;
@@ -95,6 +99,7 @@ function lazy3d(ms, fs, frs) {
       });
       stage.classList.add('is-live');
       tickLabel();
+      const hi = personFromHash(); if (hi >= 0) setTimeout(() => showInSphere(hi), REDUCED ? 0 : 900);
     } catch (e) { console.error(e); stage.classList.add('is-fallback'); }
   };
   const io = new IntersectionObserver(en => { if (en[0].isIntersecting) { io.disconnect(); go(); } }, { rootMargin: '200px' });
@@ -163,13 +168,19 @@ function open(i) {
     box.innerHTML = `<p>${L('Collegati nella rete', 'Connected in the network')}</p><div>${nb.map(j => { const q = people[j]; return `<button type="button" data-goto="${j}" title="${esc(q.name)}"><img src="${esc(q._thumb)}"${q._full ? ` onerror="this.onerror=null;this.src='${esc(q._full)}'"` : ''} alt="" width="40" height="40" /><span>${esc(q.name.split(' ')[0])}</span></button>`; }).join('')}</div>`;
     panel.appendChild(box);
   }
+  const sh = document.createElement('button'); sh.type = 'button'; sh.className = 'r3d-share';
+  sh.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7"/><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"/></svg><span>${L('Condividi il link al profilo', 'Share the profile link')}</span>`;
+  panel.appendChild(sh);
   panel.hidden = false; panel.scrollTop = 0;
   requestAnimationFrame(() => panel.classList.add('is-open'));
+  try { history.replaceState(null, '', '#' + slugOf(p.name)); } catch (e) {}
   if (net) net.select(i);
 }
 function close(silent) {
   if (current < 0) return;
+  const was = people[current];
   current = -1; panel.classList.remove('is-open');
+  if (was && decodeURIComponent(location.hash.slice(1)) === slugOf(was.name)) { try { history.replaceState(null, '', location.pathname + location.search); } catch (e) {} }
   setTimeout(() => { if (current < 0) panel.hidden = true; }, 300);
   if (net && silent !== true) net.clear();
 }
@@ -182,6 +193,15 @@ panel.addEventListener('pointerleave', e => {
 });
 panel.addEventListener('click', e => {
   if (e.target.closest('.r3d-close')) return close();
+  const sb = e.target.closest('.r3d-share');
+  if (sb && current >= 0) {
+    const p = people[current], url = personUrl(p), txt = sb.querySelector('span');
+    const done = () => { txt.textContent = L('Link copiato', 'Link copied'); sb.classList.add('is-done'); setTimeout(() => { txt.textContent = L('Condividi il link al profilo', 'Share the profile link'); sb.classList.remove('is-done'); }, 2200); };
+    if (navigator.share && MOBILE) { navigator.share({ title: p.name + ' · Rete di Boyle', url }).catch(() => {}); return; }
+    if (navigator.clipboard) navigator.clipboard.writeText(url).then(done, () => prompt(L('Copia il link', 'Copy the link'), url));
+    else prompt(L('Copia il link', 'Copy the link'), url);
+    return;
+  }
   const nb = e.target.closest('[data-goto]'); if (nb) open(+nb.dataset.goto);
 });
 document.addEventListener('keydown', e => {
@@ -233,6 +253,8 @@ function showInSphere(i) {
   panel.addEventListener('touchend', end); panel.addEventListener('touchcancel', end);
 })();
 
+window.addEventListener('hashchange', () => { const i = personFromHash(); if (i >= 0 && i !== current && net) showInSphere(i); });
+
 /* ── schede che compaiono avvicinandosi ── */
 function zoomCard(i) {
   let el = cardEls.get(i); if (el) return el;
@@ -254,7 +276,7 @@ function zoomCards(proj) {
   lastProj = proj;
   const W = stage.clientWidth, H = stage.clientHeight;
   const cand = proj.map((p, i) => ({ ...p, i })).filter(p => p.front && p.op > 0.55 && p.px > 30 && p.i !== current && p.x > -50 && p.x < W + 50 && p.y > -50 && p.y < H + 50)
-    .sort((a, b) => b.px - a.px).slice(0, MOBILE ? 2 : 3);
+    .sort((a, b) => b.px - a.px).slice(0, MOBILE ? (current >= 0 ? 0 : 2) : 3);
   const now = new Set(cand.map(c => c.i));
   for (const i of shownCards) if (!now.has(i)) { const el = cardEls.get(i); if (el) el.classList.remove('is-on'); shownCards.delete(i); }
   cand.forEach(c => {
