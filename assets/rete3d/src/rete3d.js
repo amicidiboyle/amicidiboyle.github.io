@@ -12,7 +12,7 @@ export const AREAS = [
   { id: 'A', name: 'Subacquea', color: '#56B4E9', tags: ['diving', 'subacquea', 'esplorazione', 'apnea', 'diving medical examiner'] },
   { id: 'B', name: 'Iperbarica', color: '#2fd6b0', tags: ['iperbarica', 'medicina iperbarica', 'ossigenoterapia iperbarica', 'tecnica iperbarica'] },
   { id: 'C', name: 'Emergenza e area critica', color: '#E69F00', tags: ['critical care', 'emergenza', 'trauma', 'ecmo', 'hems', 'chirurgia', 'mass gathering', 'nursing', 'area critica', 'sar', 'soccorso in ambienti estremi', 'medicina umanitaria', 'anestesia e rianimazione', 'medicina dei disastri'] },
-  { id: 'D', name: 'Quota, poli e spazio', color: '#e58fd0', tags: ['space', 'spazio', 'aerospaziale', 'astrobiologia', 'montagna', 'medicina di montagna', 'medicina speleologica', 'speleologia', 'medicina polare', 'medicina delle spedizioni', 'ambienti estremi', 'medicina aeronautica'] },
+  { id: 'D', name: 'Aeronautica, spazio, quota e poli', color: '#e58fd0', tags: ['space', 'spazio', 'aerospaziale', 'astrobiologia', 'montagna', 'medicina di montagna', 'medicina speleologica', 'speleologia', 'medicina polare', 'medicina delle spedizioni', 'ambienti estremi', 'medicina aeronautica'] },
   { id: 'E', name: 'Medicina operativa e militare', color: '#F0E442', tags: ['medicina militare', 'medical intelligence', 'droni', 'medicina operativa'] },
   { id: 'F', name: 'Ricerca e altre specialità', color: '#b9a6ff', tags: ['ricerca', 'fisiologia', 'neuroscienze', 'cardiologia', 'medicina interna', 'psicologia', 'farmacologia', 'biologia', 'ingegneria', 'intelligenza artificiale', 'safety', 'educazione'] },
 ];

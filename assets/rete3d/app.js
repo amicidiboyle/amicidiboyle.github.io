@@ -6,7 +6,7 @@ const AREAS = [
   { id: 'A', name: 'Subacquea', color: '#56B4E9', tags: ['diving', 'subacquea', 'esplorazione', 'apnea', 'diving medical examiner'] },
   { id: 'B', name: 'Iperbarica', color: '#2fd6b0', tags: ['iperbarica', 'medicina iperbarica', 'ossigenoterapia iperbarica', 'tecnica iperbarica'] },
   { id: 'C', name: 'Emergenza e area critica', color: '#E69F00', tags: ['critical care', 'emergenza', 'trauma', 'ecmo', 'hems', 'chirurgia', 'mass gathering', 'nursing', 'area critica', 'sar', 'soccorso in ambienti estremi', 'medicina umanitaria', 'anestesia e rianimazione', 'medicina dei disastri'] },
-  { id: 'D', name: 'Quota, poli e spazio', color: '#e58fd0', tags: ['space', 'spazio', 'aerospaziale', 'astrobiologia', 'montagna', 'medicina di montagna', 'medicina speleologica', 'speleologia', 'medicina polare', 'medicina delle spedizioni', 'ambienti estremi', 'medicina aeronautica'] },
+  { id: 'D', name: 'Aeronautica, spazio, quota e poli', color: '#e58fd0', tags: ['space', 'spazio', 'aerospaziale', 'astrobiologia', 'montagna', 'medicina di montagna', 'medicina speleologica', 'speleologia', 'medicina polare', 'medicina delle spedizioni', 'ambienti estremi', 'medicina aeronautica'] },
   { id: 'E', name: 'Medicina operativa e militare', color: '#F0E442', tags: ['medicina militare', 'medical intelligence', 'droni', 'medicina operativa'] },
   { id: 'F', name: 'Ricerca e altre specialità', color: '#b9a6ff', tags: ['ricerca', 'fisiologia', 'neuroscienze', 'cardiologia', 'medicina interna', 'psicologia', 'farmacologia', 'biologia', 'ingegneria', 'intelligenza artificiale', 'safety', 'educazione'] },
 ];
@@ -23,7 +23,7 @@ const AREA = Object.fromEntries(AREAS.map(a => [a.id, a]));
 const EN = () => (document.documentElement.lang || '').toLowerCase().startsWith('en');
 const L = (it, en) => EN() ? en : it;
 const bil = (o, k, en) => { const it = o[k]; Object.defineProperty(o, k, { get: () => EN() ? en : it, configurable: true, enumerable: true }); };
-const AREA_EN = { A: 'Diving', B: 'Hyperbaric', C: 'Emergency and critical care', D: 'Altitude, polar and space', E: 'Operational and military medicine', F: 'Research and other specialties' };
+const AREA_EN = { A: 'Diving', B: 'Hyperbaric', C: 'Emergency and critical care', D: 'Aviation, space, altitude and polar', E: 'Operational and military medicine', F: 'Research and other specialties' };
 AREAS.forEach(a => bil(a, 'name', AREA_EN[a.id]));
 /* Amici di Boyle che hanno scelto di comparire nella sfera (rete-amici.json, scritto dalla console) */
 const AMICI = { id: 'AM', name: 'Amici di Boyle', color: '#5eead4' }; bil(AMICI, 'name', 'Friends of Boyle');
