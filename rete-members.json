@@ -461,5 +461,17 @@
       "Subacquea",
       "Aerospaziale"
     ]
+  },
+  {
+    "name": "Anna Fachinetti",
+    "role": "Medico Chirurgo, Esaminatore Aeromedico. Cavok Medical Center. Focus: Aerospace Medicine, Human Performance, Fatigue e Flight Safety.",
+    "img": "anna-fachinetti.jpg",
+    "city": "Lonate Pozzolo - Italy",
+    "linkedin": "https://www.linkedin.com/in/anna-fachinetti-md-9a12b5107/",
+    "email": "riservata",
+    "tags": [
+      "Medicina Aeronautica",
+      "Aerospaziale"
+    ]
   }
 ]
