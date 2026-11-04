@@ -603,5 +603,21 @@
     "podcast": false,
     "research": true,
     "updated": "2026-10-31 17:09:09"
+  },
+  "anna-fachinetti": {
+    "name": "Anna Fachinetti",
+    "bio": "",
+    "linkedin": "https://www.linkedin.com/in/anna-fachinetti-md-9a12b5107/",
+    "researchgate": "",
+    "scholar": "",
+    "orcid": "",
+    "twitter": "",
+    "instagram": "",
+    "website": "",
+    "courses": "",
+    "speaker": false,
+    "podcast": false,
+    "research": false,
+    "updated": "2026-11-04 19:04:06"
   }
 }
