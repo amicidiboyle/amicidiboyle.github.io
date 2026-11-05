@@ -631,9 +631,9 @@
     "instagram": "",
     "website": "",
     "courses": "",
-    "speaker": false,
+    "speaker": true,
     "podcast": false,
-    "research": false,
-    "updated": "2026-11-04 19:05:08"
+    "research": true,
+    "updated": "2026-11-05 17:46:21"
   }
 }
