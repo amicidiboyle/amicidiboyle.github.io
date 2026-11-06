@@ -9,10 +9,10 @@
   var home = function (h) { return HOME ? h : 'index.html' + h; };
 
   var T = {
-    it: { about: 'Chi siamo', tools: 'Strumenti', rete: 'Rete', pod: 'Podcast', ev: 'Eventi', cont: 'Contatti', join: 'Network', menu: 'Menu', more: 'Chi siamo',
+    it: { home: 'Home', nav: 'Menu', about: 'Chi siamo', tools: 'Strumenti', rete: 'Rete', pod: 'Podcast', ev: 'Eventi', cont: 'Contatti', join: 'Network', menu: 'Menu', more: 'Chi siamo',
       vis: ['Visione', 'Perché esistiamo'], att: ['Attività e ricerca', 'Aree e progetti'], form: ['Formazione', 'Corsi, congressi, lezioni'], pub: ['Pubblicazioni', 'Articoli e capitoli'], fond: ['Fondatori', 'Chi guida il progetto'], part: ['Partner', 'Con chi collaboriamo'],
       lab: ['Boyle Lab', 'Laboratorio virtuale'], bib: ['Boyle Bibliography', 'Bibliografia scientifica'], div: ['Diving-Boyle', 'I diving italiani'] },
-    en: { about: 'About', tools: 'Tools', rete: 'Network', pod: 'Podcast', ev: 'Events', cont: 'Contact', join: 'Network', menu: 'Menu', more: 'About',
+    en: { home: 'Home', nav: 'Menu', about: 'About', tools: 'Tools', rete: 'Network', pod: 'Podcast', ev: 'Events', cont: 'Contact', join: 'Network', menu: 'Menu', more: 'About',
       vis: ['Vision', 'Why we exist'], att: ['Activities & research', 'Areas and projects'], form: ['Education', 'Courses, congresses, lectures'], pub: ['Publications', 'Papers and chapters'], fond: ['Founders', 'Who leads the project'], part: ['Partners', 'Who we work with'],
       lab: ['Boyle Lab', 'Virtual laboratory'], bib: ['Boyle Bibliography', 'Scientific bibliography'], div: ['Diving-Boyle', 'Italian dive centres'] }
   };
@@ -58,11 +58,13 @@
         '<button type="button" class="sh__burger" aria-expanded="false" aria-controls="shSheet"><span></span><span></span><span></span></button>' +
       '</div>' +
       '<div class="sh__sheet" id="shSheet">' +
-        '<button type="button" class="sh__grp" data-g="tools" aria-expanded="false"><span data-t="tools"></span>' + CHEV + '</button>' +
-        '<div class="sh__sub" hidden>' + TOOLS.map(function (x) { return '<a href="' + x[1] + '" data-kn="' + x[0] + '"' + (x[1] === file ? ' class="is-active"' : '') + '></a>'; }).join('') + '</div>' +
-        '<button type="button" class="sh__grp" data-g="about" aria-expanded="false"><span data-t="about"></span>' + CHEV + '</button>' +
-        '<div class="sh__sub" hidden>' + ABOUT.map(function (x) { return '<a href="' + x[1] + '" data-kn="' + x[0] + '"></a>'; }).join('') + '</div>' +
-        MAIN.map(function (m) { return '<a class="sh__item' + (m[1] === file ? ' is-active' : '') + '" href="' + m[1] + '" data-t="' + m[0] + '"></a>'; }).join('') +
+        '<p class="sh__sh" data-t="nav"></p>' +
+        '<a class="sh__item' + (HOME ? ' is-active' : '') + '" href="index.html"><span data-t="home"></span><i></i></a>' +
+        '<button type="button" class="sh__grp' + (toolActive ? ' has-active' : '') + '" data-g="tools" aria-expanded="false">' + CHEV + '<span data-t="tools"></span><i></i></button>' +
+        '<div class="sh__sub" hidden>' + TOOLS.map(function (x) { return '<a href="' + x[1] + '"' + (x[1] === file ? ' class="is-active"' : '') + '><span data-kn="' + x[0] + '"></span><em>' + ICON[x[0]] + '</em></a>'; }).join('') + '</div>' +
+        '<button type="button" class="sh__grp" data-g="about" aria-expanded="false">' + CHEV + '<span data-t="about"></span><i></i></button>' +
+        '<div class="sh__sub" hidden>' + ABOUT.map(function (x) { return '<a href="' + x[1] + '"><span data-kn="' + x[0] + '"></span><em>' + ICON[x[0]] + '</em></a>'; }).join('') + '</div>' +
+        MAIN.map(function (m) { return '<a class="sh__item' + (m[1] === file ? ' is-active' : '') + '" href="' + m[1] + '"><span data-t="' + m[0] + '"></span><i></i></a>'; }).join('') +
         '<button type="button" class="sh__lang" aria-label="Cambia lingua / Switch language"><span data-l="it">IT</span><span data-l="en">EN</span></button>' +
       '</div>';
     if (old) { old.classList.add('sh-legacy'); old.parentNode.insertBefore(h, old); }

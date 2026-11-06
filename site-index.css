@@ -26,16 +26,16 @@
   backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); overscroll-behavior: contain;
   opacity: 0; visibility: hidden; transform: translateY(8px); transform-origin: bottom right; transition: opacity .18s, transform .18s, visibility 0s .18s; }
 .si.is-open .si__panel { opacity: 1; visibility: visible; transform: none; transition: opacity .18s, transform .18s; }
-.si__h { margin: 0 10px 8px; font: 700 .64rem/1 ui-monospace, "SF Mono", Menlo, Consolas, monospace; letter-spacing: .16em; text-transform: uppercase; color: rgba(190,225,245,.5); }
-.si__top { display: block; width: 100%; text-align: left; margin: 0 0 4px; padding: 9px 10px; border: 0; border-radius: 10px; background: none; cursor: pointer;
+.si__h { text-align: right; margin: 0 12px 8px; font: 700 .64rem/1 ui-monospace, "SF Mono", Menlo, Consolas, monospace; letter-spacing: .16em; text-transform: uppercase; color: rgba(190,225,245,.5); }
+.si__top { display: block; width: 100%; text-align: right; margin: 0 0 4px; padding: 9px 10px; border: 0; border-radius: 10px; background: none; cursor: pointer;
   color: #7be4ff; font: 600 .86rem/1.2 inherit; font-family: inherit; }
 .si__top:hover { background: rgba(123,228,255,.07); }
-.si__list { list-style: none; margin: 0; padding: 0 0 0 4px; position: relative; }
-.si__list::before { content: ""; position: absolute; left: 14px; top: 14px; bottom: 14px; width: 2px; background: rgba(123,228,255,.14); border-radius: 2px; }
-.si__list a { position: relative; display: flex; align-items: center; gap: 12px; padding: 8px 12px 8px 6px; border-radius: 10px; text-decoration: none;
+.si__list { list-style: none; margin: 0; padding: 0 4px 0 0; position: relative; }
+.si__list::before { content: ""; position: absolute; right: 14px; top: 14px; bottom: 14px; width: 2px; background: rgba(123,228,255,.14); border-radius: 2px; }
+.si__list a { position: relative; display: flex; flex-direction: row-reverse; align-items: center; justify-content: flex-start; gap: 12px; text-align: right; padding: 8px 6px 8px 14px; border-radius: 10px; text-decoration: none;
   color: rgba(205,232,248,.72); font-size: .93rem; font-weight: 500; line-height: 1.25; }
 .si__list a:hover { background: rgba(123,228,255,.06); color: #fff; }
-.si__list i { position: relative; z-index: 1; flex: none; width: 10px; height: 10px; margin-left: 5px; border-radius: 50%; background: #061a33; border: 2px solid rgba(123,228,255,.35); }
+.si__list i { position: relative; z-index: 1; flex: none; width: 10px; height: 10px; margin-right: 5px; border-radius: 50%; background: #061a33; border: 2px solid rgba(123,228,255,.35); }
 .si__list a.is-done i { background: rgba(123,228,255,.55); border-color: rgba(123,228,255,.55); }
 .si__list a.is-done { color: rgba(205,232,248,.55); }
 .si__list a.is-cur { color: #fff; font-weight: 700; background: rgba(123,228,255,.08); }
