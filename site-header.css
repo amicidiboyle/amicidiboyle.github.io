@@ -15,10 +15,12 @@
 .sh__brand img { width: 46px; height: 46px; border-radius: 50%; flex: none; transition: width .25s, height .25s;
   box-shadow: 0 0 0 1px rgba(123,228,255,.25), 0 0 18px -4px rgba(123,228,255,.5); }
 .sh.is-scrolled .sh__brand img { width: 38px; height: 38px; }
-.sh__brand span { display: flex; flex-direction: column; min-width: 0; line-height: 1.15; }
+.sh__brand > span { display: flex; flex-direction: column; min-width: 0; line-height: 1.15; }
 .sh__brand b { font-size: 1.12rem; font-weight: 700; letter-spacing: -.01em; white-space: nowrap; }
 .sh__brand small { font-size: .7rem; color: rgba(190,225,245,.62); letter-spacing: .02em; white-space: nowrap; margin-top: 3px; transition: opacity .2s, max-height .25s; max-height: 20px; }
-.sh.is-scrolled .sh__brand small { opacity: 0; max-height: 0; margin-top: 0; }
+.sh__brand small i { font-style: normal; }
+.sh__dot { white-space: pre; }
+@media (min-width: 521px) { .sh.is-scrolled .sh__brand small { opacity: 0; max-height: 0; margin-top: 0; } }
 
 .sh__nav { margin-left: auto; display: flex; align-items: center; gap: 2px; }
 .sh__nav > a, .sh__dd > button { position: relative; display: inline-flex; align-items: center; gap: 6px; height: 38px; padding: 0 13px; border-radius: 10px;
@@ -88,7 +90,7 @@
 .sh__sheet .sh__lang { display: flex; margin: 8px 0 2px auto; width: max-content; height: 34px; }
 
 
-@media (max-width: 1180px) { .sh__brand small { display: none; } .sh__nav > a, .sh__dd > button { padding: 0 10px; } }
+@media (max-width: 1180px) { .sh__nav > a, .sh__dd > button { padding: 0 10px; } }
 @media (max-width: 1060px) {
   .sh__nav { display: none; }
   .sh__in > .sh__lang { display: none; }
@@ -100,6 +102,9 @@
   .sh__in { padding: 0 14px; gap: 10px; }
   .sh__brand img { width: 38px; height: 38px; }
   .sh__brand b { font-size: .95rem; }
+  .sh__brand small { font-size: .56rem; letter-spacing: .01em; max-height: none; margin-top: 2px; line-height: 1.25; }
+  .sh__brand small i { display: block; }
+  .sh__brand small .sh__dot { display: none; }
   .sh__in > .sh__join { height: 32px; padding: 0 11px; font-size: .78rem; }
   .sh__in > .sh__join svg { width: 16px; height: 16px; }
 }

@@ -9,10 +9,10 @@
   var home = function (h) { return HOME ? h : 'index.html' + h; };
 
   var T = {
-    it: { tag: 'Medicina degli ambienti estremi · Ricerca e formazione', about: 'Chi siamo', tools: 'Strumenti', rete: 'Rete', pod: 'Podcast', ev: 'Eventi', cont: 'Contatti', join: 'Network', menu: 'Menu', more: 'Chi siamo',
+    it: { about: 'Chi siamo', tools: 'Strumenti', rete: 'Rete', pod: 'Podcast', ev: 'Eventi', cont: 'Contatti', join: 'Network', menu: 'Menu', more: 'Chi siamo',
       vis: ['Visione', 'Perché esistiamo'], att: ['Attività e ricerca', 'Aree e progetti'], form: ['Formazione', 'Corsi, congressi, lezioni'], pub: ['Pubblicazioni', 'Articoli e capitoli'], fond: ['Fondatori', 'Chi guida il progetto'], part: ['Partner', 'Con chi collaboriamo'],
       lab: ['Boyle Lab', 'Laboratorio virtuale'], bib: ['Boyle Bibliography', 'Bibliografia scientifica'], div: ['Diving-Boyle', 'I diving italiani'] },
-    en: { tag: 'Extreme Environments Medicine · Research & Education', about: 'About', tools: 'Tools', rete: 'Network', pod: 'Podcast', ev: 'Events', cont: 'Contact', join: 'Network', menu: 'Menu', more: 'About',
+    en: { about: 'About', tools: 'Tools', rete: 'Network', pod: 'Podcast', ev: 'Events', cont: 'Contact', join: 'Network', menu: 'Menu', more: 'About',
       vis: ['Vision', 'Why we exist'], att: ['Activities & research', 'Areas and projects'], form: ['Education', 'Courses, congresses, lectures'], pub: ['Publications', 'Papers and chapters'], fond: ['Founders', 'Who leads the project'], part: ['Partners', 'Who we work with'],
       lab: ['Boyle Lab', 'Virtual laboratory'], bib: ['Boyle Bibliography', 'Scientific bibliography'], div: ['Diving-Boyle', 'Italian dive centres'] }
   };
@@ -47,7 +47,7 @@
     };
     h.innerHTML =
       '<div class="sh__in">' +
-        '<a class="sh__brand" href="index.html" aria-label="Gli Amici di Boyle · Home"><img src="assets/logo-boyle-96.png" srcset="assets/logo-boyle-96.png 1x, assets/logo-boyle-192.png 2x" alt="" width="46" height="46"><span><b>Gli Amici di Boyle</b><small data-t="tag"></small></span></a>' +
+        '<a class="sh__brand" href="index.html" aria-label="Gli Amici di Boyle · Home"><img src="assets/logo-boyle-96.png" srcset="assets/logo-boyle-96.png 1x, assets/logo-boyle-192.png 2x" alt="" width="46" height="46"><span><b>Gli Amici di Boyle</b><small><i>Extreme Environments Medicine</i><i><span class="sh__dot"> · </span>Research &amp; Education</i></small></span></a>' +
         '<nav class="sh__nav" aria-label="Navigazione principale">' +
           '<div class="sh__dd" data-dd><button type="button" aria-expanded="false" aria-controls="shAbout"><span data-t="about"></span>' + CHEV + '</button>' + panel(ABOUT, 'shAbout') + '</div>' +
           '<div class="sh__dd' + (toolActive ? ' is-active' : '') + '" data-dd><button type="button" aria-expanded="false" aria-controls="shTools"><span data-t="tools"></span>' + CHEV + '</button>' + panel(TOOLS, 'shTools') + '</div>' +
