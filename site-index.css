@@ -1,0 +1,62 @@
+/* Gli Amici di Boyle · indice della pagina (site-index.js) */
+.si { position: fixed; right: 16px; bottom: calc(18px + env(safe-area-inset-bottom, 0px)); z-index: 950; font-family: Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+  opacity: 0; transform: translateY(14px) scale(.9); pointer-events: none; transition: opacity .25s, transform .25s; }
+.si.is-on { opacity: 1; transform: none; pointer-events: auto; }
+.si.is-hidden { opacity: 0 !important; pointer-events: none !important; }
+.si__btn { position: relative; width: 56px; height: 56px; border-radius: 50%; padding: 0; cursor: pointer; display: grid; place-items: center;
+  color: #7be4ff; background: radial-gradient(circle at 50% 35%, rgba(18,60,110,.96), rgba(4,16,36,.97));
+  border: 1px solid rgba(123,228,255,.28); box-shadow: 0 10px 30px -8px rgba(0,0,0,.75), 0 0 22px -6px rgba(77,200,255,.55); transition: transform .2s, box-shadow .2s; }
+.si__btn:active { transform: scale(.94); }
+.si.is-open .si__btn { box-shadow: 0 10px 30px -8px rgba(0,0,0,.75), 0 0 0 3px rgba(123,228,255,.18), 0 0 26px -4px rgba(77,255,214,.6); }
+.si__ring { position: absolute; inset: -1px; width: calc(100% + 2px); height: calc(100% + 2px); transform: rotate(-90deg); }
+.si__track { fill: none; stroke: rgba(123,228,255,.12); stroke-width: 2.4; }
+.si__prog { fill: none; stroke: #4dffd6; stroke-width: 2.6; stroke-linecap: round; filter: drop-shadow(0 0 3px rgba(77,255,214,.8)); transition: stroke-dashoffset .15s linear; }
+.si__compass { width: 26px; height: 26px; filter: drop-shadow(0 0 4px rgba(123,228,255,.6)); transition: transform .35s ease; }
+.si.is-open .si__compass { transform: rotate(45deg); }
+
+.si__toast { position: absolute; right: 66px; bottom: 11px; display: flex; align-items: baseline; gap: 8px; white-space: nowrap; padding: 9px 13px; border-radius: 999px;
+  background: rgba(4,18,40,.94); border: 1px solid rgba(123,228,255,.25); box-shadow: 0 8px 24px -10px rgba(0,0,0,.8);
+  color: #edf7ff; font-size: .84rem; opacity: 0; transform: translateX(8px); pointer-events: none; transition: opacity .25s, transform .25s; }
+.si__toast.on { opacity: 1; transform: none; }
+.si__toast b { font-weight: 600; }
+.si__toast small { font: 700 .66rem/1 ui-monospace, "SF Mono", Menlo, Consolas, monospace; color: #4dffd6; letter-spacing: .06em; }
+
+.si__panel { position: absolute; right: 0; bottom: 68px; width: max-content; min-width: 220px; max-width: min(300px, calc(100vw - 32px)); max-height: min(62svh, 520px); overflow: auto;
+  padding: 12px 8px 8px; border-radius: 18px; background: rgba(5,20,43,.97); border: 1px solid rgba(123,228,255,.22); box-shadow: 0 24px 60px -18px rgba(0,0,0,.85);
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); overscroll-behavior: contain;
+  opacity: 0; visibility: hidden; transform: translateY(8px); transform-origin: bottom right; transition: opacity .18s, transform .18s, visibility 0s .18s; }
+.si.is-open .si__panel { opacity: 1; visibility: visible; transform: none; transition: opacity .18s, transform .18s; }
+.si__h { margin: 0 10px 8px; font: 700 .64rem/1 ui-monospace, "SF Mono", Menlo, Consolas, monospace; letter-spacing: .16em; text-transform: uppercase; color: rgba(190,225,245,.5); }
+.si__top { display: block; width: 100%; text-align: left; margin: 0 0 4px; padding: 9px 10px; border: 0; border-radius: 10px; background: none; cursor: pointer;
+  color: #7be4ff; font: 600 .86rem/1.2 inherit; font-family: inherit; }
+.si__top:hover { background: rgba(123,228,255,.07); }
+.si__list { list-style: none; margin: 0; padding: 0 0 0 4px; position: relative; }
+.si__list::before { content: ""; position: absolute; left: 14px; top: 14px; bottom: 14px; width: 2px; background: rgba(123,228,255,.14); border-radius: 2px; }
+.si__list a { position: relative; display: flex; align-items: center; gap: 12px; padding: 8px 12px 8px 6px; border-radius: 10px; text-decoration: none;
+  color: rgba(205,232,248,.72); font-size: .93rem; font-weight: 500; line-height: 1.25; }
+.si__list a:hover { background: rgba(123,228,255,.06); color: #fff; }
+.si__list i { position: relative; z-index: 1; flex: none; width: 10px; height: 10px; margin-left: 5px; border-radius: 50%; background: #061a33; border: 2px solid rgba(123,228,255,.35); }
+.si__list a.is-done i { background: rgba(123,228,255,.55); border-color: rgba(123,228,255,.55); }
+.si__list a.is-done { color: rgba(205,232,248,.55); }
+.si__list a.is-cur { color: #fff; font-weight: 700; background: rgba(123,228,255,.08); }
+.si__list a.is-cur i { background: #4dffd6; border-color: #4dffd6; box-shadow: 0 0 10px rgba(77,255,214,.9); }
+
+/* computer: puntini sul bordo destro */
+.si-rail { position: fixed; right: 18px; top: 50%; z-index: 900; transform: translateY(-50%); opacity: 0; pointer-events: none; transition: opacity .3s; font-family: Inter, system-ui, sans-serif; }
+.si-rail.is-on { opacity: 1; pointer-events: auto; }
+.si-rail ol { list-style: none; margin: 0; padding: 6px 0; position: relative; display: grid; gap: 4px; }
+.si-rail ol::before { content: ""; position: absolute; right: 8px; top: 12px; bottom: 12px; width: 1px; background: rgba(123,228,255,.18); }
+.si-rail a { position: relative; display: block; width: 18px; height: 18px; }
+.si-rail a::after { content: ""; position: absolute; right: 5px; top: 5px; width: 8px; height: 8px; border-radius: 50%; background: #061a33; border: 1.5px solid rgba(123,228,255,.45); transition: transform .2s, background .2s, box-shadow .2s; }
+.si-rail a.is-done::after { background: rgba(123,228,255,.5); }
+.si-rail a.is-cur::after { background: #4dffd6; border-color: #4dffd6; transform: scale(1.35); box-shadow: 0 0 10px rgba(77,255,214,.9); }
+.si-rail a:hover::after { transform: scale(1.35); background: #7be4ff; }
+.si-rail a span { position: absolute; right: 26px; top: 50%; transform: translate(6px, -50%); white-space: nowrap; padding: 6px 11px; border-radius: 9px;
+  background: rgba(4,18,40,.95); border: 1px solid rgba(123,228,255,.25); color: #edf7ff; font-size: .8rem; font-weight: 600; opacity: 0; pointer-events: none; transition: opacity .15s, transform .15s; }
+.si-rail a:hover span, .si-rail a:focus-visible span { opacity: 1; transform: translate(0, -50%); }
+.si-rail__now { display: none; }
+.si-rail.show-now a.is-cur span { opacity: 1; transform: translate(0, -50%); }
+
+@media (min-width: 1061px) { .si { display: none; } }
+@media (max-width: 1060px) { .si-rail { display: none; } }
+@media (prefers-reduced-motion: reduce) { .si, .si *, .si-rail, .si-rail * { transition: none !important; } }
