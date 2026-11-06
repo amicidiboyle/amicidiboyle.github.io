@@ -225,7 +225,7 @@ function afterScroll(cb) {
 function showInSphere(i) {
   closeLens(true);
   if (current >= 0) close(true);
-  const hdr = document.querySelector('.header');
+  const hdr = document.querySelector('.sh') || document.querySelector('.header');
   const off = hdr && getComputedStyle(hdr).position !== 'static' ? hdr.getBoundingClientRect().height : 0;
   const y = Math.max(0, Math.round(stage.getBoundingClientRect().top + window.scrollY - off));
   if (Math.abs(window.scrollY - y) > 2) window.scrollTo({ top: y, behavior: REDUCED ? 'auto' : 'smooth' });

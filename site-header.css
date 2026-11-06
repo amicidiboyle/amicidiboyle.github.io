@@ -1,0 +1,113 @@
+/* Gli Amici di Boyle · header unico del sito (site-header.js lo costruisce su ogni pagina) */
+.sh-legacy { display: none !important; }
+
+.sh { --sh-h: 68px; position: sticky; top: 0; z-index: 1000; height: var(--sh-h);
+  background: linear-gradient(180deg, rgba(4,18,40,.92), rgba(3,14,32,.86));
+  backdrop-filter: blur(14px) saturate(1.2); -webkit-backdrop-filter: blur(14px) saturate(1.2);
+  border-bottom: 1px solid rgba(123,228,255,.14); transition: height .25s ease, background .25s ease, box-shadow .25s ease;
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", sans-serif; }
+.sh.is-scrolled { --sh-h: 58px; background: rgba(2,10,24,.94); box-shadow: 0 10px 30px -18px rgba(0,0,0,.8); }
+.sh::after { content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 1px; pointer-events: none;
+  background: linear-gradient(90deg, transparent, rgba(123,228,255,.55) 30%, rgba(77,255,214,.45) 70%, transparent); opacity: .55; }
+.sh__in { box-sizing: border-box; width: min(1180px, 100%); height: 100%; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; gap: 18px; }
+
+.sh__brand { display: flex; align-items: center; gap: 12px; text-decoration: none; color: #edf7ff; min-width: 0; flex: 0 1 auto; }
+.sh__brand img { width: 46px; height: 46px; border-radius: 50%; flex: none; transition: width .25s, height .25s;
+  box-shadow: 0 0 0 1px rgba(123,228,255,.25), 0 0 18px -4px rgba(123,228,255,.5); }
+.sh.is-scrolled .sh__brand img { width: 38px; height: 38px; }
+.sh__brand span { display: flex; flex-direction: column; min-width: 0; line-height: 1.15; }
+.sh__brand b { font-size: 1.12rem; font-weight: 700; letter-spacing: -.01em; white-space: nowrap; }
+.sh__brand small { font-size: .7rem; color: rgba(190,225,245,.62); letter-spacing: .02em; white-space: nowrap; margin-top: 3px; transition: opacity .2s, max-height .25s; max-height: 20px; }
+.sh.is-scrolled .sh__brand small { opacity: 0; max-height: 0; margin-top: 0; }
+
+.sh__nav { margin-left: auto; display: flex; align-items: center; gap: 2px; }
+.sh__nav > a, .sh__dd > button { position: relative; display: inline-flex; align-items: center; gap: 6px; height: 38px; padding: 0 13px; border-radius: 10px;
+  color: rgba(225,240,250,.86); text-decoration: none; white-space: nowrap; font-family: inherit; font-size: .93rem; font-weight: 500; line-height: 1; background: none; border: 0; cursor: pointer; transition: color .15s, background .15s; }
+.sh__nav > a:hover, .sh__dd > button:hover, .sh__dd.is-open > button { color: #fff; background: rgba(123,228,255,.08); }
+.sh__nav > a.is-active, .sh__dd.is-active > button { color: #fff; background: rgba(123,228,255,.12); box-shadow: inset 0 0 0 1px rgba(123,228,255,.22); }
+.sh__nav > a.is-active::after, .sh__dd.is-active > button::after { content: ""; position: absolute; left: 14px; right: 14px; bottom: 5px; height: 2px; border-radius: 2px; background: linear-gradient(90deg, #7be4ff, #4dffd6); }
+.sh__dd { position: relative; }
+.sh__dd > button svg { width: 10px; height: 10px; opacity: .7; transition: transform .2s; }
+.sh__dd.is-open > button svg { transform: rotate(180deg); }
+.sh__panel { position: absolute; top: calc(100% + 10px); left: 50%; translate: -50% 0; min-width: 300px; padding: 8px; border-radius: 16px;
+  background: rgba(5,20,43,.97); border: 1px solid rgba(123,228,255,.2); box-shadow: 0 24px 60px -20px rgba(0,0,0,.85), 0 0 0 1px rgba(0,0,0,.2);
+  display: grid; gap: 2px; opacity: 0; visibility: hidden; transform: translateY(-6px); transition: opacity .18s, transform .18s, visibility 0s .18s; }
+.sh__dd.is-open .sh__panel { opacity: 1; visibility: visible; transform: none; transition: opacity .18s, transform .18s; }
+.sh__panel a { display: grid; grid-template-columns: 34px 1fr; gap: 2px 12px; align-items: center; padding: 10px 12px; border-radius: 11px; text-decoration: none; color: #edf7ff; }
+.sh__panel a:hover, .sh__panel a.is-active { background: rgba(123,228,255,.08); }
+.sh__panel i { grid-row: span 2; width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center; font-style: normal; font-size: .95rem;
+  background: rgba(123,228,255,.08); border: 1px solid rgba(123,228,255,.18); color: #7be4ff; }
+.sh__panel b { font-size: .92rem; font-weight: 600; }
+.sh__panel small { font-size: .76rem; color: rgba(190,225,245,.6); }
+
+.sh__lang { display: inline-flex; align-items: center; gap: 2px; height: 32px; padding: 3px; margin-left: 8px; border-radius: 999px; cursor: pointer;
+  background: rgba(2,11,24,.6); border: 1px solid rgba(123,228,255,.22); font: 700 .72rem/1 ui-monospace, "SF Mono", Menlo, Consolas, monospace; letter-spacing: .08em; }
+.sh__lang span { padding: 7px 8px; border-radius: 999px; color: rgba(190,225,245,.55); transition: background .2s, color .2s; }
+.sh__lang span.on { background: rgba(123,228,255,.16); color: #fff; }
+.sh__join { margin-left: 8px; display: inline-flex; align-items: center; gap: 6px; height: 32px; padding: 0 13px; border-radius: 999px; text-decoration: none; white-space: nowrap;
+  font-family: inherit; font-size: .84rem; font-weight: 600; line-height: 1; color: #9eeaff; background: transparent;
+  border: 1px solid rgba(123,228,255,.38); transition: background .15s, border-color .15s, color .15s; }
+.sh__join:hover { color: #fff; background: rgba(123,228,255,.1); border-color: rgba(123,228,255,.6); }
+.sh__join.is-active { color: #fff; background: rgba(123,228,255,.14); border-color: rgba(123,228,255,.7); }
+.sh__join svg { width: 18px; height: 18px; margin-left: -2px; }
+.sh__orb { overflow: visible; animation: shGlow 2.8s ease-in-out infinite; }
+.sh__orb-arc { transform-origin: 12px 12px; animation: shOrb 2.6s linear infinite; color: #e6fdff; }
+.sh__orb > circle:nth-of-type(2) { transform-origin: 12px 12px; animation: shCore 1.4s ease-in-out infinite; }
+.sh__orb > ellipse { transform-origin: 12px 12px; animation: shSpin 5s linear infinite; }
+.sh__join:hover .sh__orb { animation-duration: 1.2s; }
+.sh__join:hover .sh__orb-arc { animation-duration: 1s; }
+@keyframes shOrb { to { transform: rotate(360deg); } }
+@keyframes shSpin { 0% { transform: scaleX(1); } 25% { transform: scaleX(.15); } 50% { transform: scaleX(1); } 75% { transform: scaleX(.15); } 100% { transform: scaleX(1); } }
+@keyframes shCore { 50% { opacity: .45; transform: scale(.7); } }
+@keyframes shGlow { 0%,100% { filter: drop-shadow(0 0 2px rgba(123,228,255,.7)) drop-shadow(0 0 5px rgba(77,255,214,.3)); } 50% { filter: drop-shadow(0 0 4px rgba(150,240,255,1)) drop-shadow(0 0 10px rgba(77,255,214,.7)); } }
+
+.sh__burger { display: none; margin-left: 8px; width: 42px; height: 42px; border-radius: 12px; cursor: pointer; background: rgba(2,11,24,.6); border: 1px solid rgba(123,228,255,.25); position: relative; }
+.sh__burger span { position: absolute; left: 11px; right: 11px; height: 2px; border-radius: 2px; background: #cfefff; transition: transform .25s, opacity .2s, top .25s; }
+.sh__burger span:nth-child(1) { top: 14px; } .sh__burger span:nth-child(2) { top: 20px; } .sh__burger span:nth-child(3) { top: 26px; }
+.sh.menu-open .sh__burger span:nth-child(1) { top: 20px; transform: rotate(45deg); }
+.sh.menu-open .sh__burger span:nth-child(2) { opacity: 0; }
+.sh.menu-open .sh__burger span:nth-child(3) { top: 20px; transform: rotate(-45deg); }
+
+/* menu del telefono: riquadro compatto sotto il pulsante, allineato a destra come il menu attuale */
+.sh__sheet { position: fixed; right: 12px; top: 70px; z-index: 1001; width: max-content; min-width: 210px; max-width: calc(100vw - 24px); max-height: calc(100svh - 90px); overflow: auto;
+  padding: 8px; border-radius: 18px; background: rgba(5,20,43,.97); border: 1px solid rgba(123,228,255,.2); box-shadow: 0 24px 60px -18px rgba(0,0,0,.85);
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); font-family: Inter, system-ui, -apple-system, "Segoe UI", sans-serif; text-align: right;
+  opacity: 0; visibility: hidden; transform: translateY(-6px); transform-origin: top right; transition: opacity .18s, transform .18s, visibility 0s .18s; }
+.sh__sheet.is-open { opacity: 1; visibility: visible; transform: none; transition: opacity .18s, transform .18s; }
+.sh__sheet .sh__item, .sh__sheet .sh__grp { display: flex; align-items: center; justify-content: flex-end; gap: 8px; width: 100%; padding: 12px 14px; border-radius: 12px; border: 0; background: none; cursor: pointer;
+  color: #edf7ff; text-decoration: none; font-family: inherit; font-size: 1.02rem; font-weight: 600; line-height: 1.2; text-align: right; }
+.sh__sheet .sh__item:hover, .sh__sheet .sh__grp:hover { background: rgba(123,228,255,.07); }
+.sh__sheet .sh__item.is-active { color: #7be4ff; }
+.sh__sheet .sh__grp svg { width: 10px; height: 10px; opacity: .7; transition: transform .2s; }
+.sh__sheet .sh__grp[aria-expanded="true"] { background: rgba(123,228,255,.07); }
+.sh__sheet .sh__grp[aria-expanded="true"] svg { transform: rotate(180deg); }
+.sh__sheet .sh__sub { display: grid; padding: 2px 0 6px; margin: 0 6px 4px; border-right: 2px solid rgba(123,228,255,.25); }
+.sh__sheet .sh__sub[hidden] { display: none; }
+.sh__sheet .sh__sub a { padding: 8px 12px; color: rgba(205,232,248,.8); text-decoration: none; font-size: .92rem; font-weight: 500; }
+.sh__sheet .sh__sub a.is-active { color: #7be4ff; }
+.sh__sheet .sh__lang { display: flex; margin: 8px 0 2px auto; width: max-content; height: 34px; }
+
+
+@media (max-width: 1180px) { .sh__brand small { display: none; } .sh__nav > a, .sh__dd > button { padding: 0 10px; } }
+@media (max-width: 1060px) {
+  .sh__nav { display: none; }
+  .sh__in > .sh__lang { display: none; }
+  .sh__burger { display: block; }
+  .sh__in > .sh__join { margin-left: auto; }
+}
+@media (max-width: 520px) {
+  .sh { --sh-h: 62px; }
+  .sh__in { padding: 0 14px; gap: 10px; }
+  .sh__brand img { width: 38px; height: 38px; }
+  .sh__brand b { font-size: .95rem; }
+  .sh__in > .sh__join { height: 32px; padding: 0 11px; font-size: .78rem; }
+  .sh__in > .sh__join svg { width: 16px; height: 16px; }
+}
+@media (max-width: 360px) { .sh__in > .sh__join { display: none; } .sh__burger { margin-left: auto; } }
+@media (prefers-reduced-motion: reduce) { .sh, .sh *, .sh__sheet { transition: none !important; } }
+.sh-flash { animation: shFlash 1.6s ease 1; border-radius: 18px; }
+@keyframes shFlash { 0%,100% { box-shadow: 0 0 0 0 rgba(77,255,214,0); } 30% { box-shadow: 0 0 0 3px rgba(77,255,214,.55), 0 0 40px rgba(77,255,214,.35); } }
+
+@media (min-width: 1061px) { .sh__sheet { display: none; } }
+
+.sh__lang[hidden] { display: none !important; }
