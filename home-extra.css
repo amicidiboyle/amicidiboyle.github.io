@@ -69,19 +69,21 @@
 }
 /* fascio di luce che scorre durante la rivelazione */
 .ht-accent::before {
-  content: ""; position: absolute; top: -6%; bottom: 4%; left: 0; width: 3px;
-  border-radius: 3px; pointer-events: none; opacity: 0;
-  background: linear-gradient(180deg, transparent, #dff9ff 30%, #dff9ff 70%, transparent);
-  box-shadow: 0 0 18px 4px rgba(150, 230, 255, .55);
+  /* il fascio e' disegnato come sfondo e scorre con background-position: nessun ricalcolo dell'impaginazione */
+  content: ""; position: absolute; top: -6%; bottom: 4%; left: 0; right: 0;
+  pointer-events: none; opacity: 0;
+  background: linear-gradient(180deg, transparent, #dff9ff 30%, #dff9ff 70%, transparent) no-repeat;
+  background-size: 3px 100%; background-position: 0% 0;
+  filter: drop-shadow(0 0 7px rgba(150, 230, 255, .75)) drop-shadow(0 0 2px rgba(150, 230, 255, .6));
 }
 .ht-play .ht-accent::before {
   animation: htBeam 1.15s cubic-bezier(.65, 0, .25, 1) var(--ht-accent-delay, .8s) forwards;
 }
 @keyframes htBeam {
-  0%   { left: 0;    opacity: 0; }
+  0%   { background-position: 0% 0;   opacity: 0; }
   12%  { opacity: 1; }
   88%  { opacity: 1; }
-  100% { left: 100%; opacity: 0; }
+  100% { background-position: 100% 0; opacity: 0; }
 }
 /* linea di profondità sotto l'accento */
 .ht-accent::after {

@@ -34,7 +34,13 @@
   var CHEV = '<svg viewBox="0 0 10 10" aria-hidden="true"><path d="M1.5 3.5L5 7l3.5-3.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>';
   var ARROW = '<svg class="sh__orb" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5" stroke-width="1.6"/><ellipse cx="12" cy="12" rx="3.6" ry="8.5" stroke-width="1.2" opacity=".75"/><path d="M3.8 9.2h16.4M3.8 14.8h16.4" stroke-width="1.1" opacity=".55"/><path class="sh__orb-arc" d="M12 3.5a8.5 8.5 0 0 1 8.5 8.5" stroke-width="2"/><circle cx="12" cy="12" r="2.1" fill="currentColor" stroke="none"/><circle cx="20.5" cy="12" r="1.5" fill="currentColor" stroke="none"/><circle cx="6" cy="5.9" r="1.2" fill="currentColor" stroke="none"/><circle cx="7.5" cy="19.4" r="1.2" fill="currentColor" stroke="none"/></svg>';
 
-  function lang() { return (document.documentElement.lang || 'it').slice(0, 2) === 'en' ? 'en' : 'it'; }
+  /* l'header nasce prima che la pagina applichi la lingua scelta: fino ad allora uso quella salvata */
+  var pageReady = false, saved = 'it';
+  try { saved = sessionStorage.getItem('boyle_lang') === 'en' ? 'en' : 'it'; } catch (e) {}
+  function lang() { var l = (document.documentElement.lang || 'it').slice(0, 2) === 'en' ? 'en' : 'it'; return pageReady ? l : (l === 'en' ? 'en' : saved); }
+  /* la pagina "ha deciso" la lingua quando tocca l'attributo lang di <html>, o al piu' tardi a caricamento finito */
+  if ('MutationObserver' in window) new MutationObserver(function () { pageReady = true; }).observe(document.documentElement, { attributes: true, attributeFilter: ['lang'] });
+  addEventListener('load', function () { if (!pageReady) { pageReady = true; texts(); } });
 
   function build() {
     var old = document.querySelector('header.site-header, header.header, body > header');
