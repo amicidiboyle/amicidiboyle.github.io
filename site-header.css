@@ -1,5 +1,13 @@
 /* Gli Amici di Boyle · header unico del sito (site-header.js lo costruisce su ogni pagina) */
 .sh-legacy { display: none !important; }
+/* finche' lo script non ha costruito l'header nuovo, il vecchio occupa gia' la stessa altezza, vuoto:
+   cosi' al caricamento la pagina non salta */
+body > header.site-header:not(.sh-legacy), body > header.header:not(.sh-legacy) {
+  position: sticky !important; top: 0; z-index: 1000; box-sizing: border-box; height: 68px !important; min-height: 0 !important; max-height: 68px !important;
+  overflow: hidden !important; padding: 0 !important; margin: 0 !important; border: 0 !important; border-bottom: 1px solid rgba(123,228,255,.14) !important;
+  background: linear-gradient(180deg, rgba(4,18,40,.92), rgba(3,14,32,.86)) !important; box-shadow: none !important; transform: none !important; }
+body > header.site-header:not(.sh-legacy) > *, body > header.header:not(.sh-legacy) > * { visibility: hidden !important; }
+@media (max-width: 520px) { body > header.site-header:not(.sh-legacy), body > header.header:not(.sh-legacy) { height: 62px !important; max-height: 62px !important; } }
 
 .sh { --sh-h: 68px; position: sticky; top: 0; z-index: 1000; height: var(--sh-h);
   background: linear-gradient(180deg, rgba(4,18,40,.92), rgba(3,14,32,.86));
