@@ -419,8 +419,12 @@ export function createNetwork(stage, { members, founders, friends = [], onSelect
     else outB.copy(nodes[e.b].pos);
   }
   const eA = new THREE.Vector3(), eB = new THREE.Vector3();
-  function frame() {
+  let lastDraw = 0;
+  function frame(now) {
     raf = requestAnimationFrame(frame);
+    /* sui telefoni la scena si disegna a 30 fotogrammi al secondo: a vista e' uguale e consuma meta' */
+    if (mobile && now && now - lastDraw < 31) return;
+    lastDraw = now || 0;
     const dt = Math.min(clock.getDelta(), 0.05), t = clock.elapsedTime;
     if (fly) {
       const k = Math.min((performance.now() - fly.start) / fly.ms, 1), e = ease(k);

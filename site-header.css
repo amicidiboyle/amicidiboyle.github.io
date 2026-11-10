@@ -60,7 +60,7 @@ body > header.site-header:not(.sh-legacy) > *, body > header.header:not(.sh-lega
 .sh__join:hover { color: #fff; background: rgba(123,228,255,.1); border-color: rgba(123,228,255,.6); }
 .sh__join.is-active { color: #fff; background: rgba(123,228,255,.14); border-color: rgba(123,228,255,.7); }
 .sh__join svg { width: 18px; height: 18px; margin-left: -2px; }
-.sh__orb { overflow: visible; animation: shGlow 2.8s ease-in-out infinite; }
+.sh__orb { overflow: visible; animation: shGlow 2.8s ease-in-out infinite; will-change: opacity; }
 .sh__orb-arc { transform-origin: 12px 12px; animation: shOrb 2.6s linear infinite; color: #e6fdff; }
 .sh__orb > circle:nth-of-type(2) { transform-origin: 12px 12px; animation: shCore 1.4s ease-in-out infinite; }
 .sh__orb > ellipse { transform-origin: 12px 12px; animation: shSpin 5s linear infinite; }
@@ -69,7 +69,7 @@ body > header.site-header:not(.sh-legacy) > *, body > header.header:not(.sh-lega
 @keyframes shOrb { to { transform: rotate(360deg); } }
 @keyframes shSpin { 0% { transform: scaleX(1); } 25% { transform: scaleX(.15); } 50% { transform: scaleX(1); } 75% { transform: scaleX(.15); } 100% { transform: scaleX(1); } }
 @keyframes shCore { 50% { opacity: .45; transform: scale(.7); } }
-@keyframes shGlow { 0%,100% { filter: drop-shadow(0 0 2px rgba(123,228,255,.7)) drop-shadow(0 0 5px rgba(77,255,214,.3)); } 50% { filter: drop-shadow(0 0 4px rgba(150,240,255,1)) drop-shadow(0 0 10px rgba(77,255,214,.7)); } }
+@keyframes shGlow { 0%,100% { opacity: .82; } 50% { opacity: 1; } }
 
 .sh__burger { display: none; margin-left: 8px; width: 42px; height: 42px; border-radius: 50%; cursor: pointer; position: relative;
   background: radial-gradient(circle at 50% 35%, rgba(18,60,110,.96), rgba(4,16,36,.97)); border: 1px solid rgba(123,228,255,.3); box-shadow: 0 0 18px -6px rgba(77,200,255,.55); transition: box-shadow .2s; }
@@ -139,3 +139,17 @@ body > header.site-header:not(.sh-legacy) > *, body > header.header:not(.sh-lega
 @media (min-width: 1061px) { .sh__sheet { display: none; } }
 
 .sh__lang[hidden] { display: none !important; }
+
+/* ── prestazioni ── */
+/* animazioni continue ferme fuori schermo */
+[data-sh-off], [data-sh-off]::before, [data-sh-off]::after,
+[data-sh-off] *, [data-sh-off] *::before, [data-sh-off] *::after { animation-play-state: paused !important; }
+/* dispositivi leggeri: pannelli senza sfocatura, appena piu' opachi (l'aspetto resta quasi identico) */
+html.sh-lite *:not(.sh__sheet):not(.si__panel),
+html.sh-lite *::before, html.sh-lite *::after { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
+html.sh-lite .glass-card, html.sh-lite .evx-card, html.sh-lite details.season, html.sh-lite .podPlayer__inner, html.sh-lite .podYT,
+html.sh-lite .podFooterCTA__box, html.sh-lite .db-path, html.sh-lite .real-map-wrap, html.sh-lite .site-footer,
+html.sh-lite .glass-chip, html.sh-lite .bmx, html.sh-lite .r3d-console { background-color: rgba(4, 16, 36, .5); }
+/* globo Network: la luce pulsa con l'opacita', non ricalcolando il filtro a ogni fotogramma */
+.sh__orb { filter: drop-shadow(0 0 3px rgba(123,228,255,.85)) drop-shadow(0 0 7px rgba(77,255,214,.45)); }
+html.sh-lite .sh { background: rgba(3,14,32,.96); }

@@ -124,15 +124,16 @@ main { position: relative; z-index: 1; }
   position: absolute; inset: 0; overflow: hidden; pointer-events: none;
 }
 .ev-hero__scan::after {
-  content: ''; position: absolute; left: 0; right: 0; height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(123,228,255,.18), transparent);
+  content: ''; position: absolute; left: 0; right: 0; top: 0; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(123,228,255,.18), transparent) no-repeat;
+  background-size: 100% 1px; will-change: transform;
   animation: evScan 5s ease-in-out infinite;
 }
 @keyframes evScan {
-  0%   { top: -5%; opacity: 0; }
+  0%   { transform: translateY(-5%); opacity: 0; }
   8%   { opacity: 1; }
   88%  { opacity: .3; }
-  100% { top: 108%; opacity: 0; }
+  100% { transform: translateY(108%); opacity: 0; }
 }
 
 /* Radar — centrato orizzontalmente nella metà destra */

@@ -3,6 +3,29 @@
    cosi' gli script di ogni pagina (cambio lingua compreso) continuano a funzionare. */
 (function () {
   'use strict';
+  /* prestazioni: sui telefoni e sui computer meno potenti niente sfocatura dietro i pannelli
+     (con lo sfondo fisso va ricalcolata a ogni fotogramma di scorrimento) */
+  try {
+    var lite = matchMedia('(max-width: 1060px), (pointer: coarse)').matches ||
+      (navigator.deviceMemory && navigator.deviceMemory <= 4) || (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4) ||
+      matchMedia('(prefers-reduced-transparency: reduce)').matches;
+    if (lite) document.documentElement.classList.add('sh-lite');
+  } catch (e) {}
+  /* le animazioni continue si fermano nelle parti di pagina che non si vedono */
+  function pauseOffscreen() {
+    if (!('IntersectionObserver' in window)) return;
+    var io = new IntersectionObserver(function (en) {
+      en.forEach(function (e) { if (e.isIntersecting) e.target.removeAttribute('data-sh-off'); else e.target.setAttribute('data-sh-off', ''); });
+    }, { rootMargin: '150px 0px' });
+    var seen = [];
+    document.querySelectorAll('main > *, body > section, body > div, body > footer, main section, footer').forEach(function (el) {
+      if (seen.indexOf(el) >= 0 || el.closest('.sh, .sh__sheet, .si, .si-rail')) return;
+      var pos = getComputedStyle(el).position; if (pos === 'fixed' || pos === 'sticky') return;
+      seen.push(el); io.observe(el);
+    });
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', pauseOffscreen); else pauseOffscreen();
+
   var file = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
   if (file === '') file = 'index.html';
   var HOME = file === 'index.html';

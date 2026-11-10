@@ -90,7 +90,7 @@ function lazy3d(ms, fs, frs) {
   if (!ok) { stage.classList.add('is-fallback'); return; }
   const go = async () => {
     try {
-      const mod = await import('./rete3d.min.js?v=20261102d');
+      const mod = await import('./rete3d.min.js?v=20261110a');
       net = mod.createNetwork(stage, {
         members: ms, founders: fs, friends: frs, reduced: REDUCED, mobile: MOBILE,
         safe: safeBands,

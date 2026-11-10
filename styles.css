@@ -399,10 +399,10 @@ body::after {
   pointer-events: none;
 }
 @keyframes ghostShimmer {
-  0%   { left: -100%; opacity: 0; }
+  0%   { transform: translateX(0) skewX(-18deg); opacity: 0; }
   20%  { opacity: 1; }
-  60%  { left: 130%; opacity: 0; }
-  100% { left: 130%; opacity: 0; }
+  60%  { transform: translateX(383%) skewX(-18deg); opacity: 0; }
+  100% { transform: translateX(383%) skewX(-18deg); opacity: 0; }
 }
 .btn-ghost:hover {
   color: var(--text); border-color: rgba(123,228,255,.4);
