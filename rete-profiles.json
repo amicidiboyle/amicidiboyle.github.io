@@ -635,5 +635,21 @@
     "podcast": false,
     "research": true,
     "updated": "2026-11-05 17:46:21"
+  },
+  "janete-peregrino-braga": {
+    "name": "Janete Peregrino Braga",
+    "bio": "",
+    "linkedin": "https://www.linkedin.com/in/janete-braga-94565535",
+    "researchgate": "",
+    "scholar": "",
+    "orcid": "",
+    "twitter": "",
+    "instagram": "",
+    "website": "",
+    "courses": "",
+    "speaker": false,
+    "podcast": false,
+    "research": false,
+    "updated": "2026-11-10 10:26:13"
   }
 }
