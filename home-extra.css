@@ -24,11 +24,12 @@
   will-change: transform, opacity, filter;
 }
 .ht-play .ht-ch {
-  opacity: 0;
-  transform: translateY(.55em) scale(.94);
-  filter: blur(12px);
-  animation: htRise 1s cubic-bezier(.2, .75, .25, 1) forwards;
-  animation-delay: calc(var(--i) * 34ms + 180ms);
+  /* le lettere partono gia' intraviste, sfocate: il titolo emerge subito invece di comparire dal nulla */
+  opacity: .3;
+  transform: translateY(.35em) scale(.96);
+  filter: blur(8px);
+  animation: htRise .8s cubic-bezier(.2, .75, .25, 1) forwards;
+  animation-delay: calc(var(--i) * 22ms);
 }
 @keyframes htRise {
   55% { opacity: 1; filter: blur(1.5px); }
@@ -424,8 +425,8 @@ html.hero-video-on .site-header { -webkit-backdrop-filter: none; backdrop-filter
   transform: skewX(-20deg); opacity: 0; pointer-events: none;
 }
 
-.hero-intro .hero-lead { animation: heroFadeUp .9s cubic-bezier(.2,.7,.2,1) 1s backwards; }
-.hero-intro .hero-stats { animation: heroFadeUp 1s cubic-bezier(.2,.7,.2,1) 1.9s backwards; }
+.hero-intro .hero-lead { animation: heroFadeUpSoft .8s cubic-bezier(.2,.7,.2,1) .2s backwards; }
+.hero-intro .hero-stats { animation: heroFadeUpSoft .9s cubic-bezier(.2,.7,.2,1) .5s backwards; }
 
 .hero-intro .hero-cta-row .btn {
   animation-name: heroBtnRise, heroBtnLight, heroSonar;
@@ -434,12 +435,12 @@ html.hero-video-on .site-header { -webkit-backdrop-filter: none; backdrop-filter
   animation-fill-mode: backwards, none, none;
 }
 .hero-intro .hero-cta-row .btn::after { animation: heroGlint 1.1s cubic-bezier(.4,0,.2,1) backwards; }
-.hero-intro .hero-cta-row .btn:nth-child(1) { animation-delay: 1.25s, 2.1s, 2.15s; }
-.hero-intro .hero-cta-row .btn:nth-child(2) { animation-delay: 1.4s, 2.25s, 2.3s; }
-.hero-intro .hero-cta-row .btn:nth-child(3) { animation-delay: 1.55s, 2.4s, 2.45s; }
-.hero-intro .hero-cta-row .btn:nth-child(1)::after { animation-delay: 2.1s; }
-.hero-intro .hero-cta-row .btn:nth-child(2)::after { animation-delay: 2.25s; }
-.hero-intro .hero-cta-row .btn:nth-child(3)::after { animation-delay: 2.4s; }
+.hero-intro .hero-cta-row .btn:nth-child(1) { animation-delay: .45s, 1.3s, 1.35s; }
+.hero-intro .hero-cta-row .btn:nth-child(2) { animation-delay: .55s, 1.45s, 1.5s; }
+.hero-intro .hero-cta-row .btn:nth-child(3) { animation-delay: .65s, 1.6s, 1.65s; }
+.hero-intro .hero-cta-row .btn:nth-child(1)::after { animation-delay: 1.3s; }
+.hero-intro .hero-cta-row .btn:nth-child(2)::after { animation-delay: 1.45s; }
+.hero-intro .hero-cta-row .btn:nth-child(3)::after { animation-delay: 1.6s; }
 
 /* secondo passaggio, una sola volta: un'onda che attraversa i tre pulsanti */
 .hero-intro .hero-cta-row { animation: none; }
@@ -991,3 +992,5 @@ html.hero-video-on .site-header { -webkit-backdrop-filter: none; backdrop-filter
   .lsp-needle, .lsp-led { animation: none !important; }
   .lsp-needle { transform: rotate(40deg); }
 }
+
+@keyframes heroFadeUpSoft { from { opacity: .25; transform: translateY(14px); } to { opacity: 1; transform: none; } }

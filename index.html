@@ -14,7 +14,7 @@
   <link rel="preload" as="image" href="assets/ocean-mobile.jpg" media="(max-width: 768px)" />
   <link rel="icon" href="assets/logo.png" type="image/png" />
   <link rel="stylesheet" href="styles.css?v=20261110a" />
-  <link rel="stylesheet" href="home-extra.css?v=20261106a" />
+  <link rel="stylesheet" href="home-extra.css?v=20261113b" />
   <!-- Open Graph -->
   <meta property="og:type"        content="website" />
   <meta property="og:url"         content="https://www.amicidiboyle.it/" />
@@ -27,6 +27,7 @@
   <link rel="stylesheet" href="title-fx.css?v=20261026b" />
   <link rel="stylesheet" href="nav-tools.css?v=20261026e" />
   <link rel="stylesheet" href="barometro.css?v=20261026b" />
+  <link rel="preload" as="script" href="site-header.js?v=20261110a" />
   <link rel="stylesheet" href="site-header.css?v=20261110b" />
   <link rel="stylesheet" href="site-index.css?v=20261106m" />
 </head>
@@ -117,8 +118,16 @@
       <div class="light-scattering" aria-hidden="true"></div>
       <div class="particles" aria-hidden="true"></div>
       <div class="container">
-        <div class="hero-content reveal">
+        <div class="hero-content">
           <h1 id="hero-h1-el" class="hero-title">Medicina degli<br><span class="accent">ambienti estremi</span></h1>
+          <script>/* titolo animato costruito subito, senza aspettare gli script in fondo alla pagina */
+          (function(){try{var h1=document.getElementById('hero-h1-el');if(!h1)return;var L='it';try{L=sessionStorage.getItem('boyle_lang')==='en'?'en':'it'}catch(e){}
+          var T={it:['Medicina degli','ambienti estremi'],en:['Medicine of','Extreme Environments']}[L],i=0;
+          function e(c){return c==='&'?'&amp;':c==='<'?'&lt;':c==='>'?'&gt;':c}
+          var l1=T[0].split(' ').map(function(w){var s=w.split('').map(function(c){return '<span class="ht-ch" style="--i:'+(i++)+'">'+e(c)+'</span>'}).join('');i++;return '<span class="ht-word">'+s+'</span>'}).join(' ');
+          h1.setAttribute('data-ht-lang',L);h1.setAttribute('aria-label',T[0]+' '+T[1]);h1.style.setProperty('--ht-accent-delay',(0.1+i*0.022).toFixed(2)+'s');
+          h1.innerHTML='<span class="ht-line" aria-hidden="true">'+l1+'</span><br><span class="accent ht-accent" aria-hidden="true"><span class="ht-accent-in">'+e(T[1])+'</span></span>';
+          h1.classList.add('ht-ready','ht-play');}catch(e){}})();</script>
           <p class="hero-lead" data-i18n="hero_lead">Ricerca, formazione e rete professionale nella medicina degli ambienti estremi. Una rete multidisciplinare che unisce clinica, fisiologia, tecnologia e cultura della sicurezza.</p>
         </div>
       </div>
@@ -2233,7 +2242,7 @@
     }
   })();
   </script>
-  <script src="home-extra.js?v=20261026h" defer></script>
+  <script src="home-extra.js?v=20261113a" defer></script>
   <script src="barometro.js?v=20261026b" defer></script>
   <script src="site-index.js?v=20261106m" defer></script>
   <script src="nav-tools.js?v=20261026g" defer></script>

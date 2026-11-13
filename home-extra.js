@@ -34,7 +34,7 @@
     var t = TITLES[lang];
     var l1 = buildLine(t[0], 0);
     h1.setAttribute('aria-label', t[0] + ' ' + t[1]);
-    h1.style.setProperty('--ht-accent-delay', (0.25 + l1.next * 0.034).toFixed(2) + 's');
+    h1.style.setProperty('--ht-accent-delay', (0.1 + l1.next * 0.022).toFixed(2) + 's');
     h1.innerHTML =
       '<span class="ht-line" aria-hidden="true">' + l1.html + '</span><br>' +
       '<span class="accent ht-accent" aria-hidden="true"><span class="ht-accent-in">' + esc(t[1]) + '</span></span>';
