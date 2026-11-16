@@ -471,7 +471,7 @@
       sourceUnavailable: function (source) { return source + " non raggiungibile in questo momento"; },
       copy: "Copia", copied: "Copiato", copyFailed: "Copia manualmente",
       copyAll: "Copia tutte le citazioni", copiedAll: "Bibliografia copiata",
-      pdfOpen: "PDF", pdfPaywall: "A pagamento",
+      pdfOpen: "PDF", pdfPaywall: "A pagamento", articleAccess: "Testo integrale / DOI", articleLoading: "Caricamento della scheda PubMed…", articleReady: "Articolo selezionato da PubMed", articleUnavailable: "Scheda non disponibile. Puoi aprire il record direttamente su PubMed.", articleInvalid: "PMID non valido. Usa la ricerca per trovare l’articolo.",
       noAbstract: "Abstract non disponibile per questa voce.",
       abstractToggle: "Abstract",
       similarToggle: "Simili", similarLoading: "Cerco articoli simili…",
@@ -557,7 +557,7 @@
       sourceUnavailable: function (source) { return source + " unavailable right now"; },
       copy: "Copy", copied: "Copied", copyFailed: "Copy manually",
       copyAll: "Copy all citations", copiedAll: "Bibliography copied",
-      pdfOpen: "PDF", pdfPaywall: "Paywalled",
+      pdfOpen: "PDF", pdfPaywall: "Paywalled", articleAccess: "Full text / DOI", articleLoading: "Loading the PubMed record…", articleReady: "Selected PubMed article", articleUnavailable: "Article unavailable. Open the record directly on PubMed.", articleInvalid: "Invalid PMID. Use the search form to find the article.",
       noAbstract: "No abstract available for this entry.",
       abstractToggle: "Abstract",
       similarToggle: "Similar", similarLoading: "Looking for similar articles…",
@@ -834,13 +834,13 @@
      pronta senza una richiesta per ogni singolo articolo. L'email,
      quando presente, non indica con certezza il corresponding author
      (PubMed non lo dichiara esplicitamente): confidenza sempre "bassa". */
-  function fetchPubMedAbstracts(items) {
+  function fetchPubMedAbstracts(items, fetcher) {
     var byPmid = {};
     items.forEach(function (v) { if (v.pmid) byPmid[v.pmid] = v; });
     var pmids = Object.keys(byPmid);
     if (!pmids.length) return Promise.resolve();
     var url = EUTILS + "efetch.fcgi?db=pubmed&retmode=xml&rettype=abstract&id=" + pmids.join(",");
-    return fetch(url).then(function (res) { return res.ok ? res.text() : null; }).then(function (xmlText) {
+    return (fetcher || fetch)(url).then(function (res) { return res.ok ? res.text() : null; }).then(function (xmlText) {
       if (!xmlText) return;
       var doc = new DOMParser().parseFromString(xmlText, "text/xml");
       var articles = doc.getElementsByTagName("PubmedArticle");
@@ -908,10 +908,10 @@
      un DOI alla volta ma in parallelo, solo per le voci che hanno un DOI.
      Se la chiamata fallisce o manca il DOI, la voce resta "a pagamento"
      (mostra comunque il link di riferimento, solo senza il PDF diretto). */
-  function enrichWithOpenAccess(items) {
+  function enrichWithOpenAccess(items, fetcher) {
     return Promise.all(items.map(function (v) {
       if (!v.doi) { v.isOa = false; v.oaUrl = null; return v; }
-      return fetch(UNPAYWALL + encodeURIComponent(v.doi) + "?email=" + UNPAYWALL_EMAIL)
+      return (fetcher || fetch)(UNPAYWALL + encodeURIComponent(v.doi) + "?email=" + UNPAYWALL_EMAIL)
         .then(function (res) { return res.ok ? res.json() : null; })
         .then(function (data) {
           var loc = data && data.best_oa_location;
@@ -1289,7 +1289,7 @@
     if (idx < text.length) container.appendChild(document.createTextNode(text.slice(idx)));
   }
 
-  function renderItem(v, highlightName) {
+  function renderItem(v, highlightName, openAbstract) {
     var li = document.createElement("li");
     li.className = "bb-biblio-item";
     var wrap = document.createElement("div");
@@ -1347,7 +1347,7 @@
     } else {
       link.href = v.link;
       link.classList.add("bb-biblio-pdf--paywall");
-      setActionLabel(link, I18N[currentLang].pdfPaywall);
+      setActionLabel(link, openAbstract ? I18N[currentLang].articleAccess : I18N[currentLang].pdfPaywall);
     }
 
     var basketBtn = makeActionBtn("button", "basket", "bb-biblio-basket-btn");
@@ -1367,12 +1367,18 @@
     setActionLabel(abstractBtn, I18N[currentLang].abstractToggle);
     var abstractPanel = document.createElement("p");
     abstractPanel.className = "bb-abstract-inline";
-    abstractPanel.hidden = true;
+    abstractPanel.hidden = !openAbstract;
+    if (openAbstract) {
+      abstractPanel.textContent = v.abstract || I18N[currentLang].noAbstract;
+      abstractBtn.classList.add("is-open");
+    }
+    abstractBtn.setAttribute("aria-expanded", String(!abstractPanel.hidden));
     abstractBtn.addEventListener("click", function () {
       var open = abstractPanel.hidden;
       if (open) abstractPanel.textContent = v.abstract || I18N[currentLang].noAbstract;
       abstractPanel.hidden = !open;
       abstractBtn.classList.toggle("is-open", open);
+      abstractBtn.setAttribute("aria-expanded", String(open));
     });
 
     /* pulsante email: solo se un indirizzo è realmente presente nei
@@ -1948,6 +1954,49 @@
     loadMoreBtn.addEventListener("click", function () { triggerSearch(true); });
   }
 
+  // Un PMID nell'indirizzo identifica una sola voce PubMed, indipendentemente dai filtri.
+  function apriArticolo(pmid) {
+    if (!/^[1-9][0-9]{0,8}$/.test(pmid)) {
+      setStatus(I18N[currentLang].articleInvalid);
+      scrollStatusIntoView();
+      return;
+    }
+    var requestId = ++searchRequestId;
+    currentSearchState = null;
+    if (loadMoreBtn) loadMoreBtn.hidden = true;
+    biblioResults.innerHTML = "";
+    clearCopyAll();
+    if (compareLink) {
+      compareLink.href = "https://pubmed.ncbi.nlm.nih.gov/" + pmid + "/";
+      compareLink.hidden = false;
+    }
+    setStatus(I18N[currentLang].articleLoading);
+    scrollStatusIntoView();
+    return fetchWithTimeout(EUTILS + "esummary.fcgi?db=pubmed&retmode=json&id=" + pmid)
+      .then(function (res) {
+        if (!res.ok) throw new Error("esummary");
+        return res.json();
+      })
+      .then(function (summary) {
+        var article = summary.result && summary.result[pmid];
+        if (!article || String(article.uid) !== pmid || !article.title) throw new Error("PMID");
+        var item = mapPubMedArticle(article);
+        return Promise.all([
+          fetchPubMedAbstracts([item], fetchWithTimeout),
+          enrichWithOpenAccess([item], fetchWithTimeout)
+        ]).then(function () { return item; });
+      })
+      .then(function (item) {
+        if (requestId !== searchRequestId) return;
+        setStatus(I18N[currentLang].articleReady);
+        biblioResults.appendChild(renderItem(item, null, true));
+        renderCopyAll([item]);
+      })
+      .catch(function () {
+        if (requestId === searchRequestId) setStatus(I18N[currentLang].articleUnavailable);
+      });
+  }
+
   /* reveal on scroll: testo + costellazione */
   var revealEls = document.querySelectorAll(".bb-reveal");
   var constellation = document.getElementById("bbConstellation");
@@ -1967,6 +2016,8 @@
   } else {
     toObserve.forEach(function (el) { el.classList.add("bb-visible"); });
   }
+  var pmidParam = new URLSearchParams(window.location.search).get("pmid");
+  if (pmidParam !== null) apriArticolo(pmidParam);
 })();
 </script>
   <script src="nav-tools.js?v=20261026g" defer></script>
