@@ -1,10 +1,10 @@
 # Gli Amici di Boyle
 
-> Progetto scientifico e rete professionale italiana dedicata alla medicina degli ambienti estremi: medicina subacquea e iperbarica, medicina aerospaziale, medicina d'emergenza e maxiemergenze, fisiologia umana e sicurezza. Ricerca, formazione, un podcast divulgativo e strumenti gratuiti per professionisti. Fondato nel 2023. Sito: https://www.amicidiboyle.it/ · Contatto: info@amicidiboyle.it
+> Progetto scientifico e rete professionale italiana dedicata alla medicina degli ambienti estremi: medicina subacquea e iperbarica, medicina di montagna e d'alta quota, medicina aerospaziale, medicina d'emergenza e maxiemergenze, fisiologia umana e sicurezza. Ricerca, formazione, un podcast divulgativo e strumenti gratuiti per professionisti. Fondato nel 2023. Sito: https://www.amicidiboyle.it/ · Contatto: info@amicidiboyle.it
 
 Italian scientific project and professional network on extreme-environment medicine (diving and hyperbaric medicine, aerospace medicine, emergency and mass-casualty medicine, human physiology and safety). The site is bilingual (Italian and English). English home page: https://www.amicidiboyle.it/en.html
 
-Keywords: extreme environment medicine, diving medicine, underwater medicine, hyperbaric medicine, hyperbaric oxygen therapy, decompression sickness, fitness to dive, aerospace medicine, space medicine, emergency and disaster medicine, human factors.
+Keywords: extreme environment medicine, diving medicine, underwater medicine, hyperbaric medicine, hyperbaric oxygen therapy, decompression sickness, fitness to dive, aerospace medicine, space medicine, emergency and disaster medicine, mountain and high-altitude medicine, hypothermia and avalanche rescue, human factors.
 
 ## Fondatori
 - Silvio Zerbi, fondatore: anestesista rianimatore, intensivista, trauma team leader; medico subacqueo e iperbarico
