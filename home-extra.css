@@ -58,7 +58,7 @@
   clip-path: inset(-.2em 100% -.2em 0);
   filter: blur(8px);
   animation:
-    htReveal 1.15s cubic-bezier(.65, 0, .25, 1) var(--ht-accent-delay, .8s) forwards,
+    htReveal .95s cubic-bezier(.3, .55, .2, 1) var(--ht-accent-delay, .8s) forwards,
     htCaustic 9s ease-in-out calc(var(--ht-accent-delay, .8s) + 1.2s) 2; /* due passaggi, poi si ferma */
 }
 @keyframes htReveal {
@@ -78,12 +78,12 @@
   filter: drop-shadow(0 0 7px rgba(150, 230, 255, .75)) drop-shadow(0 0 2px rgba(150, 230, 255, .6));
 }
 .ht-play .ht-accent::before {
-  animation: htBeam 1.15s cubic-bezier(.65, 0, .25, 1) var(--ht-accent-delay, .8s) forwards;
+  animation: htBeam .95s cubic-bezier(.3, .55, .2, 1) var(--ht-accent-delay, .8s) forwards;
 }
 @keyframes htBeam {
   0%   { background-position: 0% 0;   opacity: 0; }
-  12%  { opacity: 1; }
-  88%  { opacity: 1; }
+  20%  { opacity: 1; }
+  80%  { opacity: 1; }
   100% { background-position: 100% 0; opacity: 0; }
 }
 /* linea di profondità sotto l'accento */
@@ -95,9 +95,13 @@
   transform: scaleX(0); opacity: .55;
 }
 .ht-play .ht-accent::after {
-  animation: htLine 1.4s cubic-bezier(.2, .7, .2, 1) calc(var(--ht-accent-delay, .8s) + .75s) forwards;
+  animation: htLine 1.2s cubic-bezier(.2, .7, .2, 1) calc(var(--ht-accent-delay, .8s) + .55s) forwards;
 }
 @keyframes htLine { to { transform: scaleX(1); } }
+/* sul telefono l'accento va su due righe: il fascio verticale diventerebbe una sbarra alta, lo tolgo */
+@media (max-width: 600px) { .ht-play .ht-accent::before { animation: none; opacity: 0; } }
+/* finche' la pagina e' coperta dal fondo scuro le animazioni d'ingresso aspettano: partono quando si vede */
+html.boot .hero *, html.boot .hero *::before, html.boot .hero *::after { animation-play-state: paused !important; }
 
 @media (prefers-reduced-motion: reduce) {
   .ht-play .ht-ch, .ht-play .ht-accent-in, .ht-play .ht-accent::before, .ht-play .ht-accent::after {
@@ -897,12 +901,12 @@ html.hero-video-on .site-header { -webkit-backdrop-filter: none; backdrop-filter
 .hx-cell--live .hx-sub b { color: #E8EEF5; font-weight: 600; }
 /* entrata al primo caricamento: la console arriva dopo titolo e frase */
 .hero-intro .hx-cell { animation: hxIn .9s cubic-bezier(.16, 1, .3, 1) backwards; }
-.hero-intro .hx-cell:nth-child(1) { animation-delay: 1.25s; }
-.hero-intro .hx-cell:nth-child(2) { animation-delay: 1.33s; }
-.hero-intro .hx-cell:nth-child(3) { animation-delay: 1.41s; }
-.hero-intro .hx-cell:nth-child(4) { animation-delay: 1.49s; }
-.hero-intro .hx-cell:nth-child(5) { animation-delay: 1.57s; }
-.hero-intro .hx { animation: hxPanel 1s ease 1.15s backwards; }
+.hero-intro .hx-cell:nth-child(1) { animation-delay: .85s; }
+.hero-intro .hx-cell:nth-child(2) { animation-delay: .91s; }
+.hero-intro .hx-cell:nth-child(3) { animation-delay: .97s; }
+.hero-intro .hx-cell:nth-child(4) { animation-delay: 1.03s; }
+.hero-intro .hx-cell:nth-child(5) { animation-delay: 1.09s; }
+.hero-intro .hx { animation: hxPanel .9s ease .75s backwards; }
 @keyframes hxIn { from { opacity: 0; transform: translateY(16px); } }
 @keyframes hxPanel { from { opacity: 0; } }
 @media (max-width: 1100px) {

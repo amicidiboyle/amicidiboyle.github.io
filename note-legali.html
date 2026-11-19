@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <!-- apertura: la pagina resta sul fondo scuro finche' non e' pronta, poi compare tutta insieme (niente sfondo da solo, niente pezzi che saltano) -->
-  <style>html{background-color:#020e1c}html body{background-color:transparent}html.boot body{opacity:0}html.boot-in body{transition:opacity .22s ease-out}@media (prefers-reduced-motion:reduce){html.boot-in body{transition:none}}</style>
+  <style>html{background-color:#020e1c}html body{background-color:transparent}html.boot body{opacity:0}html.boot body *,html.boot body *::before,html.boot body *::after{animation-play-state:paused!important}html.boot-in body{transition:opacity .22s ease-out}@media (prefers-reduced-motion:reduce){html.boot-in body{transition:none}}</style>
   <script>(function(){var d=document.documentElement;d.classList.add('boot');function s(){if(!d.classList.contains('boot'))return;d.classList.add('boot-in');d.classList.remove('boot');setTimeout(function(){d.classList.remove('boot-in')},400)}window.__bootShow=s;document.addEventListener('DOMContentLoaded',function(){requestAnimationFrame(function(){requestAnimationFrame(s)})});setTimeout(s,900)})();</script>
   <link rel="preload" as="image" imagesrcset="assets/logo-boyle-96.png 1x, assets/logo-boyle-192.png 2x" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
