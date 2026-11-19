@@ -21,7 +21,7 @@
   <link rel="preload" as="image" href="assets/ocean-mobile.jpg" media="(max-width: 768px)" />
   <!-- apertura: la pagina resta sul fondo scuro finche' la hero non e' completa (titolo, testo, immagine),
        poi compare tutta insieme con una dissolvenza breve. Niente sfondo da solo, niente pezzi che saltano. -->
-  <style>html{background-color:#020e1c}html.boot body{opacity:0}html.boot-in body{transition:opacity .22s ease-out}@media (prefers-reduced-motion:reduce){html.boot-in body{transition:none}}</style>
+  <style>html{background-color:#020e1c}html body{background-color:transparent}html.boot body{opacity:0}html.boot-in body{transition:opacity .22s ease-out}@media (prefers-reduced-motion:reduce){html.boot-in body{transition:none}}</style>
   <script>(function(){var d=document.documentElement;d.classList.add('boot');window.__bootShow=function(){if(!d.classList.contains('boot'))return;d.classList.add('boot-in');d.classList.remove('boot');setTimeout(function(){d.classList.remove('boot-in')},400)};setTimeout(window.__bootShow,1600)})();</script>
   <link rel="preload" as="image" imagesrcset="assets/logo-boyle-96.png 1x, assets/logo-boyle-192.png 2x" />
   <link rel="icon" href="assets/logo.png" type="image/png" />
