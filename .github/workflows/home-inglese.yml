@@ -1,0 +1,36 @@
+name: Home inglese · rigenera en.html
+
+# en.html e' la versione inglese della home per i motori di ricerca.
+# Si rigenera da sola ogni volta che cambia index.html.
+on:
+  push:
+    branches: [main]
+    paths: [index.html, scripts/build_en.mjs]
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: home-inglese
+  cancel-in-progress: false
+
+jobs:
+  genera:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Genera en.html
+        run: node scripts/build_en.mjs
+      - name: Pubblica se e' cambiata
+        run: |
+          if git diff --quiet -- en.html; then echo "en.html gia' aggiornata."; exit 0; fi
+          git config user.name "Boyle bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add en.html
+          git commit -m "Home inglese: en.html rigenerata da index.html"
+          git pull --rebase
+          git push
