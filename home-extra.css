@@ -335,7 +335,10 @@
 /* ── 7. VIDEO DI SFONDO NELLA HERO ────────────────────────────────── */
 .hero-video {
   position: absolute; inset: 0; z-index: -1; overflow: hidden; pointer-events: none;
-  background: #031024 url("assets/video/hero-poster.jpg?v=3") 50% 45% / cover no-repeat;
+  /* sotto il fotogramma vero c'e' una sua miniatura sfocata gia' dentro il CSS:
+     la hero non e' mai vuota, nemmeno nell'attimo prima che arrivi l'immagine */
+  background: url("assets/video/hero-poster.jpg?v=3") 50% 45% / cover no-repeat,
+              #031024 url("data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD//gAQTGF2YzYwLjMxLjEwMgD/2wBDAA0JCgsKCA0LCgsODg0PEyAVExISEyccHhcgLikxMC4pLSwzOko+MzZGNywtQFdBRkxOUlNSMj5aYVpQYEpRUk//2wBDAQ4ODhMREyYVFSZPNS01T09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0//wAARCAASACADASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDzUCrtrZtJgllUE9zUDNvOQKf5rqOletTVKLvLVGE3JrQfdwLBMUVw4HcVXp7Fn5qEkioqVI3vEIp21J4vvCkm6tRRWT+EPtESE7utOX7rfWiiskWz/9k=") 50% 45% / cover no-repeat;
 }
 /* sfumatura verso il basso (al posto di una maschera, molto piu' leggera da disegnare) */
 .hero-video::before {
@@ -372,7 +375,7 @@
 html.hero-video-on .site-header { -webkit-backdrop-filter: none; backdrop-filter: none; background: rgba(4,20,52,.97); }
 @media (max-width: 768px) {
   /* sul telefono un video verticale ritagliato apposta: niente ingrandimenti */
-  .hero-video { background-image: url("assets/video/hero-poster-mobile.jpg?v=3"); background-position: center; }
+  .hero-video { background-image: url("assets/video/hero-poster-mobile.jpg?v=3"), url("data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD//gAQTGF2YzYwLjMxLjEwMgD/2wBDAA0JCgsKCA0LCgsODg0PEyAVExISEyccHhcgLikxMC4pLSwzOko+MzZGNywtQFdBRkxOUlNSMj5aYVpQYEpRUk//2wBDAQ4ODhMREyYVFSZPNS01T09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0//wAARCAA5ACADASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDzcU9FJzilVCasQREnA7161Ok5M55SSRW20YrRl0+aJNzRkCqTpirnQlDcmNRS2NW3jto0/erub68VPAbeN9yqDznmskOfWpN7KASDzXpxqwS2OaVJvqb17qSPabAoBI5rm5Tkk095S3U1AxzXPXqRasiqFFU1oJvxTnuJHbLNux2NQsrDjpTAP8ivNdWR1KKLDy7lB2hfpUZbPegFTjrinbQRkfhS9o2FkhTIwYArn0qORscBMetTN/rPxpZf4v8AdrOV7AmVc5TJzTlkGMYOajP+rFIn3qxcma2P/9k="); background-position: center, center; }
   .hero-video video { object-position: 50% 50%; }
 }
 @media (prefers-reduced-motion: reduce) {
