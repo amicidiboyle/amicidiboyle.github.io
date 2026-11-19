@@ -1954,6 +1954,26 @@
     loadMoreBtn.addEventListener("click", function () { triggerSearch(true); });
   }
 
+  // Chi arriva da un post deve vedere subito l'articolo: lo scorrimento morbido
+  // partito prima del caricamento viene interrotto dal resto della pagina, quindi
+  // dopo il rendering si porta la scheda in vista e si ricontrolla poco dopo.
+  function mostraArticolo() {
+    var toccato = false;
+    ["wheel", "touchstart", "keydown"].forEach(function (ev) {
+      window.addEventListener(ev, function () { toccato = true; }, { once: true, passive: true });
+    });
+    function vai() {
+      if (toccato) return;
+      var headerEl = document.querySelector(".sh") || document.querySelector(".site-header");
+      var offset = (headerEl ? headerEl.offsetHeight : 0) + 16;
+      var top = biblioStatus.getBoundingClientRect().top + window.scrollY - offset;
+      if (Math.abs(window.scrollY - top) > 40) window.scrollTo(0, top);
+    }
+    vai();
+    setTimeout(vai, 400);
+    setTimeout(vai, 1200);
+  }
+
   // Un PMID nell'indirizzo identifica una sola voce PubMed, indipendentemente dai filtri.
   function apriArticolo(pmid) {
     if (!/^[1-9][0-9]{0,8}$/.test(pmid)) {
@@ -1991,6 +2011,7 @@
         setStatus(I18N[currentLang].articleReady);
         biblioResults.appendChild(renderItem(item, null, true));
         renderCopyAll([item]);
+        mostraArticolo();
       })
       .catch(function () {
         if (requestId === searchRequestId) setStatus(I18N[currentLang].articleUnavailable);
