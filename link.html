@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Link · Gli Amici di Boyle</title>
+  <meta name="description" content="Tutti i link degli Amici di Boyle: sito, Rete di Boyle, Boyle Lab, podcast Sotto Pressione, eventi e profili social." />
+  <link rel="canonical" href="https://www.amicidiboyle.it/link.html" />
+  <meta name="robots" content="noindex, follow" />
+  <link rel="icon" href="assets/logo.png" type="image/png" />
+  <meta property="og:title" content="Gli Amici di Boyle · tutti i link" />
+  <meta property="og:description" content="Medicina degli ambienti estremi, dagli abissi allo spazio." />
+  <meta property="og:image" content="https://www.amicidiboyle.it/assets/logo-boyle-192.png" />
+  <meta name="theme-color" content="#041b33" />
+  <style>
+    :root { --navy:#041b33; --deep:#020e1c; --cyan:#5ec8e6; --text:#eaf4fb; --muted:#a9c2d6; }
+    * { box-sizing:border-box; }
+    html, body { margin:0; }
+    body {
+      min-height:100vh; color:var(--text);
+      font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, sans-serif;
+      background:linear-gradient(180deg, var(--deep) 0%, var(--navy) 55%, #06406a 100%);
+      display:flex; justify-content:center; padding:32px 16px 48px;
+    }
+    main { width:100%; max-width:440px; text-align:center; }
+    .logo { width:96px; height:96px; border-radius:50%; box-shadow:0 0 0 3px rgba(94,200,230,.35); }
+    h1 { font-size:1.35rem; margin:14px 0 4px; }
+    .tag { color:var(--muted); margin:0 0 24px; font-size:.95rem; line-height:1.4; }
+    .links { display:flex; flex-direction:column; gap:12px; }
+    .links a {
+      display:block; padding:14px 18px; border-radius:14px; text-decoration:none;
+      color:var(--text); background:rgba(255,255,255,.07); border:1px solid rgba(94,200,230,.35);
+      font-weight:600; transition:background .15s, transform .15s;
+    }
+    .links a small { display:block; font-weight:400; color:var(--muted); font-size:.82rem; margin-top:2px; }
+    .links a:hover, .links a:focus-visible { background:rgba(94,200,230,.18); transform:translateY(-1px); outline:none; }
+    .links a.main { background:var(--cyan); color:var(--deep); border-color:var(--cyan); }
+    .links a.main small { color:#0b3550; }
+    h2 { font-size:.8rem; letter-spacing:.12em; text-transform:uppercase; color:var(--cyan); margin:30px 0 12px; }
+    .social { display:grid; grid-template-columns:repeat(3, 1fr); gap:10px; }
+    .social a {
+      padding:12px 6px; border-radius:12px; text-decoration:none; color:var(--text);
+      background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.12); font-size:.88rem;
+    }
+    .social a:hover, .social a:focus-visible { border-color:var(--cyan); outline:none; }
+    footer { margin-top:30px; color:var(--muted); font-size:.78rem; }
+    footer a { color:var(--muted); }
+  </style>
+</head>
+<body>
+  <main>
+    <img class="logo" src="assets/logo-boyle-192.png" alt="Logo Gli Amici di Boyle" width="96" height="96" />
+    <h1>Gli Amici di Boyle</h1>
+    <p class="tag">Medicina degli ambienti estremi, dagli abissi allo spazio.<br />Extreme environments. Human science.</p>
+
+    <nav class="links" aria-label="Link principali">
+      <a class="main" href="index.html">Il sito<small>Ricerca, formazione e divulgazione</small></a>
+      <a href="rete.html">Rete di Boyle<small>Medici, ingegneri e operatori degli ambienti estremi</small></a>
+      <a href="boyle-lab.html">Boyle Lab<small>Il laboratorio virtuale: prova le leggi dei gas</small></a>
+      <a href="podcast.html">Podcast Sotto Pressione<small>Gli episodi, anche su Spotify</small></a>
+      <a href="eventi.html">Eventi e corsi<small>I prossimi appuntamenti</small></a>
+      <a href="index.html#barometro">Il Barometro<small>La nostra newsletter</small></a>
+      <a href="boylebibliography.html">Boyle Bibliography<small>Gli studi che citiamo, con le fonti</small></a>
+      <a href="diving-boyle.html">Diving-Boyle<small>Dove si immerge l'Italia</small></a>
+    </nav>
+
+    <h2>Seguici · Follow us</h2>
+    <nav class="social" aria-label="Profili social">
+      <a href="https://www.instagram.com/amicidiboyle/" rel="noopener">Instagram</a>
+      <a href="https://www.facebook.com/amicidiboyle/" rel="noopener">Facebook</a>
+      <a href="https://www.linkedin.com/company/amicidiboyle/" rel="noopener">LinkedIn</a>
+      <a href="https://www.youtube.com/@AmicidiBoyle" rel="noopener">YouTube</a>
+      <a href="https://www.tiktok.com/@amicidiboyle" rel="noopener">TikTok</a>
+      <a href="https://x.com/AmicidiBoyle" rel="noopener">X</a>
+    </nav>
+
+    <footer><a href="privacy.html">Privacy</a> · <a href="note-legali.html">Note legali</a></footer>
+  </main>
+</body>
+</html>
