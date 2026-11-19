@@ -322,9 +322,14 @@
 }
 .partner-grid .partner-feature > img.partner-logo[src*="simae"] { padding: 10px; }
 
-/* ── 6. DICONO DI NOI: tre testate affiancate su desktop ──────────── */
+/* ── 6. DICONO DI NOI: quattro testate, 2x2 su schermi medi, in fila su desktop largo ── */
 @media (min-width: 1000px) {
-  #dicono-di-noi .articoli-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  #dicono-di-noi .articoli-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (min-width: 1200px) {
+  #dicono-di-noi .articoli-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px; }
+  #dicono-di-noi .feature-card h3 { font-size: 1.12rem; line-height: 1.25; }
+  #dicono-di-noi .feature-card > img { height: 160px; min-height: 160px; }
 }
 
 /* ── 7. VIDEO DI SFONDO NELLA HERO ────────────────────────────────── */
