@@ -23,14 +23,16 @@ jobs:
           python-version: "3.12"
       - name: Sposta gli eventi conclusi nell'archivio
         run: python scripts/eventi_archivio.py
+      - name: Rigenera la home inglese (en.html)
+        run: node scripts/build_en.mjs
       - name: Pubblica se qualcosa e' cambiato
         run: |
-          if git diff --quiet -- eventi.html index.html; then
+          if git diff --quiet -- eventi.html index.html en.html; then
             echo "Nessun evento da archiviare."
             exit 0
           fi
           git config user.name "Boyle bot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add eventi.html index.html
+          git add eventi.html index.html en.html
           git commit -m "Eventi: archiviazione automatica degli eventi conclusi"
           git push
