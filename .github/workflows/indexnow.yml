@@ -1,0 +1,24 @@
+name: IndexNow · avvisa Bing e gli altri motori
+
+# Ad ogni pubblicazione avvisa Bing (che alimenta anche Copilot, DuckDuckGo, Yahoo, Ecosia),
+# Yandex, Naver e Seznam che le pagine del sito sono cambiate, cosi' le rileggono subito.
+# Gratuito, senza account: la chiave pubblica e' nel file 86b1ce1780470717aed1ef8425e79967.txt alla radice del sito.
+on:
+  push:
+    branches: [main]
+    paths: ["**.html", sitemap.xml]
+  workflow_dispatch: {}
+
+jobs:
+  avvisa:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Invia gli indirizzi della sitemap a IndexNow
+        run: |
+          sleep 90   # lascia a GitHub Pages il tempo di pubblicare
+          URLS=$(grep -o '<loc>[^<]*</loc>' sitemap.xml | sed 's#</\?loc>##g' | python3 -c 'import sys,json;print(json.dumps([l.strip() for l in sys.stdin if l.strip()]))')
+          BODY=$(printf '{"host":"www.amicidiboyle.it","key":"86b1ce1780470717aed1ef8425e79967","keyLocation":"https://www.amicidiboyle.it/86b1ce1780470717aed1ef8425e79967.txt","urlList":%s}' "$URLS")
+          CODE=$(curl -s -o /dev/null -w '%{http_code}' -X POST https://api.indexnow.org/indexnow -H 'Content-Type: application/json; charset=utf-8' -d "$BODY")
+          echo "IndexNow risposta: $CODE"
+          case "$CODE" in 200|202) ;; *) exit 1;; esac
