@@ -97,7 +97,7 @@ def home():
         if not ended(tag):
             continue
         s = s.replace(block, '', 1)
-        title = re.search(r'<h3>(.*?)</h3>', block, re.S)
+        title = re.search(r'<h3[^>]*>(.*?)</h3>', block, re.S)
         title = html.unescape(re.sub(r'<[^>]+>', '', title.group(1))).strip() if title else ''
         done.append('home: ' + title)
         if 'data-founder' not in tag:
@@ -107,11 +107,13 @@ def home():
         pdf = media.group(1) if media else None
         if not pdf or f'href="{pdf}"' in s[s.find('course-poster-grid'):]:
             continue
-        meta = re.search(r'<p class="appt-meta">.*?<span>([^<]*)</span></p>', block, re.S)
+        meta = re.search(r'<p class="appt-meta">.*?<span[^>]*>([^<]*)</span></p>', block, re.S)
         where = meta.group(1).split('·')[0].strip() if meta else ''
         year = (attr(tag, 'data-start') or '')[:4]
+        # la locandina intera, non il ritaglio orizzontale della scheda
+        src = pdf if re.search(r'\.(jpe?g|png|webp)$', pdf, re.I) else (img.group(1) if img else '')
         card = (f'            <article class="glass-card course-poster-card">\n'
-                f'              <img src="{img.group(1) if img else ""}" alt="{img.group(2) if img else ""}" loading="lazy" decoding="async" onerror="this.style.display=\'none\'" />\n'
+                f'              <img src="{src}" alt="{img.group(2) if img else ""}" loading="lazy" decoding="async" onerror="this.style.display=\'none\'" />\n'
                 f'              <h4>{esc(title)} · {esc(where)} {year}</h4>\n'
                 f'              <a class="btn btn-secondary btn-block" href="{pdf}" target="_blank" rel="noopener" data-i18n="form_download">Download programma completo</a>\n'
                 f'            </article>\n')
