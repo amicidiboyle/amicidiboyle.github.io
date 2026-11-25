@@ -153,3 +153,11 @@ html.sh-lite .glass-chip, html.sh-lite .bmx, html.sh-lite .r3d-console { backgro
 /* globo Network: la luce pulsa con l'opacita', non ricalcolando il filtro a ogni fotogramma */
 .sh__orb { filter: drop-shadow(0 0 3px rgba(123,228,255,.85)) drop-shadow(0 0 7px rgba(77,255,214,.45)); }
 html.sh-lite .sh { background: rgba(3,14,32,.96); }
+
+/* social nel footer (costruiti da site-header.js) */
+.sh-social { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin: 18px auto 0; padding-top: 16px; max-width: 1180px; border-top: 1px solid rgba(120, 210, 255, .08); }
+.sh-social a { display: inline-flex; align-items: center; justify-content: center; width: 38px; height: 38px; border-radius: 50%; color: #a9c2d6; background: rgba(255, 255, 255, .04); border: 1px solid rgba(120, 210, 255, .16); transition: color .2s, border-color .2s, background .2s, transform .2s; }
+.sh-social a:hover, .sh-social a:focus-visible { color: #7be4ff; border-color: rgba(123, 228, 255, .55); background: rgba(123, 228, 255, .08); transform: translateY(-2px); outline: none; }
+.bb-footer + .sh-social { margin-top: 0; padding: 0 0 30px; border-top: 0; position: relative; z-index: 2; }
+@media (prefers-reduced-motion: reduce) { .sh-social a { transition: none; } .sh-social a:hover { transform: none; } }
+@media (max-width: 760px) { .sh-social { gap: 8px; padding-bottom: 76px; } }
