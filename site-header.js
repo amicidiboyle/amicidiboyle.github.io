@@ -161,4 +161,31 @@
   window.addEventListener('scroll', onScroll, { passive: true }); onScroll();
   new ResizeObserver(function () { sheet.style.top = (h.getBoundingClientRect().height + 8) + 'px'; }).observe(h);
 
+  /* social nel footer: un'unica riga di icone su tutte le pagine (link diretti ai profili) */
+  (function socialFooter() {
+    var S = [
+      ['Instagram', 'https://www.instagram.com/amicidiboyle/', '<rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17.4" cy="6.6" r="1.3"/>'],
+      ['LinkedIn', 'https://www.linkedin.com/company/amicidiboyle/', '<path d="M4 9h4v12H4zM6 3.2a2.2 2.2 0 1 1 0 4.4 2.2 2.2 0 0 1 0-4.4zM10 9h3.8v1.7h.1c.5-1 1.8-2 3.7-2 4 0 4.7 2.6 4.7 6V21h-4v-5.5c0-1.3 0-3-1.9-3s-2.2 1.5-2.2 2.9V21H10z"/>'],
+      ['Facebook', 'https://www.facebook.com/amicidiboyle/', '<path d="M13.6 21v-7.6h2.6l.4-3h-3V8.5c0-.9.3-1.5 1.5-1.5h1.6V4.3c-.3 0-1.2-.1-2.3-.1-2.3 0-3.9 1.4-3.9 4v2.2H7.9v3h2.6V21z"/>'],
+      ['YouTube', 'https://www.youtube.com/@AmicidiBoyle', '<path fill-rule="evenodd" d="M21.6 7.2a2.5 2.5 0 0 0-1.8-1.8C18.2 5 12 5 12 5s-6.2 0-7.8.4a2.5 2.5 0 0 0-1.8 1.8C2 8.8 2 12 2 12s0 3.2.4 4.8a2.5 2.5 0 0 0 1.8 1.8C5.8 19 12 19 12 19s6.2 0 7.8-.4a2.5 2.5 0 0 0 1.8-1.8c.4-1.6.4-4.8.4-4.8s0-3.2-.4-4.8zM10 15.1V8.9l5.3 3.1z"/>'],
+      ['TikTok', 'https://www.tiktok.com/@amicidiboyle', '<path d="M16.6 3c.3 2.2 1.6 3.6 3.9 3.8v3.1a7 7 0 0 1-3.9-1.2v5.9c0 3.4-2.4 6.2-6 6.2a6 6 0 0 1-6-6c0-3.6 3.1-6.3 6.8-5.8v3.2c-1.9-.4-3.6.9-3.6 2.7 0 1.6 1.2 2.8 2.8 2.8 1.7 0 2.8-1.2 2.8-3.1V3z"/>'],
+      ['X', 'https://x.com/AmicidiBoyle', '<path d="M17.8 3h3.1l-6.8 7.8L22 21h-6.3l-4.9-6.4L5.2 21H2.1l7.3-8.3L1.8 3h6.4l4.4 5.8zm-1.1 16.2h1.7L7.4 4.7H5.6z"/>']
+    ];
+    function build() {
+      if (document.querySelector('.sh-social')) return;
+      var host = document.querySelector('footer.site-footer') || document.querySelector('footer[role="contentinfo"]') || document.querySelector('.bb-footer');
+      if (!host) return;
+      var en = /^en/i.test(document.documentElement.lang || '');
+      var box = document.createElement('div');
+      box.className = 'sh-social';
+      box.setAttribute('role', 'navigation');
+      box.setAttribute('aria-label', en ? 'Gli Amici di Boyle on social media' : 'Gli Amici di Boyle sui social');
+      box.innerHTML = S.map(function (s) {
+        return '<a href="' + s[1] + '" target="_blank" rel="noopener" title="' + s[0] + '" aria-label="' + s[0] + '"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">' + s[2] + '</svg></a>';
+      }).join('');
+      if (host.tagName === 'FOOTER') host.appendChild(box); else host.parentNode.insertBefore(box, host.nextSibling);
+    }
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', build); else build();
+  })();
+
 })();
